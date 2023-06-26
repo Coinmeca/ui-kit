@@ -11,9 +11,9 @@ export interface Props {
     icon?: string;
     iconLeft?: string;
     iconRight?: string;
-    click?: Function;
+    onClick?: Function;
     scale?: number;
-    disable?: boolean;
+    disabled?: boolean;
 }
 
 export default function Button(props: Props) {
@@ -22,19 +22,19 @@ export default function Button(props: Props) {
     const color = props?.color || "white";
     const fit = props?.fit || false;
     const scale = props?.scale || 1;
-    const disable = props?.disable || false;
+    const disabled = props?.disabled || false;
 
     const icon = (icon: string) => {
         return <Icon icon={icon} scale={scale} />;
     };
 
-    function click(e?: any) {
-        if (disable) return;
-        if (typeof props?.click === "function") props?.click(e);
+    function onClick(e?: any) {
+        if (disabled) return;
+        if (typeof props?.onClick === "function") props?.onClick(e);
     }
 
     return (
-        <Style title={title} $type={type} $color={color} $scale={scale} $fit={fit} onClick={(e) => click(e)} $disable={disable}>
+        <Style title={title} $type={type} $color={color} $scale={scale} $fit={fit} onClick={(e) => onClick(e)} $disabled={disabled}>
             {props?.icon && typeof props?.children === "undefined" ? (
                 icon(props?.icon)
             ) : (

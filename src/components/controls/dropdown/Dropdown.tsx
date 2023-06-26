@@ -9,6 +9,7 @@ interface Props {
     style?: any;
 
     form?: string;
+    title?: string;
 
     theme?: "light" | "dark";
     width?: string;
@@ -23,14 +24,15 @@ interface Props {
     keyIndex?: number;
     imgName?: string;
 
-    click?: Function;
-    clickItem?: Function;
+    open?: boolean;
+    onClick?: Function;
+    onClickItem?: Function;
     device?: string;
 }
 
 export default function Dropdown(props: Props) {
     const form = props?.form;
-    const theme = props?.theme || "light";
+    const [open, setOpen] = useState<boolean>(props?.open || false);
 
     const placeholder = props?.placeholder || "Select";
     const [options, setOptions] = useState<any>(props?.options);
@@ -41,9 +43,7 @@ export default function Dropdown(props: Props) {
     const imgName = props?.imgName || "img";
 
     const disabled = props?.disabled || false;
-    // const click = useState<Function | undefined>(props?.click);
     const device = props?.device;
-    const [open, setOpen] = useState<boolean>(false);
 
     useEffect(() => {
         const option = props?.option;
@@ -76,65 +76,63 @@ export default function Dropdown(props: Props) {
         }
     }, [props?.options, props?.option]);
 
-    const onClick = (e: React.FormEvent, v: any, k: string | number) => {
+    const onSelect = (e: React.FormEvent, v: any, k: string | number) => {
+        if (disabled) return;
         // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
         setOption(v);
-        if (typeof v?.event === "function") {
-            v.event(e);
-        }
-        if (typeof props?.click === "function") {
-            props?.click(e, k, option);
-        }
+        if (typeof v?.event === "function") v.event(e);
+        if (typeof props?.onClickItem === "function") props?.onClickItem(e, k, option);
         setOpen(false);
     };
 
-    const onClickItem = (e: React.FormEvent, v: any, k: string | number) => {
-        // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
-        setOption(v);
-        if (typeof v?.event === "function") {
-            v.event(e);
-        }
-        if (typeof props?.clickItem === "function") {
-            props?.clickItem(e, k, option);
-        }
-        setOpen(false);
-    };
-
-    const onClose = () => {
-        setOpen(false);
-    };
-
-    const onOpen = () => {
+    const onOpen = (e?: any) => {
+        if (disabled) return;
         setOpen(!open);
+        if (typeof props?.onClick === "function") props?.onClick(e, option);
+    };
+
+    const onClose = (e?: any) => {
+        setOpen(false);
+        if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
 
     return (
-        <Style tabIndex={5} className={props?.className} style={{ zIndex: open ? 5 : 2, ...props?.style }} onBlur={onClose} title={props?.title}>
-            <ul onClick={() => onOpen()}>
-                {form?.indexOf("more") === 0 ? (
-                    <Controls.Icon icon="more" />
-                ) : form?.indexOf("icon") === 0 ? (
-                    <Controls.Icon icon={option?.icon} color={color} title={title} disabled={disabled} click={(e, v, k) => onClick(e, v, k)} device={device} />
-                ) : (
-                    <li>
-                        {option && typeof option[imgName] !== "undefined" && <img src={`${option[imgName]}`} style={{ width: 16, height: 16, verticalAlign: "middle", marginRight: 8 }} alt="" />}
-                        {typeof option === "undefined" ? placeholder : typeof option === "object" ? (typeof option[keyIndex] !== "undefined" ? option[keyIndex] : typeof option[keyName] !== "undefined" ? option[keyName] : option) : option}
-                    </li>
-                )}
+        <Style tabIndex={5} className={props?.className} style={{ ...props?.style }} onClick={onOpen} onBlur={onClose} title={props?.title} $open={open} $disabled={disabled}>
+            <ul>
+                <li>
+                    {form?.indexOf("more") === 0 ? (
+                        <Controls.Icon icon="more" />
+                    ) : form?.indexOf("icon") === 0 ? (
+                        <Controls.Icon icon={option?.icon} />
+                    ) : (
+                        <>
+                            {option && typeof option[imgName] !== "undefined" && <img src={`${option[imgName]}`} style={{ width: 16, height: 16, verticalAlign: "middle", marginRight: 8 }} alt="" />}
+                            {typeof option === "undefined"
+                                ? placeholder
+                                : typeof option === "object"
+                                ? typeof option[keyIndex] !== "undefined"
+                                    ? option[keyIndex]
+                                    : typeof option[keyName] !== "undefined"
+                                    ? option[keyName]
+                                    : option
+                                : option}
+                            <Controls.Icon scale={0.75} icon="chevron-down-bold" />
+                        </>
+                    )}
+                </li>
             </ul>
             <ul>
                 {options &&
                     options.length > 0 &&
                     options.map(
-                        (v, k) =>
+                        (v: any, k: number) =>
                             v && (
                                 <li
                                     key={k}
                                     onClick={(e) => {
-                                        onClick(e, v, k);
-                                        onClickItem(e, v, k);
+                                        onSelect(e, v, k);
                                     }}
-                                    className={typeof option !== "undefined" && (v[keyIndex] === option || v[keyName] === option || v === option) ? "disable" : ""}
+                                    className={typeof option !== "undefined" && (v[keyIndex] === option || v[keyName] === option || v === option) ? "disabled" : ""}
                                 >
                                     <>
                                         {typeof v[imgName] !== "undefined" && v[imgName] !== "" ? (
@@ -153,7 +151,7 @@ export default function Dropdown(props: Props) {
                                             </>
                                         ) : v.icon !== "" && typeof v.icon !== "undefined" ? (
                                             <>
-                                                <Controls.Icon icon={v.icon} title={v.title} />
+                                                <Controls.Icon icon={option?.icon} />
                                                 <span>{typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}</span>
                                             </>
                                         ) : typeof v === "object" ? (

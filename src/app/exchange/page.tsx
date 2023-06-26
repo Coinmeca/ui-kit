@@ -1,8 +1,20 @@
 "use client";
-import { Layouts } from "components";
+import { Controls, Layouts } from "components";
 import { Icon, Button } from "components/controls";
 
 export default function Exchange() {
+    const list = [
+        {
+            value: "item 1",
+        },
+        {
+            value: "item 2",
+        },
+        {
+            value: "item 3",
+        },
+    ];
+
     return (
         <Layouts.Box>
             <div>
@@ -31,13 +43,14 @@ export default function Exchange() {
                     <Button type="line" color="red" iconLeft="money">
                         Make money
                     </Button>
-                    <Button type="line" iconLeft="swap" disable>
+                    <Button type="line" iconLeft="swap" disabled>
                         Button
                     </Button>
                     <Button type="glass" iconRight="swap" fit>
                         Button
                     </Button>
                     <Button type="solid" icon="swap" fit />
+                    <Controls.Dropdown options={list} />
                 </Layouts.Col>
             </div>
         </Layouts.Box>
