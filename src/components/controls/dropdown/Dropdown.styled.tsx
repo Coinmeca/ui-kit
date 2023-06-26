@@ -2,48 +2,47 @@ import { css, styled } from "styled-components";
 
 export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $disabled: boolean }>`
     font-size: 0.6667em;
-    background: rgba(var(--white), var(--o0));
     position: relative;
+    background: rgba(var(--white), var(--o0));
     color: rgba(var(--white), var(--o045));
-    width: ${({ $fit }) => ($fit ? "max-content" : "100%")};
-    min-height: 4em;
+    width: ${({ $fit }) => ($fit ? "max-content" : "auto")};
+    height: 4em;
     display: flex;
     flex-direction: column;
     transition: 0.3s ease;
     cursor: pointer;
-    overflow: visible;
-
-    /* &:hover {
-        background: rgba(var(--white), var(--o015));
-    }
-
-    &:active {
-        background: rgba(var(--white), var(--o0075));
-    } */
+    /* overflow: visible; */
+    backdrop-filter: var(--blur);
 
     & > ul {
         display: flex;
         flex-direction: column;
-        width: 100%;
+        /* width: ${({ $fit }) => ($fit ? "max-content" : "100%")}; */
         height: 100%;
 
         &:first-child {
             max-height: 100%;
 
             li {
+                height: 4em;
+                max-height: 100%;
+                overflow: hidden;
+
                 & > *:last-child {
                     position: absolute;
                     right: 0.8em;
+                    transition: 0.3s ease;
                 }
             }
         }
 
         &:last-child {
-            position: absolute;
+            /* position: absolute;
             top: 100%;
-            width: 100%;
-            height: auto;
-            max-height: 0;
+            height: auto */
+            /* margin-top: 0.2em; */
+            height: 0;
+            min-height: 0;
             overflow: hidden scroll;
             transition: 0.3s ease;
 
@@ -72,6 +71,7 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
             flex-direction: row;
             align-items: center;
             justify-content: start;
+            width: calc(100% - 5em);
             min-width: max-content;
             gap: 1em;
             padding: 1em;
@@ -83,14 +83,15 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
             }
 
             & > img {
-                min-width: 1.667em;
-                height: 1.667em;
+                min-width: 2.5em;
+                height: 2.5em;
                 vertical-align: middle;
                 border-radius: 2em;
-                margin-top: -0.1em;
                 /* margin-left: -0.275em; */
-                margin-top: -0.1em;
-                margin-bottom: -0.1em;
+                /* margin-top: -0.1em;
+                margin-bottom: -0.1em; */
+                margin-top: -0.25em;
+                margin-bottom: -0.25em;
             }
 
             & i {
@@ -133,9 +134,13 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
                                 fill: rgba(var(--white), var(--o03));
                             }
                         }
+                        & > *:last-child {
+                            transform: rotate(180deg);
+                        }
                     }
                     &:last-child {
-                        max-height: ${$max}em;
+                        background: rgba(var(--white), var(--o015));
+                        min-height: ${$max}em;
                     }
                 }
             `
