@@ -15,6 +15,7 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
     backdrop-filter: var(--blur);
 
     & > ul {
+        position: relative;
         display: flex;
         flex-direction: column;
         /* width: ${({ $fit }) => ($fit ? "max-content" : "100%")}; */
@@ -24,7 +25,6 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
             max-height: 100%;
 
             li {
-                height: 4em;
                 max-height: 100%;
                 overflow: hidden;
 
@@ -37,6 +37,7 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
         }
 
         &:last-child {
+            position: relative;
             /* position: absolute;
             top: 100%;
             height: auto */
@@ -45,6 +46,7 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
             min-height: 0;
             overflow: hidden scroll;
             transition: 0.3s ease;
+            z-index: 10;
 
             background: rgba(var(--white), var(--o0075));
 

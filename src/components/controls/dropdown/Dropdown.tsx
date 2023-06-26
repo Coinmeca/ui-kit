@@ -119,7 +119,7 @@ export default function Dropdown(props: Props) {
                                         : option
                                     : option}
                             </span>
-                            <Controls.Icon scale={0.75} icon="chevron-down-bold" />
+                            <Controls.Icon icon="chevron-down-bold" />
                         </>
                     )}
                 </li>
