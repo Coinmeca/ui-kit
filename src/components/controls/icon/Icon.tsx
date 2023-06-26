@@ -1,32 +1,24 @@
 import dynamic from "next/dynamic";
-import React from "react";
+import { Style } from "./Icon.styled";
 
 interface Props {
     icon: string;
     color?: string;
     scale?: number;
-    alt?: string;
+    title?: string;
 }
 
 export default function Icon(props: Props) {
-    const icon = props.icon || "";
-    const scale = props.scale || 1;
-    const color = props.color || "white";
-    const size = 24;
+    const icon = props?.icon || "";
+    const color = props?.color || "white";
+    const scale = props?.scale || 1;
+    const title = props?.title || "";
 
     const Icons = dynamic(() => import(`./svgs/${icon}.svg`));
 
     return (
-        <i className={`icon-${icon}`} style={{ display: "flex", alignItems: "center", justifyContent: "center", width: `${size * scale}px`, height: `${size * scale}px`, fontSize: `${size}px`, fill: `${color}` }}>
+        <Style title={title} $color={color} $scale={scale}>
             <Icons />
-            {/* <style jsx>
-                {`
-                    [class^="icon-"]:before,
-                    [class*=" icon-"]:before {
-                        fill: white;
-                    }
-                `}
-            </style> */}
-        </i>
+        </Style>
     );
 }

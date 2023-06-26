@@ -7,6 +7,13 @@ const nextConfig = {
         });
         return config;
     },
+    compiler: {
+        styledComponents: true,
+    },
+    swcMinify: true,
+    experimental: {
+        appDir: true,
+    },
 };
 
 module.exports = nextConfig;

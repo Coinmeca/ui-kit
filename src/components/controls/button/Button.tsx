@@ -1,39 +1,49 @@
+"use client";
 import { Icon } from "components/controls";
+import { Style } from "./Button.styled";
 
-interface Props {
+export interface Props {
     children?: any;
+    title?: string;
     type?: "glass" | "line" | "solid";
     color?: string;
+    fit?: boolean;
     icon?: string;
     iconLeft?: string;
     iconRight?: string;
-    onClick?: Function;
+    click?: Function;
+    scale?: number;
+    disable?: boolean;
 }
 
 export default function Button(props: Props) {
-    const type = props.type || "solid";
-    const color = props.color || "black";
+    const title = props?.title || "";
+    const type = props?.type;
+    const color = props?.color || "white";
+    const fit = props?.fit || false;
+    const scale = props?.scale || 1;
+    const disable = props?.disable || false;
 
     const icon = (icon: string) => {
-        return <Icon icon={icon} color={`${type === "solid" ? "white" : color}`} />;
+        return <Icon icon={icon} scale={scale} />;
     };
 
-    const click = (e?: any) => {
-        alert("1");
-        if (typeof props.onClick === "function") props.onClick(e);
-    };
+    function click(e?: any) {
+        if (disable) return;
+        if (typeof props?.click === "function") props?.click(e);
+    }
 
     return (
-        <button style={{ display: "flex", alignItems: "center", gap: "1em", padding: "1em", userSelect: "none" }} onClick={(e) => click(e)}>
-            {props.icon && typeof props.children === "undefined" ? (
-                icon(props.icon)
+        <Style title={title} $type={type} $color={color} $scale={scale} $fit={fit} onClick={(e) => click(e)} $disable={disable}>
+            {props?.icon && typeof props?.children === "undefined" ? (
+                icon(props?.icon)
             ) : (
                 <>
-                    {props.iconLeft && icon(props.iconLeft)}
-                    <span>{props.children}</span>
-                    {props.iconRight && icon(props.iconRight)}
+                    {props?.iconLeft && icon(props?.iconLeft)}
+                    <span>{props?.children}</span>
+                    {props?.iconRight && icon(props?.iconRight)}
                 </>
             )}
-        </button>
+        </Style>
     );
 }

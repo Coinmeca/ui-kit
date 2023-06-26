@@ -1,15 +1,21 @@
-import { Montserrat, Noto_Sans_KR } from "next/font/google";
+import { Montserrat, Noto_Sans_KR, Noto_Sans_JP } from "next/font/google";
 
-const en = Montserrat({
-    subsets: ["latin"],
-    variable: "--font-montserrat",
+export const en = Montserrat({
+    subsets: ["latin-ext"],
+    variable: "--font-en",
     display: "swap",
 });
-const kr = Noto_Sans_KR({
+
+export const kr = Noto_Sans_KR({
     subsets: ["latin"],
     weight: ["100", "300", "400", "500", "700", "900"],
-    variable: "--font-noto-kr",
+    variable: "--font-kr",
     display: "swap",
 });
 
-export { en, kr };
+export const jp = Noto_Sans_JP({
+    subsets: ["latin"],
+    weight: ["100", "300", "400", "500", "700", "900"],
+    variable: "--font-jp",
+    display: "swap",
+});

@@ -1,20 +1,45 @@
+"use client";
+import { Layouts } from "components";
 import { Icon, Button } from "components/controls";
 
 export default function Exchange() {
     return (
-        <div>
-            exchange
-            <Icon scale={0.5} icon={"swap"} />
-            <Icon scale={1} icon={"account"} />
-            <Icon color={"#6080FF"} scale={2} icon={"bank"} />
-            <Icon color={"yellow"} scale={3} icon={"chevron-left"} />
-            <Icon color={"red"} scale={4} icon={"chart-area"} />
-            <Button>Button</Button>
-            <Button icon="money" />
-            <Button iconLeft="swap">Button</Button>
-            <Button iconLeft="swap" iconRight="identity">
-                Button
-            </Button>
-        </div>
+        <Layouts.Box>
+            <div>
+                exchange
+                <Layouts.Col>
+                    <Layouts.Row>
+                        <Icon scale={0.5} icon={"swap"} title={"swap"} />
+                        <Icon scale={1} icon={"account"} />
+                        <Icon color={"#6080FF"} scale={2} icon={"bank"} />
+                        <Icon color={"yellow"} scale={3} icon={"chevron-left"} />
+                        <Icon color={"red"} scale={4} icon={"chart-area"} />
+                    </Layouts.Row>
+                    <Layouts.Row>
+                        <Button iconLeft="bank">Button</Button>
+                        <Button color="blue" icon="money" fit />
+                        <Button color="orange" iconLeft="swap" title="Let's swap">
+                            Button
+                        </Button>
+                        <Button color="green" iconLeft="swap" iconRight="identity" click={() => alert("1")}>
+                            Button
+                        </Button>
+                    </Layouts.Row>
+                    <Button type="glass" color="black">
+                        Button
+                    </Button>
+                    <Button type="line" color="red" iconLeft="money">
+                        Make money
+                    </Button>
+                    <Button type="line" iconLeft="swap" disable>
+                        Button
+                    </Button>
+                    <Button type="glass" iconRight="swap" fit>
+                        Button
+                    </Button>
+                    <Button type="solid" icon="swap" fit />
+                </Layouts.Col>
+            </div>
+        </Layouts.Box>
     );
 }
