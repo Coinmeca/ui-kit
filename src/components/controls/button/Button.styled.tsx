@@ -14,27 +14,28 @@ export const Style = styled.button<{
         `;
     }};
 
+    font-size: ${({ $scale }) => $scale * 0.6667}em;
     display: flex;
     align-items: center;
     justify-content: center;
     width: ${({ $fit }) => ($fit ? "max-content" : "100%")};
     min-width: max-content;
-    min-height: 4rem;
-    gap: 0.5em;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    min-height: 4em;
+    gap: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
     cursor: pointer;
     user-select: none;
     -webkit-user-drag: none;
     transition: 0.3s ease;
 
     & > i:only-child {
-        margin-left: -0.25rem;
-        margin-right: -0.25rem;
+        margin-left: -0.1em;
+        margin-right: -0.1em;
     }
 
     & span {
-        font-size: 1.5rem;
+        font-size: 1.5em;
         transition: none;
     }
 

@@ -11,9 +11,8 @@ interface Props {
     form?: string;
     title?: string;
 
-    theme?: "light" | "dark";
-    width?: string;
-    height?: string;
+    max?: number;
+    fit?: boolean;
     disabled?: any;
     placeholder?: string;
 
@@ -33,6 +32,8 @@ interface Props {
 export default function Dropdown(props: Props) {
     const form = props?.form;
     const [open, setOpen] = useState<boolean>(props?.open || false);
+    const max = props?.max || 30;
+    const fit = props?.fit || false;
 
     const placeholder = props?.placeholder || "Select";
     const [options, setOptions] = useState<any>(props?.options);
@@ -97,7 +98,7 @@ export default function Dropdown(props: Props) {
     };
 
     return (
-        <Style tabIndex={5} className={props?.className} style={{ ...props?.style }} onClick={onOpen} onBlur={onClose} title={props?.title} $open={open} $disabled={disabled}>
+        <Style tabIndex={5} className={props?.className} style={{ ...props?.style }} onClick={onOpen} onBlur={onClose} title={props?.title} $open={open} $max={max} $fit={fit} $disabled={disabled}>
             <ul>
                 <li>
                     {form?.indexOf("more") === 0 ? (
@@ -106,16 +107,18 @@ export default function Dropdown(props: Props) {
                         <Controls.Icon icon={option?.icon} />
                     ) : (
                         <>
-                            {option && typeof option[imgName] !== "undefined" && <img src={`${option[imgName]}`} style={{ width: 16, height: 16, verticalAlign: "middle", marginRight: 8 }} alt="" />}
-                            {typeof option === "undefined"
-                                ? placeholder
-                                : typeof option === "object"
-                                ? typeof option[keyIndex] !== "undefined"
-                                    ? option[keyIndex]
-                                    : typeof option[keyName] !== "undefined"
-                                    ? option[keyName]
-                                    : option
-                                : option}
+                            {option && typeof option[imgName] !== "undefined" && <img src={`${option[imgName]}`} alt={option?.imgAlt} />}
+                            <span>
+                                {typeof option === "undefined"
+                                    ? placeholder
+                                    : typeof option === "object"
+                                    ? typeof option[keyIndex] !== "undefined"
+                                        ? option[keyIndex]
+                                        : typeof option[keyName] !== "undefined"
+                                        ? option[keyName]
+                                        : option
+                                    : option}
+                            </span>
                             <Controls.Icon scale={0.75} icon="chevron-down-bold" />
                         </>
                     )}
@@ -137,16 +140,7 @@ export default function Dropdown(props: Props) {
                                     <>
                                         {typeof v[imgName] !== "undefined" && v[imgName] !== "" ? (
                                             <>
-                                                <img
-                                                    src={`${v[imgName]}`}
-                                                    style={{
-                                                        width: 16,
-                                                        height: 16,
-                                                        verticalAlign: "middle",
-                                                        marginRight: 8,
-                                                    }}
-                                                    alt=""
-                                                />
+                                                <img src={`${v[imgName]}`} alt={v.imgAlt} />
                                                 <span>{typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}</span>
                                             </>
                                         ) : v.icon !== "" && typeof v.icon !== "undefined" ? (
@@ -154,16 +148,8 @@ export default function Dropdown(props: Props) {
                                                 <Controls.Icon icon={option?.icon} />
                                                 <span>{typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}</span>
                                             </>
-                                        ) : typeof v === "object" ? (
-                                            typeof v[keyIndex] !== "undefined" ? (
-                                                v[keyIndex]
-                                            ) : typeof v[keyName] !== "undefined" ? (
-                                                v[keyName]
-                                            ) : (
-                                                v
-                                            )
                                         ) : (
-                                            v
+                                            <span>{typeof v === "object" ? (typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v) : v}</span>
                                         )}
                                     </>
                                 </li>

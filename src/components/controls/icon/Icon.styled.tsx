@@ -5,7 +5,7 @@ export const Style = styled.i<{ $color?: string; $scale?: number }>`
     align-items: center;
     justify-content: center;
     font-style: initial;
-    font-size: ${(props) => (props.$scale || 1) * 1.5}em;
+    font-size: ${(props) => (props.$scale || 1) * 2.5}em;
     width: 1em;
     height: 1em;
     aspect-ratio: 1/1;
