@@ -19,10 +19,10 @@ export function Sort(array: Array<any>, key: string, type: string, direction: bo
 export function Search(array: Array<any>, keyword: string) {
     return array && array?.length
         ? [...array].filter((o) =>
-              Object.values(o).some((v) => {
-                  if (typeof v === 'string') return v.toLowerCase().includes(keyword.toLowerCase());
-              })
-          )
+            Object.values(o).some((v) => {
+                if (typeof v === 'string') return v.toLowerCase().includes(keyword.toLowerCase());
+            })
+        )
         : [];
 }
 
@@ -72,9 +72,9 @@ export function Format(value: any, type?: string, separator?: boolean, fix?: num
                         type === 'number'
                             ? parseFloat(copy[0]).toString()
                             : separator
-                            ? parseFloat(copy[0]).toLocaleString()
-                            : copy[0];
-                    copy[1] = parseFloat(copy[1]) === 0 ? '0' : copy[1];
+                                ? parseFloat(copy[0]).toLocaleString()
+                                : copy[0];
+                    // copy[1] = parseFloat(copy[1]) === 0 ? '0' : copy[1];
                     decimals = copy[1];
                     value = copy[0] + '.' + copy[1];
                 }
@@ -94,6 +94,6 @@ export function Format(value: any, type?: string, separator?: boolean, fix?: num
     }
 }
 
-export function getFees(n: string | number, fee:number, divider?:number) {
+export function getFees(n: string | number, fee, divider?) {
     return (parseFloat(Format(n, 'number', false)) * fee) / (divider || 10000);
 }

@@ -6,8 +6,6 @@ html {
     background: black;
     color: white;
     font-size: var(--unit);
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
 }
 
 html {
@@ -16,7 +14,6 @@ html {
     button,
     textarea {
         font-family: "Montserrat", "sans-serif";
-        font-weight: bold;
     }
 
     &[lang="ko"] {
@@ -26,7 +23,6 @@ html {
         button,
         textarea {
             font-family: "Montserrat", "Noto Sans KR", "sans-serif";
-            font-weight: bold;
         }
     }
 
@@ -37,8 +33,17 @@ html {
         button,
         textarea {
             font-family: "Montserrat", "Noto Sans JP", "sans-serif";
-            font-weight: bold;
         }
+    }
+
+    &,
+    input,
+    button,
+    textarea {
+        font-weight: bold;
+        font-feature-settings: "tnum" on, "lnum" on;
+        -webkit-text-size-adjust: 100%;
+        -webkit-font-smoothing: antialiased;
     }
 }
 
@@ -77,9 +82,9 @@ button {
     --o045: 0.45;
     --o03: 0.3;
     --o015: 0.15;
-    --o0075: 0.1;
+    --o01: 0.1;
     --o0075: 0.075;
-    --o0075: 0.05;
+    --o005: 0.05;
     --o0: 0;
 
     --blur: blur(4rem);

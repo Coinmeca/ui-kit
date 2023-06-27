@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {Format} from 'lib/utils';
+import React, { useState, useEffect } from "react";
+import { Format } from "lib/utils";
 
-import {Controls} from 'components';
-import type { Button } from 'components/controls/button/Button';
-import type { Dropdown } from 'components/controls/dropdown/Dropdown';
-import { Style } from './Input.styled';
+import { Controls } from "components";
+import type { Button } from "components/controls/button/Button";
+import type { Dropdown } from "components/controls/dropdown/Dropdown";
+import { Style } from "./Input.styled";
 
 export interface Input {
     className?: string;
@@ -14,19 +14,22 @@ export interface Input {
     fold?: boolean;
     type?: string;
     value?: number | string | undefined;
-    align?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent';
+    align?: "start" | "end" | "left" | "right" | "center" | "justify" | "match-parent";
     scale?: number;
     separator?: boolean;
 
     placeholder?: string;
-    iconLeft?: string;
-    iconRight?: string;
-    
+    icon?: string;
+
+    clearable?: boolean;
+    clearPosition?: "left" | "right";
+    width?: number;
+
     min?: number;
     max?: number;
     step?: number;
     fix?: number;
-    
+
     unit?: string;
     button?: Button;
     dropdown?: Dropdown;
@@ -48,52 +51,51 @@ export interface Input {
 
 export default function Input(props: Input) {
     const type = props?.type !== "password" ? props?.type : "password";
-    const placeholder = props?.placeholder || 'Type';
+    const placeholder = props?.placeholder || "Type";
     const step = props?.step || 1;
     const scale = props?.scale || 1;
+    const min = props?.min || 0;
 
+    const [focus, setFocus] = useState<boolean>(false);
     const [fold, setFold] = useState<boolean>(false);
     const [extend, setExtend] = useState<boolean>(false);
 
-    const [value, setValue] = useState<number | string>(props?.value?.toString() || '');
-    const [align, setAlign] = useState<any>(props.align || 'left');
-
+    const [value, setValue] = useState<number | string>(props?.value?.toString() || "");
+    const [align, setAlign] = useState<any>(props.align || "left");
 
     const [valid, setValid] = useState<boolean>(false);
     const [error, setError] = useState<string>();
 
+    const clearPosition = props?.clearPosition || "right";
     const disabled = props?.disabled || false;
 
     useEffect(() => {
         setValue(Format(value));
-        if (value === '') setValid(false);
-        if (props?.type === 'number' || props?.type === 'currency') setAlign('right');
+        if (value === "") setValid(false);
+        if (props?.type === "number" || props?.type === "currency") setAlign("right");
     }, [value]);
 
     useEffect(() => {
-        if (props?.type === 'number' || props?.type === 'currency') setAlign('right');
+        if (props?.type === "number" || props?.type === "currency") setAlign("right");
     }, [props?.type]);
 
     useEffect(() => {
-        const v = typeof props?.value !== 'undefined' ? props?.value : value;
-        const t = typeof props?.type !== 'undefined' ? props?.type : type;
-        const s = typeof props?.separator !== 'undefined' ? props?.separator : props?.separator;
-        const f = typeof props?.fix !== 'undefined' ? props?.fix :props?.fix;
+        const v = typeof props?.value !== "undefined" ? props?.value : value;
+        const t = typeof props?.type !== "undefined" ? props?.type : type;
+        const s = typeof props?.separator !== "undefined" ? props?.separator : false;
+        const f = typeof props?.fix !== "undefined" ? props?.fix : 8;
         setValue(Format(v, t, s, f).toString());
     }, [props?.value, props?.type, props?.separator, props?.fix]);
 
     const onClick = (e: any) => {
-        if (typeof props.onClick === 'function') {
+        if (typeof props.onClick === "function") {
             props.onClick(e);
         }
         onExtend();
     };
 
     const onClickItem = (e: React.FormEvent, k: string | number, v: any) => {
-        if(disabled)
-        if (typeof props?.dropdown?.onClickItem === 'function')
-            props?.dropdown?.onClickItem(e, k, v);
-    
+        if (disabled) if (typeof props?.dropdown?.onClickItem === "function") props?.dropdown?.onClickItem(e, k, v);
     };
 
     const onExtend = () => {
@@ -103,9 +105,9 @@ export default function Input(props: Input) {
     };
 
     const onBlur = () => {
-        if (typeof props.onBlur === 'function') props.onBlur();
+        if (typeof props.onBlur === "function") props.onBlur();
         setExtend(false);
-        onChange('');
+        onChange("");
     };
 
     // const handleInput = useCallback(
@@ -116,120 +118,97 @@ export default function Input(props: Input) {
     // )
 
     const onChange = (e: any) => {
-        const value = typeof e !== 'object' ? e : e.target.value;
+        const value = typeof e !== "object" ? e : e.target.value;
         setValid(false);
-        setValue(Format(value, type, props?.separator,props?.fix,props?.max));
+        setValue(Format(value, type, props?.separator, props?.fix, props?.max));
         // props?.separator ? value : setValue(parseFloat(value.replaceAll(',', '')));
-        if (typeof props?.onChange === 'function') props?.onChange(e, value);
+        if (typeof props?.onChange === "function") props?.onChange(e, value);
     };
 
-    const onFocus = (e: any) => { if (typeof props?.onFocus === 'function') props?.onFocus(e);
-    
+    const onFocus = (e: any) => {
+        if (typeof props?.onFocus === "function") props?.onFocus(e);
     };
 
     const format = {
         email: /^[a-zA-Z0-9+]*$/,
         number: /^[0-9+]*$/,
-        currency: /^[,.0-9]*$/
+        currency: /^[,.0-9]*$/,
     };
 
     const onKeyDown = (e: any) => {
         const key = e.keyCode;
-        if (
-            ((type === 'currency' || type === 'number') &&
-                ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key === 110 && key === 190))) ||
-            key === 38 ||
-            key === 107 ||
-            key === 187 ||
-            key === 40 ||
-            key === 109 ||
-            key === 189
-        ) {
-            let copy:number | undefined;
+        if (((type === "currency" || type === "number") && ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key === 110 && key === 190))) || key === 38 || key === 107 || key === 187 || key === 40 || key === 109 || key === 189) {
+            let copy: number | undefined;
             if (key === 38 || key === 107 || key === 187) {
                 if (e.shiftKey && e.ctrlKey) {
-                    copy =
-                        value.toString() === ''
-                            ? step
-                            : parseFloat(value.toString().replaceAll(',', '')) + Math.abs(step * 100);
+                    copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step * 100);
                 } else if (e.shiftKey) {
-                    copy =
-                        value.toString() === ''
-                            ? step
-                            : parseFloat(value.toString().replaceAll(',', '')) + Math.abs(step * 10);
+                    copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step * 10);
                 } else {
-                    copy =
-                        value.toString() === ''
-                            ? step
-                            : parseFloat(value.toString().replaceAll(',', '')) + Math.abs(step);
-                    console.log('copy', copy);
+                    copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step);
+                    console.log("copy", copy);
                 }
-                const result = typeof props?.max !== 'undefined' ? (copy > props?.max ?props?.max : copy) : copy;
-                if (type === 'currency') {
+                const result = typeof props?.max !== "undefined" ? (copy > props?.max ? props?.max : copy) : copy;
+                if (type === "currency") {
                     setValue(Format(result));
                 } else {
                     setValue(result);
                 }
-                if (typeof props?.onChange === 'function') props?.onChange(e, result);
+                if (typeof props?.onChange === "function") props?.onChange(e, result);
             }
             if (key === 40 || key === 109 || key === 189) {
                 if (e.shiftKey && e.ctrlKey) {
-                    copy =
-                        value.toString() === ''
-                            ? 0
-                            : parseFloat(value.toString().replaceAll(',', '')) - Math.abs(step * 100);
+                    copy = value.toString() === "" ? 0 : parseFloat(value.toString().replaceAll(",", "")) - Math.abs(step * 100);
                 } else if (e.shiftKey) {
-                    copy =
-                        value.toString() === ''
-                            ? 0
-                            : parseFloat(value.toString().replaceAll(',', '')) - Math.abs(step * 10);
+                    copy = value.toString() === "" ? 0 : parseFloat(value.toString().replaceAll(",", "")) - Math.abs(step * 10);
                 } else {
-                    copy =
-                        value.toString() === '' ? 0 : parseFloat(value.toString().replaceAll(',', '')) - Math.abs(step);
+                    copy = value.toString() === "" ? 0 : parseFloat(value.toString().replaceAll(",", "")) - Math.abs(step);
                 }
                 const result = copy <= 0 ? 0 : copy;
-                if (type === 'currency') {
+                if (type === "currency") {
                     setValue(Format(result, type));
                 } else {
                     setValue(result);
                 }
-                if (typeof props?.onChange === 'function') props?.onChange(e, result);
+                if (typeof props?.onChange === "function") props?.onChange(e, result);
             }
         }
-        if (typeof props?.onKeyDown === 'function') {
+        if (typeof props?.onKeyDown === "function") {
             props?.onKeyDown(key);
         }
     };
 
     const Input = (
-        <Style $scale={scale}>
+        <Style tabIndex={5} $scale={scale} $focus={focus} onClick={() => setFocus(true)} onBlur={() => setFocus(false)}>
             <div className={props?.className} style={props?.style}>
-                {props?.iconLeft && <Controls.Icon icon={props?.iconLeft}/>}
-                <input
-                    className={props.className}
-                    style={{textAlign: align}}
-                    placeholder={placeholder}
-                    type={type === 'currency' ? 'number' : type}
-                    min={props?.min}
-                    max={props?.max}
-                    step={props?.step}
-                    value={value}
-                    onClick={(e) => onClick(e)}
-                    onInput={(e) => onChange(e)}
-                    onChange={(e) => onChange(e)}
-                    onFocus={(e) => onFocus(e)}
-                    onKeyDown={(e) => onKeyDown(e)}
-                    autoFocus={extend}
-                    disabled={props?.disabled}
-                />
-                {props?.iconRight && <Controls.Icon icon={props?.iconRight}/>}
-                {props?.button && <Controls.Button {...props?.button}/>}
-                {/* {form === 'icon' && <>{props.children}</>} */}
-                {props?.unit && <div>{props?.unit}</div>}
-                {props?.dropdown && (
-                    <Controls.Dropdown
-                        {...props?.dropdown}
+                {props?.icon && <Controls.Icon icon={props?.icon} />}
+                <div>
+                    {props?.clearable && clearPosition === "left" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
+                    <input
+                        className={props.className}
+                        style={{ textAlign: align }}
+                        placeholder={placeholder}
+                        type={type === "currency" ? "currency" : type}
+                        min={min}
+                        max={props?.max}
+                        step={props?.step}
+                        value={value}
+                        onClick={(e) => onClick(e)}
+                        onInput={(e) => onChange(e)}
+                        onChange={(e) => onChange(e)}
+                        onFocus={(e) => onFocus(e)}
+                        onKeyDown={(e) => onKeyDown(e)}
+                        autoFocus={extend}
+                        disabled={props?.disabled}
                     />
+                    {props?.clearable && clearPosition === "right" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
+                </div>
+                {(props?.unit || props?.button || props?.dropdown) && (
+                    <div style={props?.width ? { width: `${props?.width}em` } : {}}>
+                        {props?.unit && <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", minHeight: "1.337em", padding: "0.6666em", margin: 0 }}>{props?.unit}</div>}
+                        {props?.button && <Controls.Button {...props?.button} />}
+                        {props?.dropdown && <Controls.Dropdown {...props?.dropdown} />}
+                    </div>
                 )}
             </div>
             {valid && error && <p className="message">{error}</p>}
@@ -246,4 +225,4 @@ export default function Input(props: Input) {
 
     // Styled Components Caution */
     return <>{Input}</>;
-};
+}

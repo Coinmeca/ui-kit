@@ -6,6 +6,7 @@ export const Style = styled.button<{
     $color: string;
     $scale: number;
     $fit?: boolean;
+    $hide: boolean;
     $disabled?: boolean;
 }>`
     ${({ $color }) => {
@@ -121,6 +122,19 @@ export const Style = styled.button<{
             $disabled &&
             css`
                 opacity: 0.15;
+                cursor: initial;
+                pointer-events: none !important;
+            `
+        );
+    }}
+
+    ${({ $hide }) => {
+        return (
+            $hide &&
+            css`
+                max-width: 0;
+                max-height: 0;
+                opacity: 0;
                 cursor: initial;
                 pointer-events: none !important;
             `

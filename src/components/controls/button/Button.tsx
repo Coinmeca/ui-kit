@@ -14,6 +14,7 @@ export interface Button {
     iconRight?: string;
     onClick?: Function;
     scale?: number;
+    hide?: boolean;
     disabled?: boolean;
     children?: any;
 }
@@ -24,6 +25,7 @@ export default function Button(props: Button) {
     const color = props?.color || "white";
     const fit = props?.fit || false;
     const scale = props?.scale || 1;
+    const hide = props?.hide || false;
     const disabled = props?.disabled || false;
 
     const icon = (icon: string) => {
@@ -36,7 +38,7 @@ export default function Button(props: Button) {
     }
 
     return (
-        <Style className={props?.className} style={props?.style} title={title} $type={type} $color={color} $scale={scale} $fit={fit} onClick={(e) => onClick(e)} $disabled={disabled}>
+        <Style className={props?.className} style={props?.style} title={title} $type={type} $color={color} $scale={scale} $fit={fit} $hide={hide} onClick={(e) => onClick(e)} $disabled={disabled}>
             {props?.icon && typeof props?.children === "undefined" ? (
                 icon(props?.icon)
             ) : (

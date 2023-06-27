@@ -10,7 +10,7 @@ export interface Dropdown {
 
     form?: string;
     title?: string;
-    scale?:number;
+    scale?: number;
 
     max?: number;
     fit?: boolean;
@@ -32,15 +32,15 @@ export interface Dropdown {
 
 export default function Dropdown(props: Dropdown) {
     const form = props?.form;
-    const max = props?.max || 30;
+    const max = props?.max || 15;
     const fit = props?.fit || false;
     const scale = props?.scale || 1;
-    
+
     const placeholder = props?.placeholder || "Select";
     const [options, setOptions] = useState<any>(props?.options);
     const [option, setOption] = useState<any>(props?.option);
     const [open, setOpen] = useState<boolean>(props?.open || false);
-    
+
     const keyName = props?.keyName || "value";
     const keyIndex = props?.keyName || 0;
     const imgName = props?.imgName || "img";
@@ -104,9 +104,9 @@ export default function Dropdown(props: Dropdown) {
             <ul>
                 <li>
                     {form?.indexOf("more") === 0 ? (
-                        <Controls.Icon icon="more" />
+                        <Controls.Button icon="more" />
                     ) : form?.indexOf("icon") === 0 ? (
-                        <Controls.Icon icon={option?.icon} />
+                        <Controls.Button icon={option?.icon} />
                     ) : (
                         <>
                             {option && typeof option[imgName] !== "undefined" && <img src={`${option[imgName]}`} alt={option?.imgAlt} />}

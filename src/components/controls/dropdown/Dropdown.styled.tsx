@@ -1,6 +1,6 @@
 import { css, styled } from "styled-components";
 
-export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale:number; $disabled: boolean }>`
+export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: number; $disabled: boolean }>`
     font-size: ${({ $scale }) => $scale * 0.6667}em;
     position: relative;
     background: rgba(var(--white), var(--o0));
@@ -28,6 +28,7 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
             max-height: 100%;
 
             li {
+                height: 100%;
                 max-height: 100%;
                 overflow: hidden;
 
@@ -45,8 +46,8 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
             top: 100%;
             height: auto */
             /* margin-top: 0.2em; */
-            height: 0;
-            min-height: 0;
+            height: max-content;
+            max-height: 0;
             overflow: hidden scroll;
             transition: 0.3s ease;
             z-index: 10;
@@ -145,7 +146,7 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
                     }
                     &:last-child {
                         background: rgba(var(--white), var(--o015));
-                        min-height: ${$max}em;
+                        max-height: ${$max}em;
                     }
                 }
             `
