@@ -1,14 +1,14 @@
 import dynamic from "next/dynamic";
 import { Style } from "./Icon.styled";
 
-interface Props {
+interface Icon {
     icon: string;
     color?: string;
     scale?: number;
     title?: string;
 }
 
-export default function Icon(props: Props) {
+export default function Icon(props: Icon) {
     const icon = props?.icon || "";
     const color = props?.color || "white";
     const scale = props?.scale || 1;

@@ -2,8 +2,9 @@
 import { Icon } from "components/controls";
 import { Style } from "./Button.styled";
 
-export interface Props {
-    children?: any;
+export interface Button {
+    className?: string;
+    style?: any;
     title?: string;
     type?: "glass" | "line" | "solid";
     color?: string;
@@ -14,9 +15,10 @@ export interface Props {
     onClick?: Function;
     scale?: number;
     disabled?: boolean;
+    children?: any;
 }
 
-export default function Button(props: Props) {
+export default function Button(props: Button) {
     const title = props?.title || "";
     const type = props?.type;
     const color = props?.color || "white";
@@ -34,7 +36,7 @@ export default function Button(props: Props) {
     }
 
     return (
-        <Style title={title} $type={type} $color={color} $scale={scale} $fit={fit} onClick={(e) => onClick(e)} $disabled={disabled}>
+        <Style className={props?.className} style={props?.style} title={title} $type={type} $color={color} $scale={scale} $fit={fit} onClick={(e) => onClick(e)} $disabled={disabled}>
             {props?.icon && typeof props?.children === "undefined" ? (
                 icon(props?.icon)
             ) : (

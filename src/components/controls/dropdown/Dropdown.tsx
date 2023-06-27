@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import { Controls } from "components";
 import { Style } from "./Dropdown.styled";
 
-interface Props {
+export interface Dropdown {
     className?: string;
     style?: any;
 
     form?: string;
     title?: string;
+    scale?:number;
 
     max?: number;
     fit?: boolean;
@@ -29,16 +30,17 @@ interface Props {
     device?: string;
 }
 
-export default function Dropdown(props: Props) {
+export default function Dropdown(props: Dropdown) {
     const form = props?.form;
-    const [open, setOpen] = useState<boolean>(props?.open || false);
     const max = props?.max || 30;
     const fit = props?.fit || false;
-
+    const scale = props?.scale || 1;
+    
     const placeholder = props?.placeholder || "Select";
     const [options, setOptions] = useState<any>(props?.options);
     const [option, setOption] = useState<any>(props?.option);
-
+    const [open, setOpen] = useState<boolean>(props?.open || false);
+    
     const keyName = props?.keyName || "value";
     const keyIndex = props?.keyName || 0;
     const imgName = props?.imgName || "img";
@@ -98,7 +100,7 @@ export default function Dropdown(props: Props) {
     };
 
     return (
-        <Style tabIndex={5} className={props?.className} style={{ zIndex: open ? 10 : 1, ...props?.style }} onClick={onOpen} onBlur={onClose} title={props?.title} $open={open} $max={max} $fit={fit} $disabled={disabled}>
+        <Style tabIndex={5} className={props?.className} style={{ zIndex: open ? 10 : 1, ...props?.style }} onClick={onOpen} onBlur={onClose} title={props?.title} $open={open} $max={max} $fit={fit} $scale={scale} $disabled={disabled}>
             <ul>
                 <li>
                     {form?.indexOf("more") === 0 ? (

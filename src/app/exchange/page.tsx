@@ -107,6 +107,14 @@ export default function Exchange() {
                     <Button type="solid" icon="swap" fit />
                     <Controls.Dropdown options={list} />
                     <Controls.Dropdown options={list} fit />
+                    <Layouts.Row>
+                        <Controls.Tab>Tab</Controls.Tab>
+                        <Controls.Tab iconLeft="sort-up-bold">Tab</Controls.Tab>
+                        <Controls.Tab>Tab</Controls.Tab>
+                    </Layouts.Row>
+                    <Controls.Input />
+                    <Controls.Input iconLeft="user"/>
+                    <Controls.Input iconRight="x"/>
                 </Layouts.Col>
             </div>
         </Layouts.Box>
