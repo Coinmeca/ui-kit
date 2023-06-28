@@ -40,6 +40,21 @@ export const Style = styled.div<{ $active: boolean; $disabled: boolean }>`
         background: rgba(var(--white), var(--o015));
     }
 
+    ${({ $active }) => {
+        return (
+            $active &&
+            css`
+                background: transparent;
+                cursor: initial;
+                pointer-events: none !important;
+                color: rgb(var(--white));
+                & i svg {
+                    fill: rgb(var(--white));
+                }
+            `
+        );
+    }}
+
     ${({ $disabled }) => {
         return (
             $disabled &&

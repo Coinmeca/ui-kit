@@ -1,3 +1,4 @@
+"--isolatedModules";
 import dynamic from "next/dynamic";
 import { memo } from "react";
 import { Style } from "./Icon.styled";
@@ -14,8 +15,7 @@ export const Icon = memo((props: Icon) => {
     const scale = props?.scale || 1;
     const title = props?.title || "";
 
-    const Icons = dynamic(() => import(`./svgs/${props?.icon || "x"}.svg`));
-
+    const Icons = dynamic(() => import(`./svgs/${props?.icon || ""}.svg`));
     return (
         <Style title={title} $color={color} $scale={scale}>
             <Icons />
