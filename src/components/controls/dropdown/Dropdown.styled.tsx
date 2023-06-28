@@ -2,26 +2,21 @@ import { css, styled } from "styled-components";
 
 export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: number; $disabled: boolean }>`
     font-size: ${({ $scale }) => $scale * 0.6667}em;
-    position: relative;
     background: rgba(var(--white), var(--o0));
     color: rgba(var(--white), var(--o045));
     width: ${({ $fit }) => ($fit ? "max-content" : "auto")};
     height: 4em;
-    display: flex;
-    flex-direction: column;
     transition: 0.3s ease;
     cursor: pointer;
     user-select: none;
     -webkit-user-drag: none;
     transition: 0.3s ease;
-    /* overflow: visible; */
     backdrop-filter: var(--blur);
 
     & > ul {
         position: relative;
         display: flex;
         flex-direction: column;
-        /* width: ${({ $fit }) => ($fit ? "max-content" : "100%")}; */
         height: 100%;
 
         &:first-child {
@@ -41,12 +36,7 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
         }
 
         &:last-child {
-            position: relative;
-            /* position: absolute;
-            top: 100%;
-            height: auto */
-            /* margin-top: 0.2em; */
-            height: max-content;
+            height: auto;
             max-height: 0;
             overflow: hidden scroll;
             transition: 0.3s ease;
@@ -93,9 +83,6 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
                 height: 2.5em;
                 vertical-align: middle;
                 border-radius: 2em;
-                /* margin-left: -0.275em; */
-                /* margin-top: -0.1em;
-                margin-bottom: -0.1em; */
                 margin-top: -0.25em;
                 margin-bottom: -0.25em;
             }
