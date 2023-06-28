@@ -9,7 +9,11 @@ export const Style = styled.div<{ $active: boolean; $disabled: boolean }>`
     padding: 0.5em;
     cursor: pointer;
     user-select: none;
-    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     transition: 0.3s ease;
 
     color: rgba(var(--white), var(--o045));

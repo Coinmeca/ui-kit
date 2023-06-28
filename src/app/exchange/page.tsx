@@ -71,7 +71,7 @@ export default function Exchange() {
                     <Controls.Input clearable button={{ children: "Send", iconRight: "send", type: "solid" }} />
                     <Controls.Input clearable button={{ children: "Button" }} />
 
-                    <Controls.Input type={"currency"} unit={"USD"} />
+                    <Controls.Input type={"currency"} error={true} unit={"USD"} />
                     <Controls.Input type={"currency"} separator unit={"%"} />
                 </Layouts.Col>
             </div>

@@ -27,7 +27,7 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
                 max-height: 100%;
                 overflow: hidden;
 
-                & > *:last-child {
+                & > *:last-child:not(span) {
                     position: absolute;
                     right: 0.8em;
                     transition: 0.3s ease;
@@ -127,7 +127,7 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
                                 fill: rgba(var(--white), var(--o03));
                             }
                         }
-                        & > *:last-child {
+                        & > *:last-child:not(span) {
                             transform: rotate(180deg);
                         }
                     }

@@ -1,20 +1,26 @@
 import { styled } from "styled-components";
 
-export const Style = styled.div<{ $scale: number; $focus: boolean }>`
+export const Style = styled.div<{ $scale: number; $focus: boolean; $error: boolean; $disabled: boolean }>`
     font-size: ${({ $scale }) => $scale * 0.6667}em;
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-height: 4em;
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     transition: 0.3s ease;
 
     background: ${({ $focus }) => ($focus ? "rgba(var(--white), var(--o01))" : "rgba(var(--white), var(--o0075))")};
 
     &:hover {
-        background: rgba(var(--white), var(--o015));
+        background: rgba(var(--${({ $error }) => ($error ? "red" : "white")}), var(--o015));
     }
     &:active {
-        background: rgba(var(--white), var(--o01));
+        background: rgba(var(--${({ $error }) => ($error ? "red" : "white")}), var(--o01));
     }
 
     & > div {

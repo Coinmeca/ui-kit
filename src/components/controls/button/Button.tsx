@@ -38,7 +38,7 @@ export default function Button(props: Button) {
     }
 
     return (
-        <Style className={props?.className} style={props?.style} title={title} $type={type} $color={color} $scale={scale} $fit={fit} $hide={hide} onClick={(e) => onClick(e)} $disabled={disabled}>
+        <Style className={props?.className} style={props?.style} title={title} $type={type} $color={color} $scale={scale} $fit={fit} $hide={hide} onClick={(e) => onClick(e)} $disabled={disabled} draggable={false}>
             {props?.icon && typeof props?.children === "undefined" ? (
                 icon(props?.icon)
             ) : (

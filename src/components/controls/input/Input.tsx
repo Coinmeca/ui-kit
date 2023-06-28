@@ -42,9 +42,9 @@ export interface Input {
     onBlur?: Function;
     onKeyDown?: Function;
 
-    valid?: boolean;
-    error?: string;
-    disabled?: any;
+    error?: boolean;
+    message?: any;
+    disabled?: boolean;
 
     children?: any;
 }
@@ -63,39 +63,21 @@ export default function Input(props: Input) {
     const [value, setValue] = useState<number | string>(props?.value?.toString() || "");
     const [align, setAlign] = useState<any>(props.align || "left");
 
-    const [valid, setValid] = useState<boolean>(false);
-    const [error, setError] = useState<string>();
+    const [error, setError] = useState<boolean>(props?.error || false);
 
     const clearPosition = props?.clearPosition || "right";
     const disabled = props?.disabled || false;
 
     useEffect(() => {
-        setValue(Format(value));
-        if (value === "") setValid(false);
-        if (props?.type === "number" || props?.type === "currency") setAlign("right");
-    }, [value]);
-
-    useEffect(() => {
-        if (props?.type === "number" || props?.type === "currency") setAlign("right");
-    }, [props?.type]);
-
-    useEffect(() => {
-        const v = typeof props?.value !== "undefined" ? props?.value : value;
-        const t = typeof props?.type !== "undefined" ? props?.type : type;
-        const s = typeof props?.separator !== "undefined" ? props?.separator : false;
-        const f = typeof props?.fix !== "undefined" ? props?.fix : 8;
-        setValue(Format(v, t, s, f).toString());
-    }, [props?.value, props?.type, props?.separator, props?.fix]);
+        if (value === "") setError(false);
+        setValue(Format(value, type, props?.separator, props?.fix).toString());
+    }, [value, type, props?.separator, props?.fix]);
 
     const onClick = (e: any) => {
         if (typeof props.onClick === "function") {
             props.onClick(e);
         }
         onExtend();
-    };
-
-    const onClickItem = (e: React.FormEvent, k: string | number, v: any) => {
-        if (disabled) if (typeof props?.dropdown?.onClickItem === "function") props?.dropdown?.onClickItem(e, k, v);
     };
 
     const onExtend = () => {
@@ -119,7 +101,7 @@ export default function Input(props: Input) {
 
     const onChange = (e: any) => {
         const value = typeof e !== "object" ? e : e.target.value;
-        setValid(false);
+        setError(false);
         setValue(Format(value, type, props?.separator, props?.fix, props?.max));
         // props?.separator ? value : setValue(parseFloat(value.replaceAll(',', '')));
         if (typeof props?.onChange === "function") props?.onChange(e, value);
@@ -179,7 +161,7 @@ export default function Input(props: Input) {
     };
 
     const Input = (
-        <Style tabIndex={5} $scale={scale} $focus={focus} onClick={() => setFocus(true)} onBlur={() => setFocus(false)}>
+        <Style tabIndex={5} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)} draggable={false}>
             <div className={props?.className} style={props?.style}>
                 {props?.icon && <Controls.Icon icon={props?.icon} />}
                 <div>
@@ -199,7 +181,7 @@ export default function Input(props: Input) {
                         onFocus={(e) => onFocus(e)}
                         onKeyDown={(e) => onKeyDown(e)}
                         autoFocus={extend}
-                        disabled={props?.disabled}
+                        disabled={disabled}
                     />
                     {props?.clearable && clearPosition === "right" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                 </div>
@@ -211,7 +193,7 @@ export default function Input(props: Input) {
                     </div>
                 )}
             </div>
-            {valid && error && <p className="message">{error}</p>}
+            {props?.error && props?.message && <p className="message">{props?.message}</p>}
         </Style>
     );
 

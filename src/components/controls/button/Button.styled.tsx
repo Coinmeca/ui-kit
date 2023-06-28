@@ -27,7 +27,11 @@ export const Style = styled.button<{
     padding-right: 1em;
     cursor: pointer;
     user-select: none;
-    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     transition: 0.3s ease;
 
     & > i:only-child {
