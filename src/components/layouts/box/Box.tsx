@@ -1,12 +1,12 @@
-import { Style } from "./Box.styled";
+import Style from "./Box.styled";
 
-export interface Props {
+export interface Box {
     className?: string;
     style?: any;
     children?: any;
 }
 
-export default function Box(props: Props) {
+export default function Box(props: Box) {
     return (
         <Style className={props?.className} style={props?.style}>
             {props.children}

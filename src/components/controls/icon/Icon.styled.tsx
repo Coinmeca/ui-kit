@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Style = styled.i<{ $color?: string; $scale?: number }>`
+const Style = styled.i<{ $color?: string; $scale?: number }>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,3 +17,5 @@ export const Style = styled.i<{ $color?: string; $scale?: number }>`
         transition: 0.3s ease;
     }
 `;
+
+export default Style;

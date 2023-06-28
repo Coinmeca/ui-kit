@@ -24,11 +24,11 @@
                     "preprocess": false
                 }
             }
-        ]
-        // "paths": {
-        //     "": ["./src/*"],
-        //     "~/*": ["./src/*"]
-        // }
+        ],
+        "paths": {
+            "": ["./src/*"],
+            "~/*": ["./src/*"]
+        }
     },
     "include": ["src", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
     "exclude": ["node_modules"]

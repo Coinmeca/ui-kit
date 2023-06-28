@@ -1,6 +1,6 @@
 import { css, styled } from "styled-components";
 
-export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: number; $disabled: boolean }>`
+const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: number; $disabled: boolean }>`
     font-size: ${({ $scale }) => $scale * 0.6667}em;
     background: rgba(var(--white), var(--o0));
     color: rgba(var(--white), var(--o045));
@@ -148,3 +148,5 @@ export const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $
             pointer-events: none !important;
         `}
 `;
+
+export default Style;

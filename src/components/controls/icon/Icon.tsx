@@ -1,9 +1,9 @@
 "--isolatedModules";
 import dynamic from "next/dynamic";
 import { memo } from "react";
-import { Style } from "./Icon.styled";
+import Style from "./Icon.styled";
 
-interface Icon {
+export interface Icon {
     icon: string;
     color?: string;
     scale?: number;

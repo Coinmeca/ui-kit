@@ -1,12 +1,12 @@
-import { Style } from "./Col.styled";
+import Style from "./Col.styled";
 
-export interface Props {
+export interface Col {
     children?: any;
     gap?: number;
     align?: "start" | "center" | "end" | "stretch";
 }
 
-export default function Col(props: Props) {
+export default function Col(props: Col) {
     const gap = props?.gap || 4;
     const align = props?.align || "start";
 

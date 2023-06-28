@@ -94,6 +94,6 @@ export function Format(value: any, type?: string, separator?: boolean, fix?: num
     }
 }
 
-export function getFees(n: string | number, fee, divider?) {
+export function getFees(n: string | number, fee: number, divider?: number) {
     return (parseFloat(Format(n, 'number', false)) * fee) / (divider || 10000);
 }

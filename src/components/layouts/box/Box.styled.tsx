@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 
-export const Style = styled.div`
+const Style = styled.div`
     background: rgb(var(--dim));
     color: rgba(var(--black));
-    height: calc(100% - 8rem);
+    /* height: calc(100% - 8rem); */
     min-height: calC(100vh - 8rem);
     display: flex;
     flex-direction: column;
@@ -21,3 +21,5 @@ export const Style = styled.div`
         --black: 0, 0, 0;
     }
 `;
+
+export default Style;

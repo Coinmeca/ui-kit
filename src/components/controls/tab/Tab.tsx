@@ -1,8 +1,8 @@
 "use client";
 import { Controls } from "components";
-import { Style } from "./Tab.styled";
+import Style from "./Tab.styled";
 
-export interface Props {
+export interface Tab {
     className?: string;
     style?: object;
     title?: string;
@@ -18,7 +18,7 @@ export interface Props {
     device?: string;
 }
 
-export default function Tab(props: Props) {
+export default function Tab(props: Tab) {
     const onClick = (e: any) => {
         if (typeof props?.onClick === "function") props?.onClick(e);
     };

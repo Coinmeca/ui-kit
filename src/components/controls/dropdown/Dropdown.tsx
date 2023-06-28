@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Controls } from "components";
-import { Style } from "./Dropdown.styled";
+import Style from "./Dropdown.styled";
 
 export interface Dropdown {
     className?: string;

@@ -1,6 +1,6 @@
 "use client";
 import { Icon } from "components/controls";
-import { Style } from "./Button.styled";
+import Style from "./Button.styled";
 
 export interface Button {
     className?: string;

@@ -1,5 +1,4 @@
 import { styled, css } from "styled-components";
-import { Root } from "lib/style";
 
 export const Style = styled.div<{
     $gap: number;
@@ -27,3 +26,5 @@ export const Style = styled.div<{
         `;
     }}
 `;
+
+export default Style;

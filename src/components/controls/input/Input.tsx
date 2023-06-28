@@ -4,7 +4,7 @@ import { Format } from "lib/utils";
 import { Controls } from "components";
 import type { Button } from "components/controls/button/Button";
 import type { Dropdown } from "components/controls/dropdown/Dropdown";
-import { Style } from "./Input.styled";
+import Style from "./Input.styled";
 
 export interface Input {
     className?: string;

@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Style = styled.div<{ $scale: number; $focus: boolean; $error: boolean; $disabled: boolean }>`
+const Style = styled.div<{ $scale: number; $focus: boolean; $error: boolean; $disabled: boolean }>`
     font-size: ${({ $scale }) => $scale * 0.6667}em;
     display: flex;
     flex-direction: column;
@@ -97,3 +97,5 @@ export const Style = styled.div<{ $scale: number; $focus: boolean; $error: boole
         }
     }
 `;
+
+export default Style;

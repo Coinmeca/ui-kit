@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Style = styled.div<{
+const Style = styled.div<{
     $gap: number;
     $align: "start" | "center" | "end" | "stretch";
 }>`
@@ -20,3 +20,5 @@ export const Style = styled.div<{
         }
     }
 `;
+
+export default Style;

@@ -1,6 +1,6 @@
 import { css, styled } from "styled-components";
 
-export const Style = styled.div<{ $active: boolean; $disabled: boolean }>`
+const Style = styled.div<{ $active: boolean; $disabled: boolean }>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,3 +66,5 @@ export const Style = styled.div<{ $active: boolean; $disabled: boolean }>`
         );
     }}
 `;
+
+export default Style;
