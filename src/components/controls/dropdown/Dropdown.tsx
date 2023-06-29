@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { Controls } from "components";
 import Style from "./Dropdown.styled";
@@ -112,7 +111,6 @@ export default function Dropdown(props: Dropdown) {
             $fit={fit}
             $scale={scale}
             $disabled={disabled}
-            draggable={false}
         >
             <ul>
                 <li>

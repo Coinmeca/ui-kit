@@ -6,11 +6,12 @@ const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean;
     flex-direction: column;
     justify-content: center;
     min-height: 4em;
-    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
-    -o-user-select: none;
+    -ms-user-select: none;
     user-select: none;
     transition: 0.3s ease;
 

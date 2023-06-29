@@ -8,8 +8,13 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
     height: 4em;
     transition: 0.3s ease;
     cursor: pointer;
-    user-select: none;
     -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     transition: 0.3s ease;
     backdrop-filter: var(--blur);
 

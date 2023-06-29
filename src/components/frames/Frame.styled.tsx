@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 
 const Style = styled.section<{ $sidebar: boolean; $width: number }>`
     position:relative;
@@ -21,11 +21,18 @@ const Style = styled.section<{ $sidebar: boolean; $width: number }>`
         }
 
         & > aside {
-            z-index;
-            min-width: ${({ $width }) => $width}px;
+            z-index:10;
+            ${({ $width, $sidebar }) => $sidebar && css`min-width: ${$sidebar ? $width: 0}px`};
+            transition: 0.3s ease;
 
-            @media all and (max-width: 1919px) {
-                
+        }
+    }
+    
+    @media all and (max-width: 1919px) {
+        & > section {
+            & > aside {
+                min-width: 0;
+                max-width: 0; 
             }
         }
     }

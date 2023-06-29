@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect } from "react";
 import { Format } from "lib/utils";
 
@@ -162,7 +163,7 @@ export default function Input(props: Input) {
     };
 
     const Input = (
-        <Style tabIndex={5} $clearable={clearable} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)} draggable={false}>
+        <Style tabIndex={5} $clearable={clearable} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)}>
             <div className={props?.className} style={props?.style}>
                 {props?.icon && <Controls.Icon icon={props?.icon} />}
                 <div>

@@ -1,4 +1,3 @@
-"--isolatedModules";
 import dynamic from "next/dynamic";
 import { memo } from "react";
 import Style from "./Icon.styled";

@@ -1,6 +1,7 @@
 "use client";
 import { Controls, Frames, Layouts } from "components";
 import { Icon, Button } from "components/controls";
+import { Format } from "lib/utils";
 import { useState } from "react";
 
 export default function Exchange() {
@@ -34,6 +35,8 @@ export default function Exchange() {
             children: <div>asset</div>,
         },
     ];
+
+    const [value, setValue] = useState<number>(0);
 
     return (
         <Frames.Frame sidebar sidebars={sidebars}>
@@ -93,8 +96,9 @@ export default function Exchange() {
                         <Controls.Input clearable button={{ children: "Button" }} />
 
                         <Controls.Input type={"currency"} error={true} unit={"USD"} />
-                        <Controls.Input type={"currency"} separator unit={"%"} />
-                        <Controls.Range value={value} onChange={(e) => setValue(e)} />
+                        <Controls.Input type={"currency"} separator unit={"%"} value={value} onChange={(v:any) => setValue(Format(v, 'number'))}/>
+                        <Controls.Range value={value} onChange={(v:any) => setValue(v)} />
+                        <Controls.Range snap value={value} onChange={(v:any) => setValue(v)} />
                     </Layouts.Col>
                 </div>
             </Layouts.Box>
