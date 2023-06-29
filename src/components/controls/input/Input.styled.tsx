@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-const Style = styled.div<{ $scale: number; $focus: boolean; $error: boolean; $disabled: boolean }>`
+const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean; $error: boolean; $disabled: boolean }>`
     font-size: ${({ $scale }) => $scale * 0.6667}em;
     display: flex;
     flex-direction: column;
@@ -27,11 +27,21 @@ const Style = styled.div<{ $scale: number; $focus: boolean; $error: boolean; $di
         display: flex;
         align-items: center;
 
-        &:first-child > i:first-child {
-            padding: 0.3em;
-            margin-right: 0.3em;
-        }
+        &:first-child{
+            & > div:first-child{
+                gap: 1em;
+            }
 
+            & > i {
+                padding: 0.3em;
+                margin-right: 0.3em;
+            }
+
+            & svg{
+                fill: rgb(var(--${({ $error }) => ($error ? "red" : "white")}));
+            }
+        }
+        
         & > div:nth-child(2),
         & > div:last-child:not(:only-child) > * {
             width: 100%;

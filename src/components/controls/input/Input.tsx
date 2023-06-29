@@ -52,6 +52,7 @@ export interface Input {
 export default function Input(props: Input) {
     const type = props?.type !== "password" ? props?.type : "password";
     const placeholder = props?.placeholder || "Type";
+    const clearable = props?.clearable || false;
     const step = props?.step || 1;
     const scale = props?.scale || 1;
     const min = props?.min || 0;
@@ -161,11 +162,11 @@ export default function Input(props: Input) {
     };
 
     const Input = (
-        <Style tabIndex={5} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)} draggable={false}>
+        <Style tabIndex={5} $clearable={clearable} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)} draggable={false}>
             <div className={props?.className} style={props?.style}>
                 {props?.icon && <Controls.Icon icon={props?.icon} />}
                 <div>
-                    {props?.clearable && clearPosition === "left" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
+                    {clearable && clearPosition === "left" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                     <input
                         className={props.className}
                         style={{ textAlign: align }}
@@ -183,7 +184,7 @@ export default function Input(props: Input) {
                         autoFocus={extend}
                         disabled={disabled}
                     />
-                    {props?.clearable && clearPosition === "right" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
+                    {clearable && clearPosition === "right" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                 </div>
                 {(props?.unit || props?.button || props?.dropdown) && (
                     <div style={props?.width ? { width: `${props?.width}em` } : {}}>
