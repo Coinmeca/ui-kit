@@ -24,7 +24,6 @@ export const Color = (color: string) => {
         case "sky":
             return "var(--sky)";
         default:
-            if (color.indexOf("#") === 1) return `${parseInt(color.slice(0, 1))}, ${parseInt(color.slice(2, 3))}, ${parseInt(color.slice(4, 5))}`;
             return color;
     }
 };
