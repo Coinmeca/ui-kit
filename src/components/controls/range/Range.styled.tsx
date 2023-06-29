@@ -1,20 +1,22 @@
 ﻿import { css, styled } from "styled-components";
 import { Root } from "lib/style";
 
-const Thumb = (color: string) => css`
-    background: ${Root.Color(color)};
+const Thumb = css`
+    appearance: none;
+    background: var(--color);
     width: 4em;
     height: 4em;
     border-radius: 2em;
-    transition: 0.3s ease;
-    -webkit-appearance: none;
+    transition: 0.15s ease;
 
     &:hover {
-        transform: scale(1.15);
+        transform: scale(1.125);
     }
 `;
 
 const Style = styled.div<{ $color: string }>`
+    --color: ${({ $color }) => Root.Color($color)};
+
     font-size: 0.6667em;
     position: relative;
     display: flex;
@@ -22,12 +24,12 @@ const Style = styled.div<{ $color: string }>`
     justify-content: center;
 
     input[type="range"] {
+        appearance: none;
         position: relative;
         font-size: 1em;
         width: 100%;
         height: 4em;
         background: none;
-        -webkit-appearance: none;
         z-index: 1;
 
         &:hover {
@@ -43,16 +45,15 @@ const Style = styled.div<{ $color: string }>`
         }
 
         &::-webkit-slider-thumb {
-            background: ${({ $color }) => Root.Color($color)};
-            width: 4em;
-            height: 4em;
-            border-radius: 2em;
-            transition: 0.15s ease;
-            -webkit-appearance: none;
+            ${Thumb}
+        }
 
-            &:hover {
-                transform: scale(1.125);
-            }
+        &::-moz-range-thumb {
+            ${Thumb}
+        }
+
+        ::-ms-thumb {
+            ${Thumb}
         }
     }
 
@@ -90,7 +91,7 @@ const Style = styled.div<{ $color: string }>`
                         width: 1em;
                         height: 1em;
                         border-radius: 1em;
-                        backdrop-filter: blur(1em);
+                        backdrop-filter: blur(0.25em);
 
                         &:hover {
                             background: rgba(var(--white), var(--o03));
@@ -123,7 +124,7 @@ const Style = styled.div<{ $color: string }>`
                 z-index: 2;
 
                 & > span {
-                    color: white;
+                    color: ${({ $color }) => ($color === "white" ? "var(--white)" : $color)};
                     position: absolute;
                     font-size: 1.25em;
                     font-feature-settings: initial;

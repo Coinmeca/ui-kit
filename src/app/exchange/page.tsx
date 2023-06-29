@@ -40,68 +40,71 @@ export default function Exchange() {
 
     return (
         <Frames.Frame sidebar sidebars={sidebars}>
-            <div style={{ height: "320px" }} />
-            <Layouts.Box>
-                <div>
-                    exchange
-                    <Layouts.Col>
-                        <Layouts.Row>
-                            <Icon scale={0.5} icon={"swap"} title={"swap"} />
-                            <Icon scale={1} icon={"account"} />
-                            <Icon color={"#6080FF"} scale={2} icon={"bank"} />
-                            <Icon color={"yellow"} scale={3} icon={"chevron-left"} />
-                            <Icon color={"red"} scale={4} icon={"chart-area"} />
-                        </Layouts.Row>
-                        <Layouts.Row>
-                            <Button iconLeft="bank">Button</Button>
-                            <Button color="blue" icon="money" fit />
-                            <Button color="orange" iconLeft="swap" title="Let's swap">
+            <Layouts.Page>
+                <div style={{ height: "320px" }} />
+                <Layouts.Box>
+                    <div>
+                        exchange
+                        <Layouts.Col>
+                            <Layouts.Row>
+                                <Icon scale={0.5} icon={"swap"} title={"swap"} />
+                                <Icon scale={1} icon={"account"} />
+                                <Icon color={"#6080FF"} scale={2} icon={"bank"} />
+                                <Icon color={"yellow"} scale={3} icon={"chevron-left"} />
+                                <Icon color={"red"} scale={4} icon={"chart-area"} />
+                            </Layouts.Row>
+                            <Layouts.Row>
+                                <Button iconLeft="bank">Button</Button>
+                                <Button color="blue" icon="money" fit />
+                                <Button color="orange" iconLeft="swap" title="Let's swap">
+                                    Button
+                                </Button>
+                                <Button color="green" iconLeft="swap" iconRight="identity" onClick={() => alert("1")}>
+                                    Button
+                                </Button>
+                            </Layouts.Row>
+                            <Button type="glass" color="black">
                                 Button
                             </Button>
-                            <Button color="green" iconLeft="swap" iconRight="identity" onClick={() => alert("1")}>
+                            <Button type="line" color="red" iconLeft="money">
+                                Make money
+                            </Button>
+                            <Button type="line" iconLeft="swap" disabled>
                                 Button
                             </Button>
-                        </Layouts.Row>
-                        <Button type="glass" color="black">
-                            Button
-                        </Button>
-                        <Button type="line" color="red" iconLeft="money">
-                            Make money
-                        </Button>
-                        <Button type="line" iconLeft="swap" disabled>
-                            Button
-                        </Button>
-                        <Button type="glass" iconRight="swap" fit>
-                            Button
-                        </Button>
-                        <Button type="solid" icon="swap" fit />
-                        <Controls.Dropdown options={list} />
-                        <Controls.Dropdown options={list} fit />
-                        <Layouts.Row>
-                            <Controls.Tab>Tab</Controls.Tab>
-                            <Controls.Tab iconLeft="sort-up-bold" active={active} onClick={() => setActive(!active)}>
-                                Tab
-                            </Controls.Tab>
-                            <Controls.Tab>Tab</Controls.Tab>
-                            <Controls.Tab>Tab</Controls.Tab>
-                        </Layouts.Row>
-                        <Controls.Input />
-                        <Controls.Input icon="user" />
-                        <Controls.Input clearable />
-                        <Controls.Input clearable dropdown={{ options: list }} />
-                        <Controls.Input type={"currency"} separator align={"right"} dropdown={{ options: list }} clearable width={16} />
+                            <Button type="glass" iconRight="swap" fit>
+                                Button
+                            </Button>
+                            <Button type="solid" icon="swap" fit />
+                            <Controls.Dropdown options={list} />
+                            <Controls.Dropdown options={list} fit />
+                            <Layouts.Row>
+                                <Controls.Tab>Tab</Controls.Tab>
+                                <Controls.Tab iconLeft="sort-up-bold" active={active} onClick={() => setActive(!active)}>
+                                    Tab
+                                </Controls.Tab>
+                                <Controls.Tab>Tab</Controls.Tab>
+                                <Controls.Tab>Tab</Controls.Tab>
+                            </Layouts.Row>
+                            <Controls.Input />
+                            <Controls.Input icon="user" />
+                            <Controls.Input clearable />
+                            <Controls.Input clearable dropdown={{ options: list }} />
+                            <Controls.Input type={"currency"} separator align={"right"} dropdown={{ options: list }} clearable width={16} />
 
-                        <Controls.Input clearable button={{ children: "Button" }} />
-                        <Controls.Input clearable button={{ children: "Send", iconRight: "send", type: "solid" }} />
-                        <Controls.Input clearable button={{ children: "Button" }} />
+                            <Controls.Input clearable button={{ children: "Button" }} />
+                            <Controls.Input clearable button={{ children: "Send", iconRight: "send", type: "solid" }} />
+                            <Controls.Input clearable button={{ children: "Button" }} />
 
-                        <Controls.Input type={"currency"} error={true} unit={"USD"} />
-                        <Controls.Input type={"currency"} separator unit={"%"} value={value} onChange={(v: any) => setValue(Format(v, "number"))} />
-                        <Controls.Range color={"red"} value={value} onChange={(v: any) => setValue(v)} />
-                        <Controls.Range snap value={value} onChange={(v: any) => setValue(v)} />
-                    </Layouts.Col>
-                </div>
-            </Layouts.Box>
+                            <Controls.Input type={"currency"} error={true} unit={"USD"} />
+                            <Controls.Input type={"currency"} separator unit={"%"} value={value} onChange={(v: any) => setValue(Format(v, "number"))} />
+                            <Layouts.Divider />
+                            <Controls.Range color={"sky"} value={value} onChange={(v: any) => setValue(v)} />
+                            <Controls.Range snap step={3} value={value} onChange={(v: any) => setValue(v)} />
+                        </Layouts.Col>
+                    </div>
+                </Layouts.Box>
+            </Layouts.Page>
         </Frames.Frame>
     );
 }
