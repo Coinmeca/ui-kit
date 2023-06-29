@@ -14,7 +14,7 @@ const Style = styled.i<{ $color: string; $scale?: number }>`
     & svg {
         width: 100%;
         height: 100%;
-        fill: ${({$color}) => Root.Color($color)};
+        fill: rgb(${({ $color }) => Root.Color($color)});
         transition: 0.3s ease;
     }
 `;
