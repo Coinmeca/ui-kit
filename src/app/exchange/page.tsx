@@ -96,9 +96,9 @@ export default function Exchange() {
                         <Controls.Input clearable button={{ children: "Button" }} />
 
                         <Controls.Input type={"currency"} error={true} unit={"USD"} />
-                        <Controls.Input type={"currency"} separator unit={"%"} value={value} onChange={(v:any) => setValue(Format(v, 'number'))}/>
-                        <Controls.Range value={value} onChange={(v:any) => setValue(v)} />
-                        <Controls.Range snap value={value} onChange={(v:any) => setValue(v)} />
+                        <Controls.Input type={"currency"} separator unit={"%"} value={value} onChange={(v: any) => setValue(Format(v, "number"))} />
+                        <Controls.Range color={"red"} value={value} onChange={(v: any) => setValue(v)} />
+                        <Controls.Range snap value={value} onChange={(v: any) => setValue(v)} />
                     </Layouts.Col>
                 </div>
             </Layouts.Box>
