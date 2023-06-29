@@ -94,6 +94,7 @@ export default function Exchange() {
 
                         <Controls.Input type={"currency"} error={true} unit={"USD"} />
                         <Controls.Input type={"currency"} separator unit={"%"} />
+                        <Controls.Range value={value} onChange={(e) => setValue(e)} />
                     </Layouts.Col>
                 </div>
             </Layouts.Box>
