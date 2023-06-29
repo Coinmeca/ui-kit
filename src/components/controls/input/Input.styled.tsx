@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 
 const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean; $error: boolean; $disabled: boolean }>`
     font-size: ${({ $scale }) => $scale * 0.6667}em;
@@ -14,14 +14,21 @@ const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean;
     user-select: none;
     transition: 0.3s ease;
 
-    background: ${({ $focus }) => ($focus ? "rgba(var(--white), var(--o01))" : "rgba(var(--white), var(--o0075))")};
+    ${({ $focus, $error }) => {
+        return !$focus ? css`
+            background: rgba(var(--${!$error ? "white" : "red"}), var(--o0075));
+            
+            &:hover{
+                background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
+            }
 
-    &:hover {
-        background: rgba(var(--${({ $error }) => ($error ? "red" : "white")}), var(--o015));
-    }
-    &:active {
-        background: rgba(var(--${({ $error }) => ($error ? "red" : "white")}), var(--o01));
-    }
+            &:active{
+                background: rgba(var(--${!$error ? "white" : "red"}), var(--o015));
+            }
+        ` : css`
+            background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
+        `
+    }}
 
     & > div {
         display: flex;
