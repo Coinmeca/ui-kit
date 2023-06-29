@@ -42,10 +42,10 @@ const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean;
             & > i {
                 padding: 0.3em;
                 margin-right: 0.3em;
-            }
-
-            & svg{
-                fill: rgb(var(--${({ $error }) => ($error ? "red" : "white")}));
+                
+                svg{
+                    fill: rgb(var(--${({ $error }) => ($error ? "red" : "white")}));
+                }
             }
         }
         
