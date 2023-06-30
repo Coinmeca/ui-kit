@@ -127,7 +127,7 @@ const Style = styled.div<{ $color: string }>`
                         z-index: 2;
 
                         & > span {
-                            color: ${color === "white" ? "var(--white)" : color};
+                            color: ${color === "white" ? "var(--white)" : "white"};
                             position: absolute;
                             font-size: 1.25em;
                             font-feature-settings: initial;

@@ -100,6 +100,7 @@ export default function Exchange() {
                             <Controls.Input type={"currency"} separator unit={"%"} value={value} onChange={(v: any) => setValue(Format(v, "number"))} />
                             <Layouts.Divider />
                             <Controls.Range color={"green"} value={value} onChange={(v: any) => setValue(v)} />
+                            <Controls.Range color={"orange"} step={10} value={value} onChange={(v: any) => setValue(v)} />
                             <Controls.Range color={"red"} snap step={10} value={value} onChange={(v: any) => setValue(v)} />
                         </Layouts.Col>
                     </div>
