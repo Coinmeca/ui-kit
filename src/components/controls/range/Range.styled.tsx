@@ -26,7 +26,7 @@ const Style = styled.div<{ $color: string }>`
             align-items: center;
             justify-content: center;
 
-            input[type="range"] {
+            & input[type="range"] {
                 appearance: none;
                 position: relative;
                 font-size: 1em;
