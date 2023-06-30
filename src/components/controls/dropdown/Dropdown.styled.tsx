@@ -72,7 +72,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
             align-items: center;
             justify-content: start;
             width: calc(100% - 5em);
-            min-width: max-content;
+            // min-width: max-content;
             gap: 1em;
             padding: 1em;
             padding-right: 4em;
@@ -81,6 +81,9 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
 
             & > span {
                 font-size: 1.5em;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
             }
 
             & > img {

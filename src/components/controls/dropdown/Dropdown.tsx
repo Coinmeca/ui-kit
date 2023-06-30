@@ -121,7 +121,15 @@ export default function Dropdown(props: Dropdown) {
                     ) : (
                         <>
                             {option && typeof option[imgName] !== "undefined" && <img src={`${option[imgName]}`} alt={option?.imgAlt} />}
-                            <span>
+                            <span title={typeof option === "undefined"
+                                    ? undefined
+                                    : typeof option === "object"
+                                    ? typeof option[keyIndex] !== "undefined"
+                                        ? option[keyIndex]
+                                        : typeof option[keyName] !== "undefined"
+                                        ? option[keyName]
+                                        : option
+                                    : option}>
                                 {typeof option === "undefined"
                                     ? placeholder
                                     : typeof option === "object"
@@ -154,15 +162,15 @@ export default function Dropdown(props: Dropdown) {
                                         {typeof v[imgName] !== "undefined" && v[imgName] !== "" ? (
                                             <>
                                                 <img src={`${v[imgName]}`} alt={v.imgAlt} />
-                                                <span>{typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}</span>
+                                                <span title={typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}>{typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}</span>
                                             </>
                                         ) : v.icon !== "" && typeof v.icon !== "undefined" ? (
                                             <>
                                                 <Controls.Icon icon={option?.icon} />
-                                                <span>{typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}</span>
+                                                <span title={typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}>{typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}</span>
                                             </>
                                         ) : (
-                                            <span>{typeof v === "object" ? (typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v) : v}</span>
+                                            <span title={typeof v === "object" ? (typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v) : v}>{typeof v === "object" ? (typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v) : v}</span>
                                         )}
                                     </>
                                 </li>
