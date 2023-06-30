@@ -7,7 +7,6 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
     width: ${({ $fit }) => ($fit ? "max-content" : "auto")};
     height: 4em;
     transition: 0.3s ease;
-    cursor: pointer;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -77,6 +76,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
             gap: 1em;
             padding: 1em;
             padding-right: 4em;
+            cursor: pointer;
             transition: 0.3s ease;
 
             & > span {
@@ -110,6 +110,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
 
             &.disabled {
                 opacity: 0.15;
+                cursor: initial;
                 pointer-events: none;
             }
         }
