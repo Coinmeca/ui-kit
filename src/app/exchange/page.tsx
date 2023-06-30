@@ -99,8 +99,10 @@ export default function Exchange() {
                             <Controls.Input type={"currency"} error={true} unit={"USD"} />
                             <Controls.Input type={"currency"} separator unit={"%"} value={value} onChange={(v: any) => setValue(Format(v, "number"))} />
                             <Layouts.Divider />
-                            <Controls.Range color={"sky"} value={value} onChange={(v: any) => setValue(v)} />
-                            <Controls.Range snap step={3} value={value} onChange={(v: any) => setValue(v)} />
+                            <Controls.Range color={"green"} value={value} onChange={(v: any) => setValue(v)} />
+                            <Controls.Range color={"orange"} step={10} value={value} onChange={(v: any) => setValue(v)} />
+                            <Controls.Range color={"red"} snap step={11} value={value} onChange={(v: any) => setValue(v)} />
+                            <Controls.Range color={"red"} snap step={11} min={-100} max={100} value={value} onChange={(v: any) => setValue(v)} />
                         </Layouts.Col>
                     </div>
                 </Layouts.Box>
