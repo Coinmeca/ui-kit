@@ -9,6 +9,8 @@ export interface Slider {
     onChange?: Function;
     step?: number;
     snap?: boolean;
+    min?: number;
+    max?: number;
     device?: string;
     disabled?: boolean;
 }
@@ -17,8 +19,10 @@ export default function Range(props: Slider) {
     const [value, setValue] = useState<number>(props?.value || 0);
 
     const color = props?.color || "white";
-    const step = props?.step || 2;
+    const step = (props?.step && (props?.step > 2 ? props?.step : 2)) || 2;
     const snap = props?.snap || false;
+    const min = props?.min || 0;
+    const max = props?.max || 100;
     const disabled = props?.disabled || false;
 
     useEffect(() => {
@@ -30,29 +34,20 @@ export default function Range(props: Slider) {
     }, [props?.value]);
 
     const onChange = (e: any) => {
-        const point = parseFloat(e.target.value);
-        const range = 100;
-        console.log(typeof e.target.value, e.target.value);
-        setValue(Format(e.target.value, "number"));
-        // if (0 <= point && point <= range && 0 <= value && value <= 100) {
+        const value = parseFloat(e.target.value);
+        const range = max - min;
         if (!snap) {
-            const percent = Math.round((point / range) * 100);
+            const percent = Math.round((value / range) * 100);
             setValue(percent);
             props?.onChange && props?.onChange(percent);
         } else {
-            const snap = range / (step - 1);
-            const dot = (point / snap).toFixed(2);
-            const dotPoint = dot.toString().split(".");
-
-            const add = parseInt(dotPoint[1]) < 50 ? 0 : 1;
-            const dots = parseInt(dotPoint[0]) + add;
-
-            const percent = Math.floor((100 / (step - 1)) * dots);
+            const dot = range / (step - 1);
+            const dots = Math.round(value / dot);
+            const percent = Math.round(dot * dots);
             setValue(percent);
 
             props?.onChange && props?.onChange(percent);
         }
-        // }
     };
 
     return (
@@ -64,7 +59,7 @@ export default function Range(props: Slider) {
                     <div>
                         <div style={{ backgroundSize: `${value}% 100%` }}>
                             {[...Array(step)].map((_, i) => (
-                                <div key={i} className={value >= (100 / (step - 1)) * i ? "on" : ""} />
+                                <div key={i} className={value >= (max / (step - 1)) * i ? "on" : ""} />
                             ))}
                         </div>
                     </div>

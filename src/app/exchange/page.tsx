@@ -101,7 +101,7 @@ export default function Exchange() {
                             <Layouts.Divider />
                             <Controls.Range color={"green"} value={value} onChange={(v: any) => setValue(v)} />
                             <Controls.Range color={"orange"} step={10} value={value} onChange={(v: any) => setValue(v)} />
-                            <Controls.Range color={"red"} snap step={10} value={value} onChange={(v: any) => setValue(v)} />
+                            <Controls.Range color={"red"} snap step={11} value={value} onChange={(v: any) => setValue(v)} />
                         </Layouts.Col>
                     </div>
                 </Layouts.Box>
