@@ -24,7 +24,7 @@ const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean;
             }
 
             &:active{
-                background: rgba(var(--${!$error ? "white" : "red"}), var(--o015));
+                // background: rgba(var(--${!$error ? "white" : "red"}), var(--o015));
             }
         ` : css`
             background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
