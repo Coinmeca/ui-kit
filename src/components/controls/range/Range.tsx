@@ -6,6 +6,7 @@ import { Format } from "lib/utils";
 export interface Slider {
     color?: string;
     value?: number;
+    unit?: string;
     onChange?: Function;
     step?: number;
     snap?: boolean;
@@ -39,20 +40,18 @@ export default function Range(props: Slider) {
     }, [value]);
 
     const onChange = (e: any) => {
-        const value = parseFloat(e.target.value);
         const range = max - min;
-        if (!snap) {
-            const percent = Math.round((value / range) * 100);
-            setValue(percent);
-            props?.onChange && props?.onChange(percent);
-        } else {
-            const dot = range / (step - 1);
-            const dots = Math.round(value / dot);
-            const percent = Math.round(dot * dots);
-            setValue(percent);
-
-            props?.onChange && props?.onChange(percent);
+        let value = parseFloat(e.target.value);
+        
+        if (snap) {
+            const tick = range / (step - 1);
+            value = (Math.round(value / tick) * tick);
         }
+
+        let percent = (value - min) * 100 / range;
+        setPercent(percent);
+        setValue(value);
+        props?.onChange && props?.onChange(value, percent);
     };
 
     return (
@@ -70,7 +69,7 @@ export default function Range(props: Slider) {
                     </div>
                     <div>
                         <span style={{ left: `${percent}%` }}>
-                            <span>{value.toFixed(0)}%</span>
+                            <span>{value.toFixed(0)}{props?.unit}</span>
                         </span>
                     </div>
                 </div>

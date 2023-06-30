@@ -52,9 +52,11 @@ const Style = styled.div<{ $color: string }>`
                 }
 
                 &::-moz-range-thumb {
+                    ${Thumb(color)}
                 }
-
+                
                 ::-ms-thumb {
+                    ${Thumb(color)}
                 }
             }
 
@@ -88,6 +90,8 @@ const Style = styled.div<{ $color: string }>`
                             background-position: left;
                             width: 100%;
                             height: 0.25em;
+                            will-change: background-size;
+                            transition: none;
 
                             & > div {
                                 background: rgba(var(--white), var(--o015));
@@ -98,8 +102,6 @@ const Style = styled.div<{ $color: string }>`
 
                                 &:hover {
                                     background: rgba(var(--white), var(--o03));
-                                }
-                                &:active {
                                 }
                             }
 
@@ -132,6 +134,8 @@ const Style = styled.div<{ $color: string }>`
                             font-size: 1.25em;
                             font-feature-settings: initial;
                             margin-top: -0.125em;
+                            will-change: left;
+                            transition: none;
                         }
                     }
                 }
