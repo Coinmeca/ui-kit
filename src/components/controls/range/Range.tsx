@@ -47,7 +47,7 @@ export default function Range(props: Slider) {
             const add = parseInt(dotPoint[1]) < 50 ? 0 : 1;
             const dots = parseInt(dotPoint[0]) + add;
 
-            const percent = Math.round((100 / (step - 1)) * dots);
+            const percent = Math.floor((100 / (step - 1)) * dots);
             setValue(percent);
 
             props?.onChange && props?.onChange(percent);
