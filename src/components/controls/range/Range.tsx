@@ -48,7 +48,6 @@ export default function Range(props: Slider) {
             const tick = range / (step - 1);
             
             if(zero && min < 0 && value >= (tick / -4) && value <= (tick / 4)) {
-                console.log(value);
                 value = 0;
             } else {
                 value = (Math.round((value + min) / tick) * tick) - min;
