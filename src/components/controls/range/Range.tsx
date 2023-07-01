@@ -46,17 +46,16 @@ export default function Range(props: Slider) {
 
         if (snap) {
             const tick = range / (step - 1);
-            
-            if(zero && min < 0 && value >= (tick / -4) && value <= (tick / 4)) {
+
+            if (zero && min < 0 && value >= tick / -4 && value <= tick / 4) {
                 value = 0;
             } else {
-                value = (Math.round((value + min) / tick) * tick) - min;
+                value = Math.round((value + min) / tick) * tick - min;
             }
 
-            console.log(value >= (tick / -4),value <= (tick / 4), tick / 4, tick / -4);
-
+            console.log(value >= tick / -4, value <= tick / 4, tick / 4, tick / -4);
         }
-        
+
         const percent = ((value - min) * 100) / range || 0;
         setPercent(percent);
         setValue(parseFloat(value.toFixed()));
@@ -70,15 +69,18 @@ export default function Range(props: Slider) {
                 <div>
                     <div>
                         <div style={{ backgroundSize: `${percent}% 100%` }}>
-                            {zero && (max % ((max - min) / (step - 1))) !== 0 && (<div className={value >= 0 ? " on" : ""} style={{position:'absolute', left: `${(Math.abs(min) / (max - min)) * 100}%`}}/>)}
+                            {zero && max % ((max - min) / (step - 1)) !== 0 && <div className={`zero${value >= 0 ? " on" : ""}`} style={{ left: `${(Math.abs(min) / (max - min)) * 100}%` }} />}
                             {[...Array(step)].map((_, i) => (
-                                <div key={i} className={percent >= (((((max - min) / (step - 1)) * i) / (max - min)) * 100) ? "on" : ""} />
+                                <div key={i} className={percent >= ((((max - min) / (step - 1)) * i) / (max - min)) * 100 ? "on" : ""} />
                             ))}
                         </div>
                     </div>
                     <div>
                         <span style={{ left: `${percent}%` }}>
-                            <span>{value.toFixed(0)}{props?.unit && ` ${props?.unit}`}</span>
+                            <span>
+                                {value.toFixed(0)}
+                                {props?.unit && ` ${props?.unit}`}
+                            </span>
                         </span>
                     </div>
                 </div>

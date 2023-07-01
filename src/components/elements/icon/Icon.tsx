@@ -14,7 +14,7 @@ export const Icon = memo((props: Icon) => {
     const scale = props?.scale || 1;
     const title = props?.title || "";
 
-    const Icons = props?.icon && dynamic(() => import(`./svgs/${props?.icon}.svg`));
+    const Icons = props?.icon && dynamic(() => import(`/src/app/assets/icons/${props?.icon}.svg`));
 
     return (
         <Style title={title} $color={color} $scale={scale}>

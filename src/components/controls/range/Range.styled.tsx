@@ -1,7 +1,7 @@
 ﻿import { css, styled } from "styled-components";
 import { Root } from "lib/style";
 
-const Thumb = (color: string, width:string) => css`
+const Thumb = (color: string, width: string) => css`
     appearance: none;
     background: rgba(${color}, var(--o1));
     width: calc(${width});
@@ -13,14 +13,19 @@ const Thumb = (color: string, width:string) => css`
 
     &:hover {
         background: rgba(${color}, var(--o06));
-        transform: scale(1.125);
+        transform: scale(1.15);
+        cursor: pointer;
+    }
+
+    &:active {
+        cursor: grabbing;
     }
 `;
 
-const Style = styled.div<{ $color: string, $value: number }>`
+const Style = styled.div<{ $color: string; $value: number }>`
     ${({ $color, $value }) => {
-        const color = Root.Color($color);
-        const width = `${$value}ch + 2em`;
+        const color: string = Root.Color($color);
+        const width: string = `${$value}ch + 2em`;
         return css`
             font-size: 0.6667em;
             position: relative;
@@ -56,7 +61,7 @@ const Style = styled.div<{ $color: string, $value: number }>`
                 &::-moz-range-thumb {
                     ${Thumb(color, width)}
                 }
-                
+
                 ::-ms-thumb {
                     ${Thumb(color, width)}
                 }
@@ -78,9 +83,9 @@ const Style = styled.div<{ $color: string, $value: number }>`
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        width: calc(100% - (${$value > 3 ? `${width}` : '4em'}));
-                        // margin-left: ${$value > 3 ? `calc((${width}) / -2)` : '-0.5em'};
-                        padding: 0 ${$value > 3 ? `calc((${width}) / 2)` : '2em'};
+                        width: calc(100% - (${$value > 3 ? `${width}` : "4em"}));
+                        // margin-left: ${$value > 3 ? `calc((${width}) / -2)` : "-0.5em"};
+                        padding: 0 ${$value > 3 ? `calc((${width}) / 2)` : "2em"};
 
                         & > div {
                             position: relative;
@@ -106,6 +111,10 @@ const Style = styled.div<{ $color: string, $value: number }>`
 
                                 &:hover {
                                     background: rgba(var(--white), var(--o03));
+                                }
+
+                                &.zero {
+                                    position: absolute;
                                 }
                             }
 
@@ -134,9 +143,9 @@ const Style = styled.div<{ $color: string, $value: number }>`
                         z-index: 2;
 
                         & > span {
-                            color: ${color === "white" ? "var(--white)" : "white"};
+                            color: ${$color === "white" ? "rgb(var(--black))" : "white"};
                             min-width: max-content;
-                            text-align:center;
+                            text-align: center;
                             font-size: 1.25em;
                             font-feature-settings: initial;
                             margin-top: -0.125em;
