@@ -3,8 +3,8 @@ import { styled } from "styled-components";
 const Style = styled.div`
     background: rgb(var(--dim));
     color: rgba(var(--black));
-    /* height: calc(100% - 8rem); */
-    min-height: calC(100vh - 8rem);
+    height: calc(100vh - 8rem);
+    min-height: max-content;
     display: flex;
     flex-direction: column;
     gap: 4rem;

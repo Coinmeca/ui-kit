@@ -1,10 +1,24 @@
 import TabContent from "./TabContent";
 import type { TabContent as Content } from "./TabContent";
+import Style from "./TabContainer.styled";
 
 export interface TabContainer {
-    content?: Content[];
+    contents?: Content[];
 }
 
 export default function TabContainer(props: TabContainer) {
-    return <div>{props?.content && (props?.content?.length > 0 ? props?.content.map(() => <TabContent active={}></TabContent>) : <TabContent></TabContent>)}</div>;
+    return (
+        <Style>
+            {props?.contents &&
+                (props?.contents?.length > 0 ? (
+                    props?.contents.map((content, i) => (
+                        <TabContent key={i} active={content.active}>
+                            {content.children}
+                        </TabContent>
+                    ))
+                ) : (
+                    <TabContent>There is no content.</TabContent>
+                ))}
+        </Style>
+    );
 }

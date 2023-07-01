@@ -5,4 +5,6 @@ import Row from "./row/Row";
 import Divider from "./divider/Divider";
 import Page from "./page/Page";
 
-export { BG, Box, Col, Row, Divider, Page }
+import * as Contents from './contents';
+
+export { BG, Box, Col, Row, Divider, Page, Contents }

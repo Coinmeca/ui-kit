@@ -152,6 +152,18 @@ const Style = styled.div<{ $color: string; $value: number }>`
                             will-change: left;
                             transition: none;
                         }
+
+                        &,
+                        & > span {
+                            -webkit-user-drag: none !important;
+                            -webkit-touch-callout: none !important;
+                            -webkit-user-select: none !important;
+                            -khtml-user-select: none !important;
+                            -moz-user-select: none !important;
+                            -ms-user-select: none !important;
+                            user-select: none !important;
+                            pointer-events: none !important;
+                        }
                     }
                 }
             }

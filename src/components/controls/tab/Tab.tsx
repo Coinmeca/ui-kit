@@ -24,7 +24,7 @@ export default function Tab(props: Tab) {
     };
 
     return (
-        <Style className={props?.className} style={props?.style} onClick={(e) => onClick(e)} title={props?.title} $active={props?.active || false} $disabled={props?.disabled} draggable={false}>
+        <Style className={props?.className} style={props?.style} onClick={(e) => onClick(e)} title={props?.title} $active={props?.active || false} $disabled={props?.disabled}>
             {props?.iconLeft && (
                 <>
                     <Elements.Icon icon={props?.iconLeft} />

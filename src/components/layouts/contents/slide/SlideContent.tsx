@@ -1,12 +1,12 @@
-import Style from "./TabContent.styled";
+import Style from "./SlideContent.styled";
 
-export interface TabContent {
+export interface SlideContent {
     name?: string;
     active?: boolean;
     children?: any;
 }
 
-export default function TabContent(props: TabContent) {
+export default function SlideContent(props: SlideContent) {
     const active = props?.active || false;
 
     return <Style $active={active}>{props?.children}</Style>;
