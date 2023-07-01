@@ -3,8 +3,8 @@ import Box from "./box/Box";
 import Col from "./col/Col";
 import Row from "./row/Row";
 import Divider from "./divider/Divider";
-import Page from "./page/Page";
 
+import Content from "./contents/Content";
 import * as Contents from './contents';
 
-export { BG, Box, Col, Row, Divider, Page, Contents }
+export { BG, Box, Col, Row, Divider, Content, Contents }

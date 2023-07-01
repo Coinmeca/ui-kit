@@ -142,7 +142,7 @@ export default function Exchange() {
 
     return (
         <Frames.Frame sidebar sidebars={sidebars}>
-            <Layouts.Page>
+            <Layouts.Content>
                 <div style={{ height: "320px" }} />
                 <Layouts.Box>
                     <Layouts.Contents.InnerContent>
@@ -168,7 +168,7 @@ export default function Exchange() {
                         <Layouts.Contents.TabContainer contents={tabs} />
                     </Layouts.Contents.InnerContent>
                 </Layouts.Box>
-            </Layouts.Page>
+            </Layouts.Content>
         </Frames.Frame>
     );
 }
