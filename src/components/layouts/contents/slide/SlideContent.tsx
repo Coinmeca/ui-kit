@@ -9,5 +9,5 @@ export interface SlideContent {
 export default function SlideContent(props: SlideContent) {
     const active = props?.active || false;
 
-    return <Style $active={active}>{props?.children}</Style>;
+    return <Style data-active={active}>{props?.children}</Style>;
 }
