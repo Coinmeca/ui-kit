@@ -1,10 +1,11 @@
 ﻿import { css, styled } from "styled-components";
 import { Root } from "lib/style";
 
-const Thumb = (color: string) => css`
+const Thumb = (color: string, width:string) => css`
     appearance: none;
     background: rgba(${color}, var(--o1));
-    width: 4em;
+    width: calc(${width});
+    min-width: 4em;
     height: 4em;
     border-radius: 2em;
     transition: 0.15s ease;
@@ -16,9 +17,10 @@ const Thumb = (color: string) => css`
     }
 `;
 
-const Style = styled.div<{ $color: string }>`
-    ${({ $color }) => {
+const Style = styled.div<{ $color: string, $value: number }>`
+    ${({ $color, $value }) => {
         const color = Root.Color($color);
+        const width = `${$value}ch + 2em`;
         return css`
             font-size: 0.6667em;
             position: relative;
@@ -48,15 +50,15 @@ const Style = styled.div<{ $color: string }>`
                 }
 
                 &::-webkit-slider-thumb {
-                    ${Thumb(color)}
+                    ${Thumb(color, width)}
                 }
 
                 &::-moz-range-thumb {
-                    ${Thumb(color)}
+                    ${Thumb(color, width)}
                 }
                 
                 ::-ms-thumb {
-                    ${Thumb(color)}
+                    ${Thumb(color, width)}
                 }
             }
 
@@ -76,11 +78,12 @@ const Style = styled.div<{ $color: string }>`
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        width: calc(100% - 3em);
-                        margin-left: -0.5em;
-                        padding: 0 2em;
+                        width: calc(100% - (${$value > 3 ? `${width}` : '4em'}));
+                        // margin-left: ${$value > 3 ? `calc((${width}) / -2)` : '-0.5em'};
+                        padding: 0 ${$value > 3 ? `calc((${width}) / 2)` : '2em'};
 
                         & > div {
+                            position: relative;
                             display: flex;
                             align-items: center;
                             justify-content: space-between;
@@ -114,7 +117,7 @@ const Style = styled.div<{ $color: string }>`
                     &:last-child {
                         position: relative;
                         left: 1em;
-                        width: calc(100% - 4rem);
+                        width: calc(100% - (${width}));
                     }
 
                     & > span {
@@ -122,7 +125,8 @@ const Style = styled.div<{ $color: string }>`
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        width: 4em;
+                        width: calc(${width});
+                        min-width: 4em;
                         height: 4em;
                         border-radius: 4em;
                         transform: translateX(-1em);
@@ -130,7 +134,8 @@ const Style = styled.div<{ $color: string }>`
 
                         & > span {
                             color: ${color === "white" ? "var(--white)" : "white"};
-                            position: absolute;
+                            min-width: max-content;
+                            text-align:center;
                             font-size: 1.25em;
                             font-feature-settings: initial;
                             margin-top: -0.125em;
