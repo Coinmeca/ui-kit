@@ -1,5 +1,5 @@
 "use client";
-import { Controls } from "components";
+import { Controls, Elements } from "components";
 import Style from "./Tab.styled";
 
 export interface Tab {
@@ -27,7 +27,7 @@ export default function Tab(props: Tab) {
         <Style className={props?.className} style={props?.style} onClick={(e) => onClick(e)} title={props?.title} $active={props?.active || false} $disabled={props?.disabled} draggable={false}>
             {props?.iconLeft && (
                 <>
-                    <Controls.Icon icon={props?.iconLeft} />
+                    <Elements.Icon icon={props?.iconLeft} />
                     <span>{props?.children}</span>
                 </>
             )}
@@ -35,7 +35,7 @@ export default function Tab(props: Tab) {
             {props?.iconRight && (
                 <>
                     <span>{props?.children}</span>
-                    <Controls.Icon icon={props?.iconRight} />
+                    <Elements.Icon icon={props?.iconRight} />
                 </>
             )}
         </Style>

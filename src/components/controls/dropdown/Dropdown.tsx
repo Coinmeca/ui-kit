@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Controls } from "components";
+import { Controls, Elements } from "components";
 import Style from "./Dropdown.styled";
 
 export interface Dropdown {
@@ -99,19 +99,7 @@ export default function Dropdown(props: Dropdown) {
     };
 
     return (
-        <Style
-            tabIndex={5}
-            className={props?.className}
-            style={{ zIndex: open ? 10 : 1, ...props?.style }}
-            onClick={onOpen}
-            onBlur={onClose}
-            title={props?.title}
-            $open={open}
-            $max={max}
-            $fit={fit}
-            $scale={scale}
-            $disabled={disabled}
-        >
+        <Style tabIndex={5} className={props?.className} style={{ zIndex: open ? 10 : 1, ...props?.style }} onClick={onOpen} onBlur={onClose} title={props?.title} $open={open} $max={max} $fit={fit} $scale={scale} $disabled={disabled}>
             <ul>
                 <li>
                     {form?.indexOf("more") === 0 ? (
@@ -121,15 +109,19 @@ export default function Dropdown(props: Dropdown) {
                     ) : (
                         <>
                             {option && typeof option[imgName] !== "undefined" && <img src={`${option[imgName]}`} alt={option?.imgAlt} />}
-                            <span title={typeof option === "undefined"
-                                    ? undefined
-                                    : typeof option === "object"
-                                    ? typeof option[keyIndex] !== "undefined"
-                                        ? option[keyIndex]
-                                        : typeof option[keyName] !== "undefined"
-                                        ? option[keyName]
+                            <span
+                                title={
+                                    typeof option === "undefined"
+                                        ? undefined
+                                        : typeof option === "object"
+                                        ? typeof option[keyIndex] !== "undefined"
+                                            ? option[keyIndex]
+                                            : typeof option[keyName] !== "undefined"
+                                            ? option[keyName]
+                                            : option
                                         : option
-                                    : option}>
+                                }
+                            >
                                 {typeof option === "undefined"
                                     ? placeholder
                                     : typeof option === "object"
@@ -140,7 +132,7 @@ export default function Dropdown(props: Dropdown) {
                                         : option
                                     : option}
                             </span>
-                            <Controls.Icon icon="chevron-down-bold" />
+                            <Elements.Icon icon="chevron-down-bold" />
                         </>
                     )}
                 </li>
@@ -162,15 +154,21 @@ export default function Dropdown(props: Dropdown) {
                                         {typeof v[imgName] !== "undefined" && v[imgName] !== "" ? (
                                             <>
                                                 <img src={`${v[imgName]}`} alt={v.imgAlt} />
-                                                <span title={typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}>{typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}</span>
+                                                <span title={typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}>
+                                                    {typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}
+                                                </span>
                                             </>
                                         ) : v.icon !== "" && typeof v.icon !== "undefined" ? (
                                             <>
-                                                <Controls.Icon icon={option?.icon} />
-                                                <span title={typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}>{typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}</span>
+                                                <Elements.Icon icon={option?.icon} />
+                                                <span title={typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}>
+                                                    {typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}
+                                                </span>
                                             </>
                                         ) : (
-                                            <span title={typeof v === "object" ? (typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v) : v}>{typeof v === "object" ? (typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v) : v}</span>
+                                            <span title={typeof v === "object" ? (typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v) : v}>
+                                                {typeof v === "object" ? (typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v) : v}
+                                            </span>
                                         )}
                                     </>
                                 </li>

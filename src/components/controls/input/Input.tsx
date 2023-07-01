@@ -1,8 +1,8 @@
-'use client';
+"use client";
 import React, { useState, useEffect } from "react";
 import { Format } from "lib/utils";
 
-import { Controls } from "components";
+import { Controls, Elements } from "components";
 import type { Button } from "components/controls/button/Button";
 import type { Dropdown } from "components/controls/dropdown/Dropdown";
 import Style from "./Input.styled";
@@ -165,7 +165,7 @@ export default function Input(props: Input) {
     const Input = (
         <Style tabIndex={5} $clearable={clearable} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)}>
             <div className={props?.className} style={props?.style}>
-                {props?.icon && <Controls.Icon icon={props?.icon} />}
+                {props?.icon && <Elements.Icon icon={props?.icon} />}
                 <div>
                     {clearable && clearPosition === "left" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                     <input
