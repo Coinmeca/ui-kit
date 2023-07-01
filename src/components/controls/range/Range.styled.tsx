@@ -100,6 +100,7 @@ const Style = styled.div<{ $color: string, $value: number }>`
                                 background: rgba(var(--white), var(--o015));
                                 width: 1em;
                                 height: 1em;
+                                margin-left: -0.5em;
                                 border-radius: 1em;
                                 backdrop-filter: blur(0.25em);
 

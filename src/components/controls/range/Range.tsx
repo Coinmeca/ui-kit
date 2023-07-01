@@ -1,7 +1,6 @@
 ﻿"use client";
 import React, { useState, useEffect, useRef } from "react";
 import Style from "./Range.styled";
-import { Format } from "lib/utils";
 
 export interface Slider {
     color?: string;
@@ -10,6 +9,7 @@ export interface Slider {
     onChange?: Function;
     step?: number;
     snap?: boolean;
+    zero?: boolean;
     min?: number;
     max?: number;
     device?: string;
@@ -23,6 +23,7 @@ export default function Range(props: Slider) {
     const color = props?.color || "white";
     const step = (props?.step && (props?.step > 2 ? props?.step : 2)) || 2;
     const snap = props?.snap || false;
+    const zero = props?.zero || false;
     const min = props?.min || 0;
     const max = props?.max || 100;
     const disabled = props?.disabled || false;
@@ -42,12 +43,19 @@ export default function Range(props: Slider) {
     const onChange = (e: any) => {
         const range = max - min;
         let value = parseFloat(e.target.value) >= max ? max : parseFloat(e.target.value) <= min ? min : parseFloat(e.target.value);
-        
-        if (value === 0) {
-            value = 0;
-        } else if (snap) {
+
+        if (snap) {
             const tick = range / (step - 1);
-            value = (Math.round((value + min) / tick) * tick) - min;
+            
+            if(zero && min < 0 && value >= (tick / -4) && value <= (tick / 4)) {
+                console.log(value);
+                value = 0;
+            } else {
+                value = (Math.round((value + min) / tick) * tick) - min;
+            }
+
+            console.log(value >= (tick / -4),value <= (tick / 4), tick / 4, tick / -4);
+
         }
         
         const percent = ((value - min) * 100) / range || 0;
@@ -63,7 +71,7 @@ export default function Range(props: Slider) {
                 <div>
                     <div>
                         <div style={{ backgroundSize: `${percent}% 100%` }}>
-                            {(max % ((max - min) / (step - 1))) !== 0 && (<div className={value >= 0 ? " on" : ""} style={{position:'absolute', left: `${(Math.abs(min) / (max - min)) * 100}%`}}/>)}
+                            {zero && (max % ((max - min) / (step - 1))) !== 0 && (<div className={value >= 0 ? " on" : ""} style={{position:'absolute', left: `${(Math.abs(min) / (max - min)) * 100}%`}}/>)}
                             {[...Array(step)].map((_, i) => (
                                 <div key={i} className={percent >= (((((max - min) / (step - 1)) * i) / (max - min)) * 100) ? "on" : ""} />
                             ))}

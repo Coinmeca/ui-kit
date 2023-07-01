@@ -102,8 +102,10 @@ export default function Exchange() {
                             <Controls.Range color={"green"} value={value} onChange={(v: any) => setValue(v)} />
                             <Controls.Range color={"orange"} step={10} value={value} onChange={(v: any) => setValue(v)} />
                             <Controls.Range color={"red"} snap step={11} value={value} onChange={(v: any) => setValue(v)} />
-                            <Controls.Range color={"red"} snap step={11} min={-100} max={100} value={value} onChange={(v: any) => setValue(v)} />
-                            <Controls.Range color={"red"} snap step={11} min={-50} max={150} unit={'USD'}value={value} onChange={(v: any) => setValue(v)} />
+                            <Controls.Range color={"black"} snap step={11} min={-100} max={100} value={value} onChange={(v: any) => setValue(v)} />
+                            <Controls.Range color={"white"} snap step={11} min={-50} max={150} unit={'USD'}value={value} zero onChange={(v: any) => setValue(v)} />
+                            <Controls.Range color={"purple"} snap step={11} min={-150} max={50} unit={'USD'}value={value} zero onChange={(v: any) => setValue(v)} />
+                            <Controls.Range color={"blue"} step={11} min={-150} max={50} unit={'USD'} value={value} format={'currency'} separator zero onChange={(v: any) => setValue(v)} />
                         </Layouts.Col>
                     </div>
                 </Layouts.Box>
