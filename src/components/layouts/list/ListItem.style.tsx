@@ -55,9 +55,8 @@ const Style = styled.div<{ $event: boolean }>`
     }
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
-        & {
-            flex-direction: column;
-        }
+        flex-direction: column;
+        padding: 2em;
     }
 `;
 

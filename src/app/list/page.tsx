@@ -64,7 +64,6 @@ export default function Exchange() {
         return (
             data?.length > 0 &&
             data?.map((data: any) => ({
-                style: { padding: "1em" },
                 children: [
                     {
                         children: [
