@@ -7,6 +7,7 @@ const Style = styled.div<{ $active: boolean; $disabled: boolean }>`
     width: 100%;
     gap: 0.5em;
     padding: 0.5em;
+    font-weight: bold;
     cursor: pointer;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;

@@ -25,6 +25,7 @@ const Style = styled.button<{
     gap: 1em;
     padding-left: 1em;
     padding-right: 1em;
+    font-weight: bold;
     cursor: pointer;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;

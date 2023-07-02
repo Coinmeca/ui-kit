@@ -31,6 +31,10 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
                 max-height: 100%;
                 overflow: hidden;
 
+                &:hover {
+                    background: none;
+                }
+
                 & > *:last-child:not(span) {
                     position: absolute;
                     right: 0.8em;
@@ -76,6 +80,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
             gap: 1em;
             padding: 1em;
             padding-right: 4em;
+            font-weight: bold;
             cursor: pointer;
             transition: 0.3s ease;
 

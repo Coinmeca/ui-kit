@@ -147,6 +147,7 @@ const Style = styled.div<{ $color: string; $value: number }>`
                             min-width: max-content;
                             text-align: center;
                             font-size: 1.25em;
+                            font-weight: bold;
                             font-feature-settings: initial;
                             margin-top: -0.125em;
                             will-change: left;

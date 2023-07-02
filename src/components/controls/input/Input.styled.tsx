@@ -16,40 +16,42 @@ const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean;
     transition: 0.3s ease;
 
     ${({ $focus, $error }) => {
-        return !$focus ? css`
-            background: rgba(var(--${!$error ? "white" : "red"}), var(--o0075));
-            
-            &:hover{
-                background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
-            }
+        return !$focus
+            ? css`
+                  background: rgba(var(--${!$error ? "white" : "red"}), var(--o0075));
 
-            &:active{
-                // background: rgba(var(--${!$error ? "white" : "red"}), var(--o015));
-            }
-        ` : css`
-            background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
-        `
+                  &:hover {
+                      background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
+                  }
+
+                  &:active {
+                      // background: rgba(var(--${!$error ? "white" : "red"}), var(--o015));
+                  }
+              `
+            : css`
+                  background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
+              `;
     }}
 
     & > div {
         display: flex;
         align-items: center;
 
-        &:first-child{
-            & > div:first-child{
+        &:first-child {
+            & > div:first-child {
                 gap: 1em;
             }
 
             & > i {
                 padding: 0.3em;
                 margin-right: 0.3em;
-                
-                svg{
+
+                svg {
                     fill: rgb(var(--${({ $error }) => ($error ? "red" : "white")}));
                 }
             }
         }
-        
+
         & > div:nth-child(2),
         & > div:last-child:not(:only-child) > * {
             width: 100%;
@@ -81,9 +83,10 @@ const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean;
             input {
                 background: transparent;
                 display: flex;
-                font-size: 1.5em;
                 width: 100%;
                 height: 100%;
+                font-size: 1.5em;
+                font-weight: bold;
                 outline: none;
 
                 &::placeholder {
