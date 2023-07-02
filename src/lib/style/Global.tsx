@@ -16,7 +16,7 @@ const Style = createGlobalStyle`
     button,
     textarea {
         font-family: "Montserrat", "sans-serif";
-        /* font-weight: bold; */
+        font-weight: 500;
         font-feature-settings: "tnum" on, "lnum" on;
         -webkit-text-size-adjust: 100%;
         -webkit-font-smoothing: antialiased;
