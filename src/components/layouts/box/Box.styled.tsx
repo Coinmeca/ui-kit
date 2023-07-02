@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import * as Content from "../contents/Content.styled";
+import { Root } from "lib/style";
 
 const Style = styled.div`
     ${Content.default} > & {
@@ -21,6 +22,11 @@ const Style = styled.div`
             color: white;
             --white: 255, 255, 255;
             --black: 0, 0, 0;
+        }
+
+        @media all and (max-width: ${Root.Device.Mobile}px) {
+            height: calc(100vh - 4rem);
+            padding: 2rem;
         }
     }
 `;

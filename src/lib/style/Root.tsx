@@ -1,6 +1,13 @@
 "use client";
 import { css } from "styled-components";
 
+export const Device = {
+    Mobile: 640,
+    Tablet: 960,
+    Laptop: 1280,
+    Desktop: 1920,
+};
+
 export const Blur = css<{ $scale?: number }>`
     backdrop-filter: blur(${(props) => props.$scale || 1}rem);
 `;
