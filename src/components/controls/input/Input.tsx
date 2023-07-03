@@ -163,7 +163,7 @@ export default function Input(props: Input) {
     };
 
     const Input = (
-        <Style tabIndex={5} $clearable={clearable} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)}>
+        <Style tabIndex={5} className={props?.className} style={props?.style} $clearable={clearable} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)}>
             <div className={props?.className} style={props?.style}>
                 {props?.icon && <Elements.Icon icon={props?.icon} />}
                 <div>

@@ -17,7 +17,7 @@ export interface Slide {
     padding?: number;
     timer?: number;
     scale?: number;
-    style?: any;
+    style?: object;
     event?: Function;
 }
 
@@ -41,21 +41,14 @@ export default function Slide(props: Slide) {
     }, [props?.slides, timer]);
 
     return (
-        <Style
-            style={{ ...(props?.style && props?.style), ...(props?.align && { justifyContent: `${props?.align === "left" ? "flex-start" : props?.align === "right" ? "flex-end" : props?.align}` }) }}
-            $scale={scale}
-            $padding={padding}
-            $nav={props?.nav}
-        >
+        <Style style={props?.style} $scale={scale} $padding={padding} $nav={props?.nav}>
             {props?.slides && props?.slides?.length > 0 && (
                 <>
                     <div>
                         {props?.slides?.map((slide, i) => (
                             <div key={i} data-active={slideNo === i} onClick={(e) => slide?.onClick && slide?.onClick(e)}>
                                 {slide?.background && <BG {...slide?.background} />}
-                                <div>
-                                    <div>{slide.children}</div>
-                                </div>
+                                <div data-align={props?.align}>{slide.children}</div>
                             </div>
                         ))}
                     </div>

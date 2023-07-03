@@ -8,7 +8,7 @@ export interface BG {
     fix?: boolean;
     img?: {
         src: number | string;
-        style?: any;
+        style?: object;
     };
     video?: DetailedHTMLProps<VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>;
 }
