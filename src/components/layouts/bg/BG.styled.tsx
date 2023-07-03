@@ -28,14 +28,12 @@ const Style = styled.div<{ $fix: boolean; $filter: string | undefined }>`
         opacity: 0.45;
         z-index: 0;
 
-        ${({ $filter }) => {
-            return (
+        ${({ $filter }) => 
                 $filter &&
                 css`
                     background-color: ${$filter};
                 `
-            );
-        }}
+         }
     }
 `;
 
