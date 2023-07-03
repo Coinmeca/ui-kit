@@ -19,14 +19,14 @@ export default function Menu(props: Menu) {
     const Items = ({menu, key}:{menu:any, key?:number}) => {
         return (
             (typeof menu?.menu !== "string" && menu?.menu?.length) > 0 ? (
-                <Row $scale={scale} $fix={menu?.fix}>
+                <Row key={key} $scale={scale} $fix={menu?.fix}>
                     {menu?.menu?.map((item: any, i: number) => (
                         <Items key={i} menu={item} />
                     ))}
                 </Row>
             ) : (
                 (typeof menu !== "string" && menu?.length) > 0 ? (
-                    <Row $scale={scale} $fix={menu?.fix}>
+                    <Row key={key} $scale={scale} $fix={menu?.fix}>
                         {menu?.map((item: any, i: number) => (
                             <Items key={i} menu={item} />
                         ))}
