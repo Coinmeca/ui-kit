@@ -3,15 +3,20 @@ import Style from "./Row.styled";
 export interface Row {
     children?: any;
     gap?: number;
-    align?: "start" | "center" | "end" | "stretch";
+    align?: "left" | "center" | "right" | "stretch";
+    fit?: boolean;
+    response?: string;
+    reverse?: boolean;
 }
 
 export default function Row(props: Row) {
     const gap = props?.gap || 4;
-    const align = props?.align || "start";
+    const align = props?.align || "left";
+    const fit = props?.fit || false;
+    const reverse = props?.reverse || false;
 
     return (
-        <Style $gap={gap} $align={align}>
+        <Style $gap={gap} $fit={fit} $response={props?.response} $reverse={reverse} data-align={align}>
             {props.children}
         </Style>
     );

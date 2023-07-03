@@ -149,13 +149,15 @@ export default function Exchange() {
                 },
             },
             children: (
-                <>
-                    <div className="title">Much Faster and Much Easier Coin Exchange</div>
-                    <div className="describe">Start with your new experience coin trading system on Coinmeca.</div>
-                    <Controls.Button type="glass" style={{ padding: "2em" }} color="white" fit>
+                <Layouts.Col align={"center"}>
+                    <Layouts.Col align={"center"}>
+                        <div className="title">Much Faster and Much Easier Coin Exchange</div>
+                        <div className="describe">Start with your new experience coin trading system on Coinmeca.</div>
+                    </Layouts.Col>
+                    <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
                         Get Started with Sign up
                     </Controls.Button>
-                </>
+                </Layouts.Col>
             ),
         },
         {
@@ -171,11 +173,15 @@ export default function Exchange() {
                 },
             },
             children: (
-                <>
-                    <div className="title">Meet Brand New Finance</div>
-                    <div className="describe">Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.</div>
-                    <button className="button glass white">Get Started with Sign up</button>
-                </>
+                <Layouts.Col align={"center"}>
+                    <Layouts.Col align={"center"}>
+                        <div className="title">Meet Brand New Finance</div>
+                        <div className="describe">Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.</div>
+                    </Layouts.Col>
+                    <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
+                        Get Started with Sign up
+                    </Controls.Button>
+                </Layouts.Col>
             ),
         },
         {
@@ -185,11 +191,15 @@ export default function Exchange() {
                 },
             },
             children: (
-                <>
-                    <div className="title">Make Profits While Spending Money</div>
-                    <div className="describe">Let's get earned Coinmeca Token free according your service usage. And just sell it market.</div>
-                    <button className="button glass white">Get Started with Sign up</button>
-                </>
+                <Layouts.Col align={"center"}>
+                    <Layouts.Col align={"center"}>
+                        <div className="title">Make Profits While Spending Money</div>
+                        <div className="describe">Let's get earned Coinmeca Token free according your service usage. And just sell it market.</div>
+                    </Layouts.Col>
+                    <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
+                        Get Started with Sign up
+                    </Controls.Button>
+                </Layouts.Col>
             ),
         },
     ];

@@ -96,9 +96,18 @@ const Style = createGlobalStyle`
         flex-direction: column;
     }
 
+    [data-align="left"] {
+        justify-content: flex-start;
+        text-align: left;
+    }
+
     [data-align="center"] {
         justify-content: center;
         text-align: center;
+
+        & > *{
+            margin:auto;
+        }
     }
 
     [data-align="right"] {

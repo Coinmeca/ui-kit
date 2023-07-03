@@ -6,6 +6,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
     color: rgba(var(--white), var(--o045));
     width: ${({ $fit }) => ($fit ? "max-content" : "auto")};
     height: 4em;
+    flex-direction: column;
     transition: 0.3s ease;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
