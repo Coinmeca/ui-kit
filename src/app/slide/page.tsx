@@ -224,7 +224,7 @@ export default function Exchange() {
                 </Controls.Tab>,
                 <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
                     Order History
-                </Controls.Tab>,
+                </Controls.Tab>
             ],
             [
                 <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
