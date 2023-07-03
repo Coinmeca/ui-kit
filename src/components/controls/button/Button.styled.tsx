@@ -17,7 +17,8 @@ const Style = styled.button<{
 
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     font-weight: bold;
-    width: ${({ $fit }) => ($fit ? "max-content" : "auto")};
+    ${({ $fit }) => $fit &&  "max-width: max-content"};
+    min-width: max-content;
     padding: 0 1em;
     cursor: pointer;
     -webkit-user-drag: none;
@@ -34,7 +35,7 @@ const Style = styled.button<{
         align-items: center;
         justify-content: center;
         width: 100%;
-        min-width: max-content;
+        min-width: 4em;
         min-height: 4em;
         gap: 1em;
 

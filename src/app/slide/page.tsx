@@ -209,9 +209,23 @@ export default function Exchange() {
 
     const menu = [
         [
-            <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
-                Icon
-            </Controls.Tab>,
+            [
+                <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
+                    Order History
+                </Controls.Tab>,
+                <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
+                    Order History
+                </Controls.Tab>,
+                <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
+                    Order History
+                </Controls.Tab>,
+                <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
+                    Order History
+                </Controls.Tab>,
+                <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
+                    Order History
+                </Controls.Tab>,
+            ],
             [
                 <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
                     Icon

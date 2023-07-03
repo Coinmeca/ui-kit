@@ -3,6 +3,8 @@ import * as Content from "../contents/Content.styled";
 import { Root } from "lib/style";
 
 const Style = styled.div`
+    transition:.3s ease;
+
     ${Content.default} > & {
         color-scheme: inherit;
         background: rgb(var(--dim));
