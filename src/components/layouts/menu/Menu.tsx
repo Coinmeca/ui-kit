@@ -19,7 +19,7 @@ export default function Menu(props: Menu) {
 
     const Items = ({menu, key}:{menu:any, key?:number}) => {
         return (
-            <Fragment key={key}>
+            <>
                 {(typeof menu?.menu !== "string" && menu?.menu?.length) > 0 ? (
                     <Row key={key} $scale={scale} $fix={menu?.fix}>
                         {menu?.menu?.map((item: any, i: number) => (
@@ -37,16 +37,16 @@ export default function Menu(props: Menu) {
                         menu
                     )
                 )}
-            </Fragment>
+            </>
         );
     };
 
     const Menus = ({ menu, key }: { menu: any; key?: number }) => {
         return (
-            <Fragment key={key}>
+            <>
                 {key !== 0 && <Layouts.Divider />}
-                <Items key={key} menu={menu} />
-            </Fragment>
+                <Items menu={menu} />
+            </>
         );
     };
 
