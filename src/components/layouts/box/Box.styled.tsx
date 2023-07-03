@@ -4,6 +4,7 @@ import { Root } from "lib/style";
 
 const Style = styled.div`
     ${Content.default} > & {
+        color-scheme: inherit;
         background: rgb(var(--dim));
         color: rgba(var(--black));
         height: calc(100vh - 8rem);
@@ -13,15 +14,17 @@ const Style = styled.div`
         gap: 4rem;
         width: auto;
         padding: 4rem;
-        color: black;
 
-        --white: 0, 0, 0;
-        --black: 255, 255, 255;
+        @media (prefers-color-scheme: light) {
+            --white: 0, 0, 0;
+            --black: 255, 255, 255;
+            color: black;
+        }
 
         @media (prefers-color-scheme: dark) {
-            color: white;
             --white: 255, 255, 255;
             --black: 0, 0, 0;
+            color: white;
         }
 
         @media all and (max-width: ${Root.Device.Mobile}px) {

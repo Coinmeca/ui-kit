@@ -15,23 +15,26 @@ export interface Tab {
 
     children?: any;
     onClick?: Function;
+    scale?: number;
     device?: string;
 }
 
 export default function Tab(props: Tab) {
+    const scale = props?.scale || 1;
+
     const onClick = (e: any) => {
         if (typeof props?.onClick === "function") props?.onClick(e);
     };
 
     return (
-        <Style className={props?.className} style={props?.style} onClick={(e) => onClick(e)} title={props?.title} $active={props?.active || false} $disabled={props?.disabled}>
+        <Style className={props?.className} style={props?.style} onClick={(e) => onClick(e)} title={props?.title} $scale={scale} $active={props?.active || false} $disabled={props?.disabled}>
             {props?.iconLeft && (
                 <>
                     <Elements.Icon icon={props?.iconLeft} />
                     <span>{props?.children}</span>
                 </>
             )}
-            {(!props?.iconLeft || props?.iconLeft === "") && (!props?.iconRight || props?.iconRight === "") && props?.children}
+            {(!props?.iconLeft || props?.iconLeft === "") && (!props?.iconRight || props?.iconRight === "") && <span>{props?.children}</span>}
             {props?.iconRight && (
                 <>
                     <span>{props?.children}</span>

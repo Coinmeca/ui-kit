@@ -1,11 +1,13 @@
 import { css, styled } from "styled-components";
 
-const Style = styled.div<{ $active: boolean; $disabled: boolean }>`
+const Style = styled.div<{ $scale: number; $active: boolean; $disabled: boolean }>`
+    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: 0.5em;
+    min-height: 3em;
+    gap: 0.25em;
     padding: 0.5em;
     font-weight: bold;
     cursor: pointer;
@@ -23,12 +25,8 @@ const Style = styled.div<{ $active: boolean; $disabled: boolean }>`
         fill: rgba(var(--white), var(--o045));
     }
 
-    & span {
-        font-size: 1em;
-    }
-
-    & i {
-        font-size: 1em;
+    & > span {
+        font-size: 1.5em;
     }
 
     &:hover {

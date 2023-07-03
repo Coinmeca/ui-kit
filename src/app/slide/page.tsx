@@ -141,10 +141,65 @@ export default function Exchange() {
         },
     ];
 
+    const slides = [
+        {
+            background: {
+                img: {
+                    src: "/assets/images/bg/4.jpg",
+                },
+            },
+            children: (
+                <>
+                    <div>
+                        <div className="title">Much Faster and Much Easier Coin Exchange</div>
+                        <div className="describe">Start with your new experience coin trading system on Coinmeca.</div>
+                        <button className="button glass white">Get Started with Sign up</button>
+                    </div>
+                </>
+            ),
+        },
+        {
+            background: {
+                video: {
+                    src: "https://firebasestorage.googleapis.com/v0/b/coinmeca-3e733.appspot.com/o/cm_bg.mp4?alt=media&token=fca0814a-8000-4af7-b4ca-f372e686bff7",
+                    poster: "",
+                    controls: false,
+                    muted: true,
+                    autoPlay: true,
+                    preload: "auto",
+                    loop: true,
+                },
+            },
+            children: (
+                <div>
+                    <div className="title">Meet Brand New Finance</div>
+                    <div className="describe">Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.</div>
+                    <button className="button glass white">Get Started with Sign up</button>
+                </div>
+            ),
+        },
+        {
+            background: {
+                img: {
+                    src: "/src/app/assets/images/bg/4.jpg",
+                },
+            },
+            children: (
+                <div>
+                    <div className="title">Make Profits While Spending Money</div>
+                    <div className="describe">Let's get earned Coinmeca Token free according your service usage. And just sell it market.</div>
+                    <button className="button glass white">Get Started with Sign up</button>
+                </div>
+            ),
+        },
+    ];
+
     return (
         <Frames.Frame sidebar sidebars={sidebars}>
             <Layouts.Content>
-                <div style={{ height: "320px" }} />
+                <div style={{ height: "320px" }}>
+                    <Controls.Slide slides={slides} padding={0} timer={3000} align={"center"} nav={"bottom"} style={{ zIndex: 4 }} />
+                </div>
                 <Layouts.Box>
                     <Layouts.Contents.InnerContent>
                         Exchange
