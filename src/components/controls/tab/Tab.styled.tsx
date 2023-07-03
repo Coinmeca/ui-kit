@@ -4,6 +4,7 @@ const Style = styled.div<{ $scale: number; $active: boolean; $fit: boolean; $dis
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     font-weight: bold;
     width: ${({ $fit }) => ($fit ? "max-content" : "auto")};
+    padding: 0 1em;
     cursor: pointer;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
@@ -20,9 +21,8 @@ const Style = styled.div<{ $scale: number; $active: boolean; $fit: boolean; $dis
         justify-content: center;
         width: 100%;
         min-width: max-content;
-        min-height: 3em;
+        min-height: 4em;
         gap: 0.5em;
-        padding: 0.5em;
 
         & > span {
             font-size: 1.5em;

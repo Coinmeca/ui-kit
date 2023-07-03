@@ -143,6 +143,7 @@ export default function Exchange() {
 
     const slides = [
         {
+            filter: "black",
             background: {
                 img: {
                     src: 4,
@@ -161,6 +162,7 @@ export default function Exchange() {
             ),
         },
         {
+            filter: "black",
             background: {
                 video: {
                     src: "https://firebasestorage.googleapis.com/v0/b/coinmeca-3e733.appspot.com/o/cm_bg.mp4?alt=media&token=fca0814a-8000-4af7-b4ca-f372e686bff7",
@@ -186,6 +188,7 @@ export default function Exchange() {
         },
         {
             background: {
+                filter: "black",
                 img: {
                     src: 4,
                 },
@@ -204,6 +207,24 @@ export default function Exchange() {
         },
     ];
 
+    const menu = [
+        [
+            <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
+                Icon
+            </Controls.Tab>,
+            [
+                <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
+                    Icon
+                </Controls.Tab>,
+            ],
+        ],
+        [
+            <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
+                Icon
+            </Controls.Tab>,
+        ],
+    ];
+
     return (
         <Frames.Frame sidebar sidebars={sidebars}>
             <Layouts.Content>
@@ -213,6 +234,7 @@ export default function Exchange() {
                 <Layouts.Box>
                     <Layouts.Contents.InnerContent>
                         Exchange
+                        <Layouts.Menu menu={menu} />
                         <Layouts.Row>
                             <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
                                 Icon

@@ -1,10 +1,12 @@
+import * as Contents from './contents';
+import Content from "./contents/Content";
+
 import BG from "./bg/BG";
 import Box from "./box/Box";
 import Col from "./col/Col";
 import Row from "./row/Row";
 import Divider from "./divider/Divider";
 import List from './list/List';
-import Content from "./contents/Content";
-import * as Contents from './contents';
+import Menu from './menu/Menu'
 
-export { BG, Box, Col, Row, Divider, Content, Contents, List }
+export { Contents, Content, BG, Box, Col, Row, Divider, List, Menu }
