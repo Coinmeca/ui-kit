@@ -40,15 +40,17 @@ export default function Button(props: Button) {
 
     return (
         <Style className={props?.className} style={props?.style} title={title} $type={type} $color={color} $scale={scale} $fit={fit} $hide={hide} onClick={(e) => onClick(e)} $disabled={disabled}>
-            {props?.icon && typeof props?.children === "undefined" ? (
-                icon(props?.icon)
-            ) : (
-                <>
-                    {props?.iconLeft && icon(props?.iconLeft)}
-                    <span>{props?.children}</span>
-                    {props?.iconRight && icon(props?.iconRight)}
-                </>
-            )}
+            <div>
+                {props?.icon && typeof props?.children === "undefined" ? (
+                    icon(props?.icon)
+                ) : (
+                    <>
+                        {props?.iconLeft && icon(props?.iconLeft)}
+                        <span>{props?.children}</span>
+                        {props?.iconRight && icon(props?.iconRight)}
+                    </>
+                )}
+            </div>
         </Style>
     );
 }

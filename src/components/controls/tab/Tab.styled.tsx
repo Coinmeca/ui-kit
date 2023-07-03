@@ -1,15 +1,9 @@
 import { css, styled } from "styled-components";
 
-const Style = styled.div<{ $scale: number; $active: boolean; $disabled: boolean }>`
+const Style = styled.div<{ $scale: number; $active: boolean; $fit: boolean; $disabled: boolean }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 3em;
-    gap: 0.25em;
-    padding: 0.5em;
     font-weight: bold;
+    width: ${({ $fit }) => ($fit ? "max-content" : "auto")};
     cursor: pointer;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
@@ -20,13 +14,24 @@ const Style = styled.div<{ $scale: number; $active: boolean; $disabled: boolean 
     user-select: none;
     transition: 0.3s ease;
 
+    & > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-width: max-content;
+        min-height: 3em;
+        gap: 0.5em;
+        padding: 0.5em;
+
+        & > span {
+            font-size: 1.5em;
+        }
+    }
+
     color: rgba(var(--white), var(--o045));
     & i svg {
         fill: rgba(var(--white), var(--o045));
-    }
-
-    & > span {
-        font-size: 1.5em;
     }
 
     &:hover {
