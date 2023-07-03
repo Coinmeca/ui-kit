@@ -21,14 +21,14 @@ export default function Menu(props: Menu) {
             (typeof menu?.menu !== "string" && menu?.menu?.length) > 0 ? (
                 <Row $scale={scale} $fix={menu?.fix}>
                     {menu?.menu?.map((item: any, i: number) => (
-                        <Items key={i} menu={item} />
+                        <Items key={menu.id} menu={item} />
                     ))}
                 </Row>
             ) : (
                 (typeof menu !== "string" && menu?.length) > 0 ? (
                     <Row $scale={scale} $fix={menu?.fix}>
                         {menu?.map((item: any, i: number) => (
-                            <Items key={i} menu={item} />
+                            <Items key={menu.id} menu={item} />
                         ))}
                     </Row>
                 ) : (
@@ -47,5 +47,5 @@ export default function Menu(props: Menu) {
         );
     };
 
-    return <Style $scale={scale}>{typeof props?.menu !== "string" && props?.menu?.length > 0 ? props?.menu?.map((menu: any, i: number) => <Menus key={i} menu={menu} />) : <Row $scale={scale}>{props?.menu}</Row>}</Style>;
+    return <Style $scale={scale}>{typeof props?.menu !== "string" && props?.menu?.length > 0 ? props?.menu?.map((menu: any, i: number) => <Menus key={menu.id} menu={menu} />) : <Row $scale={scale}>{props?.menu}</Row>}</Style>;
 }
