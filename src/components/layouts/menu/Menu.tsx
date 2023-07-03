@@ -1,5 +1,6 @@
 import { Layouts } from "components";
 import Style, { Row } from "./Menu.styled";
+import { Fragment } from "react";
 
 export interface Menu {
     menu?: any;
@@ -18,32 +19,34 @@ export default function Menu(props: Menu) {
 
     const Items = ({menu, key}:{menu:any, key?:number}) => {
         return (
-            (typeof menu?.menu !== "string" && menu?.menu?.length) > 0 ? (
-                <Row key={key} $scale={scale} $fix={menu?.fix}>
-                    {menu?.menu?.map((item: any, i: number) => (
-                        <Items key={i} menu={item} />
-                    ))}
-                </Row>
-            ) : (
-                (typeof menu !== "string" && menu?.length) > 0 ? (
-                    <Row key={key} $scale={scale} $fix={menu?.fix}>
-                        {menu?.map((item: any, i: number) => (
+            <Fragment key={key}>
+                {(typeof menu?.menu !== "string" && menu?.menu?.length) > 0 ? (
+                    <Row $scale={scale} $fix={menu?.fix}>
+                        {menu?.menu?.map((item: any, i: number) => (
                             <Items key={i} menu={item} />
                         ))}
                     </Row>
                 ) : (
-                    menu
-                )
-            )
+                    (typeof menu !== "string" && menu?.length) > 0 ? (
+                        <Row $scale={scale} $fix={menu?.fix}>
+                            {menu?.map((item: any, i: number) => (
+                                <Items key={i} menu={item} />
+                            ))}
+                        </Row>
+                    ) : (
+                        menu
+                    )
+                )}
+            </Fragment>
         );
     };
 
     const Menus = ({ menu, key }: { menu: any; key?: number }) => {
         return (
-            <>
+            <Fragment key={key}>
                 {key !== 0 && <Layouts.Divider />}
-                <Items key={key} menu={menu} />
-            </>
+                <Items menu={menu} />
+            </Fragment>
         );
     };
 
