@@ -18,7 +18,7 @@ export default function Frame(props: Frame) {
         <>
             <Layouts.BG
                 img={{
-                    src: require("/src/app/assets/pictures/2.jpg").default.src,
+                    src: 2,
                 }}
             />
             <Style $sidebar={sidebar} $width={width}>

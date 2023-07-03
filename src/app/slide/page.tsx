@@ -50,6 +50,7 @@ export default function Exchange() {
                     <Icon color={"#6080FF"} scale={2} icon={"bank"} />
                     <Icon color={"yellow"} scale={3} icon={"chevron-left"} />
                     <Icon color={"red"} scale={4} icon={"chart-area"} />
+                    <Icon icon={""} />
                 </Layouts.Row>
             ),
         },

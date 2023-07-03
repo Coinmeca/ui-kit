@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Controls, Elements } from "components";
 import Style from "./Dropdown.styled";
+import Image from "next/image";
 
 export interface Dropdown {
     className?: string;
@@ -108,7 +109,7 @@ export default function Dropdown(props: Dropdown) {
                         <Controls.Button icon={option?.icon} />
                     ) : (
                         <>
-                            {option && typeof option[imgName] !== "undefined" && <img src={`${option[imgName]}`} alt={option?.imgAlt} />}
+                            {option && typeof option[imgName] !== "undefined" && <Image src={`${option[imgName]}`} width={0} height={0} alt={""} />}
                             <span
                                 title={
                                     typeof option === "undefined"
@@ -153,7 +154,7 @@ export default function Dropdown(props: Dropdown) {
                                     <>
                                         {typeof v[imgName] !== "undefined" && v[imgName] !== "" ? (
                                             <>
-                                                <img src={`${v[imgName]}`} alt={v.imgAlt} />
+                                                <Image src={`${v[imgName]}`} width={0} height={0} alt={""} />
                                                 <span title={typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}>
                                                     {typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}
                                                 </span>
