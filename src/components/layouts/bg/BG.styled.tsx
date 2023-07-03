@@ -16,6 +16,7 @@ const Style = styled.div<{ $fix: boolean; $filter: string | undefined }>`
         position: ${({ $fix }) => ($fix ? "fixed" : "absolute")};
         min-width: 100%;
         min-height: 100%;
+        object-fit: cover;
         opacity: 1;
         transition: 0.3s ease;
     }

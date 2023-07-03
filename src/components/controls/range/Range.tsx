@@ -25,7 +25,7 @@ export default function Range(props: Slider) {
     const snap = props?.snap || false;
     const zero = props?.zero || false;
     const min = props?.min || 0;
-    const max = props?.max || 100;
+    const max = props?.max || min + 100;
     const disabled = props?.disabled || false;
 
     useEffect(() => {

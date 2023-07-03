@@ -9,18 +9,18 @@ export interface Icon {
     title?: string;
 }
 
-export const Icon = memo((props: Icon) => {
+export function Icon(props: Icon) {
     const color = props?.color || "white";
     const scale = props?.scale || 1;
     const title = props?.title || "";
 
-    const Icons = props?.icon && dynamic(() => import(`/src/app/assets/icons/${props?.icon}.svg`));
+    const Icons = props?.icon && props?.icon !== "" && dynamic(() => import(`/src/app/assets/icons/${props?.icon}.svg`));
 
     return (
         <Style title={title} $color={color} $scale={scale}>
             {Icons && <Icons />}
         </Style>
     );
-});
+}
 
-export default Icon;
+export default memo(Icon);
