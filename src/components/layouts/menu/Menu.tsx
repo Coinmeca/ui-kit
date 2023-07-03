@@ -20,9 +20,9 @@ export default function Menu(props: Menu) {
         return (
             (typeof menu?.menu !== "string" && menu?.menu?.length) > 0 ? (
                 <Row $scale={scale} $fix={menu?.fix}>
-                        {menu?.menu?.map((item: any, i: number) => (
-                            <Items key={i} menu={item} />
-                        ))}
+                    {menu?.menu?.map((item: any, i: number) => (
+                        <Items key={i} menu={item} />
+                    ))}
                 </Row>
             ) : (
                 (typeof menu !== "string" && menu?.length) > 0 ? (
