@@ -38,14 +38,14 @@ export default function Menu(props: Menu) {
         );
     };
 
-    const Menus = ({ menu, index }: { menu: any; index: number }) => {
+    const Menus = ({ menu, key }: { menu: any; key?: number }) => {
         return (
             <>
-                {index !== 0 && <Layouts.Divider />}
+                {key !== 0 && <Layouts.Divider />}
                 <Items menu={menu} />
             </>
         );
     };
 
-    return <Style $scale={scale}>{typeof props?.menu !== "string" && props?.menu?.length > 0 ? props?.menu?.map((menu: any, i: number) => <Menus key={i} index={i} menu={menu} />) : <Row $scale={scale}>{props?.menu}</Row>}</Style>;
+    return <Style $scale={scale}>{typeof props?.menu !== "string" && props?.menu?.length > 0 ? props?.menu?.map((menu: any, i: number) => <Menus key={i} menu={menu} />) : <Row $scale={scale}>{props?.menu}</Row>}</Style>;
 }
