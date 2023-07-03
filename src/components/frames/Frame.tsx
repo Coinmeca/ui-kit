@@ -1,4 +1,5 @@
 import { Layouts } from "components";
+import type { BG } from "components/layouts/bg/BG";
 import Style from "./Frame.styled";
 
 export interface Frame {
@@ -6,6 +7,7 @@ export interface Frame {
     sidebar?: boolean;
     sidebars?: Array<{ name?: string; active?: boolean; children: any }>;
     width?: number;
+    background?: BG;
     align?: "left" | "right";
 }
 
@@ -16,11 +18,7 @@ export default function Frame(props: Frame) {
 
     return (
         <>
-            <Layouts.BG
-                img={{
-                    src: 2,
-                }}
-            />
+            <Layouts.BG {...props?.background} />
             <Style $sidebar={sidebar} $width={width}>
                 <header></header>
                 <section>
