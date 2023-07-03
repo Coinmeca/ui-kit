@@ -25,7 +25,7 @@ export const Style = styled.div<{ $scale: number; $padding: number; $nav: "top" 
                 transition: 0.3s ease;
                 overflow: hidden;
 
-                & > *:last-child > * {
+                & > *:last-child {
                     transition: 0.3s 0.15s ease;
                     opacity: 0;
                 }
@@ -35,7 +35,7 @@ export const Style = styled.div<{ $scale: number; $padding: number; $nav: "top" 
                     transform: translateX(-15%);
                     pointer-events: none;
 
-                    & > *:last-child > * {
+                    & > *:last-child {
                         transform: translateX(-15%);
                     }
                 }
@@ -43,7 +43,7 @@ export const Style = styled.div<{ $scale: number; $padding: number; $nav: "top" 
                 &[data-active="true"] ~ * {
                     transform: translateX(15%);
 
-                    & > *:last-child > * {
+                    & > *:last-child {
                         transform: translateX(15%);
                     }
                 }
@@ -53,7 +53,7 @@ export const Style = styled.div<{ $scale: number; $padding: number; $nav: "top" 
                     pointer-events: initial;
                     opacity: 1;
 
-                    & > *:last-child > * {
+                    & > *:last-child {
                         transform: translateX(0%);
                         opacity: 1;
                     }

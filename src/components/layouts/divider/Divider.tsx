@@ -3,7 +3,7 @@ import Style from "./Divider.styled";
 interface Divider {
     vertical?: boolean;
     margin?: number;
-    style?: any;
+    style?: object;
 }
 
 export default function Divider(props: Divider) {

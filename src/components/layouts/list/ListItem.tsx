@@ -4,7 +4,7 @@ import Style, { Row, Col } from "./ListItem.style";
 
 export interface ListItem {
     children?: any;
-    style?: any;
+    style?: object;
     align?: "left" | "center" | "right";
     onClick?: Function;
 }
@@ -23,7 +23,7 @@ export default function ListItem(props: ListItem) {
         };
 
         return data && typeof data !== "string" && data?.length > 0 ? (
-            data?.map((info: any, i: any) => {
+            data?.map((info: any, i: number) => {
                 return info?.style || info.children ? (
                     <Row key={i} style={{ ...align(info?.align), ...info?.style }}>
                         {ListCol(info?.children)}
@@ -50,7 +50,7 @@ export default function ListItem(props: ListItem) {
         };
 
         return data && typeof data !== "string" && data?.length > 0 ? (
-            data?.map((info: any, i: any) => {
+            data?.map((info: any, i: number) => {
                 return info?.style || info.children ? (
                     <Col key={i} style={{ ...align(info?.align), ...info?.style }}>
                         {ListRow(info?.children)}

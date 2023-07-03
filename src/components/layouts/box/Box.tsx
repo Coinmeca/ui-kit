@@ -2,7 +2,7 @@ import Style from "./Box.styled";
 
 export interface Box {
     className?: string;
-    style?: any;
+    style?: object;
     children?: any;
 }
 

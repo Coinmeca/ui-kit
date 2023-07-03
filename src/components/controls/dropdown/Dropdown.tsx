@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export interface Dropdown {
     className?: string;
-    style?: any;
+    style?: object;
 
     form?: string;
     title?: string;

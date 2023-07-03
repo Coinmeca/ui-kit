@@ -4,7 +4,8 @@ import Style from "./Button.styled";
 
 export interface Button {
     className?: string;
-    style?: any;
+    style?: object;
+
     title?: string;
     type?: "glass" | "line" | "solid";
     color?: string;

@@ -88,6 +88,24 @@ const Style = createGlobalStyle`
         --blur: blur(4rem);
     }
 
+    [data-direction="row"] {
+        flex-direction: row;
+    }
+
+    [data-align="col"] {
+        flex-direction: column;
+    }
+
+    [data-align="center"] {
+        justify-content: center;
+        text-align: center;
+    }
+
+    [data-align="right"] {
+        justify-content: flex-end;
+        text-align: right;
+    }
+
     @media (prefers-color-scheme: light) {
         :root {
             --white: 255, 255, 255;
