@@ -1,24 +1,26 @@
 import { Root } from "lib/style";
 import { styled } from "styled-components";
 
-export const Item = styled.div<{ $direction: string; $align: string }>`
+export const Row = styled.div<{ $scale: number; $fix?: boolean }>`
+    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    display: flex;
+    overflow-x: scroll;
+    overflow-style: none;
+    ${({ $fix }) => !$fix && "overflow-x: scroll;"}
 
-
-    @media all and (max-width: ${Root.Device.Tablet}px) {
-        &[data-device="tablet"] {
-            ${({$direction}) => $direction === "row" ? "flex-direction: column" : $direction === "col" && "flex-direction:column"};
-        }
+    &::-webkit-scrollbar {
+        display: none;
     }
 
-    @media all and (max-width: ${Root.Device.Laptop}px) {
-        &[data-device="laptop"] {
-        }
+    &:last-child:not(:only-child) {
+        justify-content: "flex-end";
     }
+`;
 
-    @media all and (max-width: ${Root.Device.Mobile}px) {
-        &[data-device="mobile"] {
-        }
-    }
+export const Col = styled.div<{ $scale: number }>`
+    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    display: flex;
+    min-width: max-content;
 `;
 
 export const Style = styled.div<{}>``;
