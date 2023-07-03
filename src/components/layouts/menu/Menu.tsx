@@ -16,7 +16,7 @@ export interface MenuItem {
 export default function Menu(props: Menu) {
     const scale = props?.scale || 1;
 
-    const Items = ({menu}:{menu:any}) => {
+    const Items = ({menu, key}:{menu:any, key?:number}) => {
         return (
             (typeof menu?.menu !== "string" && menu?.menu?.length) > 0 ? (
                 <Row $scale={scale} $fix={menu?.fix}>
