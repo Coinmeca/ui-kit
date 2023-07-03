@@ -21,14 +21,14 @@ export default function Menu(props: Menu) {
         return (
             <Fragment key={key}>
                 {(typeof menu?.menu !== "string" && menu?.menu?.length) > 0 ? (
-                    <Row $scale={scale} $fix={menu?.fix}>
+                    <Row key={key} $scale={scale} $fix={menu?.fix}>
                         {menu?.menu?.map((item: any, i: number) => (
                             <Items key={i} menu={item} />
                         ))}
                     </Row>
                 ) : (
                     (typeof menu !== "string" && menu?.length) > 0 ? (
-                        <Row $scale={scale} $fix={menu?.fix}>
+                        <Row key={key} $scale={scale} $fix={menu?.fix}>
                             {menu?.map((item: any, i: number) => (
                                 <Items key={i} menu={item} />
                             ))}
@@ -45,7 +45,7 @@ export default function Menu(props: Menu) {
         return (
             <Fragment key={key}>
                 {key !== 0 && <Layouts.Divider />}
-                <Items menu={menu} />
+                <Items key={key} menu={menu} />
             </Fragment>
         );
     };
