@@ -1,5 +1,6 @@
 ﻿import { css, styled } from "styled-components";
 import { Root } from "lib/style";
+import { memo } from "react";
 
 const Thumb = (color: string, width: string) => css`
     appearance: none;
@@ -172,4 +173,4 @@ const Style = styled.div<{ $color: string; $value: number }>`
     }}
 `;
 
-export default Style;
+export default memo(Style);

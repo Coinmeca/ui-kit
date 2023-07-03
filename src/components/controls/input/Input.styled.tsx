@@ -1,7 +1,7 @@
 import { css, styled } from "styled-components";
 
 const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean; $error: boolean; $disabled: boolean }>`
-    font-size: ${({ $scale }) => $scale * 0.6667}em;
+    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     display: flex;
     flex-direction: column;
     justify-content: center;

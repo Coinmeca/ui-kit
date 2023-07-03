@@ -15,7 +15,7 @@ const Style = styled.button<{
         `;
     }};
 
-    font-size: ${({ $scale }) => $scale * 0.6667}em;
+    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     display: flex;
     align-items: center;
     justify-content: center;
