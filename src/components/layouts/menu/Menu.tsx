@@ -16,19 +16,19 @@ export interface MenuItem {
 export default function Menu(props: Menu) {
     const scale = props?.scale || 1;
 
-    const Items = ({menu, key}:{menu:any, key?:number}) => {
+    const Items = ({menu}:{menu:any}) => {
         return (
             (typeof menu?.menu !== "string" && menu?.menu?.length) > 0 ? (
                 <Row $scale={scale} $fix={menu?.fix}>
                     {menu?.menu?.map((item: any, i: number) => (
-                        <Items key={menu.id} menu={item} />
+                        <Items key={i} menu={item} />
                     ))}
                 </Row>
             ) : (
                 (typeof menu !== "string" && menu?.length) > 0 ? (
                     <Row $scale={scale} $fix={menu?.fix}>
                         {menu?.map((item: any, i: number) => (
-                            <Items key={menu.id} menu={item} />
+                            <Items key={i} menu={item} />
                         ))}
                     </Row>
                 ) : (
@@ -38,14 +38,14 @@ export default function Menu(props: Menu) {
         );
     };
 
-    const Menus = ({ menu, key }: { menu: any; key?: number }) => {
+    const Menus = ({ menu, index }: { menu: any; index:number }) => {
         return (
             <>
-                {key !== 0 && <Layouts.Divider />}
+                {index !== 0 && <Layouts.Divider />}
                 <Items menu={menu} />
             </>
         );
     };
 
-    return <Style $scale={scale}>{typeof props?.menu !== "string" && props?.menu?.length > 0 ? props?.menu?.map((menu: any, i: number) => <Menus key={menu.id} menu={menu} />) : <Row $scale={scale}>{props?.menu}</Row>}</Style>;
+    return <Style $scale={scale}>{typeof props?.menu !== "string" && props?.menu?.length > 0 ? props?.menu?.map((menu: any, i: number) => <Menus key={i} index={i} menu={menu} />) : <Row $scale={scale}>{props?.menu}</Row>}</Style>;
 }
