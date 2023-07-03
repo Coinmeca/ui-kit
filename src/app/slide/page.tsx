@@ -145,7 +145,7 @@ export default function Exchange() {
         {
             background: {
                 img: {
-                    src: "/assets/images/bg/4.jpg",
+                    src: 4,
                 },
             },
             children: (
@@ -181,7 +181,7 @@ export default function Exchange() {
         {
             background: {
                 img: {
-                    src: "/src/app/assets/images/bg/4.jpg",
+                    src: 4,
                 },
             },
             children: (
