@@ -42,7 +42,7 @@ export default function Menu(props: Menu) {
         return (
             <>
                 {key !== 0 && <Layouts.Divider />}
-                <Items menu={menu} />
+                <Items key={key} menu={menu} />
             </>
         );
     };
