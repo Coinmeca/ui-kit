@@ -13,7 +13,7 @@ const Style = styled.div<{
 
     ${({ $gap }) => {
         const gap = $gap || 4;
-        return css`
+        return gap !== 0 && css`
             gap: ${$gap || 4}rem;
 
             & > & {
