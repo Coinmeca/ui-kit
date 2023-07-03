@@ -194,7 +194,7 @@ export default function Exchange() {
                 <Layouts.Col align={"center"}>
                     <Layouts.Col align={"center"}>
                         <div className="title">Make Profits While Spending Money</div>
-                        <div className="describe">Let's get earned Coinmeca Token free according your service usage. And just sell it market.</div>
+                        <div className="describe">Lets get earned Coinmeca Token free according your service usage. And just sell it market.</div>
                     </Layouts.Col>
                     <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
                         Get Started with Sign up
