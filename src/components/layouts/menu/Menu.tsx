@@ -1,6 +1,5 @@
 import { Layouts } from "components";
 import Style, { Row } from "./Menu.styled";
-import { Fragment } from "react";
 
 export interface Menu {
     menu?: any;
@@ -17,35 +16,33 @@ export interface MenuItem {
 export default function Menu(props: Menu) {
     const scale = props?.scale || 1;
 
-    const Items = (props:any) => {
+    const Items = ({menu, key}:{menu:any, key?:number}) => {
         return (
-            <>
-                {(typeof props?.menu?.menu !== "string" && props?.menu?.menu?.length) > 0 ? (
-                    <Row $scale={scale} $fix={props?.menu?.fix}>
-                        {props?.menu?.menu?.map((item: any, i: number) => (
+            (typeof menu?.menu !== "string" && menu?.menu?.length) > 0 ? (
+                <Row $scale={scale} $fix={menu?.fix}>
+                    {menu?.menu?.map((item: any, i: number) => (
+                        <Items key={i} menu={item} />
+                    ))}
+                </Row>
+            ) : (
+                (typeof menu !== "string" && menu?.length) > 0 ? (
+                    <Row $scale={scale} $fix={menu?.fix}>
+                        {menu?.map((item: any, i: number) => (
                             <Items key={i} menu={item} />
                         ))}
                     </Row>
                 ) : (
-                    (typeof props?.menu !== "string" && props?.menu?.length) > 0 ? (
-                        <Row $scale={scale} $fix={props?.menu?.fix}>
-                            {props?.menu?.map((item: any, i: number) => (
-                                <Items key={i} menu={item} />
-                            ))}
-                        </Row>
-                    ) : (
-                        props?.menu
-                    )
-                )}
-            </>
+                    menu
+                )
+            )
         );
     };
 
-    const Menus = (props:any) => {
+    const Menus = ({ menu, key }: { menu: any; key?: number }) => {
         return (
             <>
-                {props?.key !== 0 && <Layouts.Divider />}
-                <Items menu={props?.menu} />
+                {key !== 0 && <Layouts.Divider />}
+                <Items menu={menu} />
             </>
         );
     };
