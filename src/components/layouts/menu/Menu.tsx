@@ -17,35 +17,35 @@ export interface MenuItem {
 export default function Menu(props: Menu) {
     const scale = props?.scale || 1;
 
-    const Items = ({menu, key}:{menu:any, key?:number}) => {
+    const Items = (props:any) => {
         return (
             <>
-                {(typeof menu?.menu !== "string" && menu?.menu?.length) > 0 ? (
-                    <Row key={key} $scale={scale} $fix={menu?.fix}>
-                        {menu?.menu?.map((item: any, i: number) => (
+                {(typeof props?.menu?.menu !== "string" && props?.menu?.menu?.length) > 0 ? (
+                    <Row $scale={scale} $fix={props?.menu?.fix}>
+                        {props?.menu?.menu?.map((item: any, i: number) => (
                             <Items key={i} menu={item} />
                         ))}
                     </Row>
                 ) : (
-                    (typeof menu !== "string" && menu?.length) > 0 ? (
-                        <Row key={key} $scale={scale} $fix={menu?.fix}>
-                            {menu?.map((item: any, i: number) => (
+                    (typeof props?.menu !== "string" && props?.menu?.length) > 0 ? (
+                        <Row $scale={scale} $fix={props?.menu?.fix}>
+                            {props?.menu?.map((item: any, i: number) => (
                                 <Items key={i} menu={item} />
                             ))}
                         </Row>
                     ) : (
-                        menu
+                        props?.menu
                     )
                 )}
             </>
         );
     };
 
-    const Menus = ({ menu, key }: { menu: any; key?: number }) => {
+    const Menus = (props:any) => {
         return (
             <>
-                {key !== 0 && <Layouts.Divider />}
-                <Items menu={menu} />
+                {props?.key !== 0 && <Layouts.Divider />}
+                <Items menu={props?.menu} />
             </>
         );
     };
