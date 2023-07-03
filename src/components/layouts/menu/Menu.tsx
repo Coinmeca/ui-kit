@@ -1,5 +1,5 @@
 import { Layouts } from "components";
-import Style, { Row, Col } from "./Menu.styled";
+import Style, { Row } from "./Menu.styled";
 
 export interface Menu {
     menu?: any;
@@ -16,23 +16,25 @@ export interface MenuItem {
 export default function Menu(props: Menu) {
     const scale = props?.scale || 1;
 
-    const Items = (menu: any) => {
-        return menu ? (
-            (typeof menu !== "string" && menu?.length) > 0 ? (
-                menu?.map((menu: any, i: number) => (
-                    <Row key={i} $scale={scale} $fix={menu?.fix}>
-                        {Items(menu)}
-                    </Row>
-                ))
-            ) : (
+    const Items = ({menu}:{menu:any}) => {
+        return (
+            (typeof menu?.menu !== "string" && menu?.menu?.length) > 0 ? (
                 <Row $scale={scale} $fix={menu?.fix}>
-                    {menu}
+                        {menu?.menu?.map((item: any, i: number) => (
+                            <Items key={i} menu={item} />
+                        ))}
                 </Row>
+            ) : (
+                (typeof menu !== "string" && menu?.length) > 0 ? (
+                    <Row $scale={scale} $fix={menu?.fix}>
+                        {menu?.map((item: any, i: number) => (
+                            <Items key={i} menu={item} />
+                        ))}
+                    </Row>
+                ) : (
+                    menu
+                )
             )
-        ) : (
-            <Row $scale={scale} $fix={menu?.fix}>
-                {menu}
-            </Row>
         );
     };
 
@@ -40,12 +42,10 @@ export default function Menu(props: Menu) {
         return (
             <>
                 {index !== 0 && <Layouts.Divider />}
-                <Col key={index} $scale={scale}>
-                    {Items(menu)}
-                </Col>
+                <Items menu={menu} />
             </>
         );
     };
 
-    return <Style>{typeof props?.menu !== "string" && props?.menu?.length > 0 ? props?.menu?.map((menu: any, i: number) => <Menus key={i} index={i} menu={menu} />) : <Row $scale={scale}>{props?.menu}</Row>}</Style>;
+    return <Style $scale={scale}>{typeof props?.menu !== "string" && props?.menu?.length > 0 ? props?.menu?.map((menu: any, i: number) => <Menus key={i} index={i} menu={menu} />) : <Row $scale={scale}>{props?.menu}</Row>}</Style>;
 }

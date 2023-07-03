@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 export const Row = styled.div<{ $scale: number; $fix?: boolean }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     display: flex;
+    width:100%;
     overflow-x: scroll;
     overflow-style: none;
     ${({ $fix }) => !$fix && "overflow-x: scroll;"}
@@ -13,16 +14,15 @@ export const Row = styled.div<{ $scale: number; $fix?: boolean }>`
     }
 
     &:last-child:not(:only-child) {
-        justify-content: "flex-end";
+        max-width:max-content;
+        justify-content: flex-end;
     }
 `;
 
-export const Col = styled.div<{ $scale: number }>`
+const Style = styled.div<{ $scale: number }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     display: flex;
-    min-width: max-content;
+    flex-direction:column;
 `;
-
-export const Style = styled.div<{}>``;
 
 export default Style;
