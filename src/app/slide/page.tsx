@@ -247,7 +247,6 @@ export default function Exchange() {
                 </div>
                 <Layouts.Box>
                     <Layouts.Contents.InnerContent>
-                        Exchange
                         <Layouts.Menu menu={menu} />
                         <Layouts.Row>
                             <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
