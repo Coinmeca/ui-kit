@@ -35,7 +35,7 @@ const Style = styled.button<{
         align-items: center;
         justify-content: center;
         width: 100%;
-        min-width: 4em;
+        min-width: 2em;
         min-height: 4em;
         gap: 1em;
 

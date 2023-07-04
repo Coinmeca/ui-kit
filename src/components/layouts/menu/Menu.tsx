@@ -23,12 +23,14 @@ export default function Menu(props: Menu) {
                 <Row $scale={scale} style={menu?.style} $fix={menu?.fix}>
                     {menu?.map((item:any, i:number) => 
                         <Fragment key={i}>
-                            {Items(item?.children || item)}
+                            {Items(item?.children || !item?.style && item)}
                         </Fragment>
                     )}
                 </Row>
             ) : (
-                menu
+                <>
+                    {menu}
+                </>
             );
     };
 
@@ -36,7 +38,7 @@ export default function Menu(props: Menu) {
         return (
                 <>
                     {i !== 0 && <Layouts.Divider />}
-                    <Row $scale={scale} style={menu?.style}>{Items(menu?.children || menu)}</Row>
+                    <Row $scale={scale} style={menu?.style}>{Items(menu?.children || !menu?.style && menu)}</Row>
                 </>
         );
     };

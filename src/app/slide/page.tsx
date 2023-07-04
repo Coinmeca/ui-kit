@@ -1,5 +1,5 @@
 "use client";
-import { Controls, Frames, Layouts } from "components";
+import { Controls, Elements, Frames, Layouts } from "components";
 import { Icon, Button } from "components/controls";
 import { Format } from "lib/utils";
 import { useState } from "react";
@@ -152,8 +152,8 @@ export default function Exchange() {
             children: (
                 <Layouts.Col align={"center"}>
                     <Layouts.Col align={"center"}>
-                        <div className="title">Much Faster and Much Easier Coin Exchange</div>
-                        <div className="describe">Start with your new experience coin trading system on Coinmeca.</div>
+                        <Elements.Text type={'h2'}>Much Faster and Much Easier Coin Exchange</Elements.Text>
+                        <Elements.Text scale={2} weight={'normal'} responsive={{device:'mobile', scale:4}}>Start with your new experience coin trading system on Coinmeca.</Elements.Text>
                     </Layouts.Col>
                     <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
                         Get Started with Sign up
@@ -177,8 +177,8 @@ export default function Exchange() {
             children: (
                 <Layouts.Col align={"center"}>
                     <Layouts.Col align={"center"}>
-                        <div className="title">Meet Brand New Finance</div>
-                        <div className="describe">Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.</div>
+                        <Elements.Text type={'h2'}>Meet Brand New Finance</Elements.Text>
+                        <Elements.Text scale={2} weight={'normal'}>Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.</Elements.Text>
                     </Layouts.Col>
                     <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
                         Get Started with Sign up
@@ -196,8 +196,8 @@ export default function Exchange() {
             children: (
                 <Layouts.Col align={"center"}>
                     <Layouts.Col align={"center"}>
-                        <div className="title">Make Profits While Spending Money</div>
-                        <div className="describe">Lets get earned Coinmeca Token free according your service usage. And just sell it market.</div>
+                        <Elements.Text type={'h2'}>Make Profits While Spending Money</Elements.Text>
+                        <Elements.Text scale={2} weight={'normal'}>Lets get earned Coinmeca Token free according your service usage. And just sell it market.</Elements.Text>
                     </Layouts.Col>
                     <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
                         Get Started with Sign up
