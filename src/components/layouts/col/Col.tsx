@@ -4,8 +4,9 @@ export interface Col {
     children?: any;
     gap?: number;
     align?: "left" | "center" | "right" | "stretch";
+    style?: object;
     fit?: boolean;
-    response?: string;
+    responsive?: string;
     reverse?: boolean;
 }
 
@@ -16,7 +17,7 @@ export default function Col(props: Col) {
     const reverse = props?.reverse || false;
 
     return (
-        <Style $gap={gap} $fit={fit} $response={props?.response} $reverse={reverse} data-col={align}>
+        <Style style={props?.style} $gap={gap} $fit={fit} $responsive={props?.responsive} $reverse={reverse} data-col={align}>
             {props.children}
         </Style>
     );

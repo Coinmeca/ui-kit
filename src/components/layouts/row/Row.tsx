@@ -5,7 +5,7 @@ export interface Row {
     gap?: number;
     align?: "left" | "center" | "right" | "stretch";
     fit?: boolean;
-    response?: string;
+    responsive?: string;
     reverse?: boolean;
 }
 
@@ -16,7 +16,7 @@ export default function Row(props: Row) {
     const reverse = props?.reverse || false;
 
     return (
-        <Style $gap={gap} $fit={fit} $response={props?.response} $reverse={reverse} data-row={align}>
+        <Style $gap={gap} $fit={fit} $responsive={props?.responsive} $reverse={reverse} data-row={align}>
             {props.children}
         </Style>
     );

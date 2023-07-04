@@ -21,7 +21,7 @@ const Style = styled.div<{ $scale: number; $active: boolean; $fit: boolean; $dis
         align-items: center;
         justify-content: center;
         width: 100%;
-        min-width: 4em;
+        min-width: 2em;
         min-height: 4em;
         gap: 0.5em;
 
