@@ -143,7 +143,7 @@ export default function Exchange() {
 
     const slides = [
         {
-            filter: "black",
+            filter: `rgba(var(--black-abs),var(--o045))`,
             background: {
                 img: {
                     src: 4,
@@ -162,7 +162,7 @@ export default function Exchange() {
             ),
         },
         {
-            filter: "black",
+            filter: `rgba(var(--black-abs),var(--o045))`,
             background: {
                 video: {
                     src: "https://firebasestorage.googleapis.com/v0/b/coinmeca-3e733.appspot.com/o/cm_bg.mp4?alt=media&token=fca0814a-8000-4af7-b4ca-f372e686bff7",
@@ -188,7 +188,7 @@ export default function Exchange() {
         },
         {
             background: {
-                filter: "black",
+            filter: `rgba(var(--black-abs),var(--o045))`,
                 img: {
                     src: 4,
                 },

@@ -16,7 +16,7 @@ export default function Row(props: Row) {
     const reverse = props?.reverse || false;
 
     return (
-        <Style $gap={gap} $fit={fit} $response={props?.response} $reverse={reverse} data-align={align}>
+        <Style $gap={gap} $fit={fit} $response={props?.response} $reverse={reverse} data-row={align}>
             {props.children}
         </Style>
     );

@@ -11,21 +11,10 @@ export interface ListItem {
 
 export default function ListItem(props: ListItem) {
     const ListRow = (data: any) => {
-        const align = (align: string) => {
-            switch (align) {
-                case "center":
-                    return { justifyContent: "center" };
-                case "right":
-                    return { justifyContent: "end" };
-                case "left":
-                    return { justifyContent: "start" };
-            }
-        };
-
         return data && typeof data !== "string" && data?.length > 0 ? (
             data?.map((info: any, i: number) => {
                 return info?.style || info.children ? (
-                    <Row key={i} style={{ ...align(info?.align), ...info?.style }}>
+                    <Row key={i} style={ ...info?.style } data-row={info?.align}>
                         {ListCol(info?.children)}
                     </Row>
                 ) : (
@@ -38,21 +27,11 @@ export default function ListItem(props: ListItem) {
     };
 
     const ListCol = (data: any) => {
-        const align = (align: string) => {
-            switch (align) {
-                case "center":
-                    return { alignItems: "center" };
-                case "right":
-                    return { alignItems: "end" };
-                case "left":
-                    return { alignItems: "start" };
-            }
-        };
 
         return data && typeof data !== "string" && data?.length > 0 ? (
             data?.map((info: any, i: number) => {
                 return info?.style || info.children ? (
-                    <Col key={i} style={{ ...align(info?.align), ...info?.style }}>
+                    <Col key={i} style={info?.style} data-col={info?.align}>
                         {ListRow(info?.children)}
                     </Col>
                 ) : (

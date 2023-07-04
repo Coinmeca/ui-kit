@@ -48,7 +48,7 @@ export default function Slide(props: Slide) {
                         {props?.slides?.map((slide, i) => (
                             <div key={i} data-active={slideNo === i} onClick={(e) => slide?.onClick && slide?.onClick(e)}>
                                 {slide?.background && <BG {...slide?.background} />}
-                                <div data-align={props?.align}>{slide.children}</div>
+                                <div data-row={props?.align}>{slide.children}</div>
                             </div>
                         ))}
                     </div>
