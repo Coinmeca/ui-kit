@@ -43,18 +43,20 @@ export default function Menu(props: Menu) {
     };
 
     return (
-        props?.menu && (
-            <Style $scale={scale}>
-                {typeof props?.menu !== "string" && props?.menu?.length > 0 ?
-                    (
-                        props?.menu?.map((menu: any, i: number) => 
-                            Menus(menu?.children || menu, i)
+        <>
+            {props?.menu && (
+                <Style $scale={scale}>
+                    {typeof props?.menu !== "string" && props?.menu?.length > 0 ?
+                        (
+                            props?.menu?.map((menu: any, i: number) => 
+                                Menus(menu?.children || menu, i)
+                            )
+                        ) : (
+                            <Row $scale={scale} style={props?.menu?.style}>{props?.menu?.children || props?.menu}</Row>
                         )
-                    ) : (
-                        <Row $scale={scale} style={props?.menu?.style}>{props?.menu?.children || props?.menu}</Row>
-                    )
-                }
-            </Style>
-        )
+                    }
+                </Style>
+            )}
+        </>
     );
 }
