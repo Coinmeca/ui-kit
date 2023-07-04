@@ -38,7 +38,7 @@ export default function Slide(props: Slide) {
             }, timer);
             return () => clearInterval(change);
         }
-    }, [props?.slides, props?.event, timer]);
+    }, [props, timer]);
 
     return (
         <Style style={props?.style} $scale={scale} $padding={padding} $nav={props?.nav}>
