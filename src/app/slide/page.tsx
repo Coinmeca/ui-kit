@@ -208,13 +208,15 @@ export default function Exchange() {
     ];
 
     const menu = [
-        [
-            [
-                <Controls.Tab fit>Limit Order</Controls.Tab>,
-                <Controls.Tab fit>Market Order</Controls.Tab>
-            ],
-            [<Controls.Tab fit>Order History</Controls.Tab>],
-        ],
+        {
+            children: [
+                [
+                    <Controls.Tab fit>Limit Order</Controls.Tab>,
+                    <Controls.Tab fit>Market Order</Controls.Tab>
+                ],
+                [<Controls.Tab fit>Order History</Controls.Tab>],
+            ]
+        },
         // [
         //     {
         //         style: {overflow: 'initial'},
