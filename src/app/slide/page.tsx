@@ -209,12 +209,19 @@ export default function Exchange() {
 
     const menu = [
         {
+            key:0,
             children: [
-                [
-                    <Controls.Tab fit>Limit Order</Controls.Tab>,
-                    <Controls.Tab fit>Market Order</Controls.Tab>
-                ],
-                [<Controls.Tab fit>Order History</Controls.Tab>],
+                {
+                    key: 1,
+                    children:[
+                        <Controls.Tab fit>Limit Order</Controls.Tab>,
+                        <Controls.Tab fit>Market Order</Controls.Tab>
+                    ]
+                },
+                {
+                    key:2,
+                    children:[<Controls.Tab fit>Order History</Controls.Tab>],
+                }
             ]
         },
         // [
