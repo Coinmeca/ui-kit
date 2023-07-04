@@ -14,13 +14,11 @@ export default function ListItem(props: ListItem) {
     const ListRow = (data: any) => {
         return data && (
             typeof data !== "string" && data?.length > 0 ? (
-                <Row style={ ...data?.style } data-row={data?.align}>
-                    {data?.map((info: any, i:number) => 
-                        <Fragment key={i}>
-                            {ListCol(info?.children || info)}
-                        </Fragment>
-                    )}
-                </Row>
+                data?.map((info: any, i:number) => 
+                    <Row key={i} style={ ...info?.style } data-row={info?.align}>
+                        {ListCol(info?.children || info)}
+                    </Row>
+                )
             ) : (
                 <span>{data}</span>
             )
@@ -31,13 +29,11 @@ export default function ListItem(props: ListItem) {
 
         return data && (
             typeof data !== "string" && data?.length > 0 ? (
-                <Col style={data?.style} data-col={data?.align}>
-                    {data?.map((info: any, i: number) => (
-                        <Fragment key={i}>
-                            {ListRow(info?.children || info)}
-                        </Fragment>
-                    ))}
-                </Col>
+                data?.map((info: any, i: number) => (
+                    <Col key={i} style={data?.style} data-col={data?.align}>
+                        {ListRow(info?.children || info)}
+                    </Col>
+                ))
             ) : (
                 <span>{data}</span>
             )
