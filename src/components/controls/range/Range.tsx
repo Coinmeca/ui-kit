@@ -30,7 +30,7 @@ export default function Range(props: Slider) {
 
     useEffect(() => {
         if (typeof props?.value === "number" && props?.value > -1) props?.value > 100 ? setValue(100) : props?.value < 0 ? setValue(0) : setValue(props?.value);
-    }, []);
+    });
 
     useEffect(() => {
         if (typeof props?.value === "number" && !isNaN(props?.value)) setValue(props?.value < min ? min : props?.value > max ? max : props?.value);
