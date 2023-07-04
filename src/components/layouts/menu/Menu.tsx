@@ -1,5 +1,6 @@
 import { Layouts } from "components";
 import Style, { Row } from "./Menu.styled";
+import { Fragment } from "react";
 
 export interface Menu {
     menu?: any;
@@ -20,7 +21,11 @@ export default function Menu(props: Menu) {
         return (
             (typeof menu !== "string" && menu?.length) > 0 ? (
                 <Row $scale={scale} style={menu?.style} $fix={menu?.fix}>
-                    {menu?.map((item: any, i: any) => item?.children ? <Items key={i} menu={item?.children} /> : <Items key={i} menu={item} />)}
+                    {menu?.map((item:any, i:number) => (
+                        <Fragment key={i}>
+                            {Items(item?.children || item)}
+                        </Fragment>
+                    ))}
                 </Row>
             ) : (
                 menu
@@ -32,7 +37,7 @@ export default function Menu(props: Menu) {
         return (
             <>
                 {index !== 0 && <Layouts.Divider />}
-                <Row $scale={scale}>{Items(menu)}</Row>
+                <Row $scale={scale} style={menu?.style}>{Items(menu?.children || menu)}</Row>
             </>
         );
     };
@@ -42,14 +47,16 @@ export default function Menu(props: Menu) {
             <Style $scale={scale}>
                 {typeof props?.menu !== "string" && props?.menu?.length > 0 ?
                     (
-                        <>
-                            {props?.menu?.map((menu: any, i: number) => Menus(menu?.children || menu, i))}
-                        </>
+                        props?.menu?.map((menu: any, i: number) => (
+                            <Fragment key={i}>
+                                {Menus(menu?.children || menu, i)}
+                            </Fragment>
+                        ))
                     ) : (
-                        <Row $scale={scale}>{props?.menu}</Row>
+                        <Row $scale={scale} style={props?.menu?.style}>{props?.menu?.children || props?.menu}</Row>
                     )
                 }
-        </Style>
+            </Style>
         )
     );
 }
