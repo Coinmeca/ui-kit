@@ -215,19 +215,19 @@ export default function Exchange() {
             ],
             [<Controls.Tab fit>Order History</Controls.Tab>],
         ],
-        [
-            {
-                style: {overflow: 'initial'},
-                align: 'right',
-                children:[
-                    <Controls.Dropdown options={list} />,
-                    <Controls.Dropdown options={list} />
-                ]
-            },
-            [
-                <Controls.Tab fit>View more</Controls.Tab>
-            ]
-        ]
+        // [
+        //     {
+        //         style: {overflow: 'initial'},
+        //         align: 'right',
+        //         children:[
+        //             <Controls.Dropdown options={list} />,
+        //             <Controls.Dropdown options={list} />
+        //         ]
+        //     },
+        //     [
+        //         <Controls.Tab fit>View more</Controls.Tab>
+        //     ]
+        // ]
     ];
 
     return (
