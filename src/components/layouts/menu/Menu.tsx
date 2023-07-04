@@ -34,7 +34,7 @@ export default function Menu(props: Menu) {
             <>
                 {props?.menu && (
                     <>
-                        {props?.key !== 0 && <Layouts.Divider />}
+                        {props?.index !== 0 && <Layouts.Divider />}
                         <Items menu={props?.menu} />
                     </>
                 )}
