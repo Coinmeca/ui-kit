@@ -32,13 +32,14 @@ const Style = styled.div<{
     --gap: ${({$gap}) => $gap || 4}em;
 
     display: flex;
-    flex-direction: ${({ $reverse }) => ($reverse ? "row-reverse" : "row")};
+    flex-flow: ${({ $reverse }) => ($reverse ? "row-reverse wrap" : "row wrap")};
     width: ${({ $fit }) => ($fit ? "max-content" : "auto")};
     gap: ${({ $gap }) => $gap || 4}rem;
 
     && > * {
-        display: flex;
-        width: 100%;
+        flex: 1;
+        // display: flex;
+        // width: 100%;
     }
 
     gap: calc(var(--gap));
