@@ -77,7 +77,7 @@ export default function Dropdown(props: Dropdown) {
             }
             setOptions(_options);
         }
-    }, [props?.options, props?.option]);
+    }, [props?.options, props?.option, keyName]);
 
     const onSelect = (e: React.FormEvent, v: any, k: string | number) => {
         if (disabled) return;

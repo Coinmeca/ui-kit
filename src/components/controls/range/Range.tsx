@@ -34,11 +34,11 @@ export default function Range(props: Slider) {
 
     useEffect(() => {
         if (typeof props?.value === "number" && !isNaN(props?.value)) setValue(props?.value < min ? min : props?.value > max ? max : props?.value);
-    }, [props?.value]);
+    }, [props?.value, min, max]);
 
     useEffect(() => {
         setPercent(value === min ? 0 : ((value - min) / (max - min)) * 100);
-    }, [value]);
+    }, [value, min, max]);
 
     const onChange = (e: any) => {
         const range = max - min;
