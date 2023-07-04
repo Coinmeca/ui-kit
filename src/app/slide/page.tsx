@@ -216,10 +216,14 @@ export default function Exchange() {
             [<Controls.Tab fit>Order History</Controls.Tab>],
         ],
         [
-            [
-                <Controls.Dropdown options={list} />,
-                <Controls.Dropdown options={list} />
-            ],
+            {
+                style: {overflow: 'initial'},
+                align: 'right',
+                children:[
+                    <Controls.Dropdown options={list} />,
+                    <Controls.Dropdown options={list} />
+                ]
+            },
             [
                 <Controls.Tab fit>View more</Controls.Tab>
             ]
