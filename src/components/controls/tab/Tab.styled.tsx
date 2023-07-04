@@ -65,7 +65,7 @@ const Style = styled.div<{ $scale: number; $active: boolean; $fit: boolean; $dis
         return (
             $disabled &&
             css`
-                opacity: 0.15;
+                // opacity: 0.45;
                 cursor: initial;
                 pointer-events: none !important;
             `

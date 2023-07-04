@@ -9,13 +9,13 @@ const Style = styled.div`
         color-scheme: inherit;
         background: rgb(var(--dim));
         color: rgba(var(--black));
-        height: calc(100vh - 8rem);
+        height: calc(100vh - (var(--unit) * 8));
         min-height: max-content;
         display: flex;
         flex-direction: column;
-        gap: 4rem;
+        gap: calc(var(--unit) * 4);
         width: auto;
-        padding: 4rem;
+        padding: calc(var(--unit) * 4);
 
         @media (prefers-color-scheme: light) {
             --white: 0, 0, 0;
@@ -30,8 +30,9 @@ const Style = styled.div`
         }
 
         @media all and (max-width: ${Root.Device.Mobile}px) {
-            height: calc(100vh - 4rem);
-            padding: 2rem;
+            height: calc(100vh - (var(--unit) * 6));
+            gap: calc(var(--unit) * 3);
+            padding: calc(var(--unit) * 3);
         }
     }
 `;

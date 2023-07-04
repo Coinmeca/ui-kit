@@ -214,7 +214,7 @@ export default function Exchange() {
                 {
                     key: 1,
                     children:[
-                        <Controls.Tab fit>Limit Order</Controls.Tab>,
+                        <Controls.Tab iconLeft={'plus'} fit disabled>Add Chart</Controls.Tab>,
                         <Controls.Tab fit>Market Order</Controls.Tab>
                     ]
                 },
