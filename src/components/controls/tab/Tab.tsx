@@ -25,6 +25,7 @@ export default function Tab(props: Tab) {
     const fit = props?.fit || false;
 
     const onClick = (e: any) => {
+        if (props?.disabled) return;
         if (typeof props?.onClick === "function") props?.onClick(e);
     };
 
