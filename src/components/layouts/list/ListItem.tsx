@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import Style, { Row, Col } from "./ListItem.style";
 
 export interface ListItem {
@@ -13,15 +14,13 @@ export default function ListItem(props: ListItem) {
     const ListRow = (data: any) => {
         return data && (
             typeof data !== "string" && data?.length > 0 ? (
-                data?.map((info: any, i: number) => {
-                    return info?.style || info.children ? (
-                        <Row key={i} style={ ...info?.style } data-row={info?.align}>
-                            {ListCol(info?.children)}
-                        </Row>
-                    ) : (
-                        <Row key={i}>{ListCol(info)}</Row>
-                    );
-                })
+                <Row style={ ...data?.style } data-row={data?.align}>
+                    {data?.map((info: any, i:number) => 
+                        <Fragment key={i}>
+                            {ListCol(info?.children || info)}
+                        </Fragment>
+                    )}
+                </Row>
             ) : (
                 <span>{data}</span>
             )
@@ -32,15 +31,13 @@ export default function ListItem(props: ListItem) {
 
         return data && (
             typeof data !== "string" && data?.length > 0 ? (
-                data?.map((info: any, i: number) => {
-                    return info?.style || info.children ? (
-                        <Col key={i} style={info?.style} data-col={info?.align}>
-                            {ListRow(info?.children)}
-                        </Col>
-                    ) : (
-                        <Col key={i}>{ListRow(info)}</Col>
-                    );
-                })
+                <Col style={data?.style} data-col={data?.align}>
+                    {data?.map((info: any, i: number) => (
+                        <Fragment key={i}>
+                            {ListRow(info?.children || info)}
+                        </Fragment>
+                    ))}
+                </Col>
             ) : (
                 <span>{data}</span>
             )
