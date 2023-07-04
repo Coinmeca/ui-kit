@@ -89,16 +89,16 @@ const Style = createGlobalStyle`
         flex-direction: row;
     }
 
-    [data-align="col"] {
+    [data-direction="col"] {
         flex-direction: column;
     }
 
-    [data-align="left"] {
+    [data-row="left"] {
         justify-content: flex-start;
         text-align: left;
     }
 
-    [data-align="center"] {
+    [data-row="center"] {
         justify-content: center;
         text-align: center;
 
@@ -107,8 +107,27 @@ const Style = createGlobalStyle`
         }
     }
 
-    [data-align="right"] {
+    [data-row="right"] {
         justify-content: flex-end;
+        text-align: right;
+    }
+
+    [data-col="left"] {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    [data-col="center"] {
+        align-items: center;
+        text-align: center;
+
+        & > *{
+            margin:auto;
+        }
+    }
+
+    [data-col="right"] {
+        align-items: flex-end;
         text-align: right;
     }
 

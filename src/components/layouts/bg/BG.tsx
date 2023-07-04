@@ -21,7 +21,7 @@ export default function BG(props: BG) {
         <Style $fix={fix} $filter={props?.filter}>
             {props?.img?.src && <Image src={src} style={props?.img?.style} fill alt={""} />}
             {props?.video?.src && <video {...props?.video} />}
-            {props?.filter && <div />}
+            {props?.filter && <div style={{background: props?.filter}} />}
         </Style>
     );
 }
