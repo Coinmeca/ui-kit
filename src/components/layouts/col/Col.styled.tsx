@@ -11,6 +11,10 @@ const Style = styled.div<{
     flex-direction: ${({ $reverse }) => ($reverse ? "column-reverse" : "column")};
     width: ${({ $fit }) => ($fit ? "max-content" : "100%")};
 
+    && > *{
+        width:100%;
+    }
+
     ${({ $gap }) => {
         const gap = $gap || 4;
         return gap !== 0 && css`

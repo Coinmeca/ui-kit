@@ -207,14 +207,31 @@ export default function Exchange() {
         },
     ];
 
-    const menu:any = [];
+    const menu = [
+        [
+            [
+                <Controls.Tab fit>Limit Order</Controls.Tab>,
+                <Controls.Tab fit>Market Order</Controls.Tab>
+            ],
+            [<Controls.Tab fit>Order History</Controls.Tab>],
+        ],
+        [
+            [
+                <Controls.Dropdown options={list} />,
+                <Controls.Dropdown options={list} />
+            ],
+            [
+                <Controls.Tab fit>View more</Controls.Tab>
+            ]
+        ]
+    ];
 
     return (
         <Frames.Frame sidebar sidebars={sidebars}>
             <Layouts.Content>
-                <div style={{ height: "320px" }}>
+                <Layouts.Cover fullsize>
                     <Controls.Slide slides={slides} padding={0} timer={3000} align={"center"} nav={"bottom"} style={{ zIndex: 4 }} />
-                </div>
+                </Layouts.Cover>
                 <Layouts.Box>
                     <Layouts.Contents.InnerContent>
                         <Layouts.Menu menu={menu} />

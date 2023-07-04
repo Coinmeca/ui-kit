@@ -12,17 +12,17 @@ export const Row = styled.div<{ $scale: number; $fix?: boolean }>`
     &::-webkit-scrollbar {
         display: none;
     }
-
-    &:last-child:not(:only-child) {
-        max-width:max-content;
-        justify-content: flex-end;
-    }
 `;
 
 const Style = styled.div<{ $scale: number }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     display: flex;
     flex-direction:column;
+    
+    ${Row} + ${Row}:last-child:not(:only-child) {
+        max-width:max-content;
+        justify-content: flex-end;
+    }
 `;
 
 export default Style;
