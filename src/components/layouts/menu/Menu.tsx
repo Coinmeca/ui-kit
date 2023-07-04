@@ -16,28 +16,23 @@ export interface MenuItem {
 export default function Menu(props: Menu) {
     const scale = props?.scale || 1;
 
-    const Items = (props:any) => {
+    const Items = ({menu}:{menu:any}) => {
         return (
-            (typeof props?.menu !== "string" && props?.menu?.length) > 0 ? (
-                <Row $scale={scale} style={props?.style} $fix={props?.fix}>
-                    {console.log(props?.menu)}
-                    {props?.menu?.map((item: any, i: any) => item?.children ? <Items key={i} menu={item?.children} /> : <Items key={i} menu={item} />)}
+            (typeof menu !== "string" && menu?.length) > 0 ? (
+                <Row $scale={scale} style={menu?.style} $fix={menu?.fix}>
+                    {menu?.map((item: any, i: any) => item?.children ? <Items key={i} menu={item?.children} /> : <Items key={i} menu={item} />)}
                 </Row>
             ) : (
-                props?.menu
+                menu
             )
         );
     };
 
-    const Menus = (props:any) => {
+    const Menus = ({ menu, index }: { menu: any; index:number }) => {
         return (
             <>
-                {props?.menu && (
-                    <>
-                        {props?.index !== 0 && <Layouts.Divider />}
-                        <Items menu={props?.menu} />
-                    </>
-                )}
+                {index !== 0 && <Layouts.Divider />}
+                <Items menu={menu} />
             </>
         );
     };
@@ -46,7 +41,7 @@ export default function Menu(props: Menu) {
             <Style $scale={scale}>
                 {typeof props?.menu !== "string" && props?.menu?.length > 0 ? 
                     (
-                        props?.menu?.map((menu: any, i: number) => menu?.children ? <Menus key={i} index={i} menu={menu?.children} /> : <Menus key={i} index={i} menu={menu} />)
+                        props?.menu?.map((menu: any, i: number) => menu?.children ? <div key={i} data-index={i} data-menu={menu?.children} /> : <div key={i} data-index={i} data-menu={menu} />)
                     ) : (
                         <Row $scale={scale}>{props?.menu}</Row>
                         )
