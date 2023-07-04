@@ -11,35 +11,39 @@ export interface ListItem {
 
 export default function ListItem(props: ListItem) {
     const ListRow = (data: any) => {
-        return data && typeof data !== "string" && data?.length > 0 ? (
-            data?.map((info: any, i: number) => {
-                return info?.style || info.children ? (
-                    <Row key={i} style={ ...info?.style } data-row={info?.align}>
-                        {ListCol(info?.children)}
-                    </Row>
-                ) : (
-                    <Row key={i}>{ListCol(info)}</Row>
-                );
-            })
-        ) : (
-            <span>{data}</span>
+        return data && (
+            typeof data !== "string" && data?.length > 0 ? (
+                data?.map((info: any, i: number) => {
+                    return info?.style || info.children ? (
+                        <Row key={i} style={ ...info?.style } data-row={info?.align}>
+                            {ListCol(info?.children)}
+                        </Row>
+                    ) : (
+                        <Row key={i}>{ListCol(info)}</Row>
+                    );
+                })
+            ) : (
+                <span>{data}</span>
+            )
         );
     };
 
     const ListCol = (data: any) => {
 
-        return data && typeof data !== "string" && data?.length > 0 ? (
-            data?.map((info: any, i: number) => {
-                return info?.style || info.children ? (
-                    <Col key={i} style={info?.style} data-col={info?.align}>
-                        {ListRow(info?.children)}
-                    </Col>
-                ) : (
-                    <Col key={i}>{ListRow(info)}</Col>
-                );
-            })
-        ) : (
-            <span>{data}</span>
+        return data && (
+            typeof data !== "string" && data?.length > 0 ? (
+                data?.map((info: any, i: number) => {
+                    return info?.style || info.children ? (
+                        <Col key={i} style={info?.style} data-col={info?.align}>
+                            {ListRow(info?.children)}
+                        </Col>
+                    ) : (
+                        <Col key={i}>{ListRow(info)}</Col>
+                    );
+                })
+            ) : (
+                <span>{data}</span>
+            )
         );
     };
 
