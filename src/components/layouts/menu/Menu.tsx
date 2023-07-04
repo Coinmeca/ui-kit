@@ -16,25 +16,29 @@ export interface MenuItem {
 export default function Menu(props: Menu) {
     const scale = props?.scale || 1;
 
-    const Items = ({menu}:{menu:any}) => {
+    const Items = (props:any) => {
         return (
-            (typeof menu !== "string" && menu?.length) > 0 ? (
-                <Row $scale={scale} style={menu?.style} $fix={menu?.fix}>
-                    {console.log(menu)}
-                    {menu?.map((item: any, i: any) => item?.children ? <Items key={i} menu={item?.children} /> : <Items key={i} menu={item} />)}
+            (typeof props?.menu !== "string" && props?.menu?.length) > 0 ? (
+                <Row $scale={scale} style={props?.style} $fix={props?.fix}>
+                    {console.log(props?.menu)}
+                    {props?.menu?.map((item: any, i: any) => item?.children ? <Items key={i} menu={item?.children} /> : <Items key={i} menu={item} />)}
                 </Row>
             ) : (
-                menu
+                props?.menu
             )
         );
     };
 
-    const Menus = ({ menu, index }: { menu: any; index:number }) => {
+    const Menus = (props:any) => {
         return (
-            <div>
-                {index !== 0 && <Layouts.Divider />}
-                <Items menu={menu} />
-            </div>
+            <>
+                {props?.menu && (
+                    <>
+                        {props?.key !== 0 && <Layouts.Divider />}
+                        <Items menu={props?.menu} />
+                    </>
+                )}
+            </>
         );
     };
 
