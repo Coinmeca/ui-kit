@@ -22,23 +22,22 @@ export interface Slide {
 }
 
 export default function Slide(props: Slide) {
-    const [slideNo, setSlideNo] = useState(props?.slideNo || props?.slides?.length || 0);
+    const [slideNo, setSlideNo] = useState(props?.slideNo || 0);
     const timer = props?.timer || 1000;
     const padding = props?.padding || 4;
     const scale = props?.scale || 1;
 
     useEffect(() => {
-        if (timer && timer > 0) {
+        if (timer > 0) {
             let index = 0;
             const change = setInterval(() => {
-                if (index === props?.slides.length - 1) index = 0;
-                else index++;
-                if (typeof props?.event === "function") props?.event();
+                if (index === props?.slides.length - 1) index = 0; else index++;
+                if (typeof props?.event === "function") props?.event(index);
                 setSlideNo(index);
             }, timer);
             return () => clearInterval(change);
         }
-    }, [props, timer]);
+    }, [props?.slides, props?.event, timer]);
 
     return (
         <Style style={props?.style} $scale={scale} $padding={padding} $nav={props?.nav}>
