@@ -29,10 +29,6 @@ export default function Range(props: Slider) {
     const disabled = props?.disabled || false;
 
     useEffect(() => {
-        if (typeof props?.value === "number" && props?.value > -1) props?.value > 100 ? setValue(100) : props?.value < 0 ? setValue(0) : setValue(props?.value);
-    });
-
-    useEffect(() => {
         if (typeof props?.value === "number" && !isNaN(props?.value)) setValue(props?.value < min ? min : props?.value > max ? max : props?.value);
     }, [props?.value, min, max]);
 
@@ -46,14 +42,11 @@ export default function Range(props: Slider) {
 
         if (snap) {
             const tick = range / (step - 1);
-
             if (zero && min < 0 && value >= tick / -4 && value <= tick / 4) {
                 value = 0;
             } else {
                 value = Math.round((value + min) / tick) * tick - min;
             }
-
-            console.log(value >= tick / -4, value <= tick / 4, tick / 4, tick / -4);
         }
 
         const percent = ((value - min) * 100) / range || 0;
