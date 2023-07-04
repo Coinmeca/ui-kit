@@ -17,28 +17,32 @@ export interface MenuItem {
 export default function Menu(props: Menu) {
     const scale = props?.scale || 1;
 
-    const Items = (menu:any) => {
+    const Items = (menu:any, i:number) => {
         return (
-            (typeof menu !== "string" && menu?.length) > 0 ? (
-                <Row $scale={scale} style={menu?.style} $fix={menu?.fix}>
-                    {menu?.map((item:any, i:number) => 
-                        <Fragment key={i}>
-                            {Items(item?.children || item)}
-                        </Fragment>
-                    )}
-                </Row>
-            ) : (
-                menu
-            )
+            <Fragment key={i}>
+                {(typeof menu !== "string" && menu?.length) > 0 ? (
+                    <Row $scale={scale} style={menu?.style} $fix={menu?.fix}>
+                        {menu?.map((item:any, i:number) => 
+                            <Fragment key={i}>
+                                {Items(item?.children || item, i)}
+                            </Fragment>
+                        )}
+                    </Row>
+                ) : (
+                    menu
+                )}
+            </Fragment>
         );
     };
 
     const Menus = (menu:any, i:number) => {
         return (
-            <>
-                {i !== 0 && <Layouts.Divider />}
-                <Row $scale={scale} style={menu?.style}>{Items(menu?.children || menu)}</Row>
-            </>
+            <Fragment key={i}>
+                <>
+                    {i !== 0 && <Layouts.Divider />}
+                    <Row $scale={scale} style={menu?.style}>{Items(menu?.children || menu)}</Row>
+                </>
+            </Fragment>
         );
     };
 
@@ -48,7 +52,7 @@ export default function Menu(props: Menu) {
                     (
                         props?.menu?.map((menu: any, i: number) =>
                             <Fragment key={i}>
-                                {Menus(menu?.children || menu, i)}
+                                {Menus((menu?.children || menu), i)}
                             </Fragment>
                         )
                     ) : (
