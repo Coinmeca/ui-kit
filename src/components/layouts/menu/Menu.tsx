@@ -19,7 +19,8 @@ export default function Menu(props: Menu) {
     const Items = ({menu}:{menu:any}) => {
         return (
             (typeof menu !== "string" && menu?.length) > 0 ? (
-                <Row $scale={scale} $fix={menu?.fix}>
+                <Row $scale={scale} style={menu?.style} $fix={menu?.fix}>
+                    {console.log(menu)}
                     {menu?.map((item: any, i: any) => item?.children ? <Items key={i} menu={item?.children} /> : <Items key={i} menu={item} />)}
                 </Row>
             ) : (
@@ -30,10 +31,10 @@ export default function Menu(props: Menu) {
 
     const Menus = ({ menu, index }: { menu: any; index:number }) => {
         return (
-            <>
+            <div>
                 {index !== 0 && <Layouts.Divider />}
                 <Items menu={menu} />
-            </>
+            </div>
         );
     };
 
@@ -42,10 +43,10 @@ export default function Menu(props: Menu) {
                 {typeof props?.menu !== "string" && props?.menu?.length > 0 ? 
                     (
                         props?.menu?.map((menu: any, i: number) => menu?.children ? <Menus key={i} index={i} menu={menu?.children} /> : <Menus key={i} index={i} menu={menu} />)
-                        ) : (
-                            <Row $scale={scale}>{props?.menu}</Row>
-                            )
-                        }
+                    ) : (
+                        <Row $scale={scale}>{props?.menu}</Row>
+                        )
+                    }
             </Style>
         )
     );
