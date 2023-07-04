@@ -22,7 +22,7 @@ export default function Menu(props: Menu) {
             (typeof menu !== "string" && menu?.length) > 0 ? (
                 <Row $scale={scale} style={menu?.style} $fix={menu?.fix}>
                     {menu?.map((item:any, i:number) => (
-                        <Fragment key={i}>
+                        <Fragment key={item.id}>
                             {Items(item?.children || item)}
                         </Fragment>
                     ))}
@@ -35,30 +35,27 @@ export default function Menu(props: Menu) {
 
     const Menus = (menu:any, i:number) => {
         return (
-            <Fragment key={i}>
+            <>
                 {i !== 0 && <Layouts.Divider />}
                 <Row $scale={scale} style={menu?.style}>{Items(menu?.children || menu)}</Row>
-            </Fragment>
+            </>
         );
     };
 
-    return (
-        <>
-            {props?.menu && (
-                <Style $scale={scale}>
-                    {typeof props?.menu !== "string" && props?.menu?.length > 0 ?
-                        (
-                            props?.menu?.map((menu: any, i: number) => (
-                                <Fragment key={i}>
-                                    {Menus(menu?.children || menu, i)}
-                                </Fragment>
-                            ))
-                        ) : (
-                            <Row $scale={scale} style={props?.menu?.style}>{props?.menu?.children || props?.menu}</Row>
-                        )
-                    }
-                </Style>
-            )}
-        </>
+    return (props?.menu && (
+            <Style $scale={scale}>
+                {typeof props?.menu !== "string" && props?.menu?.length > 0 ?
+                    (
+                        props?.menu?.map((menu: any, i: number) => (
+                            <Fragment key={menu.id}>
+                                {Menus(menu?.children || menu, i)}
+                            </Fragment>
+                        ))
+                    ) : (
+                        <Row $scale={scale} style={props?.menu?.style}>{props?.menu?.children || props?.menu}</Row>
+                    )
+                }
+            </Style>
+        )
     );
 }
