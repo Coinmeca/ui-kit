@@ -17,32 +17,27 @@ export interface MenuItem {
 export default function Menu(props: Menu) {
     const scale = props?.scale || 1;
 
-    const Items = (menu:any, i?:number) => {
+    const Items = (menu:any) => {
         return (
-            <Fragment key={i}>
-                {(typeof menu !== "string" && menu?.length) > 0 ? (
-                    <Row $scale={scale} style={menu?.style} $fix={menu?.fix}>
-                        {menu?.map((item:any, i:number) => 
-                            <Fragment key={i}>
-                                {Items(item?.children || item, i)}
-                            </Fragment>
-                        )}
-                    </Row>
-                ) : (
-                    menu
-                )}
-            </Fragment>
-        );
+            typeof menu !== "string" && menu?.length) > 0 ? (
+                <Row $scale={scale} style={menu?.style} $fix={menu?.fix}>
+                    {menu?.map((item:any, i:number) => 
+                        <Fragment key={i}>
+                            {Items(item?.children || item)}
+                        </Fragment>
+                    )}
+                </Row>
+            ) : (
+                menu
+            );
     };
 
     const Menus = (menu:any, i:number) => {
         return (
-            <Fragment key={i}>
                 <>
                     {i !== 0 && <Layouts.Divider />}
                     <Row $scale={scale} style={menu?.style}>{Items(menu?.children || menu)}</Row>
                 </>
-            </Fragment>
         );
     };
 
