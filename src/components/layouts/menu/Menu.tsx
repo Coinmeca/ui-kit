@@ -35,10 +35,10 @@ export default function Menu(props: Menu) {
 
     const Menus = (menu:any, index:number) => {
         return (
-            <>
+            <Fragment key={index}>
                 {index !== 0 && <Layouts.Divider />}
                 <Row $scale={scale} style={menu?.style}>{Items(menu?.children || menu)}</Row>
-            </>
+            </Fragment>
         );
     };
 
