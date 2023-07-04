@@ -47,11 +47,9 @@ export default function Menu(props: Menu) {
             <Style $scale={scale}>
                 {typeof props?.menu !== "string" && props?.menu?.length > 0 ?
                     (
-                        props?.menu?.map((menu: any, i: number) => (
-                            <Fragment key={i}>
-                                {Menus(menu?.children || menu, i)}
-                            </Fragment>
-                        ))
+                        props?.menu?.map((menu: any, i: number) => 
+                            Menus(menu?.children || menu, i)
+                        )
                     ) : (
                         <Row $scale={scale} style={props?.menu?.style}>{props?.menu?.children || props?.menu}</Row>
                     )
