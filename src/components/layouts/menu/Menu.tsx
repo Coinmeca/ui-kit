@@ -17,7 +17,7 @@ export interface MenuItem {
 export default function Menu(props: Menu) {
     const scale = props?.scale || 1;
 
-    const Items = (menu:any, i:number) => {
+    const Items = (menu:any, i?:number) => {
         return (
             <Fragment key={i}>
                 {(typeof menu !== "string" && menu?.length) > 0 ? (
