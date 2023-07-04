@@ -20,7 +20,7 @@ export default function Menu(props: Menu) {
         return (
             (typeof menu !== "string" && menu?.length) > 0 ? (
                 <Row $scale={scale} $fix={menu?.fix}>
-                    {menu?.map((item: any, i: any) => item?.children ? <Items key={i} menu={item?.children} /> : <Items key={i} menu={item} />)}
+                    {menu?.map((item: any, i: any) => item?.children ? <Items key={item?.id} menu={item?.children} /> : <Items key={item?.id} menu={item} />)}
                 </Row>
             ) : (
                 menu
@@ -41,7 +41,7 @@ export default function Menu(props: Menu) {
         <Style $scale={scale}>
             {typeof props?.menu !== "string" && props?.menu?.length > 0 ? 
                 (
-                    props?.menu?.map((menu: any, i: number) => menu?.children ? <Menus key={menu.id} index={i} menu={menu?.children} /> : <Menus key={menu.id} index={i} menu={menu} />)
+                    props?.menu?.map((menu: any, i: number) => menu?.children ? <Menus key={menu?.id} index={i} menu={menu?.children} /> : <Menus key={menu.id} index={i} menu={menu} />)
                 ) : (
                     <Row $scale={scale}>{props?.menu}</Row>
                 )
