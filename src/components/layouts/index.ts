@@ -7,7 +7,8 @@ import Cover from './cover/Cover';
 import Col from "./col/Col";
 import Row from "./row/Row";
 import Divider from "./divider/Divider";
-import List from './list/List';
 import Menu from './menu/Menu'
+import List from './list/List';
+import Table from './table/Table'
 
-export { Contents, Content, BG, Box, Cover, Col, Row, Divider, List, Menu }
+export { Contents, Content, BG, Box, Cover, Col, Row, Divider, Menu, List, Table }

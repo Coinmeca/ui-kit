@@ -25,7 +25,7 @@ export default function Frame(props: Frame) {
                     {align === "left" && props?.sidebars && props?.sidebars?.length > 0 && (
                         <aside>
                             {props?.sidebars?.map((v: any, k: any) => (
-                                <div key={k}>{v.name}</div>
+                                <div key={k}>{v.children}</div>
                             ))}
                         </aside>
                     )}
@@ -33,7 +33,7 @@ export default function Frame(props: Frame) {
                     {align === "right" && props?.sidebars && props?.sidebars?.length > 0 && (
                         <aside>
                             {props?.sidebars?.map((v: any, k: any) => (
-                                <div key={k}>{v.name}</div>
+                                <div key={k}>{v.children}</div>
                             ))}
                         </aside>
                     )}
