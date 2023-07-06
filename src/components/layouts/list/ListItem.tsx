@@ -43,7 +43,7 @@ export default function ListItem(props: ListItem) {
     };
 
     return (
-        <Style style={props?.style} onClick={(e) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false}>
+        <Style style={props?.style} onClick={(e: any) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false}>
             {ListRow(props?.children)}
         </Style>
     );
