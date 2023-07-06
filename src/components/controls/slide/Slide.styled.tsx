@@ -1,6 +1,6 @@
 import { css, styled } from "styled-components";
 
-export const Style = styled.div<{ $scale: number; $padding: number; $nav: "top" | "bottom" | undefined }>`
+export const Style = styled.div<{ $scale: number; $timer: number; $padding: number; $nav: "top" | "bottom" | undefined }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     position: relative;
     display: flex;
@@ -61,9 +61,9 @@ export const Style = styled.div<{ $scale: number; $padding: number; $nav: "top" 
             }
         }
 
-        ${({ $nav, $padding }) =>
-            $nav &&
-            css`
+        ${({ $nav, $timer, $padding }) =>
+        $nav &&
+        css`
                 &:last-child:not(:only-child) {
                     position: absolute;
                     display: flex;
@@ -74,12 +74,11 @@ export const Style = styled.div<{ $scale: number; $padding: number; $nav: "top" 
                     text-align: center;
 
                     & > * {
-                        background: white;
+                        background: rgba(var(--white), var(--o045));
                         display: inline-block;
                         width: 0.5em;
                         height: 0.5em;
                         vertical-align: top;
-                        opacity: 0.45;
                         cursor: pointer;
                         transition: 0.3s ease;
 
@@ -89,10 +88,19 @@ export const Style = styled.div<{ $scale: number; $padding: number; $nav: "top" 
 
                         &[data-active="true"] {
                             width: 8em;
-                            opacity: 1;
+                            background-image: linear-gradient(rgb(var(--white)), rgb(var(--white)));
+                            background-size:100% 100%;
+                            background-position:left;
+                            background-repeat:no-repeat;
+                            animation: slide both 1 ${$timer / 1000}s ease;
                         }
                     }
                 }
             `}
+    }
+
+    @keyframes slide{
+        0% {background-size: 0% 100%;}
+        100% {background-size: 100% 100%;}
     }
 `;
