@@ -41,7 +41,7 @@ export default function Slide(props: Slide) {
     }, [props?.slides, props?.event, timer]);
 
     return (
-        <Style style={props?.style} $scale={scale} $padding={padding} $nav={props?.nav}>
+        <Style style={props?.style} $scale={scale} $timer={timer} $padding={padding} $nav={props?.nav}>
             {props?.slides && props?.slides?.length > 0 && (
                 <>
                     <div>
