@@ -178,7 +178,7 @@ export default function Input(props: Input) {
                             max={props?.max}
                             step={props?.step}
                             value={value}
-                            onClick={(e) => onClick(e)}
+                            onClick={(e: any) => onClick(e)}
                             onInput={(e) => onChange(e)}
                             onChange={(e) => onChange(e)}
                             onFocus={(e) => onFocus(e)}
