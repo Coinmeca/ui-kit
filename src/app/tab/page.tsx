@@ -141,7 +141,7 @@ export default function Exchange() {
     ];
 
     return (
-        <Frames.Frame sidebar sidebars={sidebars}>
+        <Frames.Frame sidebar>
             <Layouts.Content>
                 <div style={{ height: "320px" }} />
                 <Layouts.Box>
