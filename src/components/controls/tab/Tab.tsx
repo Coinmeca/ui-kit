@@ -30,7 +30,7 @@ export default function Tab(props: Tab) {
     };
 
     return (
-        <Style className={props?.className} style={props?.style} onClick={(e) => onClick(e)} title={props?.title} $scale={scale} $active={props?.active || false} $fit={fit} $disabled={props?.disabled}>
+        <Style className={props?.className} style={props?.style} onClick={(e: any) => onClick(e)} title={props?.title} $scale={scale} $active={props?.active || false} $fit={fit} $disabled={props?.disabled}>
             <div>
                 {props?.iconLeft && (
                     <>
