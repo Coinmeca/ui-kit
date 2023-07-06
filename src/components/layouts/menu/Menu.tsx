@@ -22,9 +22,7 @@ export default function Menu(props: Menu) {
             typeof menu !== "string" && menu?.length) > 0 ? (
             <Row $scale={scale} style={menu?.style} $fix={menu?.fix}>
                 {menu?.map((v: any, k: number) =>
-                    <Fragment key={k}>
-                        {Items(v?.children || !v?.style && v)}
-                    </Fragment>
+                    Items(v?.children || !v?.style && v)
                 )}
             </Row>
         ) : (
@@ -47,10 +45,7 @@ export default function Menu(props: Menu) {
         <Style $scale={scale}>
             {typeof props?.menu !== "string" && props?.menu?.length > 0 ?
                 (
-                    props?.menu?.map((v: any, k: number) =>
-                        <Fragment key={k}>
-                            {Menus((v?.children || v), i)}
-                        </Fragment>
+                    props?.menu?.map((v: any, k: number) => Menus((v?.children || v), k)
                     )
                 ) : (
                     <Row $scale={scale} style={props?.menu?.style}>{props?.menu?.children || props?.menu}</Row>
