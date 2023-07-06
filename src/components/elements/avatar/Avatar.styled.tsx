@@ -35,6 +35,7 @@ const Style = styled.div<{$scale: number, $size: number}>`
 
     & > span{
         font-size:1.5em;
+        font-weight:bold;
     }
 `
 
