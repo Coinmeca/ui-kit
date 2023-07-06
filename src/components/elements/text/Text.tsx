@@ -1,6 +1,6 @@
 import * as Texts from './Text.styled';
 
-interface Text {
+export interface Text {
     children?: any;
     style?: object;
     type?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'strong' | 'p' | 'desc';
@@ -10,7 +10,7 @@ interface Text {
     responsive?: Responsive;
 }
 
-interface Responsive {
+export interface Responsive {
     style?: object;
     scale?: number;
     weight?: number | string;
@@ -23,7 +23,7 @@ export default function Text(props: Text) {
     const scale = props?.scale || 1.5;
     const line = props?.line || 1.5;
 
-    switch(props?.type) {
+    switch (props?.type) {
         case 'h1':
             return <Texts.H1 style={props?.style} $weight={props?.weight || 'bold'} $line={line}>{props?.children}</Texts.H1>;
         case 'h2':
@@ -42,7 +42,7 @@ export default function Text(props: Text) {
             return <Texts.P style={props?.style} $weight={props?.weight || 'normal'} $line={line}>{props?.children}</Texts.P>;
         case 'desc':
             return <Texts.Desc style={props?.style} $weight={props?.weight || 'normal'} $line={line}>{props?.children}</Texts.Desc>;
-        default: 
+        default:
             return <Texts.Text style={props?.style} $scale={scale} $weight={props?.weight || 'bold'} $line={line} $responsive={props?.responsive}>{props?.children}</Texts.Text>;
     }
 }

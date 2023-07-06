@@ -21,7 +21,7 @@ export function Configure({ children }: { children: React.ReactNode }) {
     return <StyleSheetManager sheet={styleSheet.instance}>{children}</StyleSheetManager>;
 }
 
-export default function Initialize({ children }: { children: any }) {
+export default function Initialize({ children }: { children: React.ReactNode }) {
     return (
         <Configure>
             {children}

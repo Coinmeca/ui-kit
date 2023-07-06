@@ -14,9 +14,9 @@ export default function Market(props: ListItem) {
     const ListRow = (data: any) => {
         return data && (
             typeof data !== "string" && data?.length > 0 ? (
-                data?.map((info: any, i:number) => 
-                    <Row key={i} style={ ...info?.style } data-row={info?.align}>
-                        {ListCol(info?.children || info)}
+                data?.map((v: any, k: number) =>
+                    <Row key={k} style={...v?.style} data-row={v?.align}>
+                        {ListCol(v?.children || v)}
                     </Row>
                 )
             ) : (
@@ -29,9 +29,9 @@ export default function Market(props: ListItem) {
 
         return data && (
             typeof data !== "string" && data?.length > 0 ? (
-                data?.map((info: any, i: number) => (
-                    <Col key={i} style={data?.style} data-col={data?.align}>
-                        {ListRow(info?.children || info)}
+                data?.map((v: any, k: number) => (
+                    <Col key={k} style={data?.style} data-col={data?.align}>
+                        {ListRow(v?.children || v)}
                     </Col>
                 ))
             ) : (

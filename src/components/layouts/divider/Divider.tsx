@@ -1,6 +1,6 @@
 import Style from "./Divider.styled";
 
-interface Divider {
+export interface Divider {
     vertical?: boolean;
     margin?: number;
     style?: object;

@@ -19,7 +19,7 @@ const Style = styled.button<{
     font-weight: bold;
     ${({ $fit }) => $fit &&  "max-width: max-content"};
     min-width: max-content;
-    padding: 0 1em;
+    padding: 0.5em 1em;
     cursor: pointer;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
@@ -36,7 +36,7 @@ const Style = styled.button<{
         justify-content: center;
         width: 100%;
         min-width: 2em;
-        min-height: 4em;
+        min-height: 3em;
         gap: 1em;
 
         & > i:only-child {
