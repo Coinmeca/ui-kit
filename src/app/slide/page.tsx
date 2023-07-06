@@ -209,17 +209,14 @@ export default function Exchange() {
 
     const menu = [
         {
-            key:0,
             children: [
                 {
-                    key: 1,
                     children:[
                         <Controls.Tab iconLeft={'plus'} fit disabled>Add Chart</Controls.Tab>,
                         <Controls.Tab fit>Market Order</Controls.Tab>
                     ]
                 },
                 {
-                    key:2,
                     children:[<Controls.Tab fit>Order History</Controls.Tab>],
                 }
             ]

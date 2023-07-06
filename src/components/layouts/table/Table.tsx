@@ -3,9 +3,9 @@ import TableItem from "./TableItem";
 
 export interface List {
     list?: any;
-    noData: string;
+    noData: any;
 }
 
 export default function Table(props: List) {
-    return <Style>{props?.list && (typeof props?.list !== "string" && props?.list?.length > 0 ? props?.list?.map((data: any, i: number) => <TableItem key={i} {...data} />) : <div>{props?.noData}</div>)}</Style>;
+    return <Style>{props?.list && (typeof props?.list !== "string" && props?.list?.length > 0 ? props?.list?.map((v: any, i: number) => <TableItem key={i} {...v} />) : <div>{props?.noData}</div>)}</Style>;
 }

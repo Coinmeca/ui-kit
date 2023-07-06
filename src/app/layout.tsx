@@ -1,5 +1,6 @@
-import { Style } from "lib";
 import "./globals.scss";
+import { Style } from "lib";
+import { Frames } from "components";
 
 export const metadata = {
     title: "Coinmeca",
@@ -10,7 +11,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
             <body suppressHydrationWarning={true}>
-                <Style.Initialize>{children}</Style.Initialize>
+                <Style.Initialize>
+                    {/* <Frames.Frame> */}
+                    {children}
+                    {/* </Frames.Frame> */}
+                </Style.Initialize>
             </body>
         </html>
     );

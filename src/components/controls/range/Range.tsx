@@ -63,8 +63,8 @@ export default function Range(props: Slider) {
                     <div>
                         <div style={{ backgroundSize: `${percent}% 100%` }}>
                             {zero && max % ((max - min) / (step - 1)) !== 0 && <div className={`zero${value >= 0 ? " on" : ""}`} style={{ left: `${(Math.abs(min) / (max - min)) * 100}%` }} />}
-                            {[...Array(step)].map((_, i) => (
-                                <div key={i} className={percent >= ((((max - min) / (step - 1)) * i) / (max - min)) * 100 ? "on" : ""} />
+                            {[...Array(step)].map((_, k) => (
+                                <div key={k} className={percent >= ((((max - min) / (step - 1)) * i) / (max - min)) * 100 ? "on" : ""} />
                             ))}
                         </div>
                     </div>

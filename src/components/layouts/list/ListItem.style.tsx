@@ -15,6 +15,7 @@ export const Row = styled.div`
 export const Col = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content:center;
     width: 100%;
     gap: 0.167em;
 

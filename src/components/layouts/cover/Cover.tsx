@@ -2,10 +2,10 @@ import type { BG as Background } from "components/layouts/bg/BG";
 import { BG } from "components/layouts";
 import Style from "./Cover.styled";
 
-interface Cover {
+export interface Cover {
     children?: any;
     background?: Background;
-    height?:number;
+    height?: number;
     fullsize?: boolean;
 }
 
