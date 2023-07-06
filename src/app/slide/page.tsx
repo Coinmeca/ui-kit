@@ -210,15 +210,15 @@ export default function Exchange() {
     const menu = [
         {
             children: [
-                [
-                    <>
-                        <Controls.Tab iconLeft={'plus'} fit disabled>Add Chart</Controls.Tab>
-                    </>,
-                    <><Controls.Tab fit>Market Order</Controls.Tab></>
-                ],
-                [
-                    <><Controls.Tab fit>Order History</Controls.Tab></>
-                ],
+                {
+                    children: [
+                        <Controls.Tab iconLeft={'plus'} fit disabled>Add Chart</Controls.Tab>,
+                        <Controls.Tab fit>Market Order</Controls.Tab>
+                    ]
+                },
+                {
+                    children: [<Controls.Tab fit>Order History</Controls.Tab>],
+                }
             ]
         },
         // [
