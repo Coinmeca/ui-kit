@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment } from "react";
-import Style, { Row, Col } from "./Market.style";
+import Style, { Row, Col } from "./Market.styled";
 
 export interface ListItem {
     children?: any;
@@ -45,7 +45,7 @@ export default function Market(props: ListItem) {
     };
 
     return (
-        <Style style={props?.style} onClick={(e) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false}>
+        <Style style={props?.style} onClick={(e: any) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false}>
             {ListRow(props?.children)}
         </Style>
     );
