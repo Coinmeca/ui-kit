@@ -5,6 +5,7 @@ export interface ListItem {
     children?: any;
     style?: object;
     align?: "left" | "center" | "right";
+    active?: boolean;
     onClick?: Function;
 }
 
@@ -12,8 +13,8 @@ export default function TableItem(props: ListItem) {
     const TableRow = (data: any) => {
         return data && (
             typeof data !== "string" && data?.length > 0 ? (
-                data?.map((info: any, i:number) => 
-                    <Row key={i} style={ ...info?.style } data-row={info?.align}>
+                data?.map((info: any, i: number) =>
+                    <Row key={i} style={...info?.style} data-row={info?.align}>
                         {TableCell(info?.children || info)}
                     </Row>
                 )
@@ -43,7 +44,7 @@ export default function TableItem(props: ListItem) {
     };
 
     return (
-        <Style style={props?.style} onClick={(e:any) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false}>
+        <Style style={props?.style} onClick={(e: any) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false} data-active={props?.active}>
             {TableRow(props?.children)}
         </Style>
     );

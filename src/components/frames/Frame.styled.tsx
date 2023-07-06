@@ -24,9 +24,9 @@ const Style = styled.section<{ $sidebar: boolean; $width: number }>`
         & > aside {
             z-index: 10;
             ${({ $width, $sidebar }) =>
-                $sidebar &&
-                css`
-                    min-width: ${$sidebar ? $width : 0}px;
+        $sidebar &&
+        css`
+                    min-width: ${$sidebar ? $width : 0}em;
                 `};
             transition: 0.3s ease;
         }
