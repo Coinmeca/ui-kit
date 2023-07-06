@@ -14,6 +14,7 @@ export const Row = styled.div`
 export const Cell = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 0.167em;
 
     & > span ~ span {
@@ -50,10 +51,15 @@ const Style = styled.div<{ $event: boolean }>`
 
     &:active {
         ${({ $event }) =>
-            $event &&
-            css`
+        $event &&
+        css`
                 background: rgba(var(--white), var(--o015));
             `};
+    }
+
+    &[data-active="true"] {
+        background: rgba(var(--white), var(--o015));
+        pointer-evetns: none;
     }
 
     @media all and (max-width: ${Root.Device.Mobile}px) {

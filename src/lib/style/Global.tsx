@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { Device } from "./Root";
 
 const Style = createGlobalStyle`
     html {
@@ -172,6 +173,30 @@ const Style = createGlobalStyle`
 
         ::-webkit-scrollbar-thumb {
             -webkit-box-shadow: inset 0 0 2rem rgba(var(--black), var(--o045));
+        }
+    }
+
+    @media all and (min-width: ${Device.HD2K}px) {
+        :root{
+            --unit: 12px;
+        }
+    }
+
+    @media all and (min-width: ${Device.HD4K}px) {
+        :root{
+            --unit: 16px;
+        }
+    }
+
+    @media all and (min-width: ${Device.HD5K}px) {
+        :root{
+            --unit: 24px;
+        }
+    }
+
+    @media all and (min-width: ${Device.HD8K}px) {
+        :root{
+            --unit: 32px;
         }
     }
 `;

@@ -14,7 +14,7 @@ export interface Frame {
 
 export default function Frame(props: Frame) {
     const sidebar = props?.sidebar || false;
-    const width = props?.width || 480;
+    const width = props?.width || 40;
     const align = props?.align || "left";
 
     return (
