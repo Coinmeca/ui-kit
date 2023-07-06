@@ -212,12 +212,12 @@ export default function Exchange() {
             children: [
                 {
                     children: [
-                        <Controls.Tab iconLeft={'plus'} fit disabled>Add Chart</Controls.Tab>,
-                        <Controls.Tab fit>Market Order</Controls.Tab>
+                        <><Controls.Tab iconLeft={'plus'} fit disabled>Add Chart</Controls.Tab></>,
+                        <><Controls.Tab fit>Market Order</Controls.Tab></>
                     ]
                 },
                 {
-                    children: [<Controls.Tab fit>Order History</Controls.Tab>],
+                    children: [<><Controls.Tab fit>Order History</Controls.Tab></>],
                 }
             ]
         },
