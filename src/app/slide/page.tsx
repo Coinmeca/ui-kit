@@ -240,7 +240,7 @@ export default function Exchange() {
     ];
 
     return (
-        <Frames.Frame sidebar sidebars={sidebars}>
+        <Frames.Frame sidebar sidebars={sidebars} background={{filter:'black', img:{src: 2}}}>
             <Layouts.Content>
                 <Layouts.Cover fullsize>
                     <Controls.Slide slides={slides} padding={0} timer={3000} align={"center"} nav={"bottom"} style={{ zIndex: 4 }} />

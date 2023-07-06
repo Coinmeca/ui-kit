@@ -21,7 +21,7 @@ const Style = styled.div<{ $fix: boolean; $filter: string | undefined }>`
         transition: 0.3s ease;
     }
 
-    & > div {
+    & > div:last-child {
         position: absolute;
         top: 0;
         left: 0;

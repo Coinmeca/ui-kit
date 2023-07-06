@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect } from "react";
 import BG from "components/layouts/bg/BG";
 import type { BG as Background } from "components/layouts/bg/BG";

@@ -1,5 +1,5 @@
 "use client";
-import Style, { Row, Col } from "./ListItem.style";
+import Style, { Row, Cell } from "./TableItem.styled";
 
 export interface ListItem {
     children?: any;
@@ -8,13 +8,13 @@ export interface ListItem {
     onClick?: Function;
 }
 
-export default function ListItem(props: ListItem) {
-    const ListRow = (data: any) => {
+export default function TableItem(props: ListItem) {
+    const TableRow = (data: any) => {
         return data && (
             typeof data !== "string" && data?.length > 0 ? (
                 data?.map((info: any, i:number) => 
                     <Row key={i} style={ ...info?.style } data-row={info?.align}>
-                        {ListCol(info?.children || info)}
+                        {TableCell(info?.children || info)}
                     </Row>
                 )
             ) : (
@@ -23,14 +23,14 @@ export default function ListItem(props: ListItem) {
         );
     };
 
-    const ListCol = (data: any) => {
+    const TableCell = (data: any) => {
 
         return data && (
             typeof data !== "string" && data?.length > 0 ? (
                 data?.map((info: any, i: number) => (
-                    <Col key={i} style={data?.style} data-col={info?.align}>
-                        {ListRow(info?.children || info)}
-                    </Col>
+                    <Cell key={i} style={data?.style} data-col={info?.align}>
+                        {TableRow(info?.children || info)}
+                    </Cell>
                 ))
             ) : (
                 <span>{data}</span>
@@ -43,8 +43,8 @@ export default function ListItem(props: ListItem) {
     };
 
     return (
-        <Style style={props?.style} onClick={(e) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false}>
-            {ListRow(props?.children)}
+        <Style style={props?.style} onClick={(e:any) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false}>
+            {TableRow(props?.children)}
         </Style>
     );
 }

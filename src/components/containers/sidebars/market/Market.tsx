@@ -1,5 +1,7 @@
 "use client";
-import Style, { Row, Col } from "./ListItem.style";
+
+import { Fragment } from "react";
+import Style, { Row, Col } from "./Market.style";
 
 export interface ListItem {
     children?: any;
@@ -8,7 +10,7 @@ export interface ListItem {
     onClick?: Function;
 }
 
-export default function ListItem(props: ListItem) {
+export default function Market(props: ListItem) {
     const ListRow = (data: any) => {
         return data && (
             typeof data !== "string" && data?.length > 0 ? (
@@ -28,7 +30,7 @@ export default function ListItem(props: ListItem) {
         return data && (
             typeof data !== "string" && data?.length > 0 ? (
                 data?.map((info: any, i: number) => (
-                    <Col key={i} style={data?.style} data-col={info?.align}>
+                    <Col key={i} style={data?.style} data-col={data?.align}>
                         {ListRow(info?.children || info)}
                     </Col>
                 ))

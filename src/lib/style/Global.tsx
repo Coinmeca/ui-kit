@@ -153,8 +153,8 @@ const Style = createGlobalStyle`
 
     @media (prefers-color-scheme: dark) {
         :root {
-            --white: 0, 0, 0;
-            --black: 255, 255, 255;
+            --white: 255,255,255;
+            --black: 0,0,0;
             --dim: 32, 32, 32;
         }
 
