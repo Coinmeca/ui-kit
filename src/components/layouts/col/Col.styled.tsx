@@ -13,10 +13,10 @@ const gap = css`
                 gap: calc(var(--gap) / 16);
 
                 & > & {
-                    gap: calc(var(--gap) / 32)};
+                    gap: calc(var(--gap) / 32);
 
                     & > & {
-                        gap: calc(var(--gap) / 64)};
+                        gap: calc(var(--gap) / 64);
                     }
                 }
             }
@@ -30,14 +30,14 @@ const Style = styled.div<{
     $responsive?: string | undefined;
     $reverse?: boolean;
 }>`
-    --gap: ${({ $gap }) => $gap || 4}em;
+    --gap: ${({ $gap }) => ($gap === 0 ? 0 : $gap || 4)}em;
 
     display: flex;
     flex-direction: ${({ $reverse }) => ($reverse ? "column-reverse" : "column")};
     width: ${({ $fit }) => ($fit ? "max-content" : "100%")};
 
-    && > *{
-        width:100%;
+    && > * {
+        width: 100%;
     }
 
     gap: calc(var(--gap));
@@ -51,10 +51,10 @@ const Style = styled.div<{
                 gap: calc(var(--gap) / 8);
 
                 & > & {
-                    gap: calc(var(--gap) / 16)};
+                    gap: calc(var(--gap) / 16);
 
                     & > & {
-                        gap: calc(var(--gap) / 32)};
+                        gap: calc(var(--gap) / 32);
                     }
                 }
             }

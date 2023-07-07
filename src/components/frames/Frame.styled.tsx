@@ -1,6 +1,6 @@
-import { css, styled } from "styled-components";
+import { styled } from "styled-components";
 
-const Style = styled.section<{ $sidebar: boolean; $width: number }>`
+const Style = styled.section`
     position: relative;
     display: flex;
     flex-direction: column;
@@ -16,29 +16,9 @@ const Style = styled.section<{ $sidebar: boolean; $width: number }>`
         height: 100%;
 
         & > main {
-            z-index: 2;
             width: 100%;
             overflow: hidden auto;
-        }
-
-        & > aside {
-            z-index: 10;
-            ${({ $width, $sidebar }) =>
-        $sidebar &&
-        css`
-                    min-width: ${$sidebar ? $width : 0}em;
-                `};
-            transition: 0.3s ease;
-        }
-    }
-
-    @media all and (max-width: 1919px) {
-        & > section {
-            & > aside {
-                z-index: 1;
-                min-width: 0;
-                max-width: 0;
-            }
+            z-index: 3;
         }
     }
 `;

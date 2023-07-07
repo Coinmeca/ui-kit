@@ -5,31 +5,24 @@ import Style from "./Frame.styled";
 
 export interface Frame {
     children?: any;
-    sidebar?: boolean;
-    sidebars?: Sidebars;
+    sidebar?: Sidebars;
     width?: number;
     background?: BG;
     align?: "left" | "right";
 }
 
 export default function Frame(props: Frame) {
-    const sidebar = props?.sidebar || false;
-    const width = props?.width || 40;
     const align = props?.align || "left";
 
     return (
         <>
             <Layouts.BG {...props?.background} />
-            <Style $sidebar={sidebar} $width={width}>
+            <Style>
                 <header></header>
                 <section>
-                    {align === "left" && (
-                        <Containers.Sidebar upper={props?.sidebars?.upper} lower={props?.sidebars?.lower} />
-                    )}
+                    {props?.align === "left" && props?.sidebar && <Containers.Sidebar {...props?.sidebar} />}
                     <main>{props?.children}</main>
-                    {align === "right" && (
-                        <Containers.Sidebar upper={props?.sidebars?.upper} lower={props?.sidebars?.lower} />
-                    )}
+                    {props?.align === "right" && props?.sidebar && <Containers.Sidebar {...props?.sidebar} />}
                 </section>
             </Style>
         </>

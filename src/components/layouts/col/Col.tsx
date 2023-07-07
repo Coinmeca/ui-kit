@@ -11,7 +11,7 @@ export interface Col {
 }
 
 export default function Col(props: Col) {
-    const gap = props?.gap || 4;
+    const gap = props?.gap === 0 ? 0 : props?.gap || 4;
     const align = props?.align || "left";
     const fit = props?.fit || false;
     const reverse = props?.reverse || false;

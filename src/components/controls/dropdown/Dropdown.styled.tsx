@@ -117,7 +117,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
                 }
             }
 
-            &.disabled {
+            &[data-disabled="true"] {
                 opacity: 0.15;
                 cursor: initial;
                 pointer-events: none;

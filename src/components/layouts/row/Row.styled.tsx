@@ -3,6 +3,7 @@ import { styled, css } from "styled-components";
 
 const gap = css`
     gap: calc(var(--gap) / 2);
+
     & > & {
         gap: calc(var(--gap) / 4);
 
@@ -13,10 +14,10 @@ const gap = css`
                 gap: calc(var(--gap) / 16);
 
                 & > & {
-                    gap: calc(var(--gap) / 32)};
+                    gap: calc(var(--gap) / 32);
 
                     & > & {
-                        gap: calc(var(--gap) / 64)};
+                        gap: calc(var(--gap) / 64);
                     }
                 }
             }
@@ -28,13 +29,13 @@ const Style = styled.div<{
     $fit: boolean;
     $responsive?: string | undefined;
     $reverse?: boolean;
+    $only?: boolean;
 }>`
-    --gap: ${({ $gap }) => $gap || 4}em;
+    --gap: ${({ $gap }) => ($gap === 0 ? 0 : $gap || 4)}em;
 
     display: flex;
-    flex-flow: ${({ $reverse }) => ($reverse ? "row-reverse wrap" : "row wrap")};
+    flex-flow: ${({ $only, $reverse }) => ($only ? "row" : $reverse ? "row-reverse wrap" : "row wrap")};
     width: ${({ $fit }) => ($fit ? "max-content" : "auto")};
-    gap: ${({ $gap }) => $gap || 4}rem;
 
     && > * {
         flex: 1;
@@ -43,6 +44,7 @@ const Style = styled.div<{
     }
 
     gap: calc(var(--gap));
+
     & > & {
         gap: calc(var(--gap) / 2);
 
@@ -53,10 +55,10 @@ const Style = styled.div<{
                 gap: calc(var(--gap) / 8);
 
                 & > & {
-                    gap: calc(var(--gap) / 16)};
+                    gap: calc(var(--gap) / 16);
 
                     & > & {
-                        gap: calc(var(--gap) / 32)};
+                        gap: calc(var(--gap) / 32);
                     }
                 }
             }
