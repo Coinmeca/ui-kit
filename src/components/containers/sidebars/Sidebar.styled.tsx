@@ -1,45 +1,56 @@
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import * as Divider from "components/layouts/divider/Divider.styled";
 import * as Input from "components/controls/input/Input.styled";
 import * as ListItem from "components/layouts/list/ListItem.style";
 import * as TableItem from "components/layouts/table/TableItem.styled";
 
+const Upper = styled.section``;
 
-const Upper = styled.section`
-`
+const Lower = styled.section``;
 
-const Lower = styled.section`
-`
-
-const Style = styled.aside`
+const Style = styled.aside<{ $width: number; $active: boolean }>`
     position: relative;
-    display:flex;
-    height:100%;
+    display: flex;
+    height: 100%;
+    z-index: 2;
 
     & > * {
         position: relative;
-        display:flex;
+        display: flex;
         flex-direction: column;
         width: 100%;
         height: 100%;
         background: rgba(var(--black), var(--o045));
-        overflow:hidden;
+        overflow: hidden;
 
-        & > *{
+        & > * {
             position: relative;
-            display:flex;
+            display: flex;
             flex-direction: column;
             width: 100%;
             height: 100%;
         }
     }
 
-    & > ${Upper} {
-    
+    & > ${Lower} {
+        z-index: 1;
     }
 
-    & > ${Lower} {
+    & > ${Upper} {
+        z-index: 3;
+    }
 
+    ${({ $width, $active }) =>
+        $active &&
+        css`
+            min-width: ${$active ? $width : 0}em;
+        `};
+    transition: 0.3s ease;
+
+    @media all and (max-width: 1919px) {
+        z-index: 0;
+        min-width: 0;
+        max-width: 0;
     }
 
     & ${Divider.default} {
@@ -56,14 +67,14 @@ const Style = styled.aside`
     }
 
     & ${TableItem.default} > * {
-        &:first-child{
+        &:first-child {
             padding-left: 2em;
         }
 
-        &:last-child{
+        &:last-child {
             padding-right: 2em;
         }
     }
-`
+`;
 
 export default Style;

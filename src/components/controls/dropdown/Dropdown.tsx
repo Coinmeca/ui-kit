@@ -115,23 +115,23 @@ export default function Dropdown(props: Dropdown) {
                                     typeof option === "undefined"
                                         ? undefined
                                         : typeof option === "object"
-                                            ? typeof option[keyIndex] !== "undefined"
-                                                ? option[keyIndex]
-                                                : typeof option[keyName] !== "undefined"
-                                                    ? option[keyName]
-                                                    : option
+                                        ? typeof option[keyIndex] !== "undefined"
+                                            ? option[keyIndex]
+                                            : typeof option[keyName] !== "undefined"
+                                            ? option[keyName]
                                             : option
+                                        : option
                                 }
                             >
                                 {typeof option === "undefined"
                                     ? placeholder
                                     : typeof option === "object"
-                                        ? typeof option[keyIndex] !== "undefined"
-                                            ? option[keyIndex]
-                                            : typeof option[keyName] !== "undefined"
-                                                ? option[keyName]
-                                                : option
-                                        : option}
+                                    ? typeof option[keyIndex] !== "undefined"
+                                        ? option[keyIndex]
+                                        : typeof option[keyName] !== "undefined"
+                                        ? option[keyName]
+                                        : option
+                                    : option}
                             </span>
                             <Elements.Icon icon="chevron-down-bold" />
                         </>
@@ -149,7 +149,7 @@ export default function Dropdown(props: Dropdown) {
                                     onClick={(e: any) => {
                                         onSelect(e, v, k);
                                     }}
-                                    className={typeof option !== "undefined" && (v[keyIndex] === option || v[keyName] === option || v === option) ? "disabled" : ""}
+                                    data-disabled={typeof option !== "undefined" && (v[keyIndex] === option || v[keyName] === option || v === option)}
                                 >
                                     <>
                                         {typeof v[imgName] !== "undefined" && v[imgName] !== "" ? (
