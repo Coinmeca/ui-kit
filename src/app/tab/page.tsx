@@ -141,34 +141,32 @@ export default function Exchange() {
     ];
 
     return (
-        <Frames.Frame sidebar>
-            <Layouts.Content>
-                <div style={{ height: "320px" }} />
-                <Layouts.Box>
-                    <Layouts.Contents.InnerContent>
-                        Exchange
-                        <Layouts.Row>
-                            <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
-                                Icon
-                            </Controls.Tab>
-                            <Controls.Tab active={tab === "button"} onClick={() => setTab("button")}>
-                                Button
-                            </Controls.Tab>
-                            <Controls.Tab active={tab === "dropdown"} onClick={() => setTab("dropdown")}>
-                                Dropdown
-                            </Controls.Tab>
-                            <Controls.Tab active={tab === "input"} onClick={() => setTab("input")}>
-                                Input
-                            </Controls.Tab>
-                            <Controls.Tab active={tab === "range"} onClick={() => setTab("range")}>
-                                Range
-                            </Controls.Tab>
-                        </Layouts.Row>
-                        <Layouts.Divider />
-                        <Layouts.Contents.TabContainer contents={tabs} />
-                    </Layouts.Contents.InnerContent>
-                </Layouts.Box>
-            </Layouts.Content>
-        </Frames.Frame>
+        <Layouts.Content>
+            <div style={{ height: "320px" }} />
+            <Layouts.Box>
+                <Layouts.Contents.InnerContent>
+                    Exchange
+                    <Layouts.Row>
+                        <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
+                            Icon
+                        </Controls.Tab>
+                        <Controls.Tab active={tab === "button"} onClick={() => setTab("button")}>
+                            Button
+                        </Controls.Tab>
+                        <Controls.Tab active={tab === "dropdown"} onClick={() => setTab("dropdown")}>
+                            Dropdown
+                        </Controls.Tab>
+                        <Controls.Tab active={tab === "input"} onClick={() => setTab("input")}>
+                            Input
+                        </Controls.Tab>
+                        <Controls.Tab active={tab === "range"} onClick={() => setTab("range")}>
+                            Range
+                        </Controls.Tab>
+                    </Layouts.Row>
+                    <Layouts.Divider />
+                    <Layouts.Contents.TabContainer contents={tabs} />
+                </Layouts.Contents.InnerContent>
+            </Layouts.Box>
+        </Layouts.Content>
     );
 }

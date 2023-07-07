@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { Controls, Elements, Frames, Layouts } from "components";
 import type { Frame } from "components/frames/Frame";
@@ -126,7 +127,6 @@ export default function Exchange(props: Exchange) {
 
     const sidebars = {
         active: true,
-        align: "left",
         lower: {
             active: true,
             children: [
@@ -225,7 +225,7 @@ export default function Exchange(props: Exchange) {
     };
 
     return (
-        <Frames.Frame header={header} sidebar={sidebars}>
+        <Frames.Frame header={header} sidebar={sidebars} align={"right"} background={{ img: { src: 2 } }}>
             {props?.children}
         </Frames.Frame>
     );
