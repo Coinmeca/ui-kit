@@ -15,7 +15,7 @@ export const Row = styled.div`
 export const Col = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content:center;
+    justify-content: center;
     width: 100%;
     gap: 0.167em;
 
@@ -33,7 +33,7 @@ const Style = styled.div<{ $event: boolean }>`
     border-spacing: 1em;
     font-feature-settings: "tnum" on, "lnum" on;
     cursor: ${({ $event }) => ($event ? "pointer" : "default")};
-    pointer-events: ${({ $event }) => ($event ? "initial" : "none")};
+    pointer-events: ${({ $event }) => ($event ? "inherit" : "none")};
     transition: 0.3s ease;
 
     & > * {

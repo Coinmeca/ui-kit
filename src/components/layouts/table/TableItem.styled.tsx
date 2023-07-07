@@ -28,7 +28,7 @@ const Style = styled.div<{ $event: boolean }>`
     gap: 1em;
     font-feature-settings: "tnum" on, "lnum" on;
     cursor: ${({ $event }) => ($event ? "pointer" : "default")};
-    pointer-events: ${({ $event }) => ($event ? "initial" : "none")};
+    pointer-events: ${({ $event }) => ($event ? "inherit" : "none")};
     transition: 0.3s ease;
 
     & > * {

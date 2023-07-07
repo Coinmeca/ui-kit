@@ -47,33 +47,35 @@ const Style = styled.aside<{ $width: number; $active: boolean }>`
         `};
     transition: 0.3s ease;
 
+    && {
+        & ${Divider.default} {
+            background: white;
+        }
+
+        & ${Input.default} {
+            padding: 1em 2em;
+        }
+
+        ${ListItem.default} {
+            padding-left: 2em;
+            padding-right: 2em;
+        }
+
+        && ${TableItem.default} > * {
+            &:first-child {
+                padding-left: 2em;
+            }
+
+            &:last-child {
+                padding-right: 2em;
+            }
+        }
+    }
+
     @media all and (max-width: 1919px) {
         z-index: 0;
         min-width: 0;
         max-width: 0;
-    }
-
-    & ${Divider.default} {
-        background: white;
-    }
-
-    & ${Input.default} {
-        padding: 1em 2em;
-    }
-
-    & ${ListItem.default} {
-        padding-left: 2em;
-        padding-right: 2em;
-    }
-
-    & ${TableItem.default} > * {
-        &:first-child {
-            padding-left: 2em;
-        }
-
-        &:last-child {
-            padding-right: 2em;
-        }
     }
 `;
 
