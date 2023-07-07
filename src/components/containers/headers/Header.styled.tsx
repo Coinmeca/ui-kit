@@ -23,6 +23,11 @@ export const Nav = styled.nav<{ $scale: number; $color: string }>`
 
     & > a {
         color: rgb(${({ $color }) => Root.Color($color)});
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
         font-size: 1.5em;
         font-weight: bold;
         text-decoration: none;

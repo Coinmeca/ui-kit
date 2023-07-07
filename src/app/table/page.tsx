@@ -352,13 +352,11 @@ export default function Exchange() {
     };
 
     return (
-        <Frames.Frame header={header} sidebar={sidebars} align={"right"} background={{ filter: "black", img: { src: 2 } }}>
-            <Layouts.Content>
-                <div style={{ height: "320px" }} />
-                <Layouts.Box>
-                    <Layouts.Table list={formatter(data)} noData="There is no data." />
-                </Layouts.Box>
-            </Layouts.Content>
-        </Frames.Frame>
+        <Layouts.Content>
+            <div style={{ height: "320px" }} />
+            <Layouts.Box>
+                <Layouts.Table list={formatter(data)} noData="There is no data." />
+            </Layouts.Box>
+        </Layouts.Content>
     );
 }
