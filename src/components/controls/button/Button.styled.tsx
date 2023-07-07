@@ -17,7 +17,7 @@ const Style = styled.button<{
 
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     font-weight: bold;
-    ${({ $fit }) => $fit &&  "max-width: max-content"};
+    ${({ $fit }) => $fit && "max-width: max-content"};
     min-width: max-content;
     padding: 0.5em 1em;
     cursor: pointer;

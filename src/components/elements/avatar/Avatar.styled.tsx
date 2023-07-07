@@ -1,12 +1,12 @@
 import { styled } from "styled-components";
 
-const Style = styled.div<{ $scale: number, $size: number }>`
+const Style = styled.div<{ $scale: number; $size: number }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
-    display:flex;
-    align-items:center;
+    display: flex;
+    align-items: center;
     gap: 1em;
 
-    & > div{
+    & > div {
         position: relative;
         min-width: ${({ $size }) => $size}em;
         min-height: ${({ $size }) => $size}em;
@@ -14,24 +14,24 @@ const Style = styled.div<{ $scale: number, $size: number }>`
         max-height: ${({ $size }) => $size}em;
         border-radius: 100%;
         aspect-ratio: 1 / 1;
-        overflow:hidden;
+        overflow: hidden;
 
-        & > span{
-            display:flex;
+        & > span {
+            display: flex;
             align-items: center;
-            justify-content:center;
+            justify-content: center;
             height: calc(100% - 0.5em);
             border: 0.25em solid white;
             border-radius: 100%;
 
-            & > span{
-                font-size:1.5em;
-                font-weight:bolder;
+            & > span {
+                font-size: 1.5em;
+                font-weight: bolder;
                 font-feature-settings: initial;
             }
         }
 
-        & > img{
+        & > img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -39,11 +39,11 @@ const Style = styled.div<{ $scale: number, $size: number }>`
         }
     }
 
-    & > span{
-        font-size:1.5em;
-        font-weight:bold;
+    & > span {
+        font-size: 1.5em;
+        font-weight: bold;
         font-feature-settings: initial;
     }
-`
+`;
 
 export default Style;

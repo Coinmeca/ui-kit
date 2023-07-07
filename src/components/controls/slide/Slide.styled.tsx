@@ -62,8 +62,8 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
         }
 
         ${({ $nav, $timer, $padding }) =>
-        $nav &&
-        css`
+            $nav &&
+            css`
                 &:last-child:not(:only-child) {
                     position: absolute;
                     display: flex;
@@ -89,9 +89,9 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
                         &[data-active="true"] {
                             width: 8em;
                             background-image: linear-gradient(rgb(var(--white)), rgb(var(--white)));
-                            background-size:100% 100%;
-                            background-position:left;
-                            background-repeat:no-repeat;
+                            background-size: 100% 100%;
+                            background-position: left;
+                            background-repeat: no-repeat;
                             animation: slide both 1 ${$timer / 1000}s ease;
                         }
                     }
@@ -99,8 +99,12 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
             `}
     }
 
-    @keyframes slide{
-        0% {background-size: 0% 100%;}
-        100% {background-size: 100% 100%;}
+    @keyframes slide {
+        0% {
+            background-size: 0% 100%;
+        }
+        100% {
+            background-size: 100% 100%;
+        }
     }
 `;

@@ -4,7 +4,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     background: rgba(var(--white), var(--o0));
     color: rgba(var(--white), var(--o045));
-    ${({ $fit }) => $fit &&  "max-width: max-content"};
+    ${({ $fit }) => $fit && "max-width: max-content"};
     height: 4em;
     flex-direction: column;
     transition: 0.3s ease;
