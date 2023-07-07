@@ -34,6 +34,7 @@ const Style = styled.div<{
     --gap: ${({ $gap }) => ($gap === 0 ? 0 : $gap || 4)}em;
 
     display: flex;
+    align-items: center;
     flex-flow: ${({ $only, $reverse }) => ($only ? "row" : $reverse ? "row-reverse wrap" : "row wrap")};
     width: ${({ $fit }) => ($fit ? "max-content" : "auto")};
 

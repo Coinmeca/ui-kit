@@ -152,8 +152,10 @@ export default function Exchange() {
             children: (
                 <Layouts.Col align={"center"}>
                     <Layouts.Col align={"center"}>
-                        <Elements.Text type={'h2'}>Much Faster and Much Easier Coin Exchange</Elements.Text>
-                        <Elements.Text scale={2} weight={'normal'} responsive={{ device: 'mobile', scale: 4 }}>Start with your new experience coin trading system on Coinmeca.</Elements.Text>
+                        <Elements.Text type={"h2"}>Much Faster and Much Easier Coin Exchange</Elements.Text>
+                        <Elements.Text scale={2} weight={"normal"} responsive={{ device: "mobile", scale: 4 }}>
+                            Start with your new experience coin trading system on Coinmeca.
+                        </Elements.Text>
                     </Layouts.Col>
                     <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
                         Get Started with Sign up
@@ -177,8 +179,10 @@ export default function Exchange() {
             children: (
                 <Layouts.Col align={"center"}>
                     <Layouts.Col align={"center"}>
-                        <Elements.Text type={'h2'}>Meet Brand New Finance</Elements.Text>
-                        <Elements.Text scale={2} weight={'normal'}>Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.</Elements.Text>
+                        <Elements.Text type={"h2"}>Meet Brand New Finance</Elements.Text>
+                        <Elements.Text scale={2} weight={"normal"}>
+                            Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.
+                        </Elements.Text>
                     </Layouts.Col>
                     <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
                         Get Started with Sign up
@@ -196,8 +200,10 @@ export default function Exchange() {
             children: (
                 <Layouts.Col align={"center"}>
                     <Layouts.Col align={"center"}>
-                        <Elements.Text type={'h2'}>Make Profits While Spending Money</Elements.Text>
-                        <Elements.Text scale={2} weight={'normal'}>Lets get earned Coinmeca Token free according your service usage. And just sell it market.</Elements.Text>
+                        <Elements.Text type={"h2"}>Make Profits While Spending Money</Elements.Text>
+                        <Elements.Text scale={2} weight={"normal"}>
+                            Lets get earned Coinmeca Token free according your service usage. And just sell it market.
+                        </Elements.Text>
                     </Layouts.Col>
                     <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
                         Get Started with Sign up
@@ -212,14 +218,24 @@ export default function Exchange() {
             children: [
                 {
                     children: [
-                        <><Controls.Tab iconLeft={'plus'} fit disabled>Add Chart</Controls.Tab></>,
-                        <><Controls.Tab fit>Market Order</Controls.Tab></>
-                    ]
+                        <>
+                            <Controls.Tab iconLeft={"plus"} fit disabled>
+                                Add Chart
+                            </Controls.Tab>
+                        </>,
+                        <>
+                            <Controls.Tab fit>Market Order</Controls.Tab>
+                        </>,
+                    ],
                 },
                 {
-                    children: [<><Controls.Tab fit>Order History</Controls.Tab></>],
-                }
-            ]
+                    children: [
+                        <>
+                            <Controls.Tab fit>Order History</Controls.Tab>
+                        </>,
+                    ],
+                },
+            ],
         },
         // [
         //     {
@@ -237,7 +253,7 @@ export default function Exchange() {
     ];
 
     return (
-        <Frames.Frame sidebar background={{ filter: 'black', img: { src: 2 } }}>
+        <Frames.Frame background={{ filter: "black", img: { src: 2 } }}>
             <Layouts.Content>
                 <Layouts.Cover fullsize>
                     <Controls.Slide slides={slides} padding={0} timer={3000} align={"center"} nav={"bottom"} style={{ zIndex: 4 }} />

@@ -1,10 +1,12 @@
 import { Containers, Layouts } from "components";
 import type { BG } from "components/layouts/bg/BG";
+import type { Header } from "components/containers/headers/Header";
 import type { Sidebars } from "components/containers/sidebars/Sidebar";
 import Style from "./Frame.styled";
 
 export interface Frame {
     children?: any;
+    header?: Header;
     sidebar?: Sidebars;
     width?: number;
     background?: BG;
@@ -18,7 +20,7 @@ export default function Frame(props: Frame) {
         <>
             <Layouts.BG {...props?.background} />
             <Style>
-                <header></header>
+                {props?.header && <Containers.Headers.Header {...props?.header} />}
                 <section>
                     {props?.align === "left" && props?.sidebar && <Containers.Sidebar {...props?.sidebar} />}
                     <main>{props?.children}</main>
