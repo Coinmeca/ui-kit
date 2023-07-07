@@ -26,6 +26,7 @@ const Style = styled.div<{ $event: boolean }>`
     display: table-row;
     align-items: center;
     gap: 1em;
+    font-feature-settings: "tnum" on, "lnum" on;
     cursor: ${({ $event }) => ($event ? "pointer" : "default")};
     pointer-events: ${({ $event }) => ($event ? "initial" : "none")};
     transition: 0.3s ease;
@@ -33,14 +34,14 @@ const Style = styled.div<{ $event: boolean }>`
     & > * {
         font-size: 1.5em;
         display: table-cell;
-        vertical-align:middle;
+        vertical-align: middle;
         padding: calc(var(--unit) * 1) calc(var(--unit) * 0.5);
-        
-        &:first-child{
+
+        &:first-child {
             padding-left: calc(var(--unit) * 1);
         }
-        
-        &:last-child{
+
+        &:last-child {
             padding-right: calc(var(--unit) * 1);
         }
     }
@@ -51,8 +52,8 @@ const Style = styled.div<{ $event: boolean }>`
 
     &:active {
         ${({ $event }) =>
-        $event &&
-        css`
+            $event &&
+            css`
                 background: rgba(var(--white), var(--o015));
             `};
     }

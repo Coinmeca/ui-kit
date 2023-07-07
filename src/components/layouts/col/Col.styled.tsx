@@ -22,7 +22,7 @@ const gap = css`
             }
         }
     }
-`
+`;
 
 const Style = styled.div<{
     $gap: number;
@@ -30,7 +30,7 @@ const Style = styled.div<{
     $responsive?: string | undefined;
     $reverse?: boolean;
 }>`
-    --gap: ${({$gap}) => $gap || 4}em;
+    --gap: ${({ $gap }) => $gap || 4}em;
 
     display: flex;
     flex-direction: ${({ $reverse }) => ($reverse ? "column-reverse" : "column")};
@@ -68,16 +68,16 @@ const Style = styled.div<{
                     @media all and(max-width: ${Root.Device.Laptop}px) {
                         flex-direction: ${$reverse ? "row-reverse" : "row"};
                         justify-content: inherit;
-                        align-items:center;
+                        align-items: center;
                         ${gap}
                     }
                 `;
             case "tablet":
                 return css`
                     @media all and(max-width: ${Root.Device.Tablet}px) {
-                        flex-direction: ${$reverse ? "row-reverse" : "row"};     
+                        flex-direction: ${$reverse ? "row-reverse" : "row"};
                         justify-content: inherit;
-                        align-items:center;
+                        align-items: center;
                         ${gap}
                     }
                 `;
@@ -86,7 +86,7 @@ const Style = styled.div<{
                     @media all and(max-width: ${Root.Device.Mobile}px) {
                         flex-direction: ${$reverse ? "row-reverse" : "row"};
                         justify-content: inherit;
-                        align-items:center;
+                        align-items: center;
                         ${gap}
                     }
                 `;

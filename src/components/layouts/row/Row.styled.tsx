@@ -22,14 +22,14 @@ const gap = css`
             }
         }
     }
-`
+`;
 const Style = styled.div<{
     $gap: number;
     $fit: boolean;
     $responsive?: string | undefined;
     $reverse?: boolean;
 }>`
-    --gap: ${({$gap}) => $gap || 4}em;
+    --gap: ${({ $gap }) => $gap || 4}em;
 
     display: flex;
     flex-flow: ${({ $reverse }) => ($reverse ? "row-reverse wrap" : "row wrap")};

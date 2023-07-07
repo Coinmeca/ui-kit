@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 export const Row = styled.div<{ $scale: number; $fix?: boolean }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     display: flex;
-    width:100%;
+    width: 100%;
     overflow-x: scroll;
     overflow-style: none;
     ${({ $fix }) => !$fix && "overflow-x: scroll;"}
@@ -17,10 +17,10 @@ export const Row = styled.div<{ $scale: number; $fix?: boolean }>`
 const Style = styled.div<{ $scale: number }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     display: flex;
-    flex-direction:column;
-    
+    flex-direction: column;
+
     ${Row} + ${Row}:last-child:not(:only-child) {
-        max-width:max-content;
+        max-width: max-content;
         justify-content: flex-end;
     }
 `;
