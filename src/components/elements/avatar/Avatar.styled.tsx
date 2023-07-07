@@ -1,6 +1,7 @@
+import { Root } from "lib/style";
 import { styled } from "styled-components";
 
-const Style = styled.div<{ $scale: number; $size: number }>`
+const Style = styled.div<{ $scale: number; $color: string; $size: number }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     display: flex;
     align-items: center;
@@ -28,6 +29,7 @@ const Style = styled.div<{ $scale: number; $size: number }>`
                 font-size: 1.5em;
                 font-weight: bolder;
                 font-feature-settings: initial;
+                ${({ $color }) => $color && `color: rgb(${Root.Color($color)})`}
             }
         }
 

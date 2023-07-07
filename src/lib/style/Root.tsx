@@ -9,11 +9,11 @@ export const Device = {
     HD2K: 2560,
     HD4K: 3840,
     HD5K: 5120,
-    HD8K: 7680
+    HD8K: 7680,
 };
 
 export const Blur = css<{ $scale?: number }>`
-    backdrop-filter: blur(${(props) => props.$scale || 1}rem);
+    backdrop-filter: blur(${({ $scale }) => $scale || 1}rem);
 `;
 
 export const Color = (color: string) => {

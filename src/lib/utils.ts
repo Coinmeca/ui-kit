@@ -88,7 +88,7 @@ export function Format(value: any, type?: string, separator?: boolean, fix?: num
                 value = type === 'number' ? parseFloat(value) : separator ? parseFloat(value).toLocaleString() : value;
             }
             if (type === 'unit') {
-                
+
             }
             return value;
         }
