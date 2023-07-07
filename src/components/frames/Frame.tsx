@@ -22,9 +22,9 @@ export default function Frame(props: Frame) {
             <Style>
                 {props?.header && <Containers.Headers.Header {...props?.header} />}
                 <section>
-                    {props?.align === "left" && props?.sidebar && <Containers.Sidebar {...props?.sidebar} />}
+                    {align === "left" && props?.sidebar && <Containers.Sidebar {...props?.sidebar} />}
                     <main>{props?.children}</main>
-                    {props?.align === "right" && props?.sidebar && <Containers.Sidebar {...props?.sidebar} />}
+                    {align === "right" && props?.sidebar && <Containers.Sidebar {...props?.sidebar} />}
                 </section>
             </Style>
         </>

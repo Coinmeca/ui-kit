@@ -1,24 +1,25 @@
-import { ReactNode } from "react";
 import Style from "./Sidebar.styled";
 
 export interface Sidebars {
     active?: boolean;
     width?: number;
+    scale?: number;
     upper?: { active?: boolean; children?: Sidebar[] };
     lower?: { active?: boolean; children?: Sidebar[] };
 }
 
 export interface Sidebar {
     active?: boolean;
-    children: ReactNode;
+    children: any;
 }
 
 export default function Sidebar(props: Sidebars) {
     const active = props?.active || false;
-    const width = props?.width || 40;
+    const scale = props?.scale || 1;
+    const width = props?.width || 60;
 
     return (
-        <Style $active={active} $width={width}>
+        <Style $scale={scale} $active={active} $width={width}>
             {props?.lower?.children && props?.lower?.children?.length > 0 && (
                 <section data-active={props?.lower?.active}>
                     {props?.lower?.children?.map((v: any, k: number) => (

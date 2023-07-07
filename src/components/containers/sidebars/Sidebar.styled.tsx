@@ -8,7 +8,8 @@ const Upper = styled.section``;
 
 const Lower = styled.section``;
 
-const Style = styled.aside<{ $width: number; $active: boolean }>`
+const Style = styled.aside<{ $scale: number; $width: number; $active: boolean }>`
+    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     position: relative;
     display: flex;
     height: 100%;

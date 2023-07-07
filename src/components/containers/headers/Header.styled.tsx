@@ -97,7 +97,17 @@ export const Menu = styled.div`
     }
 `;
 
-const Style = styled.header<{ $scale: number; $color: string; $height: number }>`
+export const Side = styled.div<{ $scale: number; $width: number }>`
+    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    max-width: ${({ $width }) => $width}em;
+
+    & > ${Row.default} {
+        padding: 0 2em;
+        justify-content: space-between;
+    }
+`;
+
+const Style = styled.header<{ $scale: number; $color: string; $height: number; $side: number }>`
     position: relative;
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     display: flex;
@@ -106,12 +116,15 @@ const Style = styled.header<{ $scale: number; $color: string; $height: number }>
     background: rgb(var(--black));
     min-height: ${({ $height }) => $height || 8}em;
 
-    & > * {
+    & > ${Row.default} > ${Row.default} {
         padding: 0 3em;
+
+        &:first-child:not(:only-child) {
+            padding-right: 2em;
+        }
     }
 
-    & ${Row.default} {
-        justify-content: space-between;
+    && ${Row.default} {
         height: 100%;
     }
 

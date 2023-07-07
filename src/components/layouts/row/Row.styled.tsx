@@ -36,7 +36,7 @@ const Style = styled.div<{
     display: flex;
     align-items: center;
     flex-flow: ${({ $only, $reverse }) => ($only ? "row" : $reverse ? "row-reverse wrap" : "row wrap")};
-    width: ${({ $fit }) => ($fit ? "max-content" : "auto")};
+    max-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
 
     && > * {
         flex: 1;

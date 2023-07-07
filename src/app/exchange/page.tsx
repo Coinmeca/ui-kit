@@ -325,6 +325,7 @@ export default function Exchange() {
     };
 
     const header = {
+        color: "red",
         logo: {
             src: "/src/assets/coinmeca.svg",
             width: 128,
@@ -348,7 +349,20 @@ export default function Exchange() {
                 path: "/launchpad",
             },
         ],
-        color: "red",
+        side: {
+            children: (
+                <>
+                    <Layouts.Row fit>
+                        <Controls.Dropdown fit />
+                        <Controls.Dropdown fit />
+                    </Layouts.Row>
+                    {/* <Controls.Button fit>Connect</Controls.Button> */}
+                    <Controls.Button iconRight={"chevron-down-bold"} fit>
+                        <Elements.Avatar length={8} size={3} display={4} name={"0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"} />
+                    </Controls.Button>
+                </>
+            ),
+        },
     };
 
     return (
