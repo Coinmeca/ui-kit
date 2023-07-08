@@ -18,12 +18,14 @@ export default function Layout(props: Exchange) {
                         {
                             style: { width: "max-content" },
                             children: [
-                                <Elements.Avatar
-                                    // length={8}
-                                    size={3}
-                                    img={data?.logo}
-                                    // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
-                                />,
+                                <>
+                                    <Elements.Avatar
+                                        // length={8}
+                                        size={3}
+                                        img={data?.logo}
+                                        // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
+                                    />
+                                </>,
                                 [`${data?.symbol}`, `${data?.market}`],
                             ],
                         },
