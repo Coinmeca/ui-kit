@@ -10,8 +10,8 @@ export interface Tab {
     active?: boolean;
     disabled?: any;
 
-    iconLeft?: string | Icon;
-    iconRight?: string | Icon;
+    iconLeft?: Icon | string;
+    iconRight?: Icon | string;
 
     children?: any;
     onClick?: Function;
@@ -26,7 +26,7 @@ export default function Tab(props: Tab) {
     const fit = props?.fit || false;
 
     const Icons = (icon?: string | Icon) => {
-        return typeof icon === "string" ? <Elements.Icon icon={icon} scale={scale} /> : typeof icon === "object" ? <Elements.Icon {...icon} scale={scale} /> : <></>;
+        return typeof icon === "object" ? <Elements.Icon {...icon} scale={scale} /> : typeof icon === "string" ? <Elements.Icon icon={icon} scale={scale} /> : <></>;
     };
 
     const onClick = (e: any) => {
