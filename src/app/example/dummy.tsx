@@ -70,7 +70,7 @@ export default function Dummy() {
                     <Elements.Icon color={"#6080FF"} scale={2} icon={"bank"} />
                     <Elements.Icon color={"yellow"} scale={3} icon={"chevron-left"} />
                     <Elements.Icon color={"red"} scale={4} icon={"chart-area"} />
-                    <Elements.Icon icon={""} />
+                    {/* <Elements.Icon icon={""} /> */}
                 </Layouts.Row>
             ),
         },
@@ -172,7 +172,9 @@ export default function Dummy() {
             children: (
                 <Layouts.Col align={"center"}>
                     <Layouts.Col align={"center"}>
-                        <Elements.Text type={"h2"}>Much Faster and Much Easier Coin Exchange</Elements.Text>
+                        <Elements.Text type={"h2"} align={"center"}>
+                            Much Faster and Much Easier Coin Exchange
+                        </Elements.Text>
                         <Elements.Text scale={2} weight={"normal"} responsive={{ device: "mobile", scale: 4 }} align={"center"}>
                             Start with your new experience coin trading system on Coinmeca.
                         </Elements.Text>
@@ -199,7 +201,9 @@ export default function Dummy() {
             children: (
                 <Layouts.Col align={"center"}>
                     <Layouts.Col align={"center"}>
-                        <Elements.Text type={"h2"}>Meet Brand New Finance</Elements.Text>
+                        <Elements.Text type={"h2"} align={"center"}>
+                            Meet Brand New Finance
+                        </Elements.Text>
                         <Elements.Text scale={2} weight={"normal"} align={"center"}>
                             Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.
                         </Elements.Text>
@@ -220,7 +224,9 @@ export default function Dummy() {
             children: (
                 <Layouts.Col align={"center"}>
                     <Layouts.Col align={"center"}>
-                        <Elements.Text type={"h2"}>Make Profits While Spending Money</Elements.Text>
+                        <Elements.Text type={"h2"} align={"center"}>
+                            Make Profits While Spending Money
+                        </Elements.Text>
                         <Elements.Text scale={2} weight={"normal"} align={"center"}>
                             Lets get earned Coinmeca Token free according your service usage. And just sell it market.
                         </Elements.Text>
