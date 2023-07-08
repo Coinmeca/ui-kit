@@ -1,5 +1,5 @@
 "use client";
-import useToast from "app/hooks/useToast";
+import useToast from "hooks/useToast";
 import { Layouts } from "components";
 import Notify from "./Notify";
 import Style from "./Notification.styled";

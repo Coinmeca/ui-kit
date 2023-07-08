@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import useToast from "app/hooks/useToast";
+import useToast from "hooks/useToast";
 import { Controls, Layouts } from "components";
 import { Text } from "components/elements";
 import Image from "next/image";
