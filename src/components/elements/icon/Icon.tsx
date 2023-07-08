@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { ReactNode, useMemo } from "react";
+import { memo } from "react";
 import Style, { Count } from "./Icon.styled";
 
 export interface Icon {
@@ -10,7 +10,7 @@ export interface Icon {
     title?: string;
 }
 
-export default function Icon(props: Icon) {
+function Icon(props: Icon) {
     const color = props?.color || "white";
     const scale = props?.scale || 1;
     const title = props?.title || "";
@@ -25,3 +25,5 @@ export default function Icon(props: Icon) {
         </Style>
     );
 }
+
+export default memo(Icon);
