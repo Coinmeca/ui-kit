@@ -1,5 +1,5 @@
 "use client";
-import useToast from "app/hooks/useToast";
+import useToast from "hooks/useToast";
 import { Controls, Elements, Frames, Layouts } from "components";
 import { Icon, Button } from "components/controls";
 import { Format } from "lib/utils";
