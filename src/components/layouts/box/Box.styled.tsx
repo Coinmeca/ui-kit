@@ -7,16 +7,15 @@ const Style = styled.div`
     transition: 0.3s ease;
 
     ${Content.default} > & {
-        color-scheme: inherit;
-        background: rgb(var(--dim));
-        color: rgba(var(--black));
-        height: calc(100% - (var(--unit) * 8));
-        min-height: max-content;
         display: flex;
         flex-direction: column;
-        gap: calc(var(--unit) * 4);
-        width: auto;
+        background: rgb(var(--dim));
+        color: rgba(var(--black));
+        width: calc(100% - (var(--unit) * 8));
+        height: calc(100% - (var(--unit) * 8));
         padding: calc(var(--unit) * 4);
+        gap: calc(var(--unit) * 4);
+        min-height: max-content;
 
         @media (prefers-color-scheme: light) {
             --white: 0, 0, 0;
@@ -31,7 +30,7 @@ const Style = styled.div`
         }
 
         @media all and (max-width: ${Root.Device.Mobile}px) {
-            height: calc(100vh - (var(--unit) * 6));
+            height: calc(100% - (var(--unit) * 6));
             gap: calc(var(--unit) * 3);
             padding: calc(var(--unit) * 3);
         }
