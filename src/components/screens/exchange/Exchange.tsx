@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { Controls, Elements, Frames, Layouts } from "components";
 import type { Frame } from "components/frames/Frame";
 
@@ -9,8 +8,6 @@ export interface Exchange {
 }
 
 export default function Exchange(props: Exchange) {
-    const [sidebarTab, setSidebarTab] = useState("exchange");
-
     const formatter = (data: any) => {
         return (
             data?.length > 0 &&
@@ -125,6 +122,8 @@ export default function Exchange(props: Exchange) {
         },
     };
 
+    let sidebarTab = "exchange";
+
     const sidebars = {
         active: true,
         lower: {
@@ -134,13 +133,13 @@ export default function Exchange(props: Exchange) {
                     children: (
                         <>
                             <Layouts.Row fit style={{ padding: "0.5em 1em" }} gap={0}>
-                                <Controls.Tab active={sidebarTab === "exchange"} onClick={() => setSidebarTab("exchange")}>
+                                <Controls.Tab active={sidebarTab === "exchange"} onClick={() => (sidebarTab = "exchange")}>
                                     Exchange
                                 </Controls.Tab>
-                                <Controls.Tab active={sidebarTab === "alert"} onClick={() => setSidebarTab("alert")}>
+                                <Controls.Tab active={sidebarTab === "alert"} onClick={() => (sidebarTab = "alert")}>
                                     Alert
                                 </Controls.Tab>
-                                <Controls.Tab active={sidebarTab === "asset"} onClick={() => setSidebarTab("asset")}>
+                                <Controls.Tab active={sidebarTab === "asset"} onClick={() => (sidebarTab = "asset")}>
                                     Assets
                                 </Controls.Tab>
                             </Layouts.Row>

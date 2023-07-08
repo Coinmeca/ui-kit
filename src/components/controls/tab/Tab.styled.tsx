@@ -1,11 +1,11 @@
 import { css, styled } from "styled-components";
 
-const Style = styled.div<{ $scale: number; $active: boolean; $fit: boolean; $disabled: boolean }>`
+const Style = styled.div<{ $scale: number; $toggle: boolean; $active: boolean; $padding: boolean; $fit: boolean; $disabled: boolean }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     font-weight: bold;
     ${({ $fit }) => $fit && "max-width: max-content"};
     min-width: max-content;
-    padding: 0 1em;
+    padding: 0 ${({ $padding }) => ($padding ? 1 : 0.75)}em;
     cursor: pointer;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
@@ -46,13 +46,13 @@ const Style = styled.div<{ $scale: number; $active: boolean; $fit: boolean; $dis
         background: rgba(var(--white), var(--o015));
     }
 
-    ${({ $active }) => {
+    ${({ $active, $toggle }) => {
         return (
             $active &&
             css`
                 background: transparent;
-                cursor: initial;
-                pointer-events: none !important;
+                cursor: ${$toggle ? "pointer" : "default"};
+                pointer-events: ${$toggle ? "inherit" : "none"};
                 color: rgb(var(--white));
                 & i svg {
                     fill: rgb(var(--white));

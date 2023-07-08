@@ -1,3 +1,4 @@
+"use client";
 import { Root } from "lib/style";
 import { styled } from "styled-components";
 

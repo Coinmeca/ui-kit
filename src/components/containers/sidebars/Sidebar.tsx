@@ -1,4 +1,4 @@
-import Style from "./Sidebar.styled";
+import Style, { Lower, Upper } from "./Sidebar.styled";
 
 export interface Sidebars {
     active?: boolean;
@@ -21,22 +21,22 @@ export default function Sidebar(props: Sidebars) {
     return (
         <Style $scale={scale} $active={active} $width={width}>
             {props?.lower?.children && props?.lower?.children?.length > 0 && (
-                <section data-active={props?.lower?.active}>
+                <Lower data-active={props?.lower?.active}>
                     {props?.lower?.children?.map((v: any, k: number) => (
                         <section key={k} data-active={v?.active}>
                             {v.children}
                         </section>
                     ))}
-                </section>
+                </Lower>
             )}
             {props?.upper?.children && props?.upper?.children?.length > 0 && (
-                <section data-active={props?.upper?.active}>
+                <Upper data-active={props?.upper?.active}>
                     {props?.upper?.children?.map((v: any, k: number) => (
                         <section key={k} data-active={v?.active}>
                             {v.children}
                         </section>
                     ))}
-                </section>
+                </Upper>
             )}
         </Style>
     );

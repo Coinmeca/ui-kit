@@ -1,5 +1,7 @@
 import { css, styled } from "styled-components";
 
+export const Item = styled.li``;
+
 const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: number; $disabled: boolean }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     background: rgba(var(--white), var(--o0));
@@ -27,7 +29,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
         &:first-child {
             max-height: 100%;
 
-            li {
+            ${Item} {
                 height: 100%;
                 max-height: 100%;
                 overflow: hidden;
@@ -38,7 +40,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
 
                 & > *:last-child:not(span) {
                     position: absolute;
-                    right: 0.8em;
+                    right: 0.25em;
                     transition: 0.3s ease;
                 }
             }
@@ -70,7 +72,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
             }
         }
 
-        & > li {
+        & > ${Item} {
             position: relative;
             display: flex;
             flex-direction: row;
@@ -102,7 +104,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
             }
 
             & i {
-                font-size: 1.5em;
+                font-size: 2.5em;
                 svg {
                     fill: rgba(var(--white), var(--o045));
                 }

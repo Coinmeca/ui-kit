@@ -8,7 +8,6 @@ import type { Dropdown } from "components/controls/dropdown/Dropdown";
 import Style from "./Input.styled";
 
 export interface Input {
-    className?: string;
     style?: object;
 
     form?: string;
@@ -163,14 +162,13 @@ export default function Input(props: Input) {
     };
 
     const Input = (
-        <Style tabIndex={5} className={props?.className} style={props?.style} $clearable={clearable} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)}>
+        <Style tabIndex={5} style={props?.style} $clearable={clearable} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)}>
             <div>
-                <div className={props?.className} style={props?.style}>
+                <div style={props?.style}>
                     {props?.icon && <Elements.Icon icon={props?.icon} />}
                     <div>
                         {clearable && clearPosition === "left" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                         <input
-                            className={props.className}
                             style={{ textAlign: align }}
                             placeholder={placeholder}
                             type={type === "currency" ? "currency" : type}
@@ -188,11 +186,12 @@ export default function Input(props: Input) {
                         />
                         {clearable && clearPosition === "right" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                     </div>
-                    {(props?.unit || props?.button || props?.dropdown) && (
+                    {(props?.unit || props?.button || props?.dropdown || props?.children) && (
                         <div style={props?.width ? { width: `${props?.width}em` } : {}}>
                             {props?.unit && <span>{props?.unit}</span>}
                             {props?.button && <Controls.Button {...props?.button} />}
                             {props?.dropdown && <Controls.Dropdown {...props?.dropdown} />}
+                            {props?.children}
                         </div>
                     )}
                 </div>

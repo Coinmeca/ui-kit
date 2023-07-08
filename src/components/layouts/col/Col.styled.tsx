@@ -1,3 +1,4 @@
+"use client";
 import { Root } from "lib/style";
 import { css, styled } from "styled-components";
 
@@ -29,6 +30,7 @@ const Style = styled.div<{
     $fit: boolean;
     $responsive?: string | undefined;
     $reverse?: boolean;
+    $only?: boolean;
 }>`
     --gap: ${({ $gap }) => ($gap === 0 ? 0 : $gap || 4)}em;
 
