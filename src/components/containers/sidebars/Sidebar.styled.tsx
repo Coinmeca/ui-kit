@@ -105,6 +105,7 @@ const Style = styled.aside<{ $scale: number; $width: number; $active: boolean }>
 
     @media all and (max-width: 1919px) {
         position: absolute;
+        pointer-events: none;
         right: 0;
 
         & > * {
@@ -114,7 +115,6 @@ const Style = styled.aside<{ $scale: number; $width: number; $active: boolean }>
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
         width: 100vw;
-        pointer-events: none;
     }
 `;
 

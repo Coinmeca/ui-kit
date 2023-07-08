@@ -53,7 +53,7 @@ const Style = styled.button<{
     ${({ $type, $color }) => {
         switch ($type) {
             case "glass":
-                const glass: string = $color === "white" ? "var(--black)" : $color === "black" ? "var(--white)" : "var(--theme)";
+                const glass: string = $color === "white" ? "var(--white)" : $color === "black" ? "var(--black)" : "var(--theme)";
                 return css`
                     background: rgba(${glass}, var(--o015));
                     color: rgb(${glass});

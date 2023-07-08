@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { memo } from "react";
+import { ReactNode, useMemo } from "react";
 import Style, { Count } from "./Icon.styled";
 
 export interface Icon {
@@ -10,11 +10,11 @@ export interface Icon {
     title?: string;
 }
 
-export function Icon(props: Icon) {
+export default function Icon(props: Icon) {
     const color = props?.color || "white";
     const scale = props?.scale || 1;
     const title = props?.title || "";
-    const count = props?.count && props?.count > 9999 && 9999;
+    const count = props?.count && props?.count > 9999 ? 9999 : props?.count;
 
     const Icons = props?.icon && props?.icon !== "" ? dynamic(() => import(`/src/assets/icons/${props?.icon}.svg`)) : <></>;
 
@@ -25,5 +25,3 @@ export function Icon(props: Icon) {
         </Style>
     );
 }
-
-export default memo(Icon);
