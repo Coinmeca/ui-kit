@@ -11,11 +11,11 @@ const Style = styled.div`
         flex-direction: column;
         background: rgb(var(--dim));
         color: rgba(var(--black));
+        height: max-content;
+        min-height: calc(100% - (var(--unit) * 8));
         width: calc(100% - (var(--unit) * 8));
-        height: calc(100% - (var(--unit) * 8));
         padding: calc(var(--unit) * 4);
         gap: calc(var(--unit) * 4);
-        min-height: max-content;
 
         @media (prefers-color-scheme: light) {
             --white: 0, 0, 0;
