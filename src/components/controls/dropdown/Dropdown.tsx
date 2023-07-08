@@ -1,11 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Controls, Elements } from "components";
-import Style from "./Dropdown.styled";
+import Style, { Item } from "./Dropdown.styled";
 import Image from "next/image";
 
 export interface Dropdown {
-    className?: string;
     style?: object;
 
     form?: string;
@@ -100,9 +99,9 @@ export default function Dropdown(props: Dropdown) {
     };
 
     return (
-        <Style tabIndex={5} className={props?.className} style={{ zIndex: open ? 10 : 1, ...props?.style }} onClick={onOpen} onBlur={onClose} title={props?.title} $open={open} $max={max} $fit={fit} $scale={scale} $disabled={disabled}>
+        <Style tabIndex={5} style={{ zIndex: open ? 10 : 1, ...props?.style }} onClick={onOpen} onBlur={onClose} title={props?.title} $open={open} $max={max} $fit={fit} $scale={scale} $disabled={disabled}>
             <ul>
-                <li>
+                <Item>
                     {form?.indexOf("more") === 0 ? (
                         <Controls.Button icon="more" />
                     ) : form?.indexOf("icon") === 0 ? (
@@ -136,7 +135,7 @@ export default function Dropdown(props: Dropdown) {
                             <Elements.Icon icon="chevron-down-bold" />
                         </>
                     )}
-                </li>
+                </Item>
             </ul>
             <ul>
                 {options &&
@@ -144,7 +143,7 @@ export default function Dropdown(props: Dropdown) {
                     options.map(
                         (v: any, k: number) =>
                             v && (
-                                <li
+                                <Item
                                     key={k}
                                     onClick={(e: any) => {
                                         onSelect(e, v, k);
@@ -172,7 +171,7 @@ export default function Dropdown(props: Dropdown) {
                                             </span>
                                         )}
                                     </>
-                                </li>
+                                </Item>
                             )
                     )}
             </ul>

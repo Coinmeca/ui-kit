@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { ComponentType, memo, ReactNode } from "react";
+import { memo } from "react";
 import Style, { Count } from "./Icon.styled";
 
 export interface Icon {
@@ -21,7 +21,7 @@ export function Icon(props: Icon) {
     return (
         <Style title={title} $color={color} $scale={scale}>
             <Icons />
-            {props?.count && props?.count > 0 && <Count $color={color}>{props?.count}</Count>}
+            {count && count > 0 && <Count $color={color}>{count}</Count>}
         </Style>
     );
 }

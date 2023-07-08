@@ -1,3 +1,4 @@
+"use client";
 import { styled, css } from "styled-components";
 
 const Style = styled.div<{ $fix: boolean; $filter: string | undefined }>`
@@ -28,12 +29,11 @@ const Style = styled.div<{ $fix: boolean; $filter: string | undefined }>`
         opacity: 0.45;
         z-index: 0;
 
-        ${({ $filter }) => 
-                $filter &&
-                css`
-                    background-color: ${$filter};
-                `
-         }
+        ${({ $filter }) =>
+            $filter &&
+            css`
+                background-color: ${$filter};
+            `}
     }
 `;
 

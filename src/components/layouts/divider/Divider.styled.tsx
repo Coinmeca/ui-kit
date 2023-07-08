@@ -1,3 +1,4 @@
+"use client";
 import { css, styled } from "styled-components";
 
 const Style = styled.div<{ $vertical: boolean; $gap: number; $margin: number }>`

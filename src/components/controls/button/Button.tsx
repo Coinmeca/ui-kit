@@ -4,9 +4,7 @@ import type { Icon } from "components/elements/icon/Icon";
 import Style from "./Button.styled";
 
 export interface Button {
-    className?: string;
     style?: object;
-
     title?: string;
     type?: "glass" | "line" | "solid";
     color?: string;
@@ -40,7 +38,7 @@ export default function Button(props: Button) {
     }
 
     return (
-        <Style className={props?.className} style={props?.style} title={title} $type={type} $color={color} $scale={scale} $fit={fit} $hide={hide} onClick={(e: any) => onClick(e)} $disabled={disabled}>
+        <Style style={props?.style} title={title} $type={type} $color={color} $scale={scale} $fit={fit} $hide={hide} onClick={(e: any) => onClick(e)} $disabled={disabled}>
             <div>
                 {props?.icon && typeof props?.children === "undefined" ? (
                     Icons(props?.icon)

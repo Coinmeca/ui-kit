@@ -1,3 +1,4 @@
+"use client";
 import { Root } from "lib/style";
 import { styled, css } from "styled-components";
 
@@ -34,7 +35,8 @@ const Style = styled.div<{
     --gap: ${({ $gap }) => ($gap === 0 ? 0 : $gap || 4)}em;
 
     display: flex;
-    align-items: center;
+    height: max-content;
+    /* align-items: center; */
     flex-flow: ${({ $only, $reverse }) => ($only ? "row" : $reverse ? "row-reverse wrap" : "row wrap")};
     max-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
 

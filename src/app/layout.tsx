@@ -1,7 +1,6 @@
-"use client";
 import "./globals.scss";
 import { Style } from "lib";
-import { Screens } from "components";
+import { Frames } from "components";
 
 export const metadata = {
     title: "Coinmeca",
@@ -12,9 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
             <body suppressHydrationWarning={true}>
-                <Style.Initialize>
-                    <Screens.Exchange>{children}</Screens.Exchange>
-                </Style.Initialize>
+                <Style.Initialize>{children}</Style.Initialize>
             </body>
         </html>
     );
