@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { memo, DetailedHTMLProps, VideoHTMLAttributes, useState, useEffect } from "react";
+import React, { DetailedHTMLProps, VideoHTMLAttributes } from "react";
 import Style from "./BG.styled";
 
 export interface BG {

@@ -19,7 +19,7 @@ export default function GridContent(props: GridContent) {
 
     return (
         <Style $area={props?.area} $responsive={props?.responsive} data-active={props?.children?.props?.active} style={props?.style}>
-            <Content {...(props?.props || props?.children?.props || props?.children?.style)}>
+            <Content {...(props?.props || props?.children?.props || props?.children)}>
                 {(isValidElement(props?.props?.children) && props?.props?.children) || (isValidElement(props?.children?.children) && props?.children?.children) || (isValidElement(props?.children) && props?.children)}
             </Content>
         </Style>

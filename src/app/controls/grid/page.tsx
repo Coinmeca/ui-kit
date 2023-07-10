@@ -36,7 +36,7 @@ export default function Grid() {
                                 area: `'up' 'down'`,
                                 width: "1fr",
                                 height: "1fr max-content",
-                                gap: { col: 0 },
+                                gap: { col: 0, row: 2 },
                             },
                         ]}
                         // format={<Layouts.Contents.SlideContent />}
