@@ -8,28 +8,27 @@ import * as ListItem from "components/layouts/list/ListItem.style";
 import * as TableItem from "components/layouts/table/TableItem.styled";
 
 export const Upper = styled.section`
-    background: rgba(var(--black), var(--o045));
-    z-index: 15;
+    background: rgba(var(--black), var(--o06));
+    z-index: 12;
+
+    &[data-active="false"] {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    &[data-active="true"] {
+        opacity: 1;
+        pointer-events: initial;
+    }
 
     @media all and (max-width: 1919px) {
-        background: rgba(var(--black), var(--o09));
-
-        &[data-active="false"] {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        &[data-active="true"] {
-            opacity: 1;
-            z-index: 10;
-            pointer-events: initial;
-        }
+        /* background: rgba(var(--black), var(--o09)); */
     }
 `;
 
 export const Lower = styled.section`
-    background: rgba(var(--black), var(--o045));
-    z-index: 10;
+    background: rgba(var(--black), var(--o06));
+    z-index: 11;
 
     @media all and (max-width: 1919px) {
         &[data-active="false"] {
@@ -38,7 +37,6 @@ export const Lower = styled.section`
         }
 
         &[data-active="true"] {
-            z-index: 10;
             transform: translateX(0%);
             pointer-events: initial;
         }
@@ -115,6 +113,7 @@ const Style = styled.aside<{ $scale: number; $width: number; $active: boolean }>
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
         width: 100vw;
+        min-width: initial;
     }
 `;
 

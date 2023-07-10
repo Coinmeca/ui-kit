@@ -44,13 +44,7 @@ const Style = createGlobalStyle`
         font-size: 1.5rem;
     }
 
-    body,
-    table,
-    ul,
-    ol,
-    form,
-    input,
-    button {
+    body, table, ul, ol, form, input, button, h1, h2, h3, h4, h5, h6, strong, p, i {
         margin: 0;
         border: 0;
         padding: 0;
@@ -144,11 +138,11 @@ const Style = createGlobalStyle`
         }
 
         ::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 0 rgba(var(--black), var(--o045));
+            -webkit-box-shadow: inset 0 0 0 rgba(var(--white), var(--o03));
         }
 
         ::-webkit-scrollbar-thumb {
-            -webkit-box-shadow: inset 0 0 2rem rgba(var(--white), var(--o045));
+            -webkit-box-shadow: inset 0 0 2rem rgba(var(--black), var(--o03));
         }
     }
 
@@ -168,11 +162,11 @@ const Style = createGlobalStyle`
         }
 
         ::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 0 rgba(var(--white), var(--o045));
+            -webkit-box-shadow: inset 0 0 0 rgba(var(--black), var(--o03));
         }
 
         ::-webkit-scrollbar-thumb {
-            -webkit-box-shadow: inset 0 0 2rem rgba(var(--black), var(--o045));
+            -webkit-box-shadow: inset 0 0 2rem rgba(var(--white), var(--o03));
         }
     }
 

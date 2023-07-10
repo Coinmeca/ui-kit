@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useState, useEffect } from "react";
 import BG from "components/layouts/bg/BG";
 import type { BG as Background } from "components/layouts/bg/BG";
@@ -13,7 +13,10 @@ export interface SlideContent {
 export interface Slide {
     slides: SlideContent[];
     slideNo?: number;
-    align?: "left" | "center" | "right";
+    align?: {
+        vertical?: "top" | "center" | "bottom";
+        horizon?: "left" | "center" | "right";
+    };
     nav?: "top" | "bottom";
     padding?: number;
     timer?: number;
@@ -24,15 +27,18 @@ export interface Slide {
 
 export default function Slide(props: Slide) {
     const [slideNo, setSlideNo] = useState(props?.slideNo || 0);
-    const timer = props?.timer || 1000;
+    const timer = props?.timer || 3000;
     const padding = props?.padding || 4;
     const scale = props?.scale || 1;
+    const vertical = props?.align?.vertical || "center";
+    const horizon = props?.align?.horizon || "center";
 
     useEffect(() => {
         if (timer > 0) {
             let index = 0;
             const change = setInterval(() => {
-                if (index === props?.slides.length - 1) index = 0; else index++;
+                if (index === props?.slides.length - 1) index = 0;
+                else index++;
                 if (typeof props?.event === "function") props?.event(index);
                 setSlideNo(index);
             }, timer);
@@ -41,14 +47,14 @@ export default function Slide(props: Slide) {
     }, [props?.slides, props?.event, timer]);
 
     return (
-        <Style style={props?.style} $scale={scale} $timer={timer} $padding={padding} $nav={props?.nav}>
+        <Style style={props?.style} $scale={scale} $timer={timer} $padding={padding} $nav={props?.nav} $vertical={vertical} $horizon={horizon} data-align={props?.align?.horizon}>
             {props?.slides && props?.slides?.length > 0 && (
                 <>
                     <div>
                         {props?.slides?.map((slide: any, i: number) => (
                             <div key={i} data-active={slideNo === i} onClick={(e: any) => slide?.onClick && slide?.onClick(e)}>
                                 {slide?.background && <BG {...slide?.background} />}
-                                <div data-row={props?.align}>{slide.children}</div>
+                                <div data-row={props?.align?.horizon}>{slide.children}</div>
                             </div>
                         ))}
                     </div>

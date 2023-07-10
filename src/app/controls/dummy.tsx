@@ -5,12 +5,35 @@ import { useState } from "react";
 import useToast from "hooks/useToast";
 
 export default function Dummy() {
-    const { AddNotify } = useToast();
     const [value, setValue] = useState<number>(0);
     const [tab, setTab] = useState<string>("icon");
     const [active, setActive] = useState(false);
     const [sidebarTab, setSidebarTab] = useState("exchange");
     const [mobileMenu, setMobileMenu] = useState("");
+
+    const notilist = [
+        {
+            id: 12234231,
+            date: Date.now(),
+            title: "Notification",
+            message: "This is a Notification",
+        },
+        {
+            id: 12234231,
+            date: Date.now(),
+            title: "Alert",
+            message: "This is a Notification",
+        },
+        {
+            id: 12234231,
+            date: Date.now(),
+            title: "Alert",
+            message: "This is a Notification",
+        },
+    ];
+
+    const { AddNotify, setNotis } = useToast(notilist);
+    // setNotis(notilist);
 
     const sidebarMarketListFormatter = (data: any) => {
         return (
@@ -80,7 +103,20 @@ export default function Dummy() {
             children: (
                 <Layouts.Col>
                     <Layouts.Row>
-                        <Controls.Tab>Tab</Controls.Tab>
+                        <Controls.Tab
+                            onClick={
+                                // () => setNotis(notilist)
+                                // () => alert(1)
+                                () =>
+                                    AddNotify({
+                                        title: "notification",
+                                        message: "message",
+                                        remain: true,
+                                    })
+                            }
+                        >
+                            Add Notify
+                        </Controls.Tab>
                         <Controls.Tab iconLeft="sort-up-bold" active={active} onClick={() => setActive(!active)}>
                             Tab
                         </Controls.Tab>
@@ -88,7 +124,7 @@ export default function Dummy() {
                         <Controls.Tab>Tab</Controls.Tab>
                     </Layouts.Row>
                     <Layouts.Row>
-                        <Controls.Button iconLeft="bank">Controls.Button</Controls.Button>
+                        <Controls.Button iconLeft="bank">Button</Controls.Button>
                         <Controls.Button color="blue" icon="money" fit />
                         <Controls.Button color="orange" iconLeft="swap" title="Let's swap">
                             Button
@@ -134,9 +170,9 @@ export default function Dummy() {
                     <Controls.Input clearable dropdown={{ options: dropdown }} />
                     <Controls.Input type={"currency"} separator align={"right"} dropdown={{ options: dropdown }} clearable width={16} />
 
-                    <Controls.Input clearable button={{ children: "Controls.Button" }} />
+                    <Controls.Input clearable button={{ children: "Button" }} />
                     <Controls.Input clearable button={{ children: "Send", iconRight: "send", type: "solid" }} />
-                    <Controls.Input clearable button={{ children: "Controls.Button" }} />
+                    <Controls.Input clearable button={{ children: "Button" }} />
 
                     <Controls.Input type={"currency"} error={true} unit={"USD"} />
                     <Controls.Input type={"currency"} separator unit={"%"} value={value} onChange={(v: any) => setValue(Format(v, "number"))} />
@@ -171,7 +207,7 @@ export default function Dummy() {
             },
             children: (
                 <Layouts.Col align={"center"}>
-                    <Layouts.Col align={"center"}>
+                    <Layouts.Col>
                         <Elements.Text type={"h2"} align={"center"}>
                             Much Faster and Much Easier Coin Exchange
                         </Elements.Text>
@@ -200,7 +236,7 @@ export default function Dummy() {
             },
             children: (
                 <Layouts.Col align={"center"}>
-                    <Layouts.Col align={"center"}>
+                    <Layouts.Col>
                         <Elements.Text type={"h2"} align={"center"}>
                             Meet Brand New Finance
                         </Elements.Text>
@@ -223,7 +259,7 @@ export default function Dummy() {
             },
             children: (
                 <Layouts.Col align={"center"}>
-                    <Layouts.Col align={"center"}>
+                    <Layouts.Col>
                         <Elements.Text type={"h2"} align={"center"}>
                             Make Profits While Spending Money
                         </Elements.Text>
@@ -249,15 +285,12 @@ export default function Dummy() {
             },
             children: (
                 <Layouts.Col align={"left"}>
-                    <Layouts.Col align={"left"}>
-                        <Elements.Text type={"h2"}>Much Faster and Much Easier Coin Exchange</Elements.Text>
-                        <Elements.Text scale={2} weight={"normal"} responsive={{ device: "mobile", scale: 4 }}>
+                    <Layouts.Col>
+                        <Elements.Text type={"h4"}>Much Faster and Much Easier Coin Exchange</Elements.Text>
+                        <Elements.Text weight={"normal"} responsive={{ device: "mobile", scale: 4 }}>
                             Start with your new experience coin trading system on Coinmeca.
                         </Elements.Text>
                     </Layouts.Col>
-                    <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
-                        Get Started with Sign up
-                    </Controls.Button>
                 </Layouts.Col>
             ),
         },
@@ -276,15 +309,10 @@ export default function Dummy() {
             },
             children: (
                 <Layouts.Col align={"left"}>
-                    <Layouts.Col align={"left"}>
-                        <Elements.Text type={"h2"}>Meet Brand New Finance</Elements.Text>
-                        <Elements.Text scale={2} weight={"normal"}>
-                            Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.
-                        </Elements.Text>
+                    <Layouts.Col>
+                        <Elements.Text type={"h4"}>Meet Brand New Finance</Elements.Text>
+                        <Elements.Text weight={"normal"}>Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.</Elements.Text>
                     </Layouts.Col>
-                    <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
-                        Get Started with Sign up
-                    </Controls.Button>
                 </Layouts.Col>
             ),
         },
@@ -298,14 +326,9 @@ export default function Dummy() {
             children: (
                 <Layouts.Col align={"left"}>
                     <Layouts.Col align={"left"}>
-                        <Elements.Text type={"h2"}>Make Profits While Spending Money</Elements.Text>
-                        <Elements.Text scale={2} weight={"normal"}>
-                            Lets get earned Coinmeca Token free according your service usage. And just sell it market.
-                        </Elements.Text>
+                        <Elements.Text type={"h4"}>Make Profits While Spending Money</Elements.Text>
+                        <Elements.Text weight={"normal"}>Lets get earned Coinmeca Token free according your service usage. And just sell it market.</Elements.Text>
                     </Layouts.Col>
-                    <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
-                        Get Started with Sign up
-                    </Controls.Button>
                 </Layouts.Col>
             ),
         },
@@ -385,20 +408,117 @@ export default function Dummy() {
             change: "23.12",
             volume: "73170731",
         },
-    ];
-
-    const notis = [
         {
-            id: 12234231,
-            date: Date.now(),
-            title: "Notification",
-            message: "message",
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
         },
         {
-            id: 12234231,
-            date: Date.now(),
-            title: "Notification",
-            message: "message",
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: "/src/assets/coins/eth.png",
+            symbol: "ETH",
+            market: "ETH/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
         },
     ];
 
@@ -414,15 +534,15 @@ export default function Dummy() {
             children: [
                 {
                     name: "Tab",
-                    path: "/example/tab",
+                    path: "/controls/tab",
                 },
                 {
                     name: "Slide",
-                    path: "/example/slide",
+                    path: "/controls/slide",
                 },
                 {
                     name: "List & Table",
-                    path: "/example/list-and-table",
+                    path: "/controls/list-and-table",
                 },
             ],
         },
@@ -430,8 +550,8 @@ export default function Dummy() {
             active: true,
             children: (
                 <>
-                    <Controls.Tab onClick={() => (mobileMenu === "notify" ? setMobileMenu("") : setMobileMenu("notify"))} active={mobileMenu === "notify"} iconLeft={{ icon: "bell", count: 24 }} toggle fit />
-                    <Controls.Tab onClick={() => (mobileMenu === "sidebar" ? setMobileMenu("") : setMobileMenu("sidebar"))} active={mobileMenu === "sidebar"} iconLeft={"sidebar"} toggle fit />
+                    <Controls.Tab onClick={() => (mobileMenu === "notify" ? setMobileMenu("") : setMobileMenu("notify"))} active={mobileMenu === "notify"} iconLeft={{ icon: "bell", count: 24 }} toggle fit onBlur={() => setMobileMenu("")} />
+                    <Controls.Tab onClick={() => (mobileMenu === "sidebar" ? setMobileMenu("") : setMobileMenu("sidebar"))} active={mobileMenu === "sidebar"} iconLeft={"sidebar"} toggle fit onBlur={() => setMobileMenu("")} />
                     <Controls.Tab onClick={() => (mobileMenu === "setting" ? setMobileMenu("") : setMobileMenu("setting"))} active={mobileMenu === "setting"} iconLeft={"gear"} toggle fit />
                 </>
             ),
@@ -548,5 +668,5 @@ export default function Dummy() {
         },
     };
 
-    return { AddNotify, value, setValue, tab, setTab, active, setActive, dropdown, tabs, slides, slides2, menu, markets, marketlist, notis, header, sidebars };
+    return { value, setValue, tab, setTab, active, setActive, dropdown, tabs, slides, slides2, menu, markets, marketlist, notilist, header, sidebars };
 }

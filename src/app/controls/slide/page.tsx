@@ -2,13 +2,13 @@
 import { Controls, Layouts } from "components";
 import Dummy from "../dummy";
 
-export default function Exchange() {
+export default function Slides() {
     const { slides, menu, tab, setTab, tabs } = Dummy();
 
     return (
         <Layouts.Content>
             <Layouts.Cover fullsize>
-                <Controls.Slide slides={slides} padding={0} timer={3000} align={"center"} nav={"bottom"} style={{ zIndex: 4 }} />
+                <Controls.Slide slides={slides} padding={0} nav={"bottom"} style={{ zIndex: 4 }} />
             </Layouts.Cover>
             <Layouts.Box>
                 <Layouts.Contents.InnerContent>

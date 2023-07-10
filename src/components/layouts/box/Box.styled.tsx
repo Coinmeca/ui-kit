@@ -1,7 +1,8 @@
 "use client";
 import { styled } from "styled-components";
-import * as Content from "../contents/Content.styled";
 import { Root } from "lib/style";
+import * as Content from "../contents/Content.styled";
+import * as InnerContent from "../contents/Inner/InnerContent.styled";
 
 const Style = styled.div`
     transition: 0.3s ease;
@@ -11,9 +12,9 @@ const Style = styled.div`
         flex-direction: column;
         background: rgb(var(--dim));
         color: rgba(var(--black));
-        height: max-content;
-        min-height: calc(100% - (var(--unit) * 8));
         width: calc(100% - (var(--unit) * 8));
+        height: calc(100% - (var(--unit) * 8));
+        min-height: max-content;
         padding: calc(var(--unit) * 4);
         gap: calc(var(--unit) * 4);
 
@@ -29,11 +30,21 @@ const Style = styled.div`
             color: white;
         }
 
+        @media all and (min-width: ${Root.Device.Desktop}px) {
+            width: calc(100% - (var(--unit) * 16));
+            padding: calc(var(--unit) * 4) calc(var(--unit) * 8);
+        }
+
         @media all and (max-width: ${Root.Device.Mobile}px) {
+            width: calc(100% - (var(--unit) * 6));
             height: calc(100% - (var(--unit) * 6));
             gap: calc(var(--unit) * 3);
             padding: calc(var(--unit) * 3);
         }
+    }
+
+    & > ${InnerContent.default} > {
+        flex: 1;
     }
 `;
 

@@ -7,15 +7,17 @@ export interface Divider {
     children?: any;
     align?: "left" | "right";
     gap?: number;
+    strong?: boolean;
 }
 
 export default function Divider(props: Divider) {
     const vertical = props?.vertical || false;
     const margin = props?.margin || 0;
     const gap = props?.gap || 2;
+    const strong = props?.strong || false;
 
     return (
-        <Style $vertical={vertical} $margin={margin} $gap={gap} style={props?.style}>
+        <Style $vertical={vertical} $margin={margin} $gap={gap} $strong={props?.strong} style={props?.style}>
             {props?.children ? (
                 <>
                     {props?.align !== "right" && <div />}

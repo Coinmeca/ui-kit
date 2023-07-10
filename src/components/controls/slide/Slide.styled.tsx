@@ -1,6 +1,7 @@
+import { Root } from "lib/style";
 import { css, styled } from "styled-components";
 
-export const Style = styled.div<{ $scale: number; $timer: number; $padding: number; $nav: "top" | "bottom" | undefined }>`
+export const Style = styled.div<{ $scale: number; $timer: number; $padding: number; $nav: "top" | "bottom" | undefined; $vertical: "top" | "center" | "bottom"; $horizon: "left" | "center" | "right" }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     position: relative;
     display: flex;
@@ -16,18 +17,22 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
                 top: 0;
                 left: 0;
                 display: flex;
-                align-items: center;
                 justify-content: center;
+                align-items: ${({ $vertical }) => ($vertical === "top" ? "flex-start" : $vertical === "bottom" ? "flex-end" : "center")};
+                width: calc(100% - (${({ $padding }) => `${$padding - $padding * 0.66667}em`} * 4));
+                height: calc(100% - (${({ $nav, $padding }) => `${$padding - $padding * 0.66667}em * ${$nav ? 6 : 4}`}));
+                padding: ${({ $padding }) => `${$padding * 0.66667}em`};
+                ${({ $nav, $padding }) => $nav && `padding-${$nav}: ${$padding * 2 * 0.66667}em`};
                 text-align: center;
-                width: calc(100% - (${({ $padding }) => `${$padding}em`} * 2));
-                height: calc(100% - (${({ $padding }) => `${$padding}em`} * 2));
-                padding: ${({ $padding }) => `${$padding}em`};
                 transition: 0.3s ease;
                 overflow: hidden;
 
-                & > *:last-child {
-                    transition: 0.3s 0.15s ease;
-                    opacity: 0;
+                & > * {
+                    width: 100%;
+                    &:last-child {
+                        transition: 0.3s 0.15s ease;
+                        opacity: 0;
+                    }
                 }
 
                 &[data-active="false"] {
@@ -58,10 +63,21 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
                         opacity: 1;
                     }
                 }
+
+                @media all and (min-width: ${Root.Device.Desktop}px) {
+                    width: calc(100% - (${({ $padding }) => `${$padding - $padding * 0.66667}em`} * 8));
+                    padding: ${({ $padding }) => `${$padding * 2 * 0.66667}em`};
+                    ${({ $nav, $padding }) => $nav && `padding-${$nav}: ${$padding * 2 * 0.66667}em`};
+                }
+
+                @media all and (max-width: ${Root.Device.Tablet}px) {
+                    height: calc(100% - (${({ $nav, $padding }) => `${$padding - $padding * 0.66667}em * ${$nav ? 5 : 4}`}));
+                    ${({ $nav, $padding }) => $nav && `padding-${$nav}: ${$padding * 1.5 * 0.66667}em`};
+                }
             }
         }
 
-        ${({ $nav, $timer, $padding }) =>
+        ${({ $nav, $horizon, $timer, $padding }) =>
             $nav &&
             css`
                 &:last-child:not(:only-child) {
@@ -69,9 +85,14 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
                     display: flex;
                     height: auto;
                     ${$nav}: 0;
+                    ${$horizon !== "center" && `${$horizon}: 0;`}
                     padding: ${$padding}em;
                     gap: 1em;
                     text-align: center;
+
+                    @media all and (min-width: ${Root.Device.Desktop}px) {
+                        padding: ${$padding}em ${$padding * 2}em;
+                    }
 
                     & > * {
                         background: rgba(var(--white), var(--o045));

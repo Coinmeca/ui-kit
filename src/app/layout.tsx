@@ -1,6 +1,5 @@
 import "./globals.scss";
 import { Style } from "lib";
-import { Frames } from "components";
 
 export const metadata = {
     title: "Coinmeca",

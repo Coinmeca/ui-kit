@@ -13,6 +13,7 @@ export interface Button {
     iconLeft?: string | Icon;
     iconRight?: string | Icon;
     onClick?: Function;
+    onBlur?: Function;
     scale?: number;
     hide?: boolean;
     disabled?: boolean;
@@ -37,8 +38,13 @@ export default function Button(props: Button) {
         if (typeof props?.onClick === "function") props?.onClick(e);
     }
 
+    const onBlur = (e: any) => {
+        if (props?.disabled) return;
+        if (typeof props?.onBlur === "function") props?.onBlur(e);
+    };
+
     return (
-        <Style style={props?.style} title={title} $type={type} $color={color} $scale={scale} $fit={fit} $hide={hide} onClick={(e: any) => onClick(e)} $disabled={disabled}>
+        <Style style={props?.style} title={title} $type={type} $color={color} $scale={scale} $fit={fit} $hide={hide} onClick={(e: any) => onClick(e)} onBlur={(e: any) => onBlur(e)} $disabled={disabled}>
             <div>
                 {props?.icon && typeof props?.children === "undefined" ? (
                     Icons(props?.icon)
