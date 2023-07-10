@@ -50,6 +50,7 @@ export const Grid = styled.div<{
     display: grid;
     width: 100%;
     height: 100%;
+    transition: 0.3s ease;
 
     ${({ $area, $direction, $gap, $width, $height }) => Layout($area, $direction, $gap, $width, $height)}
 

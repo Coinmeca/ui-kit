@@ -25,13 +25,17 @@ export default function Grid() {
                         fullsize
                         area={`'area1 area1' 'area2 area3' 'area2 area4'`}
                         width={"384px 1fr"}
-                        height={"auto 1fr 288px"}
+                        height={"max-content 1fr max-content"}
                         responsive={[
+                            // {
+                            //     device: "laptop",
+                            //     gap: 2,
+                            // },
                             {
                                 device: "tablet",
                                 area: `'up' 'down'`,
                                 width: "1fr",
-                                height: "1fr 288px",
+                                height: "1fr max-content",
                                 gap: { col: 0 },
                             },
                         ]}
@@ -89,11 +93,14 @@ export default function Grid() {
                         contents={[
                             {
                                 area: "area1",
-                                children: (
-                                    <Layouts.Contents.SlideContent active={tab === "red"} style={{ background: "red" }}>
-                                        Red
-                                    </Layouts.Contents.SlideContent>
-                                ),
+                                children: {
+                                    style: { minHeight: 128 },
+                                    children: (
+                                        <Layouts.Contents.SlideContent active={tab === "red"} style={{ background: "red" }}>
+                                            Red
+                                        </Layouts.Contents.SlideContent>
+                                    ),
+                                },
                                 responsive: [
                                     {
                                         device: "tablet",
@@ -131,7 +138,7 @@ export default function Grid() {
                             },
                             {
                                 area: "area4",
-                                children: <div style={{ background: "blue" }}></div>,
+                                children: <div style={{ background: "blue", height: 288 }}></div>,
                                 responsive: [
                                     {
                                         device: "tablet",
