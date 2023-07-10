@@ -1,20 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import useToast from "hooks/useToast";
+import type { Notify } from "hooks/useToast";
 import { Controls, Layouts } from "components";
 import { Text } from "components/elements";
 import Image from "next/image";
 import Style from "./Notify.styled";
-
-export interface Notify {
-    id?: any;
-    title?: string;
-    date?: string;
-    img?: string;
-    message?: string;
-    timer?: number;
-    importance?: boolean;
-}
 
 export default function Notify(props: Notify) {
     const { RemoveNotify } = useToast();
@@ -51,7 +42,11 @@ export default function Notify(props: Notify) {
                         </Layouts.Row>
                     </Layouts.Row>
                     {props?.img && <Image src={props?.img} width={0} height={0} alt={""} />}
-                    {props?.message && <Text type="p">{props?.message}</Text>}
+                    {props?.message && (
+                        <span>
+                            <Text type="p">{props?.message}</Text>
+                        </span>
+                    )}
                 </Layouts.Col>
             </Layouts.Box>
         </Style>

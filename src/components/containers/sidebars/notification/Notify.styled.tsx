@@ -5,16 +5,21 @@ import * as Col from "components/layouts/col/Col.styled";
 import * as Button from "components/controls/button/Button.styled";
 
 const Style = styled.div<{ $active: boolean }>`
-    max-height: 100vh;
+    max-height: 100%;
     transition: 0.3s ease;
 
     ${Box.default} {
         background: rgba(var(--white), 0.1);
         backdrop-filter: blur(calc(var(--unit) * 8));
+        width: auto;
         transition: 0.3s ease;
+        padding: 1em 0 2em;
 
         & > ${Col.default} {
-            padding: 1em 2em;
+            & > *:not(img) {
+                width: calc(100% - 4em);
+                padding: 0 2em;
+            }
 
             & ${Row.default} {
                 align-items: center;

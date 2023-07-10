@@ -1,8 +1,8 @@
-import Style from "./Frame.styled";
 import { Containers, Layouts } from "components";
 import type { BG } from "components/layouts/bg/BG";
 import type { Header } from "components/containers/headers/Header";
 import type { Sidebars } from "components/containers/sidebars/Sidebar";
+import Style from "./Frame.styled";
 
 export interface Frame {
     children?: any;

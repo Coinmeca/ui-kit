@@ -1,4 +1,5 @@
 import { css, styled } from "styled-components";
+import * as Box from "components/layouts/box/Box.styled";
 
 const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean; $error: boolean; $disabled: boolean }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
@@ -14,18 +15,34 @@ const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean;
     ${({ $focus, $error }) => {
         return !$focus
             ? css`
-                  background: rgba(var(--${!$error ? "white" : "red"}), var(--o0075));
+                  background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
 
                   &:hover {
-                      background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
+                      background: rgba(var(--${!$error ? "white" : "red"}), var(--o03));
                   }
 
                   &:active {
-                      // background: rgba(var(--${!$error ? "white" : "red"}), var(--o015));
+                      /* background: rgba(var(--${!$error ? "white" : "red"}), var(--o03)); */
+                  }
+
+                  ${Box.default} {
+                      background: rgba(var(--${!$error ? "white" : "red"}), var(--o0075));
+
+                      &:hover {
+                          background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
+                      }
+
+                      &:active {
+                          // background: rgba(var(--${!$error ? "white" : "red"}), var(--o015));
+                      }
                   }
               `
             : css`
-                  background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
+                  background: rgba(var(--${!$error ? "white" : "red"}), var(--o015));
+
+                  ${Box.default} {
+                      background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
+                  }
               `;
     }}
 

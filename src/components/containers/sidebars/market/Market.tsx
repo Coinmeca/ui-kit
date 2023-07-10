@@ -8,7 +8,7 @@ export interface Market {
 
 export default function Market(props: Market) {
     return (
-        <Layouts.Contents.InnerContent>
+        <>
             <Layouts.Row gap={1} style={{ padding: "1em" }} only>
                 <Layouts.Row gap={0} only>
                     <Controls.Tab iconLeft="sort-up">Symbol</Controls.Tab>
@@ -23,7 +23,9 @@ export default function Market(props: Market) {
                 </Layouts.Row>
             </Layouts.Row>
             <Layouts.Divider />
-            <Layouts.Table list={props?.list} noData="There is no data." />
-        </Layouts.Contents.InnerContent>
+            <Layouts.Contents.InnerContent scroll>
+                <Layouts.Table list={props?.list} noData="There is no data." />
+            </Layouts.Contents.InnerContent>
+        </>
     );
 }

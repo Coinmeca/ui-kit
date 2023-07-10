@@ -10,7 +10,7 @@ export interface Cover {
 }
 
 export default function Cover(props: Cover) {
-    const height = props?.height || 320;
+    const height = props?.height || 240;
 
     return (
         <Style $height={height} $fullsize={props?.fullsize}>

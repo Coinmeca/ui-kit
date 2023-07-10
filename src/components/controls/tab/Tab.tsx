@@ -15,6 +15,7 @@ export interface Tab {
 
     children?: any;
     onClick?: Function;
+    onBlur?: Function;
     scale?: number;
     toggle?: boolean;
     fit?: boolean;
@@ -34,10 +35,16 @@ export default function Tab(props: Tab) {
         if (typeof props?.onClick === "function") props?.onClick(e);
     };
 
+    const onBlur = (e: any) => {
+        if (props?.disabled) return;
+        if (typeof props?.onBlur === "function") props?.onBlur(e);
+    };
+
     return (
         <Style
             style={props?.style}
             onClick={(e: any) => onClick(e)}
+            onBlur={(e: any) => onBlur(e)}
             title={props?.title}
             $scale={scale}
             $toggle={props?.toggle || false}

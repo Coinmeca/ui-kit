@@ -9,6 +9,9 @@ import * as Dropdown from "components/controls/dropdown/Dropdown.styled";
 
 export const Logo = styled.a`
     max-width: max-content;
+    @media all and (min-width: ${Root.Device.Desktop}px) {
+        margin-left: calc(var(--unit) * 4);
+    }
 
     @media all and (max-width: ${Root.Device.Tablet}px) {
         position: fixed;
@@ -54,7 +57,6 @@ export const Nav = styled.nav<{ $scale: number; $color: string }>`
         width: 0;
         height: 0.25em;
         transition: 0.3s ease;
-        z-index: 10;
     }
 
     &[data-active="true"] {
@@ -78,6 +80,28 @@ export const Nav = styled.nav<{ $scale: number; $color: string }>`
     @media all and (max-width: ${Root.Device.Tablet}px) {
         &:after {
             display: none;
+        }
+    }
+`;
+
+export const MenuButton = styled.div`
+    font-size: calc(var(--unit) * 1);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    width: 3em;
+    height: 3em;
+    padding: 0.5em;
+    opacity: 0;
+
+    @media all and (max-width: ${Root.Device.Tablet}px) {
+        & > * {
+            background: white;
+            width: 100%;
+            height: 0.2em;
         }
     }
 `;
@@ -130,6 +154,7 @@ export const Side = styled.div<{ $scale: number; $width: number }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     max-width: ${({ $width }) => $width}em;
     transition: 0.3s ease;
+    z-index: 20;
 
     & > ${Row.default} {
         padding: 0 2em;
@@ -174,14 +199,14 @@ export const Side = styled.div<{ $scale: number; $width: number }>`
 
         &&& ${Row.default} {
             & > *:not(${Row.default}) {
-                font-size: 1.25em;
+                font-size: 1em;
                 width: 100%;
                 max-width: initial;
                 min-width: initial;
             }
 
             & ${Button.default} {
-                padding: 1.5em;
+                padding: 1em;
             }
 
             & ${Avatar.default} {
@@ -231,6 +256,7 @@ const Style = styled.header<{ $scale: number; $color: string; $height: number; $
         height: 100%;
         flex-flow: row;
         align-items: center;
+        z-index: 22;
     }
 
     &:after {
@@ -240,7 +266,7 @@ const Style = styled.header<{ $scale: number; $color: string; $height: number; $
         width: 100%;
         min-height: 0.25em;
         bottom: 0;
-        z-index: 5;
+        z-index: 21;
     }
 
     @media all and (max-width: ${Root.Device.Laptop}px) {

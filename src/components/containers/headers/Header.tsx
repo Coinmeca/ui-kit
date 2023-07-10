@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Layouts } from "components";
-import Style, { Logo, Nav, Menu, Side } from "./Header.styled";
+import Style, { Logo, Nav, MenuButton, Menu, Side } from "./Header.styled";
 import Coinmeca from "/src/assets/coinmeca.svg";
 
 export interface Header {
@@ -54,8 +54,13 @@ export default function Header(props: Header) {
             <Layouts.Row gap={0}>
                 <Layouts.Row>
                     <Layouts.Row>
+                        <MenuButton>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </MenuButton>
                         {props?.logo && props?.logo?.src && (
-                            <Logo>
+                            <Logo href="/">
                                 <Coinmeca height={40} />
                                 {/* <Image src={props?.logo?.src} width={props?.logo?.width} height={props?.logo?.height} title={props?.logo?.title} alt={props?.logo?.alt || ""} /> */}
                             </Logo>

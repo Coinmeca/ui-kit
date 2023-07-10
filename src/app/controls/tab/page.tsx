@@ -2,18 +2,17 @@
 import { Controls, Layouts } from "components";
 import Dummy from "../dummy";
 
-export default function Tab() {
+export default function Tabs() {
     const { slides2, tab, setTab, tabs } = Dummy();
 
     return (
         <Layouts.Content>
             <Layouts.Cover>
-                <Controls.Slide slides={slides2} padding={0} timer={3000} align={"left"} nav={"top"} style={{ zIndex: 4 }} />
+                <Controls.Slide slides={slides2} padding={0} align={{ vertical: "top", horizon: "left" }} nav={"top"} style={{ zIndex: 4 }} />
             </Layouts.Cover>
             <Layouts.Box>
                 <Layouts.Contents.InnerContent>
-                    Exchange
-                    <Layouts.Row>
+                    <Layouts.Row only>
                         <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
                             Icon
                         </Controls.Tab>
