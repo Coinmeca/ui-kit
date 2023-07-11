@@ -1,6 +1,7 @@
 import { Root } from "lib/style";
 import { styled, css } from "styled-components";
 import * as SlideContent from "components/layouts/contents/slide/SlideContent.styled";
+import { StyledComponentBrand } from "styled-components/dist/types";
 
 const Responsive = (area?: string) => {
     return css`
@@ -83,5 +84,113 @@ const Style = styled.div<{
         }
     }}
 `;
+
+export const Test = css<{
+    $area?: string;
+    $responsive?: {
+        device: "desktop" | "laptop" | "tablet" | "mobile";
+        area?: string;
+    }[];
+}>`
+    position: relative;
+    width: 100%;
+    height: 100%;
+    ${({ $area }) => $area && `grid-area: ${$area};`}
+
+    && {
+        & > * {
+            width: 100%;
+            height: 100%;
+        }
+
+        & > ${SlideContent.default} {
+            opacity: 1;
+            transform: translateX(0%);
+            pointer-events: inherit;
+        }
+    }
+
+    ${({ $responsive }) => {
+        if ($responsive && $responsive.length > 0) {
+            for (let i = 0; i < $responsive.length; i++) {
+                switch ($responsive[i]?.device) {
+                    case "laptop":
+                        return css`
+                            @media all and (max-width: ${Root.Device.Laptop}px) {
+                                ${Responsive($responsive[i].area)}
+                            }
+                        `;
+                    case "tablet":
+                        return css`
+                            @media all and (max-width: ${Root.Device.Tablet}px) {
+                                ${Responsive($responsive[i].area)}
+                            }
+                        `;
+                    case "mobile":
+                        return css`
+                            @media all and (max-width: ${Root.Device.Mobile}px) {
+                                ${Responsive($responsive[i].area)}
+                            }
+                        `;
+                }
+            }
+        }
+    }}
+`;
+
+export const Test2 = (
+    $area?: string,
+    $responsive?: {
+        device: "desktop" | "laptop" | "tablet" | "mobile";
+        area?: string;
+    }[]
+) => {
+    return css`
+        position: relative;
+        width: 100%;
+        height: 100%;
+        ${$area && `grid-area: ${$area};`}
+
+        && {
+            & > * {
+                width: 100%;
+                height: 100%;
+            }
+
+            & > ${SlideContent.default} {
+                opacity: 1;
+                transform: translateX(0%);
+                pointer-events: inherit;
+            }
+        }
+
+        ${() => {
+            if ($responsive && $responsive.length > 0) {
+                for (let i = 0; i < $responsive.length; i++) {
+                    switch ($responsive[i]?.device) {
+                        case "laptop":
+                            return css`
+                                @media all and (max-width: ${Root.Device.Laptop}px) {
+                                    ${Responsive($responsive[i].area)}
+                                }
+                            `;
+                        case "tablet":
+                            return css`
+                                @media all and (max-width: ${Root.Device.Tablet}px) {
+                                    ${Responsive($responsive[i].area)}
+                                }
+                            `;
+                        case "mobile":
+                            return css`
+                                @media all and (max-width: ${Root.Device.Mobile}px) {
+                                    ${Responsive($responsive[i].area)}
+                                }
+                            `;
+                    }
+                }
+            }
+        }}
+    `;
+};
 
 export default Style;

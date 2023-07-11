@@ -31,11 +31,13 @@ export default function GridContainer(props: GridContainer) {
     return (
         <Style $fullsize={props?.fullsize || false}>
             <Grid $area={props?.area} $direction={props?.direction} $gap={gap} $width={props?.width} $height={props?.height} $responsive={props?.responsive} style={props?.style}>
-                {props?.contents && props?.contents?.length > 0
-                    ? props?.contents?.map((v: any, k: number) => <GridContent key={k} format={props?.format} {...v} />)
-                    : props?.children && props.children?.length > 0
-                    ? props?.children?.map((v: any, k: number) => <Fragment key={k}>{v}</Fragment>)
-                    : props?.children}
+                <>
+                    {props?.contents && props?.contents?.length > 0
+                        ? props?.contents?.map((v: any, k: number) => <GridContent key={k} format={props?.format} {...v} />)
+                        : props?.children && props.children?.length > 0
+                        ? props?.children?.map((v: any, k: number) => <Fragment key={k}>{v}</Fragment>)
+                        : props?.children}
+                </>
             </Grid>
         </Style>
     );

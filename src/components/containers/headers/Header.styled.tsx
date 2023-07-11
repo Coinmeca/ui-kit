@@ -57,6 +57,7 @@ export const Nav = styled.nav<{ $scale: number; $color: string }>`
         bottom: 0;
         width: 0;
         height: 0.25em;
+        opacity: 0;
         transition: 0.3s ease;
     }
 
@@ -69,6 +70,7 @@ export const Nav = styled.nav<{ $scale: number; $color: string }>`
 
         &:after {
             width: 250%;
+            opacity: 1;
         }
     }
 
@@ -206,14 +208,14 @@ export const Menu = styled.div`
             }
         }
 
-        &[data-active="true"] {
-            max-height: 100vh;
-            opacity: 1;
-            pointer-events: inherit;
+        &[data-active="false"] {
+            /* max-height: 0; */
         }
 
-        &[data-active="false"] {
-            max-height: 0;
+        &[data-active="true"] {
+            /* max-height: 100vh; */
+            opacity: 1;
+            pointer-events: inherit;
         }
     }
 `;

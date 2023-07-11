@@ -52,13 +52,24 @@ export default function Dummy() {
                                         // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
                                     />
                                 </>,
-                                [`${data?.symbol}`, `${data?.market}`],
+                                [
+                                    <Elements.Text type="strong" height={1}>
+                                        {data?.symbol}
+                                    </Elements.Text>,
+                                    <Elements.Text type="p" height={1} style={{ opacity: 0.45 }}>
+                                        {data?.market}
+                                    </Elements.Text>,
+                                ],
                             ],
                         },
                     ],
                     [
-                        { align: "right", children: `$${data?.price}` },
-                        { align: "right", children: `+${data?.change}` },
+                        <Elements.Text type="strong" height={1}>
+                            {data?.price}
+                        </Elements.Text>,
+                        <Elements.Text type="strong" height={1}>
+                            {data?.price}
+                        </Elements.Text>,
                     ],
                     [{ align: "right", children: data.volume }],
                 ],

@@ -32,19 +32,21 @@ export default function Notify(props: Notify) {
             <Layouts.Box>
                 <Layouts.Col gap={1}>
                     <Layouts.Row only>
-                        <Text type="strong">{props?.title}</Text>
+                        <Text scale={1.25} weight={"bold"}>
+                            {props?.title}
+                        </Text>
                         <Layouts.Row only gap={1} style={{ minWidth: "max-content" }}>
-                            <Text type="strong" align="right">
+                            <Text type={"desc"} align={"right"} weight={"bold"}>
                                 {/* "YYYY-MM-DD HH:mm:ss" */}
                                 {props?.date?.toLocaleString()}
                             </Text>
-                            <Controls.Button scale={0.75} icon="x" fit onClick={() => onRemove(props?.id)} />
+                            <Controls.Button scale={0.75} icon={"x"} fit onClick={() => onRemove(props?.id)} />
                         </Layouts.Row>
                     </Layouts.Row>
                     {props?.img && <Image src={props?.img} width={0} height={0} alt={""} />}
                     {props?.message && (
                         <span>
-                            <Text type="p">{props?.message}</Text>
+                            <Text type={"p"}>{props?.message}</Text>
                         </span>
                     )}
                 </Layouts.Col>
