@@ -13,7 +13,7 @@ const Style = styled.div<{ $active: boolean }>`
         backdrop-filter: blur(calc(var(--unit) * 16));
         width: auto;
         transition: 0.3s ease;
-        padding: 1em 0 2em;
+        padding: 1.25em 0 1.5em;
 
         & > ${Col.default} {
             & > *:not(img) {
