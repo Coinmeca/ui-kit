@@ -2,7 +2,6 @@
 import { css, styled } from "styled-components";
 import { Root } from "lib/style";
 
-import * as Divider from "components/layouts/divider/Divider.styled";
 import * as Input from "components/controls/input/Input.styled";
 import * as ListItem from "components/layouts/list/ListItem.style";
 import * as TableItem from "components/layouts/table/TableItem.styled";
@@ -77,10 +76,6 @@ const Style = styled.aside<{ $scale: number; $width: number; $active: boolean }>
         `};
 
     && {
-        & ${Divider.default} {
-            background: white;
-        }
-
         & ${Input.default} {
             padding: 1em 2em;
         }

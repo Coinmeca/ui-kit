@@ -22,7 +22,7 @@ export default function Market(props: Market) {
                     <Controls.Tab iconLeft="sort-up">Volume</Controls.Tab>
                 </Layouts.Row>
             </Layouts.Row>
-            <Layouts.Divider />
+            <Layouts.Divider strong />
             <Layouts.Contents.InnerContent scroll>
                 <Layouts.Table list={props?.list} noData="There is no data." />
             </Layouts.Contents.InnerContent>

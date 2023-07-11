@@ -1,6 +1,7 @@
-import Image from "next/image";
+"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { Layouts } from "components";
 import Style, { Logo, Nav, MenuButton, Menu, Side } from "./Header.styled";
 import Coinmeca from "/src/assets/coinmeca.svg";
@@ -49,15 +50,19 @@ export default function Header(props: Header) {
 
     const side = props?.side?.width || 60;
 
+    const [mobileMenu, setMobileMenu] = useState(false);
+
     return (
         <Style $scale={scale} $color={color} $height={height} $side={side}>
             <Layouts.Row gap={0}>
                 <Layouts.Row>
                     <Layouts.Row>
-                        <MenuButton>
-                            <div></div>
-                            <div></div>
-                            <div></div>
+                        <MenuButton $active={mobileMenu} onClick={() => setMobileMenu(!mobileMenu)}>
+                            <div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
                         </MenuButton>
                         {props?.logo && props?.logo?.src && (
                             <Logo href="/">
@@ -66,9 +71,9 @@ export default function Header(props: Header) {
                             </Logo>
                         )}
                         {props?.menu?.children && props?.menu?.children?.length > 0 && (
-                            <Menu data-active={props?.menu?.active}>
+                            <Menu data-active={mobileMenu}>
                                 {props?.menu?.children?.map((v: Menu, k: number) => (
-                                    <Nav key={k} $scale={scale} $color={color} data-active={path.startsWith(v?.path || "")}>
+                                    <Nav key={k} $scale={scale} $color={color} data-active={path.startsWith(v?.path || "")} onClick={() => setMobileMenu(false)}>
                                         <Link href={v?.path || ""}>{v?.name}</Link>
                                     </Nav>
                                 ))}

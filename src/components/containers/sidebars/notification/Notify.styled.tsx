@@ -9,8 +9,8 @@ const Style = styled.div<{ $active: boolean }>`
     transition: 0.3s ease;
 
     ${Box.default} {
-        background: rgba(var(--white), 0.1);
-        backdrop-filter: blur(calc(var(--unit) * 8));
+        background: rgba(var(--white), var(--o015));
+        backdrop-filter: blur(calc(var(--unit) * 16));
         width: auto;
         transition: 0.3s ease;
         padding: 1em 0 2em;
