@@ -1,7 +1,8 @@
 "use client";
+import { Root } from "lib/style";
 import { css, styled } from "styled-components";
 
-const Style = styled.div<{ $vertical: boolean; $gap: number; $margin: number; $strong: boolean }>`
+const Style = styled.div<{ $color: string; $vertical: boolean; $gap: number; $margin: number; $strong: boolean }>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9,7 +10,7 @@ const Style = styled.div<{ $vertical: boolean; $gap: number; $margin: number; $s
     gap: ${({ $gap }) => $gap || 2}em;
 
     & > div {
-        background: rgba(var(--white), ${({ $strong }) => ($strong ? "var(--o1)" : "var(--o015)")});
+        background: rgba(${({ $color }) => Root.Color($color)}, ${({ $strong }) => ($strong ? "var(--o1)" : "var(--o015)")});
 
         ${({ $vertical, $margin }) => {
             return !$vertical

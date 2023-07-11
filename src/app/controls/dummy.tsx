@@ -14,19 +14,19 @@ export default function Dummy() {
     const notilist = [
         {
             id: 12234231,
-            date: Date.now(),
+            date: "12:06:27 07-11-23",
             title: "Notification",
             message: "This is a Notification",
         },
         {
             id: 12234231,
-            date: Date.now(),
+            date: "12:06:27 07-11-23",
             title: "Alert",
             message: "This is a Notification",
         },
         {
             id: 12234231,
-            date: Date.now(),
+            date: "12:06:27 07-11-23",
             title: "Alert",
             message: "This is a Notification",
         },
@@ -393,7 +393,15 @@ export default function Dummy() {
 
     const marketlist = [
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/btc.png"),
+            symbol: "BTC",
+            market: "BTC/USDT",
+            price: "4,678.05",
+            change: "23.12",
+            volume: "73170731",
+        },
+        {
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -401,7 +409,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -409,7 +417,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -417,7 +425,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -425,7 +433,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -433,7 +441,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -441,7 +449,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -449,7 +457,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -457,7 +465,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -465,7 +473,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -473,7 +481,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -481,7 +489,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -489,7 +497,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -497,7 +505,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -505,15 +513,7 @@ export default function Dummy() {
             volume: "73170731",
         },
         {
-            logo: "/src/assets/coins/eth.png",
-            symbol: "ETH",
-            market: "ETH/USDT",
-            price: "4,678.05",
-            change: "23.12",
-            volume: "73170731",
-        },
-        {
-            logo: "/src/assets/coins/eth.png",
+            logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -666,7 +666,7 @@ export default function Dummy() {
             children: [
                 {
                     active: mobileMenu === "notify",
-                    children: <Containers.Sidebars.Notification />,
+                    children: <Containers.Sidebars.Notification list={notilist} />,
                 },
             ],
         },

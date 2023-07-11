@@ -1,7 +1,8 @@
 "use client";
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import { Root } from "lib/style";
 import * as Row from "components/layouts/row/Row.styled";
+import * as Divider from "components/layouts/divider/Divider.styled";
 import * as Tab from "components/controls/tab/Tab.styled";
 import * as Button from "components/controls/button/Button.styled";
 import * as Avatar from "components/elements/avatar/Avatar.styled";
@@ -84,24 +85,88 @@ export const Nav = styled.nav<{ $scale: number; $color: string }>`
     }
 `;
 
-export const MenuButton = styled.div`
+export const MenuButton = styled.div<{ $active: boolean }>`
     font-size: calc(var(--unit) * 1);
     display: flex;
-    justify-content: space-between;
-    flex-direction: column;
     position: absolute;
     top: 1em;
     left: 1em;
-    width: 3em;
-    height: 3em;
-    padding: 0.5em;
+    width: 2em;
+    height: 1.5em;
+    padding: 1.25em 1em;
     opacity: 0;
+    transition: 0.3s ease;
+    pointer-events: none;
 
     @media all and (max-width: ${Root.Device.Tablet}px) {
+        pointer-events: inherit;
+        cursor: pointer;
+
+        opacity: var(--o045);
+
+        &:hover {
+            opacity: var(--o1);
+        }
+
+        &:active {
+            background: rgba(var(--white), var(--o015));
+        }
+
+        ${({ $active }) => $active && `opacity:1;`}
+
         & > * {
-            background: white;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
             width: 100%;
-            height: 0.2em;
+            height: 100%;
+
+            & > * {
+                position: absolute;
+                background: white;
+                width: 100%;
+                height: 0.2em;
+                transition: 0.3s ease;
+
+                &:first-child {
+                    top: 0;
+                }
+
+                &:nth-child(2) {
+                    top: 50%;
+                    left: 0;
+                    transform: translateY(-50%);
+                }
+
+                &:last-child {
+                    bottom: 0;
+                }
+
+                ${({ $active }) =>
+                    $active &&
+                    css`
+                        opacity: var(--o1);
+
+                        &:first-child {
+                            top: 50%;
+                            transform: translateY(-50%) rotateZ(45deg);
+                        }
+
+                        &:nth-child(2) {
+                            top: 50%;
+                            left: -100%;
+                            opacity: 0;
+                        }
+
+                        &:last-child {
+                            top: 50%;
+                            bottom: 0;
+                            transform: translateY(-50%) rotateZ(-45deg);
+                        }
+                    `}
+            }
         }
     }
 `;
@@ -129,13 +194,16 @@ export const Menu = styled.div`
 
         & > * {
             max-width: initial;
-            align-items: flex-start;
         }
 
         & ${Nav} {
-            font-size: 2em;
-            padding: 1.5em 3em;
+            font-size: 1.5em;
+            padding: 1.5em;
             height: max-content;
+
+            & > * {
+                justify-content: flex-start;
+            }
         }
 
         &[data-active="true"] {
@@ -199,7 +267,7 @@ export const Side = styled.div<{ $scale: number; $width: number }>`
 
         &&& ${Row.default} {
             & > *:not(${Row.default}) {
-                font-size: 1em;
+                font-size: 1.125em;
                 width: 100%;
                 max-width: initial;
                 min-width: initial;
@@ -207,6 +275,10 @@ export const Side = styled.div<{ $scale: number; $width: number }>`
 
             & ${Button.default} {
                 padding: 1em;
+
+                & > * > span {
+                    width: 100%;
+                }
             }
 
             & ${Avatar.default} {
@@ -267,6 +339,10 @@ const Style = styled.header<{ $scale: number; $color: string; $height: number; $
         min-height: 0.25em;
         bottom: 0;
         z-index: 21;
+    }
+
+    ${Divider.default} {
+        background-color: rgb(${({ $color }) => Root.Color($color)});
     }
 
     @media all and (max-width: ${Root.Device.Laptop}px) {

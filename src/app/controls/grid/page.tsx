@@ -26,6 +26,7 @@ export default function Grid() {
                         area={`'area1 area1' 'area2 area3' 'area2 area4'`}
                         width={"384px 1fr"}
                         height={"max-content 1fr max-content"}
+                        gap={3}
                         responsive={[
                             // {
                             //     device: "laptop",

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useToast from "hooks/useToast";
 import type { Notify } from "hooks/useToast";
 import { Controls, Layouts } from "components";
@@ -23,8 +23,8 @@ export default function Notify(props: Notify) {
         timeOut;
     }, [active]);
 
-    const onRemove = (id: string | number) => {
-        RemoveNotify(id);
+    const onRemove = (id?: string | number) => {
+        id && RemoveNotify(id);
     };
 
     return (
@@ -33,7 +33,7 @@ export default function Notify(props: Notify) {
                 <Layouts.Col gap={1}>
                     <Layouts.Row only>
                         <Text type="strong">{props?.title}</Text>
-                        <Layouts.Row only gap={1}>
+                        <Layouts.Row only gap={1} style={{ minWidth: "max-content" }}>
                             <Text type="strong" align="right">
                                 {/* "YYYY-MM-DD HH:mm:ss" */}
                                 {props?.date?.toLocaleString()}

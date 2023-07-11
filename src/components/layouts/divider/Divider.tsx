@@ -8,6 +8,7 @@ export interface Divider {
     align?: "left" | "right";
     gap?: number;
     strong?: boolean;
+    color?: string;
 }
 
 export default function Divider(props: Divider) {
@@ -15,9 +16,10 @@ export default function Divider(props: Divider) {
     const margin = props?.margin || 0;
     const gap = props?.gap || 2;
     const strong = props?.strong || false;
+    const color = props?.color || "white";
 
     return (
-        <Style $vertical={vertical} $margin={margin} $gap={gap} $strong={props?.strong} style={props?.style}>
+        <Style $color={color} $vertical={vertical} $margin={margin} $gap={gap} $strong={strong} style={props?.style}>
             {props?.children ? (
                 <>
                     {props?.align !== "right" && <div />}
