@@ -34,6 +34,8 @@ export const Color = (color: string) => {
             return "var(--purple)";
         case "sky":
             return "var(--sky)";
+        case "color":
+            return "var(--color)";
         default:
             return color;
     }

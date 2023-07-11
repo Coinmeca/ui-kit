@@ -7,8 +7,11 @@ import * as ListItem from "components/layouts/list/ListItem.style";
 import * as TableItem from "components/layouts/table/TableItem.styled";
 
 export const Upper = styled.section`
-    background: rgba(var(--black), var(--o06));
     z-index: 12;
+
+    & > * {
+        background: rgba(var(--black), var(--o09));
+    }
 
     &[data-active="false"] {
         opacity: 0;
@@ -102,7 +105,7 @@ const Style = styled.aside<{ $scale: number; $width: number; $active: boolean }>
         right: 0;
 
         & > * {
-            background: rgba(var(--black), var(--o09));
+            /* background: rgba(var(--black), var(--o09)); */
         }
     }
 

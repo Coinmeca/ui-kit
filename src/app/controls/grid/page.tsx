@@ -40,7 +40,6 @@ export default function Grid() {
                                 gap: { col: 0, row: 2 },
                             },
                         ]}
-                        // format={<Layouts.Contents.SlideContent />}
                         // contents={[
                         //     {
                         //         area: "area1",
@@ -91,17 +90,97 @@ export default function Grid() {
                         //         ],
                         //     },
                         // ]}
+                        format={(props: any) => <Layouts.Contents.SlideContent {...props} />}
+                        // format={<Layouts.Contents.SlideContent />}
+                        // contents={[
+                        //     {
+                        //         area: "area1",
+                        //         children: {
+                        //             props: {
+                        //                 active: tab === "red",
+                        //                 style: { minHeight: 128 },
+                        //             },
+                        //             children: (
+                        //                 <>
+                        //                     {/* <Layouts.Contents.SlideContent active={tab === "red"} style={{ background: "red" }}> */}
+                        //                     "Red",
+                        //                     {/* </Layouts.Contents.SlideContent> */}
+                        //                 </>
+                        //             ),
+                        //         },
+                        //         responsive: [
+                        //             {
+                        //                 device: "tablet",
+                        //                 area: "up",
+                        //             },
+                        //         ],
+                        //     },
+                        //     {
+                        //         area: "area2",
+                        //         children: {
+                        //             props: {
+                        //                 active: tab === "green",
+                        //             },
+                        //             children: (
+                        //                 <>
+                        //                     {/* <Layouts.Contents.SlideContent active={tab === "green"} style={{ background: "green" }}> */}
+                        //                     "Green",
+                        //                     {/* </Layouts.Contents.SlideContent> */}
+                        //                 </>
+                        //             ),
+                        //         },
+                        //         responsive: [
+                        //             {
+                        //                 device: "tablet",
+                        //                 area: "up",
+                        //             },
+                        //         ],
+                        //     },
+                        //     {
+                        //         area: "area3",
+                        //         children: {
+                        //             props: {
+                        //                 active: tab === "yellow",
+                        //             },
+                        //             children: (
+                        //                 <>
+                        //                     {/* <Layouts.Contents.SlideContent active={tab === "yellow"} style={{ background: "yellow" }}> */}
+                        //                     "Yellow",
+                        //                     {/* </Layouts.Contents.SlideContent> */}
+                        //                 </>
+                        //             ),
+                        //         },
+                        //         responsive: [
+                        //             {
+                        //                 device: "tablet",
+                        //                 area: "up",
+                        //             },
+                        //         ],
+                        //     },
+                        //     {
+                        //         area: "area4",
+                        //         children: {
+                        //             props: {
+                        //                 active: true,
+                        //             },
+                        //             children: <div style={{ background: "blue", height: 288 }}></div>,
+                        //         },
+                        //         responsive: [
+                        //             {
+                        //                 device: "tablet",
+                        //                 area: "down",
+                        //             },
+                        //         ],
+                        //     },
+                        // ]}
                         contents={[
                             {
                                 area: "area1",
-                                children: {
-                                    style: { minHeight: 128 },
-                                    children: (
-                                        <Layouts.Contents.SlideContent active={tab === "red"} style={{ background: "red" }}>
-                                            Red
-                                        </Layouts.Contents.SlideContent>
-                                    ),
-                                },
+                                children: (
+                                    <Layouts.Contents.SlideContent active={tab === "red"} style={{ background: "red" }}>
+                                        "Red"
+                                    </Layouts.Contents.SlideContent>
+                                ),
                                 responsive: [
                                     {
                                         device: "tablet",
@@ -113,7 +192,7 @@ export default function Grid() {
                                 area: "area2",
                                 children: (
                                     <Layouts.Contents.SlideContent active={tab === "green"} style={{ background: "green" }}>
-                                        Green
+                                        "Green"
                                     </Layouts.Contents.SlideContent>
                                 ),
                                 responsive: [
@@ -127,7 +206,7 @@ export default function Grid() {
                                 area: "area3",
                                 children: (
                                     <Layouts.Contents.SlideContent active={tab === "yellow"} style={{ background: "yellow" }}>
-                                        Yellow
+                                        "Yellow"
                                     </Layouts.Contents.SlideContent>
                                 ),
                                 responsive: [
@@ -139,7 +218,12 @@ export default function Grid() {
                             },
                             {
                                 area: "area4",
-                                children: <div style={{ background: "blue", height: 288 }}></div>,
+                                children: {
+                                    props: {
+                                        active: true,
+                                    },
+                                    children: <div style={{ background: "blue", height: 288 }}></div>,
+                                },
                                 responsive: [
                                     {
                                         device: "tablet",
