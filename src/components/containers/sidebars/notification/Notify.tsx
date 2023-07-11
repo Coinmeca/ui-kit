@@ -38,7 +38,7 @@ export default function Notify(props: Notify) {
                                 {/* "YYYY-MM-DD HH:mm:ss" */}
                                 {props?.date?.toLocaleString()}
                             </Text>
-                            <Controls.Button icon="x" fit onClick={() => onRemove(props?.id)} />
+                            <Controls.Button scale={0.75} icon="x" fit onClick={() => onRemove(props?.id)} />
                         </Layouts.Row>
                     </Layouts.Row>
                     {props?.img && <Image src={props?.img} width={0} height={0} alt={""} />}
