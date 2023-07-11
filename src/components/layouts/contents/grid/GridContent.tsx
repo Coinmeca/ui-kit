@@ -21,7 +21,7 @@ function GridContent(props: GridContent) {
             typeof props?.children !== "object" && isFunctionTypeNode(props?.children) ? (
                 <props.format {...props?.props}>{props?.children}</props.format>
             ) : (
-                props.format(props?.children)
+                "props.format(props?.children)"
             )
         ) : typeof props?.children === "function" ? (
             <props.children {...{ ...props?.children?.children?.props, ...props?.children?.props }}>{props?.children?.children}</props.children>
