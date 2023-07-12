@@ -15,16 +15,11 @@ const Style = styled.button<{
         `;
     }};
 
-    font-size: ${({ $scale }) => $scale * 0.6667}em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: ${({ $fit }) => ($fit ? "max-content" : "100%")};
+    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    font-weight: bold;
+    ${({ $fit }) => $fit && "max-width: max-content"};
     min-width: max-content;
-    min-height: 4em;
-    gap: 1em;
-    padding-left: 1em;
-    padding-right: 1em;
+    padding: 0.5em 1em;
     cursor: pointer;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
@@ -35,20 +30,30 @@ const Style = styled.button<{
     user-select: none;
     transition: 0.3s ease;
 
-    & > i:only-child {
-        margin-left: -0.1em;
-        margin-right: -0.1em;
-    }
+    & > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-width: 2em;
+        min-height: 3em;
+        gap: 1em;
 
-    & span {
-        font-size: 1.5em;
-        transition: none;
+        & > i:only-child {
+            margin-left: -0.1em;
+            margin-right: -0.1em;
+        }
+
+        & > span {
+            font-size: 1.5em;
+            transition: none;
+        }
     }
 
     ${({ $type, $color }) => {
         switch ($type) {
             case "glass":
-                const glass: string = $color === "black" ? "var(--white)" : "var(--theme)";
+                const glass: string = $color === "white" ? "var(--white)" : $color === "black" ? "var(--black)" : "var(--theme)";
                 return css`
                     background: rgba(${glass}, var(--o015));
                     color: rgb(${glass});

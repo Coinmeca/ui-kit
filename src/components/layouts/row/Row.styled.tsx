@@ -1,30 +1,102 @@
+"use client";
+import { Root } from "lib/style";
 import { styled, css } from "styled-components";
 
-export const Style = styled.div<{
-    $gap: number;
-    $align?: "start" | "center" | "end" | "stretch";
-}>`
-    display: flex;
-    flex-direction: row;
+const gap = css`
+    gap: calc(var(--gap) / 2);
 
-    ${({ $gap, $align }) => {
-        return css`
-            align-items: ${$align};
-            gap: ${$gap}rem;
+    & > & {
+        gap: calc(var(--gap) / 4);
+
+        & > & {
+            gap: calc(var(--gap) / 8);
 
             & > & {
-                gap: ${$gap / 2}rem;
+                gap: calc(var(--gap) / 16);
 
                 & > & {
-                    gap: ${$gap / 4}rem;
+                    gap: calc(var(--gap) / 32);
 
                     & > & {
-                        gap: ${$gap / 8}rem;
+                        gap: calc(var(--gap) / 64);
                     }
                 }
             }
-        `;
+        }
+    }
+`;
+const Style = styled.div<{
+    $gap: number;
+    $fit: boolean;
+    $responsive?: string | undefined;
+    $reverse?: boolean;
+    $only?: boolean;
+}>`
+    --gap: ${({ $gap }) => ($gap === 0 ? 0 : $gap || 4)}em;
+
+    display: flex;
+    height: max-content;
+    /* align-items: center; */
+    flex-flow: ${({ $only, $reverse }) => ($only ? "row" : $reverse ? "row-reverse wrap" : "row wrap")};
+    max-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
+
+    && > * {
+        flex: 1;
+        // display: flex;
+        // width: 100%;
+    }
+
+    gap: calc(var(--gap));
+
+    & > & {
+        gap: calc(var(--gap) / 2);
+
+        & > & {
+            gap: calc(var(--gap) / 4);
+
+            & > & {
+                gap: calc(var(--gap) / 8);
+
+                & > & {
+                    gap: calc(var(--gap) / 16);
+
+                    & > & {
+                        gap: calc(var(--gap) / 32);
+                    }
+                }
+            }
+        }
+    }
+
+    ${({ $responsive, $reverse }) => {
+        switch ($responsive) {
+            case "laptop":
+                return css`
+                    @media all and(max-width: ${Root.Device.Laptop}px) {
+                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        ${gap}
+                    }
+                `;
+            case "tablet":
+                return css`
+                    @media all and(max-width: ${Root.Device.Tablet}px) {
+                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        ${gap}
+                    }
+                `;
+            case "mobile":
+                return css`
+                    @media all and(max-width: ${Root.Device.Mobile}px) {
+                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        ${gap}
+                    }
+                `;
+        }
     }}
+
+    @media all and(max-width: ${Root.Device.Mobile}px) {
+        ${gap}
+    }
 `;
 
 export default Style;

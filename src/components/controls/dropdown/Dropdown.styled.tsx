@@ -1,11 +1,14 @@
 import { css, styled } from "styled-components";
 
+export const Item = styled.li``;
+
 const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: number; $disabled: boolean }>`
-    font-size: ${({ $scale }) => $scale * 0.6667}em;
-    background: rgba(var(--white), var(--o0));
+    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    background: transparent;
     color: rgba(var(--white), var(--o045));
-    width: ${({ $fit }) => ($fit ? "max-content" : "auto")};
+    ${({ $fit }) => $fit && "max-width: max-content"};
     height: 4em;
+    flex-direction: column;
     transition: 0.3s ease;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
@@ -26,14 +29,18 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
         &:first-child {
             max-height: 100%;
 
-            li {
+            ${Item} {
                 height: 100%;
                 max-height: 100%;
                 overflow: hidden;
 
+                &:hover {
+                    background: none;
+                }
+
                 & > *:last-child:not(span) {
                     position: absolute;
-                    right: 0.8em;
+                    right: 0.25em;
                     transition: 0.3s ease;
                 }
             }
@@ -65,22 +72,26 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
             }
         }
 
-        & > li {
+        & > ${Item} {
             position: relative;
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: start;
             width: calc(100% - 5em);
-            min-width: max-content;
+            // min-width: max-content;
             gap: 1em;
             padding: 1em;
             padding-right: 4em;
+            font-weight: bold;
             cursor: pointer;
             transition: 0.3s ease;
 
             & > span {
                 font-size: 1.5em;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
             }
 
             & > img {
@@ -93,7 +104,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
             }
 
             & i {
-                font-size: 1.5em;
+                font-size: 2.5em;
                 svg {
                     fill: rgba(var(--white), var(--o045));
                 }
@@ -108,7 +119,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
                 }
             }
 
-            &.disabled {
+            &[data-disabled="true"] {
                 opacity: 0.15;
                 cursor: initial;
                 pointer-events: none;
@@ -116,35 +127,32 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
         }
     }
 
-    ${({ $open, $max }) => {
-        return (
-            $open &&
-            css`
-                background: rgba(var(--white), var(--o0075));
+    ${({ $open, $max }) =>
+        $open &&
+        css`
+            background: rgba(var(--white), var(--o0075));
 
-                & > ul {
-                    &:first-child > li {
-                        &,
-                        &:hover,
-                        &:active {
-                            background: transparent;
-                            color: rgba(var(--white), var(--o03));
-                            & i svg {
-                                fill: rgba(var(--white), var(--o03));
-                            }
-                        }
-                        & > *:last-child:not(span) {
-                            transform: rotate(180deg);
+            & > ul {
+                &:first-child > li {
+                    &,
+                    &:hover,
+                    &:active {
+                        background: transparent;
+                        color: rgba(var(--white), var(--o03));
+                        & i svg {
+                            fill: rgba(var(--white), var(--o03));
                         }
                     }
-                    &:last-child {
-                        background: rgba(var(--white), var(--o015));
-                        max-height: ${$max}em;
+                    & > *:last-child:not(span) {
+                        transform: rotate(180deg);
                     }
                 }
-            `
-        );
-    }}
+                &:last-child {
+                    background: rgba(var(--white), var(--o015));
+                    max-height: ${$max}em;
+                }
+            }
+        `};
 
     ${({ $disabled }) =>
         $disabled &&

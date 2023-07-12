@@ -1,12 +1,11 @@
 import { css, styled } from "styled-components";
 
-const Style = styled.div<{ $active: boolean; $disabled: boolean }>`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    gap: 0.5em;
-    padding: 0.5em;
+const Style = styled.div<{ $scale: number; $toggle: boolean; $active: boolean; $padding: boolean; $fit: boolean; $disabled: boolean }>`
+    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    font-weight: bold;
+    ${({ $fit }) => $fit && "max-width: max-content"};
+    min-width: max-content;
+    padding: 0 ${({ $padding }) => ($padding ? 1 : 0.75)}em;
     cursor: pointer;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
@@ -17,17 +16,23 @@ const Style = styled.div<{ $active: boolean; $disabled: boolean }>`
     user-select: none;
     transition: 0.3s ease;
 
+    & > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-width: 2em;
+        min-height: 4em;
+        gap: 0.5em;
+
+        & > span {
+            font-size: 1.5em;
+        }
+    }
+
     color: rgba(var(--white), var(--o045));
     & i svg {
         fill: rgba(var(--white), var(--o045));
-    }
-
-    & span {
-        font-size: 1em;
-    }
-
-    & i {
-        font-size: 1em;
     }
 
     &:hover {
@@ -41,13 +46,13 @@ const Style = styled.div<{ $active: boolean; $disabled: boolean }>`
         background: rgba(var(--white), var(--o015));
     }
 
-    ${({ $active }) => {
+    ${({ $active, $toggle }) => {
         return (
             $active &&
             css`
                 background: transparent;
-                cursor: initial;
-                pointer-events: none !important;
+                cursor: ${$toggle ? "pointer" : "default"};
+                pointer-events: ${$toggle ? "inherit" : "none"};
                 color: rgb(var(--white));
                 & i svg {
                     fill: rgb(var(--white));
@@ -60,7 +65,7 @@ const Style = styled.div<{ $active: boolean; $disabled: boolean }>`
         return (
             $disabled &&
             css`
-                opacity: 0.15;
+                // opacity: 0.45;
                 cursor: initial;
                 pointer-events: none !important;
             `

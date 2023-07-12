@@ -49,6 +49,7 @@ export function Format(value: any, type?: string, separator?: boolean, fix?: num
             }
             return value;
         }
+        case 'unit':
         case 'number':
         case 'currency': {
             value = value.toString().replaceAll(',', '');
@@ -85,6 +86,9 @@ export function Format(value: any, type?: string, separator?: boolean, fix?: num
             }
             if (typeof decimals === 'undefined') {
                 value = type === 'number' ? parseFloat(value) : separator ? parseFloat(value).toLocaleString() : value;
+            }
+            if (type === 'unit') {
+
             }
             return value;
         }

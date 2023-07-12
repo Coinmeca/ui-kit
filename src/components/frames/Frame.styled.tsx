@@ -1,43 +1,36 @@
-import { css, styled } from "styled-components";
+"use client";
 
-const Style = styled.section<{ $sidebar: boolean; $width: number }>`
+import { styled } from "styled-components";
+import * as Content from "components/layouts/contents/Content.styled";
+
+const Style = styled.section`
     position: relative;
     display: flex;
     flex-direction: column;
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    overflow: hidden;a
     z-index: 1;
 
     & > section {
+        position: relative;
         background: rgba(var(--black-abs), var(--o045));
         display: flex;
         width: 100%;
         height: 100%;
+        overflow: hidden;
 
         & > main {
-            z-index: 2;
+            position: relative;
             width: 100%;
+            height: 100%;
             overflow: hidden auto;
-        }
+            z-index: 3;
 
-        & > aside {
-            z-index: 10;
-            ${({ $width, $sidebar }) =>
-                $sidebar &&
-                css`
-                    min-width: ${$sidebar ? $width : 0}px;
-                `};
-            transition: 0.3s ease;
-        }
-    }
-
-    @media all and (max-width: 1919px) {
-        & > section {
-            & > aside {
-                z-index: 1;
-                min-width: 0;
-                max-width: 0;
+            ${Content.default} {
+                position: relative;
+                width: 100%;
+                height: 100%;
             }
         }
     }

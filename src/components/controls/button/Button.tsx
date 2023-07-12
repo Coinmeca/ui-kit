@@ -1,18 +1,19 @@
 "use client";
-import { Icon } from "components/controls";
+import { Elements } from "components";
+import type { Icon } from "components/elements/icon/Icon";
 import Style from "./Button.styled";
 
 export interface Button {
-    className?: string;
-    style?: any;
+    style?: object;
     title?: string;
     type?: "glass" | "line" | "solid";
     color?: string;
     fit?: boolean;
-    icon?: string;
-    iconLeft?: string;
-    iconRight?: string;
+    icon?: string | Icon;
+    iconLeft?: string | Icon;
+    iconRight?: string | Icon;
     onClick?: Function;
+    onBlur?: Function;
     scale?: number;
     hide?: boolean;
     disabled?: boolean;
@@ -28,8 +29,8 @@ export default function Button(props: Button) {
     const hide = props?.hide || false;
     const disabled = props?.disabled || false;
 
-    const icon = (icon: string) => {
-        return <Icon icon={icon} scale={scale} />;
+    const Icons = (icon?: string | Icon) => {
+        return typeof icon === "string" ? <Elements.Icon icon={icon} scale={scale} /> : typeof icon === "object" ? <Elements.Icon {...icon} scale={scale} /> : <></>;
     };
 
     function onClick(e?: any) {
@@ -37,17 +38,24 @@ export default function Button(props: Button) {
         if (typeof props?.onClick === "function") props?.onClick(e);
     }
 
+    const onBlur = (e: any) => {
+        if (props?.disabled) return;
+        if (typeof props?.onBlur === "function") props?.onBlur(e);
+    };
+
     return (
-        <Style className={props?.className} style={props?.style} title={title} $type={type} $color={color} $scale={scale} $fit={fit} $hide={hide} onClick={(e) => onClick(e)} $disabled={disabled}>
-            {props?.icon && typeof props?.children === "undefined" ? (
-                icon(props?.icon)
-            ) : (
-                <>
-                    {props?.iconLeft && icon(props?.iconLeft)}
-                    <span>{props?.children}</span>
-                    {props?.iconRight && icon(props?.iconRight)}
-                </>
-            )}
+        <Style style={props?.style} title={title} $type={type} $color={color} $scale={scale} $fit={fit} $hide={hide} onClick={(e: any) => onClick(e)} onBlur={(e: any) => onBlur(e)} $disabled={disabled}>
+            <div>
+                {props?.icon && typeof props?.children === "undefined" ? (
+                    Icons(props?.icon)
+                ) : (
+                    <>
+                        {Icons(props?.iconLeft)}
+                        <span>{props?.children}</span>
+                        {Icons(props?.iconRight)}
+                    </>
+                )}
+            </div>
         </Style>
     );
 }
