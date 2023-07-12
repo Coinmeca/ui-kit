@@ -1,3 +1,5 @@
+import { Style } from "lib";
+
 export const metadata = {
     title: "Coinmeca",
     description: "The next generation decentralized exchange for new finance.",
@@ -6,7 +8,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body>{children}</body>
+            <body>
+                <Style.Initialize>{children}</Style.Initialize>
+            </body>
         </html>
     );
 }
