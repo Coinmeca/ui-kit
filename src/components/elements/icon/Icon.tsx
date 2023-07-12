@@ -20,8 +20,10 @@ function Icon(props: Icon) {
 
     return (
         <Style title={title} $color={color} $scale={scale}>
-            {/* <Icons /> */}
-            {count && count > 0 && <Count $color={color}>{count}</Count>}
+            <>
+                {Icons}
+                {count && count > 0 && <Count $color={color}>{count}</Count>}
+            </>
         </Style>
     );
 }
