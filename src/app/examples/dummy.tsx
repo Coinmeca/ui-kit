@@ -114,7 +114,7 @@ export default function Dummy() {
                     <Elements.Icon color={"#6080FF"} scale={2} icon={"bank"} />
                     <Elements.Icon color={"yellow"} scale={3} icon={"chevron-left"} />
                     <Elements.Icon color={"red"} scale={4} icon={"chart-area"} />
-                    {/* <Elements.Icon icon={""} /> */}
+                    <Elements.Icon icon={""} />
                 </Layouts.Row>
             ),
         },
