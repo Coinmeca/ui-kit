@@ -1,7 +1,6 @@
-"use client";
-import { isValidElement, memo } from "react";
-import { isFunctionTypeNode } from "typescript";
-import Style from "./GridContent.styled";
+import { Fragment, memo, ReactNode } from "react";
+import { createGlobalStyle, css, styled } from "styled-components";
+import Style, { Test, Test2, Test3 } from "./GridContent.styled";
 
 export interface GridContent {
     format?: any;
@@ -16,24 +15,25 @@ export interface GridContent {
 }
 
 function GridContent(props: GridContent) {
-    const Content =
-        props?.format && typeof props?.format === "function" ? (
-            typeof props?.children !== "object" && isFunctionTypeNode(props?.children) ? (
-                <props.format {...props?.props}>{props?.children}</props.format>
-            ) : (
-                "props.format(props?.children)"
-            )
-        ) : typeof props?.children === "function" ? (
-            <props.children {...{ ...props?.children?.children?.props, ...props?.children?.props }}>{props?.children?.children}</props.children>
-        ) : (
-            <div {...props?.children?.props}>{typeof props?.children !== "object" && props?.children}</div>
-        );
-
-    return (
-        <Style $area={props?.area} $responsive={props?.responsive} data-active={props?.children?.props?.active} {...props?.props}>
-            {Content}
-        </Style>
+    const Child = props?.children?.type !== Fragment && ((props?.children?.$$typeof && props.children) || (props.children?.children?.$$type && props.children.children));
+    const Content = Child ? (
+        <Child.type $area={props?.area} $responsive={props?.responsive} data-active={props?.props?.active}>
+            {props?.children?.children || props?.children}
+        </Child.type>
+    ) : (
+        <div data-active={props?.props?.active}>{props?.children?.children || props?.children}</div>
     );
+
+    const Format =
+        (typeof props?.format === "function" &&
+            props?.format({
+                ...props?.props,
+                children: Content?.props?.children || Content,
+            })) ||
+        (props?.format?.$$typeof && (props?.format?.type !== Fragment ? <props.format.type children={Content?.props?.children || Content} {...props?.props} /> : Content));
+
+    if (Format) return <>{Format}</>;
+    return <>{Content}</>;
 }
 
 export default memo(GridContent);

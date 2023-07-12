@@ -90,8 +90,9 @@ export default function Grid() {
                         //         ],
                         //     },
                         // ]}
-                        format={(props: any) => <Layouts.Contents.SlideContent {...props} />}
+                        // format={(props: any) => <Layouts.Contents.SlideContent {...props} />}
                         // format={<Layouts.Contents.SlideContent />}
+                        // format={<></>}
                         // contents={[
                         //     {
                         //         area: "area1",
@@ -176,11 +177,8 @@ export default function Grid() {
                         contents={[
                             {
                                 area: "area1",
-                                children: (
-                                    <Layouts.Contents.SlideContent active={tab === "red"} style={{ background: "red" }}>
-                                        "Red"
-                                    </Layouts.Contents.SlideContent>
-                                ),
+                                props: { active: tab === "red", style: { background: "red" } },
+                                children: <>"Red"</>,
                                 responsive: [
                                     {
                                         device: "tablet",
