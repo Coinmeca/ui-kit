@@ -23,8 +23,8 @@ export function Configure({ children }: { children: React.ReactNode }) {
 export default function Initialize({ children }: { children: React.ReactNode }) {
     return (
         <Configure>
-            {children}
             <Global />
+            {children}
         </Configure>
     );
 }
