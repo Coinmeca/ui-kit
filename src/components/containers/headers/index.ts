@@ -1,1 +1,3 @@
-import Default from "./Default";
+import Header from './Header';
+
+export { Header };

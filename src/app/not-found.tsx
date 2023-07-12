@@ -1,3 +1,5 @@
+import { Layouts } from "components";
+
 export default function NotFound() {
-    return <div>Not found?</div>;
+    return <Layouts.Contents.InnerContent>Not found?</Layouts.Contents.InnerContent>;
 }
