@@ -127,35 +127,32 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
         }
     }
 
-    ${({ $open, $max }) => {
-        return (
-            $open &&
-            css`
-                background: rgba(var(--white), var(--o0075));
+    ${({ $open, $max }) =>
+        $open &&
+        css`
+            background: rgba(var(--white), var(--o0075));
 
-                & > ul {
-                    &:first-child > li {
-                        &,
-                        &:hover,
-                        &:active {
-                            background: transparent;
-                            color: rgba(var(--white), var(--o03));
-                            & i svg {
-                                fill: rgba(var(--white), var(--o03));
-                            }
-                        }
-                        & > *:last-child:not(span) {
-                            transform: rotate(180deg);
+            & > ul {
+                &:first-child > li {
+                    &,
+                    &:hover,
+                    &:active {
+                        background: transparent;
+                        color: rgba(var(--white), var(--o03));
+                        & i svg {
+                            fill: rgba(var(--white), var(--o03));
                         }
                     }
-                    &:last-child {
-                        background: rgba(var(--white), var(--o015));
-                        max-height: ${$max}em;
+                    & > *:last-child:not(span) {
+                        transform: rotate(180deg);
                     }
                 }
-            `
-        );
-    }}
+                &:last-child {
+                    background: rgba(var(--white), var(--o015));
+                    max-height: ${$max}em;
+                }
+            }
+        `};
 
     ${({ $disabled }) =>
         $disabled &&
