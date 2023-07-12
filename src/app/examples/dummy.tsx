@@ -9,8 +9,8 @@ export default function Dummy() {
     const [value, setValue] = useState<number>(0);
     const [tab, setTab] = useState<string>("icon");
     const [active, setActive] = useState(false);
+    const [mobileMenu, setMobileMenu] = useState("market");
     const [sidebarTab, setSidebarTab] = useState("exchange");
-    const [mobileMenu, setMobileMenu] = useState("");
 
     const notilist = [
         {
@@ -585,7 +585,7 @@ export default function Dummy() {
             children: (
                 <>
                     <Controls.Tab onClick={() => (mobileMenu === "notify" ? setMobileMenu("") : setMobileMenu("notify"))} active={mobileMenu === "notify"} iconLeft={{ icon: "bell", count: 24 }} toggle fit onBlur={() => setMobileMenu("")} />
-                    <Controls.Tab onClick={() => (mobileMenu === "sidebar" ? setMobileMenu("") : setMobileMenu("sidebar"))} active={mobileMenu === "sidebar"} iconLeft={"sidebar"} toggle fit onBlur={() => setMobileMenu("")} />
+                    <Controls.Tab onClick={() => (mobileMenu === "market" ? setMobileMenu("") : setMobileMenu("market"))} active={mobileMenu === "market"} iconLeft={"market"} toggle fit onBlur={() => setMobileMenu("")} />
                     <Controls.Tab onClick={() => (mobileMenu === "setting" ? setMobileMenu("") : setMobileMenu("setting"))} active={mobileMenu === "setting"} iconLeft={"gear"} toggle fit />
                 </>
             ),
@@ -650,10 +650,10 @@ export default function Dummy() {
     const sidebars = {
         active: true,
         lower: {
-            active: mobileMenu === "sidebar",
+            active: mobileMenu === "market",
             children: [
                 {
-                    active: mobileMenu === "sidebar",
+                    active: true,
                     children: (
                         <>
                             <Layouts.Row fit style={{ padding: "0.5em 1em" }} gap={0}>
