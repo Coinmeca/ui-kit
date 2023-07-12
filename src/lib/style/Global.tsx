@@ -2,7 +2,7 @@
 import { createGlobalStyle } from "styled-components";
 import { Device } from "./Root";
 
-const Style = createGlobalStyle`
+const Global = createGlobalStyle`
     html {
         color-scheme: light;
         background: black;
@@ -195,4 +195,4 @@ const Style = createGlobalStyle`
     }
 `;
 
-export default Style;
+export default Global;

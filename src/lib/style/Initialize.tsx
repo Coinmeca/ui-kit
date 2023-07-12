@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useServerInsertedHTML } from "next/navigation";
 import { ServerStyleSheet, StyleSheetManager } from "styled-components";
-import Style from "./Global";
+import Global from "./Global";
 
 export function Configure({ children }: { children: React.ReactNode }) {
     // Only create stylesheet once with lazy initial state
@@ -24,7 +24,7 @@ export default function Initialize({ children }: { children: React.ReactNode }) 
     return (
         <Configure>
             {children}
-            <Style />
+            <Global />
         </Configure>
     );
 }
