@@ -7,5 +7,9 @@ export interface Content {
 }
 
 export default function Content(props: Content) {
-    return <Style $active={props?.active} style={props?.style}>{props?.children}</Style>;
+    return (
+        <Style $active={props?.active} style={props?.style}>
+            {props?.children}
+        </Style>
+    );
 }
