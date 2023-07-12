@@ -26,7 +26,7 @@ function GridContent(props: GridContent) {
                 ...props?.props,
                 children: Content?.props?.children || Content,
             })) ||
-        (props?.format?.$$typeof && (props?.format?.type !== Fragment ? <props.format.type children={Content?.props?.children || Content} {...props?.props} /> : Content));
+        (props?.format?.$$typeof && (props?.format?.type !== Fragment ? <props.format.type {...props?.props}>{Content?.props?.children || Content}</props.format.type> : Content));
 
     if (Format) return <>{Format}</>;
     return <>{Content}</>;
