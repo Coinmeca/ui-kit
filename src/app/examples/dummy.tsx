@@ -53,23 +53,31 @@ export default function Dummy() {
                                     />
                                 </>,
                                 [
-                                    <Elements.Text type="strong" height={1}>
-                                        {data?.symbol}
-                                    </Elements.Text>,
-                                    <Elements.Text type="p" height={1} style={{ opacity: 0.45 }}>
-                                        {data?.market}
-                                    </Elements.Text>,
+                                    <>
+                                        <Elements.Text type="strong" height={1}>
+                                            {data?.symbol}
+                                        </Elements.Text>
+                                    </>,
+                                    <>
+                                        <Elements.Text type="p" height={1} style={{ opacity: 0.45 }}>
+                                            {data?.market}
+                                        </Elements.Text>
+                                    </>,
                                 ],
                             ],
                         },
                     ],
                     [
-                        <Elements.Text type="strong" height={1}>
-                            {data?.price}
-                        </Elements.Text>,
-                        <Elements.Text type="strong" height={1}>
-                            {data?.price}
-                        </Elements.Text>,
+                        <>
+                            <Elements.Text type="strong" height={1}>
+                                {data?.price}
+                            </Elements.Text>
+                        </>,
+                        <>
+                            <Elements.Text type="strong" height={1}>
+                                {data?.price}
+                            </Elements.Text>
+                        </>,
                     ],
                     [{ align: "right", children: data.volume }],
                 ],
