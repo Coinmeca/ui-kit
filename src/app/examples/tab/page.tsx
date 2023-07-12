@@ -6,7 +6,7 @@ export default function Tabs() {
     const { slides2, tab, setTab, tabs } = Dummy();
 
     return (
-        <Layouts.Content>
+        <Layouts.Page>
             <Layouts.Cover>
                 <Controls.Slide slides={slides2} padding={0} align={{ vertical: "top", horizon: "left" }} nav={"top"} style={{ zIndex: 4 }} />
             </Layouts.Cover>
@@ -33,6 +33,6 @@ export default function Tabs() {
                     <Layouts.Contents.TabContainer contents={tabs} />
                 </Layouts.Contents.InnerContent>
             </Layouts.Box>
-        </Layouts.Content>
+        </Layouts.Page>
     );
 }

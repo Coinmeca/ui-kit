@@ -13,10 +13,8 @@ export default function Layout(props: Exchange) {
     const { header, sidebars } = Dummy();
 
     return (
-        <Style.Initialize>
-            <Frames.Frame header={header} sidebar={sidebars} align={"right"} background={{ img: { src: 2 } }} side={56}>
-                {props?.children}
-            </Frames.Frame>
-        </Style.Initialize>
+        <Frames.Frame header={header} sidebar={sidebars} align={"right"} background={{ img: { src: 2 } }} side={56}>
+            {props?.children}
+        </Frames.Frame>
     );
 }
