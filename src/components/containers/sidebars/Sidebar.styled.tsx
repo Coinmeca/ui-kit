@@ -33,6 +33,8 @@ export const Lower = styled.section`
     z-index: 11;
 
     @media all and (max-width: 1919px) {
+        background: rgba(var(--black), var(--o09));
+
         &[data-active="false"] {
             transform: translateX(100%);
             pointer-events: none;
