@@ -99,7 +99,7 @@ export default function Dropdown(props: Dropdown) {
     };
 
     return (
-        <Style tabIndex={5} style={{ zIndex: open ? 10 : 1, ...props?.style }} onClick={onOpen} onBlur={onClose} title={props?.title} $open={open} $max={max} $fit={fit} $scale={scale} $disabled={disabled}>
+        <Style $open={open} $max={max} $fit={fit} $scale={scale} $disabled={disabled} style={{ zIndex: open ? 10 : 1, ...props?.style }} onClick={onOpen} onBlur={onClose} title={props?.title}>
             <ul>
                 <Item>
                     {form?.indexOf("more") === 0 ? (
