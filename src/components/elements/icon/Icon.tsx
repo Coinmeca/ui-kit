@@ -16,7 +16,7 @@ function Icon(props: Icon) {
     const title = props?.title || "";
     const count = props?.count && props?.count > 9999 ? 9999 : props?.count;
 
-    const Icons = dynamic(() => import(`/src/assets/icons/${(props?.icon !== "" && props?.icon) || "empty"}.svg`));
+    const Icons = dynamic(() => import(`/src/assets/icons/${props?.icon || ""}.svg`));
 
     return (
         <Style title={title} $color={color} $scale={scale}>
