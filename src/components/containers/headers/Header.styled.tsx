@@ -15,7 +15,7 @@ export const Logo = styled.a`
     }
 
     @media all and (max-width: ${Root.Device.Tablet}px) {
-        position: fixed;
+        position: absolute;
         left: 50%;
         transform: translateX(-50%);
     }
