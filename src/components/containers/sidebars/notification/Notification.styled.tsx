@@ -5,9 +5,11 @@ const Style = styled.section`
     width: calc(100% - 6em);
     height: calc(100% - 6em);
     padding: 3em;
+    overflow: hidden auto;
 
     ${InnerContent.default} {
         gap: 2em;
+        height: max-content;
     }
 `;
 

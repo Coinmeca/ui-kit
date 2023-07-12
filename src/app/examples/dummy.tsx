@@ -32,6 +32,60 @@ export default function Dummy() {
             title: "Alert",
             message: "This is a Notification",
         },
+        {
+            id: 12234231,
+            date: "12:06:27 07-11-23",
+            title: "Notification",
+            message: "This is a Notification",
+        },
+        {
+            id: 12234231,
+            date: "12:06:27 07-11-23",
+            title: "Alert",
+            message: "This is a Notification",
+        },
+        {
+            id: 12234231,
+            date: "12:06:27 07-11-23",
+            title: "Alert",
+            message: "This is a Notification",
+        },
+        {
+            id: 12234231,
+            date: "12:06:27 07-11-23",
+            title: "Notification",
+            message: "This is a Notification",
+        },
+        {
+            id: 12234231,
+            date: "12:06:27 07-11-23",
+            title: "Alert",
+            message: "This is a Notification",
+        },
+        {
+            id: 12234231,
+            date: "12:06:27 07-11-23",
+            title: "Alert",
+            message: "This is a Notification",
+        },
+        {
+            id: 12234231,
+            date: "12:06:27 07-11-23",
+            title: "Notification",
+            message: "This is a Notification",
+        },
+        {
+            id: 12234231,
+            date: "12:06:27 07-11-23",
+            title: "Alert",
+            message: "This is a Notification",
+        },
+        {
+            id: 12234231,
+            date: "12:06:27 07-11-23",
+            title: "Alert",
+            message: "This is a Notification",
+        },
     ];
 
     const { AddNotify, setNotis } = useToast(notilist);
