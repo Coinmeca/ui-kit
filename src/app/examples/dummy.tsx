@@ -545,11 +545,11 @@ export default function Dummy() {
             children: [
                 {
                     name: "Tab",
-                    path: "/controls/tab",
+                    path: "/examples/tab",
                 },
                 {
                     name: "Slide",
-                    path: "/controls/slide",
+                    path: "/examples/slide",
                 },
                 {
                     name: "List & Table",
@@ -557,7 +557,7 @@ export default function Dummy() {
                 },
                 {
                     name: "Grid",
-                    path: "/controls/grid",
+                    path: "/examples/grid",
                 },
             ],
         },
