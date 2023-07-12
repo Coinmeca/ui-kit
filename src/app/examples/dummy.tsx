@@ -3,6 +3,7 @@ import { Elements, Layouts, Controls, Containers } from "components";
 import { Format } from "lib/utils";
 import { useState } from "react";
 import useToast from "hooks/useToast";
+import { usePathname } from "next/navigation";
 
 export default function Dummy() {
     const [value, setValue] = useState<number>(0);
@@ -541,8 +542,18 @@ export default function Dummy() {
         },
     ];
 
+    const path = usePathname();
+
+    const colorMap: any = {
+        "/examples": "sky",
+        "/examples/tab": "red",
+        "/examples/slide": "orange",
+        "/examples/list-and-table": "blue",
+        "/examples/grid": "purple",
+    };
+
     const header = {
-        color: "red",
+        color: colorMap[path],
         logo: {
             src: "/src/assets/coinmeca.svg",
             width: 128,
