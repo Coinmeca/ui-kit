@@ -177,7 +177,6 @@ export default function Grid() {
                         contents={[
                             {
                                 area: "area1",
-                                props: { active: tab === "red", style: { background: "red" } },
                                 children: <>"Red"</>,
                                 responsive: [
                                     {

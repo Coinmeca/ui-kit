@@ -16,14 +16,16 @@ function Icon(props: Icon) {
     const title = props?.title || "";
     const count = props?.count && props?.count > 9999 ? 9999 : props?.count;
 
-    const Icons = props?.icon && props?.icon !== "" ? dynamic(() => import(`/src/assets/icons/${props?.icon}.svg`)) : <></>;
-
-    return (
+    const Icons = (
         <Style title={title} $color={color} $scale={scale}>
-            {/* <Icons /> */}
-            {count && count > 0 && <Count $color={color}>{count}</Count>}
+            <>
+                {props?.icon && props?.icon !== "" ? dynamic(() => import(`/src/assets/icons/${props?.icon}.svg`)) : <></>}
+                {count && count > 0 && <Count $color={color}>{count}</Count>}
+            </>
         </Style>
     );
+
+    return <>{Icons}</>;
 }
 
 export default memo(Icon);

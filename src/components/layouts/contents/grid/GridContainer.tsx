@@ -27,8 +27,15 @@ export interface GridContainer {
     fullsize?: boolean;
 }
 
-const GridStyle = createGlobalStyle`
-    ${Style} * > *:nth-child(${(props: any) => `${props?.$id + 1}`}){
+const GridStyle = createGlobalStyle<{
+    $id: number;
+    $area?: string;
+    $responsive?: {
+        device: "desktop" | "laptop" | "tablet" | "mobile";
+        area?: string;
+    }[];
+}>`
+    ${Style} * > *:nth-child(${({ $id }) => `${$id + 1}`}){
         ${GridArea};
     }
 `;
@@ -44,14 +51,14 @@ export default function GridContainer(props: GridContainer) {
                         ? props?.contents?.map((v: any, k: number) => (
                               <Fragment key={k}>
                                   <GridContent className={k} format={props?.format} {...v} />
-                                  <GridStyle {...{ $id: k, $area: v?.area, $responsive: v?.responsive, $fullsize: props?.fullsize || false }} />
+                                  <GridStyle {...{ $id: k, $area: v?.area, $responsive: v?.responsive }} />
                               </Fragment>
                           ))
                         : props?.children && props.children?.length > 0
                         ? props?.children?.map((v: any, k: number) => (
                               <Fragment key={k}>
                                   <Fragment>{v}</Fragment>
-                                  <GridStyle {...{ $id: k, $area: v?.area, $responsive: v?.responsive, $fullsize: props?.fullsize || false }} />
+                                  <GridStyle {...{ $id: k, $area: v?.area, $responsive: v?.responsive }} />
                               </Fragment>
                           ))
                         : props?.children}
