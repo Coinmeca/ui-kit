@@ -1,4 +1,3 @@
-"use client";
 import { css, styled } from "styled-components";
 import { Root } from "lib/style";
 import * as Row from "components/layouts/row/Row.styled";
