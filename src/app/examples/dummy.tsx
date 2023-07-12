@@ -561,7 +561,7 @@ export default function Dummy() {
                 },
                 {
                     name: "List & Table",
-                    path: "/controls/list-and-table",
+                    path: "/examples/list-and-table",
                 },
                 {
                     name: "Grid",

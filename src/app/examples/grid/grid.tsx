@@ -212,7 +212,7 @@ export default function DummyGrid() {
             contents={[
                 {
                     area: "area1",
-                    children: <>"Red"</>,
+                    children: <>Red</>,
                     responsive: [
                         {
                             device: "tablet",
@@ -308,7 +308,7 @@ export default function DummyGrid() {
                     area: "area1",
                     children: (
                         <Layouts.Contents.SlideContent active={tab === "red"} style={{ background: "red" }}>
-                            "Red"
+                            Red
                         </Layouts.Contents.SlideContent>
                     ),
                     responsive: [
