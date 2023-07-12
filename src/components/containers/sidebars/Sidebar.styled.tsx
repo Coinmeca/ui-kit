@@ -55,7 +55,6 @@ const Style = styled.aside<{ $scale: number; $width: number; $active: boolean }>
     height: 100%;
     z-index: 10;
     transition: 0.3s ease;
-    pointer-events: none;
 
     & > * {
         position: absolute;
