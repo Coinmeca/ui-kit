@@ -1,4 +1,4 @@
-import Content from "./Content";
+import Content from "../page/Page";
 import InnerContent from "./Inner/InnerContent";
 import TabContainer from "./tab/TabContainer";
 import TabContent from "./tab/TabContent";

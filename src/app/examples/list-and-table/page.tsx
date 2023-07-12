@@ -221,11 +221,11 @@ export default function ListAndTables() {
     ];
 
     return (
-        <Layouts.Content>
+        <Layouts.Page>
             <div style={{ height: "320px" }} />
             <Layouts.Box>
                 <Layouts.Table list={formatter(data)} noData="There is no data." />
             </Layouts.Box>
-        </Layouts.Content>
+        </Layouts.Page>
     );
 }

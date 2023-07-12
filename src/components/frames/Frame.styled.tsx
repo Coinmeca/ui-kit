@@ -1,7 +1,7 @@
 "use client";
 
 import { styled } from "styled-components";
-import * as Content from "components/layouts/contents/Content.styled";
+import * as Page from "components/layouts/page/Page.styled";
 
 const Style = styled.section`
     position: relative;
@@ -9,7 +9,7 @@ const Style = styled.section`
     flex-direction: column;
     width: 100vw;
     height: 100vh;
-    overflow: hidden;a
+    overflow: hidden;
     z-index: 1;
 
     & > section {
@@ -27,7 +27,7 @@ const Style = styled.section`
             overflow: hidden auto;
             z-index: 3;
 
-            ${Content.default} {
+            ${Page.default} {
                 position: relative;
                 width: 100%;
                 height: 100%;

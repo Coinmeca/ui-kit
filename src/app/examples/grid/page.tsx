@@ -9,8 +9,8 @@ export default function Grid() {
     const [grid, setGrid] = useState(1);
 
     return (
-        <Layouts.Content>
-            <Layouts.Box>
+        <Layouts.Page>
+            <Layouts.Box fit>
                 <Layouts.Row gap={0}>
                     <Controls.Tab active={grid === 1} onClick={() => setGrid(1)}>
                         Format(Function)
@@ -120,6 +120,6 @@ export default function Grid() {
                     ]}
                 />
             </Layouts.Box>
-        </Layouts.Content>
+        </Layouts.Page>
     );
 }

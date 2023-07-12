@@ -1,20 +1,20 @@
 "use client";
 import { styled } from "styled-components";
 import { Root } from "lib/style";
-import * as Content from "../contents/Content.styled";
+import * as Page from "../page/Page.styled";
 import * as InnerContent from "../contents/Inner/InnerContent.styled";
 
-const Style = styled.div`
+const Style = styled.div<{ $fit?: boolean }>`
     transition: 0.3s ease;
 
-    ${Content.default} > & {
+    ${Page.default} > & {
         display: flex;
         flex-direction: column;
         background: rgb(var(--dim));
         color: rgba(var(--black));
         width: calc(100% - (var(--unit) * 8));
-        height: calc(100% - (var(--unit) * 8));
-        min-height: max-content;
+        ${({ $fit }) => ($fit ? `height: calc(100% - (var(--unit) * 8)); min-height: max-content;` : `height: max-content; min-height: calc(100% - (var(--unit) * 8));`)}
+
         padding: calc(var(--unit) * 4);
         gap: calc(var(--unit) * 4);
 
@@ -37,7 +37,7 @@ const Style = styled.div`
 
         @media all and (max-width: ${Root.Device.Mobile}px) {
             width: calc(100% - (var(--unit) * 6));
-            height: calc(100% - (var(--unit) * 6));
+            ${({ $fit }) => ($fit ? `height: calc(100% - (var(--unit) * 6)); min-height: max-content;` : `height: max-content; min-height: calc(100% - (var(--unit) * 6));`)}
             gap: calc(var(--unit) * 3);
             padding: calc(var(--unit) * 3);
         }
