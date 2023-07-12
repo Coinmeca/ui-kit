@@ -586,7 +586,7 @@ export default function Dummy() {
             children: (
                 <>
                     <Controls.Tab onClick={() => (mobileMenu === "notify" ? setMobileMenu("") : setMobileMenu("notify"))} active={mobileMenu === "notify"} iconLeft={{ icon: "bell", count: 24 }} toggle fit onBlur={() => setMobileMenu("")} />
-                    <Controls.Tab onClick={() => (mobileMenu === "market" ? setMobileMenu("") : setMobileMenu("market"))} active={mobileMenu === "market"} iconLeft={"market"} toggle fit onBlur={() => setMobileMenu("")} />
+                    <Controls.Tab onClick={() => (mobileMenu === "market" ? setMobileMenu("") : setMobileMenu("market"))} active={mobileMenu === "market"} iconLeft={"sidebar"} toggle fit onBlur={() => setMobileMenu("")} />
                     <Controls.Tab onClick={() => (mobileMenu === "setting" ? setMobileMenu("") : setMobileMenu("setting"))} active={mobileMenu === "setting"} iconLeft={"gear"} toggle fit />
                 </>
             ),
