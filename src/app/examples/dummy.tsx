@@ -9,7 +9,8 @@ export default function Dummy() {
     const [value, setValue] = useState<number>(0);
     const [tab, setTab] = useState<string>("icon");
     const [active, setActive] = useState(false);
-    const [mobileMenu, setMobileMenu] = useState("market");
+    const [mobileMenu, setMobileMenu] = useState("");
+    // const [mobileMenu, setMobileMenu] = useState("market");
     const [sidebarTab, setSidebarTab] = useState("exchange");
 
     const notilist = [
