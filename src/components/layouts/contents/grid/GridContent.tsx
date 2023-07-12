@@ -15,9 +15,9 @@ export interface GridContent {
 function GridContent(props: GridContent) {
     const Child = (props?.children?.children?.type !== Fragment && props.children?.children?.$$typeof && props?.children?.children?.type) || (props?.children?.type !== Fragment && props?.children?.$$typeof && props?.children?.type);
     const Content = Child ? (
-        <Child {...{ ...(props?.children?.props || props?.children?.children?.props), children: props?.children?.children?.children || props?.children?.children }} />
+        <Child {...{ ...(props?.children?.props || props?.children?.children?.props) }}>{props?.children?.children?.children || props?.children?.children}</Child>
     ) : (
-        <div {...{ ...(props?.children?.props || props?.children?.children?.props), children: props?.children?.children || props?.children }} />
+        <div {...{ ...(props?.children?.props || props?.children?.children?.props) }}>{props?.children?.children || props?.children}</div>
     );
 
     const Format =
