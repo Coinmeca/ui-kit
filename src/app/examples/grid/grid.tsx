@@ -40,7 +40,7 @@ export default function DummyGrid() {
                         active: tab === "red",
                         style: { background: "rgba(var(--red), var(--o015))" },
                         title: "this is 1st title",
-                        message: "this is 1st message, and Yellow won't work",
+                        message: "this is 1st message, and Yellow will not work",
                     },
                     responsive: [
                         {
@@ -56,7 +56,7 @@ export default function DummyGrid() {
                         active: tab === "green",
                         style: { background: "rgba(var(--green), var(--o015))" },
                         title: "this is 2nd title",
-                        message: "this is 2nd message, and Yellow won't work",
+                        message: "this is 2nd message, and Yellow will not work",
                     },
                     children: <Layouts.Contents.SlideContent style={{ background: "green" }}>Green</Layouts.Contents.SlideContent>,
                     responsive: [
@@ -94,7 +94,7 @@ export default function DummyGrid() {
                         active: true,
                         style: { background: "rgba(var(--blue), var(--o015))" },
                         title: "Way to use Yellow is wrong.",
-                        message: "Yellow won't work.",
+                        message: "Yellow will not work.",
                     },
                     children: <div style={{ background: "blue", height: 288 }}></div>,
                     responsive: [
@@ -131,7 +131,7 @@ export default function DummyGrid() {
                     props: {
                         active: tab === "red",
                     },
-                    children: <>Green won't work</>,
+                    children: <>Green will not work</>,
                     responsive: [
                         {
                             device: "tablet",
@@ -177,7 +177,7 @@ export default function DummyGrid() {
                     props: {
                         active: true,
                     },
-                    children: <div style={{ background: "blue", height: 288 }}>Green won't work with wrong way to use.</div>,
+                    children: <div style={{ background: "blue", height: 288 }}>Green will not work with wrong way to use.</div>,
                     responsive: [
                         {
                             device: "tablet",
