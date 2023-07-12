@@ -1,5 +1,5 @@
 "use client";
-import { Fragment } from "react";
+import { Fragment, useId } from "react";
 import { createGlobalStyle } from "styled-components";
 import Style, { Grid } from "./GridContainer.styled";
 import type { GridContent as Content } from "./GridContent";
@@ -28,6 +28,7 @@ export interface GridContainer {
 }
 
 const GridStyle = createGlobalStyle<{
+    $parent: string;
     $id: number;
     $area?: string;
     $responsive?: {
@@ -35,30 +36,31 @@ const GridStyle = createGlobalStyle<{
         area?: string;
     }[];
 }>`
-    ${Style} > * > *:nth-child(${({ $id }) => `${$id + 1}`}){
-        ${GridArea};
+    #${({ $parent }) => $parent} > *:nth-child(${({ $id }) => `${$id + 1}`}){
+        ${GridArea};  
     }
 `;
 
 export default function GridContainer(props: GridContainer) {
     const gap = props?.gap || 4;
+    const grid = useId().replaceAll(":", "");
 
     return (
         <Style $fullsize={props?.fullsize || false}>
-            <Grid $area={props?.area} $direction={props?.direction} $gap={gap} $width={props?.width} $height={props?.height} $responsive={props?.responsive} style={props?.style}>
+            <Grid id={grid} $area={props?.area} $direction={props?.direction} $gap={gap} $width={props?.width} $height={props?.height} $responsive={props?.responsive} style={props?.style}>
                 <>
                     {props?.contents && props?.contents?.length > 0
                         ? props?.contents?.map((v: any, k: number) => (
                               <Fragment key={k}>
                                   <GridContent className={k} format={props?.format} {...v} />
-                                  <GridStyle {...{ $id: k, $area: v?.area, $responsive: v?.responsive }} />
+                                  <GridStyle {...{ $parent: grid, $id: k, $area: v?.area, $responsive: v?.responsive }} />
                               </Fragment>
                           ))
                         : props?.children && props.children?.length > 0
                         ? props?.children?.map((v: any, k: number) => (
                               <Fragment key={k}>
                                   <Fragment>{v}</Fragment>
-                                  <GridStyle {...{ $id: k, $area: v?.area, $responsive: v?.responsive }} />
+                                  <GridStyle {...{ $parent: grid, $id: k, $area: v?.area, $responsive: v?.responsive }} />
                               </Fragment>
                           ))
                         : props?.children}
