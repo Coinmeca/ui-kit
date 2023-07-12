@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Style from "./SlideContent.styled";
 
 export interface SlideContent {
@@ -7,7 +8,7 @@ export interface SlideContent {
     style?: object;
 }
 
-export default function SlideContent(props: SlideContent) {
+function SlideContent(props: SlideContent) {
     const active = props?.active || false;
 
     return (
@@ -16,3 +17,5 @@ export default function SlideContent(props: SlideContent) {
         </Style>
     );
 }
+
+export default memo(SlideContent);
