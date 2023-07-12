@@ -4,7 +4,7 @@ export const Item = styled.li``;
 
 const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: number; $disabled: boolean }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
-    background: rgba(var(--white), 0);
+    background: transparent;
     color: rgba(var(--white), var(--o045));
     ${({ $fit }) => $fit && "max-width: max-content"};
     height: 4em;
