@@ -1,3 +1,4 @@
+import "./global.scss";
 import { Style } from "lib";
 
 export const metadata = {
