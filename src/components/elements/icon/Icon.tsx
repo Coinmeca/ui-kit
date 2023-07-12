@@ -21,7 +21,7 @@ function Icon(props: Icon) {
     return (
         <Style title={title} $color={color} $scale={scale}>
             <>
-                {Icons}
+                <Icons />
                 {count && count > 0 && <Count $color={color}>{count}</Count>}
             </>
         </Style>
