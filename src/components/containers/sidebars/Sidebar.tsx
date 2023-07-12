@@ -4,8 +4,9 @@ export interface Sidebars {
     active?: boolean;
     width?: number;
     scale?: number;
-    upper?: { active?: boolean; children?: Sidebar[] };
-    lower?: { active?: boolean; children?: Sidebar[] };
+    upper?: { active?: boolean; children?: Sidebar[]; onBlur?: Function };
+    lower?: { active?: boolean; children?: Sidebar[]; onBlur?: Function };
+    onBlur?: Function;
 }
 
 export interface Sidebar {
@@ -18,8 +19,14 @@ export default function Sidebar(props: Sidebars) {
     const scale = props?.scale || 1;
     const width = props?.width || 60;
 
+    const onBlur = (e: any) => {
+        if (props?.lower?.active && props?.lower?.onBlur) props?.lower?.onBlur(e);
+        if (props?.upper?.active && props?.upper?.onBlur) props?.upper?.onBlur(e);
+        if (props?.onBlur) props?.onBlur(e);
+    };
+
     return (
-        <Style $scale={scale} $active={active} $width={width}>
+        <Style tabIndex={10} $scale={scale} $active={active} $width={width} onBlur={(e: any) => onBlur(e)}>
             {props?.lower?.children && props?.lower?.children?.length > 0 && (
                 <Lower data-active={props?.lower?.active}>
                     {props?.lower?.children?.map((v: any, k: number) => (

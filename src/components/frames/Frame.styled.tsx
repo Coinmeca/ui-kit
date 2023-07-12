@@ -1,4 +1,5 @@
 "use client";
+
 import { styled } from "styled-components";
 import * as Content from "components/layouts/contents/Content.styled";
 
