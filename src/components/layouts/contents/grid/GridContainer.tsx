@@ -1,8 +1,10 @@
 "use client";
 import { Fragment } from "react";
+import { createGlobalStyle } from "styled-components";
 import Style, { Grid } from "./GridContainer.styled";
-import GridContent from "./GridContent";
 import type { GridContent as Content } from "./GridContent";
+import GridContent from "./GridContent";
+import { GridArea } from "./GridContent.styled";
 
 export interface GridContainer {
     format?: any;
@@ -25,6 +27,12 @@ export interface GridContainer {
     fullsize?: boolean;
 }
 
+const GridStyle = createGlobalStyle`
+    ${Style} * > *:nth-child(${(props: any) => `${props?.$id + 1}`}){
+        ${GridArea};
+    }
+`;
+
 export default function GridContainer(props: GridContainer) {
     const gap = props?.gap || 4;
 
@@ -33,9 +41,19 @@ export default function GridContainer(props: GridContainer) {
             <Grid $area={props?.area} $direction={props?.direction} $gap={gap} $width={props?.width} $height={props?.height} $responsive={props?.responsive} style={props?.style}>
                 <>
                     {props?.contents && props?.contents?.length > 0
-                        ? props?.contents?.map((v: any, k: number) => <GridContent key={k} format={props?.format} {...v} />)
+                        ? props?.contents?.map((v: any, k: number) => (
+                              <Fragment key={k}>
+                                  <GridContent className={k} format={props?.format} {...v} />
+                                  <GridStyle {...{ $id: k, $area: v?.area, $responsive: v?.responsive, $fullsize: props?.fullsize || false }} />
+                              </Fragment>
+                          ))
                         : props?.children && props.children?.length > 0
-                        ? props?.children?.map((v: any, k: number) => <Fragment key={k}>{v}</Fragment>)
+                        ? props?.children?.map((v: any, k: number) => (
+                              <Fragment key={k}>
+                                  <Fragment>{v}</Fragment>
+                                  <GridStyle {...{ $id: k, $area: v?.area, $responsive: v?.responsive, $fullsize: props?.fullsize || false }} />
+                              </Fragment>
+                          ))
                         : props?.children}
                 </>
             </Grid>
