@@ -35,7 +35,7 @@ const GridStyle = createGlobalStyle<{
         area?: string;
     }[];
 }>`
-    ${Style} * > *:nth-child(${({ $id }) => `${$id + 1}`}){
+    ${Style} > * > *:nth-child(${({ $id }) => `${$id + 1}`}){
         ${GridArea};
     }
 `;

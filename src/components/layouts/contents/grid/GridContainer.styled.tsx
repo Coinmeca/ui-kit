@@ -5,7 +5,7 @@ import { styled, css } from "styled-components";
 const Layout = (area?: string, direction?: "row" | "col", gap?: number | { row?: number; col?: number }, width?: number | string | { min?: number; max?: number }, height?: number | string | { min?: number; max?: number }) => css`
     ${area && `width:100%; height:100%; grid-template-areas: ${area}; ${typeof width === "string" ? `grid-template-columns: ${width};` : ""} ${typeof height === "string" ? `grid-template-rows: ${height};` : ""} overflow:hidden;`}
 
-    ${direction === "col"
+    ${direction === "row"
         ? `
         ${
             typeof width === "number"
@@ -14,9 +14,9 @@ const Layout = (area?: string, direction?: "row" | "col", gap?: number | { row?:
                   (typeof width?.min === "number" || typeof width?.max === "number") &&
                   `grid-template-columns: repeat(auto-fill, minmax(${typeof width?.min === "number" ? `${width.min}em` : "1fr"}, ${typeof width?.max === "number" ? `${width.max}em` : "1fr"}));`
         }
-        ${typeof height === "number" && `grid-auto-rows: ${height}em`}
+        ${typeof height === "number" ? `grid-auto-rows: ${height}em;` : ""}
     `
-        : direction === "row" &&
+        : direction === "col" &&
           `
         ${
             typeof height === "number"
@@ -25,7 +25,7 @@ const Layout = (area?: string, direction?: "row" | "col", gap?: number | { row?:
                   (typeof height?.min === "number" || typeof height?.max === "number") &&
                   `grid-template-rows: repeat(auto-fill, minmax(${typeof height?.min === "number" ? `${height.min}em` : "1fr"}, ${typeof height?.max === "number" ? `${height.max}em` : "1fr"}));`
         }
-        ${typeof width === "number" && `grid-auto-columns: ${width}em`}
+        ${typeof width === "number" ? `grid-auto-columns: ${width}em;` : ""}
         `}
         
         ${typeof gap === "number" ? `gap: ${gap}em;` : `${typeof gap?.row === "number" ? `grid-row-gap: ${gap?.row}em;` : ""}${typeof gap?.col === "number" ? `grid-column-gap: ${gap?.col}em;` : ""}`}

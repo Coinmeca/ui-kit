@@ -1,6 +1,4 @@
-import { Fragment, memo, ReactNode } from "react";
-import { createGlobalStyle, css, styled } from "styled-components";
-import Style, { Test, Test2, Test3 } from "./GridContent.styled";
+import { Fragment, memo } from "react";
 
 export interface GridContent {
     format?: any;
@@ -15,13 +13,11 @@ export interface GridContent {
 }
 
 function GridContent(props: GridContent) {
-    const Child = props?.children?.type !== Fragment && ((props?.children?.$$typeof && props.children) || (props.children?.children?.$$type && props.children.children));
+    const Child = (props?.children?.children?.type !== Fragment && props.children?.children?.$$typeof && props?.children?.children?.type) || (props?.children?.type !== Fragment && props?.children?.$$typeof && props?.children?.type);
     const Content = Child ? (
-        <Child.type $area={props?.area} $responsive={props?.responsive} data-active={props?.props?.active}>
-            {props?.children?.children || props?.children}
-        </Child.type>
+        <Child {...{ ...(props?.children?.props || props?.children?.children?.props), children: props?.children?.children?.children || props?.children?.children }} />
     ) : (
-        <div data-active={props?.props?.active}>{props?.children?.children || props?.children}</div>
+        <div {...{ ...(props?.children?.props || props?.children?.children?.props), children: props?.children?.children || props?.children }} />
     );
 
     const Format =

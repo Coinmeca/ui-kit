@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Style from "./TabContent.styled";
 
 export interface TabContent {
@@ -6,8 +7,10 @@ export interface TabContent {
     children?: any;
 }
 
-export default function TabContent(props: TabContent) {
+function TabContent(props: TabContent) {
     const active = props?.active || false;
 
     return <Style $active={active}>{props?.children}</Style>;
 }
+
+export default memo(TabContent);
