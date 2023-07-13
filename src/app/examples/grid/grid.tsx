@@ -131,7 +131,7 @@ export default function DummyGrid() {
                     props: {
                         active: tab === "red",
                     },
-                    children: <>Green will not work</>,
+                    children: <>Yellow will not work</>,
                     responsive: [
                         {
                             device: "tablet",
@@ -146,7 +146,7 @@ export default function DummyGrid() {
                     props: {
                         active: tab === "green",
                     },
-                    children: <span style={{ background: "green" }}>Green</span>,
+                    children: <span style={{ background: "green", height: '100%' }}>Green</span>,
                     responsive: [
                         {
                             device: "tablet",
@@ -162,7 +162,7 @@ export default function DummyGrid() {
                     },
                     children: {
                         props: { active: tab === "yellow" },
-                        children: <Layouts.Contents.SlideContent style={{ background: "yellow" }}>Green</Layouts.Contents.SlideContent>,
+                        children: <Layouts.Contents.SlideContent style={{ background: "yellow" }}>Yellow</Layouts.Contents.SlideContent>,
                     },
                     responsive: [
                         {
@@ -266,19 +266,19 @@ export default function DummyGrid() {
 
     const Grid4 = (
         <GridContainer direction="row" width={{ min: 24 }} height={16} fullsize>
-            <div style={{ gridArea: "initial", background: "red", display: "flex" }}></div>
-            <div style={{ gridArea: "initial", background: "green", display: "flex" }}></div>
-            <div style={{ gridArea: "initial", background: "yellow", display: "flex" }}></div>
-            <div style={{ gridArea: "initial", background: "blue", display: "flex" }}></div>
+            <div style={{ background: "red", display: "flex" }}></div>
+            <div style={{ background: "green", display: "flex" }}></div>
+            <div style={{ background: "yellow", display: "flex" }}></div>
+            <div style={{ background: "blue", display: "flex" }}></div>
         </GridContainer>
     );
 
     const Grid5 = (
         <GridContainer direction="col" width={32} height={{ min: 8, max: 16 }} fullsize>
-            <div style={{ gridArea: "initial", background: "red", display: "flex" }}></div>
-            <div style={{ gridArea: "initial", background: "green", display: "flex" }}></div>
-            <div style={{ gridArea: "initial", background: "yellow", display: "flex" }}></div>
-            <div style={{ gridArea: "initial", background: "blue", display: "flex" }}></div>
+            <div style={{ background: "red", display: "flex" }}></div>
+            <div style={{ background: "green", display: "flex" }}></div>
+            <div style={{ background: "yellow", display: "flex" }}></div>
+            <div style={{ background: "blue", display: "flex" }}></div>
         </GridContainer>
     );
 
