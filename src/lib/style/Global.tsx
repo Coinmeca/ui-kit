@@ -172,7 +172,13 @@ const Global = createGlobalStyle`
 
     @media all and (min-width: ${Device.HD2K}px) {
         :root{
-            // --unit: 12px;
+            --unit: 8px;
+        }
+    }
+
+    @media all and (min-width: ${Device.HD3K}px) {
+        :root{
+            --unit: 10px;
         }
     }
 
@@ -188,9 +194,15 @@ const Global = createGlobalStyle`
         }
     }
 
+    @media all and (min-width: ${Device.HD5K}px) {
+        :root{
+            --unit: 16px;
+        }
+    }
+
     @media all and (min-width: ${Device.HD8K}px) {
         :root{
-            --unit: 32px;
+            --unit: 24px;
         }
     }
 `;

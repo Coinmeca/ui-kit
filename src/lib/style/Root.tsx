@@ -7,8 +7,10 @@ export const Device = {
     Laptop: 1280,
     Desktop: 1920,
     HD2K: 2560,
+    HD3K: 3072,
     HD4K: 3840,
     HD5K: 5120,
+    HD6K: 6144,
     HD8K: 7680,
 };
 
