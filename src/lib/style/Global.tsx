@@ -172,19 +172,19 @@ const Global = createGlobalStyle`
 
     @media all and (min-width: ${Device.HD2K}px) {
         :root{
-            --unit: 12px;
+            // --unit: 12px;
         }
     }
 
     @media all and (min-width: ${Device.HD4K}px) {
         :root{
-            --unit: 16px;
+            --unit: 12px;
         }
     }
 
     @media all and (min-width: ${Device.HD5K}px) {
         :root{
-            --unit: 24px;
+            --unit: 14px;
         }
     }
 
