@@ -77,7 +77,7 @@ const Global = createGlobalStyle`
         --o005: 0.05;
         --o0: 0;
 
-        --blur: blur(4rem);
+        --blur: blur(4em);
     }
 
     [data-direction="row"] {
@@ -172,37 +172,37 @@ const Global = createGlobalStyle`
 
     @media all and (min-width: ${Device.HD2K}px) {
         :root{
-            --unit: 8px;
+            --unit: 0.75rem;
         }
     }
 
     @media all and (min-width: ${Device.HD3K}px) {
         :root{
-            --unit: 10px;
+            --unit: 0.875rem;
         }
     }
 
     @media all and (min-width: ${Device.HD4K}px) {
         :root{
-            --unit: 12px;
+            --unit: 0.875rem;
         }
     }
 
     @media all and (min-width: ${Device.HD5K}px) {
         :root{
-            --unit: 14px;
+            --unit: 1rem;
         }
     }
 
-    @media all and (min-width: ${Device.HD5K}px) {
+    @media all and (min-width: ${Device.HD6K}px) {
         :root{
-            --unit: 16px;
+            --unit: 1rem;
         }
     }
 
     @media all and (min-width: ${Device.HD8K}px) {
         :root{
-            --unit: 24px;
+            --unit: 1.25rem;
         }
     }
 `;
