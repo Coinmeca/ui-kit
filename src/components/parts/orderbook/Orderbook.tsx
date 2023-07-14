@@ -8,6 +8,7 @@ export interface Orderbook {
     bid_show?: boolean;
     onClickAsk?: Function;
     onClickBid?: Function;
+    bookOrder?: boolean;
     responsive?: "desktop" | "laptop" | "tablet" | "mobile";
 }
 

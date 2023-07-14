@@ -113,6 +113,7 @@ export const Tick = styled.div`
                 &:nth-child(1) {
                     min-width: 15%;
                     padding: 0.5em 1em;
+                    padding-right: 2em;
                     text-align: right;
                     color: rgb(var(--white));
 
@@ -125,8 +126,7 @@ export const Tick = styled.div`
                     background-position: right;
                     background-repeat: no-repeat;
                     width: 100%;
-                    padding: 0.5em 1em;
-                    padding-right: 2em;
+                    padding: 0.5em 2em;
                     transition: 0.3s ease;
                 }
             }
