@@ -230,7 +230,7 @@ export default function Page() {
                                                     active: true,
                                                     children: (
                                                         <Layouts.Contents.InnerContent>
-                                                            <Layouts.Row>
+                                                            <Layouts.Row fix>
                                                                 <Layouts.Col gap={1}>
                                                                     <Layouts.Row fix>
                                                                         <Elements.Text opacity={0.45}>Available</Elements.Text>
@@ -282,13 +282,15 @@ export default function Page() {
                                                                     </Layouts.Row>
                                                                 </Layouts.Col>
                                                             </Layouts.Row>
-                                                            <Layouts.Row>
-                                                                <Controls.Button type={"solid"} color={"green"}>
-                                                                    BUY
-                                                                </Controls.Button>
-                                                                <Controls.Button type={"solid"} color={"red"}>
-                                                                    SELL
-                                                                </Controls.Button>
+                                                            <Layouts.Row fix>
+                                                                <Layouts.Row gap={3} fix>
+                                                                    <Controls.Button type={"solid"} color={"green"}>
+                                                                        BUY
+                                                                    </Controls.Button>
+                                                                    <Controls.Button type={"solid"} color={"red"}>
+                                                                        SELL
+                                                                    </Controls.Button>
+                                                                </Layouts.Row>
                                                             </Layouts.Row>
                                                         </Layouts.Contents.InnerContent>
                                                     ),

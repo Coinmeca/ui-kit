@@ -38,6 +38,7 @@ const Style = styled.div<{
     height: max-content;
     /* align-items: center; */
     flex-flow: ${({ $fix, $reverse }) => ($fix ? "row" : $reverse ? "row-reverse wrap" : "row wrap")};
+    width: ${({ $fit }) => ($fit ? "max-content" : "100%")};
     min-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
     max-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
 
