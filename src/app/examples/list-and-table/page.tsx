@@ -1,7 +1,7 @@
 "use client";
 import { Elements, Layouts } from "components";
 
-export default function ListAndTables() {
+export default function Page() {
     const data = [
         {
             symbol: "ETH",

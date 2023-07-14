@@ -26,7 +26,8 @@ export interface Dropdown {
     open?: boolean;
     onClick?: Function;
     onClickItem?: Function;
-    device?: string;
+    show?: "desktop" | "laptop" | "tablet" | "mobile";
+    hide?: "desktop" | "laptop" | "tablet" | "mobile";
 }
 
 export default function Dropdown(props: Dropdown) {
@@ -45,7 +46,7 @@ export default function Dropdown(props: Dropdown) {
     const imgName = props?.imgName || "img";
 
     const disabled = props?.disabled || false;
-    const device = props?.device;
+    const device = props?.show;
 
     useEffect(() => {
         const option = props?.option;
@@ -99,7 +100,21 @@ export default function Dropdown(props: Dropdown) {
     };
 
     return (
-        <Style $open={open} $max={max} $fit={fit} $scale={scale} $disabled={disabled} tabIndex={5} style={{ zIndex: open ? 10 : 1, ...props?.style }} onClick={onOpen} onBlur={onClose} title={props?.title} data-active={open}>
+        <Style
+            $open={open}
+            $max={max}
+            $fit={fit}
+            $scale={scale}
+            $disabled={disabled}
+            tabIndex={5}
+            style={{ zIndex: open ? 10 : 1, ...props?.style }}
+            onClick={onOpen}
+            onBlur={onClose}
+            title={props?.title}
+            data-active={open}
+            data-show={props?.show}
+            data-hide={props?.hide}
+        >
             <ul>
                 <Item>
                     {form?.indexOf("more") === 0 ? (
@@ -108,7 +123,7 @@ export default function Dropdown(props: Dropdown) {
                         <Controls.Button icon={option?.icon} />
                     ) : (
                         <>
-                            {option && typeof option[imgName] !== "undefined" && <Image src={`${option[imgName]}`} width={0} height={0} alt={""} />}
+                            {option && typeof option[imgName] !== "undefined" && <Image src={option[imgName]} width={0} height={0} alt={""} />}
                             <span
                                 title={
                                     typeof option === "undefined"
@@ -153,7 +168,7 @@ export default function Dropdown(props: Dropdown) {
                                     <>
                                         {typeof v[imgName] !== "undefined" && v[imgName] !== "" ? (
                                             <>
-                                                <Image src={`${v[imgName]}`} width={0} height={0} alt={""} />
+                                                <Image src={v[imgName]} width={0} height={0} alt={""} />
                                                 <span title={typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}>
                                                     {typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}
                                                 </span>

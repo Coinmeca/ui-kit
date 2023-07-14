@@ -6,7 +6,7 @@ export interface Col {
     align?: "left" | "center" | "right" | "stretch";
     style?: object;
     fit?: boolean;
-    responsive?: string;
+    responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     reverse?: boolean;
 }
 

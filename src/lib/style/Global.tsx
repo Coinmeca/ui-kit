@@ -126,6 +126,7 @@ const Global = createGlobalStyle`
         text-align: right;
     }
 
+
     @media (prefers-color-scheme: light) {
         :root {
             --white: 255, 255, 255;
@@ -170,27 +171,9 @@ const Global = createGlobalStyle`
         }
     }
 
-    @media all and (min-width: ${Device.HD2K}px) {
+    @media all and (min-width: ${Device.HD8K}px) {
         :root{
-            --unit: 0.75rem;
-        }
-    }
-
-    @media all and (min-width: ${Device.HD3K}px) {
-        :root{
-            --unit: 0.875rem;
-        }
-    }
-
-    @media all and (min-width: ${Device.HD4K}px) {
-        :root{
-            --unit: 0.875rem;
-        }
-    }
-
-    @media all and (min-width: ${Device.HD5K}px) {
-        :root{
-            --unit: 1rem;
+            --unit: 1.25rem;
         }
     }
 
@@ -200,9 +183,60 @@ const Global = createGlobalStyle`
         }
     }
 
-    @media all and (min-width: ${Device.HD8K}px) {
+    @media all and (min-width: ${Device.HD5K}px) {
         :root{
-            --unit: 1.25rem;
+            --unit: 1rem;
+        }
+    }
+
+    @media all and (min-width: ${Device.HD4K}px) {
+        :root{
+            --unit: 0.875rem;
+        }
+    }
+
+    @media all and (min-width: ${Device.HD3K}px) {
+        :root{
+            --unit: 0.875rem;
+        }
+    }
+
+    @media all and (min-width: ${Device.HD2K}px) {
+        :root{
+            --unit: 0.75rem;
+        }
+    }
+
+    @media all and (max-width: ${Device.Desktop}px) {
+        [data-show="laptop"],
+        [data-show="tablet"],
+        [data-show="mobile"] {
+            display:none;
+        }
+    }
+    @media all and (max-width: ${Device.Laptop}px) {
+        [data-show="tablet"],
+        [data-show="mobile"] {
+            display:none;
+        }
+        [data-hide="desktop"] {
+            display:none;
+        }
+    }
+    @media all and (max-width: ${Device.Tablet}px) {
+        [data-show="mobile"] {
+            display:none;
+        }
+        [data-hide="desktop"],
+        [data-hide="laptop"] {
+            display:none;
+        }
+    }
+    @media all and (max-width: ${Device.Mobile}px) {
+        [data-hide="desktop"],
+        [data-hide="laptop"],
+        [data-hide="tablet"] {
+            display:none;
         }
     }
 `;

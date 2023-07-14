@@ -19,7 +19,9 @@ export interface Tab {
     scale?: number;
     toggle?: boolean;
     fit?: boolean;
-    device?: string;
+
+    show?: "desktop" | "laptop" | "tablet" | "mobile";
+    hide?: "desktop" | "laptop" | "tablet" | "mobile";
 }
 
 export default function Tab(props: Tab) {

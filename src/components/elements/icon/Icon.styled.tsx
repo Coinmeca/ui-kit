@@ -15,13 +15,13 @@ export const Count = styled.span<{ $color: string }>`
     border-radius: 1em;
 `;
 
-const Style = styled.i<{ $color?: string; $scale?: number }>`
+const Style = styled.i<{ $color?: string; $change?: boolean; $scale?: number }>`
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     font-style: initial;
-    font-size: ${({ $scale }) => ($scale || 1) * 2.5}em;
+    font-size: calc(var(--unit) * ${({ $scale }) => ($scale || 1) * 2.5});
     width: 1em;
     height: 1em;
     aspect-ratio: 1/1;
@@ -29,7 +29,7 @@ const Style = styled.i<{ $color?: string; $scale?: number }>`
     & svg {
         width: 100%;
         height: 100%;
-        fill: ${({ $color }) => $color};
+        fill: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
         transition: 0.3s ease;
     }
 `;

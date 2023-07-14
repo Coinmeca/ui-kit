@@ -1,10 +1,9 @@
 "use client";
 import { Controls, Layouts } from "components";
-import { GridContainer } from "components/layouts/contents";
 import { useState } from "react";
 import DummyGrid from "./grid";
 
-export default function Grid() {
+export default function Page() {
     const { tab, setTab, Grid1, Grid2, Grid3, Grid4, Grid5, Grid6 } = DummyGrid();
     const [grid, setGrid] = useState(1);
 

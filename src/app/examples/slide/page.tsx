@@ -2,7 +2,7 @@
 import { Controls, Layouts } from "components";
 import Dummy from "../dummy";
 
-export default function Slides() {
+export default function Page() {
     const { slides, menu, tab, setTab, tabs } = Dummy();
 
     return (

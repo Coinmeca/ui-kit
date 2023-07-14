@@ -34,7 +34,8 @@ export interface Input {
     button?: Button;
     dropdown?: Dropdown;
 
-    device?: string;
+    show?: "desktop" | "laptop" | "tablet" | "mobile";
+    hide?: "desktop" | "laptop" | "tablet" | "mobile";
 
     onClick?: Function;
     onChange?: Function;
@@ -164,7 +165,20 @@ export default function Input(props: Input) {
     };
 
     const Input = (
-        <Style tabIndex={5} style={props?.style} $clearable={clearable} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)} data-active={focus}>
+        <Style
+            tabIndex={5}
+            style={props?.style}
+            $clearable={clearable}
+            $scale={scale}
+            $focus={focus}
+            $error={error}
+            $disabled={disabled}
+            onClick={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
+            data-active={focus}
+            data-show={props?.show}
+            data-hide={props?.hide}
+        >
             <div>
                 <div style={props?.style}>
                     {props?.icon && <Elements.Icon icon={props?.icon} />}
@@ -205,7 +219,7 @@ export default function Input(props: Input) {
 
     if (fold) {
         return (
-            <div onClick={() => setExtend(true)} onBlur={onBlur}>
+            <div onClick={() => setExtend(true)} onBlur={onBlur} data-show={props?.show} data-hide={props?.hide}>
                 <div>{Input}</div>
             </div>
         );
