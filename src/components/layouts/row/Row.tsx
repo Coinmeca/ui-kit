@@ -6,6 +6,8 @@ export interface Row {
     gap?: number;
     align?: "left" | "center" | "right" | "stretch";
     fit?: boolean;
+    show?: "desktop" | "laptop" | "tablet" | "mobile";
+    hide?: "desktop" | "laptop" | "tablet" | "mobile";
     responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     reverse?: boolean;
     only?: boolean;
@@ -19,7 +21,7 @@ export default function Row(props: Row) {
     const only = props?.only || false;
 
     return (
-        <Style style={props?.style} $gap={gap} $fit={fit} $responsive={props?.responsive} $reverse={reverse} $only={only} data-row={align}>
+        <Style style={props?.style} $gap={gap} $fit={fit} $responsive={props?.responsive} $reverse={reverse} $only={only} data-row={align} data-show={props?.show} data-hide={props?.hide}>
             {props.children}
         </Style>
     );

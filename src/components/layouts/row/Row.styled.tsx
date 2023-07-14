@@ -71,21 +71,21 @@ const Style = styled.div<{
         switch ($responsive) {
             case "laptop":
                 return css`
-                    @media all and(max-width: ${Root.Device.Laptop}px) {
+                    @media all and (max-width: ${Root.Device.Laptop}px) {
                         flex-direction: ${$reverse ? "column-reverse" : "column"};
                         ${gap}
                     }
                 `;
             case "tablet":
                 return css`
-                    @media all and(max-width: ${Root.Device.Tablet}px) {
+                    @media all and (max-width: ${Root.Device.Tablet}px) {
                         flex-direction: ${$reverse ? "column-reverse" : "column"};
                         ${gap}
                     }
                 `;
             case "mobile":
                 return css`
-                    @media all and(max-width: ${Root.Device.Mobile}px) {
+                    @media all and (max-width: ${Root.Device.Mobile}px) {
                         flex-direction: ${$reverse ? "column-reverse" : "column"};
                         ${gap}
                     }
