@@ -1,21 +1,73 @@
 "use client";
-import { Controls, Elements, Layouts } from "components";
+import { Controls, Elements, Layouts, Parts } from "components";
 import { Avatar } from "components/elements";
 import { GridContainer } from "components/layouts/contents";
 import { useState } from "react";
 
 export default function Page() {
-    const [tab, setTab] = useState("");
     const [mobile, setMobile] = useState("orderbook");
 
     const market = {
         logo: require("/src/assets/coins/eth.png"),
-        symbol: "ETH",
+        base: {
+            symbol: "ETH",
+            name: "Ethereum",
+            decimal: 18,
+        },
+        quote: {
+            symbol: "DAI",
+            name: "Dai",
+            decimal: 18,
+        },
         market: "ETH/DAI",
-        price: "4,678.05",
+        price: "1510",
         change: "23.12",
         volume: "73170731",
     };
+
+    const asks = [
+        { price: 1530, balance: 100 },
+        { price: 1529, balance: 500 },
+        { price: 1528, balance: 700 },
+        { price: 1527, balance: 800 },
+        { price: 1526, balance: 600 },
+        { price: 1525, balance: 300 },
+        { price: 1524, balance: 200 },
+        { price: 1523, balance: 400 },
+        { price: 1522, balance: 100 },
+        { price: 1521, balance: 50 },
+        { price: 1519, balance: 600 },
+        { price: 1518, balance: 700 },
+        { price: 1517, balance: 1200 },
+        { price: 1516, balance: 400 },
+        { price: 1515, balance: 600 },
+        { price: 1514, balance: 900 },
+        { price: 1513, balance: 700 },
+        { price: 1512, balance: 1200 },
+        { price: 1511, balance: 800 },
+    ];
+
+    const bids = [
+        { price: 1510, balance: 100 },
+        { price: 1509, balance: 500 },
+        { price: 1508, balance: 700 },
+        { price: 1507, balance: 800 },
+        { price: 1506, balance: 600 },
+        { price: 1505, balance: 300 },
+        { price: 1504, balance: 200 },
+        { price: 1503, balance: 400 },
+        { price: 1502, balance: 100 },
+        { price: 1501, balance: 50 },
+        { price: 1500, balance: 600 },
+        { price: 1499, balance: 700 },
+        { price: 1498, balance: 1200 },
+        { price: 1497, balance: 400 },
+        { price: 1496, balance: 600 },
+        { price: 1495, balance: 900 },
+        { price: 1494, balance: 700 },
+        { price: 1493, balance: 1200 },
+        { price: 1492, balance: 800 },
+    ];
 
     return (
         <Layouts.Page>
@@ -26,10 +78,10 @@ export default function Page() {
                             <Avatar img={market.logo} scale={1.3334} />
                             <Layouts.Row responsive={"tablet"} gap={1} fit>
                                 <Elements.Text scale={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "tablet", scale: 1.5 }}>
-                                    ETH
+                                    {market.base.symbol}
                                 </Elements.Text>
                                 <Elements.Text scale={2.5} height={1} responsive={{ device: "tablet", scale: 1.5 }}>
-                                    Ethereum
+                                    {market.base.name}
                                 </Elements.Text>
                             </Layouts.Row>
                         </Layouts.Row>
@@ -37,7 +89,7 @@ export default function Page() {
                             <Layouts.Row only fit gap={1} style={{ alignItems: "center" }}>
                                 <Elements.Icon scale={1.5} icon={"caret-up"} style={{ maxHeight: "100%" }} change />
                                 <Elements.Text scale={2.5} height={1} responsive={{ device: "tablet", scale: 2 }} change>
-                                    $ 2,164
+                                    $ {market.price}
                                 </Elements.Text>
                             </Layouts.Row>
                         </Layouts.Row>
@@ -60,7 +112,7 @@ export default function Page() {
                     <GridContainer
                         fullsize
                         area={`'info info' 'book chart' 'book order'`}
-                        width={"384px 1fr"}
+                        width={"320px 1fr"}
                         height={"max-content 1fr max-content"}
                         gap={3}
                         responsive={[
@@ -90,8 +142,8 @@ export default function Page() {
                             {
                                 area: "book",
                                 children: (
-                                    <Layouts.Contents.SlideContent active={mobile === "orderbook"} style={{ background: "green" }}>
-                                        Green
+                                    <Layouts.Contents.SlideContent active={mobile === "orderbook"}>
+                                        <Parts.Orderbook asks={asks} bids={bids} />
                                     </Layouts.Contents.SlideContent>
                                 ),
                                 responsive: [
