@@ -1,5 +1,5 @@
 "use client";
-import { styled } from "styled-components";
+import { styled, css } from "styled-components";
 import { Root } from "lib/style";
 import * as Page from "../page/Page.styled";
 import * as InnerContent from "../contents/Inner/InnerContent.styled";
@@ -45,9 +45,13 @@ const Style = styled.div<{ $change?: string; $fit?: boolean }>`
         }
     }
 
-    & > ${InnerContent.default} > * {
-        flex: 1;
-    }
+    ${({ $fit }) =>
+        !$fit &&
+        css`
+            & > ${InnerContent.default} > * {
+                flex: 1;
+            }
+        `}
 `;
 
 export default Style;

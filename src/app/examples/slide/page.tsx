@@ -10,7 +10,7 @@ export default function Slides() {
             <Layouts.Cover fullsize>
                 <Controls.Slide slides={slides} padding={0} nav={"bottom"} style={{ zIndex: 4 }} />
             </Layouts.Cover>
-            <Layouts.Box>
+            <Layouts.Box fit>
                 <Layouts.Contents.InnerContent>
                     <Layouts.Menu menu={menu} />
                     <Layouts.Row>
