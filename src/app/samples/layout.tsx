@@ -4,7 +4,6 @@ import type { Frame } from "components/frames/Frame";
 import Data from "./data";
 
 export interface Sample {
-    frames?: Frame;
     children?: any;
 }
 
