@@ -28,7 +28,7 @@ const gap = css`
 const Style = styled.div<{
     $gap: number;
     $fit: boolean;
-    $responsive?: string | undefined;
+    responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     $reverse?: boolean;
     $only?: boolean;
 }>`

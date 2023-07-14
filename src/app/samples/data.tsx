@@ -248,6 +248,48 @@ export default function Data() {
         "/samples/treasury": "blue",
     };
 
+    const languages = [
+        {
+            key: 1,
+            value: "English",
+        },
+        {
+            key: 2,
+            value: "Korean",
+        },
+        {
+            key: 3,
+            value: "Spanish",
+        },
+        {
+            key: 4,
+            value: "Japanese",
+        },
+    ];
+
+    const chains = [
+        {
+            key: 1,
+            img: require("/src/assets/coins/eth.png").default.src,
+            value: "Ethereum",
+        },
+        {
+            key: 2,
+            img: require("/src/assets/coins/arb.png").default.src,
+            value: "Arbitrum",
+        },
+        {
+            key: 3,
+            img: require("/src/assets/coins/op.png").default.src,
+            value: "Optimism",
+        },
+        {
+            key: 4,
+            img: require("/src/assets/coins/avax.png").default.src,
+            value: "Avalanche",
+        },
+    ];
+
     const header = {
         color: colorMap[path],
         logo: {
@@ -287,48 +329,8 @@ export default function Data() {
             children: (
                 <>
                     <Layouts.Row fit>
-                        <Controls.Dropdown
-                            options={[
-                                {
-                                    key: 1,
-                                    value: "English",
-                                },
-                                {
-                                    key: 2,
-                                    value: "Korean",
-                                },
-                                {
-                                    key: 3,
-                                    value: "Spanish",
-                                },
-                                {
-                                    key: 4,
-                                    value: "Japanese",
-                                },
-                            ]}
-                            fit
-                        />
-                        <Controls.Dropdown
-                            options={[
-                                {
-                                    key: 1,
-                                    value: "English",
-                                },
-                                {
-                                    key: 2,
-                                    value: "Korean",
-                                },
-                                {
-                                    key: 3,
-                                    value: "Spanish",
-                                },
-                                {
-                                    key: 4,
-                                    value: "Japanese",
-                                },
-                            ]}
-                            fit
-                        />
+                        <Controls.Dropdown option={languages[0]} options={languages} fit />
+                        <Controls.Dropdown option={chains[0]} options={chains} fit />
                     </Layouts.Row>
                     {/* <Controls.Button fit>Connect</Controls.Button> */}
                     <Controls.Button iconRight={"chevron-down-bold"} fit>

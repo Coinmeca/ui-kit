@@ -5,6 +5,8 @@ import Style, { Count } from "./Icon.styled";
 export interface Icon {
     icon: string;
     color?: string;
+    change?: boolean;
+    style?: object;
     scale?: number;
     count?: number;
     title?: string;
@@ -19,7 +21,7 @@ function Icon(props: Icon) {
     const Icons = dynamic(() => import(`/src/assets/icons/${(props?.icon !== "" && props?.icon) || "empty"}.svg`));
 
     return (
-        <Style title={title} $color={color} $scale={scale}>
+        <Style title={title} $scale={scale} $color={color} $change={props?.change} style={props?.style}>
             <Icons />
             {count && count > 0 && <Count $color={color}>{count}</Count>}
         </Style>

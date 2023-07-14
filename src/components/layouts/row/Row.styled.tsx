@@ -28,7 +28,7 @@ const gap = css`
 const Style = styled.div<{
     $gap: number;
     $fit: boolean;
-    $responsive?: string | undefined;
+    $responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     $reverse?: boolean;
     $only?: boolean;
 }>`
@@ -41,9 +41,8 @@ const Style = styled.div<{
     max-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
 
     && > * {
-        flex: 1;
-        // display: flex;
-        // width: 100%;
+        ${({ $fit }) => !$fit && "flex: 1;"}/* display: flex; */
+        /* width: 100%; */
     }
 
     gap: calc(var(--gap));

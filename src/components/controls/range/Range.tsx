@@ -12,7 +12,8 @@ export interface Slider {
     zero?: boolean;
     min?: number;
     max?: number;
-    device?: string;
+    show?: "desktop" | "laptop" | "tablet" | "mobile";
+    hide?: "desktop" | "laptop" | "tablet" | "mobile";
     disabled?: boolean;
 }
 
@@ -57,7 +58,13 @@ export default function Range(props: Slider) {
 
     return (
         <>
-            <Style draggable={false} $color={color} $value={(max.toString().length > min.toString().length ? max.toString().length : min.toString().length) + (props?.unit ? props?.unit.toString().length + 1 : 0)}>
+            <Style
+                draggable={false}
+                $color={color}
+                $value={(max.toString().length > min.toString().length ? max.toString().length : min.toString().length) + (props?.unit ? props?.unit.toString().length + 1 : 0)}
+                data-show={props?.show}
+                data-hide={props?.hide}
+            >
                 <input type="range" min={min} max={max} value={value} onChange={(e) => onChange(e)} />
                 <div>
                     <div>

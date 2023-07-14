@@ -6,7 +6,7 @@ export interface Row {
     gap?: number;
     align?: "left" | "center" | "right" | "stretch";
     fit?: boolean;
-    responsive?: string;
+    responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     reverse?: boolean;
     only?: boolean;
 }
