@@ -143,7 +143,7 @@ export default function Page() {
                                 area: "book",
                                 children: (
                                     <Layouts.Contents.SlideContent active={mobile === "orderbook"}>
-                                        <Parts.Orderbook asks={asks} bids={bids} />
+                                        <Parts.Orderbook asks={asks} bids={bids} responsive={"tablet"} />
                                     </Layouts.Contents.SlideContent>
                                 ),
                                 responsive: [
