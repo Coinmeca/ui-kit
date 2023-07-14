@@ -4,7 +4,7 @@ import { useState } from "react";
 import useToast from "hooks/useToast";
 import { usePathname } from "next/navigation";
 
-export default function Dummy() {
+export default function Data() {
     const [value, setValue] = useState<number>(0);
     const [tab, setTab] = useState<string>("icon");
     const [active, setActive] = useState(false);
