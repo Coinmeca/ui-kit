@@ -30,7 +30,7 @@ const Style = styled.div<{
     $fit: boolean;
     $responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     $reverse?: boolean;
-    $only?: boolean;
+    $fix?: boolean;
 }>`
     --gap: ${({ $gap }) => ($gap === 0 ? 0 : $gap || 4)}em;
 

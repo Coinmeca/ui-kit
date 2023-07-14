@@ -74,8 +74,8 @@ export default function Page() {
         <Layouts.Page>
             <Layouts.Box fit change={parseFloat(market?.change) > 0 ? "var(--green)" : (parseFloat(market?.change) < 0 && "var(--red)") || undefined}>
                 <Layouts.Contents.InnerContent>
-                    <Layouts.Row only style={{ alignItems: "center" }}>
-                        <Layouts.Row only style={{ alignItems: "center" }} gap={2} fit>
+                    <Layouts.Row fix style={{ alignItems: "center" }}>
+                        <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
                             <Avatar img={market.logo} scale={1.3334} />
                             <Layouts.Row responsive={"tablet"} gap={1} fit>
                                 <Elements.Text scale={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "tablet", scale: 1.5 }}>
@@ -86,8 +86,8 @@ export default function Page() {
                                 </Elements.Text>
                             </Layouts.Row>
                         </Layouts.Row>
-                        <Layouts.Row only align="right">
-                            <Layouts.Row only fit gap={1} style={{ alignItems: "center" }}>
+                        <Layouts.Row fix align="right">
+                            <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
                                 <Elements.Icon scale={1.5} icon={"caret-up"} style={{ maxHeight: "100%" }} change />
                                 <Elements.Text scale={2.5} height={1} responsive={{ device: "tablet", scale: 2 }} change>
                                     $ {market.price}
@@ -96,8 +96,8 @@ export default function Page() {
                         </Layouts.Row>
                     </Layouts.Row>
                     <Layouts.Divider style={{ marginTop: "1em" }} />
-                    <Layouts.Col show={"mobile"} gap={0}>
-                        <Layouts.Row only>
+                    <Layouts.Col show={"tablet"} gap={0}>
+                        <Layouts.Row gap={1} fix>
                             <Controls.Tab active={mobile === "info"} onClick={() => setMobile("info")}>
                                 Info
                             </Controls.Tab>
@@ -173,7 +173,6 @@ export default function Page() {
                                             ]}
                                             hide={"tablet"}
                                         />
-                                        <Layouts.Divider />
                                         <Layouts.Contents.TabContainer
                                             contents={[
                                                 {
@@ -211,7 +210,93 @@ export default function Page() {
                             },
                             {
                                 area: "order",
-                                children: <div style={{ background: "purple", height: 288 }}></div>,
+                                children: (
+                                    <Layouts.Contents.InnerContent>
+                                        <Layouts.Menu
+                                            menu={[
+                                                [
+                                                    <>
+                                                        <Controls.Tab>Market</Controls.Tab>
+                                                    </>,
+                                                    <>
+                                                        <Controls.Tab>Limit</Controls.Tab>
+                                                    </>,
+                                                ],
+                                            ]}
+                                        />
+                                        <Layouts.Contents.TabContainer
+                                            contents={[
+                                                {
+                                                    active: true,
+                                                    children: (
+                                                        <Layouts.Contents.InnerContent>
+                                                            <Layouts.Row>
+                                                                <Layouts.Col gap={1}>
+                                                                    <Layouts.Row fix>
+                                                                        <Elements.Text opacity={0.45}>Available</Elements.Text>
+                                                                        <Layouts.Row fit fix>
+                                                                            <Elements.Text>9.87654321</Elements.Text>
+                                                                            <Elements.Text opacity={0.45}>DAI</Elements.Text>
+                                                                        </Layouts.Row>
+                                                                    </Layouts.Row>
+                                                                    <Controls.Input placeholder={"Price"} value={""} unit={"DAI"} align={"right"} type={"currency"}></Controls.Input>
+                                                                    <Controls.Input placeholder={"Amount"} value={""} unit={"DAI"} align={"right"} type={"currency"}></Controls.Input>
+                                                                    <Layouts.Row fix>
+                                                                        <Elements.Text opacity={0.45}>Fees</Elements.Text>
+                                                                        <Layouts.Row fit fix>
+                                                                            <Elements.Text>- 0.123456789</Elements.Text>
+                                                                            <Elements.Text opacity={0.45}>ETH</Elements.Text>
+                                                                        </Layouts.Row>
+                                                                    </Layouts.Row>
+                                                                    <Layouts.Row fix>
+                                                                        <Elements.Text opacity={0.45}>Total</Elements.Text>
+                                                                        <Layouts.Row fit fix>
+                                                                            <Elements.Text>9.87654321</Elements.Text>
+                                                                            <Elements.Text opacity={0.45}>ETH</Elements.Text>
+                                                                        </Layouts.Row>
+                                                                    </Layouts.Row>
+                                                                </Layouts.Col>
+                                                                <Layouts.Col gap={1}>
+                                                                    <Layouts.Row fix>
+                                                                        <Elements.Text opacity={0.45}>Available</Elements.Text>
+                                                                        <Layouts.Row fit fix>
+                                                                            <Elements.Text>9.87654321</Elements.Text>
+                                                                            <Elements.Text opacity={0.45}>DAI</Elements.Text>
+                                                                        </Layouts.Row>
+                                                                    </Layouts.Row>
+                                                                    <Controls.Input placeholder={"Price"} value={""} unit={"DAI"} align={"right"} type={"currency"}></Controls.Input>
+                                                                    <Controls.Input placeholder={"Amount"} value={""} unit={"DAI"} align={"right"} type={"currency"}></Controls.Input>
+                                                                    <Layouts.Row fix>
+                                                                        <Elements.Text opacity={0.45}>Fees</Elements.Text>
+                                                                        <Layouts.Row fit fix>
+                                                                            <Elements.Text>- 0.123456789</Elements.Text>
+                                                                            <Elements.Text opacity={0.45}>ETH</Elements.Text>
+                                                                        </Layouts.Row>
+                                                                    </Layouts.Row>
+                                                                    <Layouts.Row fix>
+                                                                        <Elements.Text opacity={0.45}>Total</Elements.Text>
+                                                                        <Layouts.Row fit fix>
+                                                                            <Elements.Text>9.87654321</Elements.Text>
+                                                                            <Elements.Text opacity={0.45}>ETH</Elements.Text>
+                                                                        </Layouts.Row>
+                                                                    </Layouts.Row>
+                                                                </Layouts.Col>
+                                                            </Layouts.Row>
+                                                            <Layouts.Row>
+                                                                <Controls.Button type={"solid"} color={"green"}>
+                                                                    BUY
+                                                                </Controls.Button>
+                                                                <Controls.Button type={"solid"} color={"red"}>
+                                                                    SELL
+                                                                </Controls.Button>
+                                                            </Layouts.Row>
+                                                        </Layouts.Contents.InnerContent>
+                                                    ),
+                                                },
+                                            ]}
+                                        />
+                                    </Layouts.Contents.InnerContent>
+                                ),
                                 responsive: [
                                     {
                                         device: "tablet",

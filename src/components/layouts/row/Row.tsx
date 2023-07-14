@@ -10,7 +10,7 @@ export interface Row {
     hide?: "desktop" | "laptop" | "tablet" | "mobile";
     responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     reverse?: boolean;
-    only?: boolean;
+    fix?: boolean;
 }
 
 export default function Row(props: Row) {
@@ -18,10 +18,10 @@ export default function Row(props: Row) {
     const align = props?.align || "left";
     const fit = props?.fit || false;
     const reverse = props?.reverse || false;
-    const only = props?.only || false;
+    const fix = props?.fix || false;
 
     return (
-        <Style style={props?.style} $gap={gap} $fit={fit} $responsive={props?.responsive} $reverse={reverse} $only={only} data-row={align} data-show={props?.show} data-hide={props?.hide}>
+        <Style style={props?.style} $gap={gap} $fit={fit} $responsive={props?.responsive} $reverse={reverse} $fix={fix} data-row={align} data-show={props?.show} data-hide={props?.hide}>
             {props.children}
         </Style>
     );
