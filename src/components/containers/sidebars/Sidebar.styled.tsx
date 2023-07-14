@@ -78,10 +78,10 @@ const Style = styled.aside<{ $scale: number; $width: number; $active: boolean }>
         $active &&
         css`
             min-width: ${$active ? $width : 0}em;
-        `};
+        `}
 
-    && {
-        & ${Input.default} {
+    & {
+        ${Input.default} {
             padding: 1em 2em;
         }
 
@@ -90,7 +90,7 @@ const Style = styled.aside<{ $scale: number; $width: number; $active: boolean }>
             padding-right: 2em;
         }
 
-        && ${TableItem.default} > * {
+        ${TableItem.default} > * {
             &:first-child {
                 padding-left: 2em;
             }

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createRef } from "react";
 import { Format } from "lib/utils";
 
 import { Controls, Elements } from "components";
@@ -50,6 +50,7 @@ export interface Input {
 }
 
 export default function Input(props: Input) {
+    const input: any = createRef();
     const type = props?.type !== "password" ? props?.type : "password";
     const placeholder = props?.placeholder || "Type";
     const clearable = props?.clearable || false;
@@ -75,6 +76,7 @@ export default function Input(props: Input) {
     }, [value, type, props?.separator, props?.fix]);
 
     const onClick = (e: any) => {
+        input.current.focus();
         if (typeof props.onClick === "function") {
             props.onClick(e);
         }
@@ -162,13 +164,14 @@ export default function Input(props: Input) {
     };
 
     const Input = (
-        <Style tabIndex={5} style={props?.style} $clearable={clearable} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)}>
+        <Style tabIndex={5} style={props?.style} $clearable={clearable} $scale={scale} $focus={focus} $error={error} $disabled={disabled} onClick={() => setFocus(true)} onBlur={() => setFocus(false)} data-active={focus}>
             <div>
                 <div style={props?.style}>
                     {props?.icon && <Elements.Icon icon={props?.icon} />}
                     <div>
                         {clearable && clearPosition === "left" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                         <input
+                            ref={input}
                             style={{ textAlign: align }}
                             placeholder={placeholder}
                             type={type === "currency" ? "currency" : type}

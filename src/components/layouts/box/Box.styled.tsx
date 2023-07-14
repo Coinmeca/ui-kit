@@ -4,8 +4,10 @@ import { Root } from "lib/style";
 import * as Page from "../page/Page.styled";
 import * as InnerContent from "../contents/Inner/InnerContent.styled";
 
-const Style = styled.div<{ $fit?: boolean }>`
+const Style = styled.div<{ $change?: string; $fit?: boolean }>`
     transition: 0.3s ease;
+
+    ${({ $change }) => $change && `--change: ${$change};`}
 
     ${Page.default} > & {
         display: flex;
@@ -43,7 +45,7 @@ const Style = styled.div<{ $fit?: boolean }>`
         }
     }
 
-    & > ${InnerContent.default} > {
+    & > ${InnerContent.default} > * {
         flex: 1;
     }
 `;

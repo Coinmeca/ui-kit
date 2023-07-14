@@ -1,30 +1,34 @@
 import { css, styled } from "styled-components";
 import { Root } from "lib/style";
 
-export const Row = styled.div`
+export const Row = styled.div<{ $change?: string }>`
     display: flex;
     flex-direction: row;
     width: 100%;
     gap: 1em;
+
+    ${({ $change }) => $change && `--change: ${$change};`}
 
     & > span ~ span {
         margin-left: 0.5em;
     }
 `;
 
-export const Col = styled.div`
+export const Col = styled.div<{ $change?: string }>`
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
     gap: 0.167em;
 
+    ${({ $change }) => $change && `--change: ${$change};`}
+
     & > span ~ span {
         margin-left: 0.5em;
     }
 `;
 
-const Style = styled.div<{ $event: boolean }>`
+const Style = styled.div<{ $change?: string; $event: boolean }>`
     display: flex;
     align-items: center;
     font-size: 0.6666em;
@@ -35,6 +39,8 @@ const Style = styled.div<{ $event: boolean }>`
     cursor: ${({ $event }) => ($event ? "pointer" : "default")};
     pointer-events: ${({ $event }) => ($event ? "inherit" : "none")};
     transition: 0.3s ease;
+
+    ${({ $change }) => $change && `--change: ${$change};`}
 
     & > * {
         font-size: 1.5em;
