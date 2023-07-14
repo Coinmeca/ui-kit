@@ -4,11 +4,12 @@ import Style from "./TabContainer.styled";
 
 export interface TabContainer {
     contents?: Content[];
+    scroll?: boolean;
 }
 
 export default function TabContainer(props: TabContainer) {
     return (
-        <Style>
+        <Style $scroll={props?.scroll}>
             {props?.contents &&
                 (props?.contents?.length > 0 ? (
                     props?.contents.map((content, i) => (
