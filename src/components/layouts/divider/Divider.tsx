@@ -9,6 +9,7 @@ export interface Divider {
     gap?: number;
     strong?: boolean;
     color?: string;
+    responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     show?: "desktop" | "laptop" | "tablet" | "mobile";
     hide?: "desktop" | "laptop" | "tablet" | "mobile";
 }
@@ -21,7 +22,7 @@ export default function Divider(props: Divider) {
     const color = props?.color || "white";
 
     return (
-        <Style $color={color} $vertical={vertical} $margin={margin} $gap={gap} $strong={strong} style={props?.style} data-show={props?.show} data-hide={props?.hide}>
+        <Style $color={color} $vertical={vertical} $responsive={props?.responsive} $margin={margin} $gap={gap} $strong={strong} style={props?.style} data-show={props?.show} data-hide={props?.hide}>
             {props?.children ? (
                 <>
                     {props?.align !== "right" && <div />}

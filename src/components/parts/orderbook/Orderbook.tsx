@@ -6,6 +6,9 @@ export interface Orderbook {
     bids?: Tick[];
     ask_show?: boolean;
     bid_show?: boolean;
+    onClickAsk?: Function;
+    onClickBid?: Function;
+    responsive?: "desktop" | "laptop" | "tablet" | "mobile";
 }
 
 export interface Tick {
@@ -23,15 +26,25 @@ export default function Ordrebook(props: Orderbook) {
     const ask_show = props?.ask_show || true;
     const bid_show = props?.bid_show || true;
 
+    const onClickAsk = (ask: Tick, e?: any) => {
+        if (typeof props?.onClickAsk === "function") props?.onClickAsk(ask, e);
+    };
+    const onClickBid = (bid: Tick, e?: any) => {
+        if (typeof props?.onClickBid === "function") props?.onClickBid(bid, e);
+    };
+
     return (
-        <Style>
+        <Style $responsive={props?.responsive}>
             {ask_show && (
                 <Asks>
                     {asks && asks.length > 0 ? (
                         asks.map((ask: Tick, i: number) => (
-                            <Ticks>
+                            <Ticks key={i} onClick={(e: any) => onClickAsk(ask, e)}>
                                 <div>
                                     <div>
+                                        <div>
+                                            <span>{ask.balance}</span>
+                                        </div>
                                         <div
                                             style={{
                                                 backgroundSize: `${
@@ -43,9 +56,6 @@ export default function Ordrebook(props: Orderbook) {
                                                 }% 100%`,
                                             }}
                                         >
-                                            <span>{ask.balance}</span>
-                                        </div>
-                                        <div>
                                             <span>{ask.price}</span>
                                         </div>
                                     </div>
@@ -57,14 +67,17 @@ export default function Ordrebook(props: Orderbook) {
                     )}
                 </Asks>
             )}
-            <Layouts.Divider />
+            <Layouts.Divider responsive={props?.responsive} />
             {bid_show && (
                 <Bids>
                     {bids && bids.length > 0 ? (
                         bids.map((bid: Tick, i: number) => (
-                            <Ticks>
+                            <Ticks key={i} onClick={(e: any) => onClickBid(bid, e)}>
                                 <div>
                                     <div>
+                                        <div>
+                                            <span>{bid.balance}</span>
+                                        </div>
                                         <div
                                             style={{
                                                 backgroundSize: `${
@@ -76,9 +89,6 @@ export default function Ordrebook(props: Orderbook) {
                                                 }% 100%`,
                                             }}
                                         >
-                                            <span>{bid.balance}</span>
-                                        </div>
-                                        <div>
                                             <span>{bid.price}</span>
                                         </div>
                                     </div>
