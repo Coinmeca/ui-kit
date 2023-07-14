@@ -12,7 +12,7 @@ export default function Page() {
             </Layouts.Cover>
             <Layouts.Box>
                 <Layouts.Contents.InnerContent>
-                    <Layouts.Row only>
+                    <Layouts.Row fix>
                         <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
                             Icon
                         </Controls.Tab>

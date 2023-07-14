@@ -30,14 +30,15 @@ const Style = styled.div<{
     $fit: boolean;
     $responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     $reverse?: boolean;
-    $only?: boolean;
+    $fix?: boolean;
 }>`
     --gap: ${({ $gap }) => ($gap === 0 ? 0 : $gap || 4)}em;
 
     display: flex;
     height: max-content;
     /* align-items: center; */
-    flex-flow: ${({ $only, $reverse }) => ($only ? "row" : $reverse ? "row-reverse wrap" : "row wrap")};
+    flex-flow: ${({ $fix, $reverse }) => ($fix ? "row" : $reverse ? "row-reverse wrap" : "row wrap")};
+    min-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
     max-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
 
     && > * {

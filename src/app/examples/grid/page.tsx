@@ -36,7 +36,7 @@ export default function Page() {
                             active: grid === 1,
                             children: (
                                 <Layouts.Contents.InnerContent>
-                                    <Layouts.Row gap={0} only>
+                                    <Layouts.Row gap={0} fix>
                                         <Controls.Tab active={tab === "red"} onClick={() => setTab("red")}>
                                             Red
                                         </Controls.Tab>
@@ -55,7 +55,7 @@ export default function Page() {
                             active: grid === 2,
                             children: (
                                 <Layouts.Contents.InnerContent>
-                                    <Layouts.Row gap={0} only>
+                                    <Layouts.Row gap={0} fix>
                                         <Controls.Tab active={tab === "red"} onClick={() => setTab("red")}>
                                             Red
                                         </Controls.Tab>
@@ -74,7 +74,7 @@ export default function Page() {
                             active: grid === 3,
                             children: (
                                 <Layouts.Contents.InnerContent>
-                                    <Layouts.Row gap={0} only>
+                                    <Layouts.Row gap={0} fix>
                                         <Controls.Tab active={tab === "red"} onClick={() => setTab("red")}>
                                             Red
                                         </Controls.Tab>
@@ -101,7 +101,7 @@ export default function Page() {
                             active: grid === 6,
                             children: (
                                 <Layouts.Contents.InnerContent>
-                                    <Layouts.Row gap={0} only>
+                                    <Layouts.Row gap={0} fix>
                                         <Controls.Tab active={tab === "red"} onClick={() => setTab("red")}>
                                             Red
                                         </Controls.Tab>

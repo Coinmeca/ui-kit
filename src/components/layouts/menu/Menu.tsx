@@ -33,13 +33,13 @@ export default function Menu(props: Menu) {
         );
     };
 
-    const Menus = (menu: any, i: number) => {
+    const Menus = (menu: any, i: number, l: number) => {
         return (
             <>
-                {i !== 0 && <Layouts.Divider />}
                 <Row $scale={scale} style={menu?.style} data-show={menu?.show} data-hide={menu?.hide}>
                     {Items(menu?.children || (!menu?.style && menu))}
                 </Row>
+                {i !== l && <Layouts.Divider />}
             </>
         );
     };
@@ -48,7 +48,7 @@ export default function Menu(props: Menu) {
         props?.menu && (
             <Style style={props?.style} $scale={scale} data-show={props?.show} data-hide={props?.hide}>
                 {typeof props?.menu !== "string" && props?.menu?.length > 0 ? (
-                    props?.menu?.map((v: any, k: number) => <Fragment key={k}>{Menus(v?.children || v, k)}</Fragment>)
+                    props?.menu?.map((v: any, k: number) => <Fragment key={k}>{Menus(v?.children || v, k, props?.menu?.length)}</Fragment>)
                 ) : (
                     <Row $scale={scale} style={props?.menu?.style}>
                         {props?.menu?.children || props?.menu}
