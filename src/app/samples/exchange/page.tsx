@@ -6,6 +6,7 @@ import { useState } from "react";
 
 export default function Page() {
     const [mobile, setMobile] = useState("orderbook");
+    const [marketTab, setMarketTab] = useState("orderbook");
 
     const market = {
         logo: require("/src/assets/coins/eth.png"),
@@ -143,7 +144,44 @@ export default function Page() {
                                 area: "book",
                                 children: (
                                     <Layouts.Contents.SlideContent active={mobile === "orderbook"}>
-                                        <Parts.Orderbook asks={asks} bids={bids} responsive={"tablet"} />
+                                        <Layouts.Menu
+                                            menu={[
+                                                [
+                                                    <Controls.Tab
+                                                        active={marketTab === "orderbook" || mobile === "orderbook"}
+                                                        onClick={() => {
+                                                            setMarketTab("orderbook");
+                                                            setMobile("orderbook");
+                                                        }}
+                                                    >
+                                                        Orderbook
+                                                    </Controls.Tab>,
+                                                    <Controls.Tab
+                                                        active={marketTab === "history" || mobile === "history"}
+                                                        onClick={() => {
+                                                            setMarketTab("history");
+                                                            setMobile("history");
+                                                        }}
+                                                    >
+                                                        Market History
+                                                    </Controls.Tab>,
+                                                ],
+                                            ]}
+                                            hide={"tablet"}
+                                        />
+                                        <Layouts.Divider />
+                                        <Layouts.Contents.TabContainer
+                                            contents={[
+                                                {
+                                                    active: marketTab === "orderbook" || mobile === "orderbook",
+                                                    children: <Parts.Orderbook asks={asks} bids={bids} responsive={"tablet"} />,
+                                                },
+                                                {
+                                                    active: marketTab === "history" || mobile === "history",
+                                                    children: <></>,
+                                                },
+                                            ]}
+                                        />
                                     </Layouts.Contents.SlideContent>
                                 ),
                                 responsive: [
