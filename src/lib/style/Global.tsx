@@ -211,34 +211,34 @@ const Global = createGlobalStyle`
         [data-show="laptop"],
         [data-show="tablet"],
         [data-show="mobile"] {
-            display:none;
+            display:none!important;
         }
     }
     @media all and (min-width: ${Device.Tablet + 1}px) and (max-width: ${Device.Laptop}px) {
         [data-show="tablet"],
         [data-show="mobile"] {
-            display:none;
+            display:none!important;
         }
 
         [data-hide="laptop"] {
-            display:none;
+            display:none!important;
         }
     }
     @media all and (min-width: ${Device.Mobile + 1}px) and (max-width: ${Device.Tablet}px) {
         [data-show="mobile"] {
-            display:none;
+            display:none!important;
         }
 
         [data-hide="laptop"],
         [data-hide="tablet"] {
-            display:none;
+            display:none!important;
         }
     }
     @media all and (max-width: ${Device.Mobile}px) {
         [data-hide="laptop"],
         [data-hide="tablet"],
         [data-hide="mobile"] {
-            display:none;
+            display:none!important;
         }
     }
 `;
