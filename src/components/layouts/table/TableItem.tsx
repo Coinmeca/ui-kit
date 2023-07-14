@@ -5,6 +5,7 @@ export interface ListItem {
     children?: any;
     style?: object;
     align?: "left" | "center" | "right";
+    change?: string;
     active?: boolean;
     onClick?: Function;
 }
@@ -15,12 +16,12 @@ export default function TableItem(props: ListItem) {
             data &&
             (typeof data !== "string" && data?.length > 0 ? (
                 data?.map((info: any, i: number) => (
-                    <Row key={i} style={...info?.style} data-row={info?.align}>
+                    <Row key={i} $change={info?.change} style={...info?.style} data-row={info?.align}>
                         {TableCell(info?.children || info)}
                     </Row>
                 ))
             ) : (
-                <span>{data}</span>
+                <span data-row={data?.align}>{data}</span>
             ))
         );
     };
@@ -30,12 +31,12 @@ export default function TableItem(props: ListItem) {
             data &&
             (typeof data !== "string" && data?.length > 0 ? (
                 data?.map((info: any, i: number) => (
-                    <Cell key={i} style={data?.style} data-col={info?.align}>
+                    <Cell key={i} $change={info?.change} style={data?.style} data-col={info?.align}>
                         {TableRow(info?.children || info)}
                     </Cell>
                 ))
             ) : (
-                <span>{data}</span>
+                <span data-col={data?.align}>{data}</span>
             ))
         );
     };
@@ -45,7 +46,7 @@ export default function TableItem(props: ListItem) {
     };
 
     return (
-        <Style style={props?.style} onClick={(e: any) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false} data-active={props?.active}>
+        <Style $change={props?.change} style={props?.style} onClick={(e: any) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false} data-active={props?.active}>
             {TableCell(props?.children)}
         </Style>
     );

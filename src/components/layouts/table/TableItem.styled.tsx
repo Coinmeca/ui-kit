@@ -2,28 +2,38 @@
 import { css, styled } from "styled-components";
 import { Root } from "lib/style";
 
-export const Row = styled.div`
+export const Row = styled.div<{ $change?: string }>`
     display: flex;
     flex-direction: row;
     gap: 1em;
 
-    & > span ~ span {
-        margin-left: 0.5em;
+    ${({ $change }) => $change && `--change: ${$change};`}
+
+    &>span {
+        width: 100%;
+        & ~ span {
+            margin-left: 0.5em;
+        }
     }
 `;
 
-export const Cell = styled.div`
+export const Cell = styled.div<{ $change?: string }>`
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 0.167em;
 
-    & > span ~ span {
-        margin-left: 0.5em;
+    ${({ $change }) => $change && `--change: ${$change};`}
+
+    &>span {
+        width: 100%;
+        & ~ span {
+            margin-left: 0.5em;
+        }
     }
 `;
 
-const Style = styled.div<{ $event: boolean }>`
+const Style = styled.div<{ $change?: string; $event: boolean }>`
     display: table-row;
     align-items: center;
     gap: 1em;
@@ -31,6 +41,8 @@ const Style = styled.div<{ $event: boolean }>`
     cursor: ${({ $event }) => ($event ? "pointer" : "default")};
     pointer-events: ${({ $event }) => ($event ? "inherit" : "none")};
     transition: 0.3s ease;
+
+    ${({ $change }) => $change && `--change: ${$change};`}
 
     & > * {
         font-size: 1.5em;
@@ -61,7 +73,7 @@ const Style = styled.div<{ $event: boolean }>`
 
     &[data-active="true"] {
         background: rgba(var(--white), var(--o015));
-        pointer-evetns: none;
+        pointer-events: none;
     }
 
     @media all and (max-width: ${Root.Device.Mobile}px) {

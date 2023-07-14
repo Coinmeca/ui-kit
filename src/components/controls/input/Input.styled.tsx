@@ -12,41 +12,25 @@ const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean;
     user-select: none;
     transition: 0.3s ease;
 
-    ${({ $focus, $error }) => {
-        return !$focus
-            ? css`
-                  background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
+    background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o01));
 
-                  &:hover {
-                      background: rgba(var(--${!$error ? "white" : "red"}), var(--o03));
-                  }
+    &:hover {
+        background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o03));
+    }
 
-                  &:active {
-                      /* background: rgba(var(--${!$error ? "white" : "red"}), var(--o03)); */
-                  }
+    &:active {
+        /* background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o03)); */
+    }
 
-                  ${Box.default} {
-                      background: rgba(var(--${!$error ? "white" : "red"}), var(--o0075));
+    &[data-active="true"] {
+        background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o015));
 
-                      &:hover {
-                          background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
-                      }
+        /* ${Box.default} {
+            background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o01));
+        } */
+    }
 
-                      &:active {
-                          // background: rgba(var(--${!$error ? "white" : "red"}), var(--o015));
-                      }
-                  }
-              `
-            : css`
-                  background: rgba(var(--${!$error ? "white" : "red"}), var(--o015));
-
-                  ${Box.default} {
-                      background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
-                  }
-              `;
-    }}
-
-    &>* {
+    & > * {
         display: flex;
         flex-direction: column;
         justify-content: center;

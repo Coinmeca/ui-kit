@@ -146,7 +146,7 @@ export default function DummyGrid() {
                     props: {
                         active: tab === "green",
                     },
-                    children: <span style={{ background: "green", height: '100%' }}>Green</span>,
+                    children: <span style={{ background: "green", height: "100%" }}>Green</span>,
                     responsive: [
                         {
                             device: "tablet",
@@ -307,7 +307,7 @@ export default function DummyGrid() {
                 {
                     area: "area1",
                     children: (
-                        <Layouts.Contents.SlideContent active={tab === "red"} style={{ background: "red" }}>
+                        <Layouts.Contents.SlideContent active={tab === "red"} style={{ background: "red", minHeight: 128 }}>
                             Red
                         </Layouts.Contents.SlideContent>
                     ),

@@ -2,7 +2,6 @@ import { css, styled } from "styled-components";
 import { Root } from "lib/style";
 import * as Row from "components/layouts/row/Row.styled";
 import * as Divider from "components/layouts/divider/Divider.styled";
-import * as Tab from "components/controls/tab/Tab.styled";
 import * as Button from "components/controls/button/Button.styled";
 import * as Avatar from "components/elements/avatar/Avatar.styled";
 import * as Dropdown from "components/controls/dropdown/Dropdown.styled";

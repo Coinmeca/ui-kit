@@ -5,6 +5,7 @@ export interface ListItem {
     children?: any;
     style?: object;
     align?: "left" | "center" | "right";
+    change?: string;
     onClick?: Function;
 }
 
@@ -14,7 +15,7 @@ export default function ListItem(props: ListItem) {
             data &&
             (typeof data !== "string" && data?.length > 0 ? (
                 data?.map((v: any, k: number) => (
-                    <Row key={k} style={v?.style} data-row={v?.align}>
+                    <Row key={k} $change={v?.change} style={v?.style} data-row={v?.align}>
                         {ListCol(v?.children || v)}
                     </Row>
                 ))
@@ -29,7 +30,7 @@ export default function ListItem(props: ListItem) {
             data &&
             (typeof data !== "string" && data?.length > 0 ? (
                 data?.map((v: any, k: number) => (
-                    <Col key={k} style={v?.style} data-col={v?.align}>
+                    <Col key={k} $change={v?.change} style={v?.style} data-col={v?.align}>
                         {ListRow(v?.children || v)}
                     </Col>
                 ))
@@ -44,7 +45,7 @@ export default function ListItem(props: ListItem) {
     };
 
     return (
-        <Style style={props?.style} onClick={(e: any) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false}>
+        <Style $change={props?.change} style={props?.style} onClick={(e: any) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false}>
             {ListCol(props?.children)}
         </Style>
     );
