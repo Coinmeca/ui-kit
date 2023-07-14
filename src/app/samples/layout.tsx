@@ -3,12 +3,12 @@ import { Frames } from "components";
 import type { Frame } from "components/frames/Frame";
 import Dummy from "./dummy";
 
-export interface Sample {
+interface Sample {
     frames?: Frame;
     children?: any;
 }
 
-export default function Sample(props: Sample) {
+export default function SampleLayout(props: Sample) {
     const { header, sidebars } = Dummy();
 
     return (

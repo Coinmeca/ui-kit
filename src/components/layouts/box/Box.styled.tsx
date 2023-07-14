@@ -49,7 +49,7 @@ const Style = styled.div<{ $change?: string; $fit?: boolean }>`
         !$fit &&
         css`
             & > ${InnerContent.default} > * {
-                flex: 1;
+                /* flex: 1; */
             }
         `}
 `;
