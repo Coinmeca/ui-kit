@@ -8,7 +8,7 @@ export interface Example {
     children?: any;
 }
 
-export default function Example(props: Example) {
+export default function Layout(props: Example) {
     const { header, sidebars } = Dummy();
 
     return (
