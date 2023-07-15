@@ -1,7 +1,7 @@
 "use client";
 import { styled } from "styled-components";
 import * as Button from "components/controls/button/Button.styled";
-import * as InnerContent from "components/layouts/contents/inners/InnerContent.styled";
+import * as InnerContent from "components/layouts/contents/inner/InnerContent.styled";
 import { Root } from "lib/style";
 
 export const ButtonArea = styled.div`

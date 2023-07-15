@@ -2,7 +2,7 @@
 import { styled, css } from "styled-components";
 import { Root } from "lib/style";
 import * as Page from "../page/Page.styled";
-import * as InnerContent from "../contents/inners/InnerContent.styled";
+import * as InnerContent from "../contents/inner/InnerContent.styled";
 
 const Style = styled.div<{ $change?: string; $fit?: boolean }>`
     transition: 0.3s ease;
