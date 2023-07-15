@@ -4,16 +4,19 @@ import { Avatar } from "components/elements";
 import { GridContainer } from "components/layouts/contents";
 import useWindowSize from "hooks/useWindowSize";
 import { Root } from "lib/style";
-import { Capitalize } from "lib/utils";
+import { Capitalize, Format } from "lib/utils";
 import { useState } from "react";
 import Data from "./data";
 
 export default function Page() {
     const windowSize = useWindowSize();
-    const { market, orderbook } = Data();
+    const { market, orderbook, info, orderbookView } = Data();
 
     const [mobile, setMobile] = useState("orderbook");
     const [marketTab, setMarketTab] = useState("orderbook");
+    const [option, setOption] = useState<"market" | "limit">("market");
+    const [tab, setTab] = useState<string>(option);
+    const [view, setView] = useState(0);
 
     return (
         <Layouts.Page>
@@ -33,7 +36,7 @@ export default function Page() {
                         </Layouts.Row>
                         <Layouts.Row fix align="right">
                             <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
-                                <Elements.Icon scale={1.5} icon={"caret-up"} style={{ maxHeight: "100%" }} change />
+                                <Elements.Icon scale={1.5} icon={"caret-up"} change />
                                 <Elements.Text scale={2.5} height={1} responsive={{ device: "mobile", scale: 2 }} change>
                                     $ {market.price}
                                 </Elements.Text>
@@ -74,8 +77,81 @@ export default function Page() {
                             {
                                 area: "info",
                                 children: (
-                                    <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "info"} style={{ background: "red", minHeight: 128 }}>
-                                        Red
+                                    <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "info"}>
+                                        <Layouts.Row fix responsive="mobile" gap={2} style={{ alignItems: "center", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
+                                            <Layouts.Col gap={1}>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
+                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                        Volume ({market?.base?.symbol?.toUpperCase()})
+                                                    </Elements.Text>
+                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }}>
+                                                        {Format(info?.volume_base, "currency", true)}
+                                                    </Elements.Text>
+                                                </Layouts.Row>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
+                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                        Volume ({market?.quote?.symbol?.toUpperCase()})
+                                                    </Elements.Text>
+                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }}>
+                                                        {Format(info?.volume_quote, "currency", true)}
+                                                    </Elements.Text>
+                                                </Layouts.Row>
+                                            </Layouts.Col>
+                                            <Layouts.Col gap={1}>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
+                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                        Highest
+                                                    </Elements.Text>
+                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }} color={"green"}>
+                                                        {Format(info?.high, "currency", true)}
+                                                    </Elements.Text>
+                                                </Layouts.Row>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
+                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                        Lowest
+                                                    </Elements.Text>
+                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }} color={"red"}>
+                                                        {Format(info?.low, "currency", true)}
+                                                    </Elements.Text>
+                                                </Layouts.Row>
+                                            </Layouts.Col>
+                                            <Layouts.Col gap={1}>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
+                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                        Change
+                                                    </Elements.Text>
+                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }} change>
+                                                        {Format(info?.volume_base, "currency", true)}
+                                                    </Elements.Text>
+                                                </Layouts.Row>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
+                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                        Change Rate
+                                                    </Elements.Text>
+                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }} change>
+                                                        {Format(info?.volume_base, "currency", true)}
+                                                    </Elements.Text>
+                                                </Layouts.Row>
+                                            </Layouts.Col>
+                                            <Layouts.Col gap={1}>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
+                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                        Balance
+                                                    </Elements.Text>
+                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }}>
+                                                        {Format(info?.volume_base, "currency", true)}
+                                                    </Elements.Text>
+                                                </Layouts.Row>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
+                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                        Using
+                                                    </Elements.Text>
+                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }}>
+                                                        {Format(info?.volume_base, "currency", true)}
+                                                    </Elements.Text>
+                                                </Layouts.Row>
+                                            </Layouts.Col>
+                                        </Layouts.Row>
                                     </Layouts.Contents.SlideContent>
                                 ),
                                 responsive: [
@@ -90,32 +166,44 @@ export default function Page() {
                                 children: (
                                     <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "orderbook"}>
                                         <Layouts.Menu
-                                            menu={[
-                                                [
+                                            menu={{
+                                                style: { overflow: "initial" },
+                                                children: [
+                                                    [
+                                                        <>
+                                                            <Controls.Tab
+                                                                active={marketTab === "orderbook"}
+                                                                onClick={() => {
+                                                                    setMarketTab("orderbook");
+                                                                    // setMobile("orderbook");
+                                                                }}
+                                                            >
+                                                                Orderbook
+                                                            </Controls.Tab>
+                                                        </>,
+                                                        <>
+                                                            <Controls.Tab
+                                                                active={marketTab === "history"}
+                                                                onClick={() => {
+                                                                    setMarketTab("history");
+                                                                    // setMobile("history");
+                                                                }}
+                                                            >
+                                                                Trades
+                                                            </Controls.Tab>
+                                                        </>,
+                                                    ],
                                                     <>
-                                                        <Controls.Tab
-                                                            active={marketTab === "orderbook"}
-                                                            onClick={() => {
-                                                                setMarketTab("orderbook");
-                                                                // setMobile("orderbook");
+                                                        <Controls.Dropdown
+                                                            option={orderbookView[view]}
+                                                            options={orderbookView}
+                                                            onClickItem={(e: any, k: any) => {
+                                                                setView(k);
                                                             }}
-                                                        >
-                                                            Orderbook
-                                                        </Controls.Tab>
-                                                    </>,
-                                                    <>
-                                                        <Controls.Tab
-                                                            active={marketTab === "history"}
-                                                            onClick={() => {
-                                                                setMarketTab("history");
-                                                                // setMobile("history");
-                                                            }}
-                                                        >
-                                                            Market History
-                                                        </Controls.Tab>
+                                                        />
                                                     </>,
                                                 ],
-                                            ]}
+                                            }}
                                             hide={"mobile"}
                                         />
                                         <Layouts.Contents.TabContainer
@@ -123,7 +211,7 @@ export default function Page() {
                                                 {
                                                     active: marketTab === "orderbook" || mobile === "orderbook",
                                                     style: { padding: 0 },
-                                                    children: <Parts.Orderbook asks={orderbook.asks} bids={orderbook.bids} responsive={{ device: "mobile", vertical: false }} />,
+                                                    children: <Parts.Orderbook view={view} asks={orderbook.asks} bids={orderbook.bids} responsive={{ device: "mobile", vertical: false }} />,
                                                 },
                                                 {
                                                     active: marketTab === "history" || mobile === "history",
@@ -161,12 +249,42 @@ export default function Page() {
                                         <Layouts.Menu
                                             menu={[
                                                 [
-                                                    <>
-                                                        <Controls.Tab>Market</Controls.Tab>
-                                                    </>,
-                                                    <>
-                                                        <Controls.Tab>Limit</Controls.Tab>
-                                                    </>,
+                                                    [
+                                                        <>
+                                                            <Controls.Tab
+                                                                active={tab === "market"}
+                                                                onClick={() => {
+                                                                    setTab("market");
+                                                                    setOption("market");
+                                                                }}
+                                                            >
+                                                                Market
+                                                            </Controls.Tab>
+                                                        </>,
+                                                        <>
+                                                            <Controls.Tab
+                                                                active={tab === "limit"}
+                                                                onClick={() => {
+                                                                    setTab("limit");
+                                                                    setOption("limit");
+                                                                }}
+                                                            >
+                                                                Limit
+                                                            </Controls.Tab>
+                                                        </>,
+                                                    ],
+                                                    [
+                                                        <>
+                                                            <Controls.Tab
+                                                                active={tab === "history"}
+                                                                onClick={() => {
+                                                                    setTab("history");
+                                                                }}
+                                                            >
+                                                                History
+                                                            </Controls.Tab>
+                                                        </>,
+                                                    ],
                                                 ],
                                             ]}
                                         />
@@ -176,7 +294,7 @@ export default function Page() {
                                                     active: true,
                                                     children: (
                                                         <Layouts.Contents.InnerContent>
-                                                            <Parts.OrderControl base={market.base} quote={market.quote} price={market.price} responsive={Root.Device.Tablet} />
+                                                            <Parts.OrderControl base={market.base} quote={market.quote} price={market.price} option={option} responsive={Root.Device.Tablet} />
                                                         </Layouts.Contents.InnerContent>
                                                     ),
                                                 },

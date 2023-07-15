@@ -27,6 +27,7 @@ export const Side = styled.div<{ $width?: number }>`
         font-weight: bold;
         height: 100%;
         min-height: 1.337em;
+        min-width: max-content;
         padding: 0.6667em;
         margin: 0;
         opacity: 0.45;

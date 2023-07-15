@@ -28,18 +28,24 @@ export default function Menu(props: Menu) {
                     <Fragment key={k}>{Items(v?.children || (!v?.style && v))}</Fragment>
                 ))}
             </Row>
+        ) : (typeof menu?.children !== "string" && menu?.children?.length) > 0 ? (
+            <Row $scale={scale} style={menu?.style} $fix={menu?.fix} data-show={menu?.show} data-hide={menu?.hide}>
+                {menu?.children?.map((v: any, k: number) => (
+                    <Fragment key={k}>{Items(v?.children || (!v?.style && v))}</Fragment>
+                ))}
+            </Row>
         ) : (
             <>{menu}</>
         );
     };
 
-    const Menus = (menu: any, i: number, l: number) => {
+    const Menus = (menu: any) => {
         return (
             <>
                 <Row $scale={scale} style={menu?.style} data-show={menu?.show} data-hide={menu?.hide}>
                     {Items(menu?.children || (!menu?.style && menu))}
                 </Row>
-                {i !== l && <Layouts.Divider />}
+                <Layouts.Divider />
             </>
         );
     };
@@ -48,11 +54,12 @@ export default function Menu(props: Menu) {
         props?.menu && (
             <Style style={props?.style} $scale={scale} data-show={props?.show} data-hide={props?.hide}>
                 {typeof props?.menu !== "string" && props?.menu?.length > 0 ? (
-                    props?.menu?.map((v: any, k: number) => <Fragment key={k}>{Menus(v?.children || v, k, props?.menu?.length)}</Fragment>)
+                    props?.menu?.map((v: any, k: number) => <Fragment key={k}>{Menus(v)}</Fragment>)
                 ) : (
-                    <Row $scale={scale} style={props?.menu?.style}>
-                        {props?.menu?.children || props?.menu}
-                    </Row>
+                    <>
+                        {Items(props?.menu)}
+                        <Layouts.Divider />
+                    </>
                 )}
             </Style>
         )

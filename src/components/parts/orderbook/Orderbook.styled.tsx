@@ -142,14 +142,17 @@ export const Tick = styled.div`
     }
 `;
 
-export const Asks = styled.div`
+export const Asks = styled.div<{ $show: boolean }>`
     font-size: calc(var(--unit) * 1);
     display: flex;
     flex-direction: column-reverse;
     width: 100%;
     height: 100%;
+    max-height: 100%;
     overflow: auto;
     transition: 0.3s ease;
+
+    ${({ $show }) => !$show && `max-height: 0;`}
 
     & > ${Tick} {
         color: rgb(var(--red));
@@ -157,15 +160,17 @@ export const Asks = styled.div`
     }
 `;
 
-export const Bids = styled.div`
+export const Bids = styled.div<{ $show: boolean }>`
     font-size: calc(var(--unit) * 1);
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
-    min-height: max-content;
+    max-height: 100%;
     overflow: auto;
     transition: 0.3s ease;
+
+    ${({ $show }) => !$show && `max-height: 0;`}
 
     & > ${Tick} {
         color: rgb(var(--green));
