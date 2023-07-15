@@ -76,7 +76,7 @@ export default function Range(props: Slider) {
                         </div>
                     </div>
                     <div>
-                        <span style={{ left: `${percent}%` }}>
+                        <span draggable={false} style={{ left: `${percent}%` }}>
                             <span>
                                 {value.toFixed(0)}
                                 {props?.unit && ` ${props?.unit}`}
