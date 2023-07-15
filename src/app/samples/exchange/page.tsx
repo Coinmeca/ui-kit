@@ -12,8 +12,6 @@ export default function Page() {
     const windowSize = useWindowSize();
     const { market, orderbook, info, orderbookView } = Data();
 
-    console.log(windowSize);
-
     const [mobile, setMobile] = useState("orderbook");
     const [marketTab, setMarketTab] = useState("orderbook");
     const [option, setOption] = useState<"market" | "limit">("market");
