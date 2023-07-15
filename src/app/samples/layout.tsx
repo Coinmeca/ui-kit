@@ -1,6 +1,5 @@
 "use client";
 import { Frames } from "components";
-import type { Frame } from "components/frames/Frame";
 import Data from "./data";
 
 export default function SamplesLayout(props: any) {
