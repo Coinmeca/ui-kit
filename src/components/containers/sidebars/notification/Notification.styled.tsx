@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import * as InnerContent from "components/layouts/contents/Inner/InnerContent.styled";
+import * as InnerContent from "components/layouts/contents/inner/InnerContent.styled";
 
 const Style = styled.section`
     width: calc(100% - 6em);

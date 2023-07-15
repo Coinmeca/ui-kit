@@ -12,6 +12,8 @@ export default function Page() {
     const windowSize = useWindowSize();
     const { market, orderbook, info, orderbookView } = Data();
 
+    console.log(windowSize);
+
     const [mobile, setMobile] = useState("orderbook");
     const [marketTab, setMarketTab] = useState("orderbook");
     const [option, setOption] = useState<"market" | "limit">("market");
@@ -78,9 +80,9 @@ export default function Page() {
                                 area: "info",
                                 children: (
                                     <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "info"}>
-                                        <Layouts.Row fix responsive="mobile" gap={2} style={{ alignItems: "center", ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
-                                            <Layouts.Col gap={1} style={{ ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
-                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
+                                        <Layouts.Row fix responsive="mobile" gap={2} style={{ alignItems: "center", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
+                                            <Layouts.Col gap={1}>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
                                                     <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Volume ({market?.base?.symbol?.toUpperCase()})
                                                     </Elements.Text>
@@ -88,7 +90,7 @@ export default function Page() {
                                                         {Format(info?.volume_base, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
-                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
                                                     <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Volume ({market?.quote?.symbol?.toUpperCase()})
                                                     </Elements.Text>
@@ -97,8 +99,8 @@ export default function Page() {
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                             </Layouts.Col>
-                                            <Layouts.Col gap={1} style={{ ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
-                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
+                                            <Layouts.Col gap={1}>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
                                                     <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Highest
                                                     </Elements.Text>
@@ -106,7 +108,7 @@ export default function Page() {
                                                         {Format(info?.high, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
-                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
                                                     <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Lowest
                                                     </Elements.Text>
@@ -115,8 +117,8 @@ export default function Page() {
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                             </Layouts.Col>
-                                            <Layouts.Col gap={1} style={{ ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
-                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
+                                            <Layouts.Col gap={1}>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
                                                     <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Change
                                                     </Elements.Text>
@@ -124,7 +126,7 @@ export default function Page() {
                                                         {Format(info?.volume_base, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
-                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
                                                     <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Change Rate
                                                     </Elements.Text>
@@ -133,8 +135,8 @@ export default function Page() {
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                             </Layouts.Col>
-                                            <Layouts.Col gap={1} style={{ ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
-                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
+                                            <Layouts.Col gap={1}>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
                                                     <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Balance
                                                     </Elements.Text>
@@ -142,7 +144,7 @@ export default function Page() {
                                                         {Format(info?.volume_base, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
-                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "-webkit-fill-available" }) }}>
+                                                <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
                                                     <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Using
                                                     </Elements.Text>

@@ -6,7 +6,7 @@ export interface Content {
     active?: boolean;
 }
 
-export default function Content(props: Content) {
+export default function Page(props: Content) {
     return (
         <Style $active={props?.active} style={props?.style}>
             {props?.children}
