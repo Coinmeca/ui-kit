@@ -24,6 +24,10 @@ export default function useWindowSize() {
 
         globalThis.addEventListener("resize", handleResize);
         return () => globalThis.removeEventListener("resize", handleResize);
+    }, []);
+
+    useEffect(() => {
+        setWindowSize(getWindowSize());
     }, [globalThis]);
 
     return windowSize;
