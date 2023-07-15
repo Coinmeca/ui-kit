@@ -3,9 +3,7 @@ import React, { useState, useEffect, createRef } from "react";
 import { Format } from "lib/utils";
 
 import { Controls, Elements } from "components";
-import type { Button } from "components/controls/button/Button";
-import type { Dropdown } from "components/controls/dropdown/Dropdown";
-import Style from "./Input.styled";
+import Style, { Side } from "./Input.styled";
 
 export interface Input {
     style?: object;
@@ -23,16 +21,23 @@ export interface Input {
 
     clearable?: boolean;
     clearPosition?: "left" | "right";
-    width?: number;
 
     min?: number;
     max?: number;
     step?: number;
     fix?: number;
 
+    left?: {
+        style?: object;
+        width?: number;
+        children?: any;
+    };
+    right?: {
+        style?: object;
+        width?: number;
+        children?: any;
+    };
     unit?: string;
-    button?: Button;
-    dropdown?: Dropdown;
 
     show?: "desktop" | "laptop" | "tablet" | "mobile";
     hide?: "desktop" | "laptop" | "tablet" | "mobile";
@@ -46,8 +51,6 @@ export interface Input {
     error?: boolean;
     message?: any;
     disabled?: boolean;
-
-    children?: any;
 }
 
 export default function Input(props: Input) {
@@ -181,7 +184,11 @@ export default function Input(props: Input) {
         >
             <div>
                 <div style={props?.style}>
-                    {props?.icon && <Elements.Icon icon={props?.icon} />}
+                    {props?.left && (
+                        <Side $width={props?.left?.width} style={props?.left?.style}>
+                            {props?.left?.children}
+                        </Side>
+                    )}
                     <div>
                         {clearable && clearPosition === "left" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                         <input
@@ -203,13 +210,11 @@ export default function Input(props: Input) {
                         />
                         {clearable && clearPosition === "right" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                     </div>
-                    {(props?.unit || props?.button || props?.dropdown || props?.children) && (
-                        <div style={props?.width ? { width: `${props?.width}em` } : {}}>
+                    {(props?.unit || props?.right) && (
+                        <Side $width={props?.right?.width} style={props?.right?.style}>
+                            {props?.right?.children}
                             {props?.unit && <span>{props?.unit}</span>}
-                            {props?.button && <Controls.Button {...props?.button} />}
-                            {props?.dropdown && <Controls.Dropdown {...props?.dropdown} />}
-                            {props?.children}
-                        </div>
+                        </Side>
                     )}
                 </div>
                 {props?.error && props?.message && <p className="message">{props?.message}</p>}

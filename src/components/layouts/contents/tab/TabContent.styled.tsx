@@ -13,10 +13,6 @@ const Style = styled.div<{ $active: boolean }>`
     transition: 0.3s ease;
     opacity: ${({ $active }) => ($active ? "1" : "0")};
     pointer-events: ${({ $active }) => ($active ? "inherit" : "none")};
-
-    & ~ &[$active="true"] {
-        background: blue;
-    }
 `;
 
 export default Style;

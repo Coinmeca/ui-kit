@@ -15,6 +15,7 @@ const Style = styled.button<{
         `;
     }};
 
+    position: relative;
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     font-weight: bold;
     ${({ $fit }) => $fit && "max-width: max-content"};
@@ -142,6 +143,7 @@ const Style = styled.button<{
         return (
             $hide &&
             css`
+                display: none;
                 max-width: 0;
                 max-height: 0;
                 opacity: 0;

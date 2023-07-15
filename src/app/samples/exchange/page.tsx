@@ -2,73 +2,18 @@
 import { Controls, Elements, Layouts, Parts } from "components";
 import { Avatar } from "components/elements";
 import { GridContainer } from "components/layouts/contents";
+import useWindowSize from "hooks/useWindowSize";
+import { Root } from "lib/style";
+import { Capitalize } from "lib/utils";
 import { useState } from "react";
+import Data from "./data";
 
 export default function Page() {
+    const windowSize = useWindowSize();
+    const { market, orderbook } = Data();
+
     const [mobile, setMobile] = useState("orderbook");
     const [marketTab, setMarketTab] = useState("orderbook");
-
-    const market = {
-        logo: require("/src/assets/coins/eth.png"),
-        base: {
-            symbol: "ETH",
-            name: "Ethereum",
-            decimal: 18,
-        },
-        quote: {
-            symbol: "DAI",
-            name: "Dai",
-            decimal: 18,
-        },
-        market: "ETH/DAI",
-        price: "1510",
-        change: "23.12",
-        volume: "73170731",
-    };
-
-    const asks = [
-        { price: 1530, balance: 100 },
-        { price: 1529, balance: 500 },
-        { price: 1528, balance: 700 },
-        { price: 1527, balance: 800 },
-        { price: 1526, balance: 600 },
-        { price: 1525, balance: 300 },
-        { price: 1524, balance: 200 },
-        { price: 1523, balance: 400 },
-        { price: 1522, balance: 100 },
-        { price: 1521, balance: 50 },
-        { price: 1519, balance: 600 },
-        { price: 1518, balance: 700 },
-        { price: 1517, balance: 1200 },
-        { price: 1516, balance: 400 },
-        { price: 1515, balance: 600 },
-        { price: 1514, balance: 900 },
-        { price: 1513, balance: 700 },
-        { price: 1512, balance: 1200 },
-        { price: 1511, balance: 800 },
-    ];
-
-    const bids = [
-        { price: 1510, balance: 100 },
-        { price: 1509, balance: 500 },
-        { price: 1508, balance: 700 },
-        { price: 1507, balance: 800 },
-        { price: 1506, balance: 600 },
-        { price: 1505, balance: 300 },
-        { price: 1504, balance: 200 },
-        { price: 1503, balance: 400 },
-        { price: 1502, balance: 100 },
-        { price: 1501, balance: 50 },
-        { price: 1500, balance: 600 },
-        { price: 1499, balance: 700 },
-        { price: 1498, balance: 1200 },
-        { price: 1497, balance: 400 },
-        { price: 1496, balance: 600 },
-        { price: 1495, balance: 900 },
-        { price: 1494, balance: 700 },
-        { price: 1493, balance: 1200 },
-        { price: 1492, balance: 800 },
-    ];
 
     return (
         <Layouts.Page>
@@ -77,26 +22,26 @@ export default function Page() {
                     <Layouts.Row fix style={{ alignItems: "center" }}>
                         <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
                             <Avatar img={market.logo} scale={1.3334} />
-                            <Layouts.Row responsive={"tablet"} gap={1} fit>
-                                <Elements.Text scale={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "tablet", scale: 1.5 }}>
-                                    {market.base.symbol}
+                            <Layouts.Row responsive={"mobile"} gap={1} fit>
+                                <Elements.Text scale={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", scale: 1.5 }}>
+                                    {market?.base?.symbol?.toUpperCase()}
                                 </Elements.Text>
-                                <Elements.Text scale={2.5} height={1} responsive={{ device: "tablet", scale: 1.5 }}>
-                                    {market.base.name}
+                                <Elements.Text scale={2.5} height={1} responsive={{ device: "mobile", scale: 1.5 }}>
+                                    {Capitalize(market?.base?.name || "")}
                                 </Elements.Text>
                             </Layouts.Row>
                         </Layouts.Row>
                         <Layouts.Row fix align="right">
                             <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
                                 <Elements.Icon scale={1.5} icon={"caret-up"} style={{ maxHeight: "100%" }} change />
-                                <Elements.Text scale={2.5} height={1} responsive={{ device: "tablet", scale: 2 }} change>
+                                <Elements.Text scale={2.5} height={1} responsive={{ device: "mobile", scale: 2 }} change>
                                     $ {market.price}
                                 </Elements.Text>
                             </Layouts.Row>
                         </Layouts.Row>
                     </Layouts.Row>
                     <Layouts.Divider style={{ marginTop: "1em" }} />
-                    <Layouts.Col show={"tablet"} gap={0}>
+                    <Layouts.Col show={"mobile"} gap={0}>
                         <Layouts.Row gap={1} fix>
                             <Controls.Tab active={mobile === "info"} onClick={() => setMobile("info")}>
                                 Info
@@ -113,12 +58,12 @@ export default function Page() {
                     <GridContainer
                         fullsize
                         area={`'info info' 'book chart' 'book order'`}
-                        width={"320px 1fr"}
+                        width={`${windowSize.width < Root.Device.Tablet ? "0.75fr" : "320px"} 1fr`}
                         height={"max-content 1fr max-content"}
                         gap={3}
                         responsive={[
                             {
-                                device: "tablet",
+                                device: "mobile",
                                 area: `'up' 'down'`,
                                 width: "1fr",
                                 height: "1fr max-content",
@@ -129,13 +74,13 @@ export default function Page() {
                             {
                                 area: "info",
                                 children: (
-                                    <Layouts.Contents.SlideContent active={mobile === "info"} style={{ background: "red", minHeight: 128 }}>
+                                    <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "info"} style={{ background: "red", minHeight: 128 }}>
                                         Red
                                     </Layouts.Contents.SlideContent>
                                 ),
                                 responsive: [
                                     {
-                                        device: "tablet",
+                                        device: "mobile",
                                         area: "up",
                                     },
                                 ],
@@ -143,7 +88,7 @@ export default function Page() {
                             {
                                 area: "book",
                                 children: (
-                                    <Layouts.Contents.SlideContent active={mobile === "orderbook"}>
+                                    <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "orderbook"}>
                                         <Layouts.Menu
                                             menu={[
                                                 [
@@ -171,13 +116,14 @@ export default function Page() {
                                                     </>,
                                                 ],
                                             ]}
-                                            hide={"tablet"}
+                                            hide={"mobile"}
                                         />
                                         <Layouts.Contents.TabContainer
                                             contents={[
                                                 {
                                                     active: marketTab === "orderbook" || mobile === "orderbook",
-                                                    children: <Parts.Orderbook asks={asks} bids={bids} responsive={"tablet"} />,
+                                                    style: { padding: 0 },
+                                                    children: <Parts.Orderbook asks={orderbook.asks} bids={orderbook.bids} responsive={{ device: "mobile", vertical: false }} />,
                                                 },
                                                 {
                                                     active: marketTab === "history" || mobile === "history",
@@ -189,7 +135,7 @@ export default function Page() {
                                 ),
                                 responsive: [
                                     {
-                                        device: "tablet",
+                                        device: "mobile",
                                         area: "up",
                                     },
                                 ],
@@ -197,13 +143,13 @@ export default function Page() {
                             {
                                 area: "chart",
                                 children: (
-                                    <Layouts.Contents.SlideContent active={mobile === "chart"} style={{ background: "yellow" }}>
+                                    <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "chart"} style={{ background: "yellow" }}>
                                         Yellow
                                     </Layouts.Contents.SlideContent>
                                 ),
                                 responsive: [
                                     {
-                                        device: "tablet",
+                                        device: "mobile",
                                         area: "up",
                                     },
                                 ],
@@ -230,68 +176,7 @@ export default function Page() {
                                                     active: true,
                                                     children: (
                                                         <Layouts.Contents.InnerContent>
-                                                            <Layouts.Row fix>
-                                                                <Layouts.Col gap={1}>
-                                                                    <Layouts.Row fix>
-                                                                        <Elements.Text opacity={0.45}>Available</Elements.Text>
-                                                                        <Layouts.Row fit fix>
-                                                                            <Elements.Text>9.87654321</Elements.Text>
-                                                                            <Elements.Text opacity={0.45}>DAI</Elements.Text>
-                                                                        </Layouts.Row>
-                                                                    </Layouts.Row>
-                                                                    <Controls.Input placeholder={"Price"} value={""} unit={"DAI"} align={"right"} type={"currency"}></Controls.Input>
-                                                                    <Controls.Input placeholder={"Amount"} value={""} unit={"DAI"} align={"right"} type={"currency"}></Controls.Input>
-                                                                    <Layouts.Row fix>
-                                                                        <Elements.Text opacity={0.45}>Fees</Elements.Text>
-                                                                        <Layouts.Row fit fix>
-                                                                            <Elements.Text>- 0.123456789</Elements.Text>
-                                                                            <Elements.Text opacity={0.45}>ETH</Elements.Text>
-                                                                        </Layouts.Row>
-                                                                    </Layouts.Row>
-                                                                    <Layouts.Row fix>
-                                                                        <Elements.Text opacity={0.45}>Total</Elements.Text>
-                                                                        <Layouts.Row fit fix>
-                                                                            <Elements.Text>9.87654321</Elements.Text>
-                                                                            <Elements.Text opacity={0.45}>ETH</Elements.Text>
-                                                                        </Layouts.Row>
-                                                                    </Layouts.Row>
-                                                                </Layouts.Col>
-                                                                <Layouts.Col gap={1}>
-                                                                    <Layouts.Row fix>
-                                                                        <Elements.Text opacity={0.45}>Available</Elements.Text>
-                                                                        <Layouts.Row fit fix>
-                                                                            <Elements.Text>9.87654321</Elements.Text>
-                                                                            <Elements.Text opacity={0.45}>DAI</Elements.Text>
-                                                                        </Layouts.Row>
-                                                                    </Layouts.Row>
-                                                                    <Controls.Input placeholder={"Price"} value={""} unit={"DAI"} align={"right"} type={"currency"}></Controls.Input>
-                                                                    <Controls.Input placeholder={"Amount"} value={""} unit={"DAI"} align={"right"} type={"currency"}></Controls.Input>
-                                                                    <Layouts.Row fix>
-                                                                        <Elements.Text opacity={0.45}>Fees</Elements.Text>
-                                                                        <Layouts.Row fit fix>
-                                                                            <Elements.Text>- 0.123456789</Elements.Text>
-                                                                            <Elements.Text opacity={0.45}>ETH</Elements.Text>
-                                                                        </Layouts.Row>
-                                                                    </Layouts.Row>
-                                                                    <Layouts.Row fix>
-                                                                        <Elements.Text opacity={0.45}>Total</Elements.Text>
-                                                                        <Layouts.Row fit fix>
-                                                                            <Elements.Text>9.87654321</Elements.Text>
-                                                                            <Elements.Text opacity={0.45}>ETH</Elements.Text>
-                                                                        </Layouts.Row>
-                                                                    </Layouts.Row>
-                                                                </Layouts.Col>
-                                                            </Layouts.Row>
-                                                            <Layouts.Row fix>
-                                                                <Layouts.Row gap={3} fix>
-                                                                    <Controls.Button type={"solid"} color={"green"}>
-                                                                        BUY
-                                                                    </Controls.Button>
-                                                                    <Controls.Button type={"solid"} color={"red"}>
-                                                                        SELL
-                                                                    </Controls.Button>
-                                                                </Layouts.Row>
-                                                            </Layouts.Row>
+                                                            <Parts.OrderControl base={market.base} quote={market.quote} price={market.price} responsive={Root.Device.Tablet} />
                                                         </Layouts.Contents.InnerContent>
                                                     ),
                                                 },
@@ -301,7 +186,7 @@ export default function Page() {
                                 ),
                                 responsive: [
                                     {
-                                        device: "tablet",
+                                        device: "mobile",
                                         area: "down",
                                     },
                                 ],

@@ -7,6 +7,8 @@ const Responsive = (vertical: boolean, margin?: number) => {
         ? css`
               ${margin && margin > 0 && `margin: ${margin}em 0`};
               width: 100%;
+              min-width: 100%;
+              max-width: 100%;
               height: 1px;
               min-height: 1px;
               max-height: 1px;
@@ -17,6 +19,8 @@ const Responsive = (vertical: boolean, margin?: number) => {
               min-width: 1px;
               max-width: 1px;
               height: 100%;
+              min-height: 100%;
+              max-height: 100%;
           `;
 };
 
@@ -41,11 +45,23 @@ const Style = styled.div<{ $color: string; $vertical: boolean; $gap: number; $ma
     ${({ $responsive, $vertical, $margin }) => {
         switch ($responsive) {
             case "laptop":
-                return Responsive(!$vertical, $margin);
+                return css`
+                    @media all and (max-width: ${Root.Device.Laptop}px) {
+                        ${Responsive(!$vertical, $margin)};
+                    }
+                `;
             case "tablet":
-                return Responsive(!$vertical, $margin);
+                return css`
+                    @media all and (max-width: ${Root.Device.Tablet}px) {
+                        ${Responsive(!$vertical, $margin)};
+                    }
+                `;
             case "mobile":
-                return Responsive(!$vertical, $margin);
+                return css`
+                    @media all and (max-width: ${Root.Device.Mobile}px) {
+                        ${Responsive(!$vertical, $margin)};
+                    }
+                `;
         }
     }}
 `;

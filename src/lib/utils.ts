@@ -26,11 +26,11 @@ export function Search(array: Array<any>, keyword: string) {
         : [];
 }
 
-export function Capitalize(text: string, separator?: boolean) {
+export function Capitalize(text: string) {
     if (!text || text === '') return '';
-    const lower = text.toLowerCase();
-    const cap = text.charAt(0).toUpperCase() + lower.slice(1);
-    return !separator ? cap : parseFloat(cap).toLocaleString();
+    const lower: string = text.toLowerCase();
+    const cap: string = text.charAt(0).toUpperCase() + lower.slice(1);
+    return cap;
 }
 
 export function Format(value: any, type?: string, separator?: boolean, fix?: number, max?: any, auto?: boolean) {

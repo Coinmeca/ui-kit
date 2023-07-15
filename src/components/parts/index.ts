@@ -1,3 +1,4 @@
 ﻿import Orderbook from "./orderbook/Orderbook";
+import OrderControl from "./ordercontrol/OrderControl";
 
-export { Orderbook };
+export { Orderbook, OrderControl };
