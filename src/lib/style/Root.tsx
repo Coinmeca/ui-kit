@@ -2,7 +2,7 @@
 import { css } from "styled-components";
 
 export const Device = {
-    Mobile: 640,
+    Mobile: 840,
     Tablet: 960,
     Laptop: 1280,
     Desktop: 1920,

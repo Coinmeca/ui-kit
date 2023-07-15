@@ -24,7 +24,7 @@ export default function useWindowSize() {
 
         globalThis.addEventListener("resize", handleResize);
         return () => globalThis.removeEventListener("resize", handleResize);
-    });
+    }, [globalThis]);
 
     return windowSize;
 }

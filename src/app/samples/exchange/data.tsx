@@ -65,5 +65,18 @@ export default function Data() {
 
     const orderbook = { asks: asks, bids: bids };
 
-    return { market, orderbook };
+    const info = {
+        volume_base: "123456789",
+        volume_quote: "123456789",
+        open: "123123123",
+        high: "123123123",
+        low: "123123123",
+        close: "123123123",
+        change: "123123123",
+        change_rate: "+123.%",
+    };
+
+    const orderbookView = ["All", "Ask", "Bid"];
+
+    return { market, orderbook, info, orderbookView };
 }
