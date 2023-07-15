@@ -1,5 +1,5 @@
 import Page from "../page/Page";
-import InnerContent from "./inners/InnerContent";
+import InnerContent from "./inner/InnerContent";
 import TabContainer from "./tab/TabContainer";
 import TabContent from "./tab/TabContent";
 import SlideContainer from "./slide/SlideContainer";
