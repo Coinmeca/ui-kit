@@ -1,4 +1,5 @@
 ﻿"use client";
+import { BADHINTS } from "dns";
 import { Root } from "lib/style";
 import { css, styled } from "styled-components";
 
@@ -79,6 +80,7 @@ const Balance = (color: string) => css`
 
 export const Tick = styled.div`
     font-size: calc(var(--unit) * 1);
+    position: relative;
     display: table;
     border-collapse: collapse;
     font-feature-settings: "tnum" on, "lnum" on;
@@ -140,38 +142,6 @@ export const Tick = styled.div`
     }
 `;
 
-const Style = styled.div<{ $responsive?: "desktop" | "laptop" | "tablet" | "mobile" }>`
-    font-size: calc(var(--unit) * 1);
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-
-    ${({ $responsive }) => {
-        switch ($responsive) {
-            case "laptop":
-                return css`
-                    @media all and (max-width: ${Root.Device.Laptop}px) {
-                        ${Responsive};
-                    }
-                `;
-            case "tablet":
-                return css`
-                    @media all and (max-width: ${Root.Device.Tablet}px) {
-                        ${Responsive};
-                    }
-                `;
-            case "mobile":
-                return css`
-                    @media all and (max-width: ${Root.Device.Mobile}px) {
-                        ${Responsive};
-                    }
-                `;
-        }
-    }}
-`;
-
 export const Asks = styled.div`
     font-size: calc(var(--unit) * 1);
     display: flex;
@@ -193,6 +163,7 @@ export const Bids = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
+    min-height: max-content;
     overflow: auto;
     transition: 0.3s ease;
 
@@ -202,35 +173,95 @@ export const Bids = styled.div`
     }
 `;
 
-const Responsive = css`
+const Responsive = (vertical?: boolean) => css`
     flex-direction: row-reverse;
 
     ${Asks},${Bids} {
+        flex-direction: column;
         &::-webkit-scrollbar {
-            display: none;
+            /* display: none; */
         }
 
         ${Tick} {
             & > * > * {
-                flex-direction: column-reverse;
-
                 & > * {
-                    padding: 0.2em;
+                    padding: ${vertical ? "0.2em" : "0.5em"};
                 }
             }
         }
     }
 
     ${Asks} {
+        direction: rtl;
+
         ${Tick} {
-            & > * > * > * {
-                text-align: left;
-                &:nth-child(2) {
-                    background-position: left;
+            direction: ltr;
+            & > * > * {
+                flex-direction: ${vertical ? "column-reverse" : "row-reverse"};
+
+                & > * {
+                    text-align: left;
+
+                    &:nth-child(1) {
+                        ${!vertical && "text-align: right;"}
+                    }
+
+                    &:nth-child(2) {
+                        background-position: left;
+                    }
                 }
             }
         }
     }
+
+    ${Bids} {
+        ${Tick} {
+            & > * > * {
+                direction: ltr;
+                flex-direction: ${vertical ? "column-reverse" : "row"};
+
+                & > * {
+                    &:nth-child(1) {
+                        ${!vertical && "text-align: left;"}
+                    }
+                }
+            }
+        }
+    }
+`;
+const Style = styled.div<{ $responsive?: { device: "desktop" | "laptop" | "tablet" | "mobile"; vertical?: boolean } }>`
+    font-size: calc(var(--unit) * 1);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    ${({ $responsive }) => {
+        const device = $responsive?.device;
+        const vertical = $responsive?.vertical;
+
+        switch (device) {
+            case "laptop":
+                return css`
+                    @media all and (max-width: ${Root.Device.Laptop}px) {
+                        ${Responsive(vertical)};
+                    }
+                `;
+            case "tablet":
+                return css`
+                    @media all and (max-width: ${Root.Device.Tablet}px) {
+                        ${Responsive(vertical)};
+                    }
+                `;
+            case "mobile":
+                return css`
+                    @media all and (max-width: ${Root.Device.Mobile}px) {
+                        ${Responsive(vertical)};
+                    }
+                `;
+        }
+    }}
 `;
 
 export default Style;

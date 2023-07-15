@@ -361,7 +361,7 @@ export default function Data() {
                                     Assets
                                 </Controls.Tab>
                             </Layouts.Row>
-                            <Controls.Input icon="search" dropdown={{ options: markets }} />
+                            <Controls.Input left={{ children: <Elements.Icon icon={"search"} /> }} right={{ children: <Controls.Dropdown options={markets} /> }} />
                             <Layouts.Contents.InnerContent>
                                 <Layouts.Contents.SlideContainer
                                     contents={[

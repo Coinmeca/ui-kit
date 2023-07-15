@@ -27,7 +27,7 @@ const Style = styled.div`
         user-select: none;
     }
 
-    &[data-active="true"] ~ & {
+    &[data-active="true"] ~ &[data-active="false"] {
         transform: translateX(15%);
     }
 

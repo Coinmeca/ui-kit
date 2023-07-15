@@ -240,17 +240,26 @@ export default function Dummy() {
             children: (
                 <Layouts.Col>
                     <Controls.Input />
-                    <Controls.Input icon="user" />
+                    <Controls.Input left={{ children: <Elements.Icon icon={"user"} /> }} />
                     <Controls.Input clearable />
-                    <Controls.Input clearable dropdown={{ options: dropdown }} />
-                    <Controls.Input type={"currency"} separator align={"right"} dropdown={{ options: dropdown }} clearable width={16} />
+                    <Controls.Input clearable right={{ children: <Controls.Dropdown options={dropdown} /> }} />
+                    <Controls.Input type={"currency"} separator align={"right"} clearable right={{ children: <Controls.Dropdown options={dropdown} /> }} />
 
-                    <Controls.Input clearable button={{ children: "Button" }} />
-                    <Controls.Input clearable button={{ children: "Send", iconRight: "send", type: "solid" }} />
-                    <Controls.Input clearable button={{ children: "Button" }} />
+                    <Controls.Input clearable left={{ children: <Controls.Button>Button</Controls.Button> }} />
+                    <Controls.Input
+                        clearable
+                        right={{
+                            children: (
+                                <Controls.Button type={"solid"} iconRight={"send"}>
+                                    Send
+                                </Controls.Button>
+                            ),
+                        }}
+                    />
+                    <Controls.Input clearable right={{ children: <Controls.Button>Button</Controls.Button> }} />
 
-                    <Controls.Input type={"currency"} error={true} unit={"USD"} />
-                    <Controls.Input type={"currency"} separator unit={"%"} value={value} onChange={(v: any) => setValue(Format(v, "number"))} />
+                    <Controls.Input type={"currency"} error={true} unit={"%"} />
+                    <Controls.Input type={"currency"} separator value={value} onChange={(v: any) => setValue(Format(v, "number"))} unit={"%"} />
                 </Layouts.Col>
             ),
         },
@@ -722,7 +731,7 @@ export default function Dummy() {
                                     Assets
                                 </Controls.Tab>
                             </Layouts.Row>
-                            <Controls.Input icon="search" dropdown={{ options: markets }} />
+                            <Controls.Input left={{ children: <Elements.Icon icon={"search"} /> }} right={{ children: <Controls.Dropdown options={markets} /> }} />
                             <Layouts.Contents.InnerContent>
                                 <Layouts.Contents.SlideContainer
                                     contents={[

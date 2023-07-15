@@ -45,7 +45,7 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
                     }
                 }
 
-                &[data-active="true"] ~ * {
+                &[data-active="true"] ~ &[data-active="false"] {
                     transform: translateX(15%);
 
                     & > *:last-child {

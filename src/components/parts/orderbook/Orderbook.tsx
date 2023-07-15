@@ -9,7 +9,10 @@ export interface Orderbook {
     onClickAsk?: Function;
     onClickBid?: Function;
     bookOrder?: boolean;
-    responsive?: "desktop" | "laptop" | "tablet" | "mobile";
+    responsive?: {
+        device: "desktop" | "laptop" | "tablet" | "mobile";
+        vertical?: boolean;
+    };
 }
 
 export interface Tick {
@@ -68,7 +71,7 @@ export default function Ordrebook(props: Orderbook) {
                     )}
                 </Asks>
             )}
-            <Layouts.Divider responsive={props?.responsive} />
+            <Layouts.Divider responsive={props?.responsive?.device} />
             {bid_show && (
                 <Bids>
                     {bids && bids.length > 0 ? (

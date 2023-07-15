@@ -1,5 +1,37 @@
-import { css, styled } from "styled-components";
+import { styled } from "styled-components";
 import * as Box from "components/layouts/box/Box.styled";
+import * as Button from "components/controls/button/Button.styled";
+import * as Dropdown from "components/controls/dropdown/Dropdown.styled";
+
+export const Side = styled.div<{ $width?: number }>`
+    width: ${({ $width }) => ($width ? `calc(var(--unit) * ${$width})` : "max-content")};
+    display: flex;
+
+    &:first-child {
+        margin-left: -1em;
+    }
+
+    &:last-child {
+        margin-right: -1em;
+    }
+
+    & > * {
+        width: 100%;
+    }
+
+    & > span {
+        font-size: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        height: 100%;
+        min-height: 1.337em;
+        padding: 0.6667em;
+        margin: 0;
+        opacity: 0.45;
+    }
+`;
 
 const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean; $error: boolean; $disabled: boolean }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
@@ -35,101 +67,55 @@ const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean;
         flex-direction: column;
         justify-content: center;
         min-height: 4em;
-        width: 100%;
+        padding: 0 1em;
 
-        & > div {
+        & > * {
             display: flex;
             align-items: center;
+            width: 100%;
+            height: auto;
+            gap: 1em;
 
-            &:first-child {
-                & > div:first-child {
-                    gap: 1em;
-                }
-
-                & > i {
-                    padding: 0.3em;
-                    margin-right: 0.3em;
-
-                    svg {
-                        fill: rgb(var(--${({ $error }) => ($error ? "red" : "white")}));
-                    }
+            & > ${Side} {
+                & > i > svg {
+                    fill: rgb(var(--${({ $error }) => ($error ? "red" : "white")}));
                 }
             }
 
-            & > div:nth-child(2),
-            & > div:last-child:not(:only-child) > * {
+            & > *:not(${Side}) {
+                display: flex;
+                align-items: center;
                 width: 100%;
             }
 
-            & > div {
-                font-size: 1em;
-            }
-
-            & > div:last-child:not(:only-child):not(:only-of-type) {
-            }
-
-            & > div {
+            input {
+                background: transparent;
                 display: flex;
-                align-items: center;
-                height: auto;
+                width: 100%;
+                height: 100%;
+                font-size: 1.5em;
+                font-weight: bold;
+                outline: none;
 
-                &:first-child {
-                    width: 100%;
-                    min-width: max-content;
-                    padding: 1em;
+                &::placeholder {
+                    text-align: left;
+                    font-weight: normal;
+                    color: inherit;
+                    opacity: 0.3;
                 }
 
-                &:last-child:not(:only-child):not(:only-of-type) {
-                    font-size: 1.5em;
-                    width: max-content;
-
-                    & > span {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        font-weight: bold;
-                        height: 100%;
-                        min-height: 1.337em;
-                        padding: 0.6667em;
-                        margin: 0;
-                        opacity: 0.45;
-                    }
+                &[type="number"],
+                &[type="date"] {
+                    -moz-appearance: textfield;
                 }
 
-                input {
-                    background: transparent;
-                    display: flex;
-                    width: 100%;
-                    height: 100%;
-                    font-size: 1.5em;
-                    font-weight: bold;
-                    outline: none;
-
-                    &::placeholder {
-                        text-align: left;
-                        font-weight: normal;
-                        color: inherit;
-                        opacity: 0.3;
-                    }
-
-                    &[type="number"],
-                    &[type="date"] {
-                        -moz-appearance: textfield;
-                    }
-
-                    &[type="number"]::-webkit-outer-spin-button,
-                    &[type="number"]::-webkit-inner-spin-button,
-                    &[type="date"]::-webkit-outer-spin-button,
-                    &[type="date"]::-webkit-inner-spin-button {
-                        -webkit-appearance: none;
-                        display: none;
-                        margin: 0;
-                    }
-                }
-
-                & > *:not(input) {
-                    margin-top: -1em;
-                    margin-bottom: -1em;
+                &[type="number"]::-webkit-outer-spin-button,
+                &[type="number"]::-webkit-inner-spin-button,
+                &[type="date"]::-webkit-outer-spin-button,
+                &[type="date"]::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    display: none;
+                    margin: 0;
                 }
             }
         }

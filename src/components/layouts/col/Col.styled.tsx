@@ -38,8 +38,8 @@ const Style = styled.div<{
     flex-direction: ${({ $reverse }) => ($reverse ? "column-reverse" : "column")};
     width: ${({ $fit }) => ($fit ? "max-content" : "100%")};
 
-    && > * {
-        width: 100%;
+    & > * {
+        width: -webkit-fill-available;
     }
 
     gap: calc(var(--gap));
