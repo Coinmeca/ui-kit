@@ -1,4 +1,5 @@
 ﻿import { Layouts } from "components";
+import { Format } from "lib/utils";
 import Style, { Asks, Bids, Tick as Ticks } from "./Orderbook.styled";
 
 export interface Orderbook {
@@ -23,8 +24,8 @@ export default function Ordrebook(props: Orderbook) {
     const asks = props?.asks;
     const bids = props?.bids;
 
-    const ask_max: number = (asks && asks.length > 0 && Math.max(...asks.map((o: Tick) => parseFloat(o?.balance.toString())))) || 0;
-    const bid_max: number = (bids && bids.length > 0 && Math.max(...bids.map((o: Tick) => parseFloat(o?.balance.toString())))) || 0;
+    const ask_max: number = (asks && asks?.length > 0 && Math.max(...asks?.map((o: Tick) => parseFloat(o?.balance.toString())))) || 0;
+    const bid_max: number = (bids && bids?.length > 0 && Math.max(...bids?.map((o: Tick) => parseFloat(o?.balance.toString())))) || 0;
 
     const view = props?.view || 0;
 
@@ -38,13 +39,13 @@ export default function Ordrebook(props: Orderbook) {
     return (
         <Style $responsive={props?.responsive}>
             <Asks $show={view === 0 || view === 1}>
-                {asks && asks.length > 0 ? (
-                    asks.map((ask: Tick, i: number) => (
+                {asks && asks?.length > 0 ? (
+                    asks?.map((ask: Tick, i: number) => (
                         <Ticks key={i} onClick={(e: any) => onClickAsk(ask, e)}>
                             <div>
                                 <div>
                                     <div>
-                                        <span>{ask.balance}</span>
+                                        <span>{ask?.balance}</span>
                                     </div>
                                     <div
                                         style={{
@@ -53,7 +54,7 @@ export default function Ordrebook(props: Orderbook) {
                                             }% 100%`,
                                         }}
                                     >
-                                        <span>{ask.price}</span>
+                                        <span>{Format(ask?.price, "currency", true)}</span>
                                     </div>
                                 </div>
                             </div>
@@ -65,13 +66,13 @@ export default function Ordrebook(props: Orderbook) {
             </Asks>
             <Layouts.Divider responsive={props?.responsive?.device} style={{ ...(view !== 0 && { display: "none" }) }} />
             <Bids $show={view === 0 || view === 2}>
-                {bids && bids.length > 0 ? (
-                    bids.map((bid: Tick, i: number) => (
+                {bids && bids?.length > 0 ? (
+                    bids?.map((bid: Tick, i: number) => (
                         <Ticks key={i} onClick={(e: any) => onClickBid(bid, e)}>
                             <div>
                                 <div>
                                     <div>
-                                        <span>{bid.balance}</span>
+                                        <span>{bid?.balance}</span>
                                     </div>
                                     <div
                                         style={{
@@ -80,14 +81,14 @@ export default function Ordrebook(props: Orderbook) {
                                             }% 100%`,
                                         }}
                                     >
-                                        <span>{bid.price}</span>
+                                        <span>{Format(bid?.price, "currency", true)}</span>
                                     </div>
                                 </div>
                             </div>
                         </Ticks>
                     ))
                 ) : (
-                    <div>There is no asks.</div>
+                    <div>There is no bids yet.</div>
                 )}
             </Bids>
         </Style>

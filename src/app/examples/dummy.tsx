@@ -243,7 +243,7 @@ export default function Dummy() {
                     <Controls.Input left={{ children: <Elements.Icon icon={"user"} /> }} />
                     <Controls.Input clearable />
                     <Controls.Input clearable right={{ children: <Controls.Dropdown options={dropdown} /> }} />
-                    <Controls.Input type={"currency"} separator align={"right"} clearable right={{ children: <Controls.Dropdown options={dropdown} /> }} />
+                    <Controls.Input type={"currency"} align={"right"} clearable right={{ children: <Controls.Dropdown options={dropdown} /> }} />
 
                     <Controls.Input clearable left={{ children: <Controls.Button>Button</Controls.Button> }} />
                     <Controls.Input
@@ -259,7 +259,7 @@ export default function Dummy() {
                     <Controls.Input clearable right={{ children: <Controls.Button>Button</Controls.Button> }} />
 
                     <Controls.Input type={"currency"} error={true} unit={"%"} />
-                    <Controls.Input type={"currency"} separator value={value} onChange={(v: any) => setValue(Format(v, "number"))} unit={"%"} />
+                    <Controls.Input type={"currency"} value={value} onChange={(v: any) => setValue(Format(v, "number"))} unit={"%"} />
                 </Layouts.Col>
             ),
         },

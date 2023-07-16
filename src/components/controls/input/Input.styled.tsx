@@ -1,7 +1,5 @@
 import { styled } from "styled-components";
 import * as Box from "components/layouts/box/Box.styled";
-import * as Button from "components/controls/button/Button.styled";
-import * as Dropdown from "components/controls/dropdown/Dropdown.styled";
 
 export const Side = styled.div<{ $width?: number }>`
     width: ${({ $width }) => ($width ? `calc(var(--unit) * ${$width})` : "max-content")};
