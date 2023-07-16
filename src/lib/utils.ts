@@ -90,7 +90,6 @@ export function Format(value: number | string, type?: 'email' | 'number' | 'curr
                 }
                 copy[0] = number;
             }
-            console.log(type);
 
             let decimals: string = '';
             if (copy.length > 1) {
