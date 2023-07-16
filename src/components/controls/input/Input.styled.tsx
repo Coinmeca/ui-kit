@@ -32,7 +32,7 @@ export const Side = styled.div<{ $width?: number }>`
     }
 `;
 
-const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean; $error: boolean; $disabled: boolean }>`
+const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean; $align: "left" | "center" | "right"; $error: boolean; $disabled: boolean }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
@@ -97,7 +97,7 @@ const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean;
                 outline: none;
 
                 &::placeholder {
-                    text-align: left;
+                    text-align: ${({ $align }) => $align};
                     font-weight: normal;
                     color: inherit;
                     opacity: 0.3;

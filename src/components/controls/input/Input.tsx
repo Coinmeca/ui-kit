@@ -12,7 +12,7 @@ export interface Input {
     fold?: boolean;
     type?: string;
     value?: number | string | undefined;
-    align?: "start" | "end" | "left" | "right" | "center" | "justify" | "match-parent";
+    align?: "left" | "center" | "right";
     scale?: number;
 
     placeholder?: string;
@@ -165,6 +165,7 @@ export default function Input(props: Input) {
             $clearable={clearable}
             $scale={scale}
             $focus={focus}
+            $align={align}
             $error={error}
             $disabled={disabled}
             onClick={() => setFocus(true)}
