@@ -14,7 +14,6 @@ export interface Input {
     value?: number | string | undefined;
     align?: "start" | "end" | "left" | "right" | "center" | "justify" | "match-parent";
     scale?: number;
-    separator?: boolean;
 
     placeholder?: string;
     icon?: string;
@@ -61,23 +60,22 @@ export default function Input(props: Input) {
     const step = props?.step || 1;
     const scale = props?.scale || 1;
     const min = props?.min || 0;
+    const align = props?.align || "left";
+
+    const clearPosition = props?.clearPosition || "right";
+    const disabled = props?.disabled || false;
 
     const [focus, setFocus] = useState<boolean>(false);
     const [fold, setFold] = useState<boolean>(false);
     const [extend, setExtend] = useState<boolean>(false);
 
     const [value, setValue] = useState<number | string>(props?.value?.toString() || "");
-    const [align, setAlign] = useState<any>(props.align || "left");
-
     const [error, setError] = useState<boolean>(props?.error || false);
-
-    const clearPosition = props?.clearPosition || "right";
-    const disabled = props?.disabled || false;
 
     useEffect(() => {
         if (value === "") setError(false);
-        setValue(Format(value, type, props?.separator, props?.fix).toString());
-    }, [value, type, props?.separator, props?.fix]);
+        setValue(Format(value, type, false, props?.fix).toString());
+    }, [value, type, props?.fix]);
 
     const onClick = (e: any) => {
         input.current.focus();
@@ -109,19 +107,12 @@ export default function Input(props: Input) {
     const onChange = (e: any) => {
         const value = typeof e !== "object" ? e : e.target.value;
         setError(false);
-        setValue(Format(value, type, props?.separator, props?.fix, props?.max));
-        // props?.separator ? value : setValue(parseFloat(value.replaceAll(',', '')));
+        setValue(Format(value, type, true, props?.fix, props?.max));
         if (typeof props?.onChange === "function") props?.onChange(e, value);
     };
 
     const onFocus = (e: any) => {
         if (typeof props?.onFocus === "function") props?.onFocus(e);
-    };
-
-    const format = {
-        email: /^[a-zA-Z0-9+]*$/,
-        number: /^[0-9+]*$/,
-        currency: /^[,.0-9]*$/,
     };
 
     const onKeyDown = (e: any) => {

@@ -33,8 +33,14 @@ export function Capitalize(text: string) {
     return cap;
 }
 
-export function Format(value: any, type?: string, separator?: boolean, fix?: number, max?: any, auto?: boolean) {
-    if (typeof value === 'undefined') return;
+const format = {
+    email: /^[a-zA-Z0-9+]*$/,
+    number: /^[0-9+]*$/,
+    currency: /^[,.0-9]*$/,
+};
+
+export function Format(value: number | string, type?: 'email' | 'number' | 'currency' | string, display?: boolean, fix?: number | 'auto', max?: number | string, auto?: boolean): number | string {
+    if (typeof value === 'undefined') return '';
     if (typeof value !== 'string') value = value.toString();
     switch (type) {
         case 'email': {
@@ -49,48 +55,60 @@ export function Format(value: any, type?: string, separator?: boolean, fix?: num
             }
             return value;
         }
-        case 'unit':
         case 'number':
         case 'currency': {
             value = value.toString().replaceAll(',', '');
-            if (value === '') return 0;
-            if ((!parseFloat(value) || parseFloat(value) === 0) && value.length <= 1 && value[value.length] !== '.')
-                return 0;
-            let decimals;
-            if (value.indexOf('.') !== -1) {
-                let copy: string[] = value.split('.');
-                if (copy.length > 1) {
-                    if (copy.length > 2) {
-                        for (let i = 2; i < copy.length; i++) {
-                            copy[1] += copy[i];
-                        }
-                    }
-                    if (typeof fix !== 'undefined' && copy[1]?.length > fix) {
-                        // fix = auto ? parseFloat(value)?.toString()?.length / 2;
-                        copy[1] = copy[1].substring(0, fix);
-                    }
-                    copy[0] =
-                        type === 'number'
-                            ? parseFloat(copy[0]).toString()
-                            : separator
-                                ? parseFloat(copy[0]).toLocaleString()
-                                : copy[0];
-                    // copy[1] = parseFloat(copy[1]) === 0 ? '0' : copy[1];
-                    decimals = copy[1];
-                    value = copy[0] + '.' + copy[1];
-                }
-            }
-            if (typeof max !== 'undefined') {
-                max = parseFloat(max.toString().replaceAll(',', ''));
-                if (parseFloat(value) > parseFloat(max)) value = max;
-            }
-            if (typeof decimals === 'undefined') {
-                value = type === 'number' ? parseFloat(value) : separator ? parseFloat(value).toLocaleString() : value;
-            }
-            if (type === 'unit') {
 
+            if (value === '' || value?.length <= 0) return display ? 0 : '';
+
+            if (max) {
+                max = parseFloat(max.toString().replaceAll(',', ''));
+                if (parseFloat(value) > parseFloat(max.toString())) return type === 'currency' ? max.toLocaleString() : max;
             }
-            return value;
+
+            let copy: any = '';
+            let point = false;
+
+            for (let i = 0; i < value?.length; i++) {
+                if ((!point && value[i] === '.') || !isNaN(parseInt(value[i]))) {
+                    if (!point && value[i] === '.') point = true;
+                    copy += value[i]
+                };
+            }
+
+            copy = value.split('.');
+            copy[0] = copy[0] === '' ? '0' : copy[0];
+
+            if (display) {
+                copy[0] = parseInt(copy[0]);
+                if (type === 'currency') copy[0] = copy[0].toLocaleString();
+            } else if (type === 'currency') {
+                let number: string = '';
+                for (let i = 0; i < copy[0].length; i++) {
+                    number += copy[0][i];
+                    if (i !== copy[0].length - 1 && (copy[0].length - i) % 3 === 1) number += ',';
+                }
+                copy[0] = number;
+            }
+            console.log(type);
+
+            let decimals: string = '';
+            if (copy.length > 1) {
+                if (copy.length > 2) {
+                    for (let i = 2; i < copy.length; i++) {
+                        copy[1] += copy[i];
+                    }
+                    copy[1] = copy[1].toString();
+                }
+
+                if (!isNaN(parseInt(copy[1]))) {
+                    copy[1] = (typeof fix === 'number' && !isNaN(fix) && copy[1]?.length > fix) ? copy[1].substring(0, fix) : copy[1];
+                    copy[1] = display ? parseInt(copy[1]) : copy[1];
+                }
+                decimals = '.' + copy[1];
+            }
+
+            return copy[0] + decimals;
         }
         default: {
             return value;
@@ -98,6 +116,6 @@ export function Format(value: any, type?: string, separator?: boolean, fix?: num
     }
 }
 
-export function getFees(n: string | number, fee: number, divider?: number) {
-    return (parseFloat(Format(n, 'number', false)) * fee) / (divider || 10000);
+export function getFees(n: number | string, fee: number, divider?: number) {
+    return (parseFloat(Format(n, 'number', false).toString()) * fee) / (divider || 10000);
 }
