@@ -41,7 +41,7 @@ export default function OrderControl(props: OrderControl) {
                             active: windowSize.width <= responsive ? mode === true : true,
                             style: { height: "max-content", overflow: "hidden" },
                             children: (
-                                <Layouts.Col gap={1}>
+                                <Layouts.Col gap={0.5}>
                                     <Layouts.Row style={{ padding: "0 0.5em" }} fix>
                                         <Elements.Text opacity={0.45} style={{ minWidth: "max-content" }}>
                                             Available
@@ -110,7 +110,7 @@ export default function OrderControl(props: OrderControl) {
                             active: windowSize.width <= responsive ? mode === false : true,
                             style: { height: "max-content", overflow: "hidden" },
                             children: (
-                                <Layouts.Col gap={1}>
+                                <Layouts.Col gap={0.5}>
                                     <Layouts.Row style={{ padding: "0 0.5em" }} fix>
                                         <Elements.Text opacity={0.45} style={{ minWidth: "max-content" }}>
                                             Available
