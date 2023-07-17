@@ -1,15 +1,13 @@
+import { useEffect, useState } from "react";
 import { Controls } from "components";
-import { Format } from "lib/utils";
 import { Numberpad } from "parts";
 import type { Numberpad as Pad } from "parts/numberpads/Numberpad";
-import { useEffect, useState } from "react";
+import type { Button } from "components/controls/button/Button";
+import { Format } from "lib/utils";
 
 export interface ExchangePad extends Pad {
     step?: number;
-    button?: {
-        name?: string;
-        onClick?: Function;
-    };
+    button?: Button;
 }
 
 export default function Exchange(props: ExchangePad) {
@@ -49,11 +47,11 @@ export default function Exchange(props: ExchangePad) {
             right={{
                 children: (
                     <>
-                        <Controls.Button onClick={(e: any) => onChange(e, "plus-bold")} icon={"plus-bold"} />
-                        <Controls.Button onClick={(e: any) => onChange(e, "minus-bold")} icon={"minus-bold"} />
+                        <Controls.Button onClick={(e: any) => onChange(e, "plus")} icon={"plus-bold"} />
+                        <Controls.Button onClick={(e: any) => onChange(e, "minus")} icon={"minus-bold"} />
                         <Controls.Button onClick={(e: any) => onChange(e, ".")} icon={"dot"} />
-                        <Controls.Button onClick={(e: any) => onClick(e)} style={{ ...(props?.reverse && { order: -1 }) }}>
-                            {props?.button?.name || "OK"}
+                        <Controls.Button {...props?.button} onClick={(e: any) => onClick(e)} color={props?.button?.color} style={{ ...props?.button?.style, ...(props?.reverse && { order: -1 }) }}>
+                            {props?.button?.children || "OK"}
                         </Controls.Button>
                     </>
                 ),

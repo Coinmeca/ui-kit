@@ -33,7 +33,6 @@ const Style = styled.div<{ $scale: number; $width?: number; $padding: number; $r
             & > * {
                 flex: 1;
                 height: -webkit-fill-available;
-            }
 
             & > *,
             &${Pad}, > * > * {
