@@ -32,7 +32,6 @@ export default function Page() {
             )
                 check = true;
         })(globalThis?.navigator?.userAgent || globalThis?.navigator?.vendor /*|| window?.opera*/);
-        alert(check);
         return check;
     };
 
@@ -40,7 +39,7 @@ export default function Page() {
 
     return (
         <Layouts.Page>
-            {/* <div style={{ background: "red", padding: 32 }}>{isMobile()}</div> */}
+            <div style={{ background: "red", padding: 32 }}>{isMobile()}</div>
             <Layouts.Box fit change={parseFloat(market?.change) > 0 ? "var(--green)" : (parseFloat(market?.change) < 0 && "var(--red)") || undefined}>
                 <Layouts.Contents.InnerContent>
                     <Layouts.Row fix style={{ alignItems: "center" }}>
