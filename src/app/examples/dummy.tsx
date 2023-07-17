@@ -259,7 +259,7 @@ export default function Dummy() {
                     <Controls.Input clearable right={{ children: <Controls.Button>Button</Controls.Button> }} />
 
                     <Controls.Input type={"currency"} error={true} unit={"%"} />
-                    <Controls.Input type={"currency"} value={value} onChange={(v: any) => setValue(Format(v, "number"))} unit={"%"} />
+                    <Controls.Input type={"currency"} value={value} onChange={(v: any) => setValue(Format(v, "number") as number)} unit={"%"} />
                 </Layouts.Col>
             ),
         },

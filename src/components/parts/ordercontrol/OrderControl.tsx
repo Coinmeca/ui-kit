@@ -61,9 +61,10 @@ export default function OrderControl(props: OrderControl) {
                                         left={{ width: 10, children: <span>Price</span> }}
                                         right={{ width: 16, children: <span style={{ justifyContent: "flex-start" }}>{symbol?.quote}</span> }}
                                         style={{ fontFeatureSetting: `"tnum" on, "lnum" on` }}
+                                        lock={option === "market"}
                                     ></Controls.Input>
                                     <Controls.Input
-                                        placeholder={"Amount"}
+                                        placeholder={"0"}
                                         type={"currency"}
                                         align={"right"}
                                         value={""}
@@ -130,9 +131,10 @@ export default function OrderControl(props: OrderControl) {
                                         left={{ width: 10, children: <span>Price</span> }}
                                         right={{ width: 16, children: <span style={{ justifyContent: "flex-start" }}>{symbol?.quote}</span> }}
                                         style={{ fontFeatureSetting: `"tnum" on, "lnum" on` }}
+                                        lock={option === "market"}
                                     ></Controls.Input>
                                     <Controls.Input
-                                        placeholder={"Amount"}
+                                        placeholder={"0"}
                                         type={"currency"}
                                         align={"right"}
                                         value={""}

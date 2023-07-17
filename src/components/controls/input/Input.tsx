@@ -49,6 +49,7 @@ export interface Input {
 
     error?: boolean;
     message?: any;
+    lock?: boolean;
     disabled?: boolean;
 }
 
@@ -56,14 +57,12 @@ export default function Input(props: Input) {
     const input: any = createRef();
     const type = props?.type !== "password" ? props?.type : "password";
     const placeholder = props?.placeholder || "Type";
-    const clearable = props?.clearable || false;
     const step = props?.step || 1;
     const scale = props?.scale || 1;
     const min = props?.min || 0;
     const align = props?.align || "left";
 
     const clearPosition = props?.clearPosition || "right";
-    const disabled = props?.disabled || false;
 
     const [focus, setFocus] = useState<boolean>(false);
     const [fold, setFold] = useState<boolean>(false);
@@ -73,11 +72,13 @@ export default function Input(props: Input) {
     const [error, setError] = useState<boolean>(props?.error || false);
 
     useEffect(() => {
+        if (props?.lock || props?.disabled) return;
         if (value === "") setError(false);
         setValue(Format(value, type, false, props?.fix).toString());
     }, [value, type, props?.fix]);
 
     const onClick = (e: any) => {
+        if (props?.lock || props?.disabled) return;
         input.current.focus();
         if (typeof props.onClick === "function") {
             props.onClick(e);
@@ -105,6 +106,7 @@ export default function Input(props: Input) {
     // )
 
     const onChange = (e: any) => {
+        if (props?.lock || props?.disabled) return;
         const value = typeof e !== "object" ? e : e.target.value;
         setError(false);
         setValue(Format(value, type, true, props?.fix, props?.max));
@@ -112,10 +114,12 @@ export default function Input(props: Input) {
     };
 
     const onFocus = (e: any) => {
+        if (props?.lock || props?.disabled) return;
         if (typeof props?.onFocus === "function") props?.onFocus(e);
     };
 
     const onKeyDown = (e: any) => {
+        if (props?.lock || props?.disabled) return;
         const key = e.keyCode;
         if (((type === "currency" || type === "number") && ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key === 110 && key === 190))) || key === 38 || key === 107 || key === 187 || key === 40 || key === 109 || key === 189) {
             let copy: number | undefined;
@@ -162,12 +166,13 @@ export default function Input(props: Input) {
         <Style
             tabIndex={5}
             style={props?.style}
-            $clearable={clearable}
+            $clearable={props?.clearable}
             $scale={scale}
             $focus={focus}
             $align={align}
             $error={error}
-            $disabled={disabled}
+            $lock={props?.lock}
+            $disabled={props?.disabled}
             onClick={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             data-active={focus}
@@ -182,7 +187,7 @@ export default function Input(props: Input) {
                         </Side>
                     )}
                     <div>
-                        {clearable && clearPosition === "left" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
+                        {props?.clearable && clearPosition === "left" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                         <input
                             ref={input}
                             style={{ textAlign: align }}
@@ -198,9 +203,9 @@ export default function Input(props: Input) {
                             onFocus={(e) => onFocus(e)}
                             onKeyDown={(e) => onKeyDown(e)}
                             autoFocus={extend}
-                            disabled={disabled}
+                            disabled={props?.disabled}
                         />
-                        {clearable && clearPosition === "right" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
+                        {props?.clearable && clearPosition === "right" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                     </div>
                     {(props?.unit || props?.right) && (
                         <Side $width={props?.right?.width} style={props?.right?.style}>
