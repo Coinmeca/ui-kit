@@ -214,7 +214,7 @@ export default function Input(props: Input) {
                             onChange={(e) => onChange(e)}
                             onFocus={(e) => onFocus(e)}
                             onKeyDown={(e) => onKeyDown(e)}
-                            autoFocus={extend || focus}
+                            autoFocus={!props?.numberpad && (extend || focus)}
                             disabled={props?.disabled}
                             readOnly={typeof props?.numberpad !== "undefined" || props?.lock || props?.disabled}
                         />
