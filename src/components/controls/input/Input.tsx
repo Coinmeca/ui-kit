@@ -50,6 +50,7 @@ export interface Input {
     error?: boolean;
     message?: any;
     lock?: boolean;
+    numberpad?: { open: Function; active: boolean; children?: any };
     disabled?: boolean;
 }
 
@@ -96,12 +97,6 @@ export default function Input(props: Input) {
         }
     };
 
-    const onBlur = () => {
-        if (typeof props.onBlur === "function") props.onBlur();
-        setExtend(false);
-        onChange("");
-    };
-
     // const handleInput = useCallback(
     //     (event: ChangeEvent<HTMLInputElement>) => {
     //     onUserInput(event.target.value)
@@ -120,6 +115,12 @@ export default function Input(props: Input) {
     const onFocus = (e: any) => {
         if (props?.lock || props?.disabled) return;
         if (typeof props?.onFocus === "function") props?.onFocus(e);
+    };
+
+    const onBlur = () => {
+        if (typeof props.onBlur === "function") props.onBlur();
+        setExtend(false);
+        onChange("");
     };
 
     const onKeyDown = (e: any) => {
@@ -201,12 +202,19 @@ export default function Input(props: Input) {
                             max={props?.max}
                             step={props?.step}
                             value={value}
-                            onClick={(e: any) => onClick(e)}
+                            onClick={(e: any) => {
+                                onClick(e);
+                                if (typeof props?.numberpad?.open === "function") {
+                                    props?.numberpad?.open();
+                                    blur();
+                                    console.log(props?.numberpad?.active);
+                                }
+                            }}
                             onInput={(e) => onChange(e)}
                             onChange={(e) => onChange(e)}
                             onFocus={(e) => onFocus(e)}
                             onKeyDown={(e) => onKeyDown(e)}
-                            autoFocus={extend}
+                            autoFocus={extend || focus}
                             disabled={props?.disabled}
                             readOnly={props?.lock || props?.disabled}
                         />
@@ -233,5 +241,10 @@ export default function Input(props: Input) {
     }
 
     // Styled Components Caution */
-    return <>{Input}</>;
+    return (
+        <>
+            {Input}
+            {props?.numberpad?.active && props?.numberpad?.children}
+        </>
+    );
 }

@@ -3,6 +3,10 @@ import { createGlobalStyle } from "styled-components";
 import { Device } from "./Root";
 
 const Global = createGlobalStyle`
+    html,body{
+        height:100%;
+    }
+
     html {
         color-scheme: light;
         background: black;
@@ -39,11 +43,6 @@ const Global = createGlobalStyle`
             }
         }
     }
-
-    body {
-        font-size: 1.5rem;
-    }
-
     body, table, ul, ol, form, input, button, h1, h2, h3, h4, h5, h6, strong, p, i {
         margin: 0;
         border: 0;
@@ -51,6 +50,11 @@ const Global = createGlobalStyle`
         outline: none;
         list-style: none;
     }
+
+    body {
+        font-size: 1.5rem;
+    }
+
 
     :root {
         --unit: 8px;

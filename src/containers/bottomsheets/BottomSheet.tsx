@@ -1,27 +1,44 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { Layouts } from "components";
 import Style from "./BottomSheet.styled";
 
 export interface BottomSheet {
     children?: any;
     scale?: number;
-    active?: boolean;
+    active: boolean;
     height?: number | { min?: number; max?: number };
     onBlur?: Function;
+    onClose: Function;
 }
-
 export default function BottomSheet(props: BottomSheet) {
+    const [mounted, setMounted] = useState<boolean>(false);
+    const active = props?.active || false;
     const scale = props?.scale || 1;
-    const [active, setActive] = useState<boolean>(props?.active || false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const onClose = (e: any) => {
+        if (typeof props?.onClose === "function") props?.onClose(e);
+    };
 
     const onBlur = (e: any) => {
         if (typeof props?.onBlur === "function") props?.onBlur(e);
-        // setActive(false);
+        // onClose(e);
+        // setMounted(false);
     };
 
-    return (
-        <Style tabIndex={100} $scale={scale} $active={active} $height={props?.height} onBlur={(e: any) => onBlur(e)}>
-            {props?.children}
-        </Style>
-    );
+    return mounted
+        ? createPortal(
+              <Layouts.Panel active={mounted} id="panel" style={{ zIndex: 100, pointerEvents: "none" }} fix>
+                  <Style tabIndex={100} $scale={scale} $active={active} $height={props?.height} onBlur={(e: any) => onBlur(e)}>
+                      {props?.children}
+                  </Style>
+              </Layouts.Panel>,
+              document.body
+          )
+        : null;
 }

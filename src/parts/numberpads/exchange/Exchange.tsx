@@ -6,7 +6,10 @@ import { useEffect, useState } from "react";
 
 export interface ExchangePad extends Pad {
     step?: number;
-    onExecute?: Function;
+    button?: {
+        name?: string;
+        onClick?: Function;
+    };
 }
 
 export default function Exchange(props: ExchangePad) {
@@ -17,8 +20,8 @@ export default function Exchange(props: ExchangePad) {
         if (props?.value) setValue(props?.value?.toString() || "");
     }, [props?.value]);
 
-    const onExecute = (e: any) => {
-        if (typeof props?.onExecute === "function") props?.onExecute(e, value);
+    const onClick = (e: any) => {
+        if (typeof props?.button?.onClick === "function") props?.button?.onClick(e, value);
     };
 
     const onChange = (e: any, v: string) => {
@@ -49,8 +52,8 @@ export default function Exchange(props: ExchangePad) {
                         <Controls.Button onClick={(e: any) => onChange(e, "plus")} icon={"plus"} />
                         <Controls.Button onClick={(e: any) => onChange(e, "minus")} />
                         <Controls.Button onClick={(e: any) => onChange(e, ".")}>•</Controls.Button>
-                        <Controls.Button onClick={(e: any) => onExecute(e)} style={{ ...(props?.reverse && { order: -1 }) }}>
-                            GO
+                        <Controls.Button onClick={(e: any) => onClick(e)} style={{ ...(props?.reverse && { order: -1 }) }}>
+                            {props?.button?.name || "OK"}
                         </Controls.Button>
                     </>
                 ),

@@ -4,6 +4,9 @@ import { Controls, Elements, Layouts } from "components";
 import { Token } from "types/web3";
 import useWindowSize from "hooks/useWindowSize";
 import { Format } from "lib/utils";
+import { BottomSheets } from "containers";
+import useBottomSheet from "hooks/useBottomSheet";
+import useMobile from "hooks/useMobile";
 
 export interface OrderControl {
     base: Token;
@@ -17,6 +20,8 @@ export interface OrderControl {
 
 export default function OrderControl(props: OrderControl) {
     const windowSize = useWindowSize();
+    const { active, open, close } = useBottomSheet(false);
+    const { isMobile } = useMobile();
 
     const [mode, setMode] = useState(true);
     const price = Format(props?.price, "currency", true) || 0;
@@ -99,7 +104,7 @@ export default function OrderControl(props: OrderControl) {
                                         right={{ width: gap.width, children: <span style={{ justifyContent: "flex-start" }}>{symbol?.quote}</span> }}
                                         style={text.setting}
                                         lock={option === "market"}
-                                    ></Controls.Input>
+                                    />
                                     <Controls.Input
                                         placeholder={"0"}
                                         type={"currency"}
@@ -111,6 +116,7 @@ export default function OrderControl(props: OrderControl) {
                                             children: <Controls.Dropdown option={Object.values(symbol)[0]} options={Object.values(symbol)} />,
                                         }}
                                         style={text.setting}
+                                        numberpad={{ open: open, active: isMobile ? active : false, children: <BottomSheets.Numberpads.Exchange active={active} onClose={close} /> }}
                                     />
                                     <Controls.Range color={color.buy} min={range.min} max={range.max} step={range.step} unit={range.unit} />
                                     <Layouts.Col gap={gap.col.big}>

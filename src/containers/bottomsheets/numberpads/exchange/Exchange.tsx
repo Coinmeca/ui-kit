@@ -3,10 +3,10 @@ import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
 import { Numberpads } from "parts";
 import type { BottomSheet as Sheet } from "containers/bottomsheets/BottomSheet";
-import type { Numberpad as Pad } from "parts/numberpads/Numberpad";
+import type { ExchangePad } from "parts/numberpads/exchange/Exchange";
 import { useEffect, useState } from "react";
 
-export interface Exchange extends Pad, Sheet {
+export interface Exchange extends ExchangePad, Sheet {
     label?: string;
     placeholder?: string;
     padding?: number;
@@ -14,9 +14,12 @@ export interface Exchange extends Pad, Sheet {
 }
 
 export default function Exchange(props: Exchange) {
+    const width = 64;
+
     const min = (typeof props?.height === "object" && props?.height?.min) || 40;
     const max = (typeof props?.height === "object" && props?.height?.max) || 64;
     const height = { min: (typeof props?.height === "object" ? props?.height?.min : props?.height) || min, max: (typeof props?.height === "object" ? props?.height?.min : props?.height) || max };
+
     const padding = props?.padding || 2;
 
     const [value, setValue] = useState(props?.value || "");
@@ -31,7 +34,7 @@ export default function Exchange(props: Exchange) {
     };
 
     return (
-        <BottomSheet active={props?.active} height={height}>
+        <BottomSheet {...props} height={height}>
             <Layouts.Col gap={0} align="center">
                 <Layouts.Row gap={1} style={{ alignItems: "center", padding: `${padding / 2}em` }}>
                     <Elements.Text type={"desc"} weight={"bold"} align={"right"}>
@@ -51,7 +54,23 @@ export default function Exchange(props: Exchange) {
                     style={{ padding: `${padding / 8}em ${padding}em` }}
                     unit={"ETH"}
                 />
-                <Numberpads.Exchange {...props} value={value} onChange={(e: any, v: string) => onChange(e, v)} padding={padding} reverse={false} />
+                <Numberpads.Exchange
+                    {...props}
+                    width={width}
+                    value={value}
+                    button={{
+                        ...props?.button,
+                        ...{
+                            onClick: (e: any, v: string) => {
+                                if (typeof props?.button?.onClick === "function") props?.button?.onClick(e, v);
+                                props?.onClose();
+                            },
+                        },
+                    }}
+                    onChange={(e: any, v: string) => onChange(e, v)}
+                    padding={padding}
+                    reverse={false}
+                />
             </Layouts.Col>
         </BottomSheet>
     );
