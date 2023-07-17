@@ -10,8 +10,8 @@ export default function Exchange(props: Pad) {
                 children: (
                     <>
                         <Controls.Button icon={"chevron-left"} />
-                        <Controls.Button icon={"plus"}>0</Controls.Button>
-                        <Controls.Button icon={"minus"}>0</Controls.Button>
+                        <Controls.Button icon={"plus"} />
+                        <Controls.Button icon={"empty"} />
                         <Controls.Button>GO</Controls.Button>
                     </>
                 ),
