@@ -10,7 +10,9 @@ const Style = styled.div<{ $scale: number; $active: boolean; $height?: number | 
     height: ${({ $height }) => (typeof $height === "number" && `${$height}em`) || "max-content"};
     margin: 0 !important;
     text-align: center;
-    transform: translateY(${({ $active }) => ($active ? "100%" : "0")});
+    pointer-events: ${({ $active }) => ($active ? "initial" : "none")};
+    transform: translateY(${({ $active }) => ($active ? "0" : "100%")});
+    transition: 0.3s ease;
 
     ${({ $height }) => typeof $height === "object" && typeof $height?.min === "number" && `min-height: ${$height?.min}em`};
     ${({ $height }) => typeof $height === "object" && typeof $height?.max === "number" && `max-height: ${$height?.max}em`};

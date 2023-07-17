@@ -32,7 +32,7 @@ export default function Exchange(props: Exchange) {
 
     return (
         <BottomSheet active={props?.active} height={height}>
-            <Layouts.Col gap={0}>
+            <Layouts.Col gap={0} align="center">
                 <Layouts.Row gap={1} style={{ alignItems: "center", padding: `${padding / 2}em` }}>
                     <Elements.Text type={"desc"} weight={"bold"} align={"right"}>
                         = 1.9234234
