@@ -206,7 +206,6 @@ export default function Input(props: Input) {
                                 onClick(e);
                                 if (typeof props?.numberpad?.open === "function") {
                                     props?.numberpad?.open();
-                                    blur();
                                 }
                             }}
                             onInput={(e) => onChange(e)}
@@ -215,7 +214,7 @@ export default function Input(props: Input) {
                             onKeyDown={(e) => onKeyDown(e)}
                             autoFocus={extend || focus}
                             disabled={props?.disabled}
-                            readOnly={props?.lock || props?.disabled}
+                            readOnly={typeof props?.numberpad !== "undefined" || props?.lock || props?.disabled}
                         />
                         {props?.clearable && clearPosition === "right" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                     </div>
