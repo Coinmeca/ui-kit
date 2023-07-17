@@ -11,6 +11,7 @@ export interface Input {
     form?: string;
     fold?: boolean;
     type?: string;
+    inputMode?: "email" | "text" | "search" | "none" | "tel" | "url" | "numeric" | "decimal";
     value?: number | string;
     align?: "left" | "center" | "right";
     scale?: number;
@@ -199,7 +200,8 @@ export default function Input(props: Input) {
                             ref={input}
                             style={{ textAlign: align }}
                             placeholder={placeholder}
-                            type={type === "currency" ? "currency" : props?.numberpad ? "none" : type}
+                            type={type === "currency" ? "currency" : type}
+                            inputMode={(props?.numberpad && "none") || props?.inputMode}
                             min={min}
                             max={props?.max}
                             step={props?.step}
