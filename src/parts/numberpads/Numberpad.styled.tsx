@@ -18,6 +18,7 @@ const Style = styled.div<{ $scale: number; $width?: number | { min?: number; max
 
     & > * {
         flex: 1;
+        ${({ $reverse }) => $reverse && "flex-direction: column-reverse;"}
 
         &${Pad} {
             flex: 3;
@@ -26,7 +27,6 @@ const Style = styled.div<{ $scale: number; $width?: number | { min?: number; max
         & > * {
             flex: 1;
             height: -webkit-fill-available;
-            ${({ $reverse }) => $reverse && "flex-direction: column-reverse;"}
         }
 
         & > *,

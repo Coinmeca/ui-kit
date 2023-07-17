@@ -11,7 +11,7 @@ export interface Input {
     form?: string;
     fold?: boolean;
     type?: string;
-    value?: number | string | undefined;
+    value?: number | string;
     align?: "left" | "center" | "right";
     scale?: number;
 
@@ -68,8 +68,12 @@ export default function Input(props: Input) {
     const [fold, setFold] = useState<boolean>(false);
     const [extend, setExtend] = useState<boolean>(false);
 
-    const [value, setValue] = useState<number | string>(props?.value?.toString() || "");
+    const [value, setValue] = useState<number | string>(props?.value || "");
     const [error, setError] = useState<boolean>(props?.error || false);
+
+    useEffect(() => {
+        if (props?.value) setValue(props?.value);
+    }, [props?.value]);
 
     useEffect(() => {
         if (props?.lock || props?.disabled) return;
@@ -204,6 +208,7 @@ export default function Input(props: Input) {
                             onKeyDown={(e) => onKeyDown(e)}
                             autoFocus={extend}
                             disabled={props?.disabled}
+                            readOnly={props?.lock || props?.disabled}
                         />
                         {props?.clearable && clearPosition === "right" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                     </div>
