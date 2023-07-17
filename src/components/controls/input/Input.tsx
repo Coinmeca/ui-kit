@@ -49,8 +49,10 @@ export interface Input {
 
     error?: boolean;
     message?: any;
-    lock?: boolean;
+
     numberpad?: { open: Function; active: boolean; children?: any };
+    lock?: boolean;
+    readOnly?: boolean;
     disabled?: boolean;
 }
 
