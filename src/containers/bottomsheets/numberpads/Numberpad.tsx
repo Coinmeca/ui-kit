@@ -16,7 +16,7 @@ export default function Numberpad(props: Numberpad) {
     const height = { min: (typeof props?.height === "object" ? props?.height?.min : props?.height) || min, max: (typeof props?.height === "object" ? props?.height?.min : props?.height) || max };
 
     return (
-        <BottomSheet active={props?.active} height={height}>
+        <BottomSheet {...props} active={props?.active} height={height}>
             <NumberPad width={width} {...props} />
         </BottomSheet>
     );
