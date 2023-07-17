@@ -78,7 +78,12 @@ export default function Page() {
                                 area: "info",
                                 children: (
                                     <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "info"}>
-                                        <Layouts.Row fix responsive="mobile" gap={4} style={{ marginTop: "0.5em", alignItems: "center", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
+                                        <Layouts.Row
+                                            fix
+                                            responsive="mobile"
+                                            gap={windowSize.width > Root.Device.Mobile ? 4 : 1}
+                                            style={{ marginTop: "0.5em", alignItems: "center", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}
+                                        >
                                             <Layouts.Col gap={0.5}>
                                                 <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
