@@ -207,7 +207,6 @@ export default function Input(props: Input) {
                                 if (typeof props?.numberpad?.open === "function") {
                                     props?.numberpad?.open();
                                     blur();
-                                    console.log(props?.numberpad?.active);
                                 }
                             }}
                             onInput={(e) => onChange(e)}
