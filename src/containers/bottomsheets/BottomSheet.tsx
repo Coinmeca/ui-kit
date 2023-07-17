@@ -16,7 +16,7 @@ export default function BottomSheet(props: BottomSheet) {
 
     const onBlur = (e: any) => {
         if (typeof props?.onBlur === "function") props?.onBlur(e);
-        setActive(false);
+        // setActive(false);
     };
 
     return (
