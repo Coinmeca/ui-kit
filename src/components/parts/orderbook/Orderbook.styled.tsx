@@ -120,6 +120,7 @@ export const Tick = styled.div`
                     color: rgb(var(--white));
 
                     & > span {
+                        position: absolute;
                         opacity: 0.6;
                     }
                 }
@@ -157,6 +158,14 @@ export const Asks = styled.div<{ $show: boolean }>`
     & > ${Tick} {
         color: rgb(var(--red));
         ${Balance("red")}
+
+        & > * > * > * {
+            &:nth-child(1) {
+                & > span {
+                    left: 0;
+                }
+            }
+        }
     }
 `;
 
@@ -175,6 +184,14 @@ export const Bids = styled.div<{ $show: boolean }>`
     & > ${Tick} {
         color: rgb(var(--green));
         ${Balance("green")}
+
+        & > * > * > * {
+            &:nth-child(1) {
+                & > span {
+                    left: 0;
+                }
+            }
+        }
     }
 `;
 
@@ -209,6 +226,10 @@ const Responsive = (vertical?: boolean) => css`
 
                     &:nth-child(1) {
                         ${!vertical && "text-align: right;"}
+
+                        &>span {
+                            ${!vertical ? "right: 0;" : "left:0;"}
+                        }
                     }
 
                     &:nth-child(2) {
@@ -228,6 +249,10 @@ const Responsive = (vertical?: boolean) => css`
                 & > * {
                     &:nth-child(1) {
                         ${!vertical && "text-align: left;"}
+
+                        &>span {
+                            ${!vertical ? "left:0;" : "right:0;"}
+                        }
                     }
                 }
             }

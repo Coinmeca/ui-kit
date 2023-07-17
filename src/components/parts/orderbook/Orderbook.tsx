@@ -45,7 +45,7 @@ export default function Ordrebook(props: Orderbook) {
                             <div>
                                 <div>
                                     <div>
-                                        <span>{ask?.balance}</span>
+                                        <span>{Format(ask?.balance, "currency", true)}</span>
                                     </div>
                                     <div
                                         style={{
@@ -72,7 +72,7 @@ export default function Ordrebook(props: Orderbook) {
                             <div>
                                 <div>
                                     <div>
-                                        <span>{bid?.balance}</span>
+                                        <span>{Format(bid?.balance, "currency", true)}</span>
                                     </div>
                                     <div
                                         style={{
