@@ -199,7 +199,7 @@ export default function Input(props: Input) {
                             ref={input}
                             style={{ textAlign: align }}
                             placeholder={placeholder}
-                            type={type === "currency" ? "currency" : type}
+                            type={type === "currency" ? "currency" : props?.numberpad ? "none" : type}
                             min={min}
                             max={props?.max}
                             step={props?.step}
@@ -214,9 +214,9 @@ export default function Input(props: Input) {
                             onChange={(e) => onChange(e)}
                             onFocus={(e) => onFocus(e)}
                             onKeyDown={(e) => onKeyDown(e)}
-                            autoFocus={!props?.numberpad && (extend || focus)}
+                            autoFocus={extend || focus}
                             disabled={props?.disabled}
-                            readOnly={typeof props?.numberpad !== "undefined" || props?.lock || props?.disabled}
+                            readOnly={props?.lock || props?.disabled}
                         />
                         {props?.clearable && clearPosition === "right" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
                     </div>
