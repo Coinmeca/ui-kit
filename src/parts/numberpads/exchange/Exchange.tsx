@@ -49,9 +49,9 @@ export default function Exchange(props: ExchangePad) {
             right={{
                 children: (
                     <>
-                        <Controls.Button onClick={(e: any) => onChange(e, "plus")} icon={"plus"} />
-                        <Controls.Button onClick={(e: any) => onChange(e, "minus")} />
-                        <Controls.Button onClick={(e: any) => onChange(e, ".")}>•</Controls.Button>
+                        <Controls.Button onClick={(e: any) => onChange(e, "plus-bold")} icon={"plus-bold"} />
+                        <Controls.Button onClick={(e: any) => onChange(e, "minus-bold")} icon={"minus-bold"} />
+                        <Controls.Button onClick={(e: any) => onChange(e, ".")} icon={"dot"} />
                         <Controls.Button onClick={(e: any) => onClick(e)} style={{ ...(props?.reverse && { order: -1 }) }}>
                             {props?.button?.name || "OK"}
                         </Controls.Button>

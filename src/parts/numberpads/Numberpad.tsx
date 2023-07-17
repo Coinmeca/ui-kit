@@ -63,7 +63,7 @@ export default function Numberpad(props: Numberpad) {
                         <Controls.Button onClick={(e: any) => onChange(e, "9")}>9</Controls.Button>
                     </Layouts.Row>
                     <Layouts.Row gap={0} style={{ ...(props?.reverse && { order: -1 }) }} fix>
-                        <Controls.Button onClick={(e: any) => onChange(e, "reset")} icon={"reset"} />
+                        <Controls.Button onClick={(e: any) => onChange(e, "reset")} icon={"revert-bold"} />
                         <Controls.Button onClick={(e: any) => onChange(e, "0")}>0</Controls.Button>
                         <Controls.Button onClickLonger={(e: any) => onChange(e, "sub")} icon={"chevron-left-bold"} />
                     </Layouts.Row>
