@@ -22,7 +22,7 @@ interface Option {
 export default function Numberpad(props: Numberpad) {
     const [value, setValue] = useState(props?.value?.toString() || "");
 
-    const scale = props?.scale || 2;
+    const scale = props?.scale || 1.5;
     const padding = props?.padding || 2;
 
     useEffect(() => {
