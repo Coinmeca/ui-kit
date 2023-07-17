@@ -38,10 +38,10 @@ const Style = styled.div<{ $change?: string; $fit?: boolean }>`
         }
 
         @media all and (max-width: ${Root.Device.Mobile}px) {
-            width: calc(100% - (var(--unit) * 6));
-            ${({ $fit }) => ($fit ? `height: calc(100% - (var(--unit) * 6)); min-height: max-content;` : `height: max-content; min-height: calc(100% - (var(--unit) * 6));`)}
-            gap: calc(var(--unit) * 3);
-            padding: calc(var(--unit) * 3);
+            width: calc(100% - (var(--unit) * 4));
+            ${({ $fit }) => ($fit ? `height: calc(100% - (var(--unit) * 4)); min-height: max-content;` : `height: max-content; min-height: calc(100% - (var(--unit) * 4));`)}
+            gap: calc(var(--unit) * 2);
+            padding: calc(var(--unit) * 2);
         }
     }
 
