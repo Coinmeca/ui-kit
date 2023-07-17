@@ -127,7 +127,7 @@ const Style = styled.div<{ $clearable?: boolean; $scale: number; $focus: boolean
     ${({ $lock }) =>
         $lock &&
         css`
-            background: rgba(var(--white), var(--o0045));
+            background: rgba(var(--white), var(--o003));
             cursor: pointer;
             pointer-events: none;
             & > * {
