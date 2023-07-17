@@ -29,7 +29,7 @@ export default function Avatar(props: Avatar) {
                     {(name || (props?.img && props?.img !== "")) && (
                         <div>
                             {props?.img && props?.img !== "" ? (
-                                <Image src={props?.img} fill alt={""} />
+                                <Image src={props?.img} fill sizes="100%" alt={""} />
                             ) : (
                                 name &&
                                 name !== "" && (

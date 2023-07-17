@@ -38,7 +38,7 @@ export default function Page() {
                             <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
                                 <Elements.Icon scale={1.5} icon={"caret-up"} change />
                                 <Elements.Text scale={2.5} height={1} responsive={{ device: "mobile", scale: 2 }} change>
-                                    $ {market.price}
+                                    $ {Format(market.price, "currency", true)}
                                 </Elements.Text>
                             </Layouts.Row>
                         </Layouts.Row>
