@@ -11,11 +11,11 @@ export default function SamplesLayout(props: any) {
             <Frames.Frame header={header} sidebar={sidebars} align={"right"} background={{ img: { src: 2 } }} side={56}>
                 {props?.children}
             </Frames.Frame>
-            <Layouts.Panel active={true} id="panel" style={{ zIndex: 100, pointerEvents: "none" }} fix>
-                {/* <BottomSheet scale={1.25} /> */}
-                {/* <BottomSheets.Numberpad scale={1.25} /> */}
+            {/* <Layouts.Panel active={true} id="panel" style={{ zIndex: 100, pointerEvents: "none" }} fix>
+                <BottomSheet scale={1.25} />
+                <BottomSheets.Numberpad scale={1.25} />
                 <BottomSheets.Numberpads.Exchange active={true} scale={1.25} />
-            </Layouts.Panel>
+            </Layouts.Panel> */}
             <Layouts.Panel active={false} color={"black"} style={{ zIndex: 200 }} fix>
                 <Modals.Alert title={"Alert"} message={"This is a alert modal."} />
             </Layouts.Panel>

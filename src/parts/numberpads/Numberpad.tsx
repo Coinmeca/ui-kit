@@ -10,7 +10,7 @@ export interface Numberpad {
     left?: Option;
     right?: Option;
     reverse?: boolean;
-    width?: number | { min?: number; max?: number };
+    width?: number;
     onChange?: Function;
 }
 
@@ -40,38 +40,40 @@ export default function Numberpad(props: Numberpad) {
 
     return (
         <Style $scale={scale} $width={props?.width} $padding={padding} $reverse={props?.reverse}>
-            {props?.left?.children && (
-                <Layouts.Col gap={0} style={{ ...(typeof props?.left?.flex === "number" && { flex: props?.left?.flex || 1 }) }}>
-                    {props?.left?.children}
-                </Layouts.Col>
-            )}
-            <Pad>
-                <Layouts.Row gap={0} fix>
-                    <Controls.Button onClick={(e: any) => onChange(e, "1")}>1</Controls.Button>
-                    <Controls.Button onClick={(e: any) => onChange(e, "2")}>2</Controls.Button>
-                    <Controls.Button onClick={(e: any) => onChange(e, "3")}>3</Controls.Button>
-                </Layouts.Row>
-                <Layouts.Row gap={0} fix>
-                    <Controls.Button onClick={(e: any) => onChange(e, "4")}>4</Controls.Button>
-                    <Controls.Button onClick={(e: any) => onChange(e, "5")}>5</Controls.Button>
-                    <Controls.Button onClick={(e: any) => onChange(e, "6")}>6</Controls.Button>
-                </Layouts.Row>
-                <Layouts.Row gap={0} fix>
-                    <Controls.Button onClick={(e: any) => onChange(e, "7")}>7</Controls.Button>
-                    <Controls.Button onClick={(e: any) => onChange(e, "8")}>8</Controls.Button>
-                    <Controls.Button onClick={(e: any) => onChange(e, "9")}>9</Controls.Button>
-                </Layouts.Row>
-                <Layouts.Row gap={0} style={{ ...(props?.reverse && { order: -1 }) }} fix>
-                    <Controls.Button onClick={(e: any) => onChange(e, "reset")} icon={"reset"} />
-                    <Controls.Button onClick={(e: any) => onChange(e, "0")}>0</Controls.Button>
-                    <Controls.Button onClick={(e: any) => onChange(e, "sub")} icon={"chevron-left"} />
-                </Layouts.Row>
-            </Pad>
-            {props?.right?.children && (
-                <Layouts.Col gap={0} style={{ ...(typeof props?.left?.flex === "number" && { flex: props?.left?.flex || 1 }) }}>
-                    {props?.right?.children}
-                </Layouts.Col>
-            )}
+            <div>
+                {props?.left?.children && (
+                    <Layouts.Col gap={0} style={{ ...(typeof props?.left?.flex === "number" && { flex: props?.left?.flex || 1 }) }}>
+                        {props?.left?.children}
+                    </Layouts.Col>
+                )}
+                <Pad>
+                    <Layouts.Row gap={0} fix>
+                        <Controls.Button onClick={(e: any) => onChange(e, "1")}>1</Controls.Button>
+                        <Controls.Button onClick={(e: any) => onChange(e, "2")}>2</Controls.Button>
+                        <Controls.Button onClick={(e: any) => onChange(e, "3")}>3</Controls.Button>
+                    </Layouts.Row>
+                    <Layouts.Row gap={0} fix>
+                        <Controls.Button onClick={(e: any) => onChange(e, "4")}>4</Controls.Button>
+                        <Controls.Button onClick={(e: any) => onChange(e, "5")}>5</Controls.Button>
+                        <Controls.Button onClick={(e: any) => onChange(e, "6")}>6</Controls.Button>
+                    </Layouts.Row>
+                    <Layouts.Row gap={0} fix>
+                        <Controls.Button onClick={(e: any) => onChange(e, "7")}>7</Controls.Button>
+                        <Controls.Button onClick={(e: any) => onChange(e, "8")}>8</Controls.Button>
+                        <Controls.Button onClick={(e: any) => onChange(e, "9")}>9</Controls.Button>
+                    </Layouts.Row>
+                    <Layouts.Row gap={0} style={{ ...(props?.reverse && { order: -1 }) }} fix>
+                        <Controls.Button onClick={(e: any) => onChange(e, "reset")} icon={"reset"} />
+                        <Controls.Button onClick={(e: any) => onChange(e, "0")}>0</Controls.Button>
+                        <Controls.Button onClick={(e: any) => onChange(e, "sub")} icon={"chevron-left-bold"} />
+                    </Layouts.Row>
+                </Pad>
+                {props?.right?.children && (
+                    <Layouts.Col gap={0} style={{ ...(typeof props?.left?.flex === "number" && { flex: props?.left?.flex || 1 }) }}>
+                        {props?.right?.children}
+                    </Layouts.Col>
+                )}
+            </div>
         </Style>
     );
 }
