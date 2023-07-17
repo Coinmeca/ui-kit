@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Token } from "types/web3";
 import useWindowSize from "hooks/useWindowSize";
+import { Format } from "lib/utils";
 
 export interface OrderControl {
     base: Token;
@@ -18,7 +19,7 @@ export default function OrderControl(props: OrderControl) {
     const windowSize = useWindowSize();
 
     const [mode, setMode] = useState(true);
-    const price = props?.price || 0;
+    const price = Format(props?.price, "currency", true) || 0;
     const symbol = { base: props?.base?.symbol?.toUpperCase() || "", quote: props?.quote?.symbol?.toUpperCase() || "" };
 
     const option = props?.option || "market";
@@ -31,24 +32,60 @@ export default function OrderControl(props: OrderControl) {
         alert("sell");
     };
 
+    const color = {
+        buy: "green",
+        sell: "red",
+    };
+
+    const gap = {
+        col: {
+            small: 0.5,
+            big: 1,
+        },
+        row: 2,
+        space: {
+            small: { padding: "0 0.5em" },
+            big: { padding: "0.5em" },
+        },
+        width: 16,
+    };
+
+    const text = {
+        height: 1,
+        opacity: 0.45,
+        label: { flex: 0 },
+        setting: { fontFeatureSettings: `"tnum" on,"lnum" on` },
+        width: { width: "100%", maxWidth: `${gap.width - 10}em` },
+        align: "right",
+    };
+
+    const range = {
+        min: 0,
+        max: 100,
+        step: 5,
+        unit: "%",
+    };
+
     return (
         <>
-            <Layouts.Col gap={1}>
+            <Layouts.Col gap={gap.col.big}>
                 <Layouts.Contents.SlideContainer
-                    style={{ gap: "3em" }}
+                    style={{ gap: `${windowSize.width <= responsive ? 2 : 3}em` }}
                     contents={[
                         {
                             active: windowSize.width <= responsive ? mode === true : true,
                             style: { height: "max-content", overflow: "hidden" },
                             children: (
-                                <Layouts.Col gap={0.5}>
-                                    <Layouts.Row style={{ padding: "0 0.5em" }} fix>
-                                        <Elements.Text opacity={0.45} style={{ minWidth: "max-content" }}>
+                                <Layouts.Col gap={gap.col.small}>
+                                    <Layouts.Row gap={gap.row} style={gap.space.big} fix>
+                                        <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
                                             Available
                                         </Elements.Text>
-                                        <Layouts.Row fit fix>
-                                            <Elements.Text style={{ fontFeatureSettings: `"tnum" on,"lnum" on` }}>{props?.quote?.balance}</Elements.Text>
-                                            <Elements.Text opacity={0.45} style={{ width: "6em" }}>
+                                        <Layouts.Row gap={gap.row} fix>
+                                            <Elements.Text height={text.height} align={"right"} style={text.setting}>
+                                                {props?.quote?.balance}
+                                            </Elements.Text>
+                                            <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                                                 {symbol?.quote}
                                             </Elements.Text>
                                         </Layouts.Row>
@@ -58,9 +95,9 @@ export default function OrderControl(props: OrderControl) {
                                         type={"currency"}
                                         align={"right"}
                                         value={price}
-                                        left={{ width: 10, children: <span>Price</span> }}
-                                        right={{ width: 16, children: <span style={{ justifyContent: "flex-start" }}>{symbol?.quote}</span> }}
-                                        style={{ fontFeatureSetting: `"tnum" on, "lnum" on` }}
+                                        left={{ width: gap.width - 6, children: <span>Price</span> }}
+                                        right={{ width: gap.width, children: <span style={{ justifyContent: "flex-start" }}>{symbol?.quote}</span> }}
+                                        style={text.setting}
                                         lock={option === "market"}
                                     ></Controls.Input>
                                     <Controls.Input
@@ -68,37 +105,37 @@ export default function OrderControl(props: OrderControl) {
                                         type={"currency"}
                                         align={"right"}
                                         value={""}
-                                        left={{ width: 10, children: <span>Amount</span> }}
+                                        left={{ width: gap.width - 6, children: <span>Amount</span> }}
                                         right={{
-                                            width: 16,
+                                            width: gap.width,
                                             children: <Controls.Dropdown option={Object.values(symbol)[0]} options={Object.values(symbol)} />,
                                         }}
-                                        style={{ fontFeatureSetting: `"tnum" on, "lnum" on` }}
+                                        style={text.setting}
                                     />
-                                    <Controls.Range color={"green"} min={0} max={100} unit={"%"} step={5} />
-                                    <Layouts.Col gap={1}>
-                                        <Layouts.Row style={{ padding: "0 0.5em" }} fix>
-                                            <Elements.Text height={1} opacity={0.45} style={{ minWidth: "max-content" }}>
+                                    <Controls.Range color={color.buy} min={range.min} max={range.max} step={range.step} unit={range.unit} />
+                                    <Layouts.Col gap={gap.col.big}>
+                                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
                                                 Fees
                                             </Elements.Text>
-                                            <Layouts.Row fit fix>
-                                                <Elements.Text height={1} style={{ fontFeatureSettings: `"tnum" on,"lnum" on` }}>
+                                            <Layouts.Row gap={gap.row} fix>
+                                                <Elements.Text height={text.height} align={"right"} style={text.setting}>
                                                     - 0.123456789
                                                 </Elements.Text>
-                                                <Elements.Text height={1} opacity={0.45} style={{ width: "6em" }}>
+                                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                                                     {symbol?.base}
                                                 </Elements.Text>
                                             </Layouts.Row>
                                         </Layouts.Row>
-                                        <Layouts.Row style={{ padding: "0 0.5em" }} fix>
-                                            <Elements.Text height={1} opacity={0.45} style={{ minWidth: "max-content" }}>
+                                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
                                                 Total
                                             </Elements.Text>
-                                            <Layouts.Row fit fix>
-                                                <Elements.Text height={1} style={{ fontFeatureSettings: `"tnum" on,"lnum" on` }}>
+                                            <Layouts.Row gap={gap.row} fix>
+                                                <Elements.Text height={text.height} align={"right"} style={text.setting}>
                                                     9.87654321
                                                 </Elements.Text>
-                                                <Elements.Text height={1} opacity={0.45} style={{ width: "6em" }}>
+                                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                                                     {symbol?.base}
                                                 </Elements.Text>
                                             </Layouts.Row>
@@ -111,14 +148,16 @@ export default function OrderControl(props: OrderControl) {
                             active: windowSize.width <= responsive ? mode === false : true,
                             style: { height: "max-content", overflow: "hidden" },
                             children: (
-                                <Layouts.Col gap={0.5}>
-                                    <Layouts.Row style={{ padding: "0 0.5em" }} fix>
-                                        <Elements.Text opacity={0.45} style={{ minWidth: "max-content" }}>
+                                <Layouts.Col gap={gap.col.small}>
+                                    <Layouts.Row gap={gap.row} style={gap.space.big} fix>
+                                        <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
                                             Available
                                         </Elements.Text>
-                                        <Layouts.Row fit fix>
-                                            <Elements.Text>{props?.base?.balance}</Elements.Text>
-                                            <Elements.Text opacity={0.45} style={{ width: "6em" }}>
+                                        <Layouts.Row gap={gap.row} fix>
+                                            <Elements.Text height={text.height} align={"right"} style={text.setting}>
+                                                {props?.base?.balance}
+                                            </Elements.Text>
+                                            <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                                                 {symbol?.base}
                                             </Elements.Text>
                                         </Layouts.Row>
@@ -128,9 +167,9 @@ export default function OrderControl(props: OrderControl) {
                                         type={"currency"}
                                         align={"right"}
                                         value={price}
-                                        left={{ width: 10, children: <span>Price</span> }}
-                                        right={{ width: 16, children: <span style={{ justifyContent: "flex-start" }}>{symbol?.quote}</span> }}
-                                        style={{ fontFeatureSetting: `"tnum" on, "lnum" on` }}
+                                        left={{ width: gap.width - 6, children: <span>Price</span> }}
+                                        right={{ width: gap.width, children: <span style={{ justifyContent: "flex-start" }}>{symbol?.quote}</span> }}
+                                        style={text.setting}
                                         lock={option === "market"}
                                     ></Controls.Input>
                                     <Controls.Input
@@ -138,37 +177,37 @@ export default function OrderControl(props: OrderControl) {
                                         type={"currency"}
                                         align={"right"}
                                         value={""}
-                                        left={{ width: 10, children: <span>Amount</span> }}
+                                        left={{ width: gap.width - 6, children: <span>Amount</span> }}
                                         right={{
-                                            width: 16,
+                                            width: gap.width,
                                             children: <Controls.Dropdown option={Object.values(symbol).reverse()[1]} options={Object.values(symbol).reverse()} />,
                                         }}
-                                        style={{ fontFeatureSetting: `"tnum" on, "lnum" on` }}
+                                        style={text.setting}
                                     />
-                                    <Controls.Range color={"red"} min={0} max={100} unit={"%"} step={5} />
-                                    <Layouts.Col gap={1}>
-                                        <Layouts.Row style={{ padding: "0 0.5em" }} fix>
-                                            <Elements.Text height={1} opacity={0.45} style={{ minWidth: "max-content" }}>
+                                    <Controls.Range color={color.sell} min={range.min} max={range.max} step={range.step} unit={range.unit} />
+                                    <Layouts.Col gap={gap.col.big}>
+                                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
                                                 Fees
                                             </Elements.Text>
-                                            <Layouts.Row fit fix>
-                                                <Elements.Text height={1} style={{ fontFeatureSettings: `"tnum" on,"lnum" on` }}>
+                                            <Layouts.Row gap={gap.row} fix>
+                                                <Elements.Text height={text.height} align={"right"} style={text.setting}>
                                                     - 0.123456789
                                                 </Elements.Text>
-                                                <Elements.Text height={1} opacity={0.45} style={{ width: "6em" }}>
+                                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                                                     {symbol?.quote}
                                                 </Elements.Text>
                                             </Layouts.Row>
                                         </Layouts.Row>
-                                        <Layouts.Row style={{ padding: "0 0.5em" }} fix>
-                                            <Elements.Text height={1} opacity={0.45} style={{ minWidth: "max-content" }}>
+                                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
                                                 Total
                                             </Elements.Text>
-                                            <Layouts.Row fit fix>
-                                                <Elements.Text height={1} style={{ fontFeatureSettings: `"tnum" on,"lnum" on` }}>
+                                            <Layouts.Row gap={gap.row} fix>
+                                                <Elements.Text height={text.height} align={"right"} style={text.setting}>
                                                     9.87654321
                                                 </Elements.Text>
-                                                <Elements.Text height={1} opacity={0.45} style={{ width: "6em" }}>
+                                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                                                     {symbol?.quote}
                                                 </Elements.Text>
                                             </Layouts.Row>
@@ -184,7 +223,7 @@ export default function OrderControl(props: OrderControl) {
                         <Controls.Button icon={"reset"} hide={windowSize.width > responsive} fit />
                         <Controls.Button
                             type={"solid"}
-                            color={"green"}
+                            color={color.buy}
                             style={{ ...(windowSize.width <= responsive && mode === false ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
                             onClick={(e: any) => {
                                 windowSize.width <= responsive && mode === false ? setMode(true) : onClickBuy(e);
@@ -196,7 +235,7 @@ export default function OrderControl(props: OrderControl) {
                         </Controls.Button>
                         <Controls.Button
                             type={"solid"}
-                            color={"red"}
+                            color={color.sell}
                             style={{ ...(windowSize.width <= responsive && mode ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
                             onClick={(e: any) => {
                                 windowSize.width <= responsive && mode ? setMode(false) : onClickSell(e);
