@@ -54,6 +54,8 @@ export default function Tab(props: Tab) {
             $padding={props?.children && true}
             $fit={fit}
             $disabled={props?.disabled}
+            data-show={props?.show}
+            data-hide={props?.hide}
         >
             <div>
                 {props?.iconLeft && (
