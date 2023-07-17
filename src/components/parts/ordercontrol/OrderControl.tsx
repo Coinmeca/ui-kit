@@ -47,7 +47,7 @@ export default function OrderControl(props: OrderControl) {
             small: { padding: "0 0.5em" },
             big: { padding: "0.5em" },
         },
-        width: 16,
+        width: 12,
     };
 
     const text = {
@@ -55,7 +55,7 @@ export default function OrderControl(props: OrderControl) {
         opacity: 0.45,
         label: { flex: 0 },
         setting: { fontFeatureSettings: `"tnum" on,"lnum" on` },
-        width: { width: "100%", maxWidth: `${gap.width - 10}em` },
+        width: { width: "100%", maxWidth: `${gap.width - 5.125}em` },
         align: "right",
     };
 
