@@ -13,7 +13,7 @@ export interface Button {
     iconLeft?: string | Icon;
     iconRight?: string | Icon;
     onClick?: Function;
-    onMouseDown?: Function;
+    onClickLonger?: Function;
     onBlur?: Function;
     scale?: number;
     hide?: boolean;
@@ -39,9 +39,9 @@ export default function Button(props: Button) {
         if (typeof props?.onClick === "function") props?.onClick(e);
     }
 
-    function onMouseDown(e?: any) {
+    function onClickLonger(e?: any) {
         if (disabled) return;
-        if (typeof props?.onMouseDown === "function") props?.onMouseDown(e);
+        if (typeof props?.onClickLonger === "function") props?.onClickLonger(e);
     }
 
     const onBlur = (e: any) => {
@@ -59,7 +59,8 @@ export default function Button(props: Button) {
             $fit={fit}
             $hide={hide}
             onClick={(e: any) => onClick(e)}
-            onMouseDown={(e: any) => onMouseDown(e)}
+            onMouseDown={(e: any) => onClickLonger(e)}
+            onTouchStart={(e: any) => onClickLonger(e)}
             onBlur={(e: any) => onBlur(e)}
             $disabled={disabled}
         >
