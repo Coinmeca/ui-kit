@@ -2,7 +2,7 @@
 import { BottomSheet, BottomSheets } from "containers";
 import { Numberpad as NumberPad } from "parts";
 import type { BottomSheet as Sheet } from "../BottomSheet";
-import type { Numberpad as Pad } from "parts/numberpad/Default";
+import type { Numberpad as Pad } from "parts/numberpads/Numberpad";
 
 export interface Numberpad extends Pad, Sheet {
     padding?: number;
@@ -15,7 +15,7 @@ export default function Numberpad(props: Numberpad) {
 
     return (
         <BottomSheet active={props?.active} height={height}>
-            <NumberPad.Default {...props} />
+            <NumberPad {...props} />
         </BottomSheet>
     );
 }
