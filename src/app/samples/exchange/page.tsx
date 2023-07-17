@@ -23,7 +23,6 @@ export default function Page() {
 
     return (
         <Layouts.Page>
-            <div style={{ background: "red", color: "white", padding: 32 }}>useMobile: {isMobile?.toString()}</div>
             <Layouts.Box fit change={parseFloat(market?.change) > 0 ? "var(--green)" : (parseFloat(market?.change) < 0 && "var(--red)") || undefined}>
                 <Layouts.Contents.InnerContent>
                     <Layouts.Row fix style={{ alignItems: "center" }}>
