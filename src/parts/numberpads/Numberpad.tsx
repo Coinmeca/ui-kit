@@ -44,9 +44,9 @@ export default function Numberpad(props: Numberpad) {
                     <Controls.Button>9</Controls.Button>
                 </Layouts.Row>
                 <Layouts.Row gap={0} fix>
+                    <Controls.Button icon={"reset"} />
                     <Controls.Button>0</Controls.Button>
-                    <Controls.Button>0</Controls.Button>
-                    <Controls.Button>0</Controls.Button>
+                    <Controls.Button icon={"chevron-left"} />
                 </Layouts.Row>
             </Pad>
             {props?.right?.children && (
