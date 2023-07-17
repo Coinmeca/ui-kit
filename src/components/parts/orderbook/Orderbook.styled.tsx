@@ -1,5 +1,4 @@
 ﻿"use client";
-import { BADHINTS } from "dns";
 import { Root } from "lib/style";
 import { css, styled } from "styled-components";
 
@@ -199,7 +198,7 @@ const Responsive = (vertical?: boolean) => css`
     flex-direction: row-reverse;
 
     ${Asks},${Bids} {
-        flex-direction: column;
+        flex-direction: column-reverse;
         &::-webkit-scrollbar {
             /* display: none; */
         }
