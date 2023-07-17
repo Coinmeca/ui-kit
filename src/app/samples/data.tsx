@@ -1,8 +1,9 @@
 "use client";
-import { Elements, Layouts, Controls, Containers } from "components";
+import { Elements, Layouts, Controls } from "components";
 import { useState } from "react";
 import useToast from "hooks/useToast";
 import { usePathname } from "next/navigation";
+import { Sidebars } from "containers";
 
 export default function Data() {
     const [value, setValue] = useState<number>(0);
@@ -367,15 +368,15 @@ export default function Data() {
                                     contents={[
                                         {
                                             active: sidebarTab === "exchange",
-                                            children: <Containers.Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
+                                            children: <Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
                                         },
                                         {
                                             active: sidebarTab === "alert",
-                                            children: <Containers.Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
+                                            children: <Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
                                         },
                                         {
                                             active: sidebarTab === "asset",
-                                            children: <Containers.Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
+                                            children: <Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
                                         },
                                     ]}
                                 />
@@ -390,7 +391,7 @@ export default function Data() {
             children: [
                 {
                     active: mobileMenu === "notify",
-                    children: <Containers.Sidebars.Notification list={notilist} />,
+                    children: <Sidebars.Notification list={notilist} />,
                 },
             ],
         },

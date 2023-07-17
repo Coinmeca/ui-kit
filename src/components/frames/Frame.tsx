@@ -1,7 +1,8 @@
-import { Containers, Layouts } from "components";
+import { Layouts } from "components";
+import { Headers, Sidebar } from "containers";
 import type { BG } from "components/layouts/bg/BG";
-import type { Header } from "components/containers/headers/Header";
-import type { Sidebars } from "components/containers/sidebars/Sidebar";
+import type { Header } from "containers/headers/Header";
+import type { Sidebars } from "containers/sidebars/Sidebar";
 import Style from "./Frame.styled";
 
 export interface Frame {
@@ -21,11 +22,11 @@ export default function Frame(props: Frame) {
         <>
             <Layouts.BG {...props?.background} />
             <Style>
-                {props?.header && <Containers.Headers.Header {...props?.header} side={{ ...props?.header?.side, width: width }} />}
+                {props?.header && <Headers.Header {...props?.header} side={{ ...props?.header?.side, width: width }} />}
                 <section>
-                    {align === "left" && props?.sidebar && <Containers.Sidebar {...props?.sidebar} width={width} />}
+                    {align === "left" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
                     <main>{props?.children}</main>
-                    {align === "right" && props?.sidebar && <Containers.Sidebar {...props?.sidebar} width={width} />}
+                    {align === "right" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
                 </section>
             </Style>
         </>
