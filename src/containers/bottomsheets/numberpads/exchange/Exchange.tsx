@@ -53,6 +53,7 @@ export default function Exchange(props: Exchange) {
                     left={{ children: <span>Price</span> }}
                     style={{ padding: `${padding / 8}em ${padding}em` }}
                     unit={"ETH"}
+                    readOnly
                 />
                 <Numberpads.Exchange
                     {...props}
