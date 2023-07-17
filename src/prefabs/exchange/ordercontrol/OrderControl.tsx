@@ -116,7 +116,7 @@ export default function OrderControl(props: OrderControl) {
                                             children: <Controls.Dropdown option={Object.values(symbol)[0]} options={Object.values(symbol)} />,
                                         }}
                                         style={text.setting}
-                                        numberpad={{ open: open, active: isMobile ? active : false, children: <BottomSheets.Numberpads.Exchange active={active} onClose={close} /> }}
+                                        numberpad={{ open: open, active: active, children: <BottomSheets.Numberpads.Exchange active={active} onClose={close} /> }}
                                     />
                                     <Controls.Range color={color.buy} min={range.min} max={range.max} step={range.step} unit={range.unit} />
                                     <Layouts.Col gap={gap.col.big}>
