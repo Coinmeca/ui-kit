@@ -71,7 +71,7 @@ const Style = styled.div<{ $clearable?: boolean; $scale: number; $focus: boolean
         & > * {
             display: flex;
             align-items: center;
-            width: 100%;
+            width: -webkit-fill-available;
             height: auto;
             gap: 1em;
 

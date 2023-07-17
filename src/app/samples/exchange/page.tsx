@@ -1,10 +1,11 @@
 "use client";
-import { Controls, Elements, Layouts, Parts } from "components";
+import { Controls, Elements, Layouts } from "components";
 import { Avatar } from "components/elements";
 import { GridContainer } from "components/layouts/contents";
 import useWindowSize from "hooks/useWindowSize";
 import { Root } from "lib/style";
 import { Capitalize, Format } from "lib/utils";
+import { Exchange } from "prefabs";
 import { useState } from "react";
 import Data from "./data";
 
@@ -216,7 +217,7 @@ export default function Page() {
                                                 {
                                                     active: marketTab === "orderbook" || mobile === "orderbook",
                                                     style: { padding: 0 },
-                                                    children: <Parts.Orderbook view={view} asks={orderbook.asks} bids={orderbook.bids} responsive={{ device: "mobile", vertical: false }} />,
+                                                    children: <Exchange.Orderbook view={view} asks={orderbook.asks} bids={orderbook.bids} responsive={{ device: "mobile", vertical: false }} />,
                                                 },
                                                 {
                                                     active: marketTab === "history" || mobile === "history",
@@ -299,7 +300,7 @@ export default function Page() {
                                                     active: true,
                                                     children: (
                                                         <Layouts.Contents.InnerContent>
-                                                            <Parts.OrderControl base={market.base} quote={market.quote} price={market.price} option={option} responsive={Root.Device.Tablet} />
+                                                            <Exchange.OrderControl base={market.base} quote={market.quote} price={market.price} option={option} responsive={Root.Device.Tablet} />
                                                         </Layouts.Contents.InnerContent>
                                                     ),
                                                 },

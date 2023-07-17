@@ -1,6 +1,7 @@
 import Style from "./Panel.styled";
 
 export interface Panel {
+    id?: string;
     children?: any;
     style?: object;
     color?: string;
@@ -12,7 +13,7 @@ export default function Panel(props: Panel) {
     const active = typeof props?.active !== "undefined" ? props?.active : true;
 
     return (
-        <Style $active={active} $color={props?.color} $fix={props?.fix} style={props?.style}>
+        <Style id={props?.id} $active={active} $color={props?.color} $fix={props?.fix} style={props?.style}>
             {props?.children}
         </Style>
     );

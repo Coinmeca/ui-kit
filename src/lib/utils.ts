@@ -61,11 +61,6 @@ export function Format(value: number | string, type?: 'email' | 'number' | 'curr
 
             if (value === '' || value?.length <= 0) return display ? 0 : '';
 
-            if (max) {
-                max = parseFloat(max.toString().replaceAll(',', ''));
-                if (parseFloat(value) > parseFloat(max.toString())) return type === 'currency' ? max.toLocaleString() : max;
-            }
-
             let copy: any = '';
             let point = false;
 
@@ -74,6 +69,11 @@ export function Format(value: number | string, type?: 'email' | 'number' | 'curr
                     if (!point && value[i] === '.') point = true;
                     copy += value[i]
                 };
+            }
+
+            if (max) {
+                max = parseFloat(max.toString().replaceAll(',', ''));
+                if (parseFloat(copy) > parseFloat(max.toString())) return type === 'currency' ? copy.toLocaleString() : max;
             }
 
             copy = value.split('.');

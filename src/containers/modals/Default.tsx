@@ -19,7 +19,10 @@ export interface Modal {
 export default function Default(props: Modal) {
     const { setActive } = useModal();
     const [showModal, setShowModal] = useState<boolean>(props?.active || true);
-    const width = { min: (typeof props?.width === "object" ? props?.width?.min : props?.width) || 56, max: (typeof props?.width === "object" ? props?.width?.min : props?.width) || 64 };
+
+    const min = 56;
+    const max = 64;
+    const width = { min: (typeof props?.width === "object" ? props?.width?.min : props?.width) || min, max: (typeof props?.width === "object" ? props?.width?.min : props?.width) || max };
 
     const onClose = (e: any) => {
         if (typeof props?.onClose === "function") props?.onClose(e);
