@@ -1,2 +1,2 @@
-import Exchange from './Numberpad';
+import Exchange from './exchange/Exchange';
 export { Exchange };

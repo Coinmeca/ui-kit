@@ -1,7 +1,7 @@
 "use client";
-import { BottomSheet, BottomSheets } from "containers";
+import { BottomSheet } from "containers";
 import { Numberpad as NumberPad } from "parts";
-import type { BottomSheet as Sheet } from "../BottomSheet";
+import type { BottomSheet as Sheet } from "containers/bottomsheets/BottomSheet";
 import type { Numberpad as Pad } from "parts/numberpads/Numberpad";
 
 export interface Numberpad extends Pad, Sheet {

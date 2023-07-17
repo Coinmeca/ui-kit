@@ -1,10 +1,10 @@
 import { Controls } from "components";
-import { Default } from "..";
-import type { Numberpad } from "../Numberpad";
+import { Numberpad } from "parts";
+import type { Numberpad as Pad } from "parts/numberpads/Numberpad";
 
-export default function Exchange(props: Numberpad) {
+export default function Exchange(props: Pad) {
     return (
-        <Default
+        <Numberpad
             {...props}
             right={{
                 children: (

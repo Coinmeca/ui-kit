@@ -10,6 +10,7 @@ export const Pad = styled.div`
 const Style = styled.div<{ $scale: number; $width?: number | { min?: number; max?: number }; $padding: number; $reverse?: boolean }>`
     display: flex;
     padding: ${({ $padding }) => $padding}em;
+    height: -webkit-fill-available;
 
     width: ${({ $width }) => (typeof $width === "number" && $width ? `${$width}em;` : "-webkit-fill-available")};
     ${({ $width }) => typeof $width === "object" && $width?.min && `min-width: ${$width?.min}em;`}
