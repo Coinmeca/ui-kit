@@ -78,75 +78,75 @@ export default function Page() {
                                 area: "info",
                                 children: (
                                     <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "info"}>
-                                        <Layouts.Row fix responsive="mobile" gap={2} style={{ alignItems: "center", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
-                                            <Layouts.Col gap={1}>
+                                        <Layouts.Row fix responsive="mobile" gap={4} style={{ alignItems: "center", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
+                                            <Layouts.Col gap={0.5}>
                                                 <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
-                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                    <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Volume ({market?.base?.symbol?.toUpperCase()})
                                                     </Elements.Text>
-                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }}>
+                                                    <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
                                                         {Format(info?.volume_base, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                                 <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
-                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                    <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Volume ({market?.quote?.symbol?.toUpperCase()})
                                                     </Elements.Text>
-                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }}>
+                                                    <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
                                                         {Format(info?.volume_quote, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                             </Layouts.Col>
-                                            <Layouts.Col gap={1}>
+                                            <Layouts.Col gap={0.5}>
                                                 <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
                                                     <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Highest
                                                     </Elements.Text>
-                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }} color={"green"}>
+                                                    <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"green"}>
                                                         {Format(info?.high, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                                 <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
-                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                    <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Lowest
                                                     </Elements.Text>
-                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }} color={"red"}>
+                                                    <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"red"}>
                                                         {Format(info?.low, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                             </Layouts.Col>
-                                            <Layouts.Col gap={1}>
+                                            <Layouts.Col gap={0.5}>
                                                 <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
-                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                    <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Change
                                                     </Elements.Text>
-                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }} change>
+                                                    <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
                                                         {Format(info?.volume_base, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                                 <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
-                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                    <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Change Rate
                                                     </Elements.Text>
-                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }} change>
+                                                    <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
                                                         {Format(info?.volume_base, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                             </Layouts.Col>
-                                            <Layouts.Col gap={1}>
+                                            <Layouts.Col gap={0.5}>
                                                 <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
-                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                    <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Balance
                                                     </Elements.Text>
-                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }}>
+                                                    <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
                                                         {Format(info?.volume_base, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                                 <Layouts.Row fix gap={1} style={{ alignItems: "center", padding: "0.5em", ...(windowSize.width <= Root.Device.Mobile && { height: "100%" }) }}>
-                                                    <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
+                                                    <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                                                         Using
                                                     </Elements.Text>
-                                                    <Elements.Text align="right" style={{ minWidth: "max-content" }}>
+                                                    <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
                                                         {Format(info?.volume_base, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
