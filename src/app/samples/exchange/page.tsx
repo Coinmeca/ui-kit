@@ -31,7 +31,7 @@ export default function Page() {
                 )
             )
                 check = true;
-        })(navigator?.userAgent || navigator?.vendor /*|| window?.opera*/);
+        })(globalThis?.navigator?.userAgent || globalThis?.navigator?.vendor /*|| window?.opera*/);
         alert(check);
         return check;
     };
