@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import * as Box from "components/layouts/box/Box.styled";
 
 export const Side = styled.div<{ $width?: number }>`
@@ -32,7 +32,7 @@ export const Side = styled.div<{ $width?: number }>`
     }
 `;
 
-const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean; $align: "left" | "center" | "right"; $error: boolean; $disabled: boolean }>`
+const Style = styled.div<{ $clearable?: boolean; $scale: number; $focus: boolean; $align: "left" | "center" | "right"; $lock?: boolean; $error: boolean; $disabled?: boolean }>`
     font-size: calc(var(--unit) * ${({ $scale }) => $scale});
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
@@ -116,9 +116,56 @@ const Style = styled.div<{ $clearable: boolean; $scale: number; $focus: boolean;
                     display: none;
                     margin: 0;
                 }
+
+                &:disabled {
+                    pointer-events: none;
+                }
             }
         }
     }
+
+    ${({ $lock }) =>
+        $lock &&
+        css`
+            cursor: pointer;
+            pointer-events: none;
+            & > * {
+                pointer-events: none;
+                & > * {
+                    pointer-events: none;
+                    input {
+                        cursor: pointer;
+                        pointer-events: none;
+                    }
+                }
+                & > ${Side} {
+                    cursor: pointer;
+                    pointer-events: none;
+                }
+            }
+        `}
+
+    ${({ $disabled }) =>
+        $disabled &&
+        css`
+            cursor: pointer;
+            opacity: var(--o015);
+            pointer-events: none;
+            & > * {
+                pointer-events: none;
+                & > * {
+                    pointer-events: none;
+                    input {
+                        cursor: pointer;
+                        pointer-events: none;
+                    }
+                }
+                & > ${Side} {
+                    cursor: pointer;
+                    pointer-events: none;
+                }
+            }
+        `}
 `;
 
 export default Style;
