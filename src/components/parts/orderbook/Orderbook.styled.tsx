@@ -137,7 +137,7 @@ export const Tick = styled.div`
 
     &:hover {
         & > * > *:first-child {
-            background: rgba(var(--white), var(--o005));
+            background: rgba(var(--white), var(--o0045));
         }
     }
 `;
