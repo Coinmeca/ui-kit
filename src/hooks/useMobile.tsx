@@ -17,7 +17,7 @@ export default function useMobile() {
         } else {
             setIsMobile(false);
         }
-    }, [globalThis]);
+    }, []);
 
     return { isMobile };
 }

@@ -30,8 +30,23 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
                 & > * {
                     width: 100%;
                     &:last-child {
-                        transition: 0.3s 0.15s ease;
+                        transition: 0.3s 0.05s ease;
                         opacity: 0;
+
+                        & > * {
+                            & > *:nth-child(1) {
+                                transition: 0.3s 0.075s ease;
+                                opacity: 0;
+                            }
+                            & > *:nth-child(2) {
+                                transition: 0.3s 0.1s ease;
+                                opacity: 0;
+                            }
+                            & > *:nth-child(2) {
+                                transition: 0.3s 0.15s ease;
+                                opacity: 0;
+                            }
+                        }
                     }
                 }
 
@@ -42,14 +57,28 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
 
                     & > *:last-child {
                         transform: translateX(-15%);
+                        & > * {
+                            & > *:nth-child(1),
+                            & > *:nth-child(2),
+                            & > *:nth-child(3) {
+                                transform: translateX(-15%);
+                            }
+                        }
                     }
                 }
 
-                &[data-active="true"] ~ &[data-active="false"] {
+                &[data-active="true"] ~ [data-active="false"] {
                     transform: translateX(15%);
 
                     & > *:last-child {
                         transform: translateX(15%);
+                        & > * {
+                            & > *:nth-child(1),
+                            & > *:nth-child(2),
+                            & > *:nth-child(3) {
+                                transform: translateX(15%);
+                            }
+                        }
                     }
                 }
 
@@ -61,6 +90,15 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
                     & > *:last-child {
                         transform: translateX(0%);
                         opacity: 1;
+
+                        & > * {
+                            & > *:nth-child(1),
+                            & > *:nth-child(2),
+                            & > *:nth-child(3) {
+                                transform: translateX(0%);
+                                opacity: 1;
+                            }
+                        }
                     }
                 }
 
