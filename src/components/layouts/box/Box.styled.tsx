@@ -47,6 +47,27 @@ const Style = styled.div<{ $change?: string; $fit?: boolean }>`
         }
     }
 
+
+    @media (prefers-color-scheme: light) {
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 0 rgba(var(--black), var(--o03));
+        }
+
+        ::-webkit-scrollbar-thumb {
+            -webkit-box-shadow: inset 0 0 2rem rgba(var(--white), var(--o03));
+        }
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 0 rgba(var(--black), var(--o03));
+        }
+
+        ::-webkit-scrollbar-thumb {
+            -webkit-box-shadow: inset 0 0 2rem rgba(var(--white), var(--o03));
+        }
+    }
+
     ${({ $fit }) =>
         !$fit &&
         css`
