@@ -5,6 +5,7 @@ import type { BG as Background } from "components/layouts/bg/BG";
 import { Style } from "./Slide.styled";
 
 export interface SlideContent {
+    active?: boolean;
     children?: any;
     onClick?: Function;
     background?: Background;
@@ -27,11 +28,15 @@ export interface Slide {
 
 export default function Slide(props: Slide) {
     const [slideNo, setSlideNo] = useState(props?.slideNo || 0);
-    const timer = props?.timer || 3000;
+    const timer = typeof props?.timer !== "number" ? 0 : props?.timer;
     const padding = props?.padding || 4;
     const scale = props?.scale || 1;
     const vertical = props?.align?.vertical || "center";
     const horizon = props?.align?.horizon || "center";
+
+    useEffect(() => {
+        if (typeof props?.slideNo === "number") setSlideNo(props?.slideNo);
+    }, [props?.slideNo]);
 
     useEffect(() => {
         if (timer > 0) {
@@ -52,7 +57,7 @@ export default function Slide(props: Slide) {
                 <>
                     <div>
                         {props?.slides?.map((slide: any, i: number) => (
-                            <div key={i} data-active={slideNo === i} onClick={(e: any) => slide?.onClick && slide?.onClick(e)}>
+                            <div key={i} data-active={slide?.active || slideNo === i} onClick={(e: any) => slide?.onClick && slide?.onClick(e)}>
                                 {slide?.background && <BG {...slide?.background} />}
                                 <div data-row={props?.align?.horizon}>{slide.children}</div>
                             </div>

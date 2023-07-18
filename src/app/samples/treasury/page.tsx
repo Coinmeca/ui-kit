@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Root } from "lib/style";
 import { Controls, Elements, Layouts } from "components";
 import { Capitalize, Format } from "lib/utils";
@@ -18,15 +18,59 @@ export default function Page() {
     const [tab, setTab] = useState<string>(option);
     const [view, setView] = useState(0);
 
+    useEffect(() => {
+        console.log("page", page);
+        console.log("slideNo", page ? 1 : 0);
+    }, [page]);
+
+    const [cover, setCover] = useState(1);
+
     return (
-        <Layouts.Page>
-            <Layouts.Box fit>
-                <Layouts.Contents.SlideContainer
-                    contents={[
+        <Layouts.Page style={{ background: "rgb(var(--dim))" }}>
+            <Layouts.Cover height={30}>
+                <Controls.Slide
+                    timer={0}
+                    slideNo={page ? 1 : 0}
+                    align={{ vertical: "top", horizon: "left" }}
+                    slides={[
                         {
-                            active: page === false,
+                            background: {
+                                img: {
+                                    src: 4,
+                                },
+                            },
                             children: (
-                                <>
+                                <Layouts.Col align={"left"} gap={1}>
+                                    <Elements.Text type={"h4"}>Much Faster and Much Easier Coin Exchange</Elements.Text>
+                                    <Elements.Text weight={"normal"} responsive={{ device: "mobile", scale: 4 }}>
+                                        Start with your new experience coin trading system on Coinmeca.
+                                    </Elements.Text>
+                                </Layouts.Col>
+                            ),
+                        },
+                        {
+                            background: {
+                                img: {
+                                    src: 4,
+                                },
+                            },
+                            children: (
+                                <Layouts.Col align={"left"} gap={1}>
+                                    <Elements.Text type={"h4"}>Meet Brand New Finance</Elements.Text>
+                                    <Elements.Text weight={"normal"}>Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.</Elements.Text>
+                                </Layouts.Col>
+                            ),
+                        },
+                    ]}
+                />
+            </Layouts.Cover>
+            <Layouts.Contents.SlideContainer
+                contents={[
+                    {
+                        active: page === false,
+                        children: (
+                            <>
+                                <Layouts.Box fit>
                                     <Layouts.Row fix style={{ alignItems: "center" }}>
                                         <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
                                             <Layouts.Row responsive={"mobile"} gap={1} fit>
@@ -271,13 +315,15 @@ export default function Page() {
                                             },
                                         ]}
                                     />
-                                </>
-                            ),
-                        },
-                        {
-                            active: page === true,
-                            children: (
-                                <>
+                                </Layouts.Box>
+                            </>
+                        ),
+                    },
+                    {
+                        active: page === true,
+                        children: (
+                            <>
+                                <Layouts.Box fit>
                                     <Layouts.Row fix style={{ alignItems: "center" }}>
                                         <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
                                             <Controls.Button icon={"chevron-left"} onClick={() => setPage(false)} />
@@ -523,12 +569,12 @@ export default function Page() {
                                             },
                                         ]}
                                     />
-                                </>
-                            ),
-                        },
-                    ]}
-                />
-            </Layouts.Box>
+                                </Layouts.Box>
+                            </>
+                        ),
+                    },
+                ]}
+            />
         </Layouts.Page>
     );
 }

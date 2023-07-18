@@ -2,8 +2,9 @@
 import { styled } from "styled-components";
 
 const Style = styled.div<{ $height: number; $fullsize?: boolean }>`
+    font-size: calc(var(--unit) * 1);
     width: 100%;
-    height: ${({ $fullsize, $height }) => ($fullsize ? "100%" : `${$height}px`)};
+    height: ${({ $fullsize, $height }) => ($fullsize ? "100%" : `${$height}em`)};
     overflow: hidden;
 `;
 

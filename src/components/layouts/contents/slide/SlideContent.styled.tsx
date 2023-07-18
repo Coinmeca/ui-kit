@@ -6,7 +6,8 @@ const Style = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-height: 100%;
+    height: -webkit-fill-available;
+    min-height: max-content;
     overflow: hidden auto;
     transition: 0.3s ease;
     opacity: 1;

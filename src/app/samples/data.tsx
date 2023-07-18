@@ -303,7 +303,7 @@ export default function Data() {
             children: [
                 {
                     name: "Asset",
-                    path: "/samples/assets",
+                    path: "/samples/asset",
                 },
                 {
                     name: "Exchange",
@@ -311,7 +311,7 @@ export default function Data() {
                 },
                 {
                     name: "Treasury",
-                    path: "/samples/tr",
+                    path: "/samples/treasury",
                 },
             ],
         },

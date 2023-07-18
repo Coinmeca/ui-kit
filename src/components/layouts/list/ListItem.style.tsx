@@ -28,7 +28,7 @@ export const Col = styled.div<{ $change?: string }>`
     }
 `;
 
-const Style = styled.div<{ $change?: string; $event: boolean }>`
+const Style = styled.div<{ $active?: boolean; $change?: string; $event: boolean }>`
     display: flex;
     align-items: center;
     font-size: 0.6666em;
@@ -41,6 +41,7 @@ const Style = styled.div<{ $change?: string; $event: boolean }>`
     transition: 0.3s ease;
 
     ${({ $change }) => $change && `--change: ${$change};`}
+    ${({ $active }) => $active && `background: rgba(var(--black),var(--o01));`}
 
     & > * {
         font-size: 1.5em;
@@ -51,7 +52,7 @@ const Style = styled.div<{ $change?: string; $event: boolean }>`
     }
 
     &:hover {
-        background: rgba(${({ $event }) => ($event ? "var(--white)" : "var(--black)")}, var(--o0075));
+        background: rgba(var(--black), var(--o0075));
     }
 
     &:active {

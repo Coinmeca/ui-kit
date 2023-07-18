@@ -1,18 +1,14 @@
 "use client";
-import { Controls, Elements, Layouts } from "components";
-import { Avatar } from "components/elements";
-import { GridContainer } from "components/layouts/contents";
-import useMobile from "hooks/useMobile";
-import useWindowSize from "hooks/useWindowSize";
-import { Root } from "lib/style";
-import { Capitalize, Format } from "lib/utils";
-import { Exchange } from "prefabs";
 import { useState } from "react";
+import { Root } from "lib/style";
+import { Controls, Elements, Layouts } from "components";
+import { Exchange } from "prefabs";
+import { Capitalize, Format } from "lib/utils";
+import useWindowSize from "hooks/useWindowSize";
 import Data from "./data";
 
 export default function Page() {
     const windowSize = useWindowSize();
-    const { isMobile } = useMobile();
     const { market, orderbook, info, orderbookView } = Data();
 
     const [mobile, setMobile] = useState("orderbook");
@@ -27,7 +23,7 @@ export default function Page() {
                 <Layouts.Contents.InnerContent>
                     <Layouts.Row fix style={{ alignItems: "center" }}>
                         <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
-                            <Avatar img={market.logo} scale={1.3334} />
+                            <Elements.Avatar img={market.logo} scale={1.3334} />
                             <Layouts.Row responsive={"mobile"} gap={1} fit>
                                 <Elements.Text scale={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", scale: 1.5 }}>
                                     {market?.base?.symbol?.toUpperCase()}
@@ -40,7 +36,7 @@ export default function Page() {
                         <Layouts.Row fix align="right">
                             <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
                                 <Elements.Icon scale={1.5} icon={"caret-up"} change />
-                                <Elements.Text scale={2.5} height={1} responsive={{ device: "mobile", scale: 2 }} change>
+                                <Elements.Text scale={2.5} height={1} responsive={{ device: "mobile", scale: 1.75 }} change>
                                     $ {Format(market.price, "currency", true)}
                                 </Elements.Text>
                             </Layouts.Row>
@@ -61,7 +57,7 @@ export default function Page() {
                         </Layouts.Row>
                         <Layouts.Divider />
                     </Layouts.Col>
-                    <GridContainer
+                    <Layouts.Contents.GridContainer
                         fullsize
                         area={`'info info' 'book chart' 'book order'`}
                         width={`${windowSize.width < Root.Device.Tablet ? "0.75fr" : "320px"} 1fr`}

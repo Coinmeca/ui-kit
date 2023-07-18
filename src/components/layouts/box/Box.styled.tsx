@@ -1,15 +1,17 @@
 "use client";
 import { styled, css } from "styled-components";
 import { Root } from "lib/style";
-import * as Page from "../page/Page.styled";
-import * as InnerContent from "../contents/inner/InnerContent.styled";
+import * as Page from "components/layouts/page/Page.styled";
+import * as SlideContainer from "components/layouts/contents/slide/SlideContainer.styled";
+import * as InnerContent from "components/layouts/contents/inner/InnerContent.styled";
 
 const Style = styled.div<{ $change?: string; $fit?: boolean }>`
     transition: 0.3s ease;
 
     ${({ $change }) => $change && `--change: ${$change};`}
 
-    ${Page.default} > & {
+    ${Page.default} > &,
+    ${Page.default} > ${SlideContainer.default} > * > & {
         display: flex;
         flex-direction: column;
         background: rgb(var(--dim));
