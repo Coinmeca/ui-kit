@@ -16,6 +16,10 @@ const Style = styled.div<{ $scale: number; $active: boolean; $height?: number | 
 
     ${({ $height }) => typeof $height === "object" && typeof $height?.min === "number" && `min-height: ${$height?.min}em`};
     ${({ $height }) => typeof $height === "object" && typeof $height?.max === "number" && `max-height: ${$height?.max}em`};
+
+    input {
+        color: white;
+    }
 `;
 
 export default Style;
