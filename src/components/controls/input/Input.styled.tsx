@@ -3,7 +3,7 @@ import * as Box from "components/layouts/box/Box.styled";
 
 export const Side = styled.div<{ $width?: number }>`
     display: flex;
-    min-width: "max-content";
+    min-width: max-content;
     min-width: ${({ $width }) => ($width ? `calc(var(--unit) * ${$width})` : "max-content")};
 
     &:first-child {
