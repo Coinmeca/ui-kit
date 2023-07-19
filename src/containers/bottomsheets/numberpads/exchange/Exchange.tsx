@@ -28,7 +28,7 @@ export default function Exchange(props: Exchange) {
         if (props?.value) setValue(props?.value?.toString() || "");
     }, [props?.value]);
 
-    const onChange = (e: any, v: string) => {
+    const handleChange = (e: any, v: string) => {
         if (typeof props?.onChange === "function") props?.onChange(e, v);
         setValue(v);
     };
@@ -46,7 +46,7 @@ export default function Exchange(props: Exchange) {
                 </Layouts.Row>
                 <Controls.Input
                     value={value}
-                    onChange={(e: any, v: string) => onChange(e, v)}
+                    onChange={(e: any, v: string) => handleChange(e, v)}
                     placeholder={props?.placeholder}
                     type={"currency"}
                     align={"right"}
@@ -68,7 +68,7 @@ export default function Exchange(props: Exchange) {
                             },
                         },
                     }}
-                    onChange={(e: any, v: string) => onChange(e, v)}
+                    onChange={(e: any, v: string) => handleChange(e, v)}
                     padding={padding}
                     reverse={false}
                 />

@@ -85,16 +85,16 @@ export default function Input(props: Input) {
         setValue(Format(value, type, false, props?.fix).toString());
     }, [value, type, props?.fix]);
 
-    const onClick = (e: any) => {
+    const handleClick = (e: any) => {
         if (props?.lock || props?.disabled) return;
         input.current.focus();
-        if (typeof props.onClick === "function") {
-            props.onClick(e);
+        if (typeof props?.onClick === "function") {
+            props?.onClick(e);
         }
-        onExtend();
+        handleExtend();
     };
 
-    const onExtend = () => {
+    const handleExtend = () => {
         if (fold) {
             setExtend(!extend);
         }
@@ -107,7 +107,7 @@ export default function Input(props: Input) {
     //     [onUserInput]
     // )
 
-    const onChange = (e: any) => {
+    const handleChange = (e: any) => {
         if (props?.lock || props?.disabled) return;
         const value = typeof e !== "object" ? e : e.target.value;
         setError(false);
@@ -115,18 +115,18 @@ export default function Input(props: Input) {
         if (typeof props?.onChange === "function") props?.onChange(e, value);
     };
 
-    const onFocus = (e: any) => {
+    const handleFocus = (e: any) => {
         if (props?.lock || props?.disabled) return;
         if (typeof props?.onFocus === "function") props?.onFocus(e);
     };
 
-    const onBlur = () => {
-        if (typeof props.onBlur === "function") props.onBlur();
+    const handleBlur = () => {
+        if (typeof props?.onBlur === "function") props?.onBlur();
         setExtend(false);
-        onChange("");
+        handleChange("");
     };
 
-    const onKeyDown = (e: any) => {
+    const handleKeyDown = (e: any) => {
         if (props?.lock || props?.disabled) return;
         const key = e.keyCode;
         if (((type === "currency" || type === "number") && ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key === 110 && key === 190))) || key === 38 || key === 107 || key === 187 || key === 40 || key === 109 || key === 189) {
@@ -207,15 +207,15 @@ export default function Input(props: Input) {
                             step={props?.step}
                             value={value}
                             onClick={(e: any) => {
-                                onClick(e);
+                                handleClick(e);
                                 if (typeof props?.numberpad?.open === "function") {
                                     props?.numberpad?.open();
                                 }
                             }}
-                            onInput={(e) => onChange(e)}
-                            onChange={(e) => onChange(e)}
-                            onFocus={(e) => onFocus(e)}
-                            onKeyDown={(e) => onKeyDown(e)}
+                            onInput={(e) => handleChange(e)}
+                            onChange={(e) => handleChange(e)}
+                            onFocus={(e) => handleFocus(e)}
+                            onKeyDown={(e) => handleKeyDown(e)}
                             autoFocus={extend || focus}
                             disabled={props?.disabled}
                             readOnly={props?.lock || props?.disabled}
@@ -236,7 +236,7 @@ export default function Input(props: Input) {
 
     if (fold) {
         return (
-            <div onClick={() => setExtend(true)} onBlur={onBlur} data-show={props?.show} data-hide={props?.hide}>
+            <div onClick={() => setExtend(true)} onBlur={handleBlur} data-show={props?.show} data-hide={props?.hide}>
                 <div>{Input}</div>
             </div>
         );

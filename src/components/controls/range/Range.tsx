@@ -37,7 +37,7 @@ export default function Range(props: Slider) {
         setPercent(value === min ? 0 : ((value - min) / (max - min)) * 100);
     }, [value, min, max]);
 
-    const onChange = (e: any) => {
+    const handleChange = (e: any) => {
         const range = max - min;
         let value = parseFloat(e.target.value) >= max ? max : parseFloat(e.target.value) <= min ? min : parseFloat(e.target.value);
 
@@ -53,7 +53,7 @@ export default function Range(props: Slider) {
         const percent = ((value - min) * 100) / range || 0;
         setPercent(percent);
         setValue(parseFloat(value.toFixed()));
-        props?.onChange && props?.onChange(value, percent);
+        props?.handleChange && props?.handleChange(value, percent);
     };
 
     return (
@@ -65,7 +65,7 @@ export default function Range(props: Slider) {
                 data-show={props?.show}
                 data-hide={props?.hide}
             >
-                <input type="range" min={min} max={max} value={value} onChange={(e) => onChange(e)} />
+                <input type="range" min={min} max={max} value={value} onChange={(e) => handleChange(e)} />
                 <div>
                     <div>
                         <div style={{ backgroundSize: `${percent}% 100%` }}>

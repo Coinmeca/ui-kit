@@ -79,7 +79,7 @@ export default function Dropdown(props: Dropdown) {
         }
     }, [props?.options, props?.option, keyName]);
 
-    const onSelect = (e: React.FormEvent, v: any, k: string | number) => {
+    const handleSelect = (e: React.FormEvent, v: any, k: string | number) => {
         if (disabled) return;
         // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
         setOption(v);
@@ -88,13 +88,13 @@ export default function Dropdown(props: Dropdown) {
         setOpen(false);
     };
 
-    const onOpen = (e?: any) => {
+    const handleOpen = (e?: any) => {
         if (disabled) return;
         setOpen(!open);
         if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
 
-    const onClose = (e?: any) => {
+    const handleClose = (e?: any) => {
         setOpen(false);
         if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
@@ -108,8 +108,8 @@ export default function Dropdown(props: Dropdown) {
             $disabled={disabled}
             tabIndex={5}
             style={{ zIndex: open ? 10 : 1, ...props?.style }}
-            onClick={onOpen}
-            onBlur={onClose}
+            onClick={handleOpen}
+            onBlur={handleClose}
             title={props?.title}
             data-active={open}
             data-show={props?.show}
@@ -161,7 +161,7 @@ export default function Dropdown(props: Dropdown) {
                                 <Item
                                     key={k}
                                     onClick={(e: any) => {
-                                        onSelect(e, v, k);
+                                        handleSelect(e, v, k);
                                     }}
                                     data-disabled={typeof option !== "undefined" && (v[keyIndex] === option || v[keyName] === option || v === option)}
                                 >

@@ -16,25 +16,25 @@ export interface Alert {
 }
 
 export default function Alert(props: Alert) {
-    const onLeftClick = (e: any) => {
+    const handleLeftClick = (e: any) => {
         if (typeof props?.buttonLeft?.onClick === "function") props?.buttonLeft?.onClick(e);
     };
-    const onRightClick = (e: any) => {
+    const handleRightClick = (e: any) => {
         if (typeof props?.buttonRight?.onClick === "function") props?.buttonRight?.onClick(e);
     };
 
     return (
         <Default
-            title={props?.title}
-            message={props?.message}
-            buttonArea={
-                <>
-                    <Controls.Button onClick={(e: any) => onLeftClick(e)}>{props?.buttonLeft?.name || "Cancel"}</Controls.Button>
-                    <Controls.Button onClick={(e: any) => onRightClick(e)}>{props?.buttonRight?.name || "OK"}</Controls.Button>
-                </>
-            }
-            onClose={props?.onClose}
-            close
+        // title={props?.title}
+        // message={props?.message}
+        // buttonArea={
+        //     <>
+        //         <Controls.Button onClick={(e: any) => handleLeftClick(e)}>{props?.buttonLeft?.name || "Cancel"}</Controls.Button>
+        //         <Controls.Button onClick={(e: any) => handleRightClick(e)}>{props?.buttonRight?.name || "OK"}</Controls.Button>
+        //     </>
+        // }
+        // onClose={props?.onClose}
+        // close
         />
     );
 }

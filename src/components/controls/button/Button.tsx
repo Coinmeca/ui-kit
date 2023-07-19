@@ -34,17 +34,17 @@ export default function Button(props: Button) {
         return typeof icon === "string" ? <Elements.Icon icon={icon} scale={scale} /> : typeof icon === "object" ? <Elements.Icon {...icon} scale={scale} /> : <></>;
     };
 
-    function onClick(e?: any) {
+    function handleClick(e?: any) {
         if (disabled) return;
         if (typeof props?.onClick === "function") props?.onClick(e);
     }
 
-    function onClickLonger(e?: any) {
+    function handleClickLonger(e?: any) {
         if (disabled) return;
         if (typeof props?.onClickLonger === "function") props?.onClickLonger(e);
     }
 
-    const onBlur = (e: any) => {
+    const handleBlur = (e: any) => {
         if (props?.disabled) return;
         if (typeof props?.onBlur === "function") props?.onBlur(e);
     };
@@ -58,10 +58,10 @@ export default function Button(props: Button) {
             $scale={scale}
             $fit={fit}
             $hide={hide}
-            onClick={(e: any) => onClick(e)}
-            onMouseDown={(e: any) => onClickLonger(e)}
-            onTouchStart={(e: any) => onClickLonger(e)}
-            onBlur={(e: any) => onBlur(e)}
+            onClick={(e: any) => handleClick(e)}
+            onMouseDown={(e: any) => handleClickLonger(e)}
+            onTouchStart={(e: any) => handleClickLonger(e)}
+            onBlur={(e: any) => handleBlur(e)}
             $disabled={disabled}
         >
             <div>

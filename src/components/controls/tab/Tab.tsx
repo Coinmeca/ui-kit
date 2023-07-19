@@ -32,12 +32,12 @@ export default function Tab(props: Tab) {
         return typeof icon === "object" ? <Elements.Icon {...icon} scale={scale} /> : typeof icon === "string" ? <Elements.Icon icon={icon} scale={scale} /> : <></>;
     };
 
-    const onClick = (e: any) => {
+    const handleClick = (e: any) => {
         if (props?.disabled) return;
         if (typeof props?.onClick === "function") props?.onClick(e);
     };
 
-    const onBlur = (e: any) => {
+    const handleBlur = (e: any) => {
         if (props?.disabled) return;
         if (typeof props?.onBlur === "function") props?.onBlur(e);
     };
@@ -45,8 +45,8 @@ export default function Tab(props: Tab) {
     return (
         <Style
             style={props?.style}
-            onClick={(e: any) => onClick(e)}
-            onBlur={(e: any) => onBlur(e)}
+            onClick={(e: any) => handleClick(e)}
+            onBlur={(e: any) => handleBlur(e)}
             title={props?.title}
             $scale={scale}
             $toggle={props?.toggle || false}
