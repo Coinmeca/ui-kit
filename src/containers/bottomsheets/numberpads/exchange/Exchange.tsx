@@ -36,11 +36,11 @@ export default function Exchange(props: Exchange) {
     return (
         <BottomSheet {...props} height={height}>
             <Layouts.Col gap={0} align="center">
-                <Layouts.Row gap={1} style={{ alignItems: "center", padding: `${padding / 2}em` }}>
-                    <Elements.Text type={"desc"} weight={"bold"} align={"right"}>
+                <Layouts.Row gap={3} style={{ alignItems: "center", padding: `${padding / 2}em ${padding / 1.5}em`, maxWidth: `${width}` }}>
+                    <Elements.Text type={"p"} weight={"bold"} align={"right"}>
                         = 1.9234234
                     </Elements.Text>
-                    <Elements.Text type={"desc"} weight={"bold"} style={{ maxWidth: "4em" }}>
+                    <Elements.Text type={"p"} weight={"bold"} opacity={0.6} style={{ maxWidth: "4em" }}>
                         ETH
                     </Elements.Text>
                 </Layouts.Row>
@@ -51,12 +51,13 @@ export default function Exchange(props: Exchange) {
                     type={"currency"}
                     align={"right"}
                     left={{ children: <span>Price</span> }}
-                    style={{ padding: `${padding / 8}em ${padding}em` }}
+                    style={{ fontSize: "1.125em", padding: `0.125em ${padding / 2}em` }}
                     unit={"ETH"}
                     inputMode={"none"}
                 />
                 <Numberpads.Exchange
                     {...props}
+                    type={"currency"}
                     width={width}
                     value={value}
                     button={{

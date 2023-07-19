@@ -27,7 +27,7 @@ export default function BottomSheet(props: BottomSheet) {
 
     const handleBlur = (e: any) => {
         if (typeof props?.onBlur === "function") props?.onBlur(e);
-        // onClose(e);
+        // handleClose(e);
         // setMounted(false);
     };
 

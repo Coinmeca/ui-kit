@@ -51,7 +51,7 @@ export interface Input {
     error?: boolean;
     message?: any;
 
-    numberpad?: { open: Function; active: boolean; children?: any };
+    numberpad?: { open: Function; children?: any };
     lock?: boolean;
     readOnly?: boolean;
     disabled?: boolean;
@@ -246,7 +246,7 @@ export default function Input(props: Input) {
     return (
         <>
             {Input}
-            {props?.numberpad?.active && props?.numberpad?.children}
+            {props?.numberpad?.children?.props?.active && props?.numberpad?.children}
         </>
     );
 }

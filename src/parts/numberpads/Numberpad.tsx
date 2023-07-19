@@ -6,6 +6,7 @@ import Style, { Pad } from "./Numberpad.styled";
 export interface Numberpad {
     value?: number | string;
     scale?: number;
+    type?: "number" | "currency";
     padding?: number;
     left?: Option;
     right?: Option;
@@ -22,6 +23,7 @@ interface Option {
 export default function Numberpad(props: Numberpad) {
     const [value, setValue] = useState(props?.value?.toString() || "");
 
+    const type = props?.type || "number";
     const scale = props?.scale || 1.5;
     const padding = props?.padding || 2;
 
@@ -33,7 +35,7 @@ export default function Numberpad(props: Numberpad) {
         let input: string = "";
         if (v === "sub") input = value?.length - 1 > 0 ? value?.substring(0, value?.length - 1) : "0";
         else if (v === "reset") input = "0";
-        else input = value + v;
+        else input = type === "currency" && value === "0" && v === "0" ? "0" : type === "currency" && value === "0" && v !== "0" ? v : value + v;
         if (typeof props?.onChange === "function") props?.onChange(e, input);
         setValue(input);
     };
