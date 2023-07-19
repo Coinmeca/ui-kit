@@ -237,7 +237,7 @@ export default function Page() {
                                 children: (
                                     <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "chart"}>
                                         <Layouts.Menu
-                                            hide="tablet"
+                                            hide="mobile"
                                             menu={[
                                                 [
                                                     <>
