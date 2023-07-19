@@ -26,7 +26,6 @@ export const Nav = styled.nav<{ $scale: number; $color: string }>`
     align-items: center;
     justify-content: center;
     max-width: max-content;
-    padding: 0 2em;
 
     & > a {
         color: rgb(${({ $color }) => Root.Color($color)});
@@ -35,6 +34,7 @@ export const Nav = styled.nav<{ $scale: number; $color: string }>`
         justify-content: center;
         width: 100%;
         height: 100%;
+        padding: 0 1.5em;
         font-size: 1.5em;
         font-weight: bold;
         text-decoration: none;
@@ -198,10 +198,11 @@ export const Menu = styled.div`
 
         & ${Nav} {
             font-size: 1.5em;
-            padding: 1.5em;
             height: max-content;
 
             & > * {
+                height: max-content;
+                padding: 1.5em;
                 justify-content: flex-start;
             }
         }

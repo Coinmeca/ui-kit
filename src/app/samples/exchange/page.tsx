@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Root } from "lib/style";
-import { Controls, Elements, Layouts } from "components";
+import { Charts, Controls, Elements, Layouts } from "components";
 import { Exchange } from "prefabs";
 import { Capitalize, Format } from "lib/utils";
 import useWindowSize from "hooks/useWindowSize";
@@ -9,7 +9,7 @@ import Data from "./data";
 
 export default function Page() {
     const windowSize = useWindowSize();
-    const { market, orderbook, info, orderbookView } = Data();
+    const { market, orderbook, info, orderbookView, chart } = Data();
 
     const [mobile, setMobile] = useState("orderbook");
     const [marketTab, setMarketTab] = useState("orderbook");
@@ -235,8 +235,8 @@ export default function Page() {
                             {
                                 area: "chart",
                                 children: (
-                                    <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "chart"} style={{ background: "yellow" }}>
-                                        Yellow
+                                    <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "chart"}>
+                                        <Charts.Candle price={chart.price} volume={chart.volume} up={"BUY"} down={"SELL"} />
                                     </Layouts.Contents.SlideContent>
                                 ),
                                 responsive: [

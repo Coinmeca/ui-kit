@@ -14,7 +14,7 @@ export default function useWindowSize() {
     useEffect(() => {
         // only execute all the code below in client side
         // Handler to call on window resize
-        function handleResize() {
+        function windowResize() {
             // Set window width/height to state
             setWindowSize({
                 width: window.innerWidth,
@@ -23,13 +23,13 @@ export default function useWindowSize() {
         }
 
         // Add event listener
-        window.addEventListener("resize", handleResize);
+        window.addEventListener("resize", windowResize);
 
         // Call handler right away so state gets updated with initial window size
-        handleResize();
+        windowResize();
 
         // Remove event listener on cleanup
-        return () => window.removeEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", windowResize);
     }, []); // Empty array ensures that effect is only run on mount
 
     return windowSize;
