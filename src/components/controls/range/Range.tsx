@@ -53,7 +53,7 @@ export default function Range(props: Slider) {
         const percent = ((value - min) * 100) / range || 0;
         setPercent(percent);
         setValue(parseFloat(value.toFixed()));
-        props?.handleChange && props?.handleChange(value, percent);
+        props?.onChange && props?.onChange(value, percent);
     };
 
     return (
