@@ -105,13 +105,13 @@ export const Tick = styled.div`
                 display: table-cell;
                 text-align: right;
                 vertical-align: middle;
-                font-weight: bolder;
 
                 & > span {
                     font-size: 1.375em;
                 }
 
                 &:nth-child(1) {
+                    position: relative;
                     min-width: 15%;
                     padding: 0.5em 1em;
                     padding-right: 2em;
@@ -128,6 +128,7 @@ export const Tick = styled.div`
                     font-feature-settings: initial;
                     background-position: right;
                     background-repeat: no-repeat;
+                    font-weight: bolder;
                     width: 100%;
                     padding: 0.5em 2em;
                     transition: 0.3s ease;
@@ -162,7 +163,12 @@ export const Asks = styled.div<{ $show: boolean }>`
         & > * > * > * {
             &:nth-child(1) {
                 & > span {
-                    left: 0;
+                    left: 0.5em;
+                }
+            }
+            &:nth-child(2) {
+                & > span {
+                    font-weight: bolder;
                 }
             }
         }
@@ -188,7 +194,7 @@ export const Bids = styled.div<{ $show: boolean }>`
         & > * > * > * {
             &:nth-child(1) {
                 & > span {
-                    left: 0;
+                    left: 0.5em;
                 }
             }
         }
@@ -228,7 +234,7 @@ const Responsive = (vertical?: boolean) => css`
                         ${!vertical && "text-align: right;"}
 
                         &>span {
-                            ${!vertical ? "right: 1em;" : "left:1em;"}
+                            ${!vertical ? "right: 0.5em;" : "left:0.5em;"}
                         }
                     }
 
@@ -251,7 +257,7 @@ const Responsive = (vertical?: boolean) => css`
                         ${!vertical && "text-align: left;"}
 
                         &>span {
-                            ${!vertical ? "left:1em;" : "right:1em;"}
+                            ${!vertical ? "left:0.5em;" : "right:0.5em;"}
                         }
                     }
                 }
