@@ -38,7 +38,9 @@ export default function Candle(props: any) {
     const [volume, setVolume] = useState<any>([]);
 
     const up = props?.up || "up";
-    const down = props?.up || "down";
+    const down = props?.down || "down";
+
+    const chartRef: any = useRef();
 
     useEffect(() => {
         if (props?.price && props?.price.length > 0) {
@@ -77,12 +79,17 @@ export default function Candle(props: any) {
         }
     }, [props?.volume]);
 
-    const chartRef: any = useRef();
-
     useEffect(() => {
         // const chart = createChart(document.getElementById('container'), );
 
         if (chartRef?.current) {
+            const handleResize = () => {
+                chart.applyOptions({
+                    width: chartRef?.current?.clientWidth,
+                    height: chartRef?.current?.clientHeight,
+                });
+            };
+
             const chart = createChart(chartRef?.current, {
                 layout: {
                     background: {
@@ -128,34 +135,29 @@ export default function Candle(props: any) {
                 height: chartRef?.current?.clientHeight,
             });
 
-            const handleResize = () => {
-                chart.applyOptions({
-                    width: chartRef?.current?.clientWidth,
-                    height: chartRef?.current?.clientHeight,
+            if (price) {
+                const candleSeries = chart.addCandlestickSeries({
+                    upColor: "#00b060",
+                    downColor: "#ff0040",
+                    // upColor: `rgb(var(--${color.up}))`,
+                    // downColor: `rgb(var(--${color.down}))`,
+                    borderVisible: false,
+                    wickUpColor: "#00b060",
+                    wickDownColor: "#ff0040",
+                    // wickUpColor: `rgb(var(--${color.up}))`,
+                    // wickDownColor: `rgb(var(--${color.down}))`,
                 });
-            };
 
-            const candleSeries = chart.addCandlestickSeries({
-                upColor: "#00b060",
-                downColor: "#ff0040",
-                // upColor: `rgb(var(--${color.up}))`,
-                // downColor: `rgb(var(--${color.down}))`,
-                borderVisible: false,
-                wickUpColor: "#00b060",
-                wickDownColor: "#ff0040",
-                // wickUpColor: `rgb(var(--${color.up}))`,
-                // wickDownColor: `rgb(var(--${color.down}))`,
-            });
+                candleSeries.priceScale().applyOptions({
+                    scaleMargins: {
+                        // positioning the price scale for the area series
+                        top: 0.1,
+                        bottom: volume ? 0.4 : 0,
+                    },
+                });
 
-            candleSeries.priceScale().applyOptions({
-                scaleMargins: {
-                    // positioning the price scale for the area series
-                    top: 0.1,
-                    bottom: volume ? 0.3 : 0,
-                },
-            });
-
-            candleSeries.setData(price);
+                candleSeries.setData(price);
+            }
 
             if (volume) {
                 const volumeSeries = chart.addHistogramSeries({
@@ -170,12 +172,14 @@ export default function Candle(props: any) {
                     //     bottom: 0
                     // }
                 });
+
                 volumeSeries.priceScale().applyOptions({
                     scaleMargins: {
                         top: 0.8, // highest point of the series will be 70% away from the top
                         bottom: 0,
                     },
                 });
+
                 volumeSeries.setData(volume);
             }
 
