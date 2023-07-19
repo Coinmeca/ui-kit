@@ -128,10 +128,15 @@ export const Tick = styled.div`
                     font-feature-settings: initial;
                     background-position: right;
                     background-repeat: no-repeat;
-                    font-weight: bolder;
                     width: 100%;
                     padding: 0.5em 2em;
                     transition: 0.3s ease;
+
+                    &:nth-child(2) {
+                        & > span {
+                            font-weight: bold;
+                        }
+                    }
                 }
             }
         }
@@ -164,11 +169,6 @@ export const Asks = styled.div<{ $show: boolean }>`
             &:nth-child(1) {
                 & > span {
                     left: 0.5em;
-                }
-            }
-            &:nth-child(2) {
-                & > span {
-                    font-weight: bolder;
                 }
             }
         }
