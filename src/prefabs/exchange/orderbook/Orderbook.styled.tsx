@@ -234,7 +234,7 @@ const Responsive = (vertical?: boolean) => css`
                         ${!vertical && "text-align: right;"}
 
                         &>span {
-                            ${!vertical ? "right: 0.5em;" : "left:0.5em;"}
+                            ${!vertical ? "left:initial; right: 0.5em;" : "left:0.5em;"}
                         }
                     }
 
@@ -257,7 +257,7 @@ const Responsive = (vertical?: boolean) => css`
                         ${!vertical && "text-align: left;"}
 
                         &>span {
-                            ${!vertical ? "left:0.5em;" : "right:0.5em;"}
+                            ${!vertical ? "left:0.5em;" : "left:initial; right:0.5em;"}
                         }
                     }
                 }
