@@ -50,7 +50,13 @@ export default function Exchange(props: Exchange) {
                     placeholder={props?.placeholder}
                     type={"currency"}
                     align={"right"}
-                    left={{ children: <Elements.Text type={"desc"}>Price</Elements.Text> }}
+                    left={{
+                        children: (
+                            <Elements.Text style={{ fontSize: "1.25em" }} weight={"bold"} opacity={0.6}>
+                                Price
+                            </Elements.Text>
+                        ),
+                    }}
                     style={{ fontSize: "1.125em", padding: `0.125em ${padding / 2}em` }}
                     unit={"ETH"}
                     inputMode={"none"}
