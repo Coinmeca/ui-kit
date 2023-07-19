@@ -104,6 +104,26 @@ export default function Candle(props: any) {
                     borderColor: "rgba(255,255,255,0.15)",
                 },
                 trackingMode: {},
+                crosshair: {
+                    // Change mode from default 'magnet' to 'normal'.
+                    // Allows the crosshair to move freely without snapping to datapoints
+                    mode: 0,
+
+                    // Vertical crosshair line (showing Date in Label)
+                    vertLine: {
+                        width: 4,
+                        color: "rgba(255,255,255,0.15)",
+                        // style: LightweightCharts.LineStyle.Solid,
+                        style: 0,
+                        labelBackgroundColor: "rgba(255,255,255,0.3)",
+                    },
+
+                    // Horizontal crosshair line (showing Price in Label)
+                    horzLine: {
+                        color: "rgba(255,255,255,0.45)",
+                        labelBackgroundColor: "rgba(255,255,255,0.3)",
+                    },
+                },
                 width: chartRef?.current?.clientWidth,
                 height: chartRef?.current?.clientHeight,
             });
@@ -111,26 +131,7 @@ export default function Candle(props: any) {
             const handleResize = () => {
                 chart.applyOptions({
                     width: chartRef?.current?.clientWidth,
-                    crosshair: {
-                        // Change mode from default 'magnet' to 'normal'.
-                        // Allows the crosshair to move freely without snapping to datapoints
-                        mode: 0,
-
-                        // Vertical crosshair line (showing Date in Label)
-                        vertLine: {
-                            width: 4,
-                            color: "#C3BCDB44",
-                            // style: LightweightCharts.LineStyle.Solid,
-                            style: 0,
-                            labelBackgroundColor: "#9B7DFF",
-                        },
-
-                        // Horizontal crosshair line (showing Price in Label)
-                        horzLine: {
-                            color: "#9B7DFF",
-                            labelBackgroundColor: "#9B7DFF",
-                        },
-                    },
+                    height: chartRef?.current?.clientHeight,
                 });
             };
 
@@ -158,7 +159,7 @@ export default function Candle(props: any) {
 
             if (volume) {
                 const volumeSeries = chart.addHistogramSeries({
-                    color: "",
+                    color: "yellow",
                     priceFormat: {
                         type: "volume",
                     },

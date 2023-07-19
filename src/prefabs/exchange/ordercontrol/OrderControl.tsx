@@ -20,7 +20,7 @@ export interface OrderControl {
 
 export default function OrderControl(props: OrderControl) {
     const windowSize = useWindowSize();
-    const { active, open, close } = useBottomSheet(false);
+    const { active, open, close } = useBottomSheet();
     const { isMobile } = useMobile();
 
     const [mode, setMode] = useState(true);

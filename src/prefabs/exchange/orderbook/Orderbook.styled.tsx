@@ -125,6 +125,7 @@ export const Tick = styled.div`
                 }
 
                 &:nth-child(2) {
+                    font-feature-settings: initial;
                     background-position: right;
                     background-repeat: no-repeat;
                     width: 100%;
@@ -227,7 +228,7 @@ const Responsive = (vertical?: boolean) => css`
                         ${!vertical && "text-align: right;"}
 
                         &>span {
-                            ${!vertical ? "right: 0;" : "left:0;"}
+                            ${!vertical ? "right: 1em;" : "left:1em;"}
                         }
                     }
 
@@ -250,7 +251,7 @@ const Responsive = (vertical?: boolean) => css`
                         ${!vertical && "text-align: left;"}
 
                         &>span {
-                            ${!vertical ? "left:0;" : "right:0;"}
+                            ${!vertical ? "left:1em;" : "right:1em;"}
                         }
                     }
                 }

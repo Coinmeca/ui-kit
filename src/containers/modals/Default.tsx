@@ -1,7 +1,8 @@
 "use client";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Controls, Elements, Layouts } from "components";
 import useModal from "hooks/useModal";
-import { useState } from "react";
 import Style, { Close, ButtonArea } from "./Default.styled";
 
 export interface Modal {
@@ -16,45 +17,58 @@ export interface Modal {
     onClose?: Function;
 }
 
-export default function Default(props: Modal) {
-    const { setActive } = useModal();
-    const [showModal, setShowModal] = useState<boolean>(props?.active || true);
+export default function Default() {
+    const { modal } = useModal();
+    const [mounted, setMounted] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(modal ? true : false);
 
     const min = 56;
     const max = 64;
-    const width = { min: (typeof props?.width === "object" ? props?.width?.min : props?.width) || min, max: (typeof props?.width === "object" ? props?.width?.min : props?.width) || max };
+    const width = { min: (typeof modal?.width === "object" ? modal?.width?.min : modal?.width) || min, max: (typeof modal?.width === "object" ? modal?.width?.min : modal?.width) || max };
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const onClose = (e: any) => {
-        if (typeof props?.onClose === "function") props?.onClose(e);
+        if (typeof modal?.onClose === "function") modal?.onClose(e);
         setShowModal(false);
-        setActive(false);
     };
 
-    return (
-        <Style $active={showModal} $width={width}>
-            <div>
-                <Elements.Text scale={3} align={"center"}>
-                    {props?.title}
-                </Elements.Text>
-                <Layouts.Contents.InnerContent scroll>
-                    {props?.message &&
-                        (typeof props?.message === "string" ? (
-                            <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
-                                {props?.message}
-                            </Elements.Text>
-                        ) : (
-                            props?.message
-                        ))}
-                    {props?.content}
-                    {props?.children}
-                </Layouts.Contents.InnerContent>
-                {props?.buttonArea && <ButtonArea>{props?.buttonArea}</ButtonArea>}
-                {props?.close && (
-                    <Close>
-                        <Controls.Button icon={"x"} onClick={(e: any) => onClose(e)} />
-                    </Close>
-                )}
-            </div>
-        </Style>
-    );
+    return mounted && modal
+        ? createPortal(
+              <Layouts.Panel active={false} color={"black"} style={{ zIndex: 200 }} fix>
+                  <Style $active={showModal} $width={width}>
+                      <div>
+                          {modal?.title && (
+                              <Elements.Text scale={3} align={"center"}>
+                                  {modal?.title}
+                              </Elements.Text>
+                          )}
+                          {(modal?.message || modal?.content || modal?.children) && (
+                              <Layouts.Contents.InnerContent scroll>
+                                  {modal?.message &&
+                                      (typeof modal?.message === "string" ? (
+                                          <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
+                                              {modal?.message}
+                                          </Elements.Text>
+                                      ) : (
+                                          modal?.message
+                                      ))}
+                                  {modal?.content}
+                                  {modal?.children}
+                              </Layouts.Contents.InnerContent>
+                          )}
+                          {modal?.buttonArea && <ButtonArea>{modal?.buttonArea}</ButtonArea>}
+                          {modal?.close && (
+                              <Close>
+                                  <Controls.Button icon={"x"} onClick={(e: any) => onClose(e)} />
+                              </Close>
+                          )}
+                      </div>
+                  </Style>
+              </Layouts.Panel>,
+              document.body
+          )
+        : null;
 }

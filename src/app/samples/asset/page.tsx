@@ -5,6 +5,7 @@ import { Controls, Elements, Layouts } from "components";
 import { Capitalize, Format } from "lib/utils";
 import useWindowSize from "hooks/useWindowSize";
 import Data from "./data";
+import useModal from "hooks/useModal";
 
 export default function Page() {
     const windowSize = useWindowSize();
@@ -17,6 +18,15 @@ export default function Page() {
     const [option, setOption] = useState<"market" | "limit">("market");
     const [tab, setTab] = useState<string>(option);
     const [view, setView] = useState(0);
+
+    const { set } = useModal();
+
+    const onClick = () => {
+        set({
+            title: "This is a modal.",
+            message: "This is a testing message for a modal working.",
+        });
+    };
 
     return (
         <Layouts.Page>
@@ -255,6 +265,7 @@ export default function Page() {
                                                                     children: (
                                                                         <Layouts.Contents.InnerContent>
                                                                             <Controls.Button onClick={() => setPage(true)}>Go to</Controls.Button>
+                                                                            <Controls.Button onClick={() => onClick()}>Show modal</Controls.Button>
                                                                         </Layouts.Contents.InnerContent>
                                                                     ),
                                                                 },
