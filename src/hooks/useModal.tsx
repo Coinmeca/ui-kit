@@ -1,8 +1,30 @@
 "use client";
-import { useState } from "react";
+import { Modals } from "containers";
+import { useState, useCallback } from "react";
+
+export interface Modal {
+    active?: boolean;
+    title?: string;
+    message?: any;
+    children?: any;
+    content?: any;
+    buttonArea?: any;
+    width?: number | { min?: number; max?: number };
+    close?: boolean;
+    onClose?: Function;
+}
 
 export default function useModal() {
-    const [active, setActive] = useState(true);
+    const [modal, setModal] = useState<Modal | undefined>(undefined);
 
-    return { active, setActive };
+    const container = <Modals.Default />;
+
+    return {
+        modal,
+        set: useCallback((modal: Modal) => {
+            setModal(modal);
+            return container;
+        }, []),
+        close: useCallback(() => setModal(undefined), []),
+    } as const;
 }

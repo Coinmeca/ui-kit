@@ -1,7 +1,8 @@
+"use client";
 import { useState, useCallback } from "react";
 
-export default function useBottomSheet(state: boolean, children?: any) {
-    const [active, setActive] = useState<boolean>(state);
+export default function useModal() {
+    const [active, setActive] = useState<boolean>(false);
 
     return {
         active,

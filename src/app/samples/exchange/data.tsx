@@ -73,7 +73,7 @@ export default function Data() {
         low: "123123123",
         close: "123123123",
         change: "123123123",
-        change_rate: "+123.%",
+        change_rate: "123.21%",
     };
 
     const orderbookView = ["All", "Ask", "Bid"];

@@ -236,6 +236,16 @@ export default function Page() {
                                 area: "chart",
                                 children: (
                                     <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "chart"}>
+                                        <Layouts.Menu
+                                            hide="tablet"
+                                            menu={[
+                                                [
+                                                    <>
+                                                        <Controls.Tab disabled>Chart</Controls.Tab>
+                                                    </>,
+                                                ],
+                                            ]}
+                                        />
                                         <Charts.Candle price={chart.price} volume={chart.volume} up={"BUY"} down={"SELL"} />
                                     </Layouts.Contents.SlideContent>
                                 ),
