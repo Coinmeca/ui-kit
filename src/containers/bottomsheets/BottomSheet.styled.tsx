@@ -14,8 +14,8 @@ const Style = styled.div<{ $scale: number; $active: boolean; $height?: number | 
     transform: translateY(${({ $active }) => ($active ? "0" : "100%")});
     transition: 0.3s ease;
 
-    ${({ $height }) => (typeof $height === "object" && typeof $height?.min === "number" ? `min-height: ${$height?.min}em` : typeof $height?.min === "string" && `min-height: ${$height?.min}`)};
-    ${({ $height }) => (typeof $height === "object" && typeof $height?.max === "number" ? `max-height: ${$height?.max}em` : typeof $height?.max === "string" && `max-height: ${$height?.max}`)};
+    ${({ $height }) => typeof $height === "object" && `min-height: ${typeof $height?.min === "number" ? `${$height?.min}em` : typeof $height?.min === "string" && `min-height: ${$height?.min}`}`};
+    ${({ $height }) => typeof $height === "object" && `max-height: ${typeof $height?.max === "number" ? `${$height?.max}em` : typeof $height?.max === "string" && `max-height: ${$height?.max}`}`};
 
     input {
         color: white;
