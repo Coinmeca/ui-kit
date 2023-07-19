@@ -21,7 +21,7 @@ export default function Page() {
 
     const { set } = useModal();
 
-    const onClick = () => {
+    const handleClick = () => {
         set({
             title: "This is a modal.",
             message: "This is a testing message for a modal working.",
@@ -56,13 +56,13 @@ export default function Page() {
                                     <Layouts.Divider style={{ marginTop: "1em" }} />
                                     {/* <Layouts.Col show={"mobile"} gap={0}>
                                         <Layouts.Row gap={1} fix>
-                                            <Controls.Tab active={mobile === "info"} onClick={() => setMobile("info")}>
+                                            <Controls.Tab active={mobile === "info"} onClick={()=> setMobile("info")}>
                                                 Info
                                             </Controls.Tab>
-                                            <Controls.Tab active={mobile === "orderbook"} onClick={() => setMobile("orderbook")}>
+                                            <Controls.Tab active={mobile === "orderbook"} onClick={()=> setMobile("orderbook")}>
                                                 Orderbook
                                             </Controls.Tab>
-                                            <Controls.Tab active={mobile === "chart"} onClick={() => setMobile("chart")}>
+                                            <Controls.Tab active={mobile === "chart"} onClick={()=> setMobile("chart")}>
                                                 Chart
                                             </Controls.Tab>
                                         </Layouts.Row>
@@ -265,7 +265,7 @@ export default function Page() {
                                                                     children: (
                                                                         <Layouts.Contents.InnerContent>
                                                                             <Controls.Button onClick={() => setPage(true)}>Go to</Controls.Button>
-                                                                            <Controls.Button onClick={() => onClick()}>Show modal</Controls.Button>
+                                                                            <Controls.Button onClick={() => handleClick()}>Show modal</Controls.Button>
                                                                         </Layouts.Contents.InnerContent>
                                                                     ),
                                                                 },
@@ -313,13 +313,13 @@ export default function Page() {
                                     <Layouts.Divider style={{ marginTop: "1em" }} />
                                     {/* <Layouts.Col show={"mobile"} gap={0}>
                                         <Layouts.Row gap={1} fix>
-                                            <Controls.Tab active={mobile === "info"} onClick={() => setMobile("info")}>
+                                            <Controls.Tab active={mobile === "info"} onClick={()=> setMobile("info")}>
                                                 Info
                                             </Controls.Tab>
-                                            <Controls.Tab active={mobile === "orderbook"} onClick={() => setMobile("orderbook")}>
+                                            <Controls.Tab active={mobile === "orderbook"} onClick={()=> setMobile("orderbook")}>
                                                 Orderbook
                                             </Controls.Tab>
-                                            <Controls.Tab active={mobile === "chart"} onClick={() => setMobile("chart")}>
+                                            <Controls.Tab active={mobile === "chart"} onClick={()=> setMobile("chart")}>
                                                 Chart
                                             </Controls.Tab>
                                         </Layouts.Row>

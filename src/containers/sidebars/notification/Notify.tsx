@@ -23,9 +23,9 @@ export default function Notify(props: Notify) {
         timeOut;
     }, [active]);
 
-    const onRemove = (id?: string | number) => {
-        id && RemoveNotify(id);
-    };
+    // const onRemove = (id?: string | number) => {
+    //     id && RemoveNotify(id);
+    // };
 
     return (
         <Style $active={active}>

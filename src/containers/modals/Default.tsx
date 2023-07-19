@@ -30,7 +30,7 @@ export default function Default() {
         setMounted(true);
     }, []);
 
-    const onClose = (e: any) => {
+    const handleClose = (e: any) => {
         if (typeof modal?.onClose === "function") modal?.onClose(e);
         setShowModal(false);
     };
@@ -62,7 +62,7 @@ export default function Default() {
                           {modal?.buttonArea && <ButtonArea>{modal?.buttonArea}</ButtonArea>}
                           {modal?.close && (
                               <Close>
-                                  <Controls.Button icon={"x"} onClick={(e: any) => onClose(e)} />
+                                  <Controls.Button icon={"x"} onClick={(e: any) => handleClose(e)} />
                               </Close>
                           )}
                       </div>

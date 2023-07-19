@@ -30,10 +30,10 @@ export default function OrderControl(props: OrderControl) {
     const option = props?.option || "market";
     const responsive = props?.responsive || 0;
 
-    const onClickBuy = (e: any) => {
+    const handleBuy = (e: any) => {
         alert("buy");
     };
-    const onClickSell = (e: any) => {
+    const handleSell = (e: any) => {
         alert("sell");
     };
 
@@ -233,7 +233,7 @@ export default function OrderControl(props: OrderControl) {
                             color={color.buy}
                             style={{ ...(windowSize.width <= responsive && mode === false ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
                             onClick={(e: any) => {
-                                windowSize.width <= responsive && mode === false ? setMode(true) : onClickBuy(e);
+                                windowSize.width <= responsive && mode === false ? setMode(true) : handleBuy(e);
                             }}
                         >
                             <span>B</span>
@@ -245,7 +245,7 @@ export default function OrderControl(props: OrderControl) {
                             color={color.sell}
                             style={{ ...(windowSize.width <= responsive && mode ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
                             onClick={(e: any) => {
-                                windowSize.width <= responsive && mode ? setMode(false) : onClickSell(e);
+                                windowSize.width <= responsive && mode ? setMode(false) : handleSell(e);
                             }}
                         >
                             <span>S</span>

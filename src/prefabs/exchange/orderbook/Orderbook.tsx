@@ -29,10 +29,10 @@ export default function Ordrebook(props: Orderbook) {
 
     const view = props?.view || 0;
 
-    const onClickAsk = (ask: Tick, e?: any) => {
+    const handleAsk = (ask: Tick, e?: any) => {
         if (typeof props?.onClickAsk === "function") props?.onClickAsk(ask, e);
     };
-    const onClickBid = (bid: Tick, e?: any) => {
+    const handleBid = (bid: Tick, e?: any) => {
         if (typeof props?.onClickBid === "function") props?.onClickBid(bid, e);
     };
 
@@ -41,7 +41,7 @@ export default function Ordrebook(props: Orderbook) {
             <Asks $show={view === 0 || view === 1}>
                 {asks && asks?.length > 0 ? (
                     asks?.map((ask: Tick, i: number) => (
-                        <Ticks key={i} onClick={(e: any) => onClickAsk(ask, e)}>
+                        <Ticks key={i} onClick={(e: any) => handleAsk(ask, e)}>
                             <div>
                                 <div>
                                     <div>
@@ -68,7 +68,7 @@ export default function Ordrebook(props: Orderbook) {
             <Bids $show={view === 0 || view === 2}>
                 {bids && bids?.length > 0 ? (
                     bids?.map((bid: Tick, i: number) => (
-                        <Ticks key={i} onClick={(e: any) => onClickBid(bid, e)}>
+                        <Ticks key={i} onClick={(e: any) => handleBid(bid, e)}>
                             <div>
                                 <div>
                                     <div>

@@ -21,11 +21,11 @@ export default function BottomSheet(props: BottomSheet) {
         setMounted(true);
     }, []);
 
-    const onClose = (e: any) => {
+    const handleClose = (e: any) => {
         if (typeof props?.onClose === "function") props?.onClose(e);
     };
 
-    const onBlur = (e: any) => {
+    const handleBlur = (e: any) => {
         if (typeof props?.onBlur === "function") props?.onBlur(e);
         // onClose(e);
         // setMounted(false);
@@ -34,7 +34,7 @@ export default function BottomSheet(props: BottomSheet) {
     return mounted && active
         ? createPortal(
               <Layouts.Panel active={mounted} id="panel" style={{ zIndex: 100, pointerEvents: "none" }} fix>
-                  <Style tabIndex={100} $scale={scale} $active={active} $height={props?.height} onBlur={(e: any) => onBlur(e)}>
+                  <Style tabIndex={100} $scale={scale} $active={active} $height={props?.height} onBlur={(e: any) => handleBlur(e)}>
                       {props?.children}
                   </Style>
               </Layouts.Panel>,

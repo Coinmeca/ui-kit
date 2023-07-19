@@ -41,12 +41,12 @@ export default function TableItem(props: ListItem) {
         );
     };
 
-    const onClick = (e: any) => {
+    const handleClick = (e: any) => {
         if (typeof props?.onClick === "function") props?.onClick(props, e);
     };
 
     return (
-        <Style $change={props?.change} style={props?.style} onClick={(e: any) => onClick(e)} $event={typeof props?.onClick === "function" ? true : false} data-active={props?.active}>
+        <Style $change={props?.change} style={props?.style} onClick={(e: any) => handleClick(e)} $event={typeof props?.onClick === "function" ? true : false} data-active={props?.active}>
             {TableCell(props?.children)}
         </Style>
     );

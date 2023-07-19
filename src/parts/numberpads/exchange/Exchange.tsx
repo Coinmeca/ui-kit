@@ -18,11 +18,11 @@ export default function Exchange(props: ExchangePad) {
         if (props?.value) setValue(props?.value?.toString() || "");
     }, [props?.value]);
 
-    const onClick = (e: any) => {
+    const handleClick = (e: any) => {
         if (typeof props?.button?.onClick === "function") props?.button?.onClick(e, value);
     };
 
-    const onChange = (e: any, v: string) => {
+    const handleChange = (e: any, v: string) => {
         let input: number | string = "";
         if (v === "plus") {
             console.log(v);
@@ -43,14 +43,14 @@ export default function Exchange(props: ExchangePad) {
         <Numberpad
             {...props}
             value={value}
-            onChange={(e: any, v: string) => onChange(e, v)}
+            onChange={(e: any, v: string) => handleChange(e, v)}
             right={{
                 children: (
                     <>
-                        <Controls.Button onClick={(e: any) => onChange(e, "plus")} icon={"plus-bold"} />
-                        <Controls.Button onClick={(e: any) => onChange(e, "minus")} icon={"minus-bold"} />
-                        <Controls.Button onClick={(e: any) => onChange(e, ".")} icon={"dot"} />
-                        <Controls.Button {...props?.button} onClick={(e: any) => onClick(e)} color={props?.button?.color} style={{ ...props?.button?.style, ...(props?.reverse && { order: -1 }) }}>
+                        <Controls.Button onClick={(e: any) => handleChange(e, "plus")} icon={"plus-bold"} />
+                        <Controls.Button onClick={(e: any) => handleChange(e, "minus")} icon={"minus-bold"} />
+                        <Controls.Button onClick={(e: any) => handleChange(e, ".")} icon={"dot"} />
+                        <Controls.Button {...props?.button} onClick={(e: any) => handleClick(e)} color={props?.button?.color} style={{ ...props?.button?.style, ...(props?.reverse && { order: -1 }) }}>
                             {props?.button?.children || "OK"}
                         </Controls.Button>
                     </>
