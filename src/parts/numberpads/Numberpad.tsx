@@ -34,7 +34,7 @@ export default function Numberpad(props: Numberpad) {
         if (v === "sub") input = value?.length - 1 > 0 ? value?.substring(0, value?.length - 1) : "0";
         else if (v === "reset") input = "0";
         else input = value + v;
-        if (typeof props?.handleChange === "function") props?.handleChange(e, input);
+        if (typeof props?.onChange === "function") props?.onChange(e, input);
         setValue(input);
     };
 

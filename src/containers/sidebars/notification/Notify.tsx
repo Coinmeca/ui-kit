@@ -23,9 +23,9 @@ export default function Notify(props: Notify) {
         timeOut;
     }, [active]);
 
-    // const onRemove = (id?: string | number) => {
-    //     id && RemoveNotify(id);
-    // };
+    const handleRemove = (id?: string | number) => {
+        id && RemoveNotify(id);
+    };
 
     return (
         <Style $active={active}>
@@ -40,7 +40,7 @@ export default function Notify(props: Notify) {
                                 {/* "YYYY-MM-DD HH:mm:ss" */}
                                 {props?.date?.toLocaleString()}
                             </Text>
-                            <Controls.Button scale={0.75} icon={"x"} fit onClick={() => onRemove(props?.id)} />
+                            <Controls.Button scale={0.75} icon={"x"} fit onClick={() => handleRemove(props?.id)} />
                         </Layouts.Row>
                     </Layouts.Row>
                     {props?.img && <Image src={props?.img} width={0} height={0} alt={""} />}
