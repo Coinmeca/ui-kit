@@ -8,7 +8,7 @@ export interface BottomSheet {
     children?: any;
     scale?: number;
     active: boolean;
-    height?: number | { min?: number; max?: number };
+    height?: number | string | { min?: number | string; max?: number | string };
     onBlur?: Function;
     onClose: Function;
 }

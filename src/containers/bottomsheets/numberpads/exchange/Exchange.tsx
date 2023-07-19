@@ -17,7 +17,7 @@ export default function Exchange(props: Exchange) {
     const width = 64;
 
     const min = (typeof props?.height === "object" && props?.height?.min) || 36;
-    const max = (typeof props?.height === "object" && props?.height?.max) || 64;
+    const max = (typeof props?.height === "object" && props?.height?.max) || "60vh";
     const height = { min: (typeof props?.height === "object" ? props?.height?.min : props?.height) || min, max: (typeof props?.height === "object" ? props?.height?.min : props?.height) || max };
 
     const padding = props?.padding || 2;
