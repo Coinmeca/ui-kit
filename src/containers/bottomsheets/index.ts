@@ -1,3 +1,2 @@
-import Numberpad from './numberpads/Numberpad';
+import Numberpad from "./numberpad/Numberpad";
 export { Numberpad };
-export * as Numberpads from './numberpads/';
