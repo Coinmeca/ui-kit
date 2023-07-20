@@ -5,12 +5,12 @@ import type { Numberpad as Pad } from "parts/numberpads/Numberpad";
 import type { Button } from "components/controls/button/Button";
 import { Format } from "lib/utils";
 
-export interface ExchangePad extends Pad {
+export interface CurrencyPad extends Pad {
     step?: number;
     button?: Button;
 }
 
-export default function Exchange(props: ExchangePad) {
+export default function Currency(props: CurrencyPad) {
     const step = props?.step || 1;
     const [value, setValue] = useState(props?.value || "");
 

@@ -1,3 +1,3 @@
-import Exchange from "./exchange/Exchange";
+import Currency from "./currency/Currency";
 
-export { Exchange }
+export { Currency };
