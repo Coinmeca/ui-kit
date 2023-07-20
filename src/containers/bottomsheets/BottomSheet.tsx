@@ -34,7 +34,7 @@ export default function BottomSheet(props: BottomSheet) {
     return mounted && active
         ? createPortal(
               <Layouts.Panel active={mounted} id="panel" style={{ zIndex: 100, pointerEvents: "none" }} fix>
-                  <Style tabIndex={100} $scale={scale} $active={active} $height={props?.height} onBlur={(e: any) => handleBlur(e)}>
+                <Style style={mounted ? { transform: 'translateY(0)'}:{ transform: 'translateY(100%)'}} tabIndex={100} $scale={scale} $active={active} $height={props?.height} onBlur={(e: any) => handleBlur(e)}>
                       {props?.children}
                   </Style>
               </Layouts.Panel>,

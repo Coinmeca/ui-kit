@@ -1,5 +1,6 @@
 import { styled, css } from "styled-components";
 import { Root } from "lib/style";
+import * as Icon from 'components/elements/icon/Icon.styled';
 
 const Style = styled.button<{
     $type: "glass" | "line" | "solid" | undefined;
@@ -40,9 +41,13 @@ const Style = styled.button<{
         min-height: 3em;
         gap: 1em;
 
-        & > i:only-child {
-            margin-left: -0.1em;
-            margin-right: -0.1em;
+        & > ${Icon.default}{
+            font-size:2.5em;
+            
+            &:only-child {
+                margin-left: -0.1em;
+                margin-right: -0.1em;
+            }
         }
 
         & > span {
@@ -58,7 +63,7 @@ const Style = styled.button<{
                 return css`
                     background: rgba(${glass}, var(--o015));
                     color: rgb(${glass});
-                    & i svg {
+                    & ${Icon.default} svg {
                         fill: rgb(${glass});
                     }
                     &:hover {
@@ -74,7 +79,7 @@ const Style = styled.button<{
                     background: transparent;
                     border: 1px solid rgb(var(--theme));
                     color: rgb(var(--theme));
-                    & i svg {
+                    & ${Icon.default} svg {
                         fill: rgb(var(--theme));
                     }
                     &:hover {
@@ -97,7 +102,7 @@ const Style = styled.button<{
                 return css`
                     background: rgb(var(--theme), var(--o1));
                     color: rgba(${solid});
-                    & i svg {
+                    & ${Icon.default} svg {
                         fill: rgb(${solid});
                     }
 
@@ -112,7 +117,7 @@ const Style = styled.button<{
                 return css`
                     background: transparent;
                     color: rgba(var(--theme), var(--o045));
-                    & i svg {
+                    & ${Icon.default} svg {
                         fill: rgba(var(--theme), var(--o045));
                     }
                     &:hover {
