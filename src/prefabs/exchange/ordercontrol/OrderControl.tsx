@@ -2,9 +2,9 @@
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Token } from "types/web3";
-import useWindowSize from "hooks/useWindowSize";
 import { Format } from "lib/utils";
-import { BottomSheets } from "containers";
+import { Exchange } from "prefabs";
+import useWindowSize from "hooks/useWindowSize";
 import useBottomSheet from "hooks/useBottomSheet";
 import useMobile from "hooks/useMobile";
 
@@ -116,7 +116,7 @@ export default function OrderControl(props: OrderControl) {
                                             children: <Controls.Dropdown option={Object.values(symbol)[0]} options={Object.values(symbol)} />,
                                         }}
                                         style={text.setting}
-                                        numberpad={{ open: open, children: <BottomSheets.Numberpads.Exchange active={active} button={{ color: "green", children: "BUY" }} onClose={close} /> }}
+                                        numberpad={{ open: open, children: <Exchange.BottomSheets.OrderPad active={active} button={{ color: "green", children: "BUY" }} onClose={close} /> }}
                                     />
                                     <Controls.Range color={color.buy} min={range.min} max={range.max} step={range.step} unit={range.unit} />
                                     <Layouts.Col gap={gap.col.big}>
@@ -189,7 +189,7 @@ export default function OrderControl(props: OrderControl) {
                                             children: <Controls.Dropdown option={Object.values(symbol).reverse()[1]} options={Object.values(symbol).reverse()} />,
                                         }}
                                         style={text.setting}
-                                        numberpad={{ open: open, children: <BottomSheets.Numberpads.Exchange active={isMobile ? active : false} button={{ color: "green", children: "BUY" }} onClose={close} /> }}
+                                        numberpad={{ open: open, children: <Exchange.BottomSheets.OrderPad active={isMobile ? active : false} button={{ color: "green", children: "BUY" }} onClose={close} /> }}
                                     />
                                     <Controls.Range color={color.sell} min={range.min} max={range.max} step={range.step} unit={range.unit} />
                                     <Layouts.Col gap={gap.col.big}>

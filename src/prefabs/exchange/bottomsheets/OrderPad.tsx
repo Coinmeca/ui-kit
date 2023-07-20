@@ -3,17 +3,17 @@ import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
 import { Numberpads } from "parts";
 import type { BottomSheet as Sheet } from "containers/bottomsheets/BottomSheet";
-import type { ExchangePad } from "parts/numberpads/exchange/Exchange";
+import type { CurrencyPad } from "parts/numberpads/currency/Currency";
 import { useEffect, useState } from "react";
 
-export interface Exchange extends ExchangePad, Sheet {
+export interface ExchangePad extends CurrencyPad, Sheet {
     label?: string;
     placeholder?: string;
     padding?: number;
     onChange?: Function;
 }
 
-export default function Exchange(props: Exchange) {
+export default function ExchangePad(props: ExchangePad) {
     const width = 64;
 
     const min = (typeof props?.height === "object" && props?.height?.min) || 36;
@@ -61,7 +61,7 @@ export default function Exchange(props: Exchange) {
                     unit={"ETH"}
                     inputMode={"none"}
                 />
-                <Numberpads.Exchange
+                <Numberpads.Currency
                     {...props}
                     type={"currency"}
                     width={width}
