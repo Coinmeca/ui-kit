@@ -1,3 +1,5 @@
+"use client";
+import { motion } from "framer-motion";
 import Style from "./Panel.styled";
 
 export interface Panel {
@@ -13,7 +15,7 @@ export default function Panel(props: Panel) {
     const active = typeof props?.active !== "undefined" ? props?.active : true;
 
     return (
-        <Style id={props?.id} $active={active} $color={props?.color} $fix={props?.fix} style={props?.style}>
+        <Style as={motion.section} layout id={props?.id} $active={active} $color={props?.color} $fix={props?.fix} style={props?.style}>
             {props?.children}
         </Style>
     );

@@ -28,7 +28,7 @@ const Style = styled.div<{ $color: string; $value: number }>`
         const color: string = Root.Color($color);
         const width: string = `${$value}ch + 2em`;
         return css`
-            font-size: 0.6667em;
+            font-size: 1em;
             position: relative;
             display: flex;
             align-items: center;

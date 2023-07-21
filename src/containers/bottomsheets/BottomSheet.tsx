@@ -32,28 +32,30 @@ export default function BottomSheet(props: BottomSheet) {
         // setMounted(false);
     };
 
-    return mounted
-        ? createPortal(
-              <Layouts.Panel active={mounted} id="panel" style={{ zIndex: 100, pointerEvents: "none" }} fix>
-                  <AnimatePresence>
-                      <Style
-                          key="bottomsheet"
-                          tabIndex={100}
-                          $scale={scale}
-                          $active={active}
-                          $height={props?.height}
-                          onBlur={(e: any) => handleBlur(e)}
-                          as={motion.div}
-                          initial={{ transform: "translateY(100%)" }}
-                          animate={{ transform: "translateY(0)" }}
-                          exit={{ transform: "translateY(100%)" }}
-                          transition={{ ease: "easeInOut", duration: 0.3 }}
-                      >
-                          {props?.children}
-                      </Style>
-                  </AnimatePresence>
-              </Layouts.Panel>,
-              document.body
-          )
-        : null;
+    return (
+        <AnimatePresence>
+            {mounted
+                ? createPortal(
+                      <Layouts.Panel active={mounted} id="panel" style={{ zIndex: 100, pointerEvents: "none" }} fix>
+                          <Style
+                              key="bottomsheet"
+                              tabIndex={100}
+                              $scale={scale}
+                              $active={active}
+                              $height={props?.height}
+                              onBlur={(e: any) => handleBlur(e)}
+                              as={motion.div}
+                              initial={{ transform: "translateY(100%)" }}
+                              animate={{ transform: "translateY(0)" }}
+                              exit={{ transform: "translateY(100%)" }}
+                              transition={{ ease: "easeInOut", duration: 0.3 }}
+                          >
+                              {props?.children}
+                          </Style>
+                      </Layouts.Panel>,
+                      document.body
+                  )
+                : null}
+        </AnimatePresence>
+    );
 }
