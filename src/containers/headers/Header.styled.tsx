@@ -20,7 +20,7 @@ export const Logo = styled.a`
 `;
 
 export const Nav = styled.nav<{ $scale: number; $color: string }>`
-    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    font-size: ${({ $scale }) => $scale}em;
     position: relative;
     display: flex;
     align-items: center;
@@ -49,7 +49,7 @@ export const Nav = styled.nav<{ $scale: number; $color: string }>`
 
     &:after {
         content: "";
-        font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+        font-size: ${({ $scale }) => $scale}em;
         background-image: linear-gradient(90deg, transparent, white, transparent);
         position: absolute;
         bottom: 0;
@@ -86,7 +86,7 @@ export const Nav = styled.nav<{ $scale: number; $color: string }>`
 `;
 
 export const MenuButton = styled.div<{ $active: boolean }>`
-    font-size: calc(var(--unit) * 1);
+    font-size: 1em;
     display: flex;
     position: absolute;
     top: 1em;
@@ -220,7 +220,7 @@ export const Menu = styled.div`
 `;
 
 export const Side = styled.div<{ $scale: number; $width: number }>`
-    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    font-size: ${({ $scale }) => $scale}em;
     max-width: ${({ $width }) => $width}em;
     transition: 0.3s ease;
     z-index: 20;
@@ -310,7 +310,7 @@ export const Side = styled.div<{ $scale: number; $width: number }>`
 
 const Style = styled.header<{ $scale: number; $color: string; $height: number; $side: number }>`
     position: relative;
-    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    font-size: ${({ $scale }) => $scale}em;
     display: flex;
     flex-direction: column;
     justify-content: center;

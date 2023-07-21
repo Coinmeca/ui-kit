@@ -1,6 +1,6 @@
 import { styled, css } from "styled-components";
 import { Root } from "lib/style";
-import * as Icon from 'components/elements/icon/Icon.styled';
+import * as Icon from "components/elements/icon/Icon.styled";
 
 const Style = styled.button<{
     $type: "glass" | "line" | "solid" | undefined;
@@ -17,7 +17,7 @@ const Style = styled.button<{
     }};
 
     position: relative;
-    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    font-size: ${({ $scale }) => $scale}em;
     font-weight: bold;
     ${({ $fit }) => $fit && "max-width: max-content"};
     min-width: max-content;
@@ -41,9 +41,7 @@ const Style = styled.button<{
         min-height: 3em;
         gap: 1em;
 
-        & > ${Icon.default}{
-            font-size:2.5em;
-            
+        & > ${Icon.default} {
             &:only-child {
                 margin-left: -0.1em;
                 margin-right: -0.1em;

@@ -2,7 +2,7 @@ import { Root } from "lib/style";
 import { css, styled } from "styled-components";
 
 export const Style = styled.div<{ $scale: number; $timer: number; $padding: number; $nav: "top" | "bottom" | undefined; $vertical: "top" | "center" | "bottom"; $horizon: "left" | "center" | "right" }>`
-    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    font-size: ${({ $scale }) => $scale}em;
     position: relative;
     display: flex;
     width: 100%;

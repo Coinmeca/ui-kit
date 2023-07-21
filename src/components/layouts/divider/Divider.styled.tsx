@@ -25,7 +25,7 @@ const Responsive = (vertical: boolean, margin?: number) => {
 };
 
 const Style = styled.div<{ $color: string; $vertical: boolean; $gap: number; $margin: number; $strong: boolean; $responsive?: "desktop" | "laptop" | "tablet" | "mobile" }>`
-    font-size: calc(var(--unit) * 1);
+    font-size: 1em;
     min-width: max-content;
     min-height: max-content;
     display: flex;

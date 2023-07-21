@@ -32,6 +32,7 @@ export default function Numberpad(props: Numberpad) {
     }, [props?.value]);
 
     const handleChange = (e: any, v: string) => {
+        console.log(1);
         let input: string = "";
         if (v === "sub") input = value?.length - 1 > 0 ? value?.substring(0, value?.length - 1) : "0";
         else if (v === "reset") input = "0";
@@ -67,7 +68,7 @@ export default function Numberpad(props: Numberpad) {
                     <Layouts.Row gap={0} style={{ ...(props?.reverse && { order: -1 }) }} fix>
                         <Controls.Button onClick={(e: any) => handleChange(e, "reset")} icon={"revert-bold"} />
                         <Controls.Button onClick={(e: any) => handleChange(e, "0")}>0</Controls.Button>
-                        <Controls.Button onClick={(e: any) => handleChange(e, "sub")} icon={"chevron-left-bold"} />
+                        <Controls.Button onClick={(e: any) => handleChange(e, "sub")} icon={"chevron-left-small-bold"} />
                     </Layouts.Row>
                 </Pad>
                 {props?.right?.children && (

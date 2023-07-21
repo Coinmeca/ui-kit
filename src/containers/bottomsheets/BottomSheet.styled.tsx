@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 const Style = styled.div<{ $scale: number; $active: boolean; $height?: number | string | { min?: number | string; max?: number | string } }>`
-    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    font-size: ${({ $scale }) => $scale}em;
     background: rgba(var(--black), var(--o09));
     position: absolute;
     bottom: 0;
@@ -12,7 +12,7 @@ const Style = styled.div<{ $scale: number; $active: boolean; $height?: number | 
     text-align: center;
     pointer-events: ${({ $active }) => ($active ? "initial" : "none")};
     transform: translateY(100%);
-    transform: translateY(${({ $active }) => ($active && "0")});
+    transform: translateY(${({ $active }) => $active && "0"});
     transition: 0.3s ease;
 
     ${({ $height }) => typeof $height === "object" && `min-height: ${typeof $height?.min === "number" ? `${$height?.min}em` : typeof $height?.min === "string" && `${$height?.min}`}`};

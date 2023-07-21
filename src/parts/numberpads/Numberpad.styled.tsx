@@ -25,18 +25,15 @@ const Style = styled.div<{ $scale: number; $width?: number; $padding: number; $r
         & > * {
             flex: 1;
             ${({ $reverse }) => $reverse && "flex-direction: column-reverse;"}
+            font-size: ${({ $scale }) => $scale}em;
 
             &${Pad} {
                 flex: 3;
             }
 
-            & > * {
+            & > *:not(${Pad}) {
                 flex: 1;
                 height: -webkit-fill-available;
-
-            & > *,
-            &${Pad}, > * > * {
-                font-size: calc(var(--unit) * ${({ $scale }) => $scale});
             }
         }
     }

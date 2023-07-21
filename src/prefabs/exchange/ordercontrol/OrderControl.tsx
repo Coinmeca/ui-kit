@@ -116,7 +116,7 @@ export default function OrderControl(props: OrderControl) {
                                             children: <Controls.Dropdown option={Object.values(symbol)[0]} options={Object.values(symbol)} />,
                                         }}
                                         style={text.setting}
-                                        numberpad={{ open: open, children: <Exchange.BottomSheets.OrderPad active={active} placeholder={'0'} button={{ color: "green", children: "BUY" }} onClose={close} /> }}
+                                        numberpad={{ open: open, children: <Exchange.BottomSheets.OrderPad active={active} placeholder={"0"} button={{ color: "green", children: "BUY" }} onClose={close} /> }}
                                     />
                                     <Controls.Range color={color.buy} min={range.min} max={range.max} step={range.step} unit={range.unit} />
                                     <Layouts.Col gap={gap.col.big}>
@@ -189,7 +189,7 @@ export default function OrderControl(props: OrderControl) {
                                             children: <Controls.Dropdown option={Object.values(symbol).reverse()[1]} options={Object.values(symbol).reverse()} />,
                                         }}
                                         style={text.setting}
-                                        numberpad={{ open: open, children: <Exchange.BottomSheets.OrderPad active={isMobile ? active : false} button={{ color: "green", children: "BUY" }} onClose={close} /> }}
+                                        numberpad={{ open: open, children: <Exchange.BottomSheets.OrderPad active={isMobile ? active : false} button={{ color: "red", children: "SELL" }} onClose={close} /> }}
                                     />
                                     <Controls.Range color={color.sell} min={range.min} max={range.max} step={range.step} unit={range.unit} />
                                     <Layouts.Col gap={gap.col.big}>

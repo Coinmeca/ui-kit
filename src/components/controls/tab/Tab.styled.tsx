@@ -1,7 +1,7 @@
 import { css, styled } from "styled-components";
 
 const Style = styled.div<{ $scale: number; $toggle: boolean; $active: boolean; $padding: boolean; $fit: boolean; $disabled: boolean }>`
-    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    font-size: ${({ $scale }) => $scale}em;
     font-weight: bold;
     ${({ $fit }) => $fit && "max-width: max-content"};
     min-width: max-content;
