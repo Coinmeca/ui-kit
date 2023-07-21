@@ -21,7 +21,7 @@ const Style = styled.i<{ $color?: string; $change?: boolean; $scale?: number }>`
     align-items: center;
     justify-content: center;
     font-style: initial;
-    font-size: calc(var(--unit) * ${({ $scale }) => ($scale || 1) * 2.5});
+    font-size: ${({ $scale }) => ($scale || 1) * 2.5}em;
     width: 1em;
     height: 1em;
     aspect-ratio: 1/1;

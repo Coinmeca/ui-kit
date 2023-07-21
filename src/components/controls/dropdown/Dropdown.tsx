@@ -147,7 +147,7 @@ export default function Dropdown(props: Dropdown) {
                                         : option
                                     : option}
                             </span>
-                            <Elements.Icon icon="chevron-down-bold" />
+                            <Elements.Icon icon="chevron-down-small" />
                         </>
                     )}
                 </Item>

@@ -3,15 +3,15 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Layouts } from "components";
 import Style from "./BottomSheet.styled";
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion";
 
 export interface BottomSheet {
-  children?: any;
-  scale?: number;
-  active: boolean;
-  height?: number | string | { min?: number | string; max?: number | string };
-  onBlur?: Function;
-  onClose: Function;
+    children?: any;
+    scale?: number;
+    active: boolean;
+    height?: number | string | { min?: number | string; max?: number | string };
+    onBlur?: Function;
+    onClose: Function;
 }
 export default function BottomSheet(props: BottomSheet) {
     const [mounted, setMounted] = useState<boolean>(false);
@@ -32,31 +32,28 @@ export default function BottomSheet(props: BottomSheet) {
         // setMounted(false);
     };
 
-    return mounted ? createPortal(
-        <Layouts.Panel
-            active={mounted}
-            id="panel"
-            style={{ zIndex: 100, pointerEvents: "none" }}
-            fix
-        ><AnimatePresence>
-                <Style
-                    key="bottomsheet"
-                    tabIndex={100}
-                    $scale={scale}
-                    $active={active}
-                    $height={props?.height}
-                    onBlur={(e: any) => handleBlur(e)}
-                    as={motion.div}
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    exit={{ y: "100%" }}
-                    transition={{ ease: "easeInOut", duration: 0.03 }}
-                >
-                    {props?.children}
-                </Style>
-            </AnimatePresence>
-        </Layouts.Panel>,
-        document.body
-    )
-    : null;
+    return mounted
+        ? createPortal(
+              <Layouts.Panel active={mounted} id="panel" style={{ zIndex: 100, pointerEvents: "none" }} fix>
+                  <AnimatePresence>
+                      <Style
+                          key="bottomsheet"
+                          tabIndex={100}
+                          $scale={scale}
+                          $active={active}
+                          $height={props?.height}
+                          onBlur={(e: any) => handleBlur(e)}
+                          as={motion.div}
+                          initial={{ transform: "translateY(100%)" }}
+                          animate={{ transform: "translateY(0)" }}
+                          exit={{ transform: "translateY(100%)" }}
+                          transition={{ ease: "easeInOut", duration: 0.3 }}
+                      >
+                          {props?.children}
+                      </Style>
+                  </AnimatePresence>
+              </Layouts.Panel>,
+              document.body
+          )
+        : null;
 }

@@ -3,7 +3,7 @@ import { css, styled } from "styled-components";
 export const Item = styled.li``;
 
 const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: number; $disabled: boolean }>`
-    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    font-size: ${({ $scale }) => $scale}em;
     background: transparent;
     color: rgba(var(--white), var(--o045));
     ${({ $fit }) => $fit && "max-width: max-content"};

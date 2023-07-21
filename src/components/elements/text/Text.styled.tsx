@@ -99,7 +99,7 @@ export const Desc = styled.p<{ $color: string; $change?: boolean; $opacity?: num
     opacity: ${({ $opacity }) => ($opacity ? `${$opacity}` : 0.45)};
 `;
 export const Text = styled.span<{ $scale: number; $color: string; $change?: boolean; $opacity?: number; $weight: number | string; $height: number; $align?: "left" | "center" | "right"; $responsive?: any; $size?: number }>`
-    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    font-size: ${({ $scale }) => $scale}em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     text-align: ${({ $align }) => $align};

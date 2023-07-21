@@ -51,10 +51,6 @@ const Global = createGlobalStyle`
         list-style: none;
     }
 
-    body {
-        font-size: 1.5rem;
-    }
-
 
     :root {
         --unit: 8px;

@@ -47,8 +47,8 @@ export default function Currency(props: CurrencyPad) {
             right={{
                 children: (
                     <>
-                        <Controls.Button onClick={(e: any) => handleChange(e, "plus")} icon={"plus-bold"} />
-                        <Controls.Button onClick={(e: any) => handleChange(e, "minus")} icon={"minus-bold"} />
+                        <Controls.Button onClick={(e: any) => handleChange(e, "plus")} icon={"plus-small-bold"} />
+                        <Controls.Button onClick={(e: any) => handleChange(e, "minus")} icon={"minus-small-bold"} />
                         <Controls.Button onClick={(e: any) => handleChange(e, ".")} icon={"dot"} />
                         <Controls.Button {...props?.button} onClick={(e: any) => handleClick(e)} color={props?.button?.color} style={{ ...props?.button?.style, ...(props?.reverse && { order: -1 }) }}>
                             {props?.button?.children || "OK"}

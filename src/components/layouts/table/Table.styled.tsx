@@ -2,7 +2,7 @@
 import { styled } from "styled-components";
 
 const Style = styled.div`
-    font-size: calc(var(--unit) * 1);
+    font-size: 1em;
 
     display: table;
     border-collapse: collapse;

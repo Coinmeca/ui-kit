@@ -3,7 +3,7 @@ import { Root } from "lib/style";
 import { styled } from "styled-components";
 
 const Style = styled.div<{ $scale: number; $color: string; $size: number }>`
-    font-size: calc(var(--unit) * ${({ $scale }) => $scale});
+    font-size: ${({ $scale }) => $scale}em;
     display: flex;
     align-items: center;
     gap: 1em;

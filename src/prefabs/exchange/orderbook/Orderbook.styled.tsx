@@ -78,7 +78,7 @@ const Balance = (color: string) => css`
 `;
 
 export const Tick = styled.div`
-    font-size: calc(var(--unit) * 1);
+    font-size: 1em;
     position: relative;
     display: table;
     border-collapse: collapse;
@@ -150,7 +150,7 @@ export const Tick = styled.div`
 `;
 
 export const Asks = styled.div<{ $show: boolean }>`
-    font-size: calc(var(--unit) * 1);
+    font-size: 1em;
     display: flex;
     flex-direction: column-reverse;
     width: 100%;
@@ -176,7 +176,7 @@ export const Asks = styled.div<{ $show: boolean }>`
 `;
 
 export const Bids = styled.div<{ $show: boolean }>`
-    font-size: calc(var(--unit) * 1);
+    font-size: 1em;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -266,7 +266,7 @@ const Responsive = (vertical?: boolean) => css`
     }
 `;
 const Style = styled.div<{ $responsive?: { device: "desktop" | "laptop" | "tablet" | "mobile"; vertical?: boolean } }>`
-    font-size: calc(var(--unit) * 1);
+    font-size: 1em;
     display: flex;
     flex-direction: column;
     width: 100%;
