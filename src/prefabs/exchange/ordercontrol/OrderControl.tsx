@@ -226,7 +226,7 @@ export default function OrderControl(props: OrderControl) {
                     ]}
                 />
                 <Layouts.Row fix>
-                    <Layouts.Row gap={windowSize.width <= responsive ? 2 : 6} fix>
+                    <Layouts.Row gap={6} fix>
                         <Controls.Button icon={"reset"} hide={windowSize.width > responsive} fit />
                         <Controls.Button
                             type={"solid"}
