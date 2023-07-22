@@ -16,7 +16,7 @@ export interface Input {
     align?: "left" | "center" | "right";
     scale?: number;
 
-    placeholder?: string;
+    placeholder?: number | string;
     icon?: string;
 
     clearable?: boolean;
@@ -52,6 +52,7 @@ export interface Input {
     message?: any;
 
     numberpad?: { open: Function; children?: any };
+    autoFocus?: boolean;
     lock?: boolean;
     readOnly?: boolean;
     disabled?: boolean;
@@ -216,7 +217,7 @@ export default function Input(props: Input) {
                             onChange={(e) => handleChange(e)}
                             onFocus={(e) => handleFocus(e)}
                             onKeyDown={(e) => handleKeyDown(e)}
-                            autoFocus={extend || focus}
+                            autoFocus={extend || focus || props?.autoFocus}
                             disabled={props?.disabled}
                             readOnly={props?.lock || props?.disabled}
                         />

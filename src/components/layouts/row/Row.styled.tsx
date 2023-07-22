@@ -3,22 +3,26 @@ import { Root } from "lib/style";
 import { styled, css } from "styled-components";
 
 const gap = css`
-    gap: calc(var(--gap) / 2);
+    gap: --gap;
 
     & > & {
-        gap: calc(var(--gap) / 4);
+        gap: calc(var(--gap) / 2);
 
         & > & {
-            gap: calc(var(--gap) / 8);
+            gap: calc(var(--gap) / 4);
 
             & > & {
-                gap: calc(var(--gap) / 16);
+                gap: calc(var(--gap) / 8);
 
                 & > & {
-                    gap: calc(var(--gap) / 32);
+                    gap: calc(var(--gap) / 16);
 
                     & > & {
-                        gap: calc(var(--gap) / 64);
+                        gap: calc(var(--gap) / 32);
+
+                        & > & {
+                            gap: calc(var(--gap) / 64);
+                        }
                     }
                 }
             }

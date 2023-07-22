@@ -5,34 +5,50 @@ import { Token } from "types/web3";
 import { Format } from "lib/utils";
 import { Exchange } from "prefabs";
 import useWindowSize from "hooks/useWindowSize";
-import useBottomSheet from "hooks/useBottomSheet";
-import useMobile from "hooks/useMobile";
+import Order from "./Order";
+import type { Order as O } from "./Order";
 
 export interface OrderControl {
     base: Token;
     quote: Token;
     price: number | string;
+    fee: number;
     option?: "market" | "limit";
     onClickBuy?: Function;
     onClickSell?: Function;
     responsive?: number;
 }
 
+export interface Order {
+    buy: string;
+    sell: string;
+    category?: number;
+    option?: number;
+    price: number | string;
+    amount?: number | string;
+    quantity?: number | string;
+    fees?: number | string;
+
+}
+
 export default function OrderControl(props: OrderControl) {
     const windowSize = useWindowSize();
-    const { active, open, close } = useBottomSheet();
-    const { isMobile } = useMobile();
 
     const [mode, setMode] = useState(true);
-    const price = Format(props?.price, "currency", true) || 0;
-    const symbol = { base: props?.base?.symbol?.toUpperCase() || "", quote: props?.quote?.symbol?.toUpperCase() || "" };
-
     const option = props?.option || "market";
     const responsive = props?.responsive || 0;
 
-    const handleBuy = (e: any) => {
-        alert("buy");
+    const [buy, setBuy] = useState<any>();
+
+    const handleChangeBuy = (order: O) => {
+        console.log(order);
+        setBuy(order);
+    }
+
+    const handleBuy = () => {
+        alert(buy);
     };
+
     const handleSell = (e: any) => {
         alert("sell");
     };
@@ -44,7 +60,7 @@ export default function OrderControl(props: OrderControl) {
 
     const gap = {
         col: {
-            small: 0.5,
+            small: 1,
             big: 1,
         },
         row: 2,
@@ -56,7 +72,7 @@ export default function OrderControl(props: OrderControl) {
     };
 
     const text = {
-        height: 1,
+        height: 1.5,
         opacity: 0.45,
         label: { flex: 0 },
         setting: { fontFeatureSettings: `"tnum" on,"lnum" on` },
@@ -81,159 +97,27 @@ export default function OrderControl(props: OrderControl) {
                             active: windowSize.width <= responsive ? mode === true : true,
                             style: { height: "max-content", overflow: "hidden" },
                             children: (
-                                <Layouts.Col gap={gap.col.small}>
-                                    <Layouts.Row gap={gap.row} style={gap.space.big} fix>
-                                        <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                            Available
-                                        </Elements.Text>
-                                        <Layouts.Row gap={gap.row} fix>
-                                            <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                                                {props?.quote?.balance}
-                                            </Elements.Text>
-                                            <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                                {symbol?.quote}
-                                            </Elements.Text>
-                                        </Layouts.Row>
-                                    </Layouts.Row>
-                                    <Controls.Input
-                                        placeholder={"Price"}
-                                        type={"currency"}
-                                        align={"right"}
-                                        value={price}
-                                        left={{ width: gap.width - 6, children: <span>Price</span> }}
-                                        right={{ width: gap.width, children: <span style={{ justifyContent: "flex-start" }}>{symbol?.quote}</span> }}
-                                        style={text.setting}
-                                        lock={option === "market"}
-                                    />
-                                    <Controls.Input
-                                        placeholder={"0"}
-                                        type={"currency"}
-                                        align={"right"}
-                                        value={""}
-                                        left={{ width: gap.width - 6, children: <span>Amount</span> }}
-                                        right={{
-                                            width: gap.width,
-                                            children: <Controls.Dropdown option={Object.values(symbol)[0]} options={Object.values(symbol)} />,
-                                        }}
-                                        style={text.setting}
-                                        numberpad={{ open: open, children: <Exchange.BottomSheets.OrderPad active={active} placeholder={"0"} button={{ color: "green", children: "BUY" }} onClose={close} /> }}
-                                    />
-                                    <Controls.Range color={color.buy} min={range.min} max={range.max} step={range.step} unit={range.unit} />
-                                    <Layouts.Col gap={gap.col.big}>
-                                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                                Fees
-                                            </Elements.Text>
-                                            <Layouts.Row gap={gap.row} fix>
-                                                <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                                                    - 0.123456789
-                                                </Elements.Text>
-                                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                                    {symbol?.base}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </Layouts.Row>
-                                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                                Total
-                                            </Elements.Text>
-                                            <Layouts.Row gap={gap.row} fix>
-                                                <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                                                    9.87654321
-                                                </Elements.Text>
-                                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                                    {symbol?.base}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </Layouts.Row>
-                                    </Layouts.Col>
-                                </Layouts.Col>
+                                <Order mode={true} option={option} assets={[props?.quote, props?.base]} price={props?.price} fee={props?.fee} onChange={(v: O) => handleChangeBuy(v)} />
                             ),
                         },
                         {
                             active: windowSize.width <= responsive ? mode === false : true,
                             style: { height: "max-content", overflow: "hidden" },
                             children: (
-                                <Layouts.Col gap={gap.col.small}>
-                                    <Layouts.Row gap={gap.row} style={gap.space.big} fix>
-                                        <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                            Available
-                                        </Elements.Text>
-                                        <Layouts.Row gap={gap.row} fix>
-                                            <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                                                {props?.base?.balance}
-                                            </Elements.Text>
-                                            <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                                {symbol?.base}
-                                            </Elements.Text>
-                                        </Layouts.Row>
-                                    </Layouts.Row>
-                                    <Controls.Input
-                                        placeholder={"Price"}
-                                        type={"currency"}
-                                        align={"right"}
-                                        value={price}
-                                        left={{ width: gap.width - 6, children: <span>Price</span> }}
-                                        right={{ width: gap.width, children: <span style={{ justifyContent: "flex-start" }}>{symbol?.quote}</span> }}
-                                        style={text.setting}
-                                        lock={option === "market"}
-                                    ></Controls.Input>
-                                    <Controls.Input
-                                        placeholder={"0"}
-                                        type={"currency"}
-                                        align={"right"}
-                                        value={""}
-                                        left={{ width: gap.width - 6, children: <span>Amount</span> }}
-                                        right={{
-                                            width: gap.width,
-                                            children: <Controls.Dropdown option={Object.values(symbol).reverse()[1]} options={Object.values(symbol).reverse()} />,
-                                        }}
-                                        style={text.setting}
-                                        numberpad={{ open: open, children: <Exchange.BottomSheets.OrderPad active={isMobile ? active : false} button={{ color: "red", children: "SELL" }} onClose={close} /> }}
-                                    />
-                                    <Controls.Range color={color.sell} min={range.min} max={range.max} step={range.step} unit={range.unit} />
-                                    <Layouts.Col gap={gap.col.big}>
-                                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                                Fees
-                                            </Elements.Text>
-                                            <Layouts.Row gap={gap.row} fix>
-                                                <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                                                    - 0.123456789
-                                                </Elements.Text>
-                                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                                    {symbol?.quote}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </Layouts.Row>
-                                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                                Total
-                                            </Elements.Text>
-                                            <Layouts.Row gap={gap.row} fix>
-                                                <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                                                    9.87654321
-                                                </Elements.Text>
-                                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                                    {symbol?.quote}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </Layouts.Row>
-                                    </Layouts.Col>
-                                </Layouts.Col>
+                                <Order mode={false} option={option} assets={[props?.base, props?.quote]} price={props?.price} fee={props?.fee} onChange={(v: O) => handleChangeBuy(v)} />
                             ),
                         },
                     ]}
                 />
                 <Layouts.Row fix>
-                    <Layouts.Row gap={6} fix>
+                    <Layouts.Row gap={windowSize.width > responsive ? 6 : 2} fix>
                         <Controls.Button icon={"reset"} hide={windowSize.width > responsive} fit />
                         <Controls.Button
                             type={"solid"}
                             color={color.buy}
                             style={{ ...(windowSize.width <= responsive && mode === false ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
-                            onClick={(e: any) => {
-                                windowSize.width <= responsive && mode === false ? setMode(true) : handleBuy(e);
+                            onClick={(e: any, o: O) => {
+                                windowSize.width <= responsive && mode === false ? setMode(true) : handleBuy();
                             }}
                         >
                             <span>B</span>

@@ -308,7 +308,7 @@ export default function Page() {
                                                     active: true,
                                                     children: (
                                                         <Layouts.Contents.InnerContent>
-                                                            <Exchange.OrderControl base={market.base} quote={market.quote} price={market.price} option={option} responsive={Root.Device.Tablet} />
+                                                            <Exchange.OrderControl base={market.base} quote={market.quote} price={market.price} fee={0.1} option={option} responsive={Root.Device.Tablet} />
                                                         </Layouts.Contents.InnerContent>
                                                     ),
                                                 },

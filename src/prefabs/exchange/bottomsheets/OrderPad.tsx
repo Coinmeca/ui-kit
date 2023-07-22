@@ -8,7 +8,9 @@ import { useEffect, useState } from "react";
 
 export interface ExchangePad extends CurrencyPad, Sheet {
     label?: string;
-    placeholder?: string;
+    placeholder?: number | string;
+    sub?: { value?: number | string, unit?: string }
+    unit?: string;
     padding?: number;
     onChange?: Function;
 }
@@ -37,12 +39,16 @@ export default function ExchangePad(props: ExchangePad) {
         <BottomSheet {...props} height={height}>
             <Layouts.Col gap={0} align="center">
                 <Layouts.Row gap={2} style={{ alignItems: "center", padding: `${padding / 2}em ${padding / 1.5}em`, maxWidth: `${width}` }}>
-                    <Elements.Text type={"p"} weight={"bold"} align={"right"}>
-                        = 1.9234234
-                    </Elements.Text>
-                    <Elements.Text type={"p"} weight={"bold"} opacity={0.6} style={{ maxWidth: "4em" }}>
-                        ETH
-                    </Elements.Text>
+                    {props?.sub && (
+                        <>
+                            <Elements.Text type={"p"} weight={"bold"} align={"right"}>
+                                {props?.sub?.value}
+                            </Elements.Text>
+                            <Elements.Text type={"p"} weight={"bold"} opacity={0.6} style={{ maxWidth: "4em" }}>
+                                {props?.sub?.unit}
+                            </Elements.Text>
+                        </>
+                    )}
                 </Layouts.Row>
                 <Controls.Input
                     value={value}
@@ -51,15 +57,16 @@ export default function ExchangePad(props: ExchangePad) {
                     type={"currency"}
                     align={"right"}
                     left={{
-                        children: (
+                        children: (props?.label && (
                             <Elements.Text style={{ fontSize: "1.25em" }} weight={"bold"} opacity={0.6}>
-                                Price
+                                {props?.label}
                             </Elements.Text>
-                        ),
+                        )),
                     }}
                     style={{ fontSize: "1.125em", padding: `0.125em ${padding / 2}em` }}
-                    unit={"ETH"}
+                    unit={props?.unit}
                     inputMode={"none"}
+                    autoFocus
                 />
                 <Numberpads.Currency
                     {...props}
