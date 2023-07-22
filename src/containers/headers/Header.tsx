@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Layouts } from "components";
 import Style, { Logo, Nav, MenuButton, Menu, Side } from "./Header.styled";
 import Coinmeca from "/src/assets/coinmeca.svg";
+import { animate, stagger } from "framer-motion";
 
 export interface Header {
     logo?: Logo;
@@ -51,6 +52,20 @@ export default function Header(props: Header) {
     const side = props?.side?.width || 60;
 
     const [mobileMenu, setMobileMenu] = useState(false);
+
+    useEffect(() => {
+        animate(
+            "nav",
+            mobileMenu
+                ? { opacity: 1, transform: 'translateY(0)' }
+                : { opacity: 0, transform: 'translateY(-15%)' },
+            {
+                ease: 'easeInOut',
+                duration: 0.3,
+                delay: mobileMenu ? stagger(0.05) : 0
+            }
+        );
+    }, [mobileMenu])
 
     return (
         <Style $scale={scale} $color={color} $height={height} $side={side}>

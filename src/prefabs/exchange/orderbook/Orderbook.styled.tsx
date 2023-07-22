@@ -99,7 +99,7 @@ export const Tick = styled.div`
         & > * {
             display: flex;
             padding: 0.5em;
-            transition: 0.3s ease;
+            // transition: 0.3s ease;
 
             & > * {
                 display: table-cell;
@@ -156,7 +156,7 @@ export const Asks = styled.div<{ $show: boolean }>`
     width: 100%;
     height: 100%;
     max-height: 100%;
-    overflow: auto;
+    overflow: hidden auto;
     transition: 0.3s ease;
 
     ${({ $show }) => !$show && `max-height: 0;`}
@@ -182,7 +182,7 @@ export const Bids = styled.div<{ $show: boolean }>`
     width: 100%;
     height: 100%;
     max-height: 100%;
-    overflow: auto;
+    overflow: hidden auto;
     transition: 0.3s ease;
 
     ${({ $show }) => !$show && `max-height: 0;`}
@@ -210,12 +210,20 @@ const Responsive = (vertical?: boolean) => css`
             /* display: none; */
         }
 
-        ${Tick} {
+        & > ${Tick} {
             & > * > * {
                 & > * {
                     padding: ${vertical ? "0.2em" : "0.5em"};
                 }
             }
+        }
+
+        & > *:not(${Tick}):only-child {
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            width: 100%;
+            height: 100%;
         }
     }
 

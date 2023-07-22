@@ -84,7 +84,7 @@ export default function Dropdown(props: Dropdown) {
         // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
         setOption(v);
         if (typeof v?.event === "function") v.event(e);
-        if (typeof props?.onClickItem === "function") props?.onClickItem(e, k, option);
+        if (typeof props?.onClickItem === "function") props?.onClickItem(e, option, k);
         setOpen(false);
     };
 
@@ -129,23 +129,23 @@ export default function Dropdown(props: Dropdown) {
                                     typeof option === "undefined"
                                         ? undefined
                                         : typeof option === "object"
-                                        ? typeof option[keyIndex] !== "undefined"
-                                            ? option[keyIndex]
-                                            : typeof option[keyName] !== "undefined"
-                                            ? option[keyName]
+                                            ? typeof option[keyIndex] !== "undefined"
+                                                ? option[keyIndex]
+                                                : typeof option[keyName] !== "undefined"
+                                                    ? option[keyName]
+                                                    : option
                                             : option
-                                        : option
                                 }
                             >
                                 {typeof option === "undefined"
                                     ? placeholder
                                     : typeof option === "object"
-                                    ? typeof option[keyIndex] !== "undefined"
-                                        ? option[keyIndex]
-                                        : typeof option[keyName] !== "undefined"
-                                        ? option[keyName]
-                                        : option
-                                    : option}
+                                        ? typeof option[keyIndex] !== "undefined"
+                                            ? option[keyIndex]
+                                            : typeof option[keyName] !== "undefined"
+                                                ? option[keyName]
+                                                : option
+                                        : option}
                             </span>
                             <Elements.Icon icon="chevron-down-small" />
                         </>

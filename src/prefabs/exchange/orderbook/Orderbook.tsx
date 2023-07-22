@@ -1,6 +1,6 @@
 ﻿"use client";
-import { Layouts } from "components";
-import { motion } from "framer-motion";
+import { Elements, Layouts } from "components";
+import { AnimatePresence, Reorder, motion } from "framer-motion";
 import { Format, Sort } from "lib/utils";
 import { useState } from "react";
 import Style, { Asks, Bids, Tick as Ticks } from "./Orderbook.styled";
@@ -33,75 +33,100 @@ export default function Ordrebook(props: Orderbook) {
 
     const view = props?.view || 0;
 
-    const handleAsk = (ask: Tick, e?: any) => {
-        setAsks((state: any) =>
-            Sort(
-                state.filter((s: Tick, i: number) => s?.price !== ask.price),
-                "price",
-                "number",
-                true
-            )
-        );
-        if (typeof props?.onClickAsk === "function") props?.onClickAsk(ask, e);
+    const handleAsk = (ask: Tick, k: number, e?: any) => {
+        if (typeof props?.onClickAsk === "function") props?.onClickAsk(ask, k, e);
     };
-    const handleBid = (bid: Tick, e?: any) => {
-        setAsks((state: any) => Sort([...state, ...[asks && asks]], "price", "number", true));
-        if (typeof props?.onClickBid === "function") props?.onClickBid(bid, e);
+
+    const handleBid = (bid: Tick, k: number, e?: any) => {
+        if (typeof props?.onClickBid === "function") props?.onClickBid(bid, k, e);
     };
 
     return (
         <Style $responsive={props?.responsive}>
-            <Asks $show={view === 0 || view === 1} as={motion.div}>
+            <Asks $show={view === 0 || view === 1}>
                 {asks && asks?.length > 0 ? (
-                    asks?.map((ask: Tick, i: number) => (
-                        <Ticks key={i} onClick={(e: any) => handleAsk(ask, e)} as={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-                            <div>
+                    <AnimatePresence mode="popLayout" presenceAffectsLayout>
+                        {asks?.map((ask: Tick, k: number) => (
+                            <Ticks key={k} onClick={(e: any) => handleAsk(ask, k, e)}
+                                as={motion.div}
+                                layout
+                                initial={{ scale: 0.9, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                exit={{ scale: 0.9, opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                            >
                                 <div>
                                     <div>
-                                        <span>{Format(ask?.balance, "currency", true)}</span>
-                                    </div>
-                                    <div
-                                        style={{
-                                            backgroundSize: `${
-                                                (parseFloat(ask?.balance.toString()) / ask_max) * 100 > 100 ? "100" : (parseFloat(ask?.balance.toString()) / ask_max) * 100 < 0 ? "0" : (parseFloat(ask?.balance.toString()) / ask_max) * 100
-                                            }% 100%`,
-                                        }}
-                                    >
-                                        <span>{Format(ask?.price, "currency", true)}</span>
+                                        <div>
+                                            <span>{Format(ask?.balance, "currency", true)}</span>
+                                        </div>
+                                        <div
+                                            style={{
+                                                backgroundSize: `${(parseFloat(ask?.balance.toString()) / ask_max) * 100 > 100 ? "100" : (parseFloat(ask?.balance.toString()) / ask_max) * 100 < 0 ? "0" : (parseFloat(ask?.balance.toString()) / ask_max) * 100
+                                                    }% 100%`
+                                            }}
+                                        >
+                                            <span>{Format(ask?.price, "currency", true)}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </Ticks>
-                    ))
+                            </Ticks>
+                        ))}
+                    </AnimatePresence>
                 ) : (
-                    <div>There is no asks.</div>
+                    <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.9, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        style={{ direction: 'ltr' }}
+                    >
+                        <Elements.Text type={'desc'} opacity={0.6}>
+                            There is no asks.
+                        </Elements.Text>
+                    </motion.div>
                 )}
             </Asks>
             <Layouts.Divider responsive={props?.responsive?.device} style={{ ...(view !== 0 && { display: "none" }) }} />
             <Bids $show={view === 0 || view === 2}>
                 {bids && bids?.length > 0 ? (
-                    bids?.map((bid: Tick, i: number) => (
-                        <Ticks key={i} onClick={(e: any) => handleBid(bid, e)}>
-                            <div>
+                    <AnimatePresence>
+                        {bids?.map((bid: Tick, k: number) => (
+                            <Ticks key={k} onClick={(e: any) => handleBid(bid, e)}
+                                as={motion.div}
+                                initial={{ scale: 0.9, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                exit={{ scale: 0.9, opacity: 0 }}
+                                transition={{ duration: 0.3 }}>
                                 <div>
                                     <div>
-                                        <span>{Format(bid?.balance, "currency", true)}</span>
-                                    </div>
-                                    <div
-                                        style={{
-                                            backgroundSize: `${
-                                                (parseFloat(bid?.balance.toString()) / bid_max) * 100 > 100 ? "100" : (parseFloat(bid?.balance.toString()) / bid_max) * 100 < 0 ? "0" : (parseFloat(bid?.balance.toString()) / bid_max) * 100
-                                            }% 100%`,
-                                        }}
-                                    >
-                                        <span>{Format(bid?.price, "currency", true)}</span>
+                                        <div>
+                                            <span>{Format(bid?.balance, "currency", true)}</span>
+                                        </div>
+                                        <div
+                                            style={{
+                                                backgroundSize: `${(parseFloat(bid?.balance.toString()) / bid_max) * 100 > 100 ? "100" : (parseFloat(bid?.balance.toString()) / bid_max) * 100 < 0 ? "0" : (parseFloat(bid?.balance.toString()) / bid_max) * 100
+                                                    }% 100%`
+                                            }}
+                                        >
+                                            <span>{Format(bid?.price, "currency", true)}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </Ticks>
-                    ))
+                            </Ticks>
+                        ))}
+                    </AnimatePresence>
                 ) : (
-                    <div>There is no bids yet.</div>
+                    <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.9, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <Elements.Text type={'desc'} opacity={0.6}>
+                            There is no bids.
+                        </Elements.Text>
+                    </motion.div>
                 )}
             </Bids>
         </Style>

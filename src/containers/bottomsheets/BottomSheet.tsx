@@ -32,28 +32,25 @@ export default function BottomSheet(props: BottomSheet) {
         // setMounted(false);
     };
 
-    return mounted ? (
-        <AnimatePresence>
-            {createPortal(
-                <Layouts.Panel active={mounted} id="panel" style={{ zIndex: 100, pointerEvents: "none" }} fix>
-                    <Style
-                        key="bottomsheet"
-                        tabIndex={100}
-                        $scale={scale}
-                        $active={mounted}
-                        $height={props?.height}
-                        onBlur={(e: any) => handleBlur(e)}
-                        as={motion.div}
-                        initial={{ transform: "translateY(100%)" }}
-                        animate={{ transform: "translateY(0)" }}
-                        exit={{ transform: "translateY(100%)" }}
-                        transition={{ ease: "easeInOut", duration: 0.3 }}
-                    >
-                        {props?.children}
-                    </Style>
-                </Layouts.Panel>,
-                document.body
-            )}
-        </AnimatePresence>
-    ) : null;
+    return createPortal(
+        <Layouts.Panel active={active} id="panel" style={{ zIndex: 100, pointerEvents: "none" }} fix>
+            <AnimatePresence>
+                {active && <Style
+                    key="bottomsheet"
+                    tabIndex={100}
+                    $scale={scale}
+                    $active={active}
+                    $height={props?.height}
+                    onBlur={(e: any) => handleBlur(e)}
+                    as={motion.div}
+                    initial={{ y: '100%' }}
+                    animate={{ y: 0 }}
+                    exit={{ y: '100%' }}
+                    transition={{ ease: "easeInOut", duration: 0.01 }}
+                >
+                    {props?.children}
+                </Style>}
+            </AnimatePresence>
+        </Layouts.Panel>,
+        document.body)
 }

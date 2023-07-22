@@ -91,7 +91,7 @@ export function Format(value: number | string, type?: 'email' | 'number' | 'curr
                 copy[0] = number;
             }
 
-            let decimals: string = '';
+            let decimals: string | number = '';
             if (copy.length > 1) {
                 if (copy.length > 2) {
                     for (let i = 2; i < copy.length; i++) {
@@ -100,14 +100,19 @@ export function Format(value: number | string, type?: 'email' | 'number' | 'curr
                     copy[1] = copy[1].toString();
                 }
 
-                if (!isNaN(parseInt(copy[1]))) {
-                    copy[1] = (typeof fix === 'number' && !isNaN(fix) && copy[1]?.length > fix) ? copy[1].substring(0, fix) : copy[1];
-                    copy[1] = display ? parseInt(copy[1]) : copy[1];
+                for (let i = 0; i < copy[1]?.length; i++) {
+                    if (typeof fix === 'number' && !isNaN(fix) && i === fix - 1) break;
+                    if (!isNaN(parseInt(copy[1][i]))) {
+                        decimals += copy[1][i]
+                    };
                 }
+                decimals = decimals.toString();
+                decimals = display ? parseInt(decimals) : decimals;
                 decimals = '.' + copy[1];
             }
 
-            return copy[0] + decimals;
+            const result = copy[0] + decimals;
+            return type === 'number' ? parseFloat(result) : result;
         }
         default: {
             return value;
