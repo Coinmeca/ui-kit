@@ -61,7 +61,7 @@ export interface Input {
 export default function Input(props: Input) {
     const input: any = createRef();
     const type = props?.type !== "password" ? props?.type : "password";
-    const placeholder = props?.placeholder || "Type";
+    const placeholder = props?.placeholder?.toString() || "Type";
     const step = props?.step || 1;
     const scale = props?.scale || 1;
     const min = props?.min || 0;
