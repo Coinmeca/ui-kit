@@ -25,8 +25,6 @@ export default function Currency(props: CurrencyPad) {
     const handleChange = (e: any, v: string) => {
         let input: number | string = "";
         if (v === "plus") {
-            console.log(v);
-            console.log(value);
             const number: number = parseFloat(Format(value, "number").toString());
             input = number + step;
         } else if (v === "minus") {
@@ -34,7 +32,9 @@ export default function Currency(props: CurrencyPad) {
             input = number - step;
             if (input <= 0) input = "0";
         } else input = v;
-        if (v === ".") input = value + ".";
+        if (v === ".") {
+            input = value === "" ? "0." : value + ".";
+        }
         if (typeof props?.onChange === "function") props?.onChange(e, input);
         setValue(input);
     };
