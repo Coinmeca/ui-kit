@@ -141,7 +141,7 @@ export default function Order(props: OrderControl) {
                 style={text.setting}
                 numberpad={{ open: open, children: <Exchange.BottomSheets.OrderPad active={active} label={currency === 0 ? 'Quantity' : 'Amount'} placeholder={'0'} value={currency === 0 ? order.quantity : order.amount} unit={[...assets].reverse()[currency]?.symbol?.toUpperCase()} sub={{ value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, 'currency', true)}`, unit: assets[currency]?.symbol?.toUpperCase() }} button={{ color: "green", children: "BUY" }} onChange={(e: any, v: any) => handleChangeAmount(v)} onClose={close} /> }}
             />
-            <Controls.Range color={mode ? color.buy : color.sell} min={range.min} max={range.max} step={range.step} unit={range.unit} onChange={(v: any, p: number) => handleChangeRange(p)} />
+            <Controls.Range color={mode ? color.buy : color.sell} value={(order.amount / available) * 100} min={range.min} max={range.max} step={range.step} unit={range.unit} onChange={(v: any, p: number) => handleChangeRange(p)} />
             <Layouts.Col gap={gap.col.big}>
                 <Layouts.Row gap={gap.row} style={gap.space.small} fix>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
