@@ -54,18 +54,12 @@ export default function Header(props: Header) {
     const [mobileMenu, setMobileMenu] = useState(false);
 
     useEffect(() => {
-        animate(
-            "nav",
-            mobileMenu
-                ? { opacity: 1, transform: 'translateY(0)' }
-                : { opacity: 0, transform: 'translateY(-15%)' },
-            {
-                ease: 'easeInOut',
-                duration: 0.3,
-                delay: mobileMenu ? stagger(0.05) : 0
-            }
-        );
-    }, [mobileMenu])
+        animate("nav", mobileMenu ? { opacity: 1, transform: "translateY(0)" } : { opacity: 0, transform: "translateY(-15%)" }, {
+            ease: "easeInOut",
+            duration: 0.3,
+            delay: mobileMenu ? stagger(0.05) : 0,
+        });
+    }, [mobileMenu]);
 
     return (
         <Style $scale={scale} $color={color} $height={height} $side={side}>

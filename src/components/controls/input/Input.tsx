@@ -59,7 +59,7 @@ export interface Input {
 
 export default function Input(props: Input) {
     const input: any = createRef();
-    const type = props?.type === "password" ? "password" : props?.type || 'text';
+    const type = props?.type === "password" ? "password" : props?.type || "text";
     const placeholder = props?.placeholder?.toString() || "Type";
     const step = props?.step || 1;
     const scale = props?.scale || 1;
@@ -238,9 +238,5 @@ export default function Input(props: Input) {
     }
 
     // Styled Components Caution */
-    return (
-        <>
-            {Input}
-        </>
-    );
+    return <>{Input}</>;
 }

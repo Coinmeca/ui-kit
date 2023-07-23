@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 export interface ExchangePad extends CurrencyPad, Sheet {
     label?: string;
     placeholder?: number | string;
-    sub?: { value?: number | string, unit?: string }
+    sub?: { value?: number | string; unit?: string };
     unit?: string;
     padding?: number;
     onChange?: Function;
@@ -58,11 +58,11 @@ export default function ExchangePad(props: ExchangePad) {
                     unit={props?.unit}
                     onChange={(e: any, v: string) => handleChange(e, v)}
                     left={{
-                        children: (props?.label && (
+                        children: props?.label && (
                             <Elements.Text style={{ fontSize: "1.25em" }} weight={"bold"} opacity={0.6}>
                                 {props?.label}
                             </Elements.Text>
-                        )),
+                        ),
                     }}
                     inputMode={"none"}
                     style={{ fontSize: "1.125em", padding: `0.125em ${padding / 2}em` }}

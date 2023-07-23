@@ -21,9 +21,9 @@ export default function BottomSheet(props: BottomSheet) {
     useEffect(() => {
         setActive(true);
         return () => {
-            console.log('unmount');
+            console.log("unmount");
             setActive(false);
-        }
+        };
     }, []);
 
     const handleClose = (e?: any) => {
@@ -37,25 +37,27 @@ export default function BottomSheet(props: BottomSheet) {
         // setMounted(false);
     };
 
-    return <Layouts.Panel active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
-        <AnimatePresence>
-            {active && (
-                <Style
-                    key="bottomsheet"
-                    tabIndex={100}
-                    $scale={scale}
-                    $active={active}
-                    $height={props?.height}
-                    onBlur={(e: any) => handleBlur(e)}
-                    as={motion.div}
-                    initial={{ y: '100%' }}
-                    animate={{ y: 0 }}
-                    exit={{ y: '100%' }}
-                    transition={{ ease: "easeInOut", duration: 0.15 }}
-                >
-                    {props?.children}
-                </Style>
-            )}
-        </AnimatePresence>
-    </Layouts.Panel>
+    return (
+        <Layouts.Panel active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
+            <AnimatePresence>
+                {active && (
+                    <Style
+                        key="bottomsheet"
+                        tabIndex={100}
+                        $scale={scale}
+                        $active={active}
+                        $height={props?.height}
+                        onBlur={(e: any) => handleBlur(e)}
+                        as={motion.div}
+                        initial={{ y: "100%" }}
+                        animate={{ y: 0 }}
+                        exit={{ y: "100%" }}
+                        transition={{ ease: "easeInOut", duration: 0.15 }}
+                    >
+                        {props?.children}
+                    </Style>
+                )}
+            </AnimatePresence>
+        </Layouts.Panel>
+    );
 }
