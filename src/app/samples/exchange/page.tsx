@@ -8,7 +8,7 @@ import useWindowSize from "hooks/useWindowSize";
 import Data from "./data";
 
 export default function Page() {
-    const windowSize = useWindowSize();
+    const { windowSize } = useWindowSize();
     const { market, orderbook, info, orderbookView, chart } = Data();
 
     const [mobile, setMobile] = useState("orderbook");
@@ -215,7 +215,7 @@ export default function Page() {
                                                 {
                                                     active: marketTab === "orderbook" || mobile === "orderbook",
                                                     style: { padding: 0 },
-                                                    children: <Exchange.Orderbook view={view} asks={orderbook.asks} bids={orderbook.bids} responsive={{ device: "mobile", vertical: false }} />,
+                                                    children: <Exchange.Orderbook view={view} asks={orderbook.asks} bids={orderbook.bids} responsive={{ device: "mobile", vertical: false }} guidance />,
                                                 },
                                                 {
                                                     active: marketTab === "history" || mobile === "history",

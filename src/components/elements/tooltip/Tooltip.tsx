@@ -15,11 +15,13 @@ export interface Tooltip {
     padding?: number;
     margin?: number | [number, number];
     style?: object;
+    fill?: boolean;
 }
 
 export default function Tooltip(props: Tooltip) {
     const color = props?.color || 'white';
     const margin = props?.margin || 8;
+    const padding = props?.padding || 2;
 
     const ref: any = useRef(null);
     const [active, setActive] = useState(props?.active || false);
@@ -47,7 +49,7 @@ export default function Tooltip(props: Tooltip) {
                     setY(e?.y - e?.offsetY + (e?.target?.clientHeight / 2));
                     break;
                 case 'bottom':
-                    setY(e?.y + e?.offsetY + v);
+                    setY(e?.y - e?.offsetY + v + e?.target?.clientHeight);
                     break;
                 default:
                     setY(e?.y + v);
@@ -70,7 +72,7 @@ export default function Tooltip(props: Tooltip) {
 
     return <Layouts.Panel active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
         <AnimatePresence>
-            {active && <Style ref={ref} $color={color} $padding={props?.padding || 1} style={{ top: y, left: x, width: props?.width, ...props?.style }}>
+            {active && <Style ref={ref} $color={color} $padding={padding} style={{ top: isNaN(y) ? undefined : y, left: isNaN(x) ? undefined : x, width: props?.width || props?.fill ? `calc(${props?.e?.target?.clientWidth}px - ${padding * 2}em)` : undefined, ...props?.style }}>
                 {props?.children}
             </Style>}
         </AnimatePresence>

@@ -8,7 +8,7 @@ import Data from "./data";
 import useModal from "hooks/useModal";
 
 export default function Page() {
-    const windowSize = useWindowSize();
+    const { windowSize } = useWindowSize();
 
     const [page, setPage] = useState(false);
     const { market, orderbook, info, orderbookView } = Data();
