@@ -1,9 +1,10 @@
-﻿"use client";
+﻿'use client';
 import { Elements, Layouts } from "components";
-import { AnimatePresence, Reorder, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Format, Sort } from "lib/utils";
-import { useState } from "react";
+import useTooltip from "hooks/useTooltip";
 import Style, { Asks, Bids, Tick as Ticks } from "./Orderbook.styled";
+import { Root } from "lib/style";
 
 export interface Orderbook {
     asks?: Tick[];
@@ -24,9 +25,10 @@ export interface Tick {
 }
 
 export default function Ordrebook(props: Orderbook) {
-    // const asks = props?.asks;
-    const bids = props?.bids;
-    const [asks, setAsks] = useState<Tick[] | undefined>(props?.asks);
+    const { onTooltip, close } = useTooltip();
+
+    const asks = props?.asks ? Sort(props?.asks, 'price', 'number', true) : [];
+    const bids = props?.bids ? Sort(props?.bids, 'price', 'number', false) : [];
 
     const ask_max: number = (asks && asks?.length > 0 && Math.max(...asks?.map((o: Tick) => parseFloat(o?.balance?.toString())))) || 0;
     const bid_max: number = (bids && bids?.length > 0 && Math.max(...bids?.map((o: Tick) => parseFloat(o?.balance?.toString())))) || 0;
@@ -41,13 +43,37 @@ export default function Ordrebook(props: Orderbook) {
         if (typeof props?.onClickBid === "function") props?.onClickBid(bid, k, e);
     };
 
+    const Tooltip = ({ tick }: { tick: Tick }) => {
+        return <Layouts.Row gap={2} fix>
+            <Layouts.Col gap={0.25}>
+                <Elements.Text opacity={0.6}>Price:</Elements.Text>
+                <Elements.Text opacity={0.6}>Balance:</Elements.Text>
+            </Layouts.Col>
+            <Layouts.Col gap={0.25}>
+                <Elements.Text align={"right"}>{Format(tick?.price, 'currency', true)}</Elements.Text>
+                <Elements.Text align={"right"}>{Format(tick?.balance, 'currency', true)}</Elements.Text>
+            </Layouts.Col>
+        </Layouts.Row>
+    }
+
+    const handleAskHover = (ask: Tick, e: any) => {
+        onTooltip(<Elements.Tooltip e={e} color={'red'} vertical={'top'} horizon={'left'} padding={1} style={{ border: `1px solid rgb(${Root.Color('red')})` }}>
+            <Tooltip tick={ask} />
+        </Elements.Tooltip>);
+    }
+    const handleBidHover = (bid: Tick, e: any) => {
+        onTooltip(<Elements.Tooltip e={e} color={'green'} vertical={'top'} horizon={'right'} padding={1} style={{ border: `1px solid rgb(${Root.Color('green')})` }}>
+            <Tooltip tick={bid} />
+        </Elements.Tooltip>);
+    }
+
     return (
         <Style $responsive={props?.responsive}>
             <Asks $show={view === 0 || view === 1}>
                 {asks && asks?.length > 0 ? (
                     <AnimatePresence mode="popLayout" presenceAffectsLayout>
                         {asks?.map((ask: Tick, k: number) => (
-                            <Ticks key={k} onClick={(e: any) => handleAsk(ask, k, e)}
+                            <Ticks key={k} onClick={(e: any) => handleAsk(ask, k, e)} onHoverStart={(e: any) => handleAskHover(ask, e)} onHoverEnd={close}
                                 as={motion.div}
                                 layout
                                 initial={{ scale: 0.9, opacity: 0 }}
@@ -92,7 +118,7 @@ export default function Ordrebook(props: Orderbook) {
                 {bids && bids?.length > 0 ? (
                     <AnimatePresence>
                         {bids?.map((bid: Tick, k: number) => (
-                            <Ticks key={k} onClick={(e: any) => handleBid(bid, e)}
+                            <Ticks key={k} onClick={(e: any) => handleBid(bid, e)} onHoverStart={(e: any) => handleBidHover(bid, e)} onHoverEnd={close}
                                 as={motion.div}
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
@@ -129,6 +155,6 @@ export default function Ordrebook(props: Orderbook) {
                     </motion.div>
                 )}
             </Bids>
-        </Style>
+        </Style >
     );
 }

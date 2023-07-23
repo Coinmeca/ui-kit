@@ -11,7 +11,7 @@ export interface Order {
     total?: number;
 }
 
-export default function useModal(intial: Order, available: number, fee: number, mode: boolean) {
+export default function useOrder(intial: Order, available: number, fee: number, mode: boolean) {
     const [order, setOrder] = useState<Order>(intial);
 
     const base = (base: string) => {
@@ -36,7 +36,7 @@ export default function useModal(intial: Order, available: number, fee: number, 
 
     const quantity = (quantity: number) => {
         setOrder((state: Order) => {
-            const max = mode ? (available * state?.price) : (available / state?.price);
+            const max = mode ? (available / state?.price) : (available * state?.price);
             const q = quantity > max ? max : quantity;
             return { ...state, amount: mode ? (q * state?.price) : (q / state?.price), quantity: q, fees: fees(q), total: q - fees(q) }
         });
