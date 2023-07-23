@@ -30,7 +30,7 @@ export interface Order {
 }
 
 export default function OrderControl(props: OrderControl) {
-    const windowSize = useWindowSize();
+    const { windowSize } = useWindowSize();
 
     const [mode, setMode] = useState(true);
     const option = props?.option || "market";

@@ -273,13 +273,36 @@ const Responsive = (vertical?: boolean) => css`
         }
     }
 `;
-const Style = styled.div<{ $responsive?: { device: "desktop" | "laptop" | "tablet" | "mobile"; vertical?: boolean } }>`
+const Style = styled.div<{ $responsive?: { device: "desktop" | "laptop" | "tablet" | "mobile"; vertical?: boolean }; $guidance: boolean }>`
     font-size: 1em;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
     overflow: hidden;
+
+    ${({ $guidance }) =>
+        $guidance && css`
+            
+        ${Asks},${Bids}{
+                
+                &:hover{
+
+                    ${Tick} {
+                        background: rgba(var(--white), var(--o0045));
+                        
+                        &:hover{
+                            background: rgba(var(--white), var(--o01));
+                        }
+
+                        &:hover ~ * {
+                            background:transparent;
+                        }
+                    }
+                }
+            }
+        `
+    }
 
     ${({ $responsive }) => {
         const device = $responsive?.device;

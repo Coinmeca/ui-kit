@@ -7,7 +7,7 @@ import useWindowSize from "hooks/useWindowSize";
 import Data from "./data";
 
 export default function Page() {
-    const windowSize = useWindowSize();
+    const { windowSize } = useWindowSize();
 
     const [page, setPage] = useState(false);
     const { market, orderbook, info, orderbookView } = Data();
