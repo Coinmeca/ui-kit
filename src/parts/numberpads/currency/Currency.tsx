@@ -25,10 +25,10 @@ export default function Currency(props: CurrencyPad) {
     const handleChange = (e: any, v: string) => {
         let input: number | string = "";
         if (v === "plus") {
-            const number: number = value === '' ? 0 : parseFloat(Format(value, "number").toString());
+            const number: number = value === "" ? 0 : parseFloat(Format(value, "number").toString());
             input = number + step;
         } else if (v === "minus") {
-            const number: number = value === '' ? 0 : parseFloat(Format(value, "number").toString());
+            const number: number = value === "" ? 0 : parseFloat(Format(value, "number").toString());
             input = number - step;
             if (input <= 0) input = "0";
         } else input = v;

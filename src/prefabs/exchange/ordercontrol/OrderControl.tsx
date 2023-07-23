@@ -26,7 +26,6 @@ export interface Order {
     amount?: number | string;
     quantity?: number | string;
     fees?: number | string;
-
 }
 
 export default function OrderControl(props: OrderControl) {
@@ -41,7 +40,7 @@ export default function OrderControl(props: OrderControl) {
     const handleChangeBuy = (order: O) => {
         console.log(order);
         setBuy(order);
-    }
+    };
 
     const handleBuy = () => {
         alert(buy);
@@ -94,16 +93,12 @@ export default function OrderControl(props: OrderControl) {
                         {
                             active: windowSize.width <= responsive ? mode === true : true,
                             style: { height: "max-content", overflow: "hidden" },
-                            children: (
-                                <Order mode={true} option={option} assets={[props?.quote, props?.base]} price={props?.price} fee={props?.fee} onChange={(v: O) => handleChangeBuy(v)} />
-                            ),
+                            children: <Order mode={true} option={option} assets={[props?.quote, props?.base]} price={props?.price} fee={props?.fee} onChange={(v: O) => handleChangeBuy(v)} />,
                         },
                         {
                             active: windowSize.width <= responsive ? mode === false : true,
                             style: { height: "max-content", overflow: "hidden" },
-                            children: (
-                                <Order mode={false} option={option} assets={[props?.base, props?.quote]} price={props?.price} fee={props?.fee} onChange={(v: O) => handleChangeBuy(v)} />
-                            ),
+                            children: <Order mode={false} option={option} assets={[props?.base, props?.quote]} price={props?.price} fee={props?.fee} onChange={(v: O) => handleChangeBuy(v)} />,
                         },
                     ]}
                 />

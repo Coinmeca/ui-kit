@@ -10,7 +10,7 @@ import useOrder from "hooks/useOrder";
 
 export interface OrderControl {
     mode: boolean;
-    assets: Token[]
+    assets: Token[];
     price: number | string;
     fee: number;
     option?: "market" | "limit";
@@ -33,38 +33,46 @@ export default function Order(props: OrderControl) {
     const { portal, close } = usePortal();
     const { isMobile } = useMobile();
 
-    const mode = typeof props?.mode === 'undefined' ? true : props?.mode;
+    const mode = typeof props?.mode === "undefined" ? true : props?.mode;
     const assets = props?.assets || [];
-    const available = Format(assets[0]?.balance || 0, 'number', true) as number;
+    const available = Format(assets[0]?.balance || 0, "number", true) as number;
 
     const option = props?.option || "market";
     const [currency, setCurrency] = useState(mode ? 0 : 1);
 
-    const { order, price, amount, quantity } = useOrder({
-        base: assets[0]?.address,
-        quote: assets[1]?.address,
-        price: Format(props?.price || 1, 'number', true) as number,
-        amount: 0,
-        quantity: 0,
-        fees: 0,
-        total: 0,
-    }, available, 0.01, mode);
+    const { order, price, amount, quantity } = useOrder(
+        {
+            base: assets[0]?.address,
+            quote: assets[1]?.address,
+            price: Format(props?.price || 1, "number", true) as number,
+            amount: 0,
+            quantity: 0,
+            fees: 0,
+            total: 0,
+        },
+        available,
+        0.01,
+        mode
+    );
 
     const handleChangePrice = (p: number | string) => {
-        price(Format(p, 'number', true) as number);
-    }
+        price(Format(p, "number", true) as number);
+    };
 
     const handleChangeAmount = (a: number | string) => {
-        currency === 0 ? quantity(Format(a, 'number', true) as number) : amount(Format(a, 'number', true) as number)
-    }
+        currency === 0 ? quantity(Format(a, "number", true) as number) : amount(Format(a, "number", true) as number);
+    };
 
     const handleChangeRange = (v: number) => {
-        if (available > 0) currency === 0 ? quantity(((Format(available, 'number', true) as number) / order.price) * (Format(v, 'number', true) as number) / 100) : amount((Format(available, 'number', true) as number) * (Format(v, 'number', true) as number) / 100);
-    }
+        if (available > 0)
+            currency === 0
+                ? quantity((((Format(available, "number", true) as number) / order.price) * (Format(v, "number", true) as number)) / 100)
+                : amount(((Format(available, "number", true) as number) * (Format(v, "number", true) as number)) / 100);
+    };
 
     useEffect(() => {
-        if (typeof props?.onChange === 'function') props?.onChange(order);
-    }, [order])
+        if (typeof props?.onChange === "function") props?.onChange(order);
+    }, [order]);
 
     const color = {
         buy: "green",
@@ -108,7 +116,7 @@ export default function Order(props: OrderControl) {
                 </Elements.Text>
                 <Layouts.Row gap={gap.row} fix>
                     <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                        {Format(assets[0]?.balance as number, 'currency', true)}
+                        {Format(assets[0]?.balance as number, "currency", true)}
                     </Elements.Text>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                         {assets[0]?.symbol?.toUpperCase()}
@@ -120,7 +128,7 @@ export default function Order(props: OrderControl) {
                 type={"currency"}
                 align={"right"}
                 value={order.price}
-                onClick={() => portal(<Exchange.BottomSheets.OrderPad label={'Price'} placeholder={order.price} value={order.price} button={{ children: "OK", onClick: () => close() }} onChange={(e: any, v: any) => handleChangePrice(v)} />)}
+                onClick={() => portal(<Exchange.BottomSheets.OrderPad label={"Price"} placeholder={order.price} value={order.price} button={{ children: "OK", onClick: () => close() }} onChange={(e: any, v: any) => handleChangePrice(v)} />)}
                 onChange={(e: any, v: any) => handleChangePrice(v)}
                 left={{ children: <span>Price</span> }}
                 right={{ width: gap.width, children: <span style={{ justifyContent: "flex-start" }}>{assets[0]?.symbol?.toUpperCase()}</span> }}
@@ -132,14 +140,37 @@ export default function Order(props: OrderControl) {
                 type={"currency"}
                 align={"right"}
                 value={currency === 0 ? order?.quantity : order?.amount}
-                max={currency === 0 ? ((order?.quantity || 1) / order.price) : order.amount}
+                max={currency === 0 ? (order?.quantity || 1) / order.price : order.amount}
                 onChange={(e: any, v: any) => handleChangeAmount(v)}
                 left={{ children: <span>Amount</span> }}
                 right={{
                     width: gap.width,
-                    children: <Controls.Dropdown option={[...assets].reverse()[currency]?.symbol?.toUpperCase()} options={[assets[0]?.symbol.toUpperCase(), assets[1]?.symbol.toUpperCase()].reverse()} onClickItem={(e: any, v: any, k: number) => { console.log(k); console.log(assets); setCurrency(k) }} />,
+                    children: (
+                        <Controls.Dropdown
+                            option={[...assets].reverse()[currency]?.symbol?.toUpperCase()}
+                            options={[assets[0]?.symbol.toUpperCase(), assets[1]?.symbol.toUpperCase()].reverse()}
+                            onClickItem={(e: any, v: any, k: number) => {
+                                console.log(k);
+                                console.log(assets);
+                                setCurrency(k);
+                            }}
+                        />
+                    ),
                 }}
-                onClick={() => portal(<Exchange.BottomSheets.OrderPad label={currency === 0 ? 'Quantity' : 'Amount'} placeholder={'0'} value={currency === 0 ? order.quantity : order.amount} unit={[...assets].reverse()[currency]?.symbol?.toUpperCase()} sub={{ value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, 'currency', true)}`, unit: assets[currency]?.symbol?.toUpperCase() }} button={{ color: mode ? color.buy : color.sell, children: mode ? "BUY" : "SELL", onClick: () => close() }} onChange={(e: any, v: any) => handleChangeAmount(v)} onClose={close} />)}
+                onClick={() =>
+                    portal(
+                        <Exchange.BottomSheets.OrderPad
+                            label={currency === 0 ? "Quantity" : "Amount"}
+                            placeholder={"0"}
+                            value={currency === 0 ? order.quantity : order.amount}
+                            unit={[...assets].reverse()[currency]?.symbol?.toUpperCase()}
+                            sub={{ value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", true)}`, unit: assets[currency]?.symbol?.toUpperCase() }}
+                            button={{ color: mode ? color.buy : color.sell, children: mode ? "BUY" : "SELL", onClick: () => close() }}
+                            onChange={(e: any, v: any) => handleChangeAmount(v)}
+                            onClose={close}
+                        />
+                    )
+                }
                 style={text.setting}
             />
             <Controls.Range color={mode ? color.buy : color.sell} value={(order.amount / available) * 100} min={range.min} max={range.max} step={range.step} unit={range.unit} onChange={(v: any, p: number) => handleChangeRange(p)} />
@@ -150,7 +181,7 @@ export default function Order(props: OrderControl) {
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
                         <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                            - {Format(order.fees as number, 'currency', true)}
+                            - {Format(order.fees as number, "currency", true)}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                             {assets[1]?.symbol?.toUpperCase()}
@@ -163,7 +194,7 @@ export default function Order(props: OrderControl) {
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
                         <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                            {Format(order.total as number, 'currency', true)}
+                            {Format(order.total as number, "currency", true)}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                             {assets[1]?.symbol?.toUpperCase()}

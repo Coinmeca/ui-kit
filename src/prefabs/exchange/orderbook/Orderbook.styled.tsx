@@ -219,9 +219,9 @@ const Responsive = (vertical?: boolean) => css`
         }
 
         & > *:not(${Tick}):only-child {
-            display:flex;
-            align-items:center;
-            justify-content:center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 100%;
             height: 100%;
         }
@@ -282,27 +282,24 @@ const Style = styled.div<{ $responsive?: { device: "desktop" | "laptop" | "table
     overflow: hidden;
 
     ${({ $guidance }) =>
-        $guidance && css`
-            
-        ${Asks},${Bids}{
-                
-                &:hover{
-
+        $guidance &&
+        css`
+            ${Asks},${Bids} {
+                &:hover {
                     ${Tick} {
                         background: rgba(var(--white), var(--o0045));
-                        
-                        &:hover{
+
+                        &:hover {
                             background: rgba(var(--white), var(--o01));
                         }
 
                         &:hover ~ * {
-                            background:transparent;
+                            background: transparent;
                         }
                     }
                 }
             }
-        `
-    }
+        `}
 
     ${({ $responsive }) => {
         const device = $responsive?.device;
