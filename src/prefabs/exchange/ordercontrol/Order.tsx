@@ -122,7 +122,7 @@ export default function Order(props: OrderControl) {
                 value={order.price}
                 onClick={() => portal(<Exchange.BottomSheets.OrderPad label={'Price'} placeholder={order.price} value={order.price} button={{ children: "OK", onClick: () => close() }} onChange={(e: any, v: any) => handleChangePrice(v)} />)}
                 onChange={(e: any, v: any) => handleChangePrice(v)}
-                left={{ width: gap.width - 6, children: <span>Price</span> }}
+                left={{ children: <span>Price</span> }}
                 right={{ width: gap.width, children: <span style={{ justifyContent: "flex-start" }}>{assets[0]?.symbol?.toUpperCase()}</span> }}
                 style={text.setting}
                 lock={option === "market"}
@@ -134,7 +134,7 @@ export default function Order(props: OrderControl) {
                 value={currency === 0 ? order?.quantity : order?.amount}
                 max={currency === 0 ? ((order?.quantity || 1) / order.price) : order.amount}
                 onChange={(e: any, v: any) => handleChangeAmount(v)}
-                left={{ width: gap.width - 6, children: <span>Amount</span> }}
+                left={{ children: <span>Amount</span> }}
                 right={{
                     width: gap.width,
                     children: <Controls.Dropdown option={[...assets].reverse()[currency]?.symbol?.toUpperCase()} options={[assets[0]?.symbol.toUpperCase(), assets[1]?.symbol.toUpperCase()].reverse()} onClickItem={(e: any, v: any, k: number) => { console.log(k); console.log(assets); setCurrency(k) }} />,
