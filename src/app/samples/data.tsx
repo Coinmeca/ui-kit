@@ -113,7 +113,7 @@ export default function Data() {
         {
             logo: require("/src/assets/coins/eth.png"),
             symbol: "ETH",
-            market: "ETh/USDT",
+            market: "ETH/USDT",
             price: "4,678.05",
             change: "23.12",
             volume: "73170731",
@@ -198,17 +198,17 @@ export default function Data() {
                                         // length={8}
                                         size={3}
                                         img={data?.logo}
-                                        // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
+                                    // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
                                     />
                                 </>,
                                 [
                                     <>
-                                        <Elements.Text type="strong" height={1}>
+                                        <Elements.Text type="strong" height={1.25}>
                                             {data?.symbol}
                                         </Elements.Text>
                                     </>,
                                     <>
-                                        <Elements.Text type="p" height={1} style={{ opacity: 0.45 }}>
+                                        <Elements.Text type="p" height={1.25} style={{ opacity: 0.45 }}>
                                             {data?.market}
                                         </Elements.Text>
                                     </>,
@@ -221,19 +221,19 @@ export default function Data() {
                         change: parseFloat(data?.change) > 0 ? "var(--green)" : parseFloat(data?.change) < 0 && "var(--red)",
                         children: [
                             <>
-                                <Elements.Text type="strong" height={1}>
+                                <Elements.Text type="strong" height={1.25}>
                                     $ {data?.price}
                                 </Elements.Text>
                             </>,
                             <>
-                                <Elements.Text type="strong" height={1} change>
+                                <Elements.Text type="strong" height={1.25} change>
                                     {parseFloat(data?.change) > 0 && "+"}
                                     {data?.change} %
                                 </Elements.Text>
                             </>,
                         ],
                     },
-                    [{ align: "right", children: data.volume }],
+                    [{ align: "right", children: <Elements.Text>{data?.volume}</Elements.Text> }],
                 ],
                 onClick: (props: any) => alert(props.children),
             }))
@@ -335,7 +335,7 @@ export default function Data() {
                     </Layouts.Row>
                     {/* <Controls.Button fit>Connect</Controls.Button> */}
                     <Controls.Button iconRight={"chevron-down-bold"} fit>
-                        <Elements.Avatar length={8} size={3} display={4} name={"0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"} />
+                        <Elements.Avatar length={8} scale={0.6667} display={4} name={"0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"} />
                     </Controls.Button>
                 </>
             ),

@@ -2,8 +2,6 @@
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Token } from "types/web3";
-import { Format } from "lib/utils";
-import { Exchange } from "prefabs";
 import useWindowSize from "hooks/useWindowSize";
 import Order from "./Order";
 import type { Order as O } from "./Order";
@@ -110,7 +108,7 @@ export default function OrderControl(props: OrderControl) {
                     ]}
                 />
                 <Layouts.Row fix>
-                    <Layouts.Row gap={windowSize.width > responsive ? 6 : 2} fix>
+                    <Layouts.Row gap={windowSize.width > responsive ? 6 : 4} fix>
                         <Controls.Button icon={"reset"} hide={windowSize.width > responsive} fit />
                         <Controls.Button
                             type={"solid"}

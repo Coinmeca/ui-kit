@@ -51,11 +51,12 @@ export default function ExchangePad(props: ExchangePad) {
                     )}
                 </Layouts.Row>
                 <Controls.Input
-                    value={value}
-                    onChange={(e: any, v: string) => handleChange(e, v)}
-                    placeholder={props?.placeholder}
                     type={"currency"}
                     align={"right"}
+                    placeholder={props?.placeholder}
+                    value={value}
+                    unit={props?.unit}
+                    onChange={(e: any, v: string) => handleChange(e, v)}
                     left={{
                         children: (props?.label && (
                             <Elements.Text style={{ fontSize: "1.25em" }} weight={"bold"} opacity={0.6}>
@@ -63,9 +64,8 @@ export default function ExchangePad(props: ExchangePad) {
                             </Elements.Text>
                         )),
                     }}
-                    style={{ fontSize: "1.125em", padding: `0.125em ${padding / 2}em` }}
-                    unit={props?.unit}
                     inputMode={"none"}
+                    style={{ fontSize: "1.125em", padding: `0.125em ${padding / 2}em` }}
                     autoFocus
                 />
                 <Numberpads.Currency
@@ -78,7 +78,6 @@ export default function ExchangePad(props: ExchangePad) {
                         ...{
                             onClick: (e: any, v: string) => {
                                 if (typeof props?.button?.onClick === "function") props?.button?.onClick(e, v);
-                                props?.onClose();
                             },
                         },
                     }}

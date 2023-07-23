@@ -51,7 +51,6 @@ export interface Input {
     error?: boolean;
     message?: any;
 
-    numberpad?: { open: Function; children?: any };
     autoFocus?: boolean;
     lock?: boolean;
     readOnly?: boolean;
@@ -60,7 +59,7 @@ export interface Input {
 
 export default function Input(props: Input) {
     const input: any = createRef();
-    const type = props?.type !== "password" ? props?.type : "password";
+    const type = props?.type === "password" ? "password" : props?.type || 'text';
     const placeholder = props?.placeholder?.toString() || "Type";
     const step = props?.step || 1;
     const scale = props?.scale || 1;
@@ -202,17 +201,12 @@ export default function Input(props: Input) {
                             style={{ textAlign: align }}
                             placeholder={placeholder}
                             type={type === "currency" ? "currency" : type}
-                            inputMode={(props?.numberpad && "none") || props?.inputMode}
+                            inputMode={props?.inputMode}
                             min={min}
                             max={props?.max}
                             step={props?.step}
                             value={value}
-                            onClick={(e: any) => {
-                                handleClick(e);
-                                if (typeof props?.numberpad?.open === "function") {
-                                    props?.numberpad?.open();
-                                }
-                            }}
+                            onClick={(e: any) => handleClick(e)}
                             onInput={(e) => handleChange(e)}
                             onChange={(e) => handleChange(e)}
                             onFocus={(e) => handleFocus(e)}
@@ -247,7 +241,6 @@ export default function Input(props: Input) {
     return (
         <>
             {Input}
-            {props?.numberpad?.children?.props?.active && props?.numberpad?.children}
         </>
     );
 }

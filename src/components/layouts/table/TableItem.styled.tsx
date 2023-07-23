@@ -45,17 +45,16 @@ const Style = styled.div<{ $change?: string; $event: boolean }>`
     ${({ $change }) => $change && `--change: ${$change};`}
 
     & > * {
-        font-size: 1.5em;
         display: table-cell;
         vertical-align: middle;
-        padding: calc(var(--unit) * 1) calc(var(--unit) * 0.5);
+        padding: 1em;
 
         &:first-child {
-            padding-left: calc(var(--unit) * 1);
+            padding-left: 1em;
         }
 
         &:last-child {
-            padding-right: calc(var(--unit) * 1);
+            padding-right: 1em;
         }
     }
 
@@ -65,8 +64,8 @@ const Style = styled.div<{ $change?: string; $event: boolean }>`
 
     &:active {
         ${({ $event }) =>
-            $event &&
-            css`
+        $event &&
+        css`
                 background: rgba(var(--white), var(--o015));
             `};
     }
