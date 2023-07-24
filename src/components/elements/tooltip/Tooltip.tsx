@@ -85,9 +85,9 @@ export default function Tooltip(props: Tooltip) {
                             ...props?.style,
                         }}
                         as={motion.div}
-                        initial={{ opaicty: 0 }}
-                        animate={{ opaicty: 1 }}
-                        exit={{ opaicty: 0 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                         transition={{ ease: "easeInOut", duration: 0.3 }}
                     >
                         {props?.children}
