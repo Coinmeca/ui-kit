@@ -296,7 +296,7 @@ export default function Dummy() {
                         <Elements.Text type={"h2"} align={"center"}>
                             Much Faster and Much Easier Coin Exchange
                         </Elements.Text>
-                        <Elements.Text size={2} weight={"normal"} responsive={{ device: "mobile", scale: 4 }} align={"center"}>
+                        <Elements.Text size={2} weight={"normal"} responsive={{ device: "mobile", size: 4 }} align={"center"}>
                             Start with your new experience coin trading system on Coinmeca.
                         </Elements.Text>
                     </Layouts.Col>
