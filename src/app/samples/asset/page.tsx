@@ -5,9 +5,8 @@ import { Controls, Elements, Layouts } from "components";
 import { Capitalize, Format } from "lib/utils";
 import useWindowSize from "hooks/useWindowSize";
 import Data from "./data";
-import useModal from "hooks/useModal";
 import usePortal from "hooks/usePortal";
-import { Modals } from "containers";
+import { Modal, Modals } from "containers";
 
 export default function Page() {
     const { windowSize } = useWindowSize();
@@ -23,30 +22,41 @@ export default function Page() {
 
     const { portal, close } = usePortal();
 
-    const [state, setState] = useState<boolean | null>(null);
     const handleModal = () => {
+        // portal(<Modals.Alert title={"This is a Modal."} message={"This is a modal content test message."} onClose={close} />);
+        portal(<Modal title={"This is a Modal."} message={"This is a modal content test message."} onClose={close} close />);
+    };
+
+    const [state, setState] = useState<boolean | null>(null);
+    const handleProcessModal = () => {
         // portal(<Modals.Alert title={"This is a Modal."} message={"This is a modal content test message."} onClose={close} />);
         portal(
             <Modals.Process
                 state={state}
                 title={"This is a Modal."}
-                message={"This is a modal content test message."}
                 content={
                     <>
-                        <Controls.Button
-                            onClick={() => {
-                                setState(false);
-                            }}
-                        >
-                            Go to Left
-                        </Controls.Button>
-                        <Controls.Button
-                            onClick={() => {
-                                setState(true);
-                            }}
-                        >
-                            Go to Right
-                        </Controls.Button>
+                        <Layouts.Contents.InnerContent>
+                            <Elements.Text align="center" opacity={0.6}>
+                                Here is the message for process modal.
+                            </Elements.Text>
+                        </Layouts.Contents.InnerContent>
+                        <Layouts.Row fix gap={3}>
+                            <Controls.Button
+                                onClick={() => {
+                                    setState(false);
+                                }}
+                            >
+                                Go to Left
+                            </Controls.Button>
+                            <Controls.Button
+                                onClick={() => {
+                                    setState(true);
+                                }}
+                            >
+                                Go to Right
+                            </Controls.Button>
+                        </Layouts.Row>
                     </>
                 }
                 onClose={close}
@@ -68,10 +78,10 @@ export default function Page() {
                                         <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
                                             <Layouts.Row responsive={"mobile"} gap={1} fit>
                                                 <Elements.Text
-                                                    scale={2.5}
+                                                    size={2.5}
                                                     height={1}
                                                     style={{ marginRight: "1em" }}
-                                                    responsive={{ device: "mobile", scale: 1.75 }}
+                                                    responsive={{ device: "mobile", size: 1.75 }}
                                                 >
                                                     All Assets
                                                 </Elements.Text>
@@ -79,7 +89,7 @@ export default function Page() {
                                         </Layouts.Row>
                                         <Layouts.Row fix align="right">
                                             <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
-                                                <Elements.Text scale={2.5} height={1} responsive={{ device: "mobile", scale: 1.75 }} change>
+                                                <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 1.75 }} change>
                                                     $ {Format("1,567,851,378.516", "currency", true)}
                                                 </Elements.Text>
                                             </Layouts.Row>
@@ -368,6 +378,9 @@ export default function Page() {
                                                                         <Layouts.Contents.InnerContent>
                                                                             <Controls.Button onClick={() => setPage(true)}>Go to</Controls.Button>
                                                                             <Controls.Button onClick={() => handleModal()}>Show modal</Controls.Button>
+                                                                            <Controls.Button onClick={() => handleProcessModal()}>
+                                                                                Show process modal
+                                                                            </Controls.Button>
                                                                         </Layouts.Contents.InnerContent>
                                                                     ),
                                                                 },
@@ -397,21 +410,21 @@ export default function Page() {
                                             <Elements.Avatar img={market.logo} scale={1.3334} />
                                             <Layouts.Row responsive={"mobile"} gap={1} fit>
                                                 <Elements.Text
-                                                    scale={2.5}
+                                                    size={2.5}
                                                     height={1}
                                                     style={{ marginRight: "1em" }}
-                                                    responsive={{ device: "mobile", scale: 1.5 }}
+                                                    responsive={{ device: "mobile", size: 1.5 }}
                                                 >
                                                     {"ETH".toUpperCase()}
                                                 </Elements.Text>
-                                                <Elements.Text scale={2.5} height={1} responsive={{ device: "mobile", scale: 1.5 }}>
+                                                <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 1.5 }}>
                                                     {Capitalize("Ethereum" || "")}
                                                 </Elements.Text>
                                             </Layouts.Row>
                                         </Layouts.Row>
                                         <Layouts.Row fix align="right">
                                             <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
-                                                <Elements.Text scale={2.5} height={1} responsive={{ device: "mobile", scale: 2 }} change>
+                                                <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 2 }} change>
                                                     $ {Format("1,567,851,378.516", "currency", true)}
                                                 </Elements.Text>
                                             </Layouts.Row>

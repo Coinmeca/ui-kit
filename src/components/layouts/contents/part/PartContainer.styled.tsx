@@ -7,6 +7,7 @@ export const Part = styled.div<{ $state: boolean | null }>`
     flex-direction: column;
     min-width: 100%;
     min-height: 100%;
+    height: 100%;
 `;
 
 export const Style = styled.div<{ $state: boolean | null }>`
@@ -19,6 +20,7 @@ export const Style = styled.div<{ $state: boolean | null }>`
         flex-direction: row;
         align-items: center;
         width: 100%;
+        height: 100%;
         max-height: inherit;
         transform: translateX(${({ $state }) => ($state === null ? "-100%" : $state === false ? "0" : "-100%")});
         transition: 0.3s ease;
