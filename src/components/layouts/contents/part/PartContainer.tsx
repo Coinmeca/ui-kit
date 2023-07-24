@@ -50,8 +50,8 @@ export default function PartContainer(props: PartContainer) {
 
     return (
         <Style $state={state} style={props?.style}>
-            <div>
-                <Part $state={state}>{props?.left?.children}</Part>
+            <div style={{ transform: `translateX(${state === null ? "-100%" : state === false ? "0" : "-200%"}` }} >
+                <Part $state={state} style={{}}>{props?.left?.children}</Part>
                 {!props?.loading ? (
                     <Part $state={state}>{center()}</Part>
                 ) : (

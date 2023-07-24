@@ -22,7 +22,6 @@ export const Style = styled.div<{ $state: boolean | null }>`
         width: 100%;
         height: 100%;
         max-height: inherit;
-        transform: translateX(${({ $state }) => ($state === null ? "-100%" : $state === false ? "0" : "-200%")});
         transition: 0.3s ease;
     }
 `;

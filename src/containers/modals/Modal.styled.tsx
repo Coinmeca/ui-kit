@@ -54,8 +54,9 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
         transition: 0.3s ease;
     }
 
-    & > ${InnerContent.default} {
-        font-size: 1.5em;
+    & > * > ${InnerContent.default} {
+        margin-top:2em;
+        // font-size: 1.5em;
         align-items: center;
         text-align: center;
         transition: 0.3s ease;
