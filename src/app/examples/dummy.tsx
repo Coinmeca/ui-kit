@@ -372,7 +372,7 @@ export default function Dummy() {
                 <Layouts.Col align={"left"}>
                     <Layouts.Col>
                         <Elements.Text type={"h4"}>Much Faster and Much Easier Coin Exchange</Elements.Text>
-                        <Elements.Text weight={"normal"} responsive={{ device: "mobile", scale: 4 }}>
+                        <Elements.Text weight={"normal"} responsive={{ device: "mobile", size: 4 }}>
                             Start with your new experience coin trading system on Coinmeca.
                         </Elements.Text>
                     </Layouts.Col>
