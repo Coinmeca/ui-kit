@@ -59,6 +59,8 @@ export default function Order(props: OrderControl) {
     };
 
     const handleChangeAmount = (a: number | string) => {
+        console.log(a);
+
         currency === 0 ? quantity(Format(a, "number", true) as number) : amount(Format(a, "number", true) as number);
     };
 
@@ -167,6 +169,7 @@ export default function Order(props: OrderControl) {
                         />
                     ),
                 }}
+                style={text.setting}
                 onClick={() =>
                     portal(
                         <Exchange.BottomSheets.OrderPad
@@ -181,10 +184,8 @@ export default function Order(props: OrderControl) {
                             button={{ color: mode ? color.buy : color.sell, children: mode ? "BUY" : "SELL", onClick: () => close() }}
                             onChange={(e: any, v: any) => handleChangeAmount(v)}
                             onClose={close}
-                        />
-                    )
+                        />)
                 }
-                style={text.setting}
             />
             <Controls.Range
                 color={mode ? color.buy : color.sell}
