@@ -28,7 +28,7 @@ export interface Tick {
 
 export default function Ordrebook(props: Orderbook) {
     const { windowSize } = useWindowSize();
-    const { onTooltip, close } = useTooltip();
+    const { onTooltip, closeTooltip } = useTooltip();
 
     const asks = props?.asks ? Sort(props?.asks, "price", "number", true) : [];
     const bids = props?.bids ? Sort(props?.bids, "price", "number", false) : [];
@@ -68,7 +68,12 @@ export default function Ordrebook(props: Orderbook) {
 
     const handleAskHover = (ask: Tick, i: number, e: any) => {
         if (!guidance) return;
-        const k = [...asks].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.price || 0).toString()) * parseFloat((b?.balance || 0).toString()), 0);
+        const k = [...asks]
+            .splice(0, i + 1)
+            .reduce(
+                (a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.price || 0).toString()) * parseFloat((b?.balance || 0).toString()),
+                0
+            );
         const sum = [...asks].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
         onTooltip(
             <Elements.Tooltip
@@ -88,7 +93,12 @@ export default function Ordrebook(props: Orderbook) {
 
     const handleBidHover = (bid: Tick, i: number, e: any) => {
         if (!guidance) return;
-        const k = [...bids].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.price || 0).toString()) * parseFloat((b?.balance || 0).toString()), 0);
+        const k = [...bids]
+            .splice(0, i + 1)
+            .reduce(
+                (a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.price || 0).toString()) * parseFloat((b?.balance || 0).toString()),
+                0
+            );
         const sum = [...bids].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
         onTooltip(
             <Elements.Tooltip
@@ -116,7 +126,7 @@ export default function Ordrebook(props: Orderbook) {
                                 key={k}
                                 onClick={(e: any) => handleAsk(ask, k, e)}
                                 onHoverStart={(e: any) => handleAskHover(ask, k, e)}
-                                onHoverEnd={close}
+                                onHoverEnd={closeTooltip}
                                 as={motion.div}
                                 layout
                                 initial={{ scale: 0.9, opacity: 0 }}
@@ -148,7 +158,13 @@ export default function Ordrebook(props: Orderbook) {
                         ))}
                     </AnimatePresence>
                 ) : (
-                    <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} transition={{ duration: 0.3 }} style={{ direction: "ltr" }}>
+                    <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.9, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        style={{ direction: "ltr" }}
+                    >
                         <Elements.Text type={"desc"} opacity={0.6}>
                             There is no asks.
                         </Elements.Text>
@@ -164,7 +180,7 @@ export default function Ordrebook(props: Orderbook) {
                                 key={k}
                                 onClick={(e: any) => handleBid(bid, e)}
                                 onHoverStart={(e: any) => handleBidHover(bid, k, e)}
-                                onHoverEnd={close}
+                                onHoverEnd={closeTooltip}
                                 as={motion.div}
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
@@ -195,7 +211,12 @@ export default function Ordrebook(props: Orderbook) {
                         ))}
                     </AnimatePresence>
                 ) : (
-                    <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} transition={{ duration: 0.3 }}>
+                    <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.9, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                    >
                         <Elements.Text type={"desc"} opacity={0.6}>
                             There is no bids.
                         </Elements.Text>

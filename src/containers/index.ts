@@ -1,10 +1,12 @@
-export * as Headers from './headers';
-export * as Modals from './modals';
+import * as Headers from './headers';
 
 import Sidebar from './sidebars/Sidebar';
-export * as Sidebars from './sidebars';
+import * as Sidebars from './sidebars';
+
+import Modal from "./modals/Modal";
+import * as Modals from './modals';
 
 import BottomSheet from './bottomsheets/BottomSheet';
-export * as BottomSheets from './bottomsheets';
+import * as BottomSheets from './bottomsheets';
 
-export { Sidebar, BottomSheet };
+export { Headers, Sidebar, Sidebars, Modal, Modals, BottomSheet, BottomSheets };

@@ -24,6 +24,6 @@ export default function useTooltip(initialRoot?: any) {
             },
             [root]
         ),
-        close: useCallback(() => setActive(false), []),
+        closeTooltip: useCallback(() => setActive(false), []),
     } as const;
 }

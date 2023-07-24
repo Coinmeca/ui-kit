@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
-import { Controls, Elements, Layouts } from "components";
+import { Controls, Layouts } from "components";
+import { Modal } from "containers";
 import { Token } from "types/web3";
-import useWindowSize from "hooks/useWindowSize";
 import Order from "./Order";
 import type { Order as O } from "./Order";
+import useWindowSize from "hooks/useWindowSize";
+import usePortal from "hooks/usePortal";
 
 export interface OrderControl {
     base: Token;
@@ -30,6 +32,7 @@ export interface Order {
 
 export default function OrderControl(props: OrderControl) {
     const { windowSize } = useWindowSize();
+    const { portal, close } = usePortal();
 
     const [mode, setMode] = useState(true);
     const option = props?.option || "market";
@@ -42,12 +45,16 @@ export default function OrderControl(props: OrderControl) {
         setBuy(order);
     };
 
+    const confirm = () => {
+        return <>confirm</>;
+    };
+
     const handleBuy = () => {
-        alert(buy);
+        portal(<Modal title={"Buy Confirmation"} children={confirm} onClose={close} close />);
     };
 
     const handleSell = (e: any) => {
-        alert("sell");
+        portal(<Modal title={"Sell Confirmation"} children={confirm} onClose={close} close />);
     };
 
     const color = {
@@ -68,22 +75,6 @@ export default function OrderControl(props: OrderControl) {
         width: 12,
     };
 
-    const text = {
-        height: 1.5,
-        opacity: 0.45,
-        label: { flex: 0 },
-        setting: { fontFeatureSettings: `"tnum" on,"lnum" on` },
-        width: { width: "100%", maxWidth: `${gap.width - 5.125}em` },
-        align: "right",
-    };
-
-    const range = {
-        min: 0,
-        max: 100,
-        step: 5,
-        unit: "%",
-    };
-
     return (
         <>
             <Layouts.Col gap={gap.col.big}>
@@ -93,18 +84,36 @@ export default function OrderControl(props: OrderControl) {
                         {
                             active: windowSize.width <= responsive ? mode === true : true,
                             style: { height: "max-content", overflow: "hidden" },
-                            children: <Order mode={true} option={option} assets={[props?.quote, props?.base]} price={props?.price} fee={props?.fee} onChange={(v: O) => handleChangeBuy(v)} />,
+                            children: (
+                                <Order
+                                    mode={true}
+                                    option={option}
+                                    assets={[props?.quote, props?.base]}
+                                    price={props?.price}
+                                    fee={props?.fee}
+                                    onChange={(v: O) => handleChangeBuy(v)}
+                                />
+                            ),
                         },
                         {
                             active: windowSize.width <= responsive ? mode === false : true,
                             style: { height: "max-content", overflow: "hidden" },
-                            children: <Order mode={false} option={option} assets={[props?.base, props?.quote]} price={props?.price} fee={props?.fee} onChange={(v: O) => handleChangeBuy(v)} />,
+                            children: (
+                                <Order
+                                    mode={false}
+                                    option={option}
+                                    assets={[props?.base, props?.quote]}
+                                    price={props?.price}
+                                    fee={props?.fee}
+                                    onChange={(v: O) => handleChangeBuy(v)}
+                                />
+                            ),
                         },
                     ]}
                 />
                 <Layouts.Row fix>
-                    <Layouts.Row gap={windowSize.width > responsive ? 6 : 2} fix>
-                        <Controls.Button icon={"reset"} hide={windowSize.width > responsive} fit />
+                    <Layouts.Row gap={windowSize.width > responsive ? 6 : 4} fix>
+                        <Controls.Button icon={"revert-bold"} hide={windowSize.width > responsive} fit />
                         <Controls.Button
                             type={"solid"}
                             color={color.buy}
@@ -114,8 +123,20 @@ export default function OrderControl(props: OrderControl) {
                             }}
                         >
                             <span>B</span>
-                            <span style={{ ...(windowSize.width <= responsive && mode === false && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>U</span>
-                            <span style={{ ...(windowSize.width <= responsive && mode === false && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>Y</span>
+                            <span
+                                style={{
+                                    ...(windowSize.width <= responsive && mode === false && { position: "absolute", opacity: 0, transition: ".3s ease" }),
+                                }}
+                            >
+                                U
+                            </span>
+                            <span
+                                style={{
+                                    ...(windowSize.width <= responsive && mode === false && { position: "absolute", opacity: 0, transition: ".3s ease" }),
+                                }}
+                            >
+                                Y
+                            </span>
                         </Controls.Button>
                         <Controls.Button
                             type={"solid"}
@@ -126,9 +147,15 @@ export default function OrderControl(props: OrderControl) {
                             }}
                         >
                             <span>S</span>
-                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>E</span>
-                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>L</span>
-                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>L</span>
+                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>
+                                E
+                            </span>
+                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>
+                                L
+                            </span>
+                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>
+                                L
+                            </span>
                         </Controls.Button>
                     </Layouts.Row>
                 </Layouts.Row>

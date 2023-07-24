@@ -1,6 +1,5 @@
 "use client";
-import { Frames, Layouts } from "components";
-import { Modals } from "containers";
+import { Frames } from "components";
 import Data from "./data";
 
 export default function SamplesLayout(props: any) {
@@ -11,9 +10,6 @@ export default function SamplesLayout(props: any) {
             <Frames.Frame header={header} sidebar={sidebars} align={"right"} background={{ img: { src: 2 } }} side={56}>
                 {props?.children}
             </Frames.Frame>
-            <Layouts.Panel active={false} color={"black"} style={{ zIndex: 200 }} fix>
-                <Modals.Alert title={"Alert"} message={"This is a alert modal."} />
-            </Layouts.Panel>
         </>
     );
 }

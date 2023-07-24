@@ -31,7 +31,6 @@ export interface Order {
 
 export default function Order(props: OrderControl) {
     const { portal, close } = usePortal();
-    const { isMobile } = useMobile();
 
     const mode = typeof props?.mode === "undefined" ? true : props?.mode;
     const assets = props?.assets || [];
@@ -128,10 +127,21 @@ export default function Order(props: OrderControl) {
                 type={"currency"}
                 align={"right"}
                 value={order.price}
-                onClick={() => portal(<Exchange.BottomSheets.OrderPad label={"Price"} placeholder={order.price} value={order.price} button={{ children: "OK", onClick: () => close() }} onChange={(e: any, v: any) => handleChangePrice(v)} />)}
+                onClick={() =>
+                    portal(
+                        <Exchange.BottomSheets.OrderPad
+                            label={"Price"}
+                            placeholder={order.price}
+                            value={order.price}
+                            unit={[...assets][mode ? 0 : 1]?.symbol?.toUpperCase()}
+                            button={{ children: "OK", onClick: () => close() }}
+                            onChange={(e: any, v: any) => handleChangePrice(v)}
+                        />
+                    )
+                }
                 onChange={(e: any, v: any) => handleChangePrice(v)}
                 left={{ children: <span>Price</span> }}
-                right={{ width: gap.width, children: <span style={{ justifyContent: "flex-start" }}>{assets[0]?.symbol?.toUpperCase()}</span> }}
+                right={{ width: gap.width, children: <span style={{ justifyContent: "flex-start" }}>{assets[mode ? 0 : 1]?.symbol?.toUpperCase()}</span> }}
                 style={text.setting}
                 lock={option === "market"}
             />
@@ -142,7 +152,7 @@ export default function Order(props: OrderControl) {
                 value={currency === 0 ? order?.quantity : order?.amount}
                 max={currency === 0 ? (order?.quantity || 1) / order.price : order.amount}
                 onChange={(e: any, v: any) => handleChangeAmount(v)}
-                left={{ children: <span>Amount</span> }}
+                left={{ children: <span>{mode ? (currency === 0 ? "Qunatity" : "Amount") : currency === 0 ? "Amount" : "Quantity"}</span> }}
                 right={{
                     width: gap.width,
                     children: (
@@ -164,7 +174,10 @@ export default function Order(props: OrderControl) {
                             placeholder={"0"}
                             value={currency === 0 ? order.quantity : order.amount}
                             unit={[...assets].reverse()[currency]?.symbol?.toUpperCase()}
-                            sub={{ value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", true)}`, unit: assets[currency]?.symbol?.toUpperCase() }}
+                            sub={{
+                                value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", true)}`,
+                                unit: assets[currency]?.symbol?.toUpperCase(),
+                            }}
                             button={{ color: mode ? color.buy : color.sell, children: mode ? "BUY" : "SELL", onClick: () => close() }}
                             onChange={(e: any, v: any) => handleChangeAmount(v)}
                             onClose={close}
@@ -173,7 +186,15 @@ export default function Order(props: OrderControl) {
                 }
                 style={text.setting}
             />
-            <Controls.Range color={mode ? color.buy : color.sell} value={(order.amount / available) * 100} min={range.min} max={range.max} step={range.step} unit={range.unit} onChange={(v: any, p: number) => handleChangeRange(p)} />
+            <Controls.Range
+                color={mode ? color.buy : color.sell}
+                value={(order.amount / available) * 100}
+                min={range.min}
+                max={range.max}
+                step={range.step}
+                unit={range.unit}
+                onChange={(v: any, p: number) => handleChangeRange(p)}
+            />
             <Layouts.Col gap={gap.col.big}>
                 <Layouts.Row gap={gap.row} style={gap.space.small} fix>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
