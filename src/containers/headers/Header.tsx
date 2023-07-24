@@ -64,7 +64,7 @@ export default function Header(props: Header) {
                 delay: mobileMenu ? stagger(0.05) : 0,
             });
         }
-    }, [mobileMenu]);
+    }, [mobileMenu, windowSize.width]);
 
     return (
         <Style $scale={scale} $color={color} $height={height} $side={side}>

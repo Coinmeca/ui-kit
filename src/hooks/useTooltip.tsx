@@ -4,12 +4,12 @@ import { createPortal } from "react-dom";
 import { Root, createRoot } from "react-dom/client";
 
 export default function useTooltip(initialRoot?: any) {
-    const [root, setRoot] = useState<Root>(initialRoot);
+    const [root, setRoot] = useState<Root | undefined>(initialRoot);
     const [tooltip, setTooltip] = useState();
     const [active, setActive] = useState(true);
 
     useEffect(() => {
-        setRoot(!initialRoot ? createRoot(document?.createElement("section")) : initialRoot);
+        !root && setRoot(createRoot(document?.createElement("section")));
     }, []);
 
     useEffect(() => {
@@ -22,7 +22,7 @@ export default function useTooltip(initialRoot?: any) {
                 setTooltip(children);
                 setActive(true);
             },
-            [root]
+            []
         ),
         closeTooltip: useCallback(() => setActive(false), []),
     } as const;

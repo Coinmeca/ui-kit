@@ -1,13 +1,17 @@
 "use client";
 import { useState } from "react";
 import { Contents, Controls, Elements, Layouts } from "components";
-import type { PartContainer } from "components/layouts/contents/part/PartContainer";
-import type { State } from "../states/State";
+import type { State } from "components/contents/states/State";
 
-export interface Process extends PartContainer {
-    left?: { children?: State };
-    right?: { children?: State };
+export interface Process {
+    state?: boolean | null;
+    content?: any;
+    failure?: State;
+    success?: State;
+    style?: object;
+    onBack?: Function;
     onFinish?: Function;
+    loading?: boolean;
 }
 
 export default function Process(props: Process) {
@@ -30,20 +34,23 @@ export default function Process(props: Process) {
             left={{
                 children: (
                     <Contents.States.Failure
-                        {...props?.left}
+                        {...props?.failure}
                         message={'Your order has been failed to processing.'}
-                        children={<Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>}
-                    />
+                    >
+                        <Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>
+                    </Contents.States.Failure>
                 ),
             }}
             content={props?.content}
             right={{
                 children: (
                     <Contents.States.Success
-                        {...props?.right}
+                        {...props?.success}
                         message={"Your order has been successfully completed."}
-                        children={<Controls.Button onClick={(e: any) => handleFinish(e)}>OK</Controls.Button>}
-                    />
+
+                    >
+                        <Controls.Button onClick={(e: any) => handleFinish(e)}>OK</Controls.Button>
+                    </Contents.States.Success>
                 ),
             }}
         />
