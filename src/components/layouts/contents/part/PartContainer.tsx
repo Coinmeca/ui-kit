@@ -42,7 +42,7 @@ export default function PartContainer(props: PartContainer) {
                 if (typeof props?.right?.onClick === "function") props?.right?.onClick();
                 break;
         }
-    }, [state]);
+    }, [state, props?.onBack, props?.left?.onClick, props?.right?.onClick]);
 
     const center = () => {
         return <Part $state={state}>{props?.content}</Part>;
