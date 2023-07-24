@@ -1,6 +1,6 @@
 "use client";
-import * as InnerContent from "components/layouts/contents/inner/InnerContent.styled";
 import { styled } from "styled-components";
+import * as InnerContent from "components/layouts/contents/inner/InnerContent.styled";
 
 const Style = styled.div<{ $width: number; $height: number }>`
     display: flex;

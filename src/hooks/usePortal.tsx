@@ -4,12 +4,12 @@ import { createPortal } from "react-dom";
 import { Root, createRoot } from "react-dom/client";
 
 export default function usePortal(initialRoot?: any) {
-    const [root, setRoot] = useState<Root>(initialRoot);
+    const [root, setRoot] = useState<Root | undefined>(initialRoot);
     const [children, setChildren] = useState();
     const [active, setActive] = useState(true);
 
     useEffect(() => {
-        setRoot(!initialRoot ? createRoot(document?.createElement("section")) : initialRoot);
+        !root && setRoot(createRoot(document?.createElement("section")));
     }, []);
 
     useEffect(() => {
@@ -22,7 +22,7 @@ export default function usePortal(initialRoot?: any) {
                 setChildren(children);
                 setActive(true);
             },
-            [root]
+            []
         ),
         close: useCallback(() => setActive(false), []),
     } as const;

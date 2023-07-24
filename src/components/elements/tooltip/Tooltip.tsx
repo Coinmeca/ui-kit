@@ -68,7 +68,7 @@ export default function Tooltip(props: Tooltip) {
                     setX(e?.x + h);
             }
         }
-    }, [props?.e]);
+    }, [props?.e, props?.vertical, props?.horizon, margin]);
 
     return (
         <AnimatePresence>

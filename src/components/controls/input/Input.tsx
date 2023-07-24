@@ -83,7 +83,7 @@ export default function Input(props: Input) {
         if (props?.lock || props?.disabled) return;
         if (value === "") setError(false);
         setValue(Format(value, type, false, props?.fix).toString());
-    }, [value, type, props?.fix]);
+    }, [value, type, props?.fix, props?.lock, props?.disabled]);
 
     const handleClick = (e: any) => {
         if (props?.lock || props?.disabled) return;
