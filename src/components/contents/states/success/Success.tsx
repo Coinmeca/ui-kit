@@ -2,8 +2,8 @@
 import { State } from "components/contents";
 import type { State as Props } from "components/contents/states/State";
 
-export default function Failure(props: Props) {
-    const img = props?.img?.src || require("/src/assets/icons/animation/icon_failure.gif")?.default?.src;
+export default function Success(props: Props) {
+    const img = props?.img?.src || require("/src/assets/icons/animation/icon_success.gif")?.default?.src;
 
     return <State {...props} img={{ src: img }} />;
 }
