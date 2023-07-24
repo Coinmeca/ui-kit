@@ -50,11 +50,11 @@ export default function OrderControl(props: OrderControl) {
     };
 
     const handleBuy = () => {
-        portal(<Modal title={"Buy Confirmation"} children={confirm} onClose={close} close />);
+        portal(<Modal title={"Buy Confirmation"} onClose={close} close>{confirm}</Modal>);
     };
 
     const handleSell = (e: any) => {
-        portal(<Modal title={"Sell Confirmation"} children={confirm} onClose={close} close />);
+        portal(<Modal title={"Sell Confirmation"} onClose={close} close>{confirm}</Modal>);
     };
 
     const color = {
