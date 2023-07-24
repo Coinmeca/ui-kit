@@ -31,11 +31,10 @@ export default function Page() {
                 state={state}
                 title={"This is a Modal."}
                 message={"This is a modal content test message."}
-                children={
+                content={
                     <>
                         <Controls.Button
                             onClick={() => {
-                                console.log(1);
                                 setState(false);
                             }}
                         >
@@ -43,7 +42,6 @@ export default function Page() {
                         </Controls.Button>
                         <Controls.Button
                             onClick={() => {
-                                console.log(1);
                                 setState(true);
                             }}
                         >
