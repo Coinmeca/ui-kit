@@ -42,7 +42,7 @@ export default function Page() {
                             children: (
                                 <Layouts.Col align={"left"} gap={1}>
                                     <Elements.Text type={"h4"}>Much Faster and Much Easier Coin Exchange</Elements.Text>
-                                    <Elements.Text weight={"normal"} responsive={{ device: "mobile", scale: 4 }}>
+                                    <Elements.Text weight={"normal"} responsive={{ device: "mobile", size: 4 }}>
                                         Start with your new experience coin trading system on Coinmeca.
                                     </Elements.Text>
                                 </Layouts.Col>
@@ -74,14 +74,14 @@ export default function Page() {
                                     <Layouts.Row fix style={{ alignItems: "center" }}>
                                         <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
                                             <Layouts.Row responsive={"mobile"} gap={1} fit>
-                                                <Elements.Text scale={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", scale: 1.75 }}>
+                                                <Elements.Text size={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", scale: 1.75 }}>
                                                     All Assets
                                                 </Elements.Text>
                                             </Layouts.Row>
                                         </Layouts.Row>
                                         <Layouts.Row fix align="right">
                                             <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
-                                                <Elements.Text scale={2.5} height={1} responsive={{ device: "mobile", scale: 1.75 }} change>
+                                                <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 1.75 }} change>
                                                     $ {Format("1,567,851,378.516", "currency", true)}
                                                 </Elements.Text>
                                             </Layouts.Row>

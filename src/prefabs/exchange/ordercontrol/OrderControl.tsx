@@ -117,8 +117,8 @@ export default function OrderControl(props: OrderControl) {
                             Fees
                         </Elements.Text>
                         <Layouts.Row gap={gap.row} fix>
-                            <Elements.Text opacity={0.6} height={text.height} align={text.align} style={text.setting}>
-                                12345678
+                            <Elements.Text opacity={0.45} height={text.height} align={text.align} style={text.setting}>
+                                - 12345678
                             </Elements.Text>
                             <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                                 {('eth').toUpperCase()}
