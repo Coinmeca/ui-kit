@@ -329,17 +329,17 @@ export default function Page() {
                                             <Controls.Button icon={"chevron-left"} onClick={() => setPage(false)} />
                                             <Elements.Avatar img={market.logo} scale={1.3334} />
                                             <Layouts.Row responsive={"mobile"} gap={1} fit>
-                                                <Elements.Text scale={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", size: 1.5 }}>
+                                                <Elements.Text size={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", size: 1.5 }}>
                                                     {"ETH".toUpperCase()}
                                                 </Elements.Text>
-                                                <Elements.Text scale={2.5} height={1} responsive={{ device: "mobile", size: 1.5 }}>
+                                                <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 1.5 }}>
                                                     {Capitalize("Ethereum" || "")}
                                                 </Elements.Text>
                                             </Layouts.Row>
                                         </Layouts.Row>
                                         <Layouts.Row fix align="right">
                                             <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
-                                                <Elements.Text scale={2.5} height={1} responsive={{ device: "mobile", size: 2 }} change>
+                                                <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 2 }} change>
                                                     $ {Format("1,567,851,378.516", "currency", true)}
                                                 </Elements.Text>
                                             </Layouts.Row>
