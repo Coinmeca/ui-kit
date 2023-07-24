@@ -196,7 +196,7 @@ export default function Candle(props: any) {
                 chart.remove();
             };
         }
-    }, [chartRef, price, volume]);
+    }, [chartRef, price, volume, props?.fit]);
 
     return (
         <Suspense fallback={props?.fallback || <div>Loading...</div>}>
