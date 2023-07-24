@@ -81,7 +81,7 @@ export default function Ordrebook(props: Orderbook) {
                 color={"red"}
                 vertical={"top"}
                 horizon={"center"}
-                // horizon={windowSize.width > Root.Device.Tablet ? 'center' : 'left'}
+                // horizon={windowSize.width > Root.Device.Mobile ? 'center' : 'left'}
                 padding={1}
                 style={{ border: `1px solid rgb(${Root.Color("red")})` }}
                 fill
@@ -104,9 +104,9 @@ export default function Ordrebook(props: Orderbook) {
             <Elements.Tooltip
                 e={e}
                 color={"green"}
-                vertical={windowSize.width > Root.Device.Tablet ? "bottom" : "top"}
+                vertical={windowSize.width > Root.Device.Mobile ? "bottom" : "top"}
                 horizon={"center"}
-                // horizon={windowSize.width > Root.Device.Tablet ? 'center' : 'right'}
+                // horizon={windowSize.width > Root.Device.Mobile ? 'center' : 'right'}
                 padding={1}
                 style={{ border: `1px solid rgb(${Root.Color("green")})` }}
                 fill
