@@ -32,7 +32,7 @@ export default function Notify(props: Notify) {
             <Layouts.Box>
                 <Layouts.Col gap={1}>
                     <Layouts.Row fix>
-                        <Text scale={1.25} weight={"bold"}>
+                        <Text size={1.25} weight={"bold"}>
                             {props?.title}
                         </Text>
                         <Layouts.Row fix gap={1} style={{ minWidth: "max-content" }}>
