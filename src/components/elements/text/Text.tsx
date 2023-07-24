@@ -5,7 +5,7 @@ export interface Text {
     style?: object;
     type?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "strong" | "p" | "desc";
     align?: "left" | "center" | "right";
-    scale?: number;
+    size?: number;
     color?: string;
     change?: boolean;
     weight?: number | string;
@@ -17,7 +17,7 @@ export interface Text {
 
 export interface Responsive {
     style?: object;
-    scale?: number;
+    size?: number;
     weight?: number | string;
     align?: "left" | "center" | "right";
     height?: number;
@@ -26,7 +26,7 @@ export interface Responsive {
 }
 
 export default function Text(props: Text) {
-    const scale = props?.scale || 1.5;
+    const size = props?.size || 1.5;
     const weight = props?.weight || "bold";
     const height = props?.height || 1.5;
     const color = props?.color || "white";
@@ -35,61 +35,153 @@ export default function Text(props: Text) {
     switch (props?.type) {
         case "h1":
             return (
-                <Texts.H1 style={props?.style} $color={color} $change={props?.change} $opacity={opacity} $weight={weight} $height={height} $align={props?.align} $fit={props?.fit}>
+                <Texts.H1
+                    style={props?.style}
+                    $color={color}
+                    $change={props?.change}
+                    $opacity={opacity}
+                    $weight={weight}
+                    $height={height}
+                    $align={props?.align}
+                    $fit={props?.fit}
+                >
                     {props?.children}
                 </Texts.H1>
             );
         case "h2":
             return (
-                <Texts.H2 style={props?.style} $color={color} $change={props?.change} $opacity={opacity} $weight={weight} $height={height} $align={props?.align} $fit={props?.fit}>
+                <Texts.H2
+                    style={props?.style}
+                    $color={color}
+                    $change={props?.change}
+                    $opacity={opacity}
+                    $weight={weight}
+                    $height={height}
+                    $align={props?.align}
+                    $fit={props?.fit}
+                >
                     {props?.children}
                 </Texts.H2>
             );
         case "h3":
             return (
-                <Texts.H3 style={props?.style} $color={color} $change={props?.change} $opacity={opacity} $weight={weight} $height={height} $align={props?.align} $fit={props?.fit}>
+                <Texts.H3
+                    style={props?.style}
+                    $color={color}
+                    $change={props?.change}
+                    $opacity={opacity}
+                    $weight={weight}
+                    $height={height}
+                    $align={props?.align}
+                    $fit={props?.fit}
+                >
                     {props?.children}
                 </Texts.H3>
             );
         case "h4":
             return (
-                <Texts.H4 style={props?.style} $color={color} $change={props?.change} $opacity={opacity} $weight={weight} $height={height} $align={props?.align} $fit={props?.fit}>
+                <Texts.H4
+                    style={props?.style}
+                    $color={color}
+                    $change={props?.change}
+                    $opacity={opacity}
+                    $weight={weight}
+                    $height={height}
+                    $align={props?.align}
+                    $fit={props?.fit}
+                >
                     {props?.children}
                 </Texts.H4>
             );
         case "h5":
             return (
-                <Texts.H5 style={props?.style} $color={color} $change={props?.change} $opacity={opacity} $weight={weight} $height={height} $align={props?.align} $fit={props?.fit}>
+                <Texts.H5
+                    style={props?.style}
+                    $color={color}
+                    $change={props?.change}
+                    $opacity={opacity}
+                    $weight={weight}
+                    $height={height}
+                    $align={props?.align}
+                    $fit={props?.fit}
+                >
                     {props?.children}
                 </Texts.H5>
             );
         case "h6":
             return (
-                <Texts.H6 style={props?.style} $color={color} $change={props?.change} $opacity={opacity} $weight={weight} $height={height} $align={props?.align} $fit={props?.fit}>
+                <Texts.H6
+                    style={props?.style}
+                    $color={color}
+                    $change={props?.change}
+                    $opacity={opacity}
+                    $weight={weight}
+                    $height={height}
+                    $align={props?.align}
+                    $fit={props?.fit}
+                >
                     {props?.children}
                 </Texts.H6>
             );
         case "strong":
             return (
-                <Texts.Strong style={props?.style} $color={color} $change={props?.change} $opacity={opacity} $weight={weight} $height={height} $align={props?.align} $fit={props?.fit}>
+                <Texts.Strong
+                    style={props?.style}
+                    $color={color}
+                    $change={props?.change}
+                    $opacity={opacity}
+                    $weight={weight}
+                    $height={height}
+                    $align={props?.align}
+                    $fit={props?.fit}
+                >
                     {props?.children}
                 </Texts.Strong>
             );
         case "p":
             return (
-                <Texts.P style={props?.style} $color={color} $change={props?.change} $opacity={opacity} $weight={props?.weight || "normal"} $height={height} $align={props?.align} $fit={props?.fit}>
+                <Texts.P
+                    style={props?.style}
+                    $color={color}
+                    $change={props?.change}
+                    $opacity={opacity}
+                    $weight={props?.weight || "normal"}
+                    $height={height}
+                    $align={props?.align}
+                    $fit={props?.fit}
+                >
                     {props?.children}
                 </Texts.P>
             );
         case "desc":
             return (
-                <Texts.Desc style={props?.style} $color={color} $change={props?.change} $opacity={opacity} $weight={props?.weight || "normal"} $height={height} $align={props?.align} $fit={props?.fit}>
+                <Texts.Desc
+                    style={props?.style}
+                    $color={color}
+                    $change={props?.change}
+                    $opacity={opacity}
+                    $weight={props?.weight || "normal"}
+                    $height={height}
+                    $align={props?.align}
+                    $fit={props?.fit}
+                >
                     {props?.children}
                 </Texts.Desc>
             );
         default:
             return (
-                <Texts.Text style={props?.style} $scale={scale} $color={color} $change={props?.change} $opacity={opacity} $weight={weight} $height={height} $align={props?.align} $responsive={props?.responsive} $fit={props?.fit}>
+                <Texts.Text
+                    style={props?.style}
+                    $size={size}
+                    $color={color}
+                    $change={props?.change}
+                    $opacity={opacity}
+                    $weight={weight}
+                    $height={height}
+                    $align={props?.align}
+                    $responsive={props?.responsive}
+                    $fit={props?.fit}
+                >
                     {props?.children}
                 </Texts.Text>
             );
