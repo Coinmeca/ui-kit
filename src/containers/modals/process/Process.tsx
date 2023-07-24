@@ -24,7 +24,7 @@ export default function Process(props: Process) {
 
     return (
         <Modal
-            {...{ ...props, children: undefined }}
+            {...{ ...props }}
             onClose={(e: any) => handleClose(e)}
             content={
                 <Layouts.Contents.PartContainer
@@ -35,6 +35,8 @@ export default function Process(props: Process) {
                     right={{ children: <Contents.States.Success message="Your order has been successfully completed." /> }}
                 />
             }
+            children={undefined}
+            close
         />
     );
 }
