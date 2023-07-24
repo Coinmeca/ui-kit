@@ -10,14 +10,6 @@ export interface Process extends PartContainer, Default {
 }
 
 export default function Process(props: Process) {
-    const [state, setState] = useState<boolean | null>(props?.state || null);
-
-    useEffect(() => {
-        return () => {
-            setState(null);
-        };
-    }, []);
-
     const handleClose = (e: any) => {
         if (typeof props?.onClose === "function") props?.onClose(e);
     };
@@ -29,15 +21,13 @@ export default function Process(props: Process) {
             content={
                 <Layouts.Contents.PartContainer
                     {...props}
-                    state={state}
+                    state={props?.state}
                     left={{ children: <Contents.States.Success message="Your order has been failed to processing." /> }}
-                    children={props?.children}
+                    content={props?.content}
                     right={{ children: <Contents.States.Success message="Your order has been successfully completed." /> }}
                 />
             }
-            children={undefined}
             close
-            outsideClose
         />
     );
 }
