@@ -174,6 +174,7 @@ export const MenuButton = styled.div<{ $active: boolean }>`
 export const Menu = styled.div`
     display: flex;
     height: 100%;
+    opacity: 1;
     transition: 0.3s ease;
 
     & ${Nav} {

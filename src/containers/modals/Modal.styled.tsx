@@ -9,7 +9,7 @@ export const ButtonArea = styled.div`
     flex-direction: row;
     width: -webkit-fill-available;
     gap: 4em;
-    /* margin: 0 -2em -2em; */
+    margin: 2em -2em -2em;
 
     & > * {
         flex: 1;

@@ -1,4 +1,5 @@
-import Default from "./Default";
+import Modal from './Modal';
 import Alert from './alert/Alert';
+import Process from './process/Process';
 
-export { Default, Alert }
+export { Modal, Alert, Process }

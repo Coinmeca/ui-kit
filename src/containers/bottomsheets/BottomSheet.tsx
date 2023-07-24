@@ -1,9 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 import { Layouts } from "components";
-import Style from "./BottomSheet.styled";
 import { motion, AnimatePresence } from "framer-motion";
+import Style from "./BottomSheet.styled";
 
 export interface BottomSheet {
     children?: any;
@@ -21,20 +20,13 @@ export default function BottomSheet(props: BottomSheet) {
     useEffect(() => {
         setActive(true);
         return () => {
-            console.log("unmount");
+            if (typeof props?.onClose === "function") props?.onClose();
             setActive(false);
         };
     }, []);
 
-    const handleClose = (e?: any) => {
-        setActive(false);
-        if (typeof props?.onClose === "function") props?.onClose(e);
-    };
-
     const handleBlur = (e?: any) => {
         if (typeof props?.onBlur === "function") props?.onBlur(e);
-        // handleClose(e);
-        // setMounted(false);
     };
 
     return (

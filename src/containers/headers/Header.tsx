@@ -6,6 +6,8 @@ import { Layouts } from "components";
 import Style, { Logo, Nav, MenuButton, Menu, Side } from "./Header.styled";
 import Coinmeca from "/src/assets/coinmeca.svg";
 import { animate, stagger } from "framer-motion";
+import useWindowSize from "hooks/useWindowSize";
+import { Root } from "lib/style";
 
 export interface Header {
     logo?: Logo;
@@ -44,6 +46,7 @@ export interface Side {
 }
 
 export default function Header(props: Header) {
+    const { windowSize } = useWindowSize();
     const path = usePathname();
     const scale = props?.scale || 1;
     const height = props?.height || 8;
@@ -54,11 +57,13 @@ export default function Header(props: Header) {
     const [mobileMenu, setMobileMenu] = useState(false);
 
     useEffect(() => {
-        animate("nav", mobileMenu ? { opacity: 1, transform: "translateY(0)" } : { opacity: 0, transform: "translateY(-15%)" }, {
-            ease: "easeInOut",
-            duration: 0.3,
-            delay: mobileMenu ? stagger(0.05) : 0,
-        });
+        if (windowSize.width <= Root.Device.Tablet) {
+            animate("nav", mobileMenu ? { opacity: 1, transform: "translateY(0)" } : { opacity: 0, transform: "translateY(-15%)" }, {
+                ease: "easeInOut",
+                duration: 0.3,
+                delay: mobileMenu ? stagger(0.05) : 0,
+            });
+        }
     }, [mobileMenu]);
 
     return (
@@ -82,7 +87,13 @@ export default function Header(props: Header) {
                         {props?.menu?.children && props?.menu?.children?.length > 0 && (
                             <Menu data-active={mobileMenu}>
                                 {props?.menu?.children?.map((v: Menu, k: number) => (
-                                    <Nav key={k} $scale={scale} $color={color} data-active={path.startsWith(v?.path || "")} onClick={() => setMobileMenu(false)}>
+                                    <Nav
+                                        key={k}
+                                        $scale={scale}
+                                        $color={color}
+                                        data-active={path.startsWith(v?.path || "")}
+                                        onClick={() => setMobileMenu(false)}
+                                    >
                                         <Link href={v?.path || ""}>{v?.name}</Link>
                                     </Nav>
                                 ))}
