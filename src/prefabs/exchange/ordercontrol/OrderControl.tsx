@@ -42,7 +42,6 @@ export default function OrderControl(props: OrderControl) {
 
 
     const handleChangeBuy = (order: O) => {
-        console.log(order);
         setBuy(order);
     };
 
