@@ -37,6 +37,7 @@ export default function Process(props: Process) {
             }
             children={undefined}
             close
+            outsideClose
         />
     );
 }
