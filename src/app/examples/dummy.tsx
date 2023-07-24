@@ -106,7 +106,7 @@ export default function Dummy() {
                                         // length={8}
                                         size={3}
                                         img={data?.logo}
-                                        // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
+                                    // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
                                     />
                                 </>,
                                 [
@@ -296,7 +296,7 @@ export default function Dummy() {
                         <Elements.Text type={"h2"} align={"center"}>
                             Much Faster and Much Easier Coin Exchange
                         </Elements.Text>
-                        <Elements.Text scale={2} weight={"normal"} responsive={{ device: "mobile", scale: 4 }} align={"center"}>
+                        <Elements.Text size={2} weight={"normal"} responsive={{ device: "mobile", scale: 4 }} align={"center"}>
                             Start with your new experience coin trading system on Coinmeca.
                         </Elements.Text>
                     </Layouts.Col>
@@ -325,7 +325,7 @@ export default function Dummy() {
                         <Elements.Text type={"h2"} align={"center"}>
                             Meet Brand New Finance
                         </Elements.Text>
-                        <Elements.Text scale={2} weight={"normal"} align={"center"}>
+                        <Elements.Text size={2} weight={"normal"} align={"center"}>
                             Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.
                         </Elements.Text>
                     </Layouts.Col>
@@ -348,7 +348,7 @@ export default function Dummy() {
                         <Elements.Text type={"h2"} align={"center"}>
                             Make Profits While Spending Money
                         </Elements.Text>
-                        <Elements.Text scale={2} weight={"normal"} align={"center"}>
+                        <Elements.Text size={2} weight={"normal"} align={"center"}>
                             Lets get earned Coinmeca Token free according your service usage. And just sell it market.
                         </Elements.Text>
                     </Layouts.Col>
