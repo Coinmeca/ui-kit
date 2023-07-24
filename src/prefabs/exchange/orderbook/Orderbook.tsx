@@ -58,6 +58,12 @@ export default function Ordrebook(props: Orderbook) {
                 </Layouts.Row>
                 <Layouts.Row gap={0} fix>
                     <Elements.Text opacity={0.6} fit>
+                        Sum Amount:
+                    </Elements.Text>
+                    <Elements.Text align={"right"}>{Format((parseFloat(tick?.balance?.toString()) / parseFloat(tick?.price?.toString())), "currency", true, 4)}</Elements.Text>
+                </Layouts.Row>
+                <Layouts.Row gap={0} fix>
+                    <Elements.Text opacity={0.6} fit>
                         Sum Balance:
                     </Elements.Text>
                     <Elements.Text align={"right"}>{Format(tick?.balance, "currency", true, 4)}</Elements.Text>
@@ -141,13 +147,12 @@ export default function Ordrebook(props: Orderbook) {
                                         </div>
                                         <div
                                             style={{
-                                                backgroundSize: `${
-                                                    (parseFloat(ask?.balance.toString()) / ask_max) * 100 > 100
-                                                        ? "100"
-                                                        : (parseFloat(ask?.balance.toString()) / ask_max) * 100 < 0
+                                                backgroundSize: `${(parseFloat(ask?.balance.toString()) / ask_max) * 100 > 100
+                                                    ? "100"
+                                                    : (parseFloat(ask?.balance.toString()) / ask_max) * 100 < 0
                                                         ? "0"
                                                         : (parseFloat(ask?.balance.toString()) / ask_max) * 100
-                                                }% 100%`,
+                                                    }% 100%`,
                                             }}
                                         >
                                             <span>{Format(ask?.price, "currency", true)}</span>
@@ -194,13 +199,12 @@ export default function Ordrebook(props: Orderbook) {
                                         </div>
                                         <div
                                             style={{
-                                                backgroundSize: `${
-                                                    (parseFloat(bid?.balance.toString()) / bid_max) * 100 > 100
-                                                        ? "100"
-                                                        : (parseFloat(bid?.balance.toString()) / bid_max) * 100 < 0
+                                                backgroundSize: `${(parseFloat(bid?.balance.toString()) / bid_max) * 100 > 100
+                                                    ? "100"
+                                                    : (parseFloat(bid?.balance.toString()) / bid_max) * 100 < 0
                                                         ? "0"
                                                         : (parseFloat(bid?.balance.toString()) / bid_max) * 100
-                                                }% 100%`,
+                                                    }% 100%`,
                                             }}
                                         >
                                             <span>{Format(bid?.price, "currency", true)}</span>

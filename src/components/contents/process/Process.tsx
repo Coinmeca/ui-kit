@@ -31,14 +31,8 @@ export default function Process(props: Process) {
                 children: (
                     <Contents.States.Failure
                         {...props?.left}
-                        message={
-                            <Layouts.Col>
-                                <Elements.Text type={"p"} opacity={0.6}>
-                                    Your order has been failed to processing.
-                                </Elements.Text>
-                                <Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>
-                            </Layouts.Col>
-                        }
+                        message={'Your order has been failed to processing.'}
+                        children={<Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>}
                     />
                 ),
             }}
@@ -47,14 +41,8 @@ export default function Process(props: Process) {
                 children: (
                     <Contents.States.Success
                         {...props?.right}
-                        message={
-                            <Layouts.Col>
-                                <Elements.Text type={"p"} opacity={0.6}>
-                                    Your order has been successfully completed.
-                                </Elements.Text>
-                                <Controls.Button onClick={(e: any) => handleFinish(e)}>OK</Controls.Button>
-                            </Layouts.Col>
-                        }
+                        message={"Your order has been successfully completed."}
+                        children={<Controls.Button onClick={(e: any) => handleFinish(e)}>OK</Controls.Button>}
                     />
                 ),
             }}
