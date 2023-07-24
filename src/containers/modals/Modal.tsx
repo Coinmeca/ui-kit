@@ -14,7 +14,7 @@ export interface Modal {
     width?: number | { min?: number; max?: number };
     close?: boolean;
     onClose: Function;
-    outsideClick?: boolean;
+    outsideClose?: boolean;
 }
 
 export default function Modal(props: Modal) {
@@ -44,7 +44,7 @@ export default function Modal(props: Modal) {
             color={"black"}
             style={{ zIndex: 200 }}
             onClick={(e: any) => {
-                props?.outsideClick && handleClose(e);
+                props?.outsideClose && handleClose(e);
             }}
             fix
         >
