@@ -48,7 +48,7 @@ export default function OrderControl(props: OrderControl) {
         sell: "red",
     };
 
-    const confirm = () => {
+    const confirm = (close: Function) => {
         const gap = {
             row: 2,
             space: {
@@ -145,13 +145,13 @@ export default function OrderControl(props: OrderControl) {
 
     const [handleBuy, closeBuy] = usePortal(
         <Modal title={"Buy Confirmation"} onClose={() => closeBuy()} close>
-            {confirm()}
+            {confirm(() => closeBuy())}
         </Modal>
     );
 
     const [handleSell, closeSell] = usePortal(
         <Modal title={"Sell Confirmation"} onClose={() => closeSell()} close>
-            {confirm()}
+            {confirm(() => closeSell())}
         </Modal>
     );
 
