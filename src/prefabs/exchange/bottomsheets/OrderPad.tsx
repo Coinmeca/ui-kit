@@ -6,7 +6,7 @@ import type { BottomSheet as Sheet } from "containers/bottomsheets/BottomSheet";
 import type { CurrencyPad } from "parts/numberpads/currency/Currency";
 import { useEffect, useState } from "react";
 
-export interface ExchangePad extends CurrencyPad, Sheet {
+export interface OrderPad extends CurrencyPad, Sheet {
     label?: string;
     placeholder?: number | string;
     sub?: { value?: number | string; unit?: string };
@@ -15,16 +15,18 @@ export interface ExchangePad extends CurrencyPad, Sheet {
     onChange?: Function;
 }
 
-export default function ExchangePad(props: ExchangePad) {
+export default function OrderPad(props: OrderPad) {
     const width = 64;
-
     const min = (typeof props?.height === "object" && props?.height?.min) || 36;
     const max = (typeof props?.height === "object" && props?.height?.max) || "60vh";
-    const height = { min: (typeof props?.height === "object" ? props?.height?.min : props?.height) || min, max: (typeof props?.height === "object" ? props?.height?.min : props?.height) || max };
-
+    const height = {
+        min: (typeof props?.height === "object" ? props?.height?.min : props?.height) || min,
+        max: (typeof props?.height === "object" ? props?.height?.min : props?.height) || max,
+    };
     const padding = props?.padding || 2;
-
     const [value, setValue] = useState(props?.value || "");
+
+    console.log(props?.onClose);
 
     useEffect(() => {
         if (props?.value) setValue(props?.value?.toString() || "");
@@ -73,14 +75,10 @@ export default function ExchangePad(props: ExchangePad) {
                     type={"currency"}
                     width={width}
                     value={value}
-                    button={{
-                        ...props?.button,
-                        ...{
-                            onClick: (e: any, v: string) => {
-                                if (typeof props?.button?.onClick === "function") props?.button?.onClick(e, v);
-                            },
-                        },
-                    }}
+                    button={
+                        props?.button
+                        // onClick: props?.button?.onClick,
+                    }
                     onChange={(e: any, v: string) => handleChange(e, v)}
                     padding={padding}
                     reverse={false}

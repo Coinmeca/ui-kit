@@ -40,7 +40,7 @@ export default function Modal(props: Modal) {
 
     return (
         <Layouts.Panel
-            active={active}
+            active={true}
             color={"black"}
             style={{ zIndex: 200 }}
             onClick={(e: any) => {
