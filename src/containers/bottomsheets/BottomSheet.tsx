@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Layouts } from "components";
-import { motion, AnimatePresence, useForceUpdate } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Style from "./BottomSheet.styled";
 
 export interface BottomSheet {
@@ -30,8 +30,8 @@ export default function BottomSheet(props: BottomSheet) {
     };
 
     return (
-        <Layouts.Panel active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
-            <AnimatePresence>
+        <AnimatePresence mode="popLayout">
+            <Layouts.Panel key="panel" active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
                 {active && (
                     <Style
                         key="bottomsheet"
@@ -49,7 +49,7 @@ export default function BottomSheet(props: BottomSheet) {
                         {props?.children}
                     </Style>
                 )}
-            </AnimatePresence>
-        </Layouts.Panel>
+            </Layouts.Panel>
+        </AnimatePresence>
     );
 }
