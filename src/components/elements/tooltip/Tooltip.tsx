@@ -25,8 +25,8 @@ export default function Tooltip(props: Tooltip) {
 
     const ref: any = useRef(null);
     const [active, setActive] = useState(props?.active || false);
-    const [x, setX] = useState<number>(0);
-    const [y, setY] = useState<number>(0);
+    const [x, setX] = useState<number | undefined>();
+    const [y, setY] = useState<number | undefined>();
 
     useEffect(() => {
         setActive(true);
@@ -43,29 +43,35 @@ export default function Tooltip(props: Tooltip) {
         if (e) {
             switch (props?.vertical) {
                 case "top":
-                    setY(e?.y - e?.offsetY - v - ref?.current?.clientHeight);
+                    setY(e?.nativeEvent?.clientY - e?.nativeEvent?.offsetY - v - ref?.current?.clientHeight);
                     break;
                 case "center":
-                    setY(e?.y - e?.offsetY + e?.target?.clientHeight / 2);
+                    setY(e?.nativeEvent?.clientY - e?.nativeEvent?.offsetY + e?.target?.clientHeight / 2);
                     break;
                 case "bottom":
-                    setY(e?.y - e?.offsetY + v + e?.target?.clientHeight);
+                    setY(e?.nativeEvent?.clientY - e?.nativeEvent?.offsetY + v + e?.target?.clientHeight);
+                    break;
+                case "cursor":
+                    setY(e?.nativeEvent?.clientY + v);
                     break;
                 default:
-                    setY(e?.y + v);
+                    setY(undefined);
             }
             switch (props?.horizon) {
                 case "left":
-                    setX(e?.x - e?.offsetX - h - ref?.current?.clientWidth);
+                    setX(e?.nativeEvent?.clientX - e?.nativeEvent?.offsetX - h - ref?.current?.clientWidth);
                     break;
                 case "center":
-                    setX(e?.x - e?.offsetX + e?.target?.clientWidth / 2 - ref?.current?.clientWidth / 2);
+                    setX(e?.nativeEvent?.clientX - e?.nativeEvent?.offsetX + e?.target?.clientWidth / 2 - ref?.current?.clientWidth / 2);
                     break;
                 case "right":
-                    setX(e?.x - e?.offsetX + e?.target?.clientWidth + h);
+                    setX(e?.nativeEvent?.clientX - e?.nativeEvent?.offsetX + e?.target?.clientWidth + h);
+                    break;
+                case "cursor":
+                    setX(e?.nativeEvent?.clientX + h);
                     break;
                 default:
-                    setX(e?.x + h);
+                    setX(undefined);
             }
         }
     }, [props?.e, props?.vertical, props?.horizon, margin]);
