@@ -14,7 +14,7 @@ export interface PartContainer {
 }
 
 export default function PartContainer(props: PartContainer) {
-    const [state, setState] = useState<boolean | null>(props?.state || null);
+    const [state, setState] = useState<boolean | null>(typeof props?.state !== "undefined" ? props?.state : null);
 
     useEffect(() => {
         return () => {
@@ -27,7 +27,6 @@ export default function PartContainer(props: PartContainer) {
     }, [props?.state]);
 
     useEffect(() => {
-        console.log("change", props?.state);
         switch (state) {
             case null:
                 console.log(1, props?.state);
@@ -50,8 +49,10 @@ export default function PartContainer(props: PartContainer) {
 
     return (
         <Style $state={state} style={props?.style}>
-            <div style={{ transform: `translateX(${state === null ? "-100%" : state === false ? "0" : "-200%"}` }} >
-                <Part $state={state} style={{}}>{props?.left?.children}</Part>
+            <div style={{ transform: `translateX(${state === null ? "-100%" : state === false ? "0" : "-200%"}` }}>
+                <Part $state={state} style={{}}>
+                    {props?.left?.children}
+                </Part>
                 {!props?.loading ? (
                     <Part $state={state}>{center()}</Part>
                 ) : (

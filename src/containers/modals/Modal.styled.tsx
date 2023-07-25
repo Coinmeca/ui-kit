@@ -48,14 +48,14 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
     & > * {
         display: flex;
         flex-direction: column;
-        width: 100%;
+        width: -webkit-fill-available;
         gap: 2em;
         padding: 4em;
         transition: 0.3s ease;
     }
 
     & > * > ${InnerContent.default} {
-        margin-top:2em;
+        margin-top: 2em;
         // font-size: 1.5em;
         align-items: center;
         text-align: center;

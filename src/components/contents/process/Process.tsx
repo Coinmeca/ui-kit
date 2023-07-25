@@ -15,13 +15,17 @@ export interface Process {
 }
 
 export default function Process(props: Process) {
-    const [state, setState] = useState<boolean | null>(props?.state || null);
+    const [state, setState] = useState<boolean | null>(typeof props?.state !== "undefined" ? props?.state : null);
 
     useEffect(() => {
         return () => {
             setState(null);
         };
     }, []);
+
+    useEffect(() => {
+        if (typeof props?.state !== "undefined") setState(props?.state);
+    }, [props?.state]);
 
     const handleBack = (e: any) => {
         if (typeof props?.onBack === "function") props?.onBack(e);
