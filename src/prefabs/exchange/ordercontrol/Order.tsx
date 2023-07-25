@@ -34,7 +34,10 @@ export default function Order(props: OrderControl) {
     const available = Format(assets[0]?.balance || 0, "number", true) as number;
 
     const option = props?.option || "market";
-    const [currency, setCurrency] = useState(mode ? 0 : 1);
+    const [currency, setCurrency] = useState(0);
+    const currencies = mode
+        ? [assets[1]?.symbol.toUpperCase(), assets[0]?.symbol.toUpperCase()]
+        : [assets[0]?.symbol.toUpperCase(), assets[1]?.symbol.toUpperCase()];
 
     const { order, price, amount, quantity } = useOrder(
         {
@@ -167,13 +170,13 @@ export default function Order(props: OrderControl) {
                 value={currency === 0 ? order?.quantity : order?.amount}
                 max={currency === 0 ? (order?.quantity || 1) / order.price : order.amount}
                 onChange={(e: any, v: any) => handleChangeAmount(v)}
-                left={{ children: <span>{mode ? (currency === 0 ? "Qunatity" : "Amount") : currency === 0 ? "Amount" : "Quantity"}</span> }}
+                left={{ children: <span>{currency === 0 ? "Qunatity" : "Amount"}</span> }}
                 right={{
                     width: gap.width,
                     children: (
                         <Controls.Dropdown
-                            option={[...assets].reverse()[currency]?.symbol?.toUpperCase()}
-                            options={[assets[0]?.symbol.toUpperCase(), assets[1]?.symbol.toUpperCase()].reverse()}
+                            option={currencies[currency]}
+                            options={currencies}
                             onClickItem={(e: any, v: any, k: number) => {
                                 console.log(k);
                                 console.log(assets);
