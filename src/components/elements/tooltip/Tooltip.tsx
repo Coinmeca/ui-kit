@@ -25,8 +25,8 @@ export default function Tooltip(props: Tooltip) {
 
     const ref: any = useRef(null);
     const [active, setActive] = useState(props?.active || false);
-    const [x, setX] = useState<number | undefined>();
-    const [y, setY] = useState<number | undefined>();
+    const [x, setX] = useState<number>(0);
+    const [y, setY] = useState<number>(0);
 
     useEffect(() => {
         setActive(true);
@@ -51,11 +51,8 @@ export default function Tooltip(props: Tooltip) {
                 case "bottom":
                     setY(e?.nativeEvent?.clientY - e?.nativeEvent?.offsetY + v + e?.target?.clientHeight);
                     break;
-                case "cursor":
-                    setY(e?.nativeEvent?.clientY + v);
-                    break;
                 default:
-                    setY(undefined);
+                    setY(e?.nativeEvent?.clientY + v);
             }
             switch (props?.horizon) {
                 case "left":
@@ -67,11 +64,8 @@ export default function Tooltip(props: Tooltip) {
                 case "right":
                     setX(e?.nativeEvent?.clientX - e?.nativeEvent?.offsetX + e?.target?.clientWidth + h);
                     break;
-                case "cursor":
-                    setX(e?.nativeEvent?.clientX + h);
-                    break;
                 default:
-                    setX(undefined);
+                    setX(e?.nativeEvent?.clientX + h);
             }
         }
     }, [props?.e, props?.vertical, props?.horizon, margin]);
