@@ -1,7 +1,7 @@
 "use client";
 import { styled } from "styled-components";
 
-export const Part = styled.div<{ $state: boolean | null }>`
+export const Part = styled.div<{ $state: boolean | null | undefined }>`
     position: relative;
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@ export const Part = styled.div<{ $state: boolean | null }>`
     height: 100%;
 `;
 
-export const Style = styled.div<{ $state: boolean | null }>`
+export const Style = styled.div<{ $state: boolean | null | undefined }>`
     position: relative;
     width: 100%;
     height: 100%;

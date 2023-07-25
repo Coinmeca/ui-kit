@@ -14,15 +14,16 @@ export interface PartContainer {
 }
 
 export default function PartContainer(props: PartContainer) {
-    const [state, setState] = useState<boolean | null>(typeof props?.state !== "undefined" ? props?.state : null);
+    const [state, setState] = useState<boolean | null | undefined>(typeof props?.state !== "undefined" ? props?.state : null);
 
     useEffect(() => {
         return () => {
-            setState(null);
+            setState(undefined);
         };
     }, []);
 
     useEffect(() => {
+        console.log("process", props?.state);
         if (typeof props?.state !== "undefined") setState(props?.state);
     }, [props?.state]);
 
@@ -49,17 +50,17 @@ export default function PartContainer(props: PartContainer) {
 
     return (
         <Style $state={state} style={props?.style}>
-            <div style={{ transform: `translateX(${state === null ? "-100%" : state === false ? "0" : "-200%"}` }}>
+            <div style={{ transform: `translateX(${!state ? (typeof state === "undefined" ? "0" : state === false ? "-100%" : "-200%") : "0"}` }}>
                 <Part $state={state} style={{}}>
                     {props?.left?.children}
                 </Part>
                 {!props?.loading ? (
-                    <Part $state={state}>{center()}</Part>
+                    center()
                 ) : (
                     <Layouts.Contents.SlideContainer
                         contents={[
-                            { active: !props?.loading, children: center },
-                            { active: props?.loading, children: <Part $state={state}>{props?.content}</Part> },
+                            { active: !props?.loading, children: center() },
+                            { active: props?.loading, children: <>Loading...</> },
                         ]}
                     />
                 )}

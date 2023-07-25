@@ -51,7 +51,14 @@ export default function Page() {
                         >
                             Go to Left
                         </Controls.Button>
-                        <Controls.Button onClick={() => setState(true)}>Go to Right</Controls.Button>
+                        <Controls.Button
+                            onClick={() => {
+                                setState(true);
+                                console.log("onClick", state);
+                            }}
+                        >
+                            Go to Right
+                        </Controls.Button>
                     </Layouts.Row>
                 </>
             }
