@@ -45,9 +45,8 @@ export default function Page() {
                     <Layouts.Row fix gap={3}>
                         <Controls.Button
                             onClick={() => {
-                                console.log(123);
                                 setState(false);
-                                console.log(state);
+                                console.log("onClick", state);
                             }}
                         >
                             Go to Left
@@ -60,7 +59,7 @@ export default function Page() {
             close
         />
     );
-    console.log("state", state);
+    console.log("page", state);
 
     return (
         <Layouts.Page>

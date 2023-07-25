@@ -26,8 +26,6 @@ export default function OrderPad(props: OrderPad) {
     const padding = props?.padding || 2;
     const [value, setValue] = useState(props?.value || "");
 
-    console.log(props?.onClose);
-
     useEffect(() => {
         if (props?.value) setValue(props?.value?.toString() || "");
     }, [props?.value]);
