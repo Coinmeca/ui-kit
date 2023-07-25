@@ -6,6 +6,7 @@ import { Format } from "lib/utils";
 import { Exchange } from "prefabs";
 import useOrder from "hooks/useOrder";
 import usePortal from "hooks/usePortal";
+import useMobile from "hooks/useMobile";
 
 export interface OrderControl {
     mode: boolean;
@@ -29,6 +30,8 @@ export interface Order {
 }
 
 export default function Order(props: OrderControl) {
+    const { isMobile } = useMobile();
+
     const mode = typeof props?.mode === "undefined" ? true : props?.mode;
     const assets = props?.assets || [];
     const available = Format(assets[0]?.balance || 0, "number", true) as number;
@@ -167,6 +170,7 @@ export default function Order(props: OrderControl) {
                 placeholder={"0"}
                 type={"currency"}
                 align={"right"}
+                inputMode={isMobile ? "none" : undefined}
                 value={currency === 0 ? order?.quantity : order?.amount}
                 max={currency === 0 ? (order?.quantity || 1) / order.price : order.amount}
                 onChange={(e: any, v: any) => handleChangeAmount(v)}
