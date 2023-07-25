@@ -67,80 +67,78 @@ export default function OrderControl(props: OrderControl) {
 
         return (
             <>
-                <Layouts.Col>
-                    <Layouts.Contents.InnerContent>
-                        <Layouts.Col gap={2}>
-                            <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                                <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                    Price
+                <Layouts.Contents.InnerContent style={{ justifyContent: "center" }}>
+                    <Layouts.Col gap={1}>
+                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                                Price
+                            </Elements.Text>
+                            <Layouts.Row gap={gap.row} fix>
+                                <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
+                                    12345678
                                 </Elements.Text>
-                                <Layouts.Row gap={gap.row} fix>
-                                    <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
-                                        12345678
-                                    </Elements.Text>
-                                    <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                        {"eth".toUpperCase()}
-                                    </Elements.Text>
-                                </Layouts.Row>
-                            </Layouts.Row>
-                            <Layouts.Divider />
-                            <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                                <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                    Amount
+                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                                    {"eth".toUpperCase()}
                                 </Elements.Text>
-                                <Layouts.Row gap={gap.row} fix>
-                                    <Elements.Text height={text.height} align={text.align} style={text.setting}>
-                                        12345678
-                                    </Elements.Text>
-                                    <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                        {"eth".toUpperCase()}
-                                    </Elements.Text>
-                                </Layouts.Row>
                             </Layouts.Row>
-                            <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                                <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                    Quantity
+                        </Layouts.Row>
+                        <Layouts.Divider />
+                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                                Amount
+                            </Elements.Text>
+                            <Layouts.Row gap={gap.row} fix>
+                                <Elements.Text height={text.height} align={text.align} style={text.setting}>
+                                    12345678
                                 </Elements.Text>
-                                <Layouts.Row gap={gap.row} fix>
-                                    <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
-                                        12345678
-                                    </Elements.Text>
-                                    <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                        {"eth".toUpperCase()}
-                                    </Elements.Text>
-                                </Layouts.Row>
-                            </Layouts.Row>
-                            <Layouts.Divider />
-                            <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                                <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                    Fees
+                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                                    {"eth".toUpperCase()}
                                 </Elements.Text>
-                                <Layouts.Row gap={gap.row} fix>
-                                    <Elements.Text opacity={0.45} height={text.height} align={text.align} style={text.setting}>
-                                        - 12345678
-                                    </Elements.Text>
-                                    <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                        {"eth".toUpperCase()}
-                                    </Elements.Text>
-                                </Layouts.Row>
                             </Layouts.Row>
-                            <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                                <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                    Total
+                        </Layouts.Row>
+                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                                Quantity
+                            </Elements.Text>
+                            <Layouts.Row gap={gap.row} fix>
+                                <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
+                                    12345678
                                 </Elements.Text>
-                                <Layouts.Row gap={gap.row} fix>
-                                    <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
-                                        12345678
-                                    </Elements.Text>
-                                    <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                        {"eth".toUpperCase()}
-                                    </Elements.Text>
-                                </Layouts.Row>
+                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                                    {"eth".toUpperCase()}
+                                </Elements.Text>
                             </Layouts.Row>
-                        </Layouts.Col>
-                    </Layouts.Contents.InnerContent>
-                    <Controls.Button onClick={confirm}>Confirm</Controls.Button>
-                </Layouts.Col>
+                        </Layouts.Row>
+                        <Layouts.Divider />
+                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                                Fees
+                            </Elements.Text>
+                            <Layouts.Row gap={gap.row} fix>
+                                <Elements.Text opacity={0.45} height={text.height} align={text.align} style={text.setting}>
+                                    - 12345678
+                                </Elements.Text>
+                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                                    {"eth".toUpperCase()}
+                                </Elements.Text>
+                            </Layouts.Row>
+                        </Layouts.Row>
+                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                                Total
+                            </Elements.Text>
+                            <Layouts.Row gap={gap.row} fix>
+                                <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
+                                    12345678
+                                </Elements.Text>
+                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                                    {"eth".toUpperCase()}
+                                </Elements.Text>
+                            </Layouts.Row>
+                        </Layouts.Row>
+                    </Layouts.Col>
+                </Layouts.Contents.InnerContent>
+                <Controls.Button onClick={confirm}>Confirm</Controls.Button>
             </>
         );
     };
@@ -179,7 +177,7 @@ export default function OrderControl(props: OrderControl) {
                             setState(true);
                         }}
                     >
-                        Let's Finish
+                        {`Let's Finish`}
                     </Controls.Button>
                 ),
             }}
@@ -188,6 +186,7 @@ export default function OrderControl(props: OrderControl) {
                 children: (
                     <Controls.Button
                         onClick={(e: any) => {
+                            closeBuy();
                             setState(null);
                             setLoading(false);
                         }}
@@ -199,7 +198,7 @@ export default function OrderControl(props: OrderControl) {
             onClose={() => {
                 closeBuy();
             }}
-            close
+            close={!loading}
         />
     );
 

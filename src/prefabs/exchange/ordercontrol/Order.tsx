@@ -136,7 +136,7 @@ export default function Order(props: OrderControl) {
     return (
         <Layouts.Col gap={gap.col.small}>
             <Layouts.Row gap={gap.row} style={gap.space.big} fix>
-                <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
+                <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
                     Available
                 </Elements.Text>
                 <Layouts.Row gap={gap.row} fix>
@@ -196,7 +196,7 @@ export default function Order(props: OrderControl) {
             />
             <Layouts.Col gap={gap.col.big}>
                 <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                    <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
+                    <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
                         Fees
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
@@ -209,7 +209,7 @@ export default function Order(props: OrderControl) {
                     </Layouts.Row>
                 </Layouts.Row>
                 <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                    <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
+                    <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
                         Total
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>

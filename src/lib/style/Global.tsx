@@ -24,7 +24,7 @@ const Global = createGlobalStyle`
         -webkit-font-smoothing: antialiased;
 
         &[lang="ko"] {
-            font-size: 10px;
+            /* font-size: 10px; */
             &,
             input,
             button,
