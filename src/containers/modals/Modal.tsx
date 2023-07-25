@@ -41,6 +41,7 @@ export default function Modal(props: Modal) {
     return (
         <AnimatePresence>
             <Layouts.Panel
+                key="panel"
                 active={true}
                 color={"black"}
                 style={{ zIndex: 200 }}
@@ -51,13 +52,14 @@ export default function Modal(props: Modal) {
             >
                 {active && (
                     <Style
+                        key="modal"
                         $active={active}
                         $width={width}
                         as={motion.div}
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.9, opacity: 0 }}
-                        transition={{ ease: "easeInOut", duration: 0 }}
+                        transition={{ ease: "easeInOut", duration: 0.15 }}
                     >
                         <div>
                             {props?.title && (

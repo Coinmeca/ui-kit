@@ -11,12 +11,16 @@ const Style = styled.div<{ $scale: number; $active: boolean; $height?: number | 
     margin: 0 !important;
     text-align: center;
     pointer-events: ${({ $active }) => ($active ? "initial" : "none")};
-    /* transform: translateY(100%);
-    transform: translateY(${({ $active }) => $active && "0"}); */
+    transform: translateY(100%);
+    transform: translateY(${({ $active }) => $active && "0"});
     transition: 0.3s ease;
 
-    ${({ $height }) => typeof $height === "object" && `min-height: ${typeof $height?.min === "number" ? `${$height?.min}em` : typeof $height?.min === "string" && `${$height?.min}`}`};
-    ${({ $height }) => typeof $height === "object" && `max-height: ${typeof $height?.max === "number" ? `${$height?.max}em` : typeof $height?.max === "string" && `${$height?.max}`}`};
+    ${({ $height }) =>
+        typeof $height === "object" &&
+        `min-height: ${typeof $height?.min === "number" ? `${$height?.min}em` : typeof $height?.min === "string" && `${$height?.min}`}`};
+    ${({ $height }) =>
+        typeof $height === "object" &&
+        `max-height: ${typeof $height?.max === "number" ? `${$height?.max}em` : typeof $height?.max === "string" && `${$height?.max}`}`};
 
     input {
         color: white;

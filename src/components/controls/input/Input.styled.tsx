@@ -1,5 +1,6 @@
 import { css, styled } from "styled-components";
 import * as Box from "components/layouts/box/Box.styled";
+import * as Dropdown from "components/controls/dropdown/Dropdown.styled";
 
 export const Side = styled.div<{ $width?: number }>`
     display: flex;
@@ -31,9 +32,25 @@ export const Side = styled.div<{ $width?: number }>`
         margin: 0;
         opacity: 0.45;
     }
+
+    & > *${Dropdown.default} {
+        &,
+        & > ul,
+        & > ul > li {
+            backdrop-filter: none;
+        }
+    }
 `;
 
-const Style = styled.div<{ $clearable?: boolean; $scale: number; $focus: boolean; $align: "left" | "center" | "right"; $lock?: boolean; $error: boolean; $disabled?: boolean }>`
+const Style = styled.div<{
+    $clearable?: boolean;
+    $scale: number;
+    $focus: boolean;
+    $align: "left" | "center" | "right";
+    $lock?: boolean;
+    $error: boolean;
+    $disabled?: boolean;
+}>`
     font-size: ${({ $scale }) => $scale}em;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
