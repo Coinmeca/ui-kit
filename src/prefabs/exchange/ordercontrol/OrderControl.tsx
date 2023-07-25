@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
-import { Modal } from "containers";
+import { Modal, Modals } from "containers";
 import { Token } from "types/web3";
 import Order from "./Order";
 import type { Order as O } from "./Order";
@@ -48,7 +48,7 @@ export default function OrderControl(props: OrderControl) {
         sell: "red",
     };
 
-    const confirm = (close: Function) => {
+    const confirm = (confirm: Function) => {
         const gap = {
             row: 2,
             space: {
@@ -68,91 +68,139 @@ export default function OrderControl(props: OrderControl) {
         return (
             <>
                 <Layouts.Col>
-                    <Layouts.Col gap={2}>
-                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                Price
-                            </Elements.Text>
-                            <Layouts.Row gap={gap.row} fix>
-                                <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
-                                    12345678
+                    <Layouts.Contents.InnerContent>
+                        <Layouts.Col gap={2}>
+                            <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                                <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
+                                    Price
                                 </Elements.Text>
-                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                    {"eth".toUpperCase()}
-                                </Elements.Text>
+                                <Layouts.Row gap={gap.row} fix>
+                                    <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
+                                        12345678
+                                    </Elements.Text>
+                                    <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                                        {"eth".toUpperCase()}
+                                    </Elements.Text>
+                                </Layouts.Row>
                             </Layouts.Row>
-                        </Layouts.Row>
-                        <Layouts.Divider />
-                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                Amount
-                            </Elements.Text>
-                            <Layouts.Row gap={gap.row} fix>
-                                <Elements.Text height={text.height} align={text.align} style={text.setting}>
-                                    12345678
+                            <Layouts.Divider />
+                            <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                                <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
+                                    Amount
                                 </Elements.Text>
-                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                    {"eth".toUpperCase()}
-                                </Elements.Text>
+                                <Layouts.Row gap={gap.row} fix>
+                                    <Elements.Text height={text.height} align={text.align} style={text.setting}>
+                                        12345678
+                                    </Elements.Text>
+                                    <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                                        {"eth".toUpperCase()}
+                                    </Elements.Text>
+                                </Layouts.Row>
                             </Layouts.Row>
-                        </Layouts.Row>
-                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                Quantity
-                            </Elements.Text>
-                            <Layouts.Row gap={gap.row} fix>
-                                <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
-                                    12345678
+                            <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                                <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
+                                    Quantity
                                 </Elements.Text>
-                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                    {"eth".toUpperCase()}
-                                </Elements.Text>
+                                <Layouts.Row gap={gap.row} fix>
+                                    <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
+                                        12345678
+                                    </Elements.Text>
+                                    <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                                        {"eth".toUpperCase()}
+                                    </Elements.Text>
+                                </Layouts.Row>
                             </Layouts.Row>
-                        </Layouts.Row>
-                        <Layouts.Divider />
-                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                Fees
-                            </Elements.Text>
-                            <Layouts.Row gap={gap.row} fix>
-                                <Elements.Text opacity={0.45} height={text.height} align={text.align} style={text.setting}>
-                                    - 12345678
+                            <Layouts.Divider />
+                            <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                                <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
+                                    Fees
                                 </Elements.Text>
-                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                    {"eth".toUpperCase()}
-                                </Elements.Text>
+                                <Layouts.Row gap={gap.row} fix>
+                                    <Elements.Text opacity={0.45} height={text.height} align={text.align} style={text.setting}>
+                                        - 12345678
+                                    </Elements.Text>
+                                    <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                                        {"eth".toUpperCase()}
+                                    </Elements.Text>
+                                </Layouts.Row>
                             </Layouts.Row>
-                        </Layouts.Row>
-                        <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
-                                Total
-                            </Elements.Text>
-                            <Layouts.Row gap={gap.row} fix>
-                                <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
-                                    12345678
+                            <Layouts.Row gap={gap.row} style={gap.space.small} fix>
+                                <Elements.Text height={text.height} opacity={text.opacity} style={text.label}>
+                                    Total
                                 </Elements.Text>
-                                <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                                    {"eth".toUpperCase()}
-                                </Elements.Text>
+                                <Layouts.Row gap={gap.row} fix>
+                                    <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
+                                        12345678
+                                    </Elements.Text>
+                                    <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                                        {"eth".toUpperCase()}
+                                    </Elements.Text>
+                                </Layouts.Row>
                             </Layouts.Row>
-                        </Layouts.Row>
-                    </Layouts.Col>
-                    <Controls.Button onClick={close}>Confirm</Controls.Button>
+                        </Layouts.Col>
+                    </Layouts.Contents.InnerContent>
+                    <Controls.Button onClick={confirm}>Confirm</Controls.Button>
                 </Layouts.Col>
             </>
         );
     };
 
-    const [handleBuy, closeBuy] = usePortal(
-        <Modal title={"Buy Confirmation"} onClose={() => closeBuy()} close>
-            {confirm(() => closeBuy())}
-        </Modal>
-    );
-
     const [handleSell, closeSell] = usePortal(
         <Modal title={"Sell Confirmation"} onClose={() => closeSell()} close>
             {confirm(() => closeSell())}
         </Modal>
+    );
+
+    const [state, setState] = useState<boolean | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [handleBuy, closeBuy] = usePortal(
+        <Modals.Process
+            state={state}
+            title={"This is a Modal."}
+            content={confirm(() => setLoading(true))}
+            failure={{
+                message: "Your order has been failed to processing.",
+                children: (
+                    <Controls.Button
+                        onClick={(e: any) => {
+                            setState(null);
+                        }}
+                    >
+                        Go Back
+                    </Controls.Button>
+                ),
+            }}
+            loading={{
+                active: loading,
+                message: "Please wait to done your transaction processing.",
+                children: (
+                    <Controls.Button
+                        onClick={(e: any) => {
+                            setState(true);
+                        }}
+                    >
+                        Let's Finish
+                    </Controls.Button>
+                ),
+            }}
+            success={{
+                message: "Your order has been successfully completed.",
+                children: (
+                    <Controls.Button
+                        onClick={(e: any) => {
+                            setState(null);
+                            setLoading(false);
+                        }}
+                    >
+                        OK
+                    </Controls.Button>
+                ),
+            }}
+            onClose={() => {
+                closeBuy();
+            }}
+            close
+        />
     );
 
     return (

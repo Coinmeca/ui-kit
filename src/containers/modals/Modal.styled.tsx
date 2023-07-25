@@ -55,7 +55,7 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
     }
 
     & > * > ${InnerContent.default} {
-        margin-top: 2em;
+        /* margin-top: 2em; */
         // font-size: 1.5em;
         align-items: center;
         text-align: center;
@@ -66,6 +66,10 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
         min-width: calc(100% - 4em);
         max-width: calc(100% - 4em);
         margin: 2em;
+
+        & > * {
+            padding: 4em 2em 2em;
+        }
 
         & > ${ButtonArea} {
             padding: 2em;
