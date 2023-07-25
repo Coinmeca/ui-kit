@@ -68,7 +68,7 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
         margin: 2em;
 
         & > * {
-            padding: 4em 2em 2em;
+            padding: 4em 2em;
         }
 
         & > ${ButtonArea} {
