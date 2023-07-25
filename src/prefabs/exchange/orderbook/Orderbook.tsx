@@ -187,8 +187,8 @@ export default function Ordrebook(props: Orderbook) {
                             <Ticks
                                 key={k}
                                 onClick={(e: any) => handleBid(bid, e)}
-                                onHoverStart={(e: any) => handleBidHover(bid, k, e)}
-                                onHoverEnd={closeTooltip}
+                                onMouseEnter={(e: any) => handleBidHover(bid, k, e)}
+                                onMouseLeave={closeTooltip}
                                 as={motion.div}
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
