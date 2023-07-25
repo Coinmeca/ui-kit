@@ -156,7 +156,7 @@ export default function OrderControl(props: OrderControl) {
     const [handleBuy, closeBuy] = usePortal(
         <Modals.Process
             state={state}
-            title={"This is a Modal."}
+            title={"Buy Confirmation"}
             content={confirm(() => setLoading(true))}
             failure={{
                 message: "Your order has been failed to processing.",
