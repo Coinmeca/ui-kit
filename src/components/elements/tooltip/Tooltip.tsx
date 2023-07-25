@@ -37,38 +37,40 @@ export default function Tooltip(props: Tooltip) {
 
     useEffect(() => {
         const e = props?.e;
+        console.log(e?.clientX - e?.nativeEvent?.offsetX, e?.target?.clientWidth / 2, ref?.current?.clientWidth / 2);
+        // console.log(e?.clientY, e?.nativeEvent?.offsetY, e?.clientY - e?.nativeEvent?.offsetY);
         const h: number = margin && typeof margin !== "number" ? (margin?.length >= 1 ? margin[0] : 8) : margin;
         const v: number = margin && typeof margin !== "number" ? (margin?.length >= 2 ? margin[1] : 8) : margin;
 
         if (e) {
             switch (props?.vertical) {
                 case "top":
-                    setY(e?.nativeEvent?.clientY - e?.nativeEvent?.offsetY - v - ref?.current?.clientHeight);
+                    setY(e?.clientY - e?.nativeEvent?.offsetY - v - ref?.current?.clientHeight);
                     break;
                 case "center":
-                    setY(e?.nativeEvent?.clientY - e?.nativeEvent?.offsetY + e?.target?.clientHeight / 2);
+                    setY(e?.clientY - e?.nativeEvent?.offsetY + e?.target?.clientHeight / 2);
                     break;
                 case "bottom":
-                    setY(e?.nativeEvent?.clientY - e?.nativeEvent?.offsetY + v + e?.target?.clientHeight);
+                    setY(e?.clientY - e?.nativeEvent?.offsetY + v + e?.target?.clientHeight);
                     break;
                 default:
-                    setY(e?.nativeEvent?.clientY + v);
+                    setY(e?.clientY + v);
             }
             switch (props?.horizon) {
                 case "left":
-                    setX(e?.nativeEvent?.clientX - e?.nativeEvent?.offsetX - h - ref?.current?.clientWidth);
+                    setX(e?.clientX - e?.nativeEvent?.offsetX - h - ref?.current?.clientWidth);
                     break;
                 case "center":
-                    setX(e?.nativeEvent?.clientX - e?.nativeEvent?.offsetX + e?.target?.clientWidth / 2 - ref?.current?.clientWidth / 2);
+                    setX(e?.clientX - e?.nativeEvent?.offsetX + e?.target?.clientWidth / 2 - ref?.current?.clientWidth / 2);
                     break;
                 case "right":
-                    setX(e?.nativeEvent?.clientX - e?.nativeEvent?.offsetX + e?.target?.clientWidth + h);
+                    setX(e?.clientX - e?.nativeEvent?.offsetX + e?.target?.clientWidth + h);
                     break;
                 default:
-                    setX(e?.nativeEvent?.clientX + h);
+                    setX(e?.clientX + h);
             }
         }
-    }, [props?.e, props?.vertical, props?.horizon, margin]);
+    }, [props?.e, props?.vertical, props?.horizon, props?.fill, margin]);
 
     return (
         <AnimatePresence>
@@ -81,7 +83,7 @@ export default function Tooltip(props: Tooltip) {
                         style={{
                             top: isNaN(y) ? undefined : y,
                             left: isNaN(x) ? undefined : x,
-                            width: props?.width || props?.fill ? `calc(${props?.e?.target?.clientWidth}px - ${padding * 2}em)` : undefined,
+                            minWidth: props?.width || props?.fill ? `calc(${props?.e?.target?.clientWidth}px - ${padding * 2}em)` : undefined,
                             ...props?.style,
                         }}
                         as={motion.div}
