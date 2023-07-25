@@ -4,7 +4,7 @@ import { Contents, Controls, Elements, Layouts } from "components";
 import type { State } from "components/contents/states/State";
 
 export interface Process {
-    state?: boolean | null;
+    state: boolean | null;
     content?: any;
     failure?: State;
     success?: State;
@@ -15,26 +15,21 @@ export interface Process {
 }
 
 export default function Process(props: Process) {
-    const [state, setState] = useState<boolean | null>(typeof props?.state !== "undefined" ? props?.state : null);
+    const [state, setState] = useState<boolean | null | undefined>(typeof props?.state !== "undefined" ? props?.state : null);
 
     useEffect(() => {
-        return () => {
-            setState(null);
-        };
-    }, []);
-
-    useEffect(() => {
+        console.log("process", props?.state);
         if (typeof props?.state !== "undefined") setState(props?.state);
     }, [props?.state]);
 
     const handleBack = (e: any) => {
         if (typeof props?.onBack === "function") props?.onBack(e);
-        setState(null);
+        setState(undefined);
     };
 
     const handleFinish = (e: any) => {
         if (typeof props?.onFinish === "function") props?.onFinish(e);
-        setState(null);
+        setState(undefined);
     };
 
     return (
