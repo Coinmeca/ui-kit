@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Layouts } from "components";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useForceUpdate } from "framer-motion";
 import Style from "./BottomSheet.styled";
 
 export interface BottomSheet {

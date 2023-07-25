@@ -3,10 +3,10 @@ import { useState } from "react";
 import { Root } from "lib/style";
 import { Controls, Elements, Layouts } from "components";
 import { Capitalize, Format } from "lib/utils";
-import useWindowSize from "hooks/useWindowSize";
 import Data from "./data";
-import usePortal from "hooks/usePortal";
 import { Modal, Modals } from "containers";
+import useWindowSize from "hooks/useWindowSize";
+import usePortal from "hooks/usePortal";
 
 export default function Page() {
     const { windowSize } = useWindowSize();
@@ -20,50 +20,47 @@ export default function Page() {
     const [tab, setTab] = useState<string>(option);
     const [view, setView] = useState(0);
 
-    const { portal, close } = usePortal();
+    // const handleModal = () => {
+    //     // portal(<Modals.Alert title={"This is a Modal."} message={"This is a modal content test message."} onClose={close} />);
+    //     // portal(<Modal title={"This is a Modal."} message={"This is a modal content test message."} onClose={close} close />);
+    //     handleDialogue();
+    // };
 
-    const handleModal = () => {
-        // portal(<Modals.Alert title={"This is a Modal."} message={"This is a modal content test message."} onClose={close} />);
-        portal(<Modal title={"This is a Modal."} message={"This is a modal content test message."} onClose={close} close />);
-    };
+    const [handleModal, closeDialogue] = usePortal(
+        <Modal title={"This is a Modal."} message={"This is a modal content test message."} onClose={() => closeDialogue()} close />
+    );
 
     const [state, setState] = useState<boolean | null>(null);
-    const handleProcessModal = () => {
-        // portal(<Modals.Alert title={"This is a Modal."} message={"This is a modal content test message."} onClose={close} />);
-        portal(
-            <Modals.Process
-                state={state}
-                title={"This is a Modal."}
-                content={
-                    <>
-                        <Layouts.Contents.InnerContent>
-                            <Elements.Text align="center" opacity={0.6}>
-                                Here is the message for process modal.
-                            </Elements.Text>
-                        </Layouts.Contents.InnerContent>
-                        <Layouts.Row fix gap={3}>
-                            <Controls.Button
-                                onClick={() => {
-                                    setState(false);
-                                }}
-                            >
-                                Go to Left
-                            </Controls.Button>
-                            <Controls.Button
-                                onClick={() => {
-                                    setState(true);
-                                }}
-                            >
-                                Go to Right
-                            </Controls.Button>
-                        </Layouts.Row>
-                    </>
-                }
-                onClose={close}
-                close
-            />
-        );
-    };
+    const [handleProcessModal, closeProcessModal] = usePortal(
+        <Modals.Process
+            state={state}
+            title={"This is a Modal."}
+            content={
+                <>
+                    <Layouts.Contents.InnerContent>
+                        <Elements.Text align="center" opacity={0.6}>
+                            Here is the message for process modal.
+                        </Elements.Text>
+                    </Layouts.Contents.InnerContent>
+                    <Layouts.Row fix gap={3}>
+                        <Controls.Button
+                            onClick={() => {
+                                console.log(123);
+                                setState(false);
+                                console.log(state);
+                            }}
+                        >
+                            Go to Left
+                        </Controls.Button>
+                        <Controls.Button onClick={() => setState(true)}>Go to Right</Controls.Button>
+                    </Layouts.Row>
+                </>
+            }
+            onClose={() => closeProcessModal()}
+            close
+        />
+    );
+    console.log("state", state);
 
     return (
         <Layouts.Page>
@@ -377,10 +374,8 @@ export default function Page() {
                                                                     children: (
                                                                         <Layouts.Contents.InnerContent>
                                                                             <Controls.Button onClick={() => setPage(true)}>Go to</Controls.Button>
-                                                                            <Controls.Button onClick={() => handleModal()}>Show modal</Controls.Button>
-                                                                            <Controls.Button onClick={() => handleProcessModal()}>
-                                                                                Show process modal
-                                                                            </Controls.Button>
+                                                                            <Controls.Button onClick={handleModal}>Show modal</Controls.Button>
+                                                                            <Controls.Button onClick={handleProcessModal}>Show process modal</Controls.Button>
                                                                         </Layouts.Contents.InnerContent>
                                                                     ),
                                                                 },

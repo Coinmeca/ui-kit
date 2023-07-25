@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Contents, Controls, Elements, Layouts } from "components";
 import type { State } from "components/contents/states/State";
 
@@ -17,6 +17,12 @@ export interface Process {
 export default function Process(props: Process) {
     const [state, setState] = useState<boolean | null>(props?.state || null);
 
+    useEffect(() => {
+        return () => {
+            setState(null);
+        };
+    }, []);
+
     const handleBack = (e: any) => {
         if (typeof props?.onBack === "function") props?.onBack(e);
         setState(null);
@@ -33,10 +39,7 @@ export default function Process(props: Process) {
             state={state}
             left={{
                 children: (
-                    <Contents.States.Failure
-                        {...props?.failure}
-                        message={'Your order has been failed to processing.'}
-                    >
+                    <Contents.States.Failure {...props?.failure} message={"Your order has been failed to processing."}>
                         <Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>
                     </Contents.States.Failure>
                 ),
@@ -44,11 +47,7 @@ export default function Process(props: Process) {
             content={props?.content}
             right={{
                 children: (
-                    <Contents.States.Success
-                        {...props?.success}
-                        message={"Your order has been successfully completed."}
-
-                    >
+                    <Contents.States.Success {...props?.success} message={"Your order has been successfully completed."}>
                         <Controls.Button onClick={(e: any) => handleFinish(e)}>OK</Controls.Button>
                     </Contents.States.Success>
                 ),

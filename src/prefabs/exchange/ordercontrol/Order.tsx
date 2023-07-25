@@ -1,12 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Token } from "types/web3";
 import { Format } from "lib/utils";
 import { Exchange } from "prefabs";
-import usePortal from "hooks/usePortal";
-import useMobile from "hooks/useMobile";
 import useOrder from "hooks/useOrder";
+import usePortal from "hooks/usePortal";
 
 export interface OrderControl {
     mode: boolean;
@@ -30,8 +29,6 @@ export interface Order {
 }
 
 export default function Order(props: OrderControl) {
-    const { portal, close } = usePortal();
-
     const mode = typeof props?.mode === "undefined" ? true : props?.mode;
     const assets = props?.assets || [];
     const available = Format(assets[0]?.balance || 0, "number", true) as number;
@@ -109,6 +106,33 @@ export default function Order(props: OrderControl) {
         unit: "%",
     };
 
+    const [handlePricePad, closePricePad] = usePortal(
+        <Exchange.BottomSheets.OrderPad
+            label={"Price"}
+            placeholder={order.price}
+            value={order.price}
+            unit={[...assets][mode ? 0 : 1]?.symbol?.toUpperCase()}
+            button={{ children: "OK", onClick: () => closePricePad() }}
+            onChange={(e: any, v: any) => handleChangePrice(v)}
+        />
+    );
+
+    const [handleAmountPad, closeAmountPad] = usePortal(
+        <Exchange.BottomSheets.OrderPad
+            label={currency === 0 ? "Quantity" : "Amount"}
+            placeholder={"0"}
+            value={currency === 0 ? order.quantity : order.amount}
+            unit={[...assets].reverse()[currency]?.symbol?.toUpperCase()}
+            sub={{
+                value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", true)}`,
+                unit: assets[currency]?.symbol?.toUpperCase(),
+            }}
+            button={{ color: mode ? color.buy : color.sell, children: mode ? "BUY" : "SELL", onClick: () => closeAmountPad() }}
+            onChange={(e: any, v: any) => handleChangeAmount(v)}
+            onClose={() => closeAmountPad()}
+        />
+    );
+
     return (
         <Layouts.Col gap={gap.col.small}>
             <Layouts.Row gap={gap.row} style={gap.space.big} fix>
@@ -129,18 +153,7 @@ export default function Order(props: OrderControl) {
                 type={"currency"}
                 align={"right"}
                 value={order.price}
-                onClick={() =>
-                    portal(
-                        <Exchange.BottomSheets.OrderPad
-                            label={"Price"}
-                            placeholder={order.price}
-                            value={order.price}
-                            unit={[...assets][mode ? 0 : 1]?.symbol?.toUpperCase()}
-                            button={{ children: "OK", onClick: () => close() }}
-                            onChange={(e: any, v: any) => handleChangePrice(v)}
-                        />
-                    )
-                }
+                onClick={() => handlePricePad()}
                 onChange={(e: any, v: any) => handleChangePrice(v)}
                 left={{ children: <span>Price</span> }}
                 right={{ width: gap.width, children: <span style={{ justifyContent: "flex-start" }}>{assets[mode ? 0 : 1]?.symbol?.toUpperCase()}</span> }}
@@ -170,22 +183,7 @@ export default function Order(props: OrderControl) {
                     ),
                 }}
                 style={text.setting}
-                onClick={() =>
-                    portal(
-                        <Exchange.BottomSheets.OrderPad
-                            label={currency === 0 ? "Quantity" : "Amount"}
-                            placeholder={"0"}
-                            value={currency === 0 ? order.quantity : order.amount}
-                            unit={[...assets].reverse()[currency]?.symbol?.toUpperCase()}
-                            sub={{
-                                value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", true)}`,
-                                unit: assets[currency]?.symbol?.toUpperCase(),
-                            }}
-                            button={{ color: mode ? color.buy : color.sell, children: mode ? "BUY" : "SELL", onClick: () => close() }}
-                            onChange={(e: any, v: any) => handleChangeAmount(v)}
-                            onClose={close}
-                        />)
-                }
+                onClick={() => handleAmountPad()}
             />
             <Controls.Range
                 color={mode ? color.buy : color.sell}
