@@ -60,7 +60,9 @@ export default function Ordrebook(props: Orderbook) {
                     <Elements.Text opacity={0.6} fit>
                         Sum Amount:
                     </Elements.Text>
-                    <Elements.Text align={"right"}>{Format((parseFloat(tick?.balance?.toString()) / parseFloat(tick?.price?.toString())), "currency", true, 4)}</Elements.Text>
+                    <Elements.Text align={"right"}>
+                        {Format(parseFloat(tick?.balance?.toString()) / parseFloat(tick?.price?.toString()), "currency", true, 4)}
+                    </Elements.Text>
                 </Layouts.Row>
                 <Layouts.Row gap={0} fix>
                     <Elements.Text opacity={0.6} fit>
@@ -131,8 +133,8 @@ export default function Ordrebook(props: Orderbook) {
                             <Ticks
                                 key={k}
                                 onClick={(e: any) => handleAsk(ask, k, e)}
-                                onHoverStart={(e: any) => handleAskHover(ask, k, e)}
-                                onHoverEnd={closeTooltip}
+                                onMouseEnter={(e: any) => handleAskHover(ask, k, e)}
+                                onMouseLeave={closeTooltip}
                                 as={motion.div}
                                 layout
                                 initial={{ scale: 0.9, opacity: 0 }}
@@ -147,12 +149,13 @@ export default function Ordrebook(props: Orderbook) {
                                         </div>
                                         <div
                                             style={{
-                                                backgroundSize: `${(parseFloat(ask?.balance.toString()) / ask_max) * 100 > 100
-                                                    ? "100"
-                                                    : (parseFloat(ask?.balance.toString()) / ask_max) * 100 < 0
+                                                backgroundSize: `${
+                                                    (parseFloat(ask?.balance.toString()) / ask_max) * 100 > 100
+                                                        ? "100"
+                                                        : (parseFloat(ask?.balance.toString()) / ask_max) * 100 < 0
                                                         ? "0"
                                                         : (parseFloat(ask?.balance.toString()) / ask_max) * 100
-                                                    }% 100%`,
+                                                }% 100%`,
                                             }}
                                         >
                                             <span>{Format(ask?.price, "currency", true)}</span>
@@ -199,12 +202,13 @@ export default function Ordrebook(props: Orderbook) {
                                         </div>
                                         <div
                                             style={{
-                                                backgroundSize: `${(parseFloat(bid?.balance.toString()) / bid_max) * 100 > 100
-                                                    ? "100"
-                                                    : (parseFloat(bid?.balance.toString()) / bid_max) * 100 < 0
+                                                backgroundSize: `${
+                                                    (parseFloat(bid?.balance.toString()) / bid_max) * 100 > 100
+                                                        ? "100"
+                                                        : (parseFloat(bid?.balance.toString()) / bid_max) * 100 < 0
                                                         ? "0"
                                                         : (parseFloat(bid?.balance.toString()) / bid_max) * 100
-                                                    }% 100%`,
+                                                }% 100%`,
                                             }}
                                         >
                                             <span>{Format(bid?.price, "currency", true)}</span>
