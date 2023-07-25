@@ -39,16 +39,16 @@ export default function Modal(props: Modal) {
     };
 
     return (
-        <Layouts.Panel
-            active={true}
-            color={"black"}
-            style={{ zIndex: 200 }}
-            onClick={(e: any) => {
-                props?.outsideClose && handleClose(e);
-            }}
-            fix
-        >
-            <AnimatePresence>
+        <AnimatePresence>
+            <Layouts.Panel
+                active={true}
+                color={"black"}
+                style={{ zIndex: 200 }}
+                onClick={(e: any) => {
+                    props?.outsideClose && handleClose(e);
+                }}
+                fix
+            >
                 {active && (
                     <Style
                         $active={active}
@@ -88,7 +88,7 @@ export default function Modal(props: Modal) {
                         </div>
                     </Style>
                 )}
-            </AnimatePresence>
-        </Layouts.Panel>
+            </Layouts.Panel>
+        </AnimatePresence>
     );
 }

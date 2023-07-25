@@ -1,4 +1,5 @@
 "use client";
+import { AnimatePresence, motion } from "framer-motion";
 import Style from "./Panel.styled";
 
 export interface Panel {
@@ -19,8 +20,24 @@ export default function Panel(props: Panel) {
     };
 
     return (
-        <Style id={props?.id} $active={active} $color={props?.color} $fix={props?.fix} style={props?.style} onClick={(e: any) => handleClick(e)}>
-            {props?.children}
-        </Style>
+        <AnimatePresence>
+            {active && (
+                <Style
+                    id={props?.id}
+                    $active={active}
+                    $color={props?.color}
+                    $fix={props?.fix}
+                    style={props?.style}
+                    onClick={(e: any) => handleClick(e)}
+                    as={motion.div}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 1 }}
+                    transition={{ ease: "easeInOut", duration: 0 }}
+                >
+                    {props?.children}
+                </Style>
+            )}
+        </AnimatePresence>
     );
 }
