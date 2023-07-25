@@ -7,7 +7,7 @@ export interface State {
     img?: {
         width?: number;
         height?: number;
-        src?: string | object;
+        src?: any;
         style?: object;
         alt?: string;
     };
@@ -17,7 +17,7 @@ export interface State {
 }
 
 export default function State(props: State) {
-    const img = typeof props?.img?.src === "string" && props?.img?.src !== "" ? props?.img?.src : props?.img?.src?.default?.src || "";
+    const img = (typeof props?.img?.src === "string" && props?.img?.src !== "" ? props?.img?.src : props?.img?.src?.default?.src) || "";
     // const img = props?.img?.src && props?.img?.src === 'object' ? require(props?.img?.src) : props?.img?.src !== "" ? props?.img?.src : '';
     const width = props?.img?.width || 14;
     const height = props?.img?.height || 14;
