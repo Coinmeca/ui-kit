@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Contents, Controls, Elements, Layouts } from "components";
+import { Contents, Layouts } from "components";
 import type { State } from "components/contents/states/State";
 
 export interface Process {
@@ -8,48 +8,38 @@ export interface Process {
     content?: any;
     failure?: State;
     success?: State;
+    loading?: State & { active?: boolean };
     style?: object;
-    onBack?: Function;
-    onFinish?: Function;
-    loading?: boolean;
 }
 
 export default function Process(props: Process) {
-    const [state, setState] = useState<boolean | null | undefined>(typeof props?.state !== "undefined" ? props?.state : null);
+    const [state, setState] = useState<boolean | null | undefined>(props?.state);
 
     useEffect(() => {
-        console.log("process", props?.state);
-        if (typeof props?.state !== "undefined") setState(props?.state);
+        setState(props?.state);
     }, [props?.state]);
-
-    const handleBack = (e: any) => {
-        if (typeof props?.onBack === "function") props?.onBack(e);
-        setState(undefined);
-    };
-
-    const handleFinish = (e: any) => {
-        if (typeof props?.onFinish === "function") props?.onFinish(e);
-        setState(undefined);
-    };
 
     return (
         <Layouts.Contents.PartContainer
             {...props}
             state={state}
+            content={
+                !props?.loading ? (
+                    props?.content
+                ) : (
+                    <Layouts.Contents.SlideContainer
+                        contents={[
+                            { active: !props?.loading?.active, children: props?.content },
+                            { active: props?.loading?.active, children: <Contents.States.Loading {...props?.loading} /> },
+                        ]}
+                    />
+                )
+            }
             left={{
-                children: (
-                    <Contents.States.Failure {...props?.failure} message={"Your order has been failed to processing."}>
-                        <Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>
-                    </Contents.States.Failure>
-                ),
+                children: <Contents.States.Failure {...props?.failure} />,
             }}
-            content={props?.content}
             right={{
-                children: (
-                    <Contents.States.Success {...props?.success} message={"Your order has been successfully completed."}>
-                        <Controls.Button onClick={(e: any) => handleFinish(e)}>OK</Controls.Button>
-                    </Contents.States.Success>
-                ),
+                children: <Contents.States.Success {...props?.success} />,
             }}
         />
     );

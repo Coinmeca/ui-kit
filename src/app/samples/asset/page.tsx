@@ -46,7 +46,7 @@ export default function Page() {
                         <Controls.Button
                             onClick={() => {
                                 setState(false);
-                                console.log("onClick", state);
+                                console.log("onLeft", state);
                             }}
                         >
                             Go to Left
@@ -54,7 +54,7 @@ export default function Page() {
                         <Controls.Button
                             onClick={() => {
                                 setState(true);
-                                console.log("onClick", state);
+                                console.log("onRight", state);
                             }}
                         >
                             Go to Right
@@ -62,11 +62,38 @@ export default function Page() {
                     </Layouts.Row>
                 </>
             }
-            onClose={() => closeProcessModal()}
+            failure={{
+                message: "Your order has been successfully completed.",
+                children: (
+                    <Controls.Button
+                        onClick={(e: any) => {
+                            console.log("back");
+                            setState(null);
+                        }}
+                    >
+                        Go Back
+                    </Controls.Button>
+                ),
+            }}
+            success={{
+                message: "Your order has been failed to processing.",
+                children: (
+                    <Controls.Button
+                        onClick={(e: any) => {
+                            console.log("finish");
+                            setState(null);
+                        }}
+                    >
+                        Go Back
+                    </Controls.Button>
+                ),
+            }}
+            onClose={() => {
+                closeProcessModal();
+            }}
             close
         />
     );
-    console.log("page", state);
 
     return (
         <Layouts.Page>

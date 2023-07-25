@@ -61,7 +61,7 @@ export default function Modal(props: Modal) {
                     >
                         <div>
                             {props?.title && (
-                                <Elements.Text size={3} align={"center"}>
+                                <Elements.Text size={2} align={"center"}>
                                     {props?.title}
                                 </Elements.Text>
                             )}

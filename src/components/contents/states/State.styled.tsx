@@ -11,19 +11,21 @@ const Style = styled.div<{ $width: number; $height: number }>`
     height: 100%;
 
     & > * {
-        width:100%;
+        width: 100%;
     }
 
-
     & > ${InnerContent.default} {
-        align-items:center;
-        justify-content:center;
+        align-items: center;
+        justify-content: center;
         padding: 3em 0;
 
         & > img {
             width: ${({ $width }) => $width}em;
             height: ${({ $height }) => $height}em;
-            margin: 4em 0;
+        }
+
+        & > * ~ * {
+            margin-top: 2em;
         }
     }
 `;
