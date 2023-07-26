@@ -19,8 +19,10 @@ export default function ListItem(props: ListItem) {
                         {ListCol(v?.children || v)}
                     </Row>
                 ))
-            ) : (
+            ) : typeof data === "string" ? (
                 <span>{data}</span>
+            ) : (
+                data
             ))
         );
     };
@@ -34,8 +36,10 @@ export default function ListItem(props: ListItem) {
                         {ListRow(v?.children || v)}
                     </Col>
                 ))
-            ) : (
+            ) : typeof data === "string" ? (
                 <span>{data}</span>
+            ) : (
+                data
             ))
         );
     };

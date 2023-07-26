@@ -18,7 +18,7 @@ export default function Confirmation(props: any) {
         sell: props?.color?.sell || "red",
     };
 
-    const [state, setState] = useState<boolean | null>(null);
+    const [process, setProcess] = useState<boolean | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
     const handleClose = (e: any) => {
@@ -122,7 +122,7 @@ export default function Confirmation(props: any) {
 
     return (
         <Modals.Process
-            state={state}
+            process={process}
             title={`${mode ? "Buy" : "Sell"} Confirmation`}
             content={confirm(() => setLoading(true))}
             failure={{
@@ -130,7 +130,7 @@ export default function Confirmation(props: any) {
                 children: (
                     <Controls.Button
                         onClick={(e: any) => {
-                            setState(null);
+                            setProcess(null);
                         }}
                     >
                         Go Back
@@ -143,7 +143,7 @@ export default function Confirmation(props: any) {
                 children: (
                     <Controls.Button
                         onClick={(e: any) => {
-                            setState(true);
+                            setProcess(true);
                         }}
                     >
                         {`Let's Finish`}
@@ -156,7 +156,7 @@ export default function Confirmation(props: any) {
                     <Controls.Button
                         onClick={(e: any) => {
                             handleClose(e);
-                            setState(null);
+                            setProcess(null);
                             setLoading(false);
                         }}
                     >

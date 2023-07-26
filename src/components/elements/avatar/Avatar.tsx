@@ -10,6 +10,7 @@ export interface Avatar {
     color?: string;
     display?: number;
     length?: number;
+    style?: object;
 }
 
 export default function Avatar(props: Avatar) {
@@ -25,7 +26,7 @@ export default function Avatar(props: Avatar) {
     return (
         <>
             {((props?.img && props?.img !== "") || (props?.name && props?.name !== "")) && (
-                <Style $color={color} $scale={scale} $size={size}>
+                <Style $color={color} $scale={scale} $size={size} style={props?.style}>
                     {(name || (props?.img && props?.img !== "")) && (
                         <div>
                             {props?.img && props?.img !== "" ? (

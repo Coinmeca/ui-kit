@@ -19,7 +19,7 @@ export const Col = styled.div<{ $change?: string }>`
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    gap: 0.167em;
+    gap: 1em;
 
     ${({ $change }) => $change && `--change: ${$change};`}
 
@@ -41,7 +41,7 @@ const Style = styled.div<{ $active?: boolean; $change?: string; $event: boolean 
     transition: 0.3s ease;
 
     ${({ $change }) => $change && `--change: ${$change};`}
-    ${({ $active }) => $active && `background: rgba(var(--black),var(--o01));`}
+    ${({ $active }) => $active && `background: rgba(var(--white),var(--o01));`}
 
     & > * {
         font-size: 1.5em;
@@ -52,7 +52,7 @@ const Style = styled.div<{ $active?: boolean; $change?: string; $event: boolean 
     }
 
     &:hover {
-        background: rgba(var(--black), var(--o0075));
+        background: rgba(var(--white), var(--o0075));
     }
 
     &:active {

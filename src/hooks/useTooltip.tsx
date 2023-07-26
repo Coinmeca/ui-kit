@@ -5,7 +5,7 @@ import { Root, createRoot } from "react-dom/client";
 
 export default function useTooltip(initial?: Function | ReactNode | null, props?: object) {
     const [root, setRoot] = useState<Root | undefined>();
-    const [tooltip, setTooltip] = useState<any>();
+    const [tooltip, setTooltip] = useState<Function | ReactNode | null>();
     const [tooltipProps, setTooltipProps] = useState<any>((state: any) => {
         return { ...state, ...props };
     });

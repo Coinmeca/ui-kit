@@ -4,7 +4,7 @@ import { Contents, Layouts } from "components";
 import type { State } from "components/contents/states/State";
 
 export interface Process {
-    state: boolean | null;
+    process: boolean | null;
     content?: any;
     failure?: State;
     success?: State;
@@ -13,16 +13,16 @@ export interface Process {
 }
 
 export default function Process(props: Process) {
-    const [state, setState] = useState<boolean | null | undefined>(props?.state);
+    const [process, setProcess] = useState<boolean | null | undefined>(props?.process);
 
     useEffect(() => {
-        setState(props?.state);
-    }, [props?.state]);
+        setProcess(props?.process);
+    }, [props?.process]);
 
     return (
         <Layouts.Contents.PartContainer
             {...props}
-            state={state}
+            state={process}
             content={
                 !props?.loading ? (
                     props?.content
