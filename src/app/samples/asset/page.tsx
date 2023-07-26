@@ -20,7 +20,7 @@ export default function Page() {
                         },
                         {
                             active: typeof selectedAsset !== "undefined",
-                            children: <Asset.Pages.Detail assets={assets} onBack={() => setSelectedAsset(undefined)} />,
+                            children: <Asset.Pages.Detail selectedAsset={selectedAsset} assets={assets} onBack={() => setSelectedAsset(undefined)} />,
                         },
                     ]}
                 />

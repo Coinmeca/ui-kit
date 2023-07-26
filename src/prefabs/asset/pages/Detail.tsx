@@ -7,11 +7,12 @@ import { Token } from "types/web3";
 import useWindowSize from "hooks/useWindowSize";
 
 import Data from "app/samples/asset/data";
-import * as HistoryData from "app/samples/asset/history";
+import * as HistoryData from "app/samples/asset/data";
 import { Asset } from "prefabs";
 
 export interface Detail {
     assets?: Token[];
+    selectedAsset?: Token;
     onBack?: Function;
 }
 
@@ -19,8 +20,9 @@ export default function Detail(props: Detail) {
     const { windowSize } = useWindowSize();
     const [mobile, setMobile] = useState("history");
     const responsive = windowSize.width <= Root.Device.Mobile;
+    const [selectedAsset, setSelectedAsset] = useState(props?.selectedAsset && props?.selectedAsset);
 
-    const { info, market } = Data();
+    const { info } = Data();
     const { history } = HistoryData.default();
 
     const handleBack = (data: Token | undefined) => {
@@ -32,7 +34,7 @@ export default function Detail(props: Detail) {
             <Layouts.Row fix style={{ alignItems: "center" }}>
                 <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
                     <Controls.Button icon={"chevron-left"} onClick={() => handleBack(undefined)} />
-                    <Elements.Avatar img={market.logo} scale={1.3334} />
+                    <Elements.Avatar img={require(`/src/assets/coins/${selectedAsset?.symbol || "meca"}.png`)} scale={1.3334} />
                     <Layouts.Row responsive={"mobile"} gap={1} fit>
                         <Elements.Text size={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", size: 1.5 }}>
                             {"ETH".toUpperCase()}
@@ -103,7 +105,7 @@ export default function Detail(props: Detail) {
                                             }}
                                         >
                                             <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                Volume ({market?.base?.symbol?.toUpperCase()})
+                                                Volume
                                             </Elements.Text>
                                             <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
                                                 {Format(info?.volume_base, "currency", true)}
@@ -119,7 +121,7 @@ export default function Detail(props: Detail) {
                                             }}
                                         >
                                             <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                Volume ({market?.quote?.symbol?.toUpperCase()})
+                                                Volume
                                             </Elements.Text>
                                             <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
                                                 {Format(info?.volume_quote, "currency", true)}

@@ -17,7 +17,7 @@ export interface History {
 export default function History(props: History) {
     const responsive = props?.responsive;
 
-    const { category, state, history } = HistoryData.default();
+    const { category, state, colorset, history } = HistoryData.default();
     const [process, setProcess] = useState(null);
 
     const [handleDetail, closeDetail] = usePortal();
@@ -32,8 +32,8 @@ export default function History(props: History) {
                             <Layouts.Col gap={1}>
                                 <Layouts.Row gap={1} fix>
                                     <Layouts.Col gap={0}>
-                                        <Elements.Text>{category[data?.category]}</Elements.Text>
-                                        <Elements.Text weight={"normal"} opacity={0.6}>
+                                        <Elements.Text color={colorset[data?.category]}>{category[data?.category]}</Elements.Text>
+                                        <Elements.Text weight={"normal"} opacity={data?.state !== 2 ? 1 : 0.3}>
                                             {state[data?.state]}
                                         </Elements.Text>
                                     </Layouts.Col>
@@ -82,8 +82,6 @@ export default function History(props: History) {
             />
         );
     };
-
-    const colorMap = [];
 
     const historyFormatter = (data: Data[]) => {
         return (
@@ -149,10 +147,12 @@ export default function History(props: History) {
                                             style: { gap: "0.5em" },
                                             children: [
                                                 <>
-                                                    <Elements.Text height={1.25}>{category[data?.category]}</Elements.Text>
+                                                    <Elements.Text height={1.25} color={colorset[data?.category]}>
+                                                        {category[data?.category]}
+                                                    </Elements.Text>
                                                 </>,
                                                 <>
-                                                    <Elements.Text height={1.25} weight={"normal"} opacity={0.6}>
+                                                    <Elements.Text height={1.25} weight={"normal"} opacity={data?.state === 1 ? 0.3 : 1}>
                                                         {state[data?.state]}
                                                     </Elements.Text>
                                                 </>,
