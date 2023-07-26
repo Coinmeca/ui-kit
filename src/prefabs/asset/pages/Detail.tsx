@@ -276,14 +276,14 @@ export default function Detail(props: Detail) {
                     ]}
                 />
             </Layouts.Contents.InnerContent>
-            <Layouts.Col gap={2}>
+            <Layouts.Row gap={2}>
                 <Controls.Button type={"solid"} color={"orange"}>
                     Deposit & Widthdraw
                 </Controls.Button>
                 <Controls.Button type={"solid"} color={"green"}>
                     Trades
                 </Controls.Button>
-            </Layouts.Col>
+            </Layouts.Row>
         </>
     );
 }

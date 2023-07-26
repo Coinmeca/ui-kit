@@ -91,7 +91,7 @@ export default function History(props: History) {
                         </Layouts.Contents.InnerContent>
                         <Layouts.Row fix style={{ marginTop: "2em" }}>
                             <Controls.Button>Undo</Controls.Button>
-                            <Controls.Button>Close</Controls.Button>
+                            <Controls.Button onClick={() => closeDetail()}>Close</Controls.Button>
                         </Layouts.Row>
                     </>
                 }
@@ -123,6 +123,7 @@ export default function History(props: History) {
                             time: time,
                             category: data?.category,
                             state: data?.state,
+                            price: data?.price,
                             amount: data?.amount,
                             quantity: data?.quantity,
                             fees: data?.fees,
