@@ -70,7 +70,7 @@ export default function Ordrebook(props: Orderbook) {
                             Sum Amount:
                         </Elements.Text>
                         <Elements.Text align={"right"}>
-                            {Format(parseFloat(props?.balance?.toString()) / parseFloat(props?.price?.toString()), "currency", true, 4)}
+                            {Format(parseFloat(props?.balance?.toString()) * parseFloat(props?.price?.toString()), "currency", true, 4)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row gap={0} fix>
