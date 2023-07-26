@@ -39,7 +39,7 @@ export default function View(props: any) {
                                 children: (
                                     <>
                                         <Elements.Avatar
-                                            size={4}
+                                            size={responsive ? 4 : 3.5}
                                             style={{ marginRight: responsive && "1em" }}
                                             img={require(`/src/assets/coins/${data?.symbol?.toLowerCase()}.png`)}
                                         />
