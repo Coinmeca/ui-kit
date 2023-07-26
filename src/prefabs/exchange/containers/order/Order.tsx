@@ -38,6 +38,7 @@ export default function Order(props: OrderControl) {
     };
 
     const [handleConfirm, closeConfirm] = usePortal(<Exchange.Modals.Confirmation mode={mode} color={color} order={buy} onClose={() => closeConfirm()} />);
+    const handleReset = () => {};
 
     return (
         <>

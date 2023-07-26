@@ -68,13 +68,16 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
         margin: 2em;
 
         & > * {
-            padding: 2em;
-            padding-top: 3em;
+            padding: 3em;
         }
 
         & > ${ButtonArea} {
             padding: 2em;
         }
+
+        /* & *:last-child > ${Button.default} {
+            margin-bottom: -1em;
+        } */
     }
 `;
 export default Style;
