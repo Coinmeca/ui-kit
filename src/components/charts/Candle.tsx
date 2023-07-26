@@ -36,8 +36,8 @@ export default function Candle(props: any) {
     const down = props?.down || "down";
     const theme = props?.theme && props?.theme === "light" ? "0,0,0" : "255,255,255";
     const [color, setColor] = useState({
-        up: props?.color?.up || "#00b060",
-        down: props?.color?.down || "#ff0040",
+        up: props?.color?.up || "0,192,96",
+        down: props?.color?.down || "255,0,64",
         theme: {
             strong: `rgba(${theme}, 0.6)`,
             semi: `rgba(${theme}, 0.45)`,
@@ -94,7 +94,7 @@ export default function Candle(props: any) {
                         return {
                             time: v.time,
                             value: v.value,
-                            color: v.type === up ? color.up : color.down,
+                            color: v.type === up ? `rgba(${color.up}, 0.3)` : `rgba(${color.down}, 0.3)`,
                             // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
                         };
                     }),
@@ -164,13 +164,13 @@ export default function Candle(props: any) {
 
             if (price) {
                 const candleSeries = chart.addCandlestickSeries({
-                    upColor: color.up,
-                    downColor: color.down,
+                    upColor: `rgb(${color.up})`,
+                    downColor: `rgb(${color.down})`,
                     // upColor: `rgb(var(--${color.up}))`,
                     // downColor: `rgb(var(--${color.down}))`,
                     borderVisible: false,
-                    wickUpColor: color.up,
-                    wickDownColor: color.down,
+                    wickUpColor: `rgb(${color.up})`,
+                    wickDownColor: `rgb(${color.down})`,
                     // wickUpColor: `rgb(var(--${color.up}))`,
                     // wickDownColor: `rgb(var(--${color.down}))`,
                 });
@@ -194,10 +194,6 @@ export default function Candle(props: any) {
                     },
                     priceScaleId: "", // set as an overlay by setting a blank priceScaleId
                     // set the positioning of the volume series
-                    // scaleMargins: {
-                    //     top: 0.7, // highest point of the series will be 70% away from the top
-                    //     bottom: 0
-                    // }
                 });
 
                 volumeSeries.priceScale().applyOptions({
@@ -210,16 +206,16 @@ export default function Candle(props: any) {
                 volumeSeries.setData(volume);
             }
 
-            if (props?.fit) {
-                chart.timeScale().applyOptions({
-                    barSpacing: 10,
-                }); //timeScale().fitContent();
-            }
+            props?.fit
+                ? chart.timeScale().fitContent()
+                : chart.timeScale().applyOptions({
+                      barSpacing: 10,
+                  });
 
-            window.addEventListener("resize", handleResize);
+            globalThis.addEventListener("resize", handleResize);
 
             return () => {
-                window.removeEventListener("resize", handleResize);
+                globalThis.removeEventListener("resize", handleResize);
                 chart.remove();
             };
         }
