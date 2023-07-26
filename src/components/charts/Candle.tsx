@@ -31,10 +31,10 @@ export interface Volume {
     type: string;
 }
 
-export default function Candle(props: any) {
+export default function Candle(props: Candle) {
     const up = props?.up || "up";
     const down = props?.down || "down";
-    const theme = props?.theme && props?.theme === "light" ? "0,0,0" : "255,255,255";
+    const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
     const [color, setColor] = useState({
         up: props?.color?.up || "0,192,96",
         down: props?.color?.down || "255,0,64",
@@ -52,7 +52,7 @@ export default function Candle(props: any) {
     const chartRef: any = useRef();
 
     useEffect(() => {
-        globalThis.matchMedia("(prefers-color-scheme: light)").addEventListener("change", ({ matches }) => {
+        globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
             const scheme = !theme && matches ? "0,0,0" : "255,255,255";
             setColor((color) => {
                 return {
