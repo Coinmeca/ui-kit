@@ -8,7 +8,7 @@ const Style = styled.section`
     display: flex;
     flex-direction: column;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     overflow: hidden;
     z-index: 1;
 
