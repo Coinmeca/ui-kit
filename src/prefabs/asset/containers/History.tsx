@@ -20,6 +20,8 @@ export default function History(props: History) {
 
     const { category, state, history } = HistoryData.default();
 
+    const [process, setProcess] = useState(null);
+
     const historyFormatter = (data: Data[]) => {
         return (
             typeof data !== "string" &&
@@ -33,7 +35,6 @@ export default function History(props: History) {
                 const date = ("0" + d.getDate()).slice(-2) + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + d.getFullYear().toString().substring(2, 4);
                 const time = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
 
-                const [process, setProcess] = useState(null);
                 const [handleDetail, closeDetail] = usePortal(
                     <Modals.Process
                         process={process}
