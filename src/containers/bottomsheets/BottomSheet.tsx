@@ -30,7 +30,7 @@ export default function BottomSheet(props: BottomSheet) {
     };
 
     return (
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence>
             <Layouts.Panel key="panel" active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
                 {active && (
                     <Style
