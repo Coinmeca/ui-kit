@@ -62,6 +62,18 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
         transition: 0.3s ease;
     }
 
+    @media (prefers-color-scheme: light) {
+        --white: 0, 0, 0;
+        --black: 255, 255, 255;
+        color: black;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        --white: 255, 255, 255;
+        --black: 0, 0, 0;
+        color: white;
+    }
+
     @media all and (max-width: ${Root.Device.Mobile}px) {
         min-width: calc(100% - 4em);
         max-width: calc(100% - 4em);
