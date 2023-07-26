@@ -7,6 +7,7 @@ import { Root } from "lib/style";
 import useWindowSize from "hooks/useWindowSize";
 import useTooltip from "hooks/useTooltip";
 import Tooltip from "./Tooltip";
+import { useEffect } from "react";
 
 export interface Orderbook {
     asks?: Tick[];
@@ -41,6 +42,12 @@ export default function Ordrebook(props: Orderbook) {
 
     const view = props?.view || 0;
     const guidance = props?.guidance || false;
+
+    useEffect(() => {
+        return () => {
+            closeTooltip();
+        };
+    }, []);
 
     const handleAsk = (ask: Tick, k: number, e?: any) => {
         if (typeof props?.onClickAsk === "function") props?.onClickAsk(ask, k, e);

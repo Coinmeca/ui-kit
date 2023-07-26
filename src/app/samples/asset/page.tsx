@@ -1,17 +1,12 @@
 "use client";
 import { useState } from "react";
-import { Root } from "lib/style";
-import { Controls, Elements, Layouts } from "components";
-import { Capitalize, Format } from "lib/utils";
-import Data from "./data";
-import { Modal, Modals } from "containers";
-import useWindowSize from "hooks/useWindowSize";
-import usePortal from "hooks/usePortal";
-import { Token } from "types/web3";
+import { Layouts } from "components";
 import { Asset } from "prefabs";
+import { Token } from "types/web3";
+import Data from "./data";
 
 export default function Page() {
-    const { info, assets, market } = Data();
+    const { info, assets } = Data();
     const [selectedAsset, setSelectedAsset] = useState<Token | undefined>();
 
     return (
