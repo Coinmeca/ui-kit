@@ -18,10 +18,10 @@ export default function Page() {
         <Modal title={"This is a Modal."} message={"This is a modal content test message."} onClose={() => closeDialogue()} close />
     );
 
-    const [state, setState] = useState<boolean | null>(null);
+    const [process, setProcess] = useState<boolean | null>(null);
     const [handleProcessModal, closeProcessModal] = usePortal(
         <Modals.Process
-            state={state}
+            process={process}
             title={"This is a Modal."}
             content={
                 <>
@@ -33,16 +33,16 @@ export default function Page() {
                     <Layouts.Row fix gap={3}>
                         <Controls.Button
                             onClick={() => {
-                                setState(false);
-                                console.log("onLeft", state);
+                                setProcess(false);
+                                console.log("onLeft", process);
                             }}
                         >
                             Go to Left
                         </Controls.Button>
                         <Controls.Button
                             onClick={() => {
-                                setState(true);
-                                console.log("onRight", state);
+                                setProcess(true);
+                                console.log("onRight", process);
                             }}
                         >
                             Go to Right
@@ -56,7 +56,7 @@ export default function Page() {
                     <Controls.Button
                         onClick={(e: any) => {
                             console.log("back");
-                            setState(null);
+                            setProcess(null);
                         }}
                     >
                         Go Back
@@ -69,7 +69,7 @@ export default function Page() {
                     <Controls.Button
                         onClick={(e: any) => {
                             console.log("finish");
-                            setState(null);
+                            setProcess(null);
                         }}
                     >
                         Go Back
