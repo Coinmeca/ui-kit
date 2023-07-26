@@ -5,7 +5,6 @@ import { Format } from "lib/utils";
 import { Root } from "lib/style";
 import { Token } from "types/web3";
 import useWindowSize from "hooks/useWindowSize";
-import Data from "app/samples/asset/data";
 
 export interface View {
     info?: any;
@@ -19,8 +18,6 @@ export default function View(props: any) {
     const responsive = windowSize.width > Root.Device.Mobile;
 
     const info = props?.info;
-
-    const { market } = Data();
 
     const handleSelectedAsset = (data: Token) => {
         if (typeof props?.onSelect === "function") props?.onSelect(data);
@@ -191,7 +188,7 @@ export default function View(props: any) {
                                             }}
                                         >
                                             <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                Volume ({market?.base?.symbol?.toUpperCase()})
+                                                Volume
                                             </Elements.Text>
                                             <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
                                                 {Format(info?.volume_base, "currency", true)}
@@ -207,7 +204,7 @@ export default function View(props: any) {
                                             }}
                                         >
                                             <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                Volume ({market?.quote?.symbol?.toUpperCase()})
+                                                Volume
                                             </Elements.Text>
                                             <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
                                                 {Format(info?.volume_quote, "currency", true)}

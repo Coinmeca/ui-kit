@@ -5,8 +5,7 @@ import { Modals } from "containers";
 import { Format } from "lib/utils";
 import { Token, History as Data } from "types/web3";
 import usePortal from "hooks/usePortal";
-
-import * as HistoryData from "app/samples/asset/history";
+import * as HistoryData from "app/samples/asset/data";
 
 export interface History {
     assets?: Token[];
@@ -83,6 +82,8 @@ export default function History(props: History) {
             />
         );
     };
+
+    const colorMap = [];
 
     const historyFormatter = (data: Data[]) => {
         return (
