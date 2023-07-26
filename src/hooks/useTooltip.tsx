@@ -19,7 +19,7 @@ export default function useTooltip(initial?: Function | ReactNode | null, props?
 
     useEffect(() => {
         root?.render(
-            tooltip ? createPortal(typeof tooltip === "function" && tooltipProps ? tooltip({ ...tooltipProps, ...props }) : tooltip, document?.body) : null
+            tooltip ? createPortal(typeof tooltip === "function" && tooltipProps ? tooltip({ ...props, ...tooltipProps }) : tooltip, document?.body) : null
         );
     }, [tooltip, tooltipProps, root]);
 
