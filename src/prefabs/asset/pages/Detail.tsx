@@ -21,6 +21,7 @@ export default function Detail(props: Detail) {
     const [mobile, setMobile] = useState("history");
     const responsive = windowSize.width <= Root.Device.Mobile;
     const [selectedAsset, setSelectedAsset] = useState(props?.selectedAsset && props?.selectedAsset);
+    console.log(selectedAsset);
 
     const { info } = Data();
     const { history } = HistoryData.default();
@@ -33,8 +34,8 @@ export default function Detail(props: Detail) {
         <>
             <Layouts.Row fix style={{ alignItems: "center" }}>
                 <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
-                    <Controls.Button icon={"chevron-left"} onClick={() => handleBack(undefined)} />
-                    <Elements.Avatar img={require(`/src/assets/coins/${selectedAsset?.symbol || "meca"}.png`)} scale={1.3334} />
+                    <Controls.Button scale={0.75} icon={"chevron-left"} style={{ marginRight: "-1.5em" }} onClick={() => handleBack(undefined)} />
+                    <Elements.Avatar img={require(`/src/assets/coins/${selectedAsset?.symbol || "meca"}.png`)} size={4} />
                     <Layouts.Row responsive={"mobile"} gap={1} fit>
                         <Elements.Text size={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", size: 1.5 }}>
                             {"ETH".toUpperCase()}
