@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 export interface OrderPad extends CurrencyPad, Sheet {
     label?: string;
     placeholder?: number | string;
-    sub?: { value?: number | string; unit?: string };
+    sub?: { color?: string; value?: number | string; unit?: string };
     unit?: string;
     padding?: number;
     onChange?: Function;
@@ -41,10 +41,10 @@ export default function OrderPad(props: OrderPad) {
                 <Layouts.Row gap={2} style={{ alignItems: "center", padding: `${padding / 2}em ${padding / 1.5}em`, maxWidth: `${width}` }}>
                     {props?.sub && (
                         <>
-                            <Elements.Text type={"p"} weight={"bold"} align={"right"}>
+                            <Elements.Text type={"p"} color={props?.sub?.color} weight={"bold"} align={"right"}>
                                 {props?.sub?.value}
                             </Elements.Text>
-                            <Elements.Text type={"p"} weight={"bold"} opacity={0.6} style={{ maxWidth: "4em" }}>
+                            <Elements.Text type={"p"} color={props?.sub?.color} weight={"bold"} opacity={0.6} style={{ maxWidth: "4em" }}>
                                 {props?.sub?.unit}
                             </Elements.Text>
                         </>
