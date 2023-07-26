@@ -1,5 +1,6 @@
-import Orderbook from "./orderbook/Orderbook";
-import OrderControl from "./ordercontrol/OrderControl";
+import * as Containers from './containers';
+import * as Controls from './controls';
 import * as BottomSheets from "./bottomsheets/";
+import * as Modals from "./modals/";
 
-export { Orderbook, OrderControl, BottomSheets };
+export { Containers, Controls, BottomSheets, Modals };

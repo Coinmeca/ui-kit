@@ -284,7 +284,7 @@ export default function Page() {
                                                     active: marketTab === "orderbook" || mobile === "orderbook",
                                                     style: { padding: 0 },
                                                     children: (
-                                                        <Exchange.Orderbook
+                                                        <Exchange.Containers.Orderbook
                                                             view={view}
                                                             asks={orderbook.asks}
                                                             bids={orderbook.bids}
@@ -384,7 +384,7 @@ export default function Page() {
                                                     active: true,
                                                     children: (
                                                         <Layouts.Contents.InnerContent>
-                                                            <Exchange.OrderControl
+                                                            <Exchange.Containers.Order
                                                                 base={market.base}
                                                                 quote={market.quote}
                                                                 price={market.price}
