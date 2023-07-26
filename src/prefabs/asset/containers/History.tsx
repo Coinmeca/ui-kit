@@ -32,16 +32,18 @@ export default function History(props: History) {
                             <Layouts.Col gap={1}>
                                 <Layouts.Row gap={1} fix>
                                     <Layouts.Col gap={0}>
-                                        <Elements.Text color={colorset[data?.category]}>{category[data?.category]}</Elements.Text>
-                                        <Elements.Text weight={"normal"} opacity={data?.state !== 2 ? 1 : 0.3}>
+                                        <Elements.Text height={1.5} color={colorset[data?.category]}>
+                                            {category[data?.category]}
+                                        </Elements.Text>
+                                        <Elements.Text height={1.5} opacity={data?.state !== 2 ? 1 : 0.3}>
                                             {state[data?.state]}
                                         </Elements.Text>
                                     </Layouts.Col>
                                     <Layouts.Col gap={0}>
-                                        <Elements.Text weight={"normal"} opacity={0.6} align={"right"}>
+                                        <Elements.Text height={1.5} weight={"normal"} opacity={0.6} align={"right"}>
                                             {data?.date}
                                         </Elements.Text>
-                                        <Elements.Text weight={"normal"} opacity={0.6} align={"right"}>
+                                        <Elements.Text height={1.5} weight={"normal"} opacity={0.6} align={"right"}>
                                             {data?.time}
                                         </Elements.Text>
                                     </Layouts.Col>
@@ -119,11 +121,10 @@ export default function History(props: History) {
                                     style: { flexDirection: responsive && "row-reverse" },
                                     children: [
                                         {
-                                            style: { gap: "0.5em" },
+                                            style: { gap: "0" },
                                             children: [
                                                 <>
                                                     <Elements.Text
-                                                        height={1.25}
                                                         weight={"normal"}
                                                         opacity={0.6}
                                                         style={{ ...(responsive && { width: "100%", textAlign: "right" }) }}
@@ -133,7 +134,6 @@ export default function History(props: History) {
                                                 </>,
                                                 <>
                                                     <Elements.Text
-                                                        height={1.25}
                                                         weight={"normal"}
                                                         opacity={0.6}
                                                         style={{ ...(responsive && { width: "100%", textAlign: "right" }) }}
@@ -144,17 +144,13 @@ export default function History(props: History) {
                                             ],
                                         },
                                         {
-                                            style: { gap: "0.5em" },
+                                            style: { gap: "0" },
                                             children: [
                                                 <>
-                                                    <Elements.Text height={1.25} color={colorset[data?.category]}>
-                                                        {category[data?.category]}
-                                                    </Elements.Text>
+                                                    <Elements.Text color={colorset[data?.category]}>{category[data?.category]}</Elements.Text>
                                                 </>,
                                                 <>
-                                                    <Elements.Text height={1.25} weight={"normal"} opacity={data?.state === 1 ? 0.3 : 1}>
-                                                        {state[data?.state]}
-                                                    </Elements.Text>
+                                                    <Elements.Text opacity={data?.state === 1 ? 0.3 : 1}>{state[data?.state]}</Elements.Text>
                                                 </>,
                                             ],
                                         },
