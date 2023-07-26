@@ -96,7 +96,7 @@ export default function Ordrebook(props: Orderbook) {
             );
         const sum = [...asks].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
         // onTooltip(<Tooltip color={"red"} e={e} price={k / sum} balance={sum} />);
-        onTooltip(undefined, { color: "red", e: e, price: k / sum, balance: sum });
+        onTooltip({ props: { color: "red", e: e, price: k / sum, balance: sum } });
     };
 
     const handleBidHover = (bid: Tick, i: number, e: any) => {
@@ -109,7 +109,7 @@ export default function Ordrebook(props: Orderbook) {
             );
         const sum = [...bids].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
         // onTooltip(<Tooltip color={"green"} e={e} price={k / sum} balance={sum} />);
-        onTooltip(undefined, { color: "green", e: e, price: k / sum, balance: sum });
+        onTooltip({ props: { color: "green", e: e, price: k / sum, balance: sum } });
     };
 
     return (
