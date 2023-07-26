@@ -10,11 +10,12 @@ export interface Candle {
         down?: string;
         theme?: string;
     };
-    price?: Price;
-    volume?: Volume;
+    price?: Price[];
+    volume?: Volume[];
     up?: string;
     down?: string;
     fallback?: any;
+    fit?: boolean;
 }
 
 export interface Price {
