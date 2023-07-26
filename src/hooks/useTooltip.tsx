@@ -20,7 +20,7 @@ export default function useTooltip(initial?: Function | ReactNode | null, props?
     }, [tooltip, tooltipProps, root]);
 
     return {
-        onTooltip: (tooltip?: Function | ReactNode | null, props?: object) => {
+        onTooltip: ({ tooltip, props }: { tooltip?: Function | ReactNode | null; props?: object }) => {
             tooltip ? setTooltip(tooltip) : typeof initial === "function" && props ? setTooltip(initial(props)) : setTooltip(initial);
             props && setTooltipProps(props);
         },
