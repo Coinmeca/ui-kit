@@ -111,7 +111,7 @@ export default function History(props: History) {
                             fees: data?.fees,
                         });
                     },
-                    style: { flex: 1, padding: !responsive && "2em" },
+                    style: { flex: 1, padding: "2em" },
                     children: [
                         {
                             style: { flex: 1, maxWidth: !responsive && "20%" },
