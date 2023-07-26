@@ -1,15 +1,28 @@
+"use client";
 import { styled } from "styled-components";
 import * as InnerContent from "components/layouts/contents/inner/InnerContent.styled";
+import { Root } from "lib/style";
 
 const Style = styled.section`
-    width: calc(100% - 6em);
-    height: calc(100% - 6em);
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
     padding: 3em;
     overflow: hidden auto;
 
     ${InnerContent.default} {
         gap: 2em;
         height: max-content;
+    }
+
+    @media all and (max-width: ${Root.Device.Mobile}px) {
+        & {
+            padding: 2em;
+
+            ${InnerContent.default} {
+                gap: 1em;
+                height: max-content;
+            }
+        }
     }
 `;
 

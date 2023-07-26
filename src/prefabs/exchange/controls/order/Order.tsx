@@ -165,14 +165,15 @@ export default function Order(props: OrderControl) {
                 right={{ width: gap.width, children: <span style={{ justifyContent: "flex-start" }}>{assets[mode ? 0 : 1]?.symbol?.toUpperCase()}</span> }}
                 style={text.setting}
                 lock={option === "market"}
+                inputMode={isMobile ? "none" : undefined}
             />
             <Controls.Input
                 placeholder={"0"}
                 type={"currency"}
                 align={"right"}
-                inputMode={isMobile ? "none" : undefined}
                 value={currency === 0 ? order?.quantity : order?.amount}
                 max={currency === 0 ? (order?.quantity || 1) / order.price : order.amount}
+                onClick={() => handleAmountPad()}
                 onChange={(e: any, v: any) => handleChangeAmount(v)}
                 left={{ children: <span>{currency === 0 ? "Qunatity" : "Amount"}</span> }}
                 right={{
@@ -190,7 +191,7 @@ export default function Order(props: OrderControl) {
                     ),
                 }}
                 style={text.setting}
-                onClick={() => handleAmountPad()}
+                inputMode={isMobile ? "none" : undefined}
             />
             <Controls.Range
                 color={mode ? color.buy : color.sell}

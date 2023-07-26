@@ -1,51 +1,28 @@
 "use client";
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
-import { Modal, Modals } from "containers";
-import { Token } from "types/web3";
-import Order from "./Order";
-import type { Order as O } from "./Order";
-import useWindowSize from "hooks/useWindowSize";
-import usePortal from "hooks/usePortal";
+import { Modals } from "containers";
+import type { Order as O } from "prefabs/exchange/controls/order/Order";
 
-export interface OrderControl {
-    base: Token;
-    quote: Token;
-    price: number | string;
-    fee: number;
-    option?: "market" | "limit";
-    onClickBuy?: Function;
-    onClickSell?: Function;
-    responsive?: number;
+export interface Confirmation {
+    mode?: boolean;
+    color?: { buy?: string; sell?: string };
+    order: O;
+    onClose: Function;
 }
 
-export interface Order {
-    buy: string;
-    sell: string;
-    category?: number;
-    option?: number;
-    price: number | string;
-    amount?: number | string;
-    quantity?: number | string;
-    fees?: number | string;
-}
-
-export default function OrderControl(props: OrderControl) {
-    const { windowSize } = useWindowSize();
-
-    const [mode, setMode] = useState(true);
-    const option = props?.option || "market";
-    const responsive = props?.responsive || 0;
-
-    const [buy, setBuy] = useState<any>();
-
-    const handleChangeBuy = (order: O) => {
-        setBuy(order);
+export default function Confirmation(props: any) {
+    const mode = typeof props?.mode === "undefined" ? true : props?.mode;
+    const color = {
+        buy: props?.color?.buy || "green",
+        sell: props?.color?.sell || "red",
     };
 
-    const color = {
-        buy: "green",
-        sell: "red",
+    const [state, setState] = useState<boolean | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const handleClose = (e: any) => {
+        if (typeof props?.onClose === "function") props?.onClose(e);
     };
 
     const confirm = (confirm: Function) => {
@@ -75,7 +52,7 @@ export default function OrderControl(props: OrderControl) {
                             </Elements.Text>
                             <Layouts.Row gap={gap.row} fix>
                                 <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
-                                    12345678
+                                    {props?.order?.price}
                                 </Elements.Text>
                                 <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                                     {"eth".toUpperCase()}
@@ -89,7 +66,7 @@ export default function OrderControl(props: OrderControl) {
                             </Elements.Text>
                             <Layouts.Row gap={gap.row} fix>
                                 <Elements.Text height={text.height} align={text.align} style={text.setting}>
-                                    12345678
+                                    {props?.order?.amount}
                                 </Elements.Text>
                                 <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                                     {"eth".toUpperCase()}
@@ -102,7 +79,7 @@ export default function OrderControl(props: OrderControl) {
                             </Elements.Text>
                             <Layouts.Row gap={gap.row} fix>
                                 <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
-                                    12345678
+                                    {props?.order?.quantity}
                                 </Elements.Text>
                                 <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                                     {"eth".toUpperCase()}
@@ -116,7 +93,7 @@ export default function OrderControl(props: OrderControl) {
                             </Elements.Text>
                             <Layouts.Row gap={gap.row} fix>
                                 <Elements.Text opacity={0.45} height={text.height} align={text.align} style={text.setting}>
-                                    - 12345678
+                                    - {props?.order?.fees}
                                 </Elements.Text>
                                 <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                                     {"eth".toUpperCase()}
@@ -129,7 +106,7 @@ export default function OrderControl(props: OrderControl) {
                             </Elements.Text>
                             <Layouts.Row gap={gap.row} fix>
                                 <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
-                                    12345678
+                                    {props?.order?.total}
                                 </Elements.Text>
                                 <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                                     {"eth".toUpperCase()}
@@ -143,18 +120,10 @@ export default function OrderControl(props: OrderControl) {
         );
     };
 
-    const [handleSell, closeSell] = usePortal(
-        <Modal title={"Sell Confirmation"} onClose={() => closeSell()} close>
-            {confirm(() => closeSell())}
-        </Modal>
-    );
-
-    const [state, setState] = useState<boolean | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [handleBuy, closeBuy] = usePortal(
+    return (
         <Modals.Process
             state={state}
-            title={"Buy Confirmation"}
+            title={`${mode ? "Buy" : "Sell"} Confirmation`}
             content={confirm(() => setLoading(true))}
             failure={{
                 message: "Your order has been failed to processing.",
@@ -186,7 +155,7 @@ export default function OrderControl(props: OrderControl) {
                 children: (
                     <Controls.Button
                         onClick={(e: any) => {
-                            closeBuy();
+                            handleClose(e);
                             setState(null);
                             setLoading(false);
                         }}
@@ -195,98 +164,10 @@ export default function OrderControl(props: OrderControl) {
                     </Controls.Button>
                 ),
             }}
-            onClose={() => {
-                closeBuy();
+            onClose={(e: any) => {
+                handleClose(e);
             }}
             close={!loading}
         />
-    );
-
-    return (
-        <>
-            <Layouts.Col gap={1}>
-                <Layouts.Contents.SlideContainer
-                    style={{ gap: `${windowSize.width <= responsive ? 2 : 3}em` }}
-                    contents={[
-                        {
-                            active: windowSize.width <= responsive ? mode === true : true,
-                            style: { height: "max-content", overflow: "hidden" },
-                            children: (
-                                <Order
-                                    mode={true}
-                                    option={option}
-                                    assets={[props?.quote, props?.base]}
-                                    price={props?.price}
-                                    fee={props?.fee}
-                                    onChange={(v: O) => handleChangeBuy(v)}
-                                />
-                            ),
-                        },
-                        {
-                            active: windowSize.width <= responsive ? mode === false : true,
-                            style: { height: "max-content", overflow: "hidden" },
-                            children: (
-                                <Order
-                                    mode={false}
-                                    option={option}
-                                    assets={[props?.base, props?.quote]}
-                                    price={props?.price}
-                                    fee={props?.fee}
-                                    onChange={(v: O) => handleChangeBuy(v)}
-                                />
-                            ),
-                        },
-                    ]}
-                />
-                <Layouts.Row fix>
-                    <Layouts.Row gap={windowSize.width > responsive ? 6 : 4} fix>
-                        <Controls.Button icon={"revert-bold"} hide={windowSize.width > responsive} fit />
-                        <Controls.Button
-                            type={"solid"}
-                            color={color.buy}
-                            style={{ ...(windowSize.width <= responsive && mode === false ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
-                            onClick={(e: any, o: O) => {
-                                windowSize.width <= responsive && mode === false ? setMode(true) : handleBuy();
-                            }}
-                        >
-                            <span>B</span>
-                            <span
-                                style={{
-                                    ...(windowSize.width <= responsive && mode === false && { position: "absolute", opacity: 0, transition: ".3s ease" }),
-                                }}
-                            >
-                                U
-                            </span>
-                            <span
-                                style={{
-                                    ...(windowSize.width <= responsive && mode === false && { position: "absolute", opacity: 0, transition: ".3s ease" }),
-                                }}
-                            >
-                                Y
-                            </span>
-                        </Controls.Button>
-                        <Controls.Button
-                            type={"solid"}
-                            color={color.sell}
-                            style={{ ...(windowSize.width <= responsive && mode ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
-                            onClick={(e: any) => {
-                                windowSize.width <= responsive && mode ? setMode(false) : handleSell();
-                            }}
-                        >
-                            <span>S</span>
-                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>
-                                E
-                            </span>
-                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>
-                                L
-                            </span>
-                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>
-                                L
-                            </span>
-                        </Controls.Button>
-                    </Layouts.Row>
-                </Layouts.Row>
-            </Layouts.Col>
-        </>
     );
 }
