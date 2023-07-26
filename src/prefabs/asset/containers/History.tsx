@@ -50,26 +50,42 @@ export default function History(props: History) {
                                 </Layouts.Row>
                                 <Layouts.Divider />
                                 <Layouts.Row gap={1} fix>
-                                    <Elements.Text fit>Price</Elements.Text>
+                                    <Elements.Text opacity={0.6} fit>
+                                        Price
+                                    </Elements.Text>
                                     <Elements.Text align={"right"}>{data?.price}</Elements.Text>
-                                    <Elements.Text style={{ maxWidth: "6em" }}>{data?.quote}</Elements.Text>
+                                    <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
+                                        {data?.quote}
+                                    </Elements.Text>
                                 </Layouts.Row>
                                 <Layouts.Divider />
                                 <Layouts.Row gap={1} fix>
-                                    <Elements.Text fit>Amount</Elements.Text>
+                                    <Elements.Text opacity={0.6} fit>
+                                        Amount
+                                    </Elements.Text>
                                     <Elements.Text align={"right"}>{data?.amount}</Elements.Text>
-                                    <Elements.Text style={{ maxWidth: "6em" }}>{data?.quote}</Elements.Text>
+                                    <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
+                                        {data?.quote}
+                                    </Elements.Text>
                                 </Layouts.Row>
                                 <Layouts.Divider />
                                 <Layouts.Row gap={1} fix>
-                                    <Elements.Text fit>Quantity</Elements.Text>
+                                    <Elements.Text opacity={0.6} fit>
+                                        Quantity
+                                    </Elements.Text>
                                     <Elements.Text align={"right"}>{data?.quantity}</Elements.Text>
-                                    <Elements.Text style={{ maxWidth: "6em" }}>{data?.base}</Elements.Text>
+                                    <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
+                                        {data?.base}
+                                    </Elements.Text>
                                 </Layouts.Row>
                                 <Layouts.Row gap={1} fix>
-                                    <Elements.Text fit>Fees</Elements.Text>
+                                    <Elements.Text opacity={0.6} fit>
+                                        Fees
+                                    </Elements.Text>
                                     <Elements.Text align={"right"}>{data?.fees}</Elements.Text>
-                                    <Elements.Text style={{ maxWidth: "6em" }}>{data?.base}</Elements.Text>
+                                    <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
+                                        {data?.base}
+                                    </Elements.Text>
                                 </Layouts.Row>
                             </Layouts.Col>
                         </Layouts.Contents.InnerContent>
