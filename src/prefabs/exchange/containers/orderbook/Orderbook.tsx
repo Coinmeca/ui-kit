@@ -12,6 +12,8 @@ export interface Orderbook {
     asks?: Tick[];
     bids?: Tick[];
     view?: number;
+    base?: string;
+    quote?: string;
     onClickAsk?: Function;
     onClickBid?: Function;
     bookOrder?: boolean;
@@ -57,7 +59,7 @@ export default function Ordrebook(props: Orderbook) {
                 0
             );
         const sum = [...asks].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
-        onTooltip({ props: { vertical: "top", color: "red", e: e, price: k / sum, balance: sum } });
+        onTooltip({ props: { vertical: "top", color: "red", e: e, base: props?.base, quote: props?.quote, price: k / sum, amount: k * sum, balance: sum } });
     };
 
     const handleBidHover = (bid: Tick, i: number, e: any) => {
@@ -69,7 +71,18 @@ export default function Ordrebook(props: Orderbook) {
                 0
             );
         const sum = [...bids].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
-        onTooltip({ props: { vertical: windowSize.width > Root.Device.Mobile ? "bottom" : "top", color: "green", e: e, price: k / sum, balance: sum } });
+        onTooltip({
+            props: {
+                vertical: windowSize.width > Root.Device.Mobile ? "bottom" : "top",
+                color: "green",
+                e: e,
+                base: props?.base,
+                quote: props?.quote,
+                price: k / sum,
+                amount: k * sum,
+                balance: sum,
+            },
+        });
     };
 
     return (

@@ -32,9 +32,9 @@ export default function useOrder(intial: Order, available: number, fee: number, 
             return {
                 ...state,
                 price: price,
-                quantity: quantity(state?.amount),
-                fees: fees(quantity(state?.amount)),
-                total: quantity(state?.amount) - fees(quantity(state?.amount)),
+                quantity: state?.price === 0 || state?.amount === 0 ? 0 : quantity(state?.amount),
+                fees: state?.price === 0 || state?.amount === 0 ? 0 : fees(quantity(state?.amount)),
+                total: state?.price === 0 || state?.amount === 0 ? 0 : quantity(state?.amount) - fees(quantity(state?.amount)),
             };
         });
     };
@@ -45,10 +45,10 @@ export default function useOrder(intial: Order, available: number, fee: number, 
         setOrder((state: Order) => {
             return {
                 ...state,
-                amount: a,
-                quantity: quantity(state?.price),
-                fees: fees(quantity(state?.price)),
-                total: quantity(state?.price) - fees(quantity(state?.price)),
+                amount: state?.price === 0 || amount === 0 ? 0 : a,
+                quantity: state?.price === 0 || amount === 0 ? 0 : quantity(state?.price),
+                fees: state?.price === 0 || amount === 0 ? 0 : fees(quantity(state?.price)),
+                total: state?.price === 0 || amount === 0 ? 0 : quantity(state?.price) - fees(quantity(state?.price)),
             };
         });
         return a;
@@ -58,7 +58,13 @@ export default function useOrder(intial: Order, available: number, fee: number, 
         setOrder((state: Order) => {
             const max = mode ? available / state?.price : available * state?.price;
             const q = quantity > max ? max : quantity;
-            return { ...state, amount: mode ? q * state?.price : q / state?.price, quantity: q, fees: fees(q), total: q - fees(q) };
+            return {
+                ...state,
+                amount: state?.price === 0 || quantity === 0 ? 0 : mode ? q * state?.price : q / state?.price,
+                quantity: state?.price === 0 || quantity === 0 ? 0 : q,
+                fees: state?.price === 0 || quantity === 0 ? 0 : fees(q),
+                total: state?.price === 0 || quantity === 0 ? 0 : q - fees(q),
+            };
         });
     };
 
