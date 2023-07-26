@@ -112,7 +112,7 @@ export default function Order(props: OrderControl) {
         unit: "%",
     };
 
-    const pricePosition = order.price === 0 ? "" : (1 - parseFloat(props?.price?.toString()) / order.price) * 100;
+    const pricePosition = order.price === 0 ? 0 : (1 - parseFloat(props?.price?.toString()) / order.price) * 100;
     const [handlePricePad, closePricePad] = usePortal(
         <Exchange.BottomSheets.OrderPad
             label={"Price"}
@@ -123,7 +123,7 @@ export default function Order(props: OrderControl) {
                 color: `${
                     mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
                 }`,
-                value: `${(pricePosition > 0 && "+ ") || (pricePosition < 0 && "- ") || ""}${Math.abs(pricePosition?.toString())}`,
+                value: `${(pricePosition > 0 && "+ ") || (pricePosition < 0 && "- ") || ""}${Math.abs(pricePosition)}`,
                 unit: "%",
             }}
             button={{ children: "OK", onClick: () => closePricePad() }}
