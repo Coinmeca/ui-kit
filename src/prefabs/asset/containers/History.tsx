@@ -82,7 +82,7 @@ export default function History(props: History) {
                                     <Elements.Text opacity={0.6} fit>
                                         Fees
                                     </Elements.Text>
-                                    <Elements.Text align={"right"}>{data?.fees}</Elements.Text>
+                                    <Elements.Text align={"right"}>- {data?.fees}</Elements.Text>
                                     <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
                                         {data?.base}
                                     </Elements.Text>
@@ -212,7 +212,7 @@ export default function History(props: History) {
                                             </>,
                                             <>
                                                 <Layouts.Row gap={1} style={{ width: "100%" }}>
-                                                    <Elements.Text align={"right"}>{Format(data?.fees || 0, "currency", true)}</Elements.Text>
+                                                    <Elements.Text align={"right"}>- {Format(data?.fees || 0, "currency", true)}</Elements.Text>
                                                     <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
                                                         {item}
                                                     </Elements.Text>
