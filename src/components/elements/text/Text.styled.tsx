@@ -15,6 +15,8 @@ export const H1 = styled.h1<{
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
+    text-overflow: ellipsis;
+    overflow: hidden;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $fit }) =>
@@ -41,6 +43,8 @@ export const H2 = styled.h2<{
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
+    text-overflow: ellipsis;
+    overflow: hidden;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $fit }) =>
@@ -67,6 +71,8 @@ export const H3 = styled.h3<{
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
+    text-overflow: ellipsis;
+    overflow: hidden;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $fit }) =>
@@ -93,6 +99,8 @@ export const H4 = styled.h4<{
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
+    text-overflow: ellipsis;
+    overflow: hidden;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $fit }) =>
@@ -119,6 +127,8 @@ export const H5 = styled.h5<{
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
+    text-overflow: ellipsis;
+    overflow: hidden;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $fit }) =>
@@ -145,6 +155,8 @@ export const H6 = styled.h6<{
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
+    text-overflow: ellipsis;
+    overflow: hidden;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $fit }) =>
@@ -171,6 +183,8 @@ export const Strong = styled.strong<{
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
+    text-overflow: ellipsis;
+    overflow: hidden;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $fit }) =>
@@ -193,6 +207,8 @@ export const P = styled.p<{
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
+    text-overflow: ellipsis;
+    overflow: hidden;
     ${({ $align }) => $align && `text-align: ${$align};`};
     opacity: ${({ $opacity }) => ($opacity ? `${$opacity}` : 0.6)};
     ${({ $fit }) =>
@@ -215,6 +231,8 @@ export const Desc = styled.p<{
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
+    text-overflow: ellipsis;
+    overflow: hidden;
     ${({ $align }) => $align && `text-align: ${$align};`};
     opacity: ${({ $opacity }) => ($opacity ? `${$opacity}` : 0.45)};
     ${({ $fit }) =>
@@ -240,6 +258,8 @@ export const Text = styled.span<{
     line-height: ${({ $height }) => $height}em;
     ${({ $align }) => $align && `text-align: ${$align};`};
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
+    text-overflow: ellipsis;
+    overflow: hidden;
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $fit }) =>
         $fit &&

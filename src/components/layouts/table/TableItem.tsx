@@ -46,7 +46,13 @@ export default function TableItem(props: ListItem) {
     };
 
     return (
-        <Style $change={props?.change} style={props?.style} onClick={(e: any) => handleClick(e)} $event={typeof props?.onClick === "function" ? true : false} data-active={props?.active}>
+        <Style
+            $change={props?.change}
+            style={props?.style}
+            onClick={(e: any) => handleClick(e)}
+            $event={typeof props?.onClick === "function" ? true : false}
+            data-active={props?.active}
+        >
             {TableCell(props?.children)}
         </Style>
     );

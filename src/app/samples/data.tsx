@@ -186,6 +186,7 @@ export default function Data() {
 
     const sidebarMarketListFormatter = (data: any) => {
         return (
+            typeof data !== "string" &&
             data?.length > 0 &&
             data?.map((data: any) => ({
                 children: [
@@ -198,7 +199,7 @@ export default function Data() {
                                         // length={8}
                                         size={3}
                                         img={data?.logo}
-                                    // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
+                                        // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
                                     />
                                 </>,
                                 [
@@ -319,9 +320,31 @@ export default function Data() {
             active: true,
             children: (
                 <>
-                    <Controls.Tab onClick={() => (mobileMenu === "notify" ? setMobileMenu("") : setMobileMenu("notify"))} active={mobileMenu === "notify"} iconLeft={{ icon: "bell", count: 24 }} toggle fit onBlur={() => setMobileMenu("")} />
-                    <Controls.Tab onClick={() => (mobileMenu === "market" ? setMobileMenu("") : setMobileMenu("market"))} active={mobileMenu === "market"} iconLeft={"sidebar"} show={"tablet"} toggle fit onBlur={() => setMobileMenu("")} />
-                    <Controls.Tab onClick={() => (mobileMenu === "setting" ? setMobileMenu("") : setMobileMenu("setting"))} active={mobileMenu === "setting"} iconLeft={"gear"} show={"tablet"} toggle fit />
+                    <Controls.Tab
+                        onClick={() => (mobileMenu === "notify" ? setMobileMenu("") : setMobileMenu("notify"))}
+                        active={mobileMenu === "notify"}
+                        iconLeft={{ icon: "bell", count: 24 }}
+                        toggle
+                        fit
+                        onBlur={() => setMobileMenu("")}
+                    />
+                    <Controls.Tab
+                        onClick={() => (mobileMenu === "market" ? setMobileMenu("") : setMobileMenu("market"))}
+                        active={mobileMenu === "market"}
+                        iconLeft={"sidebar"}
+                        show={"tablet"}
+                        toggle
+                        fit
+                        onBlur={() => setMobileMenu("")}
+                    />
+                    <Controls.Tab
+                        onClick={() => (mobileMenu === "setting" ? setMobileMenu("") : setMobileMenu("setting"))}
+                        active={mobileMenu === "setting"}
+                        iconLeft={"gear"}
+                        show={"tablet"}
+                        toggle
+                        fit
+                    />
                 </>
             ),
         },
@@ -362,7 +385,10 @@ export default function Data() {
                                     Assets
                                 </Controls.Tab>
                             </Layouts.Row>
-                            <Controls.Input left={{ children: <Elements.Icon icon={"search"} /> }} right={{ children: <Controls.Dropdown options={markets} /> }} />
+                            <Controls.Input
+                                left={{ children: <Elements.Icon icon={"search"} /> }}
+                                right={{ children: <Controls.Dropdown options={markets} /> }}
+                            />
                             <Layouts.Contents.InnerContent>
                                 <Layouts.Contents.SlideContainer
                                     contents={[

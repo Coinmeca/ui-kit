@@ -3,9 +3,26 @@ import ListItem from "./ListItem";
 
 export interface List {
     list?: any;
-    noData: string;
+    noData?: any;
 }
 
 export default function List(props: List) {
-    return <Style>{props?.list && (typeof props?.list !== "string" && props?.list?.length > 0 ? props?.list?.map((data: any, i: number) => <ListItem key={i} {...data} />) : <div>{props?.noData}</div>)}</Style>;
+    const nodata = props?.noData || "There is no data.";
+
+    return (
+        <Style>
+            {props?.list &&
+                (typeof props?.list !== "string" && props?.list?.length > 0 ? (
+                    props?.list?.map((data: any, i: number) => (
+                        <ListItem key={i} {...(data?.children && data)}>
+                            {data?.children ? data?.children : data}
+                        </ListItem>
+                    ))
+                ) : nodata?.typeof$$ ? (
+                    { nodata }
+                ) : (
+                    <div>{nodata}</div>
+                ))}
+        </Style>
+    );
 }

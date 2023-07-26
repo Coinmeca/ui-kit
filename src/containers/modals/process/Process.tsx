@@ -5,7 +5,7 @@ import { Contents } from "components";
 import type { Process as Part } from "components/contents/process/Process";
 
 export interface Process extends Part, Default {
-    state: boolean | null;
+    process: boolean | null;
 }
 
 export default function Process(props: Process) {

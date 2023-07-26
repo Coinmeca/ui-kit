@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Token } from "types/web3";
 import { Format } from "lib/utils";
@@ -57,27 +57,6 @@ export default function Order(props: OrderControl) {
         mode
     );
 
-    const handleChangePrice = (p: number | string) => {
-        price(Format(p, "number", true) as number);
-    };
-
-    const handleChangeAmount = (a: number | string) => {
-        console.log(a);
-
-        currency === 0 ? quantity(Format(a, "number", true) as number) : amount(Format(a, "number", true) as number);
-    };
-
-    const handleChangeRange = (v: number) => {
-        if (available > 0)
-            currency === 0
-                ? quantity((((Format(available, "number", true) as number) / order.price) * (Format(v, "number", true) as number)) / 100)
-                : amount(((Format(available, "number", true) as number) * (Format(v, "number", true) as number)) / 100);
-    };
-
-    useEffect(() => {
-        if (typeof props?.onChange === "function") props?.onChange(order);
-    }, [order]);
-
     const color = {
         buy: "green",
         sell: "red",
@@ -110,6 +89,32 @@ export default function Order(props: OrderControl) {
         max: 100,
         step: 5,
         unit: "%",
+    };
+
+    useEffect(() => {
+        return () => {
+            closePricePad();
+            closeAmountPad();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (typeof props?.onChange === "function") props?.onChange(order);
+    }, [order]);
+
+    const handleChangePrice = (p: number | string) => {
+        price(Format(p, "number", true) as number);
+    };
+
+    const handleChangeAmount = (a: number | string) => {
+        currency === 0 ? quantity(Format(a, "number", true) as number) : amount(Format(a, "number", true) as number);
+    };
+
+    const handleChangeRange = (v: number) => {
+        if (available > 0)
+            currency === 0
+                ? quantity((((Format(available, "number", true) as number) / order.price) * (Format(v, "number", true) as number)) / 100)
+                : amount(((Format(available, "number", true) as number) * (Format(v, "number", true) as number)) / 100);
     };
 
     const pricePosition = order.price === 0 ? 0 : (1 - parseFloat(props?.price?.toString()) / order.price) * 100;
@@ -191,8 +196,6 @@ export default function Order(props: OrderControl) {
                             option={currencies[currency]}
                             options={currencies}
                             onClickItem={(e: any, v: any, k: number) => {
-                                console.log(k);
-                                console.log(assets);
                                 setCurrency(k);
                             }}
                         />

@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Controls, Elements, Layouts } from "components";
-import { Modal, Modals } from "containers";
+import { Controls, Layouts } from "components";
 import { Exchange } from "prefabs";
 import { Token } from "types/web3";
 import type { Order as O } from "prefabs/exchange/controls/order/Order";
@@ -26,11 +25,8 @@ export default function Order(props: OrderControl) {
     const option = props?.option || "market";
     const responsive = props?.responsive || 0;
 
-    const [buy, setBuy] = useState<any>();
-
-    const handleChangeBuy = (order: O) => {
-        setBuy(order);
-    };
+    const [buy, setBuy] = useState<O | undefined>();
+    const [sell, setSell] = useState<O | undefined>();
 
     const color = {
         buy: "green",
@@ -56,7 +52,7 @@ export default function Order(props: OrderControl) {
                                     assets={[props?.quote, props?.base]}
                                     price={props?.price}
                                     fee={props?.fee}
-                                    onChange={(v: O) => handleChangeBuy(v)}
+                                    onChange={(v: O) => setBuy(v)}
                                 />
                             ),
                         },
@@ -70,7 +66,7 @@ export default function Order(props: OrderControl) {
                                     assets={[props?.base, props?.quote]}
                                     price={props?.price}
                                     fee={props?.fee}
-                                    onChange={(v: O) => handleChangeBuy(v)}
+                                    onChange={(v: O) => setSell(v)}
                                 />
                             ),
                         },
