@@ -45,11 +45,17 @@ export default function History(props: History) {
                                         <Layouts.Row gap={1} fix>
                                             <Layouts.Col gap={0}>
                                                 <Elements.Text>{category[data?.category]}</Elements.Text>
-                                                <Elements.Text>{state[data?.state]}</Elements.Text>
+                                                <Elements.Text weight={"normal"} opacity={0.6}>
+                                                    {state[data?.state]}
+                                                </Elements.Text>
                                             </Layouts.Col>
                                             <Layouts.Col gap={0}>
-                                                <Elements.Text align={"right"}>{date}</Elements.Text>
-                                                <Elements.Text align={"right"}>{time}</Elements.Text>
+                                                <Elements.Text weight={"normal"} opacity={0.6} align={"right"}>
+                                                    {date}
+                                                </Elements.Text>
+                                                <Elements.Text weight={"normal"} opacity={0.6} align={"right"}>
+                                                    {time}
+                                                </Elements.Text>
                                             </Layouts.Col>
                                         </Layouts.Row>
                                         <Layouts.Divider />
