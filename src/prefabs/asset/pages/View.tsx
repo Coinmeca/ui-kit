@@ -39,7 +39,7 @@ export default function View(props: any) {
                                 children: (
                                     <>
                                         <Elements.Avatar
-                                            size={responsive ? 4 : 3}
+                                            size={4}
                                             style={{ marginRight: responsive && "1em" }}
                                             img={require(`/src/assets/coins/${data?.symbol?.toLowerCase()}.png`)}
                                         />
@@ -54,9 +54,7 @@ export default function View(props: any) {
                                             <Elements.Text>{data?.symbol}</Elements.Text>
                                         </>,
                                         <>
-                                            <Elements.Text weight={"normal"} opacity={0.6}>
-                                                {data?.name}
-                                            </Elements.Text>
+                                            <Elements.Text opacity={0.3}>{data?.name}</Elements.Text>
                                         </>,
                                     ],
                                 },
