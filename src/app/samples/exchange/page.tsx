@@ -288,6 +288,8 @@ export default function Page() {
                                                             view={view}
                                                             asks={orderbook.asks}
                                                             bids={orderbook.bids}
+                                                            base={market.base.symbol}
+                                                            quote={market.quote.symbol}
                                                             responsive={{ device: "mobile", vertical: false }}
                                                             guidance
                                                         />

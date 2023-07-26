@@ -2,6 +2,14 @@ import { Elements, Layouts } from "components";
 import { Root } from "lib/style";
 import { Format } from "lib/utils";
 
+export interface OrderbookTooltip {
+    base: string;
+    quote: string;
+    price?: number;
+    amount?: number;
+    balance?: number;
+}
+
 export default function Tooltip(props: any) {
     return (
         <Elements.Tooltip
@@ -14,26 +22,30 @@ export default function Tooltip(props: any) {
             fill
         >
             <Layouts.Col gap={0.25}>
-                <Layouts.Row gap={0} fix>
-                    <Elements.Text opacity={0.6} fit>
-                        Avg Price:
-                    </Elements.Text>
-                    <Elements.Text align={"right"}>{Format(props?.price, "currency", true, 4)}</Elements.Text>
-                </Layouts.Row>
-                <Layouts.Row gap={0} fix>
-                    <Elements.Text opacity={0.6} fit>
-                        Sum Amount:
-                    </Elements.Text>
-                    <Elements.Text align={"right"}>
-                        {Format(parseFloat(props?.balance?.toString()) * parseFloat(props?.price?.toString()), "currency", true, 4)}
-                    </Elements.Text>
-                </Layouts.Row>
-                <Layouts.Row gap={0} fix>
-                    <Elements.Text opacity={0.6} fit>
-                        Sum Balance:
-                    </Elements.Text>
-                    <Elements.Text align={"right"}>{Format(props?.balance, "currency", true, 4)}</Elements.Text>
-                </Layouts.Row>
+                {props?.price && (
+                    <Layouts.Row gap={0} fix>
+                        <Elements.Text opacity={0.6} fit>
+                            Avg Price:
+                        </Elements.Text>
+                        <Elements.Text align={"right"}>{Format(props?.price, "currency", true, 4)}</Elements.Text>
+                    </Layouts.Row>
+                )}
+                {props?.amount && (
+                    <Layouts.Row gap={0} fix>
+                        <Elements.Text opacity={0.6} fit>
+                            Sum {props?.quote?.toUpperCase()}:
+                        </Elements.Text>
+                        <Elements.Text align={"right"}>{Format(props?.amount, "currency", true, 4)}</Elements.Text>
+                    </Layouts.Row>
+                )}
+                {props?.balance && (
+                    <Layouts.Row gap={0} fix>
+                        <Elements.Text opacity={0.6} fit>
+                            Sum {props?.base?.toUpperCase()}:
+                        </Elements.Text>
+                        <Elements.Text align={"right"}>{Format(props?.balance, "currency", true, 4)}</Elements.Text>
+                    </Layouts.Row>
+                )}
             </Layouts.Col>
         </Elements.Tooltip>
     );
