@@ -288,7 +288,7 @@ export default function Page() {
                                                             view={view}
                                                             asks={orderbook.asks}
                                                             bids={orderbook.bids}
-                                                            responsive={{ device: "mobile", vertical: true }}
+                                                            responsive={{ device: "mobile", vertical: false }}
                                                             guidance
                                                         />
                                                     ),
