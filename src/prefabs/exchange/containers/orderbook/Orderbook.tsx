@@ -28,7 +28,6 @@ export interface Tick {
 
 export default function Ordrebook(props: Orderbook) {
     const { windowSize } = useWindowSize();
-    const { onTooltip, closeTooltip } = useTooltip();
 
     const asks = props?.asks ? Sort(props?.asks, "price", "number", true) : [];
     const bids = props?.bids ? Sort(props?.bids, "price", "number", false) : [];
@@ -47,32 +46,45 @@ export default function Ordrebook(props: Orderbook) {
         if (typeof props?.onClickBid === "function") props?.onClickBid(bid, k, e);
     };
 
-    const Tooltip = ({ tick }: { tick: Tick }) => {
+    const Tooltip = (props: any) => {
         return (
-            <Layouts.Col gap={0.25}>
-                <Layouts.Row gap={0} fix>
-                    <Elements.Text opacity={0.6} fit>
-                        Avg Price:
-                    </Elements.Text>
-                    <Elements.Text align={"right"}>{Format(tick?.price, "currency", true, 4)}</Elements.Text>
-                </Layouts.Row>
-                <Layouts.Row gap={0} fix>
-                    <Elements.Text opacity={0.6} fit>
-                        Sum Amount:
-                    </Elements.Text>
-                    <Elements.Text align={"right"}>
-                        {Format(parseFloat(tick?.balance?.toString()) / parseFloat(tick?.price?.toString()), "currency", true, 4)}
-                    </Elements.Text>
-                </Layouts.Row>
-                <Layouts.Row gap={0} fix>
-                    <Elements.Text opacity={0.6} fit>
-                        Sum Balance:
-                    </Elements.Text>
-                    <Elements.Text align={"right"}>{Format(tick?.balance, "currency", true, 4)}</Elements.Text>
-                </Layouts.Row>
-            </Layouts.Col>
+            <Elements.Tooltip
+                e={props?.e}
+                color={props?.color}
+                vertical={windowSize.width > Root.Device.Mobile ? "bottom" : "top"}
+                horizon={"center"}
+                // horizon={windowSize.width > Root.Device.Mobile ? 'center' : 'right'}
+                padding={1}
+                style={{ border: `1px solid rgb(${Root.Color(props?.color)})` }}
+                fill
+            >
+                <Layouts.Col gap={0.25}>
+                    <Layouts.Row gap={0} fix>
+                        <Elements.Text opacity={0.6} fit>
+                            Avg Price:
+                        </Elements.Text>
+                        <Elements.Text align={"right"}>{Format(props?.price, "currency", true, 4)}</Elements.Text>
+                    </Layouts.Row>
+                    <Layouts.Row gap={0} fix>
+                        <Elements.Text opacity={0.6} fit>
+                            Sum Amount:
+                        </Elements.Text>
+                        <Elements.Text align={"right"}>
+                            {Format(parseFloat(props?.balance?.toString()) / parseFloat(props?.price?.toString()), "currency", true, 4)}
+                        </Elements.Text>
+                    </Layouts.Row>
+                    <Layouts.Row gap={0} fix>
+                        <Elements.Text opacity={0.6} fit>
+                            Sum Balance:
+                        </Elements.Text>
+                        <Elements.Text align={"right"}>{Format(props?.balance, "currency", true, 4)}</Elements.Text>
+                    </Layouts.Row>
+                </Layouts.Col>
+            </Elements.Tooltip>
         );
     };
+
+    const { onTooltip, closeTooltip } = useTooltip(Tooltip);
 
     const handleAskHover = (ask: Tick, i: number, e: any) => {
         if (!guidance) return;
@@ -83,20 +95,8 @@ export default function Ordrebook(props: Orderbook) {
                 0
             );
         const sum = [...asks].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
-        onTooltip(
-            <Elements.Tooltip
-                e={e}
-                color={"red"}
-                vertical={"top"}
-                horizon={"center"}
-                // horizon={windowSize.width > Root.Device.Mobile ? 'center' : 'left'}
-                padding={1}
-                style={{ border: `1px solid rgb(${Root.Color("red")})` }}
-                fill
-            >
-                <Tooltip tick={{ price: k / sum, balance: sum }} />
-            </Elements.Tooltip>
-        );
+        // onTooltip(<Tooltip color={"red"} e={e} price={k / sum} balance={sum} />);
+        onTooltip(undefined, { color: "red", e: e, price: k / sum, balance: sum });
     };
 
     const handleBidHover = (bid: Tick, i: number, e: any) => {
@@ -108,20 +108,8 @@ export default function Ordrebook(props: Orderbook) {
                 0
             );
         const sum = [...bids].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
-        onTooltip(
-            <Elements.Tooltip
-                e={e}
-                color={"green"}
-                vertical={windowSize.width > Root.Device.Mobile ? "bottom" : "top"}
-                horizon={"center"}
-                // horizon={windowSize.width > Root.Device.Mobile ? 'center' : 'right'}
-                padding={1}
-                style={{ border: `1px solid rgb(${Root.Color("green")})` }}
-                fill
-            >
-                <Tooltip tick={{ price: k / sum, balance: sum }} />
-            </Elements.Tooltip>
-        );
+        // onTooltip(<Tooltip color={"green"} e={e} price={k / sum} balance={sum} />);
+        onTooltip(undefined, { color: "green", e: e, price: k / sum, balance: sum });
     };
 
     return (
@@ -180,7 +168,7 @@ export default function Ordrebook(props: Orderbook) {
                 )}
             </Asks>
             <Layouts.Divider responsive={props?.responsive?.device} style={{ ...(view !== 0 && { display: "none" }) }} />
-            <Bids $show={view === 0 || view === 2}>
+            <Bids $show={view === 0 || view === 2} onMouseLeave={closeTooltip}>
                 {bids && bids?.length > 0 ? (
                     <AnimatePresence>
                         {bids?.map((bid: Tick, k: number) => (
@@ -188,7 +176,6 @@ export default function Ordrebook(props: Orderbook) {
                                 key={k}
                                 onClick={(e: any) => handleBid(bid, e)}
                                 onMouseEnter={(e: any) => handleBidHover(bid, k, e)}
-                                onMouseLeave={closeTooltip}
                                 as={motion.div}
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}

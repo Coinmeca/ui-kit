@@ -23,7 +23,7 @@ export default function Tooltip(props: Tooltip) {
     const margin = props?.margin || 8;
     const padding = props?.padding || 2;
 
-    const ref: any = useRef(null);
+    const ref: any = useRef();
     const [active, setActive] = useState(props?.active || false);
     const [x, setX] = useState<number>(0);
     const [y, setY] = useState<number>(0);
@@ -37,15 +37,15 @@ export default function Tooltip(props: Tooltip) {
 
     useEffect(() => {
         const e = props?.e;
-        console.log(e?.clientX - e?.nativeEvent?.offsetX, e?.target?.clientWidth / 2, ref?.current?.clientWidth / 2);
-        // console.log(e?.clientY, e?.nativeEvent?.offsetY, e?.clientY - e?.nativeEvent?.offsetY);
         const h: number = margin && typeof margin !== "number" ? (margin?.length >= 1 ? margin[0] : 8) : margin;
         const v: number = margin && typeof margin !== "number" ? (margin?.length >= 2 ? margin[1] : 8) : margin;
 
+        console.log(e?.clientY - e?.nativeEvent?.offsetY - v, ref?.current?.clientHeight);
         if (e) {
             switch (props?.vertical) {
                 case "top":
-                    setY(e?.clientY - e?.nativeEvent?.offsetY - v - ref?.current?.clientHeight);
+                    setY(e?.clientY - e?.nativeEvent?.offsetY - v - (ref?.current?.clientHeight || e?.target?.clientHeight));
+                    // setY(e?.clientY - e?.nativeEvent?.offsetY - v);
                     break;
                 case "center":
                     setY(e?.clientY - e?.nativeEvent?.offsetY + e?.target?.clientHeight / 2);
@@ -61,7 +61,7 @@ export default function Tooltip(props: Tooltip) {
                     setX(e?.clientX - e?.nativeEvent?.offsetX - h - ref?.current?.clientWidth);
                     break;
                 case "center":
-                    setX(e?.clientX - e?.nativeEvent?.offsetX + e?.target?.clientWidth / 2 - ref?.current?.clientWidth / 2);
+                    setX(e?.clientX - e?.nativeEvent?.offsetX + e?.target?.clientWidth / 2 - (ref?.current?.clientWidth || e?.target?.clientWidth) / 2);
                     break;
                 case "right":
                     setX(e?.clientX - e?.nativeEvent?.offsetX + e?.target?.clientWidth + h);
@@ -77,6 +77,7 @@ export default function Tooltip(props: Tooltip) {
             <Layouts.Panel active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
                 {active && (
                     <Style
+                        key="tooltip"
                         ref={ref}
                         $color={color}
                         $padding={padding}
