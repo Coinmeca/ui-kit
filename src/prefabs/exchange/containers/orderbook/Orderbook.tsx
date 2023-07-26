@@ -84,7 +84,7 @@ export default function Ordrebook(props: Orderbook) {
         );
     };
 
-    const { onTooltip, closeTooltip } = useTooltip(Tooltip);
+    const [onTooltip, closeTooltip] = useTooltip(Tooltip);
 
     const handleAskHover = (ask: Tick, i: number, e: any) => {
         if (!guidance) return;
@@ -112,7 +112,7 @@ export default function Ordrebook(props: Orderbook) {
 
     return (
         <Style $responsive={props?.responsive} $guidance={guidance}>
-            <Asks $show={view === 0 || view === 1}>
+            <Asks $show={view === 0 || view === 1} onMouseLeave={() => closeTooltip()}>
                 {asks && asks?.length > 0 ? (
                     <AnimatePresence mode="popLayout" presenceAffectsLayout>
                         {asks?.map((ask: Tick, k: number) => (
@@ -120,7 +120,6 @@ export default function Ordrebook(props: Orderbook) {
                                 key={k}
                                 onClick={(e: any) => handleAsk(ask, k, e)}
                                 onMouseEnter={(e: any) => handleAskHover(ask, k, e)}
-                                onMouseLeave={closeTooltip}
                                 as={motion.div}
                                 layout
                                 initial={{ scale: 0.9, opacity: 0 }}
@@ -166,7 +165,7 @@ export default function Ordrebook(props: Orderbook) {
                 )}
             </Asks>
             <Layouts.Divider responsive={props?.responsive?.device} style={{ ...(view !== 0 && { display: "none" }) }} />
-            <Bids $show={view === 0 || view === 2} onMouseLeave={closeTooltip}>
+            <Bids $show={view === 0 || view === 2} onMouseLeave={() => closeTooltip()}>
                 {bids && bids?.length > 0 ? (
                     <AnimatePresence>
                         {bids?.map((bid: Tick, k: number) => (
