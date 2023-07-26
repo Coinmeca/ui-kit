@@ -128,7 +128,7 @@ export const Tick = styled.div`
                     font-feature-settings: initial;
                     background-position: right;
                     background-repeat: no-repeat;
-                    width: 100%;
+                    width: -webkit-fill-available;
                     padding: 0.5em 2em;
                     transition: 0.3s ease;
 
@@ -213,7 +213,11 @@ const Responsive = (vertical?: boolean) => css`
         & > ${Tick} {
             & > * > * {
                 & > * {
-                    padding: ${vertical ? "0.2em" : "0.5em"};
+                    padding: ${vertical ? "0.2em 0.5em" : "0.5em"};
+                    & > * {
+                        ${vertical && "position: relative;"}
+                        ${vertical && "left:initial!important; right:initial!important;"}
+                    }
                 }
             }
         }

@@ -29,7 +29,13 @@ export default function useOrder(intial: Order, available: number, fee: number, 
     const price = (price: number) => {
         const quantity = (amount: number) => (mode ? amount / price : amount * price);
         setOrder((state: Order) => {
-            return { ...state, price: price, quantity: quantity(state?.amount), fees: fees(quantity(state?.amount)), total: quantity(state?.amount) - fees(quantity(state?.amount)) };
+            return {
+                ...state,
+                price: price,
+                quantity: quantity(state?.amount),
+                fees: fees(quantity(state?.amount)),
+                total: quantity(state?.amount) - fees(quantity(state?.amount)),
+            };
         });
     };
 
@@ -37,7 +43,13 @@ export default function useOrder(intial: Order, available: number, fee: number, 
         const a = amount > available ? available : amount;
         const quantity = (price: number) => (mode ? a / price : a * price);
         setOrder((state: Order) => {
-            return { ...state, amount: a, quantity: quantity(state?.price), fees: fees(quantity(state?.price)), total: quantity(state?.price) - fees(quantity(state?.price)) };
+            return {
+                ...state,
+                amount: a,
+                quantity: quantity(state?.price),
+                fees: fees(quantity(state?.price)),
+                total: quantity(state?.price) - fees(quantity(state?.price)),
+            };
         });
         return a;
     };
@@ -50,7 +62,7 @@ export default function useOrder(intial: Order, available: number, fee: number, 
         });
     };
 
-    const fees = (quantity: number) => quantity * fee;
+    const fees = (quantity: number) => (quantity === 0 ? 0 : quantity * fee);
 
     return { order, base, quote, price, amount, quantity };
 }
