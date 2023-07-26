@@ -19,11 +19,11 @@ export default function useTooltip(initial?: Function | ReactNode | null, props?
         root?.render(tooltip ? createPortal(typeof tooltip === "function" && tooltipProps ? tooltip(tooltipProps) : tooltip, document?.body) : null);
     }, [tooltip, tooltipProps, root]);
 
-    return {
-        onTooltip: ({ tooltip, props }: { tooltip?: Function | ReactNode | null; props?: object }) => {
+    return [
+        ({ tooltip, props }: { tooltip?: Function | ReactNode | null; props?: object }) => {
             tooltip ? setTooltip(tooltip) : typeof initial === "function" && props ? setTooltip(initial(props)) : setTooltip(initial);
             props && setTooltipProps(props);
         },
-        closeTooltip: useCallback(() => setTooltip(null), []),
-    } as const;
+        () => setTooltip(null),
+    ] as const;
 }
