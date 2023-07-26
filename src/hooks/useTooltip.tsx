@@ -1,13 +1,13 @@
 "use client";
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Root, createRoot } from "react-dom/client";
 
-export default function useTooltip(initial?: Function | ReactNode | null, props?: object) {
+export default function useTooltip(initial?: Function | ReactNode | null, initialProps?: object) {
     const [root, setRoot] = useState<Root | undefined>();
-    const [tooltip, setTooltip] = useState<Function | ReactNode | null>();
+    const [tooltip, setTooltip] = useState<Function | ReactNode | null>(initial);
     const [tooltipProps, setTooltipProps] = useState<any>((state: any) => {
-        return { ...state, ...props };
+        return { ...state, ...initialProps };
     });
 
     useEffect(() => {
@@ -19,7 +19,9 @@ export default function useTooltip(initial?: Function | ReactNode | null, props?
 
     useEffect(() => {
         root?.render(
-            tooltip ? createPortal(typeof tooltip === "function" && tooltipProps ? tooltip({ ...props, ...tooltipProps }) : tooltip, document?.body) : null
+            tooltip
+                ? createPortal(typeof tooltip === "function" && tooltipProps ? tooltip({ ...initialProps, ...tooltipProps }) : tooltip, document?.body)
+                : null
         );
     }, [tooltip, tooltipProps, root]);
 

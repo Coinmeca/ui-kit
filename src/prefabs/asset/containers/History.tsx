@@ -19,8 +19,70 @@ export default function History(props: History) {
     const responsive = props?.responsive;
 
     const { category, state, history } = HistoryData.default();
-
     const [process, setProcess] = useState(null);
+
+    const [handleDetail, closeDetail] = usePortal();
+    const handleDetailModal = (data: any) => {
+        return (
+            <Modals.Process
+                process={process}
+                title="Transaction Detail"
+                content={
+                    <>
+                        <Layouts.Contents.InnerContent>
+                            <Layouts.Col gap={1}>
+                                <Layouts.Row gap={1} fix>
+                                    <Layouts.Col gap={0}>
+                                        <Elements.Text>{category[data?.category]}</Elements.Text>
+                                        <Elements.Text weight={"normal"} opacity={0.6}>
+                                            {state[data?.state]}
+                                        </Elements.Text>
+                                    </Layouts.Col>
+                                    <Layouts.Col gap={0}>
+                                        <Elements.Text weight={"normal"} opacity={0.6} align={"right"}>
+                                            {data?.date}
+                                        </Elements.Text>
+                                        <Elements.Text weight={"normal"} opacity={0.6} align={"right"}>
+                                            {data?.time}
+                                        </Elements.Text>
+                                    </Layouts.Col>
+                                </Layouts.Row>
+                                <Layouts.Divider />
+                                <Layouts.Row gap={1} fix>
+                                    <Elements.Text fit>Price</Elements.Text>
+                                    <Elements.Text align={"right"}>{data?.price}</Elements.Text>
+                                    <Elements.Text style={{ maxWidth: "6em" }}>{data?.quote}</Elements.Text>
+                                </Layouts.Row>
+                                <Layouts.Divider />
+                                <Layouts.Row gap={1} fix>
+                                    <Elements.Text fit>Amount</Elements.Text>
+                                    <Elements.Text align={"right"}>{data?.amount}</Elements.Text>
+                                    <Elements.Text style={{ maxWidth: "6em" }}>{data?.quote}</Elements.Text>
+                                </Layouts.Row>
+                                <Layouts.Divider />
+                                <Layouts.Row gap={1} fix>
+                                    <Elements.Text fit>Quantity</Elements.Text>
+                                    <Elements.Text align={"right"}>{data?.quantity}</Elements.Text>
+                                    <Elements.Text style={{ maxWidth: "6em" }}>{data?.base}</Elements.Text>
+                                </Layouts.Row>
+                                <Layouts.Row gap={1} fix>
+                                    <Elements.Text fit>Fees</Elements.Text>
+                                    <Elements.Text align={"right"}>{data?.fees}</Elements.Text>
+                                    <Elements.Text style={{ maxWidth: "6em" }}>{data?.base}</Elements.Text>
+                                </Layouts.Row>
+                            </Layouts.Col>
+                        </Layouts.Contents.InnerContent>
+                        <Layouts.Row fix style={{ marginTop: "2em" }}>
+                            <Controls.Button>Undo</Controls.Button>
+                            <Controls.Button>Close</Controls.Button>
+                        </Layouts.Row>
+                    </>
+                }
+                onClose={() => closeDetail()}
+                close
+            />
+        );
+    };
 
     const historyFormatter = (data: Data[]) => {
         return (
@@ -35,68 +97,20 @@ export default function History(props: History) {
                 const date = ("0" + d.getDate()).slice(-2) + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + d.getFullYear().toString().substring(2, 4);
                 const time = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
 
-                const [handleDetail, closeDetail] = usePortal(
-                    <Modals.Process
-                        process={process}
-                        title="Transaction Detail"
-                        content={
-                            <>
-                                <Layouts.Contents.InnerContent>
-                                    <Layouts.Col gap={1}>
-                                        <Layouts.Row gap={1} fix>
-                                            <Layouts.Col gap={0}>
-                                                <Elements.Text>{category[data?.category]}</Elements.Text>
-                                                <Elements.Text weight={"normal"} opacity={0.6}>
-                                                    {state[data?.state]}
-                                                </Elements.Text>
-                                            </Layouts.Col>
-                                            <Layouts.Col gap={0}>
-                                                <Elements.Text weight={"normal"} opacity={0.6} align={"right"}>
-                                                    {date}
-                                                </Elements.Text>
-                                                <Elements.Text weight={"normal"} opacity={0.6} align={"right"}>
-                                                    {time}
-                                                </Elements.Text>
-                                            </Layouts.Col>
-                                        </Layouts.Row>
-                                        <Layouts.Divider />
-                                        <Layouts.Row gap={1} fix>
-                                            <Elements.Text fit>Price</Elements.Text>
-                                            <Elements.Text align={"right"}>{data?.price}</Elements.Text>
-                                            <Elements.Text style={{ maxWidth: "6em" }}>{pay}</Elements.Text>
-                                        </Layouts.Row>
-                                        <Layouts.Divider />
-                                        <Layouts.Row gap={1} fix>
-                                            <Elements.Text fit>Amount</Elements.Text>
-                                            <Elements.Text align={"right"}>{data?.amount}</Elements.Text>
-                                            <Elements.Text style={{ maxWidth: "6em" }}>{pay}</Elements.Text>
-                                        </Layouts.Row>
-                                        <Layouts.Divider />
-                                        <Layouts.Row gap={1} fix>
-                                            <Elements.Text fit>Quantity</Elements.Text>
-                                            <Elements.Text align={"right"}>{data?.quantity}</Elements.Text>
-                                            <Elements.Text style={{ maxWidth: "6em" }}>{item}</Elements.Text>
-                                        </Layouts.Row>
-                                        <Layouts.Row gap={1} fix>
-                                            <Elements.Text fit>Fees</Elements.Text>
-                                            <Elements.Text align={"right"}>{data?.fees}</Elements.Text>
-                                            <Elements.Text style={{ maxWidth: "6em" }}>{item}</Elements.Text>
-                                        </Layouts.Row>
-                                    </Layouts.Col>
-                                </Layouts.Contents.InnerContent>
-                                <Layouts.Row fix style={{ marginTop: "2em" }}>
-                                    <Controls.Button>Undo</Controls.Button>
-                                    <Controls.Button>Close</Controls.Button>
-                                </Layouts.Row>
-                            </>
-                        }
-                        onClose={() => closeDetail()}
-                        close
-                    />
-                );
-
                 return {
-                    onClick: () => handleDetail(),
+                    onClick: () => {
+                        handleDetail(handleDetailModal, {
+                            base: item,
+                            quote: pay,
+                            date: date,
+                            time: time,
+                            category: data?.category,
+                            state: data?.state,
+                            amount: data?.amount,
+                            quantity: data?.quantity,
+                            fees: data?.fees,
+                        });
+                    },
                     style: { flex: 1, padding: !responsive && "2em" },
                     children: [
                         {

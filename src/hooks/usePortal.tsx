@@ -1,19 +1,66 @@
 "use client";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Root, createRoot } from "react-dom/client";
 
-export default function usePortal(children: any, props?: any) {
+export default function usePortal(initial?: any, initialProps?: any) {
     const [root, setRoot] = useState<Root | undefined>();
     const [active, setActive] = useState(false);
+    const [children, setChildren] = useState<Function | ReactNode | null>();
+    const [childrenProps, setChildrenProps] = useState<any>((state: any) => {
+        return { ...state, ...initialProps };
+    });
 
     useEffect(() => {
         !root && setRoot(createRoot(document?.createElement("section")));
     }, []);
 
     useEffect(() => {
-        root?.render(active ? createPortal(typeof children === "function" && props ? children(props) : children, document?.body) : null);
-    }, [root, children, active]);
+        console.log("children", children);
+        root?.render(
+            active
+                ? createPortal(
+                      initial
+                          ? typeof initial === "function"
+                              ? initial(childrenProps)
+                              : initial
+                          : children && (typeof children === "function" ? children(childrenProps) : children),
+                      document?.body
+                  )
+                : null
+        );
+    }, [root, initial, children, active]);
 
-    return [() => setActive(true), () => setActive(false)];
+    return [
+        (children?: Function | ReactNode | null, props?: object) => {
+            children &&
+                (typeof children === "function" ? setChildren(children({ ...(initialProps && initialProps), ...(props && props) })) : setChildren(children));
+            props &&
+                setChildrenProps((state: any) => {
+                    return { ...state, props };
+                });
+            setActive(true);
+        },
+        () => setActive(false),
+    ];
 }
+
+// "use client";
+// import { useEffect, useState } from "react";
+// import { createPortal } from "react-dom";
+// import { Root, createRoot } from "react-dom/client";
+
+// export default function usePortal(children: any, props?: any) {
+//     const [root, setRoot] = useState<Root | undefined>();
+//     const [active, setActive] = useState(false);
+
+//     useEffect(() => {
+//         !root && setRoot(createRoot(document?.createElement("section")));
+//     }, []);
+
+//     useEffect(() => {
+//         root?.render(active ? createPortal(typeof children === "function" && props ? children(props) : children, document?.body) : null);
+//     }, [root, children, active]);
+
+//     return [() => setActive(true), () => setActive(false)];
+// };
