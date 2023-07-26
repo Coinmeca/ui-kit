@@ -44,7 +44,7 @@ export default function Tooltip(props: Tooltip) {
         if (e) {
             switch (props?.vertical) {
                 case "top":
-                    setY(e?.clientY - e?.nativeEvent?.offsetY - v - (ref?.current?.clientHeight || e?.target?.clientHeight));
+                    setY(e?.clientY - e?.nativeEvent?.offsetY - v - (ref?.current?.clientHeight || e?.target?.clientHeight) * 1.5);
                     // setY(e?.clientY - e?.nativeEvent?.offsetY - v);
                     break;
                 case "center":
