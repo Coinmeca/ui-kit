@@ -2,13 +2,13 @@
 import { createChart } from "lightweight-charts";
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import { Sort } from "lib/utils";
-import { Root } from "lib/style";
 import Style from "./Chart.styled";
 
 export interface Candle {
     color?: {
-        up: string;
-        down: string;
+        up?: string;
+        down?: string;
+        theme?: string;
     };
     price?: Price;
     volume?: Volume;
@@ -32,15 +32,42 @@ export interface Volume {
 }
 
 export default function Candle(props: any) {
-    const color = { up: props?.color?.up || "green", down: props?.color?.down || "red" };
+    const up = props?.up || "up";
+    const down = props?.down || "down";
+    const theme = props?.theme && props?.theme === "light" ? "0,0,0" : "255,255,255";
+    const [color, setColor] = useState({
+        up: props?.color?.up || "#00b060",
+        down: props?.color?.down || "#ff0040",
+        theme: {
+            strong: `rgba(${theme}, 0.6)`,
+            semi: `rgba(${theme}, 0.45)`,
+            medium: `rgba(${theme}, 0.3)`,
+            regular: `rgba(${theme}, 0.15)`,
+            light: `rgba(${theme}, 0.05)`,
+        },
+    });
 
     const [price, setPrice] = useState<any>([]);
     const [volume, setVolume] = useState<any>([]);
-
-    const up = props?.up || "up";
-    const down = props?.down || "down";
-
     const chartRef: any = useRef();
+
+    useEffect(() => {
+        globalThis.matchMedia("(prefers-color-scheme: light)").addEventListener("change", ({ matches }) => {
+            const scheme = !theme && matches ? "0,0,0" : "255,255,255";
+            setColor((color) => {
+                return {
+                    ...color,
+                    theme: {
+                        strong: `rgba(${scheme}, 0.6)`,
+                        semi: `rgba(${scheme}, 0.45)`,
+                        medium: `rgba(${scheme}, 0.3)`,
+                        regular: `rgba(${scheme}, 0.15)`,
+                        light: `rgba(${scheme}, 0.05)`,
+                    },
+                };
+            });
+        });
+    }, [props?.color, theme]);
 
     useEffect(() => {
         if (props?.price && props?.price.length > 0) {
@@ -67,7 +94,7 @@ export default function Candle(props: any) {
                         return {
                             time: v.time,
                             value: v.value,
-                            color: v.type === up ? "#00b060" : "#ff0040",
+                            color: v.type === up ? color.up : color.down,
                             // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
                         };
                     }),
@@ -97,18 +124,18 @@ export default function Candle(props: any) {
                     },
                     fontSize: 10,
                     fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif",
-                    textColor: "rgba(255,255,255,0.6)",
+                    textColor: color.theme.strong,
                 },
                 grid: {
-                    vertLines: { color: "rgba(255,255,255,0.05)" },
-                    horzLines: { color: "rgba(255,255,255,0.05)" },
+                    vertLines: { color: color.theme.light },
+                    horzLines: { color: color.theme.light },
                 },
                 rightPriceScale: {
                     borderVisible: true,
-                    borderColor: "rgba(255,255,255,0.15)",
+                    borderColor: color.theme.regular,
                 },
                 timeScale: {
-                    borderColor: "rgba(255,255,255,0.15)",
+                    borderColor: color.theme.regular,
                 },
                 trackingMode: {},
                 crosshair: {
@@ -119,16 +146,16 @@ export default function Candle(props: any) {
                     // Vertical crosshair line (showing Date in Label)
                     vertLine: {
                         width: 4,
-                        color: "rgba(255,255,255,0.15)",
+                        color: color.theme.light,
                         // style: LightweightCharts.LineStyle.Solid,
                         style: 0,
-                        labelBackgroundColor: "rgba(255,255,255,0.3)",
+                        labelBackgroundColor: color.theme.medium,
                     },
 
                     // Horizontal crosshair line (showing Price in Label)
                     horzLine: {
-                        color: "rgba(255,255,255,0.45)",
-                        labelBackgroundColor: "rgba(255,255,255,0.3)",
+                        color: color.theme.semi,
+                        labelBackgroundColor: color.theme.medium,
                     },
                 },
                 width: chartRef?.current?.clientWidth,
@@ -137,13 +164,13 @@ export default function Candle(props: any) {
 
             if (price) {
                 const candleSeries = chart.addCandlestickSeries({
-                    upColor: "#00b060",
-                    downColor: "#ff0040",
+                    upColor: color.up,
+                    downColor: color.down,
                     // upColor: `rgb(var(--${color.up}))`,
                     // downColor: `rgb(var(--${color.down}))`,
                     borderVisible: false,
-                    wickUpColor: "#00b060",
-                    wickDownColor: "#ff0040",
+                    wickUpColor: color.up,
+                    wickDownColor: color.down,
                     // wickUpColor: `rgb(var(--${color.up}))`,
                     // wickDownColor: `rgb(var(--${color.down}))`,
                 });
@@ -196,7 +223,7 @@ export default function Candle(props: any) {
                 chart.remove();
             };
         }
-    }, [chartRef, price, volume, props?.fit]);
+    }, [chartRef, color, price, volume, props?.fit]);
 
     return (
         <Suspense fallback={props?.fallback || <div>Loading...</div>}>
