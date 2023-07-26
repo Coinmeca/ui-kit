@@ -34,7 +34,7 @@ export default function Detail(props: Detail) {
         <>
             <Layouts.Row fix style={{ alignItems: "center" }}>
                 <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
-                    <Controls.Button scale={0.75} icon={"chevron-left"} style={{ marginRight: "-1.5em" }} onClick={() => handleBack(undefined)} />
+                    <Controls.Button scale={0.875} icon={"chevron-left"} style={{ marginRight: "-1.5em" }} onClick={() => handleBack(undefined)} />
                     <Elements.Avatar img={require(`/src/assets/coins/${selectedAsset?.symbol || "meca"}.png`)} size={4} />
                     <Layouts.Row responsive={"mobile"} gap={1} fit>
                         <Elements.Text size={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", size: 1.5 }}>
