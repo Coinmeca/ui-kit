@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
+import { Asset } from "prefabs";
 import { Capitalize, Format } from "lib/utils";
 import { Root } from "lib/style";
 import { Token } from "types/web3";
@@ -8,7 +9,6 @@ import useWindowSize from "hooks/useWindowSize";
 
 import Data from "app/samples/asset/data";
 import * as HistoryData from "app/samples/asset/data";
-import { Asset } from "prefabs";
 
 export interface Detail {
     assets?: Token[];
