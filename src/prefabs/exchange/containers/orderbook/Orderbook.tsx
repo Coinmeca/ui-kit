@@ -95,7 +95,6 @@ export default function Ordrebook(props: Orderbook) {
                 0
             );
         const sum = [...asks].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
-        // onTooltip(<Tooltip color={"red"} e={e} price={k / sum} balance={sum} />);
         onTooltip({ props: { color: "red", e: e, price: k / sum, balance: sum } });
     };
 
@@ -108,7 +107,6 @@ export default function Ordrebook(props: Orderbook) {
                 0
             );
         const sum = [...bids].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
-        // onTooltip(<Tooltip color={"green"} e={e} price={k / sum} balance={sum} />);
         onTooltip({ props: { color: "green", e: e, price: k / sum, balance: sum } });
     };
 
