@@ -16,7 +16,6 @@ export default function usePortal(initial?: any, initialProps?: any) {
     }, []);
 
     useEffect(() => {
-        console.log("children", children);
         root?.render(
             active
                 ? createPortal(
