@@ -12,7 +12,7 @@ export const H1 = styled.h1<{
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
-    font-size: calc(var(--unit) * 8);
+    font-size: 8em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
@@ -30,7 +30,7 @@ export const H1 = styled.h1<{
         `}
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
-        font-size: calc(var(--unit) * 6);
+        font-size: 6em;
     }
 `;
 export const H2 = styled.h2<{
@@ -43,7 +43,7 @@ export const H2 = styled.h2<{
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
-    font-size: calc(var(--unit) * 6);
+    font-size: 6em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
@@ -61,7 +61,7 @@ export const H2 = styled.h2<{
         `}
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
-        font-size: calc(var(--unit) * 4);
+        font-size: 4em
     }
 `;
 export const H3 = styled.h3<{
@@ -74,7 +74,7 @@ export const H3 = styled.h3<{
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
-    font-size: calc(var(--unit) * 5);
+    font-size: 5em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
@@ -92,7 +92,7 @@ export const H3 = styled.h3<{
         `}
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
-        font-size: calc(var(--unit) * 3);
+        font-size: 3em;
     }
 `;
 export const H4 = styled.h4<{
@@ -105,7 +105,7 @@ export const H4 = styled.h4<{
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
-    font-size: calc(var(--unit) * 4);
+    font-size: 4em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
@@ -123,7 +123,7 @@ export const H4 = styled.h4<{
         `}
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
-        font-size: calc(var(--unit) * 2.5);
+        font-size: 2.5em;
     }
 `;
 export const H5 = styled.h5<{
@@ -136,7 +136,7 @@ export const H5 = styled.h5<{
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
-    font-size: calc(var(--unit) * 3);
+    font-size: 3em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
@@ -154,7 +154,7 @@ export const H5 = styled.h5<{
         `}
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
-        font-size: calc(var(--unit) * 2);
+        font-size: 2em;
     }
 `;
 export const H6 = styled.h6<{
@@ -167,7 +167,7 @@ export const H6 = styled.h6<{
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
-    font-size: calc(var(--unit) * 2);
+    font-size: 2em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
@@ -185,7 +185,7 @@ export const H6 = styled.h6<{
         `}
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
-        font-size: calc(var(--unit) * 1.75);
+        font-size: 1.75em;
     }
 `;
 export const Strong = styled.strong<{
@@ -198,7 +198,7 @@ export const Strong = styled.strong<{
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
-    font-size: calc(var(--unit) * 1.5);
+    font-size: 1.5em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
@@ -225,7 +225,7 @@ export const P = styled.p<{
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
-    font-size: calc(var(--unit) * 1.5);
+    font-size: 1.5em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
@@ -252,7 +252,7 @@ export const Desc = styled.p<{
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
-    font-size: calc(var(--unit) * 1.25);
+    font-size: 1.25em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};

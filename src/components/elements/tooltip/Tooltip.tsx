@@ -16,6 +16,7 @@ export interface Tooltip {
     margin?: number | [number, number];
     style?: object;
     fill?: boolean;
+    fit?: boolean;
 }
 
 export default function Tooltip(props: Tooltip) {
@@ -83,6 +84,7 @@ export default function Tooltip(props: Tooltip) {
                             top: vertical(),
                             left: horizon(),
                             minWidth: props?.width || props?.fill ? `calc(${props?.e?.target?.clientWidth}px - ${padding * 2}em)` : undefined,
+                            maxWidth: props?.width || props?.fit ? `calc(${props?.e?.target?.clientWidth}px - ${padding * 2}em)` : undefined,
                             ...props?.style,
                         }}
                         as={motion.div}
