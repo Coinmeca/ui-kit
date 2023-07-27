@@ -32,7 +32,7 @@ export interface Tick {
 
 export default function Ordrebook(props: Orderbook) {
     const { windowSize } = useWindowSize();
-    const [onTooltip, closeTooltip] = usePortal(Tooltip, { horizon: 'center'});
+    const [onTooltip, closeTooltip] = usePortal(Tooltip, { horizon: 'center', fit:true});
 
     const asks = props?.asks ? Sort(props?.asks, "price", "number", true) : [];
     const bids = props?.bids ? Sort(props?.bids, "price", "number", false) : [];
