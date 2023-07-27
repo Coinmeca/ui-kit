@@ -60,11 +60,11 @@ export default function History(props: History) {
                                 </Layouts.Row>
                                 <Layouts.Divider />
                                 <Layouts.Row gap={1} fix>
-                                    <Elements.Text opacity={0.6} fit>
+                                    <Elements.Text opacity={0.3} fit>
                                         Amount
                                     </Elements.Text>
                                     <Elements.Text align={"right"}>{data?.amount}</Elements.Text>
-                                    <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
+                                    <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
                                         {data?.quote}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -138,7 +138,7 @@ export default function History(props: History) {
                                     style: { flexDirection: responsive && "row-reverse" },
                                     children: [
                                         {
-                                            style: { gap: "0" },
+                                            style: { gap: "0", maxWidth: "10em" },
                                             children: [
                                                 <>
                                                     <Elements.Text

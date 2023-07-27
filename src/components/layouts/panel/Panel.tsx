@@ -23,6 +23,7 @@ export default function Panel(props: Panel) {
         <AnimatePresence>
             {active && (
                 <Style
+                    key={'panel'}
                     id={props?.id}
                     $active={active}
                     $color={props?.color}

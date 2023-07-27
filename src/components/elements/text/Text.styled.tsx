@@ -9,6 +9,7 @@ export const H1 = styled.h1<{
     $weight: number | string;
     $height: number;
     $align?: "left" | "center" | "right";
+    $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
     font-size: calc(var(--unit) * 8);
@@ -20,6 +21,7 @@ export const H1 = styled.h1<{
     white-space: nowrap;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
+    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
     ${({ $fit }) =>
         $fit &&
         css`
@@ -38,6 +40,7 @@ export const H2 = styled.h2<{
     $weight: number | string;
     $height: number;
     $align?: "left" | "center" | "right";
+    $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
     font-size: calc(var(--unit) * 6);
@@ -49,6 +52,7 @@ export const H2 = styled.h2<{
     white-space: nowrap;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
+    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
     ${({ $fit }) =>
         $fit &&
         css`
@@ -67,6 +71,7 @@ export const H3 = styled.h3<{
     $weight: number | string;
     $height: number;
     $align?: "left" | "center" | "right";
+    $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
     font-size: calc(var(--unit) * 5);
@@ -78,6 +83,7 @@ export const H3 = styled.h3<{
     white-space: nowrap;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
+    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
     ${({ $fit }) =>
         $fit &&
         css`
@@ -96,6 +102,7 @@ export const H4 = styled.h4<{
     $weight: number | string;
     $height: number;
     $align?: "left" | "center" | "right";
+    $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
     font-size: calc(var(--unit) * 4);
@@ -107,6 +114,7 @@ export const H4 = styled.h4<{
     white-space: nowrap;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
+    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
     ${({ $fit }) =>
         $fit &&
         css`
@@ -125,6 +133,7 @@ export const H5 = styled.h5<{
     $weight: number | string;
     $height: number;
     $align?: "left" | "center" | "right";
+    $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
     font-size: calc(var(--unit) * 3);
@@ -136,6 +145,7 @@ export const H5 = styled.h5<{
     white-space: nowrap;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
+    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
     ${({ $fit }) =>
         $fit &&
         css`
@@ -154,6 +164,7 @@ export const H6 = styled.h6<{
     $weight: number | string;
     $height: number;
     $align?: "left" | "center" | "right";
+    $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
     font-size: calc(var(--unit) * 2);
@@ -165,6 +176,7 @@ export const H6 = styled.h6<{
     white-space: nowrap;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
+    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
     ${({ $fit }) =>
         $fit &&
         css`
@@ -183,6 +195,7 @@ export const Strong = styled.strong<{
     $weight: number | string;
     $height: number;
     $align?: "left" | "center" | "right";
+    $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
     font-size: calc(var(--unit) * 1.5);
@@ -194,6 +207,7 @@ export const Strong = styled.strong<{
     white-space: nowrap;
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
+    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
     ${({ $fit }) =>
         $fit &&
         css`
@@ -208,6 +222,7 @@ export const P = styled.p<{
     $weight: number | string;
     $height: number;
     $align?: "left" | "center" | "right";
+    $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
     font-size: calc(var(--unit) * 1.5);
@@ -219,6 +234,7 @@ export const P = styled.p<{
     white-space: nowrap;
     ${({ $align }) => $align && `text-align: ${$align};`};
     opacity: ${({ $opacity }) => ($opacity ? `${$opacity}` : 0.6)};
+    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
     ${({ $fit }) =>
         $fit &&
         css`
@@ -233,6 +249,7 @@ export const Desc = styled.p<{
     $weight: number | string;
     $height: number;
     $align?: "left" | "center" | "right";
+    $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
 }>`
     font-size: calc(var(--unit) * 1.25);
@@ -244,6 +261,7 @@ export const Desc = styled.p<{
     white-space: nowrap;
     ${({ $align }) => $align && `text-align: ${$align};`};
     opacity: ${({ $opacity }) => ($opacity ? `${$opacity}` : 0.45)};
+    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
     ${({ $fit }) =>
         $fit &&
         css`
@@ -259,6 +277,7 @@ export const Text = styled.span<{
     $weight: number | string;
     $height: number;
     $align?: "left" | "center" | "right";
+    $case?: "upper" | "lower" | "capital";
     $responsive?: any;
     $fit?: boolean;
 }>`
@@ -271,6 +290,7 @@ export const Text = styled.span<{
     overflow: hidden;
     white-space: nowrap;
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
+    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
     ${({ $fit }) =>
         $fit &&
         css`
