@@ -5,6 +5,7 @@ export interface Text {
     style?: object;
     type?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "strong" | "p" | "desc";
     align?: "left" | "center" | "right";
+    case?: "upper" | "lower" | "capital";
     size?: number;
     color?: string;
     change?: boolean;
@@ -43,6 +44,7 @@ export default function Text(props: Text) {
                     $weight={weight}
                     $height={height}
                     $align={props?.align}
+                    $case={props?.case}
                     $fit={props?.fit}
                 >
                     {props?.children}
@@ -58,6 +60,7 @@ export default function Text(props: Text) {
                     $weight={weight}
                     $height={height}
                     $align={props?.align}
+                    $case={props?.case}
                     $fit={props?.fit}
                 >
                     {props?.children}
@@ -73,6 +76,7 @@ export default function Text(props: Text) {
                     $weight={weight}
                     $height={height}
                     $align={props?.align}
+                    $case={props?.case}
                     $fit={props?.fit}
                 >
                     {props?.children}
@@ -88,6 +92,7 @@ export default function Text(props: Text) {
                     $weight={weight}
                     $height={height}
                     $align={props?.align}
+                    $case={props?.case}
                     $fit={props?.fit}
                 >
                     {props?.children}
@@ -103,6 +108,7 @@ export default function Text(props: Text) {
                     $weight={weight}
                     $height={height}
                     $align={props?.align}
+                    $case={props?.case}
                     $fit={props?.fit}
                 >
                     {props?.children}
@@ -118,6 +124,7 @@ export default function Text(props: Text) {
                     $weight={weight}
                     $height={height}
                     $align={props?.align}
+                    $case={props?.case}
                     $fit={props?.fit}
                 >
                     {props?.children}
@@ -133,6 +140,7 @@ export default function Text(props: Text) {
                     $weight={weight}
                     $height={height}
                     $align={props?.align}
+                    $case={props?.case}
                     $fit={props?.fit}
                 >
                     {props?.children}
@@ -148,6 +156,7 @@ export default function Text(props: Text) {
                     $weight={props?.weight || "normal"}
                     $height={height}
                     $align={props?.align}
+                    $case={props?.case}
                     $fit={props?.fit}
                 >
                     {props?.children}
@@ -163,6 +172,7 @@ export default function Text(props: Text) {
                     $weight={props?.weight || "normal"}
                     $height={height}
                     $align={props?.align}
+                    $case={props?.case}
                     $fit={props?.fit}
                 >
                     {props?.children}
@@ -179,6 +189,7 @@ export default function Text(props: Text) {
                     $weight={weight}
                     $height={height}
                     $align={props?.align}
+                    $case={props?.case}
                     $responsive={props?.responsive}
                     $fit={props?.fit}
                 >

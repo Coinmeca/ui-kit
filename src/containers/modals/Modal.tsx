@@ -39,20 +39,20 @@ export default function Modal(props: Modal) {
     };
 
     return (
-        <AnimatePresence>
-            <Layouts.Panel
-                key="panel"
-                active={true}
-                color={"black"}
-                style={{ zIndex: 200 }}
-                onClick={(e: any) => {
-                    props?.outsideClose && handleClose(e);
-                }}
-                fix
-            >
+        <Layouts.Panel
+            key={"panel"}
+            active={true}
+            color={"black"}
+            style={{ zIndex: 200 }}
+            onClick={(e: any) => {
+                props?.outsideClose && handleClose(e);
+            }}
+            fix
+        >
+            <AnimatePresence>
                 {active && (
                     <Style
-                        key="modal"
+                        key={"modal"}
                         $active={active}
                         $width={width}
                         as={motion.div}
@@ -90,7 +90,7 @@ export default function Modal(props: Modal) {
                         </div>
                     </Style>
                 )}
-            </Layouts.Panel>
-        </AnimatePresence>
+            </AnimatePresence>
+        </Layouts.Panel>
     );
 }

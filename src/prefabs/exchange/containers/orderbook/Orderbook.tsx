@@ -7,7 +7,8 @@ import { Root } from "lib/style";
 import useWindowSize from "hooks/useWindowSize";
 import useTooltip from "hooks/useTooltip";
 import Tooltip from "./Tooltip";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import usePortal from "hooks/usePortal";
 
 export interface Orderbook {
     asks?: Tick[];
@@ -32,7 +33,7 @@ export interface Tick {
 
 export default function Ordrebook(props: Orderbook) {
     const { windowSize } = useWindowSize();
-    const [onTooltip, closeTooltip] = useTooltip(Tooltip, { horizon: "center" });
+    const [onTooltip, closeTooltip] = usePortal(Tooltip, { horizon: 'center'});
 
     const asks = props?.asks ? Sort(props?.asks, "price", "number", true) : [];
     const bids = props?.bids ? Sort(props?.bids, "price", "number", false) : [];
@@ -66,7 +67,7 @@ export default function Ordrebook(props: Orderbook) {
                 0
             );
         const sum = [...asks].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
-        onTooltip({ props: { vertical: "top", color: "red", e: e, base: props?.base, quote: props?.quote, price: k / sum, amount: k * sum, balance: sum } });
+        onTooltip(null, { vertical: "top", color: "red", e: e, base: props?.base, quote: props?.quote, price: k / sum, amount: k * sum, balance: sum } );
     };
 
     const handleBidHover = (bid: Tick, i: number, e: any) => {
@@ -78,8 +79,7 @@ export default function Ordrebook(props: Orderbook) {
                 0
             );
         const sum = [...bids].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
-        onTooltip({
-            props: {
+        onTooltip(null, {
                 vertical: windowSize.width > Root.Device.Mobile ? "bottom" : "top",
                 color: "green",
                 e: e,
@@ -88,8 +88,8 @@ export default function Ordrebook(props: Orderbook) {
                 price: k / sum,
                 amount: k * sum,
                 balance: sum,
-            },
-        });
+            }
+        );
     };
 
     return (
@@ -103,11 +103,11 @@ export default function Ordrebook(props: Orderbook) {
                                 onClick={(e: any) => handleAsk(ask, k, e)}
                                 onMouseEnter={(e: any) => handleAskHover(ask, k, e)}
                                 as={motion.div}
-                                layout
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.9, opacity: 0 }}
                                 transition={{ duration: 0.3 }}
+                                layout
                             >
                                 <div>
                                     <div>
@@ -149,10 +149,10 @@ export default function Ordrebook(props: Orderbook) {
             <Layouts.Divider responsive={props?.responsive?.device} style={{ ...(view !== 0 && { display: "none" }) }} />
             <Bids $show={view === 0 || view === 2} onMouseLeave={() => closeTooltip()}>
                 {bids && bids?.length > 0 ? (
-                    <AnimatePresence>
+                    <AnimatePresence mode="popLayout">
                         {bids?.map((bid: Tick, k: number) => (
                             <Ticks
-                                key={k}
+                            key={k}
                                 onClick={(e: any) => handleBid(bid, e)}
                                 onMouseEnter={(e: any) => handleBidHover(bid, k, e)}
                                 as={motion.div}
@@ -160,6 +160,7 @@ export default function Ordrebook(props: Orderbook) {
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.9, opacity: 0 }}
                                 transition={{ duration: 0.3 }}
+                                layout
                             >
                                 <div>
                                     <div>

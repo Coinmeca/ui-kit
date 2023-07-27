@@ -40,11 +40,11 @@ export default function Detail(props: Detail) {
                             style={{ marginLeft: "-1em" }}
                         />
                         <Layouts.Row responsive={"mobile"} gap={1} fit>
-                            <Elements.Text size={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", size: 1.5 }}>
-                                {"ETH".toUpperCase()}
+                            <Elements.Text size={2.5} height={1} case={'upper'} style={{ marginRight: "1em" }} responsive={{ device: "mobile", size: 1.5 }}>
+                                {props?.selectedAsset?.symbol}
                             </Elements.Text>
-                            <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 1.5 }}>
-                                {Capitalize("Ethereum" || "")}
+                            <Elements.Text size={2.5} height={1} case={'capital'} responsive={{ device: "mobile", size: 1.5 }}>
+                                {props?.selectedAsset?.name}
                             </Elements.Text>
                         </Layouts.Row>
                     </Layouts.Row>

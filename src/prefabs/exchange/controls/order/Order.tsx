@@ -187,7 +187,8 @@ export default function Order(props: OrderControl) {
                 value={currency === 0 ? order?.quantity : order?.amount}
                 max={currency === 0 ? (order?.quantity || 1) / order.price : order.amount}
                 onChange={(e: any, v: any) => handleChangeAmount(v)}
-                onClick={() => isMobile && handleAmountPad()}
+                // onClick={() => isMobile && handleAmountPad()}
+                onClick={() => handleAmountPad()}
                 inputMode={isMobile ? "none" : undefined}
                 left={{ children: <span>{currency === 0 ? "Qunatity" : "Amount"}</span> }}
                 right={{

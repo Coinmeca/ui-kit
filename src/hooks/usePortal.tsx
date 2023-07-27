@@ -13,6 +13,13 @@ export default function usePortal(initial?: any, initialProps?: any) {
 
     useEffect(() => {
         !root && setRoot(createRoot(document?.createElement("section")));
+        return () => {
+            root?.render(null);
+            root?.unmount();
+            setActive(false);
+            setChildren(null);
+            setRoot(undefined);
+        }
     }, []);
 
     useEffect(() => {
@@ -28,7 +35,7 @@ export default function usePortal(initial?: any, initialProps?: any) {
                   )
                 : null
         );
-    }, [root, initial, children, active]);
+    }, [root, initial, children, childrenProps, active]);
 
     return [
         (children?: Function | ReactNode | null, props?: object) => {
@@ -36,7 +43,7 @@ export default function usePortal(initial?: any, initialProps?: any) {
                 (typeof children === "function" ? setChildren(children({ ...(initialProps && initialProps), ...(props && props) })) : setChildren(children));
             props &&
                 setChildrenProps((state: any) => {
-                    return { ...state, props };
+                    return { ...state, ...props };
                 });
             setActive(true);
         },

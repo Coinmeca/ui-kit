@@ -30,11 +30,11 @@ export default function BottomSheet(props: BottomSheet) {
     };
 
     return (
-        <AnimatePresence>
-            <Layouts.Panel key="panel" active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
+        <Layouts.Panel active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
+            <AnimatePresence>
                 {active && (
                     <Style
-                        key="bottomsheet"
+                        key={"bottomsheet"}
                         tabIndex={100}
                         $scale={scale}
                         $active={active}
@@ -49,7 +49,7 @@ export default function BottomSheet(props: BottomSheet) {
                         {props?.children}
                     </Style>
                 )}
-            </Layouts.Panel>
-        </AnimatePresence>
+            </AnimatePresence>
+        </Layouts.Panel>
     );
 }

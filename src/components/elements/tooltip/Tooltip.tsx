@@ -25,8 +25,6 @@ export default function Tooltip(props: Tooltip) {
 
     const ref: any = useRef();
     const [active, setActive] = useState(props?.active || false);
-    const [x, setX] = useState<number>(0);
-    const [y, setY] = useState<number>(0);
 
     useEffect(() => {
         setActive(true);
@@ -35,55 +33,55 @@ export default function Tooltip(props: Tooltip) {
         };
     }, []);
 
-    useEffect(() => {
-        const e = props?.e;
-        const h: number = margin && typeof margin !== "number" ? (margin?.length >= 1 ? margin[0] : 8) : margin;
-        const v: number = margin && typeof margin !== "number" ? (margin?.length >= 2 ? margin[1] : 8) : margin;
-
-        console.log(e?.clientY - e?.nativeEvent?.offsetY - v, ref?.current?.clientHeight);
-        if (e) {
-            switch (props?.vertical) {
-                case "top":
-                    setY(e?.clientY - e?.nativeEvent?.offsetY - v - (ref?.current?.clientHeight || e?.target?.clientHeight) * 1.5);
-                    // setY(e?.clientY - e?.nativeEvent?.offsetY - v);
-                    break;
-                case "center":
-                    setY(e?.clientY - e?.nativeEvent?.offsetY + e?.target?.clientHeight / 2);
-                    break;
-                case "bottom":
-                    setY(e?.clientY - e?.nativeEvent?.offsetY + v + e?.target?.clientHeight);
-                    break;
-                default:
-                    setY(e?.clientY + v);
-            }
-            switch (props?.horizon) {
-                case "left":
-                    setX(e?.clientX - e?.nativeEvent?.offsetX - h - ref?.current?.clientWidth);
-                    break;
-                case "center":
-                    setX(e?.clientX - e?.nativeEvent?.offsetX + e?.target?.clientWidth / 2 - (ref?.current?.clientWidth || e?.target?.clientWidth) / 2);
-                    break;
-                case "right":
-                    setX(e?.clientX - e?.nativeEvent?.offsetX + e?.target?.clientWidth + h);
-                    break;
-                default:
-                    setX(e?.clientX + h);
-            }
+    const vertical = ():number | undefined => {
+        const offset: number = margin && typeof margin !== "number" ? (margin?.length >= 2 ? margin[1] : 8) : margin;
+        let vertical: number | undefined;
+        switch (props?.vertical) {
+            case "top":
+                vertical = props?.e?.clientY - props?.e?.nativeEvent?.offsetY - offset - ref?.current?.clientHeight;
+                break;
+            case "center":
+                vertical = props?.e?.clientY - props?.e?.nativeEvent?.offsetY + props?.e?.target?.clientHeight / 2;
+                break;
+            case "bottom":
+                vertical = props?.e?.clientY - props?.e?.nativeEvent?.offsetY + props?.e?.target?.clientHeight + offset;
+                break;
+            default:
+                vertical = props?.e?.clientY + offset;        
         }
-    }, [props?.e, props?.vertical, props?.horizon, props?.fill, margin]);
+        return isNaN(vertical as number) ? undefined : vertical;
+    }
+    const horizon = ():number | undefined => {
+        const offset: number = margin && typeof margin !== "number" ? (margin?.length >= 1 ? margin[0] : 8) : margin;
+        let horizon: number | undefined;
+        switch (props?.horizon) {
+            case "left":
+                horizon = props?.e?.clientX - props?.e?.nativeEvent?.offsetX - offset - ref?.current?.clientWidth;
+                break;
+            case "center":
+                horizon = props?.e?.clientX - props?.e?.nativeEvent?.offsetX + (props?.e?.target?.clientWidth / 2) - (ref?.current?.clientWidth / 2);
+                break;
+            case "right":
+                horizon = props?.e?.clientX - props?.e?.nativeEvent?.offsetX + props?.e?.target?.clientWidth + offset;
+                break;
+            default:
+                horizon = props?.e?.clientX + offset;
+        }
+        return isNaN(horizon as number) ? undefined : horizon;
+    }
 
     return (
-        <AnimatePresence>
-            <Layouts.Panel active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
+        <Layouts.Panel active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
+            <AnimatePresence>
                 {active && (
                     <Style
-                        key="tooltip"
+                        key={"tooltip"}
                         ref={ref}
                         $color={color}
                         $padding={padding}
                         style={{
-                            top: isNaN(y) ? undefined : y,
-                            left: isNaN(x) ? undefined : x,
+                            top: vertical(),
+                            left: horizon(),
                             minWidth: props?.width || props?.fill ? `calc(${props?.e?.target?.clientWidth}px - ${padding * 2}em)` : undefined,
                             ...props?.style,
                         }}
@@ -96,7 +94,7 @@ export default function Tooltip(props: Tooltip) {
                         {props?.children}
                     </Style>
                 )}
-            </Layouts.Panel>
-        </AnimatePresence>
+            </AnimatePresence>
+        </Layouts.Panel>
     );
 }
