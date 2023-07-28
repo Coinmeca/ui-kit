@@ -16,11 +16,12 @@ const Style = styled.div<{ $change?: string; $fit?: boolean }>`
         flex-direction: column;
         background: rgb(var(--dim));
         color: rgba(var(--black));
-        width: -webkit-fill-available;
-        ${({ $fit }) => ($fit ? `height: calc(100% - 8em); min-height: max-content;` : `height: max-content; min-height: calc(100% - 8em);`)}
+        width: calc(100% - (var(--unit) * 8));
+        ${({ $fit }) =>
+            $fit ? `height: calc(100% - (var(--unit) * 8)); min-height: max-content;` : `height: max-content; min-height: calc(100% - (var(--unit) * 8));`}
 
-        padding: 4em;
-        gap: 4em;
+        padding: calc(var(--unit) * 4);
+        gap: calc(var(--unit) * 4);
 
         @media (prefers-color-scheme: light) {
             --white: 0, 0, 0;
@@ -35,19 +36,17 @@ const Style = styled.div<{ $change?: string; $fit?: boolean }>`
         }
 
         @media all and (min-width: ${Root.Device.Desktop}px) {
-            padding: 4em 8em;
+            width: calc(100% - (var(--unit) * 16));
+            padding: calc(var(--unit) * 4) calc(var(--unit) * 8);
         }
 
         @media all and (max-width: ${Root.Device.Mobile}px) {
+            width: calc(100% - (var(--unit) * 4));
             ${({ $fit }) =>
-                $fit ? `height: -webkit-fill-available; min-height: max-content;` : `height:  -webkit-fill-available; min-height: calc(100% - 4em);`}
-            gap: 2em;
-            padding: 2em;
+                $fit ? `height: calc(100% - (var(--unit) * 4)); min-height: max-content;` : `height: max-content; min-height: calc(100% - (var(--unit) * 4));`}
+            gap: calc(var(--unit) * 2);
+            padding: calc(var(--unit) * 2);
         }
-    }
-
-    & > & {
-        background-color: rgba(var(--black), var(--o01));
     }
 
     @media (prefers-color-scheme: light) {

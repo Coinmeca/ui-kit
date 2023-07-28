@@ -225,6 +225,8 @@ export default function View(props: View) {
                             ]}
                         />
                     </Layouts.Row>
+                </Layouts.Col>
+                <Layouts.Contents.InnerContent>
                     <Layouts.Contents.TabContainer
                         contents={[
                             {
@@ -241,7 +243,7 @@ export default function View(props: View) {
                             },
                         ]}
                     />
-                </Layouts.Col>
+                </Layouts.Contents.InnerContent>
             </Layouts.Box>
         </>
     );

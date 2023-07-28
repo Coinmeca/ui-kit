@@ -385,19 +385,17 @@ export default function Page() {
                                                 {
                                                     active: true,
                                                     children: (
-                                                        <Layouts.Contents.InnerContent>
-                                                            <Exchange.Containers.Order
-                                                                base={market.base}
-                                                                quote={market.quote}
-                                                                price={market.price}
-                                                                fee={0.1}
-                                                                option={option}
-                                                                responsive={
-                                                                    (windowSize.width <= Root.Device.Tablet && windowSize.width > 840) ||
-                                                                    (windowSize.width <= Root.Device.Tablet && windowSize.width < 640)
-                                                                }
-                                                            />
-                                                        </Layouts.Contents.InnerContent>
+                                                        <Exchange.Containers.Order
+                                                            base={market.base}
+                                                            quote={market.quote}
+                                                            price={market.price}
+                                                            fee={0.1}
+                                                            option={option}
+                                                            responsive={
+                                                                (windowSize.width <= Root.Device.Tablet && windowSize.width > 840) ||
+                                                                (windowSize.width <= Root.Device.Tablet && windowSize.width < 640)
+                                                            }
+                                                        />
                                                     ),
                                                 },
                                             ]}
