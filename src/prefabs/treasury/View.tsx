@@ -174,6 +174,7 @@ export default function View(props: View) {
                                             <AnimatePresence mode="popLayout">
                                                 {tab === "vault" ? (
                                                     <Controls.Tab
+                                                        key="listing"
                                                         iconLeft={"plus"}
                                                         as={motion.div}
                                                         initial={{ opacity: 0 }}
@@ -184,6 +185,7 @@ export default function View(props: View) {
                                                     </Controls.Tab>
                                                 ) : (
                                                     <Controls.Tab
+                                                        key="create"
                                                         iconLeft={"plus"}
                                                         as={motion.div}
                                                         initial={{ opacity: 0 }}
