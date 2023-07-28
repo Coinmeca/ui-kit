@@ -63,6 +63,16 @@ export default function Header(props: Header) {
                 duration: 0.3,
                 delay: mobileMenu ? stagger(0.05) : 0,
             });
+        } else {
+            animate(
+                "nav",
+                { opacity: 1, transform: "translateX(0)" },
+                {
+                    ease: "easeInOut",
+                    duration: 0.3,
+                    delay: mobileMenu ? stagger(0.05) : 0,
+                }
+            );
         }
     }, [mobileMenu, windowSize.width]);
 
