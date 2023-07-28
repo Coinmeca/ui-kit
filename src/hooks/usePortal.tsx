@@ -19,7 +19,7 @@ export default function usePortal(initial?: any, initialProps?: any) {
             setActive(false);
             setChildren(null);
             setRoot(undefined);
-        }
+        };
     }, []);
 
     useEffect(() => {

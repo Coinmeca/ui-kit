@@ -204,12 +204,12 @@ export default function Data() {
                                 </>,
                                 [
                                     <>
-                                        <Elements.Text type="strong" case={'upper'} height={1.25}>
+                                        <Elements.Text type="strong" case={"upper"} height={1.25}>
                                             {data?.symbol}
                                         </Elements.Text>
                                     </>,
                                     <>
-                                        <Elements.Text type="p" case={'upper'} height={1.25} style={{ opacity: 0.45 }}>
+                                        <Elements.Text type="p" case={"upper"} height={1.25} style={{ opacity: 0.45 }}>
                                             {data?.market}
                                         </Elements.Text>
                                     </>,
@@ -248,6 +248,7 @@ export default function Data() {
         "/samples/asset": "red",
         "/samples/exchange": "orange",
         "/samples/treasury": "blue",
+        "/samples/vault": "blue",
     };
 
     const languages = [

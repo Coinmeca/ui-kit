@@ -17,7 +17,6 @@ export interface Input {
     scale?: number;
 
     placeholder?: number | string;
-    icon?: string;
 
     clearable?: boolean;
     clearPosition?: "left" | "right";
@@ -129,7 +128,15 @@ export default function Input(props: Input) {
     const handleKeyDown = (e: any) => {
         if (props?.lock || props?.disabled) return;
         const key = e.keyCode;
-        if (((type === "currency" || type === "number") && ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key === 110 && key === 190))) || key === 38 || key === 107 || key === 187 || key === 40 || key === 109 || key === 189) {
+        if (
+            ((type === "currency" || type === "number") && ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key === 110 && key === 190))) ||
+            key === 38 ||
+            key === 107 ||
+            key === 187 ||
+            key === 40 ||
+            key === 109 ||
+            key === 189
+        ) {
             let copy: number | undefined;
             if (key === 38 || key === 107 || key === 187) {
                 if (e.shiftKey && e.ctrlKey) {
@@ -195,7 +202,14 @@ export default function Input(props: Input) {
                         </Side>
                     )}
                     <div>
-                        {props?.clearable && clearPosition === "left" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
+                        {props?.clearable && clearPosition === "left" && (
+                            <Controls.Button
+                                icon={"x"}
+                                fit
+                                hide={value.toString().length === 0}
+                                onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")}
+                            />
+                        )}
                         <input
                             ref={input}
                             style={{ textAlign: align }}
@@ -215,7 +229,14 @@ export default function Input(props: Input) {
                             disabled={props?.disabled}
                             readOnly={props?.lock || props?.disabled}
                         />
-                        {props?.clearable && clearPosition === "right" && <Controls.Button icon={"x"} fit hide={value.toString().length === 0} onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")} />}
+                        {props?.clearable && clearPosition === "right" && (
+                            <Controls.Button
+                                icon={"x"}
+                                fit
+                                hide={value.toString().length === 0}
+                                onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")}
+                            />
+                        )}
                     </div>
                     {(props?.unit || props?.right) && (
                         <Side $width={props?.right?.width} style={props?.right?.style}>

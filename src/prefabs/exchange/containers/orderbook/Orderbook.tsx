@@ -32,7 +32,7 @@ export interface Tick {
 
 export default function Ordrebook(props: Orderbook) {
     const { windowSize } = useWindowSize();
-    const [onTooltip, closeTooltip] = usePortal(Tooltip, { horizon: 'center', fit:true});
+    const [onTooltip, closeTooltip] = usePortal(Tooltip, { horizon: "center", fit: true });
 
     const asks = props?.asks ? Sort(props?.asks, "price", "number", true) : [];
     const bids = props?.bids ? Sort(props?.bids, "price", "number", false) : [];
@@ -66,7 +66,17 @@ export default function Ordrebook(props: Orderbook) {
                 0
             );
         const sum = [...asks].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
-        onTooltip(null, { vertical: "top", color: "red", e: e, base: props?.base, quote: props?.quote, price: k / sum, amount: k * sum, balance: sum } );
+        onTooltip(null, {
+            vertical: "top",
+            color: "red",
+            e: e,
+            base: props?.base,
+            quote: props?.quote,
+            price: k / sum,
+            amount: k * sum,
+            balance: sum,
+            fit: true,
+        });
     };
 
     const handleBidHover = (bid: Tick, i: number, e: any) => {
@@ -79,16 +89,16 @@ export default function Ordrebook(props: Orderbook) {
             );
         const sum = [...bids].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
         onTooltip(null, {
-                vertical: windowSize.width > Root.Device.Mobile ? "bottom" : "top",
-                color: "green",
-                e: e,
-                base: props?.base,
-                quote: props?.quote,
-                price: k / sum,
-                amount: k * sum,
-                balance: sum,
-            }
-        );
+            vertical: windowSize.width > Root.Device.Mobile ? "bottom" : "top",
+            color: "green",
+            e: e,
+            base: props?.base,
+            quote: props?.quote,
+            price: k / sum,
+            amount: k * sum,
+            balance: sum,
+            fit: true,
+        });
     };
 
     return (
@@ -151,7 +161,7 @@ export default function Ordrebook(props: Orderbook) {
                     <AnimatePresence mode="popLayout">
                         {bids?.map((bid: Tick, k: number) => (
                             <Ticks
-                            key={k}
+                                key={k}
                                 onClick={(e: any) => handleBid(bid, e)}
                                 onMouseEnter={(e: any) => handleBidHover(bid, k, e)}
                                 as={motion.div}

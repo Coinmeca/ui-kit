@@ -3,11 +3,23 @@ import { useEffect, useState } from "react";
 import { Layouts } from "components";
 import { Asset } from "prefabs";
 import { Token } from "types/web3";
+import { Root } from "lib/style";
+import useWindowSize from "hooks/useWindowSize";
 import Data from "./data";
 
 export default function Page() {
-    const { info, assets } = Data();
-    const [selectedAsset, setSelectedAsset] = useState<Token | undefined>();
+    const Dummy = Data();
+    const props: any = {
+        info: Dummy?.info,
+        assets: Dummy?.assets,
+        history: Dummy?.history,
+    };
+
+    const { windowSize } = useWindowSize();
+    const [asset, setAsset] = useState<Token | undefined>();
+    const [history, setHistory] = useState(Dummy?.history);
+
+    useEffect(() => {}, [props?.assets, props?.history]);
 
     return (
         <Layouts.Page>
@@ -15,12 +27,28 @@ export default function Page() {
                 <Layouts.Contents.SlideContainer
                     contents={[
                         {
-                            active: typeof selectedAsset === "undefined",
-                            children: <Asset.Pages.View info={info} assets={assets} onSelect={(a: Token | undefined) => setSelectedAsset(a)} />,
+                            active: typeof asset === "undefined",
+                            children: (
+                                <Asset.Pages.View
+                                    info={props?.info}
+                                    assets={props?.assets}
+                                    onSelect={(a: Token | undefined) => setAsset(a)}
+                                    responsive={windowSize.width > Root.Device.Mobile}
+                                />
+                            ),
                         },
                         {
-                            active: typeof selectedAsset !== "undefined",
-                            children: <Asset.Pages.Detail selectedAsset={selectedAsset} assets={assets} onBack={() => setSelectedAsset(undefined)} />,
+                            active: typeof asset !== "undefined",
+                            children: (
+                                <Asset.Pages.Detail
+                                    info={props?.info}
+                                    assets={props?.assets}
+                                    asset={asset}
+                                    history={history}
+                                    onBack={() => setAsset(undefined)}
+                                    responsive={windowSize.width <= Root.Device.Mobile}
+                                />
+                            ),
                         },
                     ]}
                 />

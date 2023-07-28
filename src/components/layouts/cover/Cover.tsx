@@ -4,16 +4,17 @@ import Style from "./Cover.styled";
 
 export interface Cover {
     children?: any;
-    background?: Background;
     height?: number;
     fullsize?: boolean;
+    background?: Background;
+    ref?: any;
 }
 
 export default function Cover(props: Cover) {
     const height = props?.height || 32;
 
     return (
-        <Style $height={height} $fullsize={props?.fullsize}>
+        <Style ref={props?.ref} $height={height} $fullsize={props?.fullsize}>
             {props?.background && <BG {...props?.background} />}
             {props?.children}
         </Style>
