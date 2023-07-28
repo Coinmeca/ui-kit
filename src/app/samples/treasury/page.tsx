@@ -10,13 +10,12 @@ import Data from "./data";
 export default function Page() {
     const { windowSize } = useWindowSize();
 
-    const Dummy = Data();
-
     const [page, setPage] = useState<"vault" | "farm" | undefined>("vault");
     const [asset, setAsset] = useState<Token | undefined>();
+    const [farm, setFarm] = useState<Token | undefined>();
 
+    const Dummy = Data();
     const props = {
-        info: Dummy.info,
         assets: Dummy.assets,
         responsive: windowSize.width > Root.Device.Mobile,
         asset: asset,
@@ -29,10 +28,6 @@ export default function Page() {
 
     const cover: any = useRef(null);
 
-    useEffect(() => {
-        console.log(cover);
-    }, []);
-
     return (
         <Layouts.Page style={{ background: "rgb(var(--dim))" }}>
             <Layouts.Contents.SlideContainer
@@ -40,11 +35,31 @@ export default function Page() {
                 contents={[
                     {
                         active: !asset,
-                        children: <Treasury.View assets={props?.assets} page={page} onSelect={(a: Token) => setAsset(a)} responsive={props?.responsive} />,
+                        children: (
+                            <Treasury.View
+                                assets={props?.assets}
+                                page={page}
+                                onSelect={(a?: Token, f?: any) => {
+                                    console.log(a, f);
+                                    setAsset(a);
+                                    setFarm(f);
+                                }}
+                                responsive={props?.responsive}
+                            />
+                        ),
                     },
                     {
                         active: !!asset,
-                        children: <Treasury.Detail asset={asset} onBack={() => setAsset(undefined)} responsive={!props?.responsive} />,
+                        children: (
+                            <Treasury.Detail
+                                asset={asset}
+                                onBack={() => {
+                                    setAsset(undefined);
+                                    setFarm(undefined);
+                                }}
+                                responsive={!props?.responsive}
+                            />
+                        ),
                     },
                 ]}
             />

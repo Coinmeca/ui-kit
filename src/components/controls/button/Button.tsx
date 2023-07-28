@@ -31,7 +31,13 @@ export default function Button(props: Button) {
     const disabled = props?.disabled || false;
 
     const Icons = (icon?: string | Icon) => {
-        return typeof icon === "string" ? <Elements.Icon icon={icon} scale={scale} /> : typeof icon === "object" ? <Elements.Icon {...icon} scale={scale} /> : <></>;
+        return typeof icon === "string" ? (
+            <Elements.Icon icon={icon} scale={scale} />
+        ) : typeof icon === "object" ? (
+            <Elements.Icon {...icon} scale={scale} />
+        ) : (
+            <></>
+        );
     };
 
     function handleClick(e?: any) {

@@ -3,7 +3,7 @@ import { Root } from "lib/style";
 import { styled, css } from "styled-components";
 
 const gap = css`
-    gap: --gap;
+    gap: var(--gap);
 
     & > & {
         gap: calc(var(--gap) / 2);

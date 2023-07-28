@@ -19,7 +19,7 @@ export default function Page() {
 
     return (
         <Layouts.Page>
-            <Layouts.Box fit change={parseFloat(market?.change) > 0 ? "var(--green)" : (parseFloat(market?.change) < 0 && "var(--red)") || undefined}>
+            <Layouts.Box fit change={parseFloat(market?.change) > 0 ? "var(--green)" : parseFloat(market?.change) < 0 && "var(--red)"}>
                 <Layouts.Contents.InnerContent>
                     <Layouts.Row fix style={{ alignItems: "center" }}>
                         <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
@@ -60,7 +60,7 @@ export default function Page() {
                     <Layouts.Contents.GridContainer
                         fullsize
                         area={`'info info' 'book chart' 'book order'`}
-                        width={`${windowSize.width < Root.Device.Tablet ? "0.75fr" : "320px"} 1fr`}
+                        width={`${windowSize.width < Root.Device.Tablet ? "0.75fr" : "40em"} 1fr`}
                         height={"max-content 1fr max-content"}
                         gap={3}
                         responsive={[

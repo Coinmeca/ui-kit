@@ -61,7 +61,7 @@ const Global = createGlobalStyle`
         --red: 255, 0, 64;
         --green: 0, 192, 96;
         --orange: 255, 160, 0;
-        --blue: 0, 0, 255;
+        --blue: 0, 64, 255;
         --sky: 0, 255, 255;
         --purple: 160, 0, 255;
 

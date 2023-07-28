@@ -11,6 +11,7 @@ export const H1 = styled.h1<{
     $align?: "left" | "center" | "right";
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
+    $fix?: boolean;
 }>`
     font-size: 8em;
     font-weight: ${({ $weight }) => $weight};
@@ -18,10 +19,11 @@ export const H1 = styled.h1<{
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    ${({ $fix }) => $fix && "white-space: nowrap;"}
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
-    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
+    ${({ $case }) =>
+        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
     ${({ $fit }) =>
         $fit &&
         css`
@@ -42,6 +44,7 @@ export const H2 = styled.h2<{
     $align?: "left" | "center" | "right";
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
+    $fix?: boolean;
 }>`
     font-size: 6em;
     font-weight: ${({ $weight }) => $weight};
@@ -49,10 +52,11 @@ export const H2 = styled.h2<{
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    ${({ $fix }) => $fix && "white-space: nowrap;"}
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
-    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
+    ${({ $case }) =>
+        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
     ${({ $fit }) =>
         $fit &&
         css`
@@ -61,7 +65,7 @@ export const H2 = styled.h2<{
         `}
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
-        font-size: 4em
+        font-size: 4em;
     }
 `;
 export const H3 = styled.h3<{
@@ -73,6 +77,7 @@ export const H3 = styled.h3<{
     $align?: "left" | "center" | "right";
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
+    $fix?: boolean;
 }>`
     font-size: 5em;
     font-weight: ${({ $weight }) => $weight};
@@ -80,10 +85,11 @@ export const H3 = styled.h3<{
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    ${({ $fix }) => $fix && "white-space: nowrap;"}
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
-    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
+    ${({ $case }) =>
+        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
     ${({ $fit }) =>
         $fit &&
         css`
@@ -104,6 +110,7 @@ export const H4 = styled.h4<{
     $align?: "left" | "center" | "right";
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
+    $fix?: boolean;
 }>`
     font-size: 4em;
     font-weight: ${({ $weight }) => $weight};
@@ -111,10 +118,11 @@ export const H4 = styled.h4<{
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    ${({ $fix }) => $fix && "white-space: nowrap;"}
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
-    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
+    ${({ $case }) =>
+        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
     ${({ $fit }) =>
         $fit &&
         css`
@@ -135,6 +143,7 @@ export const H5 = styled.h5<{
     $align?: "left" | "center" | "right";
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
+    $fix?: boolean;
 }>`
     font-size: 3em;
     font-weight: ${({ $weight }) => $weight};
@@ -142,10 +151,11 @@ export const H5 = styled.h5<{
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    ${({ $fix }) => $fix && "white-space: nowrap;"}
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
-    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
+    ${({ $case }) =>
+        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
     ${({ $fit }) =>
         $fit &&
         css`
@@ -166,6 +176,7 @@ export const H6 = styled.h6<{
     $align?: "left" | "center" | "right";
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
+    $fix?: boolean;
 }>`
     font-size: 2em;
     font-weight: ${({ $weight }) => $weight};
@@ -173,10 +184,11 @@ export const H6 = styled.h6<{
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    ${({ $fix }) => $fix && "white-space: nowrap;"}
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
-    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
+    ${({ $case }) =>
+        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
     ${({ $fit }) =>
         $fit &&
         css`
@@ -197,6 +209,7 @@ export const Strong = styled.strong<{
     $align?: "left" | "center" | "right";
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
+    $fix?: boolean;
 }>`
     font-size: 1.5em;
     font-weight: ${({ $weight }) => $weight};
@@ -204,10 +217,11 @@ export const Strong = styled.strong<{
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    ${({ $fix }) => $fix && "white-space: nowrap;"}
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
-    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
+    ${({ $case }) =>
+        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
     ${({ $fit }) =>
         $fit &&
         css`
@@ -224,6 +238,7 @@ export const P = styled.p<{
     $align?: "left" | "center" | "right";
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
+    $fix?: boolean;
 }>`
     font-size: 1.5em;
     font-weight: ${({ $weight }) => $weight};
@@ -231,10 +246,11 @@ export const P = styled.p<{
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    ${({ $fix }) => $fix && "white-space: nowrap;"}
     ${({ $align }) => $align && `text-align: ${$align};`};
     opacity: ${({ $opacity }) => ($opacity ? `${$opacity}` : 0.6)};
-    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
+    ${({ $case }) =>
+        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
     ${({ $fit }) =>
         $fit &&
         css`
@@ -251,6 +267,7 @@ export const Desc = styled.p<{
     $align?: "left" | "center" | "right";
     $case?: "upper" | "lower" | "capital";
     $fit?: boolean;
+    $fix?: boolean;
 }>`
     font-size: 1.25em;
     font-weight: ${({ $weight }) => $weight};
@@ -258,10 +275,11 @@ export const Desc = styled.p<{
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    ${({ $fix }) => $fix && "white-space: nowrap;"}
     ${({ $align }) => $align && `text-align: ${$align};`};
     opacity: ${({ $opacity }) => ($opacity ? `${$opacity}` : 0.45)};
-    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
+    ${({ $case }) =>
+        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
     ${({ $fit }) =>
         $fit &&
         css`
@@ -280,6 +298,7 @@ export const Text = styled.span<{
     $case?: "upper" | "lower" | "capital";
     $responsive?: any;
     $fit?: boolean;
+    $fix?: boolean;
 }>`
     font-size: ${({ $size }) => $size}em;
     font-weight: ${({ $weight }) => $weight};
@@ -288,9 +307,10 @@ export const Text = styled.span<{
     color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    ${({ $fix }) => $fix && "white-space: nowrap;"}
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
-    ${({$case}) => $case && ($case === 'upper' ? 'text-transform: uppercase;' : $case === 'lower' ? 'text-transform: lowercase;' : 'text-transform: capitalize;') }
+    ${({ $case }) =>
+        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
     ${({ $fit }) =>
         $fit &&
         css`

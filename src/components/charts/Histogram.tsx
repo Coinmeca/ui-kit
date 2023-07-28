@@ -1,43 +1,36 @@
 "use client";
-import { CandlestickData, createChart, HistogramData } from "lightweight-charts";
+import { createChart, HistogramData, Time } from "lightweight-charts";
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import { Sort } from "lib/utils";
 import Style from "./Chart.styled";
 
-export interface Candle {
+export interface Histogram {
     color?: {
+        default?: string;
         up?: string;
         down?: string;
         theme?: string;
     };
-    price?: Price[];
-    volume?: Volume[];
+    data?: Data[];
     up?: string;
     down?: string;
     fallback?: any;
     fit?: boolean;
 }
 
-export interface Price {
-    time: number | string;
-    open: number | string;
-    high: number | string;
-    low: number | string;
-    close: number | string;
-}
-
-export interface Volume {
-    time: number | string;
+export interface Data {
     value: number | string;
-    type: string;
+    time: number | string;
+    type?: string;
 }
 
-export default function Candle(props: Candle) {
+export default function Histogram(props: Histogram) {
     const up = props?.up || "up";
     const down = props?.down || "down";
 
     const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
     const [color, setColor] = useState({
+        default: props?.color?.default || `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
         down: props?.color?.down || "255,0,64",
         theme: {
@@ -49,8 +42,7 @@ export default function Candle(props: Candle) {
         },
     });
 
-    const [price, setPrice] = useState<Price[]>([]);
-    const [volume, setVolume] = useState<Volume[]>([]);
+    const [data, setData] = useState<any>([]);
     const chartRef: any = useRef();
 
     useEffect(() => {
@@ -72,12 +64,15 @@ export default function Candle(props: Candle) {
     }, [props?.color, theme]);
 
     useEffect(() => {
-        if (props?.price && props?.price?.length > 0) {
-            setPrice(
+        if (props?.data && props?.data?.length > 0) {
+            setData(
                 Sort(
-                    props?.price?.map((v: Price) => {
+                    props?.data?.map((v: Data) => {
                         return {
                             ...v,
+                            ...(v?.type && {
+                                color: `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`,
+                            }),
                         };
                     }),
                     "time",
@@ -86,27 +81,7 @@ export default function Candle(props: Candle) {
                 )
             );
         }
-    }, [props?.price]);
-
-    useEffect(() => {
-        if (props?.volume && props?.volume?.length > 0) {
-            setVolume(
-                Sort(
-                    props?.volume?.map((v: Volume) => {
-                        return {
-                            time: v?.time,
-                            value: v?.value,
-                            color: v?.type === up ? `rgba(${color.up}, 0.3)` : `rgba(${color.down}, 0.3)`,
-                            // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
-                        };
-                    }),
-                    "time",
-                    "number",
-                    false
-                )
-            );
-        }
-    }, [props?.volume, up]);
+    }, [props?.data]);
 
     useEffect(() => {
         // const chart = createChart(document.getElementById('container'), );
@@ -164,33 +139,9 @@ export default function Candle(props: Candle) {
                 height: chartRef?.current?.clientHeight,
             });
 
-            if (price) {
-                const candleSeries = chart.addCandlestickSeries({
-                    upColor: `rgb(${color.up})`,
-                    downColor: `rgb(${color.down})`,
-                    // upColor: `rgb(var(--${color.up}))`,
-                    // downColor: `rgb(var(--${color.down}))`,
-                    borderVisible: false,
-                    wickUpColor: `rgb(${color.up})`,
-                    wickDownColor: `rgb(${color.down})`,
-                    // wickUpColor: `rgb(var(--${color.up}))`,
-                    // wickDownColor: `rgb(var(--${color.down}))`,
-                });
-
-                candleSeries.priceScale().applyOptions({
-                    scaleMargins: {
-                        // positioning the price scale for the area series
-                        top: 0.1,
-                        bottom: volume ? 0.4 : 0,
-                    },
-                });
-
-                candleSeries.setData(price as CandlestickData[]);
-            }
-
-            if (volume) {
-                const volumeSeries = chart.addHistogramSeries({
-                    color: "yellow",
+            if (data) {
+                const series = chart.addHistogramSeries({
+                    color: color.default,
                     priceFormat: {
                         type: "volume",
                     },
@@ -198,14 +149,7 @@ export default function Candle(props: Candle) {
                     // set the positioning of the volume series
                 });
 
-                volumeSeries.priceScale().applyOptions({
-                    scaleMargins: {
-                        top: 0.8, // highest point of the series will be 70% away from the top
-                        bottom: 0,
-                    },
-                });
-
-                volumeSeries.setData(volume as HistogramData[]);
+                series.setData(data);
             }
 
             props?.fit
@@ -221,7 +165,7 @@ export default function Candle(props: Candle) {
                 chart.remove();
             };
         }
-    }, [chartRef, color, price, volume, props?.fit]);
+    }, [chartRef, color, data, props?.fit]);
 
     return (
         <Suspense fallback={props?.fallback || <div>Loading...</div>}>
