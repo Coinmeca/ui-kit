@@ -334,7 +334,7 @@ export default function View(props: any) {
                                         ],
                                     ]}
                                 />
-                                <Layouts.List list={assetListFormatter(props?.assets)} noData={"There is no assets yet."} />
+                                <Layouts.List list={assetListFormatter(props?.assets)} fallback={"There is no assets yet."} />
                             </Layouts.Contents.SlideContent>
                         ),
                         responsive: [

@@ -7,13 +7,14 @@ export interface Text {
     align?: "left" | "center" | "right";
     case?: "upper" | "lower" | "capital";
     size?: number;
-    color?: string;
+    color?: string | false;
     change?: boolean;
     weight?: number | string;
     height?: number;
     opacity?: number;
     responsive?: Responsive;
     fit?: boolean;
+    fix?: boolean;
 }
 
 export interface Responsive {
@@ -46,6 +47,7 @@ export default function Text(props: Text) {
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
+                    $fix={props?.fix}
                 >
                     {props?.children}
                 </Texts.H1>
@@ -62,6 +64,7 @@ export default function Text(props: Text) {
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
+                    $fix={props?.fix}
                 >
                     {props?.children}
                 </Texts.H2>
@@ -78,6 +81,7 @@ export default function Text(props: Text) {
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
+                    $fix={props?.fix}
                 >
                     {props?.children}
                 </Texts.H3>
@@ -94,6 +98,7 @@ export default function Text(props: Text) {
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
+                    $fix={props?.fix}
                 >
                     {props?.children}
                 </Texts.H4>
@@ -110,6 +115,7 @@ export default function Text(props: Text) {
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
+                    $fix={props?.fix}
                 >
                     {props?.children}
                 </Texts.H5>
@@ -126,6 +132,7 @@ export default function Text(props: Text) {
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
+                    $fix={props?.fix}
                 >
                     {props?.children}
                 </Texts.H6>
@@ -142,6 +149,7 @@ export default function Text(props: Text) {
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
+                    $fix={props?.fix}
                 >
                     {props?.children}
                 </Texts.Strong>
@@ -158,6 +166,7 @@ export default function Text(props: Text) {
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
+                    $fix={props?.fix}
                 >
                     {props?.children}
                 </Texts.P>
@@ -174,6 +183,7 @@ export default function Text(props: Text) {
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
+                    $fix={props?.fix}
                 >
                     {props?.children}
                 </Texts.Desc>
@@ -192,6 +202,7 @@ export default function Text(props: Text) {
                     $case={props?.case}
                     $responsive={props?.responsive}
                     $fit={props?.fit}
+                    $fix={props?.fix}
                 >
                     {props?.children}
                 </Texts.Text>

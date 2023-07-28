@@ -1,3 +1,4 @@
 import Candle from "./Candle";
+import Histogram from "./Histogram";
 
-export { Candle };
+export { Candle, Histogram };

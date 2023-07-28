@@ -1,2 +1,3 @@
-import View from "../../View";
-export { View };
+import { Detail } from "./Detail";
+
+export { Detail };

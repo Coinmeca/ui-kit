@@ -2,15 +2,16 @@
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Modals } from "containers";
+import type { List } from "components/layouts/list/List";
 import { Format } from "lib/utils";
-import { Token, History as Data } from "types/web3";
+import { Token } from "types/web3";
+import { Order } from "types/history";
 import usePortal from "hooks/usePortal";
 
-export interface History {
+export interface History extends List {
     assets?: Token[];
-    history?: Data[];
+    list?: Order[];
     responsive?: boolean;
-    noData?: any;
 }
 
 export default function History(props: History) {
@@ -18,7 +19,7 @@ export default function History(props: History) {
     const state = ["Pending", "Complete", "Cancel", "Claimable", "Liquidation"];
     const colorset = ["white", "green", "red", "orange", "blue"];
 
-    const [history, setHistory] = useState(props?.history || []);
+    const [history, setHistory] = useState(props?.list || []);
     const [process, setProcess] = useState(null);
 
     const [handleDetail, closeDetail] = usePortal();
@@ -102,26 +103,24 @@ export default function History(props: History) {
         );
     };
 
-    const historyFormatter = (data: Data[]) => {
+    const historyFormatter = (data?: Order[]) => {
         return (
+            data &&
             typeof data !== "string" &&
             data?.length > 0 &&
-            data?.map((data: Data) => {
+            data?.map((data: Order) => {
                 // console.log(props?.assets?.find((a: Token) => console.log(a)));
                 const pay: any = props?.assets?.find((a: Token) => a?.address === data?.pay)?.symbol;
                 const item: any = props?.assets?.find((a: Token) => a?.address === data?.item)?.symbol;
 
-                const d = new Date(data?.time * 1000);
-                const date = ("0" + d.getDate()).slice(-2) + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + d.getFullYear().toString().substring(2, 4);
-                const time = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
-
+                const date = (Format(data?.time, "date") as string).split(" ");
                 return {
                     onClick: () => {
                         handleDetail(handleDetailModal, {
                             base: item,
                             quote: pay,
-                            date: date,
-                            time: time,
+                            date: date[0],
+                            time: date[1],
                             category: data?.category,
                             state: data?.state,
                             price: data?.price,
@@ -143,12 +142,12 @@ export default function History(props: History) {
                                             children: [
                                                 <>
                                                     <Elements.Text opacity={0.3} style={{ ...(props?.responsive && { width: "100%", textAlign: "right" }) }}>
-                                                        {date}
+                                                        {date[0]}
                                                     </Elements.Text>
                                                 </>,
                                                 <>
                                                     <Elements.Text opacity={0.3} style={{ ...(props?.responsive && { width: "100%", textAlign: "right" }) }}>
-                                                        {time}
+                                                        {date[1]}
                                                     </Elements.Text>
                                                 </>,
                                             ],
@@ -223,5 +222,5 @@ export default function History(props: History) {
         );
     };
 
-    return <Layouts.List list={historyFormatter(history)} noData={props?.noData} />;
+    return <Layouts.List list={historyFormatter(history)} fallback={props?.fallback} />;
 }

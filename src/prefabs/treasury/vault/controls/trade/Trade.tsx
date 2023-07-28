@@ -8,7 +8,7 @@ import useOrder from "hooks/useOrder";
 import usePortal from "hooks/usePortal";
 import useMobile from "hooks/useMobile";
 
-export interface OrderControl {
+export interface TradeControl {
     mode: boolean;
     assets: Token[];
     price: number | string;
@@ -29,7 +29,7 @@ export interface Order {
     fees?: number | string;
 }
 
-export default function Order(props: OrderControl) {
+export default function Trade(props: TradeControl) {
     const { isMobile } = useMobile();
 
     const mode = typeof props?.mode === "undefined" ? true : props?.mode;
@@ -58,8 +58,8 @@ export default function Order(props: OrderControl) {
     );
 
     const color = {
-        buy: "green",
-        sell: "red",
+        buy: "orange",
+        sell: "blue",
     };
 
     const gap = {

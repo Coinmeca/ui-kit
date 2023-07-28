@@ -39,7 +39,7 @@ const format = {
     currency: /^[,.0-9]*$/,
 }
 
-export function Format(value: number | string, type?: 'email' | 'number' | 'currency' | string, display?: boolean, fix?: number | 'auto', max?: number | string, auto?: boolean): number | string {
+export function Format(value: number | string, type?: 'email' | 'number' | 'currency' | 'date' | string, display?: boolean, fix?: number | 'auto', max?: number | string, auto?: boolean): number | string {
     if (typeof value === 'undefined') return '';
     if (typeof value !== 'string') value = value.toString();
     switch (type) {
@@ -114,6 +114,20 @@ export function Format(value: number | string, type?: 'email' | 'number' | 'curr
             const result = copy[0] + decimals;
             return type === 'number' ? parseFloat(result) : result;
         }
+        case 'date':
+            value = value.toString();
+
+            let copy: any = '';
+            for (let i = 0; i < value?.length; i++) {
+                if (!isNaN(parseInt(value[i]))) {
+                    copy += value[i]
+                };
+            }
+
+            const d = new Date(copy * 1000);
+            const date = ("0" + d.getDate()).slice(-2) + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + d.getFullYear().toString().substring(2, 4);
+            const time = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
+            return date + ' ' + time;
         default: {
             return value;
         }
