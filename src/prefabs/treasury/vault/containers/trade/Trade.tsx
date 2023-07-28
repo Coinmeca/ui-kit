@@ -16,15 +16,13 @@ export interface TradeControl {
     option?: "market" | "limit";
     onClickBuy?: Function;
     onClickSell?: Function;
-    responsive?: number;
+    responsive?: boolean;
 }
 
 export default function Trade(props: TradeControl) {
-    const { windowSize } = useWindowSize();
-
     const [mode, setMode] = useState(true);
     const option = props?.option || "market";
-    const responsive = props?.responsive || 0;
+    const responsive = props?.responsive || false;
 
     const [deposit, setDeposit] = useState<O | undefined>();
     const [withdraw, setWithdraw] = useState<O | undefined>();
@@ -65,10 +63,10 @@ export default function Trade(props: TradeControl) {
         <>
             <Layouts.Col gap={1}>
                 <Layouts.Contents.SlideContainer
-                    style={{ gap: `${windowSize.width <= responsive ? 2 : 3}em` }}
+                    style={{ gap: `${responsive ? 2 : 3}em` }}
                     contents={[
                         {
-                            active: windowSize.width <= responsive ? mode === true : true,
+                            active: responsive ? mode === true : true,
                             style: { height: "max-content", overflow: "hidden" },
                             children: (
                                 <Vault.Controls.Trade
@@ -82,7 +80,7 @@ export default function Trade(props: TradeControl) {
                             ),
                         },
                         {
-                            active: windowSize.width <= responsive ? mode === false : true,
+                            active: responsive ? mode === false : true,
                             style: { height: "max-content", overflow: "hidden" },
                             children: (
                                 <Vault.Controls.Trade
@@ -98,29 +96,29 @@ export default function Trade(props: TradeControl) {
                     ]}
                 />
                 <Layouts.Row fix>
-                    <Layouts.Row gap={windowSize.width > responsive ? 6 : 4} fix>
-                        <Controls.Button icon={"revert-bold"} hide={windowSize.width > responsive} fit />
+                    <Layouts.Row gap={!responsive ? 6 : 4} fix>
+                        <Controls.Button icon={"revert-bold"} hide={!responsive} fit />
                         <Controls.Button
                             type={"solid"}
                             color={color.deposit}
-                            style={{ ...(windowSize.width <= responsive && mode === false ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
+                            style={{ ...(responsive && mode === false ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
                             onClick={(e: any, o: O) => {
                                 mode === false && setMode(true);
-                                (mode === true || windowSize.width > responsive) && handleConfirm(null, { order: o });
+                                (mode === true || !responsive) && handleConfirm(null, { order: o });
                             }}
                         >
-                            {ButtonName("DEPOSIT", windowSize.width <= responsive && mode === false)}
+                            {ButtonName("DEPOSIT", responsive && mode === false)}
                         </Controls.Button>
                         <Controls.Button
                             type={"solid"}
                             color={color.withdraw}
-                            style={{ ...(windowSize.width <= responsive && mode ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
+                            style={{ ...(responsive && mode ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
                             onClick={(e: any, o: O) => {
                                 mode === true && setMode(false);
-                                (mode === false || windowSize.width > responsive) && handleConfirm(null, { order: o });
+                                (mode === false || !responsive) && handleConfirm(null, { order: o });
                             }}
                         >
-                            {ButtonName("WITHDRAW", windowSize.width <= responsive && mode === true)}
+                            {ButtonName("WITHDRAW", responsive && mode === true)}
                         </Controls.Button>
                     </Layouts.Row>
                 </Layouts.Row>

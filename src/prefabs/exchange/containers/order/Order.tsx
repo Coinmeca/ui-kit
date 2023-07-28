@@ -15,7 +15,7 @@ export interface OrderControl {
     option?: "market" | "limit";
     onClickBuy?: Function;
     onClickSell?: Function;
-    responsive?: number;
+    responsive?: boolean;
 }
 
 export default function Order(props: OrderControl) {
@@ -23,7 +23,7 @@ export default function Order(props: OrderControl) {
 
     const [mode, setMode] = useState(true);
     const option = props?.option || "market";
-    const responsive = props?.responsive || 0;
+    const responsive = props?.responsive || false;
 
     const [buy, setBuy] = useState<O | undefined>();
     const [sell, setSell] = useState<O | undefined>();
@@ -36,14 +36,39 @@ export default function Order(props: OrderControl) {
     const [handleConfirm, closeConfirm] = usePortal(<Exchange.Modals.Confirmation mode={mode} color={color} order={buy} onClose={() => closeConfirm()} />);
     const handleReset = () => {};
 
+    const ButtonName = (name: string, condition: boolean) => {
+        if (!name && name === "") return;
+        return (
+            <span style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {Object.values(name).map((character: string, i: number) => {
+                    return (
+                        <span
+                            style={{
+                                ...(i !== 0 && {
+                                    ...(condition && {
+                                        position: "absolute",
+                                        opacity: 0,
+                                        // transition: ".15s ease",
+                                    }),
+                                }),
+                            }}
+                        >
+                            {character}
+                        </span>
+                    );
+                })}
+            </span>
+        );
+    };
+
     return (
         <>
             <Layouts.Col gap={1}>
                 <Layouts.Contents.SlideContainer
-                    style={{ gap: `${windowSize.width <= responsive ? 2 : 3}em` }}
+                    style={{ gap: `${responsive ? 2 : 3}em` }}
                     contents={[
                         {
-                            active: windowSize.width <= responsive ? mode === true : true,
+                            active: responsive ? mode === true : true,
                             style: { height: "max-content", overflow: "hidden" },
                             children: (
                                 <Exchange.Controls.Order
@@ -57,7 +82,7 @@ export default function Order(props: OrderControl) {
                             ),
                         },
                         {
-                            active: windowSize.width <= responsive ? mode === false : true,
+                            active: responsive ? mode === false : true,
                             style: { height: "max-content", overflow: "hidden" },
                             children: (
                                 <Exchange.Controls.Order
@@ -73,52 +98,29 @@ export default function Order(props: OrderControl) {
                     ]}
                 />
                 <Layouts.Row fix>
-                    <Layouts.Row gap={windowSize.width > responsive ? 6 : 4} fix>
-                        <Controls.Button icon={"revert-bold"} hide={windowSize.width > responsive} fit />
+                    <Layouts.Row gap={!responsive ? 6 : 4} fix>
+                        <Controls.Button icon={"revert-bold"} hide={!responsive} fit />
                         <Controls.Button
                             type={"solid"}
                             color={color.buy}
-                            style={{ ...(windowSize.width <= responsive && mode === false ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
+                            style={{ ...(responsive && mode === false ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
                             onClick={(e: any, o: O) => {
                                 mode === false && setMode(true);
-                                (mode === true || windowSize.width > responsive) && handleConfirm();
+                                (mode === true || !responsive) && handleConfirm();
                             }}
                         >
-                            <span>B</span>
-                            <span
-                                style={{
-                                    ...(windowSize.width <= responsive && mode === false && { position: "absolute", opacity: 0, transition: ".3s ease" }),
-                                }}
-                            >
-                                U
-                            </span>
-                            <span
-                                style={{
-                                    ...(windowSize.width <= responsive && mode === false && { position: "absolute", opacity: 0, transition: ".3s ease" }),
-                                }}
-                            >
-                                Y
-                            </span>
+                            {ButtonName("BUY", responsive && mode === false)}
                         </Controls.Button>
                         <Controls.Button
                             type={"solid"}
                             color={color.sell}
-                            style={{ ...(windowSize.width <= responsive && mode ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
+                            style={{ ...(responsive && mode ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
                             onClick={(e: any) => {
                                 mode === true && setMode(false);
-                                (mode === false || windowSize.width > responsive) && handleConfirm();
+                                (mode === false || !responsive) && handleConfirm();
                             }}
                         >
-                            <span>S</span>
-                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>
-                                E
-                            </span>
-                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>
-                                L
-                            </span>
-                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>
-                                L
-                            </span>
+                            {ButtonName("SELL", responsive && mode === true)}
                         </Controls.Button>
                     </Layouts.Row>
                 </Layouts.Row>

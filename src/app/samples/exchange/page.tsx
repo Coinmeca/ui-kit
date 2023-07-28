@@ -392,7 +392,10 @@ export default function Page() {
                                                                 price={market.price}
                                                                 fee={0.1}
                                                                 option={option}
-                                                                responsive={Root.Device.Tablet}
+                                                                responsive={
+                                                                    (windowSize.width <= Root.Device.Tablet && windowSize.width > 840) ||
+                                                                    (windowSize.width <= Root.Device.Tablet && windowSize.width < 640)
+                                                                }
                                                             />
                                                         </Layouts.Contents.InnerContent>
                                                     ),
