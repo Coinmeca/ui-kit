@@ -171,31 +171,37 @@ export default function View(props: View) {
                                             </>,
                                         ],
                                         [
-                                            <AnimatePresence mode="popLayout">
-                                                {tab === "vault" ? (
-                                                    <Controls.Tab
-                                                        key="listing"
-                                                        iconLeft={"plus"}
-                                                        as={motion.div}
-                                                        initial={{ opacity: 0 }}
-                                                        animate={{ opacity: 1 }}
-                                                        exit={{ opacity: 0 }}
-                                                    >
-                                                        Listing
-                                                    </Controls.Tab>
-                                                ) : (
-                                                    <Controls.Tab
-                                                        key="create"
-                                                        iconLeft={"plus"}
-                                                        as={motion.div}
-                                                        initial={{ opacity: 0 }}
-                                                        animate={{ opacity: 1 }}
-                                                        exit={{ opacity: 0 }}
-                                                    >
-                                                        Create
-                                                    </Controls.Tab>
-                                                )}
-                                            </AnimatePresence>,
+                                            <>
+                                                <AnimatePresence mode="wait">
+                                                    {tab === "vault" ? (
+                                                        <Controls.Tab
+                                                            key="listing"
+                                                            iconLeft={"plus"}
+                                                            as={motion.div}
+                                                            initial={{ opacity: 0 }}
+                                                            animate={{ opacity: 1 }}
+                                                            exit={{ opacity: 0 }}
+                                                            transition={{ ease: "easeInOut", duration: 0.15 }}
+                                                            layout
+                                                        >
+                                                            Listing
+                                                        </Controls.Tab>
+                                                    ) : (
+                                                        <Controls.Tab
+                                                            key="create"
+                                                            iconLeft={"plus"}
+                                                            as={motion.div}
+                                                            initial={{ opacity: 0 }}
+                                                            animate={{ opacity: 1 }}
+                                                            exit={{ opacity: 0 }}
+                                                            transition={{ ease: "easeInOut", duration: 0.15 }}
+                                                            layout
+                                                        >
+                                                            Create
+                                                        </Controls.Tab>
+                                                    )}
+                                                </AnimatePresence>
+                                            </>,
                                         ],
                                     ],
                                 },

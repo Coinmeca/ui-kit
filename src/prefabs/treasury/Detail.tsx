@@ -33,7 +33,7 @@ export default function Detail(props: Detail) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 1 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ ease: "easeInOut", duration: 0.15 }}
                     >
                         <Layouts.Row fix style={{ alignItems: "center" }}>
                             <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
