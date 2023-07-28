@@ -8,7 +8,7 @@ const Style = styled.div`
     width: 100%;
     height: -webkit-fill-available;
     min-height: max-content;
-    overflow: hidden auto;
+    /* overflow: hidden auto; */
     transition: 0.3s ease;
     opacity: 1;
 

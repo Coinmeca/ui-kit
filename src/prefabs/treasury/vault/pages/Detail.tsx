@@ -6,6 +6,7 @@ import { Vault } from "prefabs/treasury";
 import { Token } from "types/web3";
 import { Trade as Data } from "types/history";
 import { Root } from "lib/style";
+import useWindowSize from "hooks/useWindowSize";
 
 export interface Detail {
     asset: Token;
@@ -27,6 +28,8 @@ export interface Detail {
 }
 
 export function Detail(props: Detail) {
+    const { windowSize } = useWindowSize();
+
     const [mobile, setMobile] = useState("chart");
     const [tab, setTab] = useState("liquidity");
     const colorset = {
@@ -139,7 +142,7 @@ export function Detail(props: Detail) {
                         <Controls.Tab active={mobile === "chart"} onClick={() => setMobile("chart")}>
                             Chart
                         </Controls.Tab>
-                        <Controls.Tab active={mobile === "history"} onClick={() => setMobile("recent")}>
+                        <Controls.Tab active={mobile === "recent"} onClick={() => setMobile("recent")}>
                             Recent
                         </Controls.Tab>
                     </Layouts.Row>
@@ -147,7 +150,7 @@ export function Detail(props: Detail) {
                 </Layouts.Col>
                 <Layouts.Contents.GridContainer
                     fullsize
-                    area={`'info info' 'history chart' 'history trade'`}
+                    area={`'info info' 'recent chart' 'recent trade'`}
                     width={`${props?.responsive ? "0.75fr" : "40em"} 1fr`}
                     height={"max-content 1fr max-content"}
                     gap={3}
@@ -505,9 +508,9 @@ export function Detail(props: Detail) {
                             ],
                         },
                         {
-                            area: "history",
+                            area: "recent",
                             children: (
-                                <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "history" : true}>
+                                <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "recent" : true}>
                                     <Layouts.Contents.InnerContent>
                                         <Layouts.Menu
                                             hide="mobile"
@@ -578,7 +581,10 @@ export function Detail(props: Detail) {
                                                         quote={{ symbol: "MECA", name: "Coinmeca" }}
                                                         price={props?.info?.token_per}
                                                         fee={0.1}
-                                                        responsive={Root.Device.Tablet}
+                                                        responsive={
+                                                            (windowSize.width <= Root.Device.Tablet && windowSize.width > 840) ||
+                                                            (windowSize.width <= Root.Device.Tablet && windowSize.width < 640)
+                                                        }
                                                     />
                                                 ),
                                             },
