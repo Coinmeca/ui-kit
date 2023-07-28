@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Controls, Layouts } from "components";
 import { Exchange } from "prefabs";
 import { Token } from "types/web3";
@@ -35,6 +35,31 @@ export default function Trade(props: TradeControl) {
     };
 
     const [handleConfirm, closeConfirm] = usePortal(<Exchange.Modals.Confirmation mode={mode} color={color} onClose={() => closeConfirm()} />);
+
+    const ButtonName = (name: string, condition: boolean) => {
+        if (!name && name === "") return;
+        return (
+            <span style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {Object.values(name).map((character: string, i: number) => {
+                    return (
+                        <span
+                            style={{
+                                ...(i !== 0 && {
+                                    ...(condition && {
+                                        position: "absolute",
+                                        opacity: 0,
+                                        // transition: ".15s ease",
+                                    }),
+                                }),
+                            }}
+                        >
+                            {character}
+                        </span>
+                    );
+                })}
+            </span>
+        );
+    };
 
     return (
         <>
@@ -84,21 +109,7 @@ export default function Trade(props: TradeControl) {
                                 (mode === true || windowSize.width > responsive) && handleConfirm(null, { order: o });
                             }}
                         >
-                            <span>B</span>
-                            <span
-                                style={{
-                                    ...(windowSize.width <= responsive && mode === false && { position: "absolute", opacity: 0, transition: ".3s ease" }),
-                                }}
-                            >
-                                U
-                            </span>
-                            <span
-                                style={{
-                                    ...(windowSize.width <= responsive && mode === false && { position: "absolute", opacity: 0, transition: ".3s ease" }),
-                                }}
-                            >
-                                Y
-                            </span>
+                            {ButtonName("DEPOSIT", windowSize.width <= responsive && mode === false)}
                         </Controls.Button>
                         <Controls.Button
                             type={"solid"}
@@ -109,16 +120,7 @@ export default function Trade(props: TradeControl) {
                                 (mode === false || windowSize.width > responsive) && handleConfirm(null, { order: o });
                             }}
                         >
-                            <span>S</span>
-                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>
-                                E
-                            </span>
-                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>
-                                L
-                            </span>
-                            <span style={{ ...(windowSize.width <= responsive && mode && { position: "absolute", opacity: 0, transition: ".3s ease" }) }}>
-                                L
-                            </span>
+                            {ButtonName("WITHDRAW", windowSize.width <= responsive && mode === true)}
                         </Controls.Button>
                     </Layouts.Row>
                 </Layouts.Row>

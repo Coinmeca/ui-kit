@@ -5,6 +5,7 @@ import { Format } from "lib/utils";
 import { Vault } from "prefabs/treasury";
 import { Token } from "types/web3";
 import { Trade as Data } from "types/history";
+import { Root } from "lib/style";
 
 export interface Detail {
     asset: Token;
@@ -27,6 +28,7 @@ export interface Detail {
 
 export function Detail(props: Detail) {
     const [mobile, setMobile] = useState("chart");
+    const [tab, setTab] = useState("liquidity");
     const colorset = {
         DEPOSIT: "orange",
         WITHDRAW: "blue",
@@ -137,8 +139,8 @@ export function Detail(props: Detail) {
                         <Controls.Tab active={mobile === "chart"} onClick={() => setMobile("chart")}>
                             Chart
                         </Controls.Tab>
-                        <Controls.Tab active={mobile === "history"} onClick={() => setMobile("history")}>
-                            History
+                        <Controls.Tab active={mobile === "history"} onClick={() => setMobile("recent")}>
+                            Recent
                         </Controls.Tab>
                     </Layouts.Row>
                     <Layouts.Divider />
@@ -512,7 +514,7 @@ export function Detail(props: Detail) {
                                             menu={[
                                                 [
                                                     <>
-                                                        <Controls.Tab disabled>History</Controls.Tab>
+                                                        <Controls.Tab disabled>Recent</Controls.Tab>
                                                     </>,
                                                 ],
                                             ]}
@@ -535,12 +537,54 @@ export function Detail(props: Detail) {
                         {
                             area: "trade",
                             children: (
-                                <Vault.Containers.Trade
-                                    base={props?.asset}
-                                    quote={{ symbol: "MECA", name: "Coinmeca" }}
-                                    price={props?.info?.token_per}
-                                    fee={0.1}
-                                />
+                                <Layouts.Contents.InnerContent>
+                                    <Layouts.Menu
+                                        menu={[
+                                            [
+                                                [
+                                                    <>
+                                                        <Controls.Tab
+                                                            active={tab === "liquidity"}
+                                                            onClick={() => {
+                                                                setTab("liquidity");
+                                                            }}
+                                                        >
+                                                            Liquidity
+                                                        </Controls.Tab>
+                                                    </>,
+                                                ],
+                                                [
+                                                    <>
+                                                        <Controls.Tab
+                                                            active={tab === "history"}
+                                                            onClick={() => {
+                                                                setTab("history");
+                                                            }}
+                                                        >
+                                                            History
+                                                        </Controls.Tab>
+                                                    </>,
+                                                ],
+                                            ],
+                                        ]}
+                                    />
+                                    <Layouts.Contents.TabContainer
+                                        contents={[
+                                            {
+                                                active: tab === "liquidity",
+                                                children: (
+                                                    <Vault.Containers.Trade
+                                                        base={props?.asset}
+                                                        quote={{ symbol: "MECA", name: "Coinmeca" }}
+                                                        price={props?.info?.token_per}
+                                                        fee={0.1}
+                                                        responsive={Root.Device.Tablet}
+                                                    />
+                                                ),
+                                            },
+                                        ]}
+                                    />
+                                </Layouts.Contents.InnerContent>
                             ),
                             responsive: [
                                 {
