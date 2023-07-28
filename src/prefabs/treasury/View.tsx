@@ -151,7 +151,7 @@ export default function View(props: View) {
                 />
             </Layouts.Cover>
             <Layouts.Box fit>
-                <Layouts.Col gap={0}>
+                <Layouts.Contents.InnerContent>
                     <Layouts.Row gap={0} responsive={"mobile"}>
                         <Layouts.Menu
                             menu={[
@@ -225,8 +225,6 @@ export default function View(props: View) {
                             ]}
                         />
                     </Layouts.Row>
-                </Layouts.Col>
-                <Layouts.Contents.InnerContent>
                     <Layouts.Contents.TabContainer
                         contents={[
                             {
