@@ -6,7 +6,7 @@ import Style, { NoData } from "./Table.styled";
 import TableItem from "./TableItem";
 
 export interface Table {
-    list?: any[];
+    list?: any;
     fallback?: string | ReactNode | JSX.Element | Function;
     style?: object;
 }
