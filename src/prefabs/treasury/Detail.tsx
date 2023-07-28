@@ -1,29 +1,28 @@
 "use client";
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
-import { Asset } from "prefabs";
+import { Token } from "types/web3";
 import { Format } from "lib/utils";
-import { Token, History as Data } from "types/web3";
+import { Root } from "lib/style";
+import useWindowSize from "hooks/useWindowSize";
 
 export interface Detail {
     info?: any;
-    assets?: Token[];
     asset?: Token;
-    history?: Data[];
     onBack?: Function;
     responsive?: boolean;
 }
 
 export default function Detail(props: Detail) {
-    const [mobile, setMobile] = useState("history");
-    const [history, setHistory] = useState<Data[]>(props?.history || []);
+    const { windowSize } = useWindowSize();
+    const [mobile, setMobile] = useState("chart");
 
     const handleBack = () => {
         if (typeof props?.onBack === "function") props?.onBack(undefined);
     };
 
     return (
-        <>
+        <Layouts.Box>
             <Layouts.Contents.InnerContent>
                 <Layouts.Row fix style={{ alignItems: "center" }}>
                     <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
@@ -56,6 +55,9 @@ export default function Detail(props: Detail) {
                         <Controls.Tab active={mobile === "info"} onClick={() => setMobile("info")}>
                             Info
                         </Controls.Tab>
+                        <Controls.Tab active={mobile === "chart"} onClick={() => setMobile("chart")}>
+                            Chart
+                        </Controls.Tab>
                         <Controls.Tab active={mobile === "history"} onClick={() => setMobile("history")}>
                             History
                         </Controls.Tab>
@@ -64,14 +66,14 @@ export default function Detail(props: Detail) {
                 </Layouts.Col>
                 <Layouts.Contents.GridContainer
                     fullsize
-                    area={`'info' 'history'`}
-                    width={"1fr"}
-                    height={"max-content 1fr"}
+                    area={`'info info' 'history chart' 'history trade'`}
+                    width={`${windowSize.width < Root.Device.Tablet ? "0.75fr" : "320px"} 1fr`}
+                    height={"max-content 1fr max-content"}
                     gap={3}
                     responsive={[
                         {
                             device: "mobile",
-                            area: `'area'`,
+                            area: `'up' 'down'`,
                             width: "1fr",
                             height: "1fr max-content",
                             gap: { col: 0, row: 2 },
@@ -234,7 +236,7 @@ export default function Detail(props: Detail) {
                             responsive: [
                                 {
                                     device: "mobile",
-                                    area: "area",
+                                    area: "up",
                                 },
                             ],
                         },
@@ -252,32 +254,53 @@ export default function Detail(props: Detail) {
                                             ],
                                         ]}
                                     />
-                                    <Asset.Containers.History
-                                        responsive={props?.responsive}
-                                        assets={props?.assets}
-                                        history={history}
-                                        noData={"There is no assets yet."}
-                                    />
+                                    history area
                                 </Layouts.Contents.SlideContent>
                             ),
                             responsive: [
                                 {
                                     device: "mobile",
-                                    area: "area",
+                                    area: "up",
+                                },
+                            ],
+                        },
+                        {
+                            area: "chart",
+                            children: (
+                                <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "chart" : true}>
+                                    <Layouts.Menu
+                                        hide="mobile"
+                                        menu={[
+                                            [
+                                                <>
+                                                    <Controls.Tab disabled>Chart</Controls.Tab>
+                                                </>,
+                                            ],
+                                        ]}
+                                    />
+                                    chart area
+                                </Layouts.Contents.SlideContent>
+                            ),
+                            responsive: [
+                                {
+                                    device: "mobile",
+                                    area: "up",
+                                },
+                            ],
+                        },
+                        {
+                            area: "trade",
+                            children: <>trade</>,
+                            responsive: [
+                                {
+                                    device: "mobile",
+                                    area: "down",
                                 },
                             ],
                         },
                     ]}
                 />
             </Layouts.Contents.InnerContent>
-            <Layouts.Row gap={2}>
-                <Controls.Button type={"solid"} color={"orange"}>
-                    Deposit & Widthdraw
-                </Controls.Button>
-                <Controls.Button type={"solid"} color={"green"}>
-                    Trades
-                </Controls.Button>
-            </Layouts.Row>
-        </>
+        </Layouts.Box>
     );
 }

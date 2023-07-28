@@ -2,20 +2,17 @@
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Format } from "lib/utils";
-import { Root } from "lib/style";
 import { Token } from "types/web3";
-import useWindowSize from "hooks/useWindowSize";
 
 export interface View {
     info?: any;
     assets?: Token[];
     onSelect?: Function;
+    responsive?: boolean;
 }
 
 export default function View(props: any) {
-    const { windowSize } = useWindowSize();
     const [mobile, setMobile] = useState("asset");
-    const responsive = windowSize.width > Root.Device.Mobile;
 
     const info = props?.info;
 
@@ -29,7 +26,7 @@ export default function View(props: any) {
             data?.length > 0 &&
             data?.map((data: Token) => ({
                 onClick: () => handleSelectedAsset(data),
-                style: { flex: 1, padding: responsive && "2em" },
+                style: { padding: props?.responsive && "2em" },
                 children: [
                     {
                         style: { flex: 1 },
@@ -39,8 +36,8 @@ export default function View(props: any) {
                                 children: (
                                     <>
                                         <Elements.Avatar
-                                            size={responsive ? 4 : 3.5}
-                                            style={{ marginRight: responsive && "1em" }}
+                                            size={props?.responsive ? 4 : 3.5}
+                                            style={{ marginRight: props?.responsive && "1em" }}
                                             img={require(`/src/assets/coins/${data?.symbol?.toLowerCase()}.png`)}
                                         />
                                     </>
@@ -51,10 +48,12 @@ export default function View(props: any) {
                                     style: { gap: "0" },
                                     children: [
                                         <>
-                                            <Elements.Text>{data?.symbol}</Elements.Text>
+                                            <Elements.Text height={1.25}>{data?.symbol}</Elements.Text>
                                         </>,
                                         <>
-                                            <Elements.Text opacity={0.3}>{data?.name}</Elements.Text>
+                                            <Elements.Text height={1.25} opacity={0.3}>
+                                                {data?.name}
+                                            </Elements.Text>
                                         </>,
                                     ],
                                 },
@@ -77,7 +76,7 @@ export default function View(props: any) {
                                             </Layouts.Row>
                                         </>,
                                         <>
-                                            <Layouts.Row gap={1}>
+                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
                                                 <Elements.Text align={"right"}>$ {data?.using}</Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
                                                     USD
@@ -90,7 +89,7 @@ export default function View(props: any) {
                                     style: { gap: 0 },
                                     children: [
                                         <>
-                                            <Layouts.Row gap={1} style={{ width: "100%" }}>
+                                            <Layouts.Row gap={1}>
                                                 <Elements.Text align={"right"}>{data?.using}</Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
                                                     {data?.symbol}
@@ -98,7 +97,7 @@ export default function View(props: any) {
                                             </Layouts.Row>
                                         </>,
                                         <>
-                                            <Layouts.Row gap={1} style={{ width: "100%" }}>
+                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
                                                 <Elements.Text align={"right"}>$ {data?.using}</Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
                                                     USD
@@ -164,15 +163,15 @@ export default function View(props: any) {
                     {
                         area: "info",
                         children: (
-                            <Layouts.Contents.SlideContent active={responsive ? true : mobile === "info"}>
+                            <Layouts.Contents.SlideContent active={props?.responsive ? true : mobile === "info"}>
                                 <Layouts.Row
                                     fix
                                     responsive="mobile"
-                                    gap={responsive ? 4 : 1}
+                                    gap={props?.responsive ? 4 : 1}
                                     style={{
                                         marginTop: "0.5em",
                                         alignItems: "center",
-                                        ...(!responsive && { height: "100%" }),
+                                        ...(!props?.responsive && { height: "100%" }),
                                     }}
                                 >
                                     <Layouts.Col gap={0.5}>
@@ -182,7 +181,7 @@ export default function View(props: any) {
                                             style={{
                                                 alignItems: "center",
                                                 padding: "0.5em",
-                                                ...(!responsive && { height: "100%" }),
+                                                ...(!props?.responsive && { height: "100%" }),
                                             }}
                                         >
                                             <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -198,7 +197,7 @@ export default function View(props: any) {
                                             style={{
                                                 alignItems: "center",
                                                 padding: "0.5em",
-                                                ...(!responsive && { height: "100%" }),
+                                                ...(!props?.responsive && { height: "100%" }),
                                             }}
                                         >
                                             <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -216,7 +215,7 @@ export default function View(props: any) {
                                             style={{
                                                 alignItems: "center",
                                                 padding: "0.5em",
-                                                ...(!responsive && { height: "100%" }),
+                                                ...(!props?.responsive && { height: "100%" }),
                                             }}
                                         >
                                             <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -232,7 +231,7 @@ export default function View(props: any) {
                                             style={{
                                                 alignItems: "center",
                                                 padding: "0.5em",
-                                                ...(!responsive && { height: "100%" }),
+                                                ...(!props?.responsive && { height: "100%" }),
                                             }}
                                         >
                                             <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -250,7 +249,7 @@ export default function View(props: any) {
                                             style={{
                                                 alignItems: "center",
                                                 padding: "0.5em",
-                                                ...(!responsive && { height: "100%" }),
+                                                ...(!props?.responsive && { height: "100%" }),
                                             }}
                                         >
                                             <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -266,7 +265,7 @@ export default function View(props: any) {
                                             style={{
                                                 alignItems: "center",
                                                 padding: "0.5em",
-                                                ...(!responsive && { height: "100%" }),
+                                                ...(!props?.responsive && { height: "100%" }),
                                             }}
                                         >
                                             <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -284,7 +283,7 @@ export default function View(props: any) {
                                             style={{
                                                 alignItems: "center",
                                                 padding: "0.5em",
-                                                ...(!responsive && { height: "100%" }),
+                                                ...(!props?.responsive && { height: "100%" }),
                                             }}
                                         >
                                             <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -300,7 +299,7 @@ export default function View(props: any) {
                                             style={{
                                                 alignItems: "center",
                                                 padding: "0.5em",
-                                                ...(!responsive && { height: "100%" }),
+                                                ...(!props?.responsive && { height: "100%" }),
                                             }}
                                         >
                                             <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -324,7 +323,7 @@ export default function View(props: any) {
                     {
                         area: "asset",
                         children: (
-                            <Layouts.Contents.SlideContent active={responsive ? true : mobile === "asset"}>
+                            <Layouts.Contents.SlideContent active={props?.responsive ? true : mobile === "asset"}>
                                 <Layouts.Menu
                                     hide="mobile"
                                     menu={[

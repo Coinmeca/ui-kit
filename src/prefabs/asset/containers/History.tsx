@@ -5,7 +5,6 @@ import { Modals } from "containers";
 import { Format } from "lib/utils";
 import { Token, History as Data } from "types/web3";
 import usePortal from "hooks/usePortal";
-import * as HistoryData from "app/samples/asset/data";
 
 export interface History {
     assets?: Token[];
@@ -15,9 +14,11 @@ export interface History {
 }
 
 export default function History(props: History) {
-    const responsive = props?.responsive;
+    const category = ["Order", "Buy", "Sell", "Deposit", "Withdraw", "Stake", "Unstake", "Claim", "Futures", "Perpetual"];
+    const state = ["Pending", "Complete", "Cancel", "Claimable", "Liquidation"];
+    const colorset = ["white", "green", "red", "orange", "blue"];
 
-    const { category, state, colorset, history } = HistoryData.default();
+    const [history, setHistory] = useState(props?.history || []);
     const [process, setProcess] = useState(null);
 
     const [handleDetail, closeDetail] = usePortal();
@@ -129,32 +130,24 @@ export default function History(props: History) {
                             fees: data?.fees,
                         });
                     },
-                    style: { flex: 1, padding: "2em" },
+                    style: { padding: "2em" },
                     children: [
                         {
-                            style: { flex: 1, maxWidth: !responsive && "20%" },
+                            style: { flex: 1, maxWidth: !props?.responsive && "20%" },
                             children: [
                                 {
-                                    style: { flexDirection: responsive && "row-reverse" },
+                                    style: { flexDirection: props?.responsive && "row-reverse" },
                                     children: [
                                         {
                                             style: { gap: "0", maxWidth: "10em" },
                                             children: [
                                                 <>
-                                                    <Elements.Text
-                                                        weight={"normal"}
-                                                        opacity={0.6}
-                                                        style={{ ...(responsive && { width: "100%", textAlign: "right" }) }}
-                                                    >
+                                                    <Elements.Text opacity={0.3} style={{ ...(props?.responsive && { width: "100%", textAlign: "right" }) }}>
                                                         {date}
                                                     </Elements.Text>
                                                 </>,
                                                 <>
-                                                    <Elements.Text
-                                                        weight={"normal"}
-                                                        opacity={0.6}
-                                                        style={{ ...(responsive && { width: "100%", textAlign: "right" }) }}
-                                                    >
+                                                    <Elements.Text opacity={0.3} style={{ ...(props?.responsive && { width: "100%", textAlign: "right" }) }}>
                                                         {time}
                                                     </Elements.Text>
                                                 </>,
@@ -191,7 +184,7 @@ export default function History(props: History) {
                                                 </Layouts.Row>
                                             </>,
                                             <>
-                                                <Layouts.Row gap={1}>
+                                                <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
                                                     <Elements.Text align={"right"}>{Format(data?.price || 0, "currency", true)}</Elements.Text>
                                                     <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
                                                         {pay}
@@ -204,7 +197,7 @@ export default function History(props: History) {
                                         style: { gap: 0 },
                                         children: [
                                             <>
-                                                <Layouts.Row gap={1} style={{ width: "100%" }}>
+                                                <Layouts.Row gap={1}>
                                                     <Elements.Text align={"right"}>{Format(data?.quantity || 0, "currency", true)}</Elements.Text>
                                                     <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
                                                         {item}
@@ -212,7 +205,7 @@ export default function History(props: History) {
                                                 </Layouts.Row>
                                             </>,
                                             <>
-                                                <Layouts.Row gap={1} style={{ width: "100%" }}>
+                                                <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
                                                     <Elements.Text align={"right"}>- {Format(data?.fees || 0, "currency", true)}</Elements.Text>
                                                     <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
                                                         {item}

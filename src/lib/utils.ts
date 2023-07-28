@@ -37,7 +37,7 @@ const format = {
     email: /^[a-zA-Z0-9+]*$/,
     number: /^[0-9+]*$/,
     currency: /^[,.0-9]*$/,
-};
+}
 
 export function Format(value: number | string, type?: 'email' | 'number' | 'currency' | string, display?: boolean, fix?: number | 'auto', max?: number | string, auto?: boolean): number | string {
     if (typeof value === 'undefined') return '';

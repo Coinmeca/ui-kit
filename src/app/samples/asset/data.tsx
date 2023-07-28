@@ -57,27 +57,6 @@ export default function Data() {
         change: "123123123",
         change_rate: "+123.%",
     };
-
-    const market = {
-        logo: require("/src/assets/coins/eth.png"),
-        base: {
-            symbol: "eth",
-            name: "ethereum",
-            decimal: 18,
-            balance: 15000.987654321,
-        },
-        quote: {
-            symbol: "dai",
-            name: "dai",
-            decimal: 18,
-            balance: 15000.87654321,
-        },
-        market: "ETH/DAI",
-        price: "1510",
-        change: "23.12",
-        volume: "73170731",
-    };
-
     const history = [
         {
             item: "0x1234",

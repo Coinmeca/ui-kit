@@ -34,12 +34,17 @@ export default function Tooltip(props: Tooltip) {
         };
     }, []);
 
-    const vertical = ():number | undefined => {
+    useEffect(() => {
+        console.log(props?.e?.target, props?.e?.currentTarget?.clientHeight);
+    }, [props?.e]);
+
+    const vertical = (): number | undefined => {
         const offset: number = margin && typeof margin !== "number" ? (margin?.length >= 2 ? margin[1] : 8) : margin;
         let vertical: number | undefined;
         switch (props?.vertical) {
             case "top":
-                vertical = props?.e?.clientY - props?.e?.nativeEvent?.offsetY - offset - ref?.current?.clientHeight;
+                // vertical = props?.e?.clientY - props?.e?.nativeEvent?.offsetY - offset - ref?.current?.clientHeight;
+                vertical = props?.e?.currentTarget?.clientY + 30;
                 break;
             case "center":
                 vertical = props?.e?.clientY - props?.e?.nativeEvent?.offsetY + props?.e?.target?.clientHeight / 2;
@@ -48,11 +53,11 @@ export default function Tooltip(props: Tooltip) {
                 vertical = props?.e?.clientY - props?.e?.nativeEvent?.offsetY + props?.e?.target?.clientHeight + offset;
                 break;
             default:
-                vertical = props?.e?.clientY + offset;        
+                vertical = props?.e?.clientY + offset;
         }
         return isNaN(vertical as number) ? undefined : vertical;
-    }
-    const horizon = ():number | undefined => {
+    };
+    const horizon = (): number | undefined => {
         const offset: number = margin && typeof margin !== "number" ? (margin?.length >= 1 ? margin[0] : 8) : margin;
         let horizon: number | undefined;
         switch (props?.horizon) {
@@ -60,7 +65,7 @@ export default function Tooltip(props: Tooltip) {
                 horizon = props?.e?.clientX - props?.e?.nativeEvent?.offsetX - offset - ref?.current?.clientWidth;
                 break;
             case "center":
-                horizon = props?.e?.clientX - props?.e?.nativeEvent?.offsetX + (props?.e?.target?.clientWidth / 2) - (ref?.current?.clientWidth / 2);
+                horizon = props?.e?.clientX - props?.e?.nativeEvent?.offsetX + props?.e?.target?.clientWidth / 2 - ref?.current?.clientWidth / 2;
                 break;
             case "right":
                 horizon = props?.e?.clientX - props?.e?.nativeEvent?.offsetX + props?.e?.target?.clientWidth + offset;
@@ -69,7 +74,7 @@ export default function Tooltip(props: Tooltip) {
                 horizon = props?.e?.clientX + offset;
         }
         return isNaN(horizon as number) ? undefined : horizon;
-    }
+    };
 
     return (
         <Layouts.Panel active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
