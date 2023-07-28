@@ -41,6 +41,7 @@ export default function Trade(props: TradeControl) {
                 {Object.values(name).map((character: string, i: number) => {
                     return (
                         <span
+                            key={i}
                             style={{
                                 ...(i !== 0 && {
                                     ...(condition && {

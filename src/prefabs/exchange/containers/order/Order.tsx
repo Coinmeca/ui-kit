@@ -43,6 +43,7 @@ export default function Order(props: OrderControl) {
                 {Object.values(name).map((character: string, i: number) => {
                     return (
                         <span
+                            key={i}
                             style={{
                                 ...(i !== 0 && {
                                     ...(condition && {
