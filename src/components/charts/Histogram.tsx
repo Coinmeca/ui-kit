@@ -165,7 +165,7 @@ export default function Histogram(props: Histogram) {
                 chart.remove();
             };
         }
-    }, [chartRef, color, data, props?.fit]);
+    }, [chartRef, data, color, up, down, props?.fit]);
 
     return (
         <Suspense fallback={props?.fallback || <div>Loading...</div>}>

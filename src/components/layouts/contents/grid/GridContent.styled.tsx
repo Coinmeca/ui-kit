@@ -1,7 +1,6 @@
 import { Root } from "lib/style";
 import { styled, css } from "styled-components";
 import * as SlideContent from "components/layouts/contents/slide/SlideContent.styled";
-import { StyledComponentBrand } from "styled-components/dist/types";
 
 const Responsive = (area?: string) => {
     return css`

@@ -37,7 +37,7 @@ export default function PartContainer(props: PartContainer) {
                 if (typeof props?.onBack === "function") props?.onBack();
                 break;
         }
-    }, [state, props?.onBack, props?.left?.onClick, props?.right?.onClick]);
+    }, [state, props?.left?.onClick, props?.right?.onClick, props?.onBack]);
 
     return (
         <Style $state={state} style={props?.style}>
