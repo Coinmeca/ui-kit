@@ -95,7 +95,7 @@ export default function Header(props: Header) {
                             </Logo>
                         )}
                         {props?.menu?.children && props?.menu?.children?.length > 0 && (
-                            <Menu data-active={mobileMenu}>
+                            <Menu data-active={mobileMenu} onClick={() => setMobileMenu(false)}>
                                 {props?.menu?.children?.map((v: Menu, k: number) => (
                                     <Nav
                                         key={k}
