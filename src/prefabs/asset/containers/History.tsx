@@ -29,7 +29,7 @@ export default function History(props: History) {
                 process={process}
                 title="Transaction Detail"
                 content={
-                    <>
+                    <Layouts.Col gap={4}>
                         <Layouts.Contents.InnerContent>
                             <Layouts.Col gap={1}>
                                 <Layouts.Row gap={1} fix>
@@ -95,7 +95,7 @@ export default function History(props: History) {
                             <Controls.Button>Undo</Controls.Button>
                             <Controls.Button onClick={() => closeDetail()}>Close</Controls.Button>
                         </Layouts.Row>
-                    </>
+                    </Layouts.Col>
                 }
                 onClose={() => closeDetail()}
                 close

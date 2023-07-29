@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
 import { Charts, Controls, Elements, Layouts } from "components";
-import { Format } from "lib/utils";
+import { Capitalize, Format } from "lib/utils";
 import { Vault } from "prefabs/treasury";
 import { Token } from "types/web3";
 import { Trade as Data } from "types/history";
 import { Root } from "lib/style";
+import { Modal } from "containers";
+import usePortal from "hooks/usePortal";
 import useWindowSize from "hooks/useWindowSize";
 
 export interface Detail {
@@ -37,28 +39,84 @@ export function Detail(props: Detail) {
         WITHDRAW: "blue",
     };
 
+    const handleDetailModal = (data: any) => {
+        const date = (Format(data?.time || 0, "date") as string).split(" ");
+        return (
+            <Modal title={"Transaction Detail"} onClose={closeDetail} close>
+                <Layouts.Col gap={4}>
+                    <Layouts.Contents.InnerContent>
+                        <Layouts.Col gap={1}>
+                            <Layouts.Row fix>
+                                <Layouts.Col>
+                                    <Elements.Text color={colorset[`${data?.type as "DEPOSIT" | "WITHDRAW"}`]} case={"capital"}>
+                                        {data?.type}
+                                    </Elements.Text>
+                                </Layouts.Col>
+                                <Layouts.Col gap={0}>
+                                    <Elements.Text height={1.25} opacity={0.3} align={"right"}>
+                                        {date[0]}
+                                    </Elements.Text>
+                                    <Elements.Text height={1.25} opacity={0.3} align={"right"}>
+                                        {date[1]}
+                                    </Elements.Text>
+                                </Layouts.Col>
+                            </Layouts.Row>
+                            <Layouts.Divider />
+                            <Layouts.Row fix>
+                                <Elements.Text opacity={0.6} fit>
+                                    Volume
+                                </Elements.Text>
+                                <Elements.Text align={"right"}>{data?.volume}</Elements.Text>
+                                <Elements.Text opacity={0.6} style={{ maxWidth: "4em" }}>
+                                    {props?.asset?.symbol}
+                                </Elements.Text>
+                            </Layouts.Row>
+                            <Layouts.Row fix>
+                                <Elements.Text opacity={0.6} fit>
+                                    {data?.type === "DEPOSIT" ? "Earn" : "Burn"}
+                                </Elements.Text>
+                                <Elements.Text align={"right"}>{data?.meca}</Elements.Text>
+                                <Elements.Text opacity={0.6} style={{ maxWidth: "4em" }}>
+                                    MECA
+                                </Elements.Text>
+                            </Layouts.Row>
+                            <Layouts.Divider />
+                            <Layouts.Row fix>
+                                <Elements.Text opacity={0.6} fit>
+                                    Share
+                                </Elements.Text>
+                                <Elements.Text align={"right"}>{data?.share}</Elements.Text>
+                                <Elements.Text opacity={0.6} style={{ maxWidth: "4em" }}>
+                                    %
+                                </Elements.Text>
+                            </Layouts.Row>
+                        </Layouts.Col>
+                    </Layouts.Contents.InnerContent>
+                    <Layouts.Row>
+                        <Controls.Button onClick={closeDetail}>Close</Controls.Button>
+                    </Layouts.Row>
+                </Layouts.Col>
+            </Modal>
+        );
+    };
+    const [handleDetail, closeDetail] = usePortal(handleDetailModal);
+
     const historyFormatter = (data?: Data[]) => {
         return (
             data &&
             typeof data !== "string" &&
             data?.length > 0 &&
             data?.map((data: Data) => {
-                const date = (Format(data?.time || 0, "date") as string).split(" ");
                 return {
-                    // onClick: () => {
-                    //     handleDetail(handleDetailModal, {
-                    //         base: item,
-                    //         quote: pay,
-                    //         date: date,
-                    //         time: time,
-                    //         category: data?.category,
-                    //         state: data?.state,
-                    //         price: data?.price,
-                    //         amount: data?.amount,
-                    //         quantity: data?.quantity,
-                    //         fees: data?.fees,
-                    //     });
-                    // },
+                    onClick: () => {
+                        handleDetail(null, {
+                            type: data?.type,
+                            time: data?.time,
+                            volume: data?.volume,
+                            meca: data?.meca,
+                            share: data?.share,
+                        });
+                    },
                     children: [
                         [
                             [
