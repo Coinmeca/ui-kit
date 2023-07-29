@@ -2,7 +2,7 @@
 import { Root } from "lib/style";
 import { Elements, Layouts } from "components";
 import { Token } from "types/web3";
-import { Format } from "lib/utils";
+import { Format, Sign } from "lib/utils";
 import useWindowSize from "hooks/useWindowSize";
 
 export interface Info {
@@ -118,7 +118,7 @@ export default function Info(props: Info) {
                         Change
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
-                        {Format(props?.info?.volume_base, "currency", true)}
+                        {Sign(props?.info?.change)} {Format(props?.info?.change, "currency", true)}
                     </Elements.Text>
                 </Layouts.Row>
                 <Layouts.Row
@@ -134,7 +134,7 @@ export default function Info(props: Info) {
                         Change Rate
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
-                        {Format(props?.info?.volume_base, "currency", true)}
+                        {Sign(props?.info?.change_rate)} {Format(props?.info?.change_rate, "currency", true)} %
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Col>

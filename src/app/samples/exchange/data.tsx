@@ -19,6 +19,17 @@ export default function Data() {
         volume: "73170731",
     };
 
+    const info = {
+        volume_base: "123456789",
+        volume_quote: "123456789",
+        open: "123123123",
+        high: "123123123",
+        low: "123123123",
+        close: "123123123",
+        change: "123123123",
+        change_rate: "123.21",
+    };
+
     const asks = [
         { price: 1511, balance: 800 },
         { price: 1512, balance: 1200 },
@@ -64,18 +75,6 @@ export default function Data() {
     ];
 
     const orderbook = { asks: asks, bids: bids };
-
-    const info = {
-        volume_base: "123456789",
-        volume_quote: "123456789",
-        open: "123123123",
-        high: "123123123",
-        low: "123123123",
-        close: "123123123",
-        change: "123123123",
-        change_rate: "123.21%",
-    };
-
     const orderbookView = ["All", "Ask", "Bid"];
 
     const chart = {
