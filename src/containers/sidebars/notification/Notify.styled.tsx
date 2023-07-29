@@ -6,7 +6,12 @@ import * as Button from "components/controls/button/Button.styled";
 
 const Style = styled.div<{ $active: boolean }>`
     max-height: 100%;
+    scroll-snap-align: start;
     transition: 0.3s ease;
+
+    &:last-child {
+        scroll-snap-align: end;
+    }
 
     ${Box.default} {
         background: rgba(var(--white), var(--o015));
