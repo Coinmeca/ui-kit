@@ -1,2 +1,3 @@
 import History from "./History";
-export { History };
+import HistoryShort from "./HistoryShort";
+export { History, HistoryShort };

@@ -2,15 +2,28 @@
 import { useState } from "react";
 import { Root } from "lib/style";
 import { Charts, Controls, Elements, Layouts } from "components";
-import { Exchange } from "prefabs";
+import { Asset, Exchange } from "prefabs";
 import { Capitalize, Format } from "lib/utils";
 import useWindowSize from "hooks/useWindowSize";
-import Data from "./data";
 import { AnimatePresence } from "framer-motion";
+
+import ExchangeData from "./data";
+import AssetData from "../asset/data";
 
 export default function Page() {
     const { windowSize } = useWindowSize();
-    const { market, orderbook, info, orderbookView, chart } = Data();
+    const DummyExchange = ExchangeData();
+    const DummyAsset = AssetData();
+    const props = {
+        market: DummyExchange.market,
+        info: DummyExchange.info,
+        orderbook: DummyExchange.orderbook,
+        orderbookView: DummyExchange.orderbookView,
+        chart: DummyExchange.chart,
+        assets: DummyAsset.assets,
+        history: DummyAsset.history,
+        responsive: windowSize.width <= Root.Device.Mobile,
+    };
 
     const [mobile, setMobile] = useState("orderbook");
     const [marketTab, setMarketTab] = useState("orderbook");
@@ -20,18 +33,18 @@ export default function Page() {
 
     return (
         <Layouts.Page>
-            <Layouts.Box fit change={parseFloat(market?.change) > 0 ? "green" : parseFloat(market?.change) < 0 && "red"}>
+            <Layouts.Box fit change={parseFloat(props?.market?.change) > 0 ? "green" : parseFloat(props?.market?.change) < 0 && "red"}>
                 <AnimatePresence mode="wait">
                     <Layouts.Contents.InnerContent>
                         <Layouts.Row fix style={{ alignItems: "center" }}>
                             <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
-                                <Elements.Avatar img={market.logo} scale={1.3334} />
+                                <Elements.Avatar img={props?.market?.logo} scale={1.3334} />
                                 <Layouts.Row responsive={"mobile"} gap={1} fit>
                                     <Elements.Text size={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", size: 1.5 }}>
-                                        {market?.base?.symbol?.toUpperCase()}
+                                        {props?.market?.base?.symbol?.toUpperCase()}
                                     </Elements.Text>
                                     <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 1.5 }}>
-                                        {Capitalize(market?.base?.name || "")}
+                                        {Capitalize(props?.market?.base?.name || "")}
                                     </Elements.Text>
                                 </Layouts.Row>
                             </Layouts.Row>
@@ -39,7 +52,7 @@ export default function Page() {
                                 <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
                                     <Elements.Icon scale={1.5} icon={"caret-up"} change />
                                     <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 1.75 }} change>
-                                        $ {Format(market.price, "currency", true)}
+                                        $ {Format(props?.market?.price, "currency", true)}
                                     </Elements.Text>
                                 </Layouts.Row>
                             </Layouts.Row>
@@ -63,14 +76,14 @@ export default function Page() {
                             fullsize
                             area={`'info info' 'book chart' 'book order'`}
                             width={`${windowSize.width < Root.Device.Tablet ? "0.75fr" : "40em"} 1fr`}
-                            height={"max-content 1fr max-content"}
+                            height={`max-content 1fr ${tab === "history" ? "minmax(34em, 1fr)" : "34em"}`}
                             gap={3}
                             responsive={[
                                 {
                                     device: "mobile",
                                     area: `'up' 'down'`,
                                     width: "1fr",
-                                    height: "1fr max-content",
+                                    height: `1fr ${tab === "history" ? "minmax(34em, 1fr)" : "34em"}`,
                                     gap: { col: 0, row: 2 },
                                 },
                             ]}
@@ -100,10 +113,10 @@ export default function Page() {
                                                         }}
                                                     >
                                                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                            Volume ({market?.base?.symbol?.toUpperCase()})
+                                                            Volume ({props?.market?.base?.symbol?.toUpperCase()})
                                                         </Elements.Text>
                                                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                                                            {Format(info?.volume_base, "currency", true)}
+                                                            {Format(props?.info?.volume_base, "currency", true)}
                                                         </Elements.Text>
                                                     </Layouts.Row>
                                                     <Layouts.Row
@@ -116,10 +129,10 @@ export default function Page() {
                                                         }}
                                                     >
                                                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                            Volume ({market?.quote?.symbol?.toUpperCase()})
+                                                            Volume ({props?.market?.quote?.symbol?.toUpperCase()})
                                                         </Elements.Text>
                                                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                                                            {Format(info?.volume_quote, "currency", true)}
+                                                            {Format(props?.info?.volume_quote, "currency", true)}
                                                         </Elements.Text>
                                                     </Layouts.Row>
                                                 </Layouts.Col>
@@ -137,7 +150,7 @@ export default function Page() {
                                                             Highest
                                                         </Elements.Text>
                                                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"green"}>
-                                                            {Format(info?.high, "currency", true)}
+                                                            {Format(props?.info?.high, "currency", true)}
                                                         </Elements.Text>
                                                     </Layouts.Row>
                                                     <Layouts.Row
@@ -153,7 +166,7 @@ export default function Page() {
                                                             Lowest
                                                         </Elements.Text>
                                                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"red"}>
-                                                            {Format(info?.low, "currency", true)}
+                                                            {Format(props?.info?.low, "currency", true)}
                                                         </Elements.Text>
                                                     </Layouts.Row>
                                                 </Layouts.Col>
@@ -171,7 +184,7 @@ export default function Page() {
                                                             Change
                                                         </Elements.Text>
                                                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
-                                                            {Format(info?.volume_base, "currency", true)}
+                                                            {Format(props?.info?.volume_base, "currency", true)}
                                                         </Elements.Text>
                                                     </Layouts.Row>
                                                     <Layouts.Row
@@ -187,7 +200,7 @@ export default function Page() {
                                                             Change Rate
                                                         </Elements.Text>
                                                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
-                                                            {Format(info?.volume_base, "currency", true)}
+                                                            {Format(props?.info?.volume_base, "currency", true)}
                                                         </Elements.Text>
                                                     </Layouts.Row>
                                                 </Layouts.Col>
@@ -205,7 +218,7 @@ export default function Page() {
                                                             Balance
                                                         </Elements.Text>
                                                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                                                            {Format(info?.volume_base, "currency", true)}
+                                                            {Format(props?.info?.volume_base, "currency", true)}
                                                         </Elements.Text>
                                                     </Layouts.Row>
                                                     <Layouts.Row
@@ -221,7 +234,7 @@ export default function Page() {
                                                             Using
                                                         </Elements.Text>
                                                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                                                            {Format(info?.volume_base, "currency", true)}
+                                                            {Format(props?.info?.volume_base, "currency", true)}
                                                         </Elements.Text>
                                                     </Layouts.Row>
                                                 </Layouts.Col>
@@ -269,9 +282,9 @@ export default function Page() {
                                                         ],
                                                         <>
                                                             <Controls.Dropdown
-                                                                option={orderbookView[view]}
-                                                                options={orderbookView}
-                                                                onClickItem={(e: any, k: any) => {
+                                                                option={props?.orderbookView[view]}
+                                                                options={props?.orderbookView}
+                                                                onClickItem={(e: any, v: any, k: any) => {
                                                                     setView(k);
                                                                 }}
                                                             />
@@ -288,11 +301,11 @@ export default function Page() {
                                                         children: (
                                                             <Exchange.Containers.Orderbook
                                                                 view={view}
-                                                                asks={orderbook.asks}
-                                                                bids={orderbook.bids}
-                                                                base={market.base.symbol}
-                                                                quote={market.quote.symbol}
-                                                                responsive={{ device: "mobile", vertical: false }}
+                                                                asks={props?.orderbook?.asks}
+                                                                bids={props?.orderbook?.bids}
+                                                                base={props?.market?.base?.symbol}
+                                                                quote={props?.market?.quote?.symbol}
+                                                                responsive={{ device: "mobile", vertical: windowSize.width < 640 }}
                                                                 guidance
                                                             />
                                                         ),
@@ -326,7 +339,7 @@ export default function Page() {
                                                     ],
                                                 ]}
                                             />
-                                            <Charts.Candle price={chart.price} volume={chart.volume} up={"BUY"} down={"SELL"} />
+                                            <Charts.Candle price={props?.chart?.price} volume={props?.chart?.volume} up={"BUY"} down={"SELL"} />
                                         </Layouts.Contents.SlideContent>
                                     ),
                                     responsive: [
@@ -385,12 +398,12 @@ export default function Page() {
                                             <Layouts.Contents.TabContainer
                                                 contents={[
                                                     {
-                                                        active: true,
+                                                        active: tab !== "history",
                                                         children: (
                                                             <Exchange.Containers.Order
-                                                                base={market.base}
-                                                                quote={market.quote}
-                                                                price={market.price}
+                                                                base={props?.market?.base}
+                                                                quote={props?.market?.quote}
+                                                                price={props?.market?.price}
                                                                 fee={0.1}
                                                                 option={option}
                                                                 responsive={
@@ -398,6 +411,18 @@ export default function Page() {
                                                                     (windowSize.width <= Root.Device.Tablet && windowSize.width < 640)
                                                                 }
                                                             />
+                                                        ),
+                                                    },
+                                                    {
+                                                        active: tab === "history",
+                                                        children: (
+                                                            <Layouts.Contents.InnerContent scroll>
+                                                                <Asset.Containers.History
+                                                                    assets={props?.assets}
+                                                                    list={props?.history}
+                                                                    responsive={props?.responsive}
+                                                                />
+                                                            </Layouts.Contents.InnerContent>
                                                         ),
                                                     },
                                                 ]}

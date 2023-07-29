@@ -14,7 +14,7 @@ export interface History extends List {
     responsive?: boolean;
 }
 
-export default function History(props: History) {
+export default function HistoryShort(props: History) {
     const category = ["Order", "Buy", "Sell", "Deposit", "Withdraw", "Stake", "Unstake", "Claim", "Futures", "Perpetual"];
     const state = ["Pending", "Complete", "Cancel", "Claimable", "Liquidation"];
     const colorset = ["white", "green", "red", "orange", "blue"];
@@ -142,14 +142,23 @@ export default function History(props: History) {
                     },
                     style: { padding: "2em" },
                     children: [
-                        {
-                            style: { flex: 1, maxWidth: !props?.responsive && "20%" },
-                            children: [
-                                {
-                                    style: { flexDirection: props?.responsive && "row-reverse" },
-                                    children: [
+                        [
+                            [
+                                [
+                                    [
                                         {
-                                            style: { gap: "0", maxWidth: "10em" },
+                                            style: { gap: "0" },
+                                            children: [
+                                                <>
+                                                    <Elements.Text color={colorset[data?.category]}>{category[data?.category]}</Elements.Text>
+                                                </>,
+                                                <>
+                                                    <Elements.Text opacity={data?.state === 1 ? 0.3 : 1}>{state[data?.state]}</Elements.Text>
+                                                </>,
+                                            ],
+                                        },
+                                        {
+                                            style: { gap: "0" },
                                             children: [
                                                 <>
                                                     <Elements.Text opacity={0.3} style={{ ...(props?.responsive && { width: "100%", textAlign: "right" }) }}>
@@ -163,70 +172,54 @@ export default function History(props: History) {
                                                 </>,
                                             ],
                                         },
+                                    ],
+                                    [
                                         {
-                                            style: { gap: "0" },
+                                            style: { gap: 0 },
                                             children: [
                                                 <>
-                                                    <Elements.Text color={colorset[data?.category]}>{category[data?.category]}</Elements.Text>
+                                                    <Layouts.Row gap={1}>
+                                                        <Elements.Text align={"right"}>{Format(data?.amount || 0, "currency", true)}</Elements.Text>
+                                                        <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
+                                                            {pay}
+                                                        </Elements.Text>
+                                                    </Layouts.Row>
                                                 </>,
                                                 <>
-                                                    <Elements.Text opacity={data?.state === 1 ? 0.3 : 1}>{state[data?.state]}</Elements.Text>
+                                                    <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
+                                                        <Elements.Text align={"right"}>{Format(data?.price || 0, "currency", true)}</Elements.Text>
+                                                        <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
+                                                            {pay}
+                                                        </Elements.Text>
+                                                    </Layouts.Row>
+                                                </>,
+                                            ],
+                                        },
+                                        {
+                                            style: { gap: 0 },
+                                            children: [
+                                                <>
+                                                    <Layouts.Row gap={1}>
+                                                        <Elements.Text align={"right"}>{Format(data?.quantity || 0, "currency", true)}</Elements.Text>
+                                                        <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
+                                                            {item}
+                                                        </Elements.Text>
+                                                    </Layouts.Row>
+                                                </>,
+                                                <>
+                                                    <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
+                                                        <Elements.Text align={"right"} fix>{`- ${Format(data?.fees || 0, "currency", true)}`}</Elements.Text>
+                                                        <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
+                                                            {item}
+                                                        </Elements.Text>
+                                                    </Layouts.Row>
                                                 </>,
                                             ],
                                         },
                                     ],
-                                },
-                            ],
-                        },
-                        {
-                            style: { flex: 2 },
-                            children: [
-                                [
-                                    {
-                                        style: { gap: 0 },
-                                        children: [
-                                            <>
-                                                <Layouts.Row gap={1}>
-                                                    <Elements.Text align={"right"}>{Format(data?.amount || 0, "currency", true)}</Elements.Text>
-                                                    <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
-                                                        {pay}
-                                                    </Elements.Text>
-                                                </Layouts.Row>
-                                            </>,
-                                            <>
-                                                <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                    <Elements.Text align={"right"}>{Format(data?.price || 0, "currency", true)}</Elements.Text>
-                                                    <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
-                                                        {pay}
-                                                    </Elements.Text>
-                                                </Layouts.Row>
-                                            </>,
-                                        ],
-                                    },
-                                    {
-                                        style: { gap: 0 },
-                                        children: [
-                                            <>
-                                                <Layouts.Row gap={1}>
-                                                    <Elements.Text align={"right"}>{Format(data?.quantity || 0, "currency", true)}</Elements.Text>
-                                                    <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
-                                                        {item}
-                                                    </Elements.Text>
-                                                </Layouts.Row>
-                                            </>,
-                                            <>
-                                                <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                    <Elements.Text align={"right"}>- {Format(data?.fees || 0, "currency", true)}</Elements.Text>
-                                                    <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
-                                                        {item}
-                                                    </Elements.Text>
-                                                </Layouts.Row>
-                                            </>,
-                                        ],
-                                    },
                                 ],
                             ],
-                        },
+                        ],
                     ],
                 };
             })
