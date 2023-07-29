@@ -119,7 +119,7 @@ export default function Info(props: Info) {
                             style={{ minWidth: "max-content" }}
                             color={Sign(props?.info?.total_return_rate) === "+" ? "green" : Sign(props?.info?.total_return_rate) === "-" && "red"}
                         >
-                            ={Sign(props?.info?.total_return_rate)}$ {Format(props?.info?.total_return_rate, "currency", true)}
+                            {Sign(props?.info?.total_return_rate)}$ {Format(props?.info?.total_return_rate, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
