@@ -10,6 +10,7 @@ import { Capitalize, Format } from "lib/utils";
 import usePortal from "hooks/usePortal";
 import useWindowSize from "hooks/useWindowSize";
 import type { Price, Volume } from "components/charts/Candle";
+import { Asset } from "prefabs";
 
 export interface Detail {
     asset: Token;
@@ -408,6 +409,10 @@ export default function Detail(props: Detail) {
                                                         }
                                                     />
                                                 ),
+                                            },
+                                            {
+                                                active: tab === "liquidity",
+                                                children: <Asset.Containers.History list={[]} responsive={props?.responsive} />,
                                             },
                                         ]}
                                     />
