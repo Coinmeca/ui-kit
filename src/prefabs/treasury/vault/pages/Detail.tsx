@@ -43,7 +43,7 @@ export function Detail(props: Detail) {
         const date = (Format(data?.time || 0, "date") as string).split(" ");
         return (
             <Modal title={"Transaction Detail"} onClose={closeDetail} close>
-                <Layouts.Col gap={2}>
+                <Layouts.Col gap={2} style={{ height: "100%" }}>
                     <Layouts.Contents.InnerContent>
                         <Layouts.Col gap={1}>
                             <Layouts.Row fix>

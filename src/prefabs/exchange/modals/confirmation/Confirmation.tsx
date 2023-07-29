@@ -43,7 +43,7 @@ export default function Confirmation(props: any) {
         };
 
         return (
-            <>
+            <Layouts.Col gap={2} style={{ height: "100%" }}>
                 <Layouts.Contents.InnerContent style={{ justifyContent: "center" }}>
                     <Layouts.Col gap={1}>
                         <Layouts.Row gap={gap.row} style={gap.space.small} fix>
@@ -116,7 +116,7 @@ export default function Confirmation(props: any) {
                     </Layouts.Col>
                 </Layouts.Contents.InnerContent>
                 <Controls.Button onClick={confirm}>Confirm</Controls.Button>
-            </>
+            </Layouts.Col>
         );
     };
 
