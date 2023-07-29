@@ -8,6 +8,8 @@ const Style = styled.section`
     height: -webkit-fill-available;
     padding: 3em;
     overflow: hidden auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
 
     ${InnerContent.default} {
         gap: 2em;

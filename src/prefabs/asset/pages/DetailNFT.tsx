@@ -261,22 +261,24 @@ export default function DetailNFT(props: Detail) {
                                     area: "history",
                                     children: (
                                         <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "history" : true}>
-                                            <Layouts.Menu
-                                                hide="mobile"
-                                                menu={[
-                                                    [
-                                                        <>
-                                                            <Controls.Tab disabled>History</Controls.Tab>
-                                                        </>,
-                                                    ],
-                                                ]}
-                                            />
-                                            <Asset.Containers.HistoryShort
-                                                assets={props?.assets}
-                                                list={history}
-                                                responsive={true}
-                                                fallback={"There is no assets yet."}
-                                            />
+                                            <Layouts.Contents.InnerContent>
+                                                <Layouts.Menu
+                                                    hide="mobile"
+                                                    menu={[
+                                                        [
+                                                            <>
+                                                                <Controls.Tab disabled>History</Controls.Tab>
+                                                            </>,
+                                                        ],
+                                                    ]}
+                                                />
+                                                <Asset.Containers.HistoryShort
+                                                    assets={props?.assets}
+                                                    list={history}
+                                                    responsive={true}
+                                                    fallback={"There is no assets yet."}
+                                                />
+                                            </Layouts.Contents.InnerContent>
                                         </Layouts.Contents.SlideContent>
                                     ),
                                     responsive: [
@@ -290,48 +292,56 @@ export default function DetailNFT(props: Detail) {
                                     area: "position",
                                     children: (
                                         <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "position" : true}>
-                                            <Layouts.Menu
-                                                hide="mobile"
-                                                menu={[
-                                                    [
-                                                        <>
-                                                            <Controls.Tab disabled>Position</Controls.Tab>
-                                                        </>,
-                                                    ],
-                                                ]}
-                                            />
-                                            <Layouts.Contents.GridContainer direction="row" width={{ min: 24 }} gap={4} style={{ padding: "2em" }} fullsize>
-                                                {props?.positions?.map((position: any, i: number) => (
-                                                    <Layouts.Col key={i} gap={0}>
-                                                        <div>
-                                                            <Image
-                                                                width={0}
-                                                                height={0}
-                                                                src={position?.imageUrl}
-                                                                alt={position?.name}
-                                                                style={{ width: "100%", height: "100%", maxHeight: "50vh" }}
-                                                            />
-                                                        </div>
-                                                        <div style={{ padding: "0.5em 0" }}>
-                                                            <Layouts.Row gap={1} fix>
-                                                                <Elements.Text opacity={0.3} fit>
-                                                                    Market
-                                                                </Elements.Text>
-                                                                <Elements.Text align={"right"}>{position?.name?.split(" ")[1]}</Elements.Text>
-                                                            </Layouts.Row>
-                                                            <Layouts.Row gap={1} fix>
-                                                                <Elements.Text opacity={0.3} fit>
-                                                                    Price
-                                                                </Elements.Text>
-                                                                <Elements.Text align={"right"}>{position?.name?.split(" ")[2]}</Elements.Text>
-                                                                <Elements.Text align={"right"} opacity={0.3} fit>
-                                                                    {position?.name?.split(" ")[1]?.split("/")[1]}
-                                                                </Elements.Text>
-                                                            </Layouts.Row>
-                                                        </div>
-                                                    </Layouts.Col>
-                                                ))}
-                                            </Layouts.Contents.GridContainer>
+                                            <Layouts.Contents.InnerContent>
+                                                <Layouts.Menu
+                                                    hide="mobile"
+                                                    menu={[
+                                                        [
+                                                            <>
+                                                                <Controls.Tab disabled>Position</Controls.Tab>
+                                                            </>,
+                                                        ],
+                                                    ]}
+                                                />
+                                                <Layouts.Contents.GridContainer
+                                                    direction={!props?.responsive ? "row" : "col"}
+                                                    width={{ min: 24 }}
+                                                    gap={4}
+                                                    style={{ padding: "2em" }}
+                                                    fullsize
+                                                >
+                                                    {props?.positions?.map((position: any, i: number) => (
+                                                        <Layouts.Col key={i} gap={0}>
+                                                            <div>
+                                                                <Image
+                                                                    width={0}
+                                                                    height={0}
+                                                                    src={position?.imageUrl}
+                                                                    alt={position?.name}
+                                                                    style={{ width: "100%", height: "100%", maxHeight: "50vh" }}
+                                                                />
+                                                            </div>
+                                                            <div style={{ padding: "0.5em 0" }}>
+                                                                <Layouts.Row gap={1} fix>
+                                                                    <Elements.Text opacity={0.3} fit>
+                                                                        Market
+                                                                    </Elements.Text>
+                                                                    <Elements.Text align={"right"}>{position?.name?.split(" ")[1]}</Elements.Text>
+                                                                </Layouts.Row>
+                                                                <Layouts.Row gap={1} fix>
+                                                                    <Elements.Text opacity={0.3} fit>
+                                                                        Price
+                                                                    </Elements.Text>
+                                                                    <Elements.Text align={"right"}>{position?.name?.split(" ")[2]}</Elements.Text>
+                                                                    <Elements.Text align={"right"} opacity={0.3} fit>
+                                                                        {position?.name?.split(" ")[1]?.split("/")[1]}
+                                                                    </Elements.Text>
+                                                                </Layouts.Row>
+                                                            </div>
+                                                        </Layouts.Col>
+                                                    ))}
+                                                </Layouts.Contents.GridContainer>
+                                            </Layouts.Contents.InnerContent>
                                         </Layouts.Contents.SlideContent>
                                     ),
                                     responsive: [
