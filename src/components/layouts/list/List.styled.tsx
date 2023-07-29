@@ -15,6 +15,8 @@ const Style = styled.div`
     width: 100%;
     /* height: 100%; */
     overflow: hidden auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
 `;
 
 export default Style;

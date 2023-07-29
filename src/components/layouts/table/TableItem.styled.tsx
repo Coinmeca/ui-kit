@@ -40,6 +40,7 @@ const Style = styled.div<{ $change?: string; $event: boolean }>`
     font-feature-settings: "tnum" on, "lnum" on;
     cursor: ${({ $event }) => ($event ? "pointer" : "default")};
     pointer-events: ${({ $event }) => ($event ? "inherit" : "none")};
+    scroll-snap-align: start;
     transition: 0.3s ease;
 
     ${({ $change }) => $change && `--change: ${$change};`}
@@ -57,17 +58,20 @@ const Style = styled.div<{ $change?: string; $event: boolean }>`
             padding-right: 1em;
         }
     }
-
     &:hover {
         background: rgba(${({ $event }) => ($event ? "var(--white)" : "var(--black)")}, var(--o0075));
     }
 
     &:active {
         ${({ $event }) =>
-        $event &&
-        css`
+            $event &&
+            css`
                 background: rgba(var(--white), var(--o015));
             `};
+    }
+
+    &:last-child {
+        scroll-snap-align: end;
     }
 
     &[data-active="true"] {
