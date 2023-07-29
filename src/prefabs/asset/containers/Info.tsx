@@ -1,6 +1,6 @@
 "use client";
 import { Elements, Layouts } from "components";
-import { Format } from "lib/utils";
+import { Format, Sign } from "lib/utils";
 import useWindowSize from "hooks/useWindowSize";
 
 export interface Info {
@@ -92,8 +92,13 @@ export default function Info(props: Info) {
                         <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
                             Total Return
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            $ {Format(props?.info?.total_return, "currency", true)}
+                        <Elements.Text
+                            height={1}
+                            align="right"
+                            style={{ minWidth: "max-content" }}
+                            color={Sign(props?.info?.total_return) === "+" ? "green" : Sign(props?.info?.total_return) === "-" && "red"}
+                        >
+                            {Sign(props?.info?.total_return)}$ {Format(props?.info?.total_return, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -108,8 +113,13 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Total Return Rate
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            $ {Format(props?.info?.total_return_rate, "currency", true)}
+                        <Elements.Text
+                            height={1}
+                            align="right"
+                            style={{ minWidth: "max-content" }}
+                            color={Sign(props?.info?.total_return_rate) === "+" ? "green" : Sign(props?.info?.total_return_rate) === "-" && "red"}
+                        >
+                            ={Sign(props?.info?.total_return_rate)}$ {Format(props?.info?.total_return_rate, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -160,8 +170,13 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Avg Return
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            $ {Format(props?.info?.avg_return, "currency", true)}
+                        <Elements.Text
+                            height={1}
+                            align="right"
+                            style={{ minWidth: "max-content" }}
+                            color={Sign(props?.info?.avg_return) === "+" ? "green" : Sign(props?.info?.avg_return) === "-" && "red"}
+                        >
+                            {Sign(props?.info?.avg_return)}$ {Format(props?.info?.avg_return, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -176,8 +191,13 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Avg Return Rate
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.avg_return_rate, "currency", true)} %
+                        <Elements.Text
+                            height={1}
+                            align="right"
+                            style={{ minWidth: "max-content" }}
+                            color={Sign(props?.info?.avg_return_rate) === "+" ? "green" : Sign(props?.info?.avg_return_rate) === "-" && "red"}
+                        >
+                            {Sign(props?.info?.avg_return_rate)} {Format(props?.info?.avg_return_rate, "currency", true)} %
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -273,8 +293,13 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Total Open Interest
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.total_open_interest, "currency", true)}
+                        <Elements.Text
+                            height={1}
+                            align="right"
+                            style={{ minWidth: "max-content" }}
+                            color={Sign(props?.info?.total_open_interest) === "+" ? "green" : Sign(props?.info?.total_open_interest) === "-" && "red"}
+                        >
+                            {Sign(props?.info?.total_open_interest)} {Format(props?.info?.total_open_interest, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -289,8 +314,13 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Total Open Interest
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.total_open_interest_rate, "currency", true)} %
+                        <Elements.Text
+                            height={1}
+                            align="right"
+                            style={{ minWidth: "max-content" }}
+                            color={Sign(props?.info?.total_open_interest_rate) === "+" ? "green" : Sign(props?.info?.total_open_interest_rate) === "-" && "red"}
+                        >
+                            {Sign(props?.info?.total_open_interest_rate)} {Format(props?.info?.total_open_interest_rate, "currency", true)} %
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -307,8 +337,13 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Avg Open Interest
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            $ {Format(props?.info?.avg_open_interest, "currency", true)}
+                        <Elements.Text
+                            height={1}
+                            align="right"
+                            style={{ minWidth: "max-content" }}
+                            color={Sign(props?.info?.avg_open_interest) === "+" ? "green" : Sign(props?.info?.avg_open_interest) === "-" && "red"}
+                        >
+                            {Sign(props?.info?.avg_open_interest)}$ {Format(props?.info?.avg_open_interest, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -323,8 +358,13 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Avg Open Interest Rate
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.avg_open_interest_rate, "currency", true)} %
+                        <Elements.Text
+                            height={1}
+                            align="right"
+                            style={{ minWidth: "max-content" }}
+                            color={Sign(props?.info?.avg_open_interest_rate) === "+" ? "green" : Sign(props?.info?.avg_open_interest_rate) === "-" && "red"}
+                        >
+                            {Sign(props?.info?.avg_open_interest_rate)} {Format(props?.info?.avg_open_interest_rate, "currency", true)} %
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>

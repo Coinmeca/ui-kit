@@ -109,8 +109,8 @@ export default function Data() {
     const vault = {
         info: {
             exchange: 0.015895972662384555,
-            exchange_change: 0,
-            exchange_change_rate: 0,
+            exchange_rate: 0,
+            exchange_rate_change: 0,
             tl: 4252286.302800037,
             tl_change: 0,
             tvl: 0,

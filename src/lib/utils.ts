@@ -138,7 +138,8 @@ export function Format(value?: number | string, type?: 'email' | 'number' | 'cur
     }
 }
 
-export function Sign(value: number | string): string {
+export function Sign(value?: number | string): string {
+    if (typeof value === 'undefined') return '';
     value = parseFloat(value?.toString());
     if (isNaN(value)) return '';
     return value > 0 ? '+' : value < 0 ? '-' : '';
