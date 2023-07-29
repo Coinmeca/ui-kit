@@ -19,7 +19,7 @@ export default function View(props: View) {
 
     return (
         <>
-            <Layouts.Cover height={32} style={{ scrollSnapAlign: "start" }}>
+            <Layouts.Cover height={32} background={{ filter: "black" }} style={{ scrollSnapAlign: "start" }}>
                 <Controls.Slide
                     timer={0}
                     slideNo={props?.page === "vault" ? 0 : 1}

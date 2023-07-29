@@ -1,7 +1,7 @@
 "use client";
 import { Elements, Layouts } from "components";
 import { Token } from "types/web3";
-import { Format } from "lib/utils";
+import { Format, Sign } from "lib/utils";
 import useWindowSize from "hooks/useWindowSize";
 
 export interface Info {
@@ -12,8 +12,8 @@ export interface Info {
 
 export interface VaultInfo {
     exchange: number | string;
-    exchange_change: number | string;
-    exchange_change_rate: number | string;
+    exchange_rate: number | string;
+    exchange_rate_change: number | string;
     tl: number | string;
     tl_change: number | string;
     tvl: number | string;
@@ -83,9 +83,9 @@ export default function Info(props: Info) {
                             height={1}
                             align="right"
                             style={{ minWidth: "max-content" }}
-                            color={(props?.info?.tl_change || 0) > 0 ? "green" : (props?.info?.tl_change || 0) < 0 && "red"}
+                            color={Sign(props?.info?.tl_change) === "+" ? "green" : Sign(props?.info?.tl_change) === "-" && "red"}
                         >
-                            {Format(props?.info?.tl_change, "currency", true)}
+                            {Sign(props?.info?.tl_change)} {Format(props?.info?.tl_change, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -118,8 +118,13 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Total Value Locked Change
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            $ {Format(props?.info?.tvl_change, "currency", true)}
+                        <Elements.Text
+                            height={1}
+                            align="right"
+                            style={{ minWidth: "max-content" }}
+                            color={Sign(props?.info?.tvl_change) === "+" ? "green" : Sign(props?.info?.tvl_change) === "-" && "red"}
+                        >
+                            {Sign(props?.info?.tvl_change)}$ {Format(props?.info?.tvl_change, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -152,7 +157,7 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Deposit (24H)
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
+                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={Sign(props?.info?.deposit_24h) === "+" && "red"}>
                             {Format(props?.info?.deposit_24h, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
@@ -186,7 +191,7 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Withdraw (24H)
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
+                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={Sign(props?.info?.withdraw_24h) === "+" && "red"}>
                             {Format(props?.info?.withdraw_24h, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
@@ -231,8 +236,13 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Weight Change
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.weight_change, "currency", true)} %
+                        <Elements.Text
+                            height={1}
+                            align="right"
+                            style={{ minWidth: "max-content" }}
+                            color={Sign(props?.info?.weight_change) === "+" ? "green" : Sign(props?.info?.weight_change) === "-" && "red"}
+                        >
+                            {Sign(props?.info?.weight_change)} {Format(props?.info?.weight_change, "currency", true)} %
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -281,10 +291,15 @@ export default function Info(props: Info) {
                         }}
                     >
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                            Exchange Change
+                            Exchange Rate
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.exchange_change, "currency", true)}
+                        <Elements.Text
+                            height={1}
+                            align="right"
+                            style={{ minWidth: "max-content" }}
+                            color={Sign(props?.info?.exchange_rate) === "+" ? "green" : Sign(props?.info?.exchange_rate) === "-" && "red"}
+                        >
+                            {Sign(props?.info?.exchange_rate)} {Format(props?.info?.exchange_rate, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -297,10 +312,15 @@ export default function Info(props: Info) {
                         }}
                     >
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                            Exchange Change Rate
+                            Exchange Rate Change
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.exchange_change_rate, "currency", true)} %
+                        <Elements.Text
+                            height={1}
+                            align="right"
+                            style={{ minWidth: "max-content" }}
+                            color={Sign(props?.info?.exchange_rate_change) === "+" ? "green" : Sign(props?.info?.exchange_rate_change) === "-" && "red"}
+                        >
+                            {Sign(props?.info?.exchange_rate_change)} {Format(props?.info?.exchange_rate_change, "currency", true)} %
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -317,7 +337,7 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Mint
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
+                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={Sign(props?.info?.earn) === "+" && "green"}>
                             {Format(props?.info?.earn, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
@@ -333,7 +353,7 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Burn
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
+                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={Sign(props?.info?.earn) === "+" && "red"}>
                             {Format(props?.info?.burn, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
