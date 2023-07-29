@@ -48,14 +48,20 @@ export default function Data() {
         },
     ];
     const info = {
-        volume_base: "123456789",
-        volume_quote: "123456789",
-        open: "123123123",
-        high: "123123123",
-        low: "123123123",
-        close: "123123123",
-        change: "123123123",
-        change_rate: "+123.%",
+        total_buy: "123456789",
+        total_sell: "156785323",
+        total_return: "8456",
+        total_return_rate: "15.1564",
+        avg_buy: "545678",
+        avg_sell: "456546",
+        avg_return: "1235489",
+        avg_return_rate: "123.123",
+        total_lending: "123456",
+        total_lending_interest: "123456",
+        total_open_interest: "1535468",
+        total_open_interest_rate: "1567.8",
+        avg_open_interest: "1567.4",
+        avg_open_interest_rate: "123.13",
     };
     const history = [
         {

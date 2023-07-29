@@ -10,8 +10,8 @@ const Layout = (
     height?: number | string | { min?: number; max?: number }
 ) => css`
     ${area &&
-    `width:100%; height:100%; grid-template-areas: ${area}; ${typeof width === "string" ? `grid-template-columns: ${width};` : ""} ${
-        typeof height === "string" ? `grid-template-rows: ${height};` : ""
+    `width:100%; height:100%; grid-template-areas: ${area}; ${typeof width === "string" && `grid-template-columns: ${width};`} ${
+        typeof height === "string" && `grid-template-rows: ${height};`
     } overflow:hidden;`}
 
     ${direction === "row"
@@ -25,7 +25,7 @@ const Layout = (
                       typeof width?.max === "number" ? `${width.max}em` : "1fr"
                   }));`
         }
-        ${typeof height === "number" ? `grid-auto-rows: ${height}em;` : ""}
+        ${typeof height === "number" && `grid-auto-rows: ${height}em;`}
     `
         : direction === "col" &&
           `
@@ -38,10 +38,10 @@ const Layout = (
                       typeof height?.max === "number" ? `${height.max}em` : "1fr"
                   }));`
         }
-        ${typeof width === "number" ? `grid-auto-columns: ${width}em;` : ""}
-        `}
-        
-        ${typeof gap === "number"
+        ${typeof width === "number" && `grid-auto-columns: ${width}em;`}
+        `};
+
+    ${typeof gap === "number"
         ? `gap: ${gap}em;`
         : `${typeof gap?.row === "number" ? `grid-row-gap: ${gap?.row}em;` : ""}${typeof gap?.col === "number" ? `grid-column-gap: ${gap?.col}em;` : ""}`}
 `;

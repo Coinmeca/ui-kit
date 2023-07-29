@@ -1,5 +1,6 @@
-import Assets from "./assets/Assets";
-import History from "./history/History";
-import Trade from "./trade/Trade";
+import Assets from "./Assets";
+import Info from "./Info";
+import History from "./History";
+import Trade from "./Trade";
 
-export { Assets, History, Trade };
+export { Assets, Info, History, Trade };

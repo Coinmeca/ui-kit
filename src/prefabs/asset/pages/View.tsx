@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Format } from "lib/utils";
 import { Token } from "types/web3";
+import { Asset } from "prefabs";
 
 export interface View {
     info?: any;
@@ -37,7 +38,6 @@ export default function View(props: any) {
                                     <>
                                         <Elements.Avatar
                                             size={props?.responsive ? 4 : 3.5}
-                                            style={{ marginRight: props?.responsive && "1em" }}
                                             img={require(`/src/assets/coins/${data?.symbol?.toLowerCase()}.png`)}
                                         />
                                     </>
@@ -163,154 +163,8 @@ export default function View(props: any) {
                     {
                         area: "info",
                         children: (
-                            <Layouts.Contents.SlideContent active={props?.responsive ? true : mobile === "info"}>
-                                <Layouts.Row
-                                    fix
-                                    responsive="mobile"
-                                    gap={props?.responsive ? 4 : 1}
-                                    style={{
-                                        marginTop: "0.5em",
-                                        alignItems: "center",
-                                        ...(!props?.responsive && { height: "100%" }),
-                                    }}
-                                >
-                                    <Layouts.Col gap={0.5}>
-                                        <Layouts.Row
-                                            fix
-                                            gap={1}
-                                            style={{
-                                                alignItems: "center",
-                                                padding: "0.5em",
-                                                ...(!props?.responsive && { height: "100%" }),
-                                            }}
-                                        >
-                                            <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                Volume
-                                            </Elements.Text>
-                                            <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                                                {Format(info?.volume_base, "currency", true)}
-                                            </Elements.Text>
-                                        </Layouts.Row>
-                                        <Layouts.Row
-                                            fix
-                                            gap={1}
-                                            style={{
-                                                alignItems: "center",
-                                                padding: "0.5em",
-                                                ...(!props?.responsive && { height: "100%" }),
-                                            }}
-                                        >
-                                            <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                Volume
-                                            </Elements.Text>
-                                            <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                                                {Format(info?.volume_quote, "currency", true)}
-                                            </Elements.Text>
-                                        </Layouts.Row>
-                                    </Layouts.Col>
-                                    <Layouts.Col gap={0.5}>
-                                        <Layouts.Row
-                                            fix
-                                            gap={1}
-                                            style={{
-                                                alignItems: "center",
-                                                padding: "0.5em",
-                                                ...(!props?.responsive && { height: "100%" }),
-                                            }}
-                                        >
-                                            <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                Highest
-                                            </Elements.Text>
-                                            <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"green"}>
-                                                {Format(info?.high, "currency", true)}
-                                            </Elements.Text>
-                                        </Layouts.Row>
-                                        <Layouts.Row
-                                            fix
-                                            gap={1}
-                                            style={{
-                                                alignItems: "center",
-                                                padding: "0.5em",
-                                                ...(!props?.responsive && { height: "100%" }),
-                                            }}
-                                        >
-                                            <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                Lowest
-                                            </Elements.Text>
-                                            <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"red"}>
-                                                {Format(info?.low, "currency", true)}
-                                            </Elements.Text>
-                                        </Layouts.Row>
-                                    </Layouts.Col>
-                                    <Layouts.Col gap={0.5}>
-                                        <Layouts.Row
-                                            fix
-                                            gap={1}
-                                            style={{
-                                                alignItems: "center",
-                                                padding: "0.5em",
-                                                ...(!props?.responsive && { height: "100%" }),
-                                            }}
-                                        >
-                                            <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                Change
-                                            </Elements.Text>
-                                            <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
-                                                {Format(info?.volume_base, "currency", true)}
-                                            </Elements.Text>
-                                        </Layouts.Row>
-                                        <Layouts.Row
-                                            fix
-                                            gap={1}
-                                            style={{
-                                                alignItems: "center",
-                                                padding: "0.5em",
-                                                ...(!props?.responsive && { height: "100%" }),
-                                            }}
-                                        >
-                                            <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                Change Rate
-                                            </Elements.Text>
-                                            <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
-                                                {Format(info?.volume_base, "currency", true)}
-                                            </Elements.Text>
-                                        </Layouts.Row>
-                                    </Layouts.Col>
-                                    <Layouts.Col gap={0.5}>
-                                        <Layouts.Row
-                                            fix
-                                            gap={1}
-                                            style={{
-                                                alignItems: "center",
-                                                padding: "0.5em",
-                                                ...(!props?.responsive && { height: "100%" }),
-                                            }}
-                                        >
-                                            <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                Balance
-                                            </Elements.Text>
-                                            <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                                                {Format(info?.volume_base, "currency", true)}
-                                            </Elements.Text>
-                                        </Layouts.Row>
-                                        <Layouts.Row
-                                            fix
-                                            gap={1}
-                                            style={{
-                                                alignItems: "center",
-                                                padding: "0.5em",
-                                                ...(!props?.responsive && { height: "100%" }),
-                                            }}
-                                        >
-                                            <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                                                Using
-                                            </Elements.Text>
-                                            <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                                                {Format(info?.volume_base, "currency", true)}
-                                            </Elements.Text>
-                                        </Layouts.Row>
-                                    </Layouts.Col>
-                                </Layouts.Row>
+                            <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "info" : true}>
+                                <Asset.Containers.Info info={props?.info} responsive={props?.responsive} />
                             </Layouts.Contents.SlideContent>
                         ),
                         responsive: [
@@ -323,7 +177,7 @@ export default function View(props: any) {
                     {
                         area: "asset",
                         children: (
-                            <Layouts.Contents.SlideContent active={props?.responsive ? true : mobile === "asset"}>
+                            <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "asset" : true}>
                                 <Layouts.Menu
                                     hide="mobile"
                                     menu={[

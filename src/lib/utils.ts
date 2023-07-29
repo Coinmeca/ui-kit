@@ -39,11 +39,12 @@ const format = {
     currency: /^[,.0-9]*$/,
 }
 
-export function Format(value: number | string, type?: 'email' | 'number' | 'currency' | 'date' | string, display?: boolean, fix?: number | 'auto', max?: number | string, auto?: boolean): number | string {
-    if (typeof value === 'undefined') return '';
-    if (typeof value !== 'string') value = value.toString();
+export function Format(value?: number | string, type?: 'email' | 'number' | 'currency' | 'date' | string, display?: boolean, fix?: number | 'auto', max?: number | string, auto?: boolean): number | string {
+
     switch (type) {
         case 'email': {
+            if (typeof value === 'undefined') return '';
+            if (typeof value !== 'string') value = value.toString();
             if (value.indexOf('@') === 1) {
                 let copy: string[] = value.split('@');
                 if (0 < copy.length && copy.length < 2) {
@@ -57,7 +58,8 @@ export function Format(value: number | string, type?: 'email' | 'number' | 'curr
         }
         case 'number':
         case 'currency': {
-            value = value.toString().replaceAll(',', '');
+            if (typeof value === 'undefined') return 0;
+            value = value?.toString()?.replaceAll(',', '');
 
             if (value === '' || value?.length <= 0) return display ? 0 : '';
 
@@ -115,7 +117,8 @@ export function Format(value: number | string, type?: 'email' | 'number' | 'curr
             return type === 'number' ? parseFloat(result) : result;
         }
         case 'date':
-            value = value.toString();
+            if (typeof value === 'undefined') return '-';
+            if (typeof value !== 'string') value = value.toString();
 
             let copy: any = '';
             for (let i = 0; i < value?.length; i++) {
@@ -129,6 +132,7 @@ export function Format(value: number | string, type?: 'email' | 'number' | 'curr
             const time = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
             return date + ' ' + time;
         default: {
+            if (typeof value === 'undefined') return '';
             return value;
         }
     }
