@@ -436,7 +436,7 @@ export function Detail(props: Detail) {
                                                         Weight Change
                                                     </Elements.Text>
                                                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                                                        {Format(props?.info?.weight_change, "currency", true)}
+                                                        {Format(props?.info?.weight_change, "currency", true)} %
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                             </Layouts.Col>
