@@ -44,14 +44,14 @@ export default function Confirmation(props: any) {
 
         return (
             <Layouts.Col gap={2} style={{ height: "100%" }}>
-                <Layouts.Contents.InnerContent style={{ justifyContent: "center" }}>
+                <Layouts.Contents.InnerContent style={{ justifyContent: "center", ...text?.setting }}>
                     <Layouts.Col gap={1}>
                         <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                            <Elements.Text height={text.height} opacity={text.opacity} fit>
                                 Price
                             </Elements.Text>
                             <Layouts.Row gap={gap.row} fix>
-                                <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
+                                <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align}>
                                     {props?.order?.price}
                                 </Elements.Text>
                                 <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
@@ -61,11 +61,11 @@ export default function Confirmation(props: any) {
                         </Layouts.Row>
                         <Layouts.Divider />
                         <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                            <Elements.Text height={text.height} opacity={text.opacity} fit>
                                 Amount
                             </Elements.Text>
                             <Layouts.Row gap={gap.row} fix>
-                                <Elements.Text height={text.height} align={text.align} style={text.setting}>
+                                <Elements.Text height={text.height} align={text.align}>
                                     {props?.order?.amount}
                                 </Elements.Text>
                                 <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
@@ -74,11 +74,11 @@ export default function Confirmation(props: any) {
                             </Layouts.Row>
                         </Layouts.Row>
                         <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                            <Elements.Text height={text.height} opacity={text.opacity} fit>
                                 Quantity
                             </Elements.Text>
                             <Layouts.Row gap={gap.row} fix>
-                                <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
+                                <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align}>
                                     {props?.order?.quantity}
                                 </Elements.Text>
                                 <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
@@ -88,11 +88,11 @@ export default function Confirmation(props: any) {
                         </Layouts.Row>
                         <Layouts.Divider />
                         <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                            <Elements.Text height={text.height} opacity={text.opacity} fit>
                                 Fees
                             </Elements.Text>
                             <Layouts.Row gap={gap.row} fix>
-                                <Elements.Text opacity={0.45} height={text.height} align={text.align} style={text.setting}>
+                                <Elements.Text opacity={0.45} height={text.height} align={text.align}>
                                     - {props?.order?.fees}
                                 </Elements.Text>
                                 <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
@@ -101,11 +101,11 @@ export default function Confirmation(props: any) {
                             </Layouts.Row>
                         </Layouts.Row>
                         <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                            <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                            <Elements.Text height={text.height} opacity={text.opacity} fit>
                                 Total
                             </Elements.Text>
                             <Layouts.Row gap={gap.row} fix>
-                                <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align} style={text.setting}>
+                                <Elements.Text color={mode ? color.buy : color.sell} height={text.height} align={text.align}>
                                     {props?.order?.total}
                                 </Elements.Text>
                                 <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>

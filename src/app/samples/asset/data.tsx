@@ -378,6 +378,57 @@ export default function Data() {
             fees: 0.000004751551881739,
         },
     ];
+    const positions = [
+        {
+            address: "0x8fbcdc17b26741e7be137089823d7640fb0a1a69",
+            slug: "coinmeca-tm41market-matic-usdt",
+            imageUrl: "https://openseauserdata.com/files/69ff4713679f55599836cd0a60d6e530.svg",
+            name: "Coinmeca MATIC/USDT 5.91",
+            tokenId: "3",
+        },
+        {
+            address: "0x8fbcdc17b26741e7be137089823d7640fb0a1a69",
+            slug: "coinmeca-tm41market-matic-usdt",
+            imageUrl: "https://openseauserdata.com/files/eff03100ea846862659f0684e1a81a71.svg",
+            name: "Coinmeca MATIC/USDT 5.919999999999999999",
+            tokenId: "2",
+        },
+        {
+            address: "0x8fbcdc17b26741e7be137089823d7640fb0a1a69",
+            slug: "coinmeca-tm41market-matic-usdt",
+            imageUrl: "https://openseauserdata.com/files/ac6a966fe9b230be6728156ca856e657.svg",
+            name: "Coinmeca MATIC/USDT 6.01",
+            tokenId: "1",
+        },
+        {
+            address: "0x8fbcdc17b26741e7be137089823d7640fb0a1a69",
+            slug: "coinmeca-tm41market-matic-usdt",
+            imageUrl: "https://openseauserdata.com/files/69ff4713679f55599836cd0a60d6e530.svg",
+            name: "Coinmeca MATIC/USDT 5.91",
+            tokenId: "3",
+        },
+        {
+            address: "0x8fbcdc17b26741e7be137089823d7640fb0a1a69",
+            slug: "coinmeca-tm41market-matic-usdt",
+            imageUrl: "https://openseauserdata.com/files/eff03100ea846862659f0684e1a81a71.svg",
+            name: "Coinmeca MATIC/USDT 5.919999999999999999",
+            tokenId: "2",
+        },
+        {
+            address: "0x8fbcdc17b26741e7be137089823d7640fb0a1a69",
+            slug: "coinmeca-tm41market-matic-usdt",
+            imageUrl: "https://openseauserdata.com/files/ac6a966fe9b230be6728156ca856e657.svg",
+            name: "Coinmeca MATIC/USDT 6.01",
+            tokenId: "1",
+        },
+        {
+            address: "0x8fbcdc17b26741e7be137089823d7640fb0a1a69",
+            slug: "coinmeca-tm41market-matic-usdt",
+            imageUrl: "https://openseauserdata.com/files/69ff4713679f55599836cd0a60d6e530.svg",
+            name: "Coinmeca MATIC/USDT 5.91",
+            tokenId: "3",
+        },
+    ];
 
-    return { info, assets, history, category, state, colorset };
+    return { info, assets, history, category, state, colorset, positions };
 }

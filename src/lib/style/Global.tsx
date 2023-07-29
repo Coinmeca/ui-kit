@@ -137,6 +137,11 @@ const Global = createGlobalStyle`
             --dim: 255, 255, 255;
         }
 
+        ::selection {
+            color: white;
+            background: black;
+        }
+
         ::-webkit-scrollbar {
             width: 4px;
         }
@@ -155,6 +160,11 @@ const Global = createGlobalStyle`
             --white: 255,255,255;
             --black: 0,0,0;
             --dim: 32, 32, 32;
+        }
+
+        ::selection {
+            color: black;
+            background: white;
         }
 
         html {

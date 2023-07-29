@@ -13,6 +13,7 @@ export default function Page() {
         info: Dummy?.info,
         assets: Dummy?.assets,
         history: Dummy?.history,
+        positions: Dummy?.positions,
     };
 
     const { windowSize } = useWindowSize();
@@ -40,11 +41,12 @@ export default function Page() {
                         {
                             active: typeof asset !== "undefined",
                             children: (
-                                <Asset.Pages.Detail
+                                <Asset.Pages.DetailNFT
                                     info={props?.info}
                                     assets={props?.assets}
                                     asset={asset}
                                     history={history}
+                                    positions={props?.positions}
                                     onBack={() => setAsset(undefined)}
                                     responsive={windowSize.width <= Root.Device.Mobile}
                                 />
