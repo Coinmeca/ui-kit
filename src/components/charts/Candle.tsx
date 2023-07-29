@@ -1,6 +1,7 @@
 "use client";
-import { CandlestickData, createChart, HistogramData } from "lightweight-charts";
 import React, { Suspense, useEffect, useRef, useState } from "react";
+import { createChart } from "lightweight-charts";
+import type { CandlestickData, HistogramData } from "lightweight-charts";
 import { Sort } from "lib/utils";
 import Style from "./Chart.styled";
 
@@ -29,7 +30,7 @@ export interface Price {
 export interface Volume {
     time: number | string;
     value: number | string;
-    type: string;
+    type?: string;
 }
 
 export default function Candle(props: Candle) {

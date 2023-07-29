@@ -6,6 +6,7 @@ import * as SlideContainer from "components/layouts/contents/slide/SlideContaine
 import * as InnerContent from "components/layouts/contents/inner/InnerContent.styled";
 
 const Style = styled.div<{ $change?: string; $fit?: boolean }>`
+    scroll-snap-align: start;
     transition: 0.3s ease;
 
     ${({ $change }) => $change && `--change: ${Root.Color($change)};`}
@@ -19,8 +20,8 @@ const Style = styled.div<{ $change?: string; $fit?: boolean }>`
         width: calc(100% - 8em);
         ${({ $fit }) => ($fit ? `height: calc(100% - 8em); min-height: max-content;` : `height: max-content; min-height: calc(100% - 8em);`)}
 
-        padding: calc4em;
-        gap: calc4em;
+        padding: 4em;
+        gap: 4em;
 
         @media (prefers-color-scheme: light) {
             --white: 0, 0, 0;
@@ -36,14 +37,14 @@ const Style = styled.div<{ $change?: string; $fit?: boolean }>`
 
         @media all and (min-width: ${Root.Device.Desktop}px) {
             width: calc(100% - 16em);
-            padding: calc4em calc8em;
+            padding: 4em 8em;
         }
 
         @media all and (max-width: ${Root.Device.Mobile}px) {
             width: calc(100% - 4em);
             ${({ $fit }) => ($fit ? `height: calc(100% - 4em); min-height: max-content;` : `height: max-content; min-height: calc(100% - 4em);`)}
-            gap: calc(var(--unit) * 2);
-            padding: calc(var(--unit) * 2);
+            gap:2em;
+            padding: 2em;
         }
     }
 

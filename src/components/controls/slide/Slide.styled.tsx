@@ -1,7 +1,14 @@
 import { Root } from "lib/style";
 import { css, styled } from "styled-components";
 
-export const Style = styled.div<{ $scale: number; $timer: number; $padding: number; $nav: "top" | "bottom" | undefined; $vertical: "top" | "center" | "bottom"; $horizon: "left" | "center" | "right" }>`
+export const Style = styled.div<{
+    $scale: number;
+    $timer: number;
+    $padding: number;
+    $nav: "top" | "bottom" | undefined;
+    $vertical: "top" | "center" | "bottom";
+    $horizon: "left" | "center" | "right";
+}>`
     font-size: ${({ $scale }) => $scale}em;
     position: relative;
     display: flex;
@@ -12,17 +19,16 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
     & > * {
         &:first-child {
             & > * {
-                font-size: 1.5em;
                 position: absolute;
                 top: 0;
                 left: 0;
                 display: flex;
                 justify-content: center;
                 align-items: ${({ $vertical }) => ($vertical === "top" ? "flex-start" : $vertical === "bottom" ? "flex-end" : "center")};
-                width: calc(100% - (${({ $padding }) => `${$padding - $padding * 0.66667}em`} * 4));
-                height: calc(100% - (${({ $nav, $padding }) => `${$padding - $padding * 0.66667}em * ${$nav ? 6 : 4}`}));
-                padding: ${({ $padding }) => `${$padding * 0.66667}em`};
-                ${({ $nav, $padding }) => $nav && `padding-${$nav}: ${$padding * 2 * 0.66667}em`};
+                width: -webkit-fill-available;
+                height: -webkit-fill-available;
+                padding: ${({ $padding }) => `${$padding}em`};
+                ${({ $nav, $padding }) => $nav && `padding-${$nav}: ${$padding * 2}em`};
                 text-align: center;
                 transition: 0.3s ease;
                 overflow: hidden;
@@ -103,14 +109,12 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
                 }
 
                 @media all and (min-width: ${Root.Device.Desktop}px) {
-                    width: calc(100% - (${({ $padding }) => `${$padding - $padding * 0.66667}em`} * 8));
-                    padding: ${({ $padding }) => `${$padding * 2 * 0.66667}em`};
-                    ${({ $nav, $padding }) => $nav && `padding-${$nav}: ${$padding * 2 * 0.66667}em`};
+                    padding: ${({ $padding }) => `${$padding}em`};
+                    ${({ $nav, $padding }) => $nav && `padding-${$nav}: ${$padding}em`};
                 }
 
                 @media all and (max-width: ${Root.Device.Tablet}px) {
-                    height: calc(100% - (${({ $nav, $padding }) => `${$padding - $padding * 0.66667}em * ${$nav ? 5 : 4}`}));
-                    ${({ $nav, $padding }) => $nav && `padding-${$nav}: ${$padding * 1.5 * 0.66667}em`};
+                    ${({ $nav, $padding }) => $nav && `padding-${$nav}: ${$padding / 2}em`};
                 }
             }
         }
@@ -156,6 +160,26 @@ export const Style = styled.div<{ $scale: number; $timer: number; $padding: numb
                     }
                 }
             `}
+    }
+
+    @media all and (max-width: ${Root.Device.Tablet}px) {
+        & > * {
+            &:first-child {
+                & > * {
+                    padding: ${({ $padding }) => `${$padding * 0.875}em`};
+                }
+            }
+        }
+    }
+
+    @media all and (max-width: ${Root.Device.Mobile}px) {
+        & > * {
+            &:first-child {
+                & > * {
+                    padding: ${({ $padding }) => `${$padding * 0.75}em`};
+                }
+            }
+        }
     }
 
     @keyframes slide {

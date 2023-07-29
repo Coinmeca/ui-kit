@@ -1,38 +1,29 @@
 "use client";
-import { createChart } from "lightweight-charts";
 import React, { Suspense, useEffect, useRef, useState } from "react";
+import { createChart } from "lightweight-charts";
+import type { LineData } from "lightweight-charts";
 import { Sort } from "lib/utils";
 import Style from "./Chart.styled";
 
-export interface Histogram {
+export interface Line {
     color?: {
         default?: string;
-        up?: string;
-        down?: string;
         theme?: string;
     };
-    data?: Data[];
+    data?: LineData[];
     up?: string;
     down?: string;
     fallback?: any;
     fit?: boolean;
 }
 
-export interface Data {
-    value: number | string;
-    time: number | string;
-    type?: string;
-}
-
-export default function Histogram(props: Histogram) {
+export default function Line(props: Line) {
     const up = props?.up || "up";
     const down = props?.down || "down";
 
     const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
     const [color, setColor] = useState({
         default: props?.color?.default || `rgb(${theme})`,
-        up: props?.color?.up || "0,192,96",
-        down: props?.color?.down || "255,0,64",
         theme: {
             strong: `rgba(${theme}, 0.6)`,
             semi: `rgba(${theme}, 0.45)`,
@@ -67,12 +58,9 @@ export default function Histogram(props: Histogram) {
         if (props?.data && props?.data?.length > 0) {
             setData(
                 Sort(
-                    props?.data?.map((v: Data) => {
+                    props?.data?.map((v: LineData) => {
                         return {
                             ...v,
-                            ...(v?.type && {
-                                color: `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`,
-                            }),
                         };
                     }),
                     "time",
@@ -140,12 +128,13 @@ export default function Histogram(props: Histogram) {
             });
 
             if (data) {
-                const series = chart.addHistogramSeries({
+                const series = chart.addLineSeries({
                     color: color.default,
                     priceFormat: {
                         type: "volume",
                     },
-                    priceScaleId: "", // set as an overlay by setting a blank priceScaleId
+                    // set as an overlay by setting a blank priceScaleId
+                    priceScaleId: "",
                     // set the positioning of the volume series
                 });
 

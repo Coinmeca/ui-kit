@@ -16,7 +16,7 @@ export default function List(props: List) {
 
     return (
         <Style style={props?.style}>
-            <AnimatePresence>
+            <AnimatePresence mode="popLayout">
                 {props?.list &&
                     (typeof props?.list !== "string" && props?.list?.length > 0 ? (
                         props?.list?.map((data: any, i: number) => (
