@@ -221,7 +221,7 @@ export function Detail(props: Detail) {
                 <Layouts.Contents.GridContainer
                     fullsize
                     area={`'info info' 'recent chart' 'recent trade'`}
-                    width={`${props?.responsive ? "0.75fr" : "40em"} 1fr`}
+                    width={`${props?.responsive ? "40em" : "0.75fr"} 1fr`}
                     height={"max-content 1fr max-content"}
                     gap={3}
                     responsive={[
@@ -237,16 +237,21 @@ export function Detail(props: Detail) {
                         {
                             area: "info",
                             children: (
-                                <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "info" : true}>
-                                    <Layouts.Contents.InnerContent scroll>
+                                <Layouts.Contents.SlideContent active={props?.responsive ? true : mobile === "info"}>
+                                    <Layouts.Contents.InnerContent
+                                        scroll={windowSize.width > Root.Device.Tablet || windowSize.width <= 640}
+                                        style={{
+                                            ...(windowSize.width <= Root.Device.Tablet && windowSize.width > 640 && { flexDirection: "row" }),
+                                        }}
+                                    >
                                         <Layouts.Row
                                             fix
                                             responsive="mobile"
-                                            gap={props?.responsive ? 1 : 4}
+                                            gap={props?.responsive ? 4 : 1}
                                             style={{
                                                 marginTop: "0.5em",
                                                 alignItems: "center",
-                                                ...(props?.responsive && { height: "100%" }),
+                                                ...(!props?.responsive && { height: "100%" }),
                                             }}
                                         >
                                             <Layouts.Col gap={0.5}>
@@ -256,7 +261,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -272,7 +277,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -295,7 +300,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -311,7 +316,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -329,7 +334,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -345,7 +350,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -363,7 +368,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -379,7 +384,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -391,14 +396,14 @@ export function Detail(props: Detail) {
                                                 </Layouts.Row>
                                             </Layouts.Col>
                                         </Layouts.Row>
-                                        <Layouts.Divider margin={1} />
+                                        <Layouts.Divider margin={1} vertical={windowSize.width <= Root.Device.Tablet && windowSize.width > 640} />
                                         <Layouts.Row
                                             fix
                                             responsive="mobile"
-                                            gap={props?.responsive ? 1 : 4}
+                                            gap={props?.responsive ? 4 : 1}
                                             style={{
                                                 alignItems: "center",
-                                                ...(props?.responsive && { height: "100%" }),
+                                                ...(!props?.responsive && { height: "100%" }),
                                             }}
                                         >
                                             <Layouts.Col gap={0.5}>
@@ -408,7 +413,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -424,7 +429,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -442,7 +447,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -458,7 +463,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -476,7 +481,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -492,7 +497,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -510,7 +515,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -526,7 +531,7 @@ export function Detail(props: Detail) {
                                                     style={{
                                                         alignItems: "center",
                                                         padding: "0.5em",
-                                                        ...(props?.responsive && { height: "100%" }),
+                                                        ...(!props?.responsive && { height: "100%" }),
                                                     }}
                                                 >
                                                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
@@ -551,7 +556,7 @@ export function Detail(props: Detail) {
                         {
                             area: "chart",
                             children: (
-                                <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "chart" : true}>
+                                <Layouts.Contents.SlideContent active={props?.responsive ? true : mobile === "chart"}>
                                     <Layouts.Menu
                                         hide="mobile"
                                         menu={[
@@ -580,7 +585,7 @@ export function Detail(props: Detail) {
                         {
                             area: "recent",
                             children: (
-                                <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "recent" : true}>
+                                <Layouts.Contents.SlideContent active={props?.responsive ? true : mobile === "recent"}>
                                     <Layouts.Contents.InnerContent>
                                         <Layouts.Menu
                                             hide="mobile"

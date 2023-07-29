@@ -17,7 +17,7 @@ export default function Page() {
     const Dummy = Data();
     const props = {
         assets: Dummy.assets,
-        responsive: windowSize.width > Root.Device.Mobile,
+        responsive: windowSize.width <= Root.Device.Mobile,
         asset: asset,
     };
 
@@ -40,7 +40,6 @@ export default function Page() {
                                 assets={props?.assets}
                                 page={page}
                                 onSelect={(a?: Token, f?: any) => {
-                                    console.log(a, f);
                                     setAsset(a);
                                     setFarm(f);
                                 }}

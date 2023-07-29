@@ -31,12 +31,15 @@ const gap = css`
 `;
 const Style = styled.div<{
     $gap: number;
-    $fit: boolean;
+    $change?: string;
     $responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     $reverse?: boolean;
+    $fit: boolean;
     $fix?: boolean;
 }>`
     --gap: ${({ $gap }) => ($gap === 0 ? 0 : $gap || 4)}em;
+
+    ${({ $change }) => $change && `--change: ${Root.Color($change)};`}
 
     display: flex;
     height: max-content;

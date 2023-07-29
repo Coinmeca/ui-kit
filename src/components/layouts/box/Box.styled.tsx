@@ -8,7 +8,7 @@ import * as InnerContent from "components/layouts/contents/inner/InnerContent.st
 const Style = styled.div<{ $change?: string; $fit?: boolean }>`
     transition: 0.3s ease;
 
-    ${({ $change }) => $change && `--change: ${$change};`}
+    ${({ $change }) => $change && `--change: ${Root.Color($change)};`}
 
     ${Page.default} > &,
     ${Page.default} > ${SlideContainer.default} > * > & {
