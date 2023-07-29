@@ -307,7 +307,7 @@ export function Detail(props: Detail) {
                                                         Total Value Locked
                                                     </Elements.Text>
                                                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                                                        {Format(props?.info?.tvl, "currency", true)}
+                                                        $ {Format(props?.info?.tvl, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                                 <Layouts.Row
@@ -323,7 +323,7 @@ export function Detail(props: Detail) {
                                                         Total Value Locked Change
                                                     </Elements.Text>
                                                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                                                        {Format(props?.info?.tvl_change, "currency", true)}
+                                                        $ {Format(props?.info?.tvl_change, "currency", true)}
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                             </Layouts.Col>
