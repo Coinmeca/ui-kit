@@ -16,12 +16,11 @@ const Style = styled.div<{ $change?: string; $fit?: boolean }>`
         flex-direction: column;
         background: rgb(var(--dim));
         color: rgba(var(--black));
-        width: calc(100% - (var(--unit) * 8));
-        ${({ $fit }) =>
-            $fit ? `height: calc(100% - (var(--unit) * 8)); min-height: max-content;` : `height: max-content; min-height: calc(100% - (var(--unit) * 8));`}
+        width: calc(100% - 8em);
+        ${({ $fit }) => ($fit ? `height: calc(100% - 8em); min-height: max-content;` : `height: max-content; min-height: calc(100% - 8em);`)}
 
-        padding: calc(var(--unit) * 4);
-        gap: calc(var(--unit) * 4);
+        padding: calc4em;
+        gap: calc4em;
 
         @media (prefers-color-scheme: light) {
             --white: 0, 0, 0;
@@ -36,14 +35,13 @@ const Style = styled.div<{ $change?: string; $fit?: boolean }>`
         }
 
         @media all and (min-width: ${Root.Device.Desktop}px) {
-            width: calc(100% - (var(--unit) * 16));
-            padding: calc(var(--unit) * 4) calc(var(--unit) * 8);
+            width: calc(100% - 16em);
+            padding: calc4em calc8em;
         }
 
         @media all and (max-width: ${Root.Device.Mobile}px) {
-            width: calc(100% - (var(--unit) * 4));
-            ${({ $fit }) =>
-                $fit ? `height: calc(100% - (var(--unit) * 4)); min-height: max-content;` : `height: max-content; min-height: calc(100% - (var(--unit) * 4));`}
+            width: calc(100% - 4em);
+            ${({ $fit }) => ($fit ? `height: calc(100% - 4em); min-height: max-content;` : `height: max-content; min-height: calc(100% - 4em);`)}
             gap: calc(var(--unit) * 2);
             padding: calc(var(--unit) * 2);
         }
