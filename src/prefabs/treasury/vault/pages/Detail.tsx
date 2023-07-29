@@ -239,9 +239,9 @@ export function Detail(props: Detail) {
                             children: (
                                 <Layouts.Contents.SlideContent active={props?.responsive ? true : mobile === "info"}>
                                     <Layouts.Contents.InnerContent
-                                        scroll={windowSize.width > Root.Device.Tablet || windowSize.width <= 640}
+                                        scroll={windowSize.width > 840 || windowSize.width <= 640}
                                         style={{
-                                            ...(windowSize.width <= Root.Device.Tablet && windowSize.width > 640 && { flexDirection: "row" }),
+                                            ...(windowSize.width <= 840 && windowSize.width > 640 && { flexDirection: "row" }),
                                         }}
                                     >
                                         <Layouts.Row
@@ -396,7 +396,7 @@ export function Detail(props: Detail) {
                                                 </Layouts.Row>
                                             </Layouts.Col>
                                         </Layouts.Row>
-                                        <Layouts.Divider margin={1} vertical={windowSize.width <= Root.Device.Tablet && windowSize.width > 640} />
+                                        <Layouts.Divider margin={1} vertical={windowSize.width <= 840 && windowSize.width > 640} />
                                         <Layouts.Row
                                             fix
                                             responsive="mobile"
