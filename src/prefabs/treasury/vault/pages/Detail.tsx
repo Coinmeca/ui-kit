@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
 import { Charts, Controls, Elements, Layouts } from "components";
-import { Capitalize, Format } from "lib/utils";
+import { Modal } from "containers";
 import { Vault } from "prefabs/treasury";
 import { Token } from "types/web3";
 import { Trade as Data } from "types/history";
 import { Root } from "lib/style";
-import { Modal } from "containers";
+import { Capitalize, Format } from "lib/utils";
 import usePortal from "hooks/usePortal";
 import useWindowSize from "hooks/useWindowSize";
 
@@ -117,19 +117,27 @@ export function Detail(props: Detail) {
                             share: data?.share,
                         });
                     },
+                    style: { padding: "2em" },
                     children: [
                         [
                             [
                                 {
-                                    style: { gap: 0 },
+                                    style: { gap: 0, maxWidth: "max-content" },
                                     children: [
                                         <>
-                                            <Elements.Text color={colorset[`${data?.type as "DEPOSIT" | "WITHDRAW"}`]} case={"capital"}>
-                                                {data?.type}
+                                            <Elements.Text color={colorset[`${data?.type as "DEPOSIT" | "WITHDRAW"}`]} case={"capital"} fit>
+                                                {Capitalize(data?.type)}
                                             </Elements.Text>
                                         </>,
                                         <>
-                                            <Elements.Text align={"right"}>{Format(data?.share || 0, "currency", true)} %</Elements.Text>
+                                            <Layouts.Row gap={0.5} style={{ opacity: 0.6 }}>
+                                                <Elements.Text align={"right"} style={{ fontFeatureSettings: "initial" }} fit>
+                                                    {Format(data?.share || 0, "currency", true)}
+                                                </Elements.Text>
+                                                <Elements.Text align={"left"} opacity={0.6} fit>
+                                                    %
+                                                </Elements.Text>
+                                            </Layouts.Row>
                                         </>,
                                     ],
                                 },
@@ -138,7 +146,9 @@ export function Detail(props: Detail) {
                                     children: [
                                         <>
                                             <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{Format(data?.volume || 0, "currency", true)}</Elements.Text>
+                                                <Elements.Text align={"right"} style={{ fontFeatureSettings: "initial" }}>
+                                                    {Format(data?.volume || 0, "currency", true)}
+                                                </Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ maxWidth: "4em" }} fit>
                                                     {props?.asset?.symbol}
                                                 </Elements.Text>
@@ -146,7 +156,9 @@ export function Detail(props: Detail) {
                                         </>,
                                         <>
                                             <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                <Elements.Text align={"right"}>{Format(data?.meca || 0, "currency", true)}</Elements.Text>
+                                                <Elements.Text align={"right"} style={{ fontFeatureSettings: "initial" }}>
+                                                    {Format(data?.meca || 0, "currency", true)}
+                                                </Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ maxWidth: "4em" }} fit>
                                                     MECA
                                                 </Elements.Text>
