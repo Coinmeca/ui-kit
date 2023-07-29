@@ -26,7 +26,7 @@ export default function View(props: any) {
             data?.length > 0 &&
             data?.map((data: Token) => ({
                 onClick: () => handleSelectedAsset(data),
-                style: { padding: props?.responsive && "2em" },
+                style: { padding: "2em" },
                 children: [
                     {
                         style: { flex: 1 },
