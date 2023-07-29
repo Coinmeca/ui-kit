@@ -1,9 +1,6 @@
 "use client";
 import { Controls, Elements, Layouts } from "components";
-import { AnimatePresence, motion } from "framer-motion";
-import { Root } from "lib/style";
-import { Format, Sign } from "lib/utils";
-import { useState } from "react";
+import { Format } from "lib/utils";
 import { Asset } from "types/web3";
 import { Vault } from ".";
 
@@ -11,11 +8,14 @@ export interface View {
     assets?: Asset[];
     page?: "vault" | "farm";
     responsive?: boolean;
+    onPage?: Function;
     onSelect?: Function;
 }
 
 export default function View(props: View) {
-    const [tab, setTab] = useState(props?.page);
+    const handlePage = (page: "vault" | "farm") => {
+        if (typeof props?.onPage === "function") props?.onPage(page);
+    };
 
     return (
         <>
@@ -30,11 +30,11 @@ export default function View(props: View) {
                                 img: { src: 4 },
                             },
                             children: (
-                                <Layouts.Col gap={1}>
-                                    <Elements.Text type={"h4"}>Much Faster and Much Easier Coin Exchange</Elements.Text>
+                                <Layouts.Col gap={0}>
                                     <Elements.Text weight={"normal"} responsive={{ device: "mobile", size: 4 }}>
-                                        Start with your new experience coin trading system on Coinmeca.
+                                        {Format(Date.now(), "date")}
                                     </Elements.Text>
+                                    <Elements.Text type={"h6"}>Total Value Locked</Elements.Text>
                                 </Layouts.Col>
                             ),
                         },
@@ -43,9 +43,11 @@ export default function View(props: View) {
                                 img: { src: 4 },
                             },
                             children: (
-                                <Layouts.Col gap={1}>
-                                    <Elements.Text type={"h4"}>Meet Brand New Finance</Elements.Text>
-                                    <Elements.Text weight={"normal"}>Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.</Elements.Text>
+                                <Layouts.Col gap={0}>
+                                    <Elements.Text weight={"normal"} responsive={{ device: "mobile", size: 4 }}>
+                                        {Format(Date.now(), "date")}
+                                    </Elements.Text>
+                                    <Elements.Text type={"h6"}>Total Volume</Elements.Text>
                                 </Layouts.Col>
                             ),
                         },
@@ -62,19 +64,19 @@ export default function View(props: View) {
                                     children: [
                                         [
                                             <>
-                                                <Controls.Tab active={tab === "vault"} onClick={() => setTab("vault")}>
+                                                <Controls.Tab active={props?.page === "vault"} onClick={() => handlePage("vault")}>
                                                     Vault
                                                 </Controls.Tab>
                                             </>,
                                             <>
-                                                <Controls.Tab active={tab === "farm"} onClick={() => setTab("farm")}>
+                                                <Controls.Tab active={props?.page === "farm"} onClick={() => handlePage("farm")}>
                                                     Farm
                                                 </Controls.Tab>
                                             </>,
                                         ],
                                         [
                                             <Controls.Tab key="listing" iconLeft={"plus"} style={{ ...(!props?.responsive && { marginRight: "1em" }) }}>
-                                                {tab === "vault" ? "Listing" : "Create"}
+                                                {props?.page === "vault" ? "Listing" : "Create"}
                                             </Controls.Tab>,
                                         ],
                                     ],
@@ -102,11 +104,11 @@ export default function View(props: View) {
                     <Layouts.Contents.TabContainer
                         contents={[
                             {
-                                active: tab === "vault",
+                                active: props?.page === "vault",
                                 children: <Vault.Containers.Assets assets={props?.assets} onSelect={props?.onSelect} responsive={props?.responsive} />,
                             },
                             {
-                                active: tab === "farm",
+                                active: props?.page === "farm",
                                 children: <>{/* <Layouts.List list={assetListFormatter(props?.assets)} /> */}</>,
                             },
                         ]}
