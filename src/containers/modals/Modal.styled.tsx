@@ -49,7 +49,7 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
         display: flex;
         flex-direction: column;
         width: -webkit-fill-available;
-        gap: 2em;
+        gap: 4em;
         padding: 4em;
         transition: 0.3s ease;
     }
@@ -74,7 +74,7 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
         color: white;
     }
 
-    @media all and (max-width: ${Root.Device.Mobile}px) {
+    @media all and (max-width: 640px) {
         min-width: calc(100% - 4em);
         max-width: calc(100% - 4em);
         margin: 2em;
