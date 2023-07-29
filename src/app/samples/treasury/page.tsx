@@ -21,10 +21,7 @@ export default function Page() {
         asset: asset,
     };
 
-    useEffect(() => {
-        console.log("page", page);
-        console.log("slideNo", page ? 1 : 0);
-    }, [page]);
+    useEffect(() => {}, [asset, farm]);
 
     const cover: any = useRef(null);
 
@@ -39,6 +36,7 @@ export default function Page() {
                             <Treasury.View
                                 assets={props?.assets}
                                 page={page}
+                                onPage={(page?: "vault" | "farm") => setPage(page)}
                                 onSelect={(a?: Token, f?: any) => {
                                     setAsset(a);
                                     setFarm(f);
