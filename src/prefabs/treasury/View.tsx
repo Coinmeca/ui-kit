@@ -19,7 +19,7 @@ export default function View(props: View) {
 
     return (
         <>
-            <Layouts.Cover height={32}>
+            <Layouts.Cover height={32} style={{ scrollSnapAlign: "start" }}>
                 <Controls.Slide
                     timer={0}
                     slideNo={props?.page === "vault" ? 0 : 1}
@@ -54,7 +54,7 @@ export default function View(props: View) {
                     ]}
                 />
             </Layouts.Cover>
-            <Layouts.Box fit>
+            <Layouts.Box fit style={{ scrollSnapAlign: "start" }}>
                 <Layouts.Contents.InnerContent>
                     <Layouts.Row gap={0} responsive={"mobile"}>
                         <Layouts.Menu

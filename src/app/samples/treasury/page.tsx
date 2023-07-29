@@ -21,14 +21,9 @@ export default function Page() {
         asset: asset,
     };
 
-    useEffect(() => {}, [asset, farm]);
-
-    const cover: any = useRef(null);
-
     return (
         <Layouts.Page style={{ background: "rgb(var(--dim))" }}>
             <Layouts.Contents.SlideContainer
-                style={{ height: `calc(100% + ${cover?.current?.clientHeight || 0})` }}
                 contents={[
                     {
                         active: !asset,

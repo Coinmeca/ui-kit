@@ -302,7 +302,7 @@ export default function DetailNFT(props: Detail) {
                                             />
                                             <Layouts.Contents.GridContainer direction="row" width={{ min: 24 }} gap={4} style={{ padding: "2em" }} fullsize>
                                                 {props?.positions?.map((position: any, i: number) => (
-                                                    <Layouts.Col key={i} gap={0}>
+                                                    <Layouts.Col key={i} gap={0} style={{ scrollSnapAlign: "start" }}>
                                                         <div>
                                                             <Image
                                                                 width={0}
