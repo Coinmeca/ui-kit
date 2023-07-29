@@ -1,11 +1,14 @@
 "use client";
 import { Controls, Elements, Layouts } from "components";
 import { AnimatePresence, motion } from "framer-motion";
+import { Root } from "lib/style";
+import { Format, Sign } from "lib/utils";
 import { useState } from "react";
-import { Token } from "types/web3";
+import { Asset } from "types/web3";
+import { Vault } from ".";
 
 export interface View {
-    assets?: Token[];
+    assets?: Asset[];
     page?: "vault" | "farm";
     responsive?: boolean;
     onSelect?: Function;
@@ -13,103 +16,6 @@ export interface View {
 
 export default function View(props: View) {
     const [tab, setTab] = useState(props?.page);
-
-    const assetListFormatter = (data: Token[] | undefined) => {
-        return (
-            data &&
-            typeof data !== "string" &&
-            data?.length > 0 &&
-            data?.map((data: Token) => ({
-                onClick: () => {
-                    if (typeof props?.onSelect === "function") props?.onSelect(data);
-                },
-                style: { padding: "2em" },
-                children: [
-                    {
-                        style: { flex: 1 },
-                        children: [
-                            {
-                                style: { maxWidth: "max-content" },
-                                children: (
-                                    <>
-                                        <Elements.Avatar
-                                            size={props?.responsive ? 4 : 3.5}
-                                            style={{ marginRight: props?.responsive && "1em" }}
-                                            img={require(`/src/assets/coins/${data?.symbol?.toLowerCase()}.png`)}
-                                        />
-                                    </>
-                                ),
-                            },
-                            [
-                                {
-                                    style: { gap: "0" },
-                                    children: [
-                                        <>
-                                            <Elements.Text height={1.25}>{data?.symbol}</Elements.Text>
-                                        </>,
-                                        <>
-                                            <Elements.Text height={1.25} opacity={0.3}>
-                                                {data?.name}
-                                            </Elements.Text>
-                                        </>,
-                                    ],
-                                },
-                            ],
-                        ],
-                    },
-                    {
-                        style: { flex: 2 },
-                        children: [
-                            [
-                                {
-                                    style: { gap: 0 },
-                                    children: [
-                                        <>
-                                            <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{data?.balance}</Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    {data?.symbol}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                        <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                <Elements.Text align={"right"}>$ {data?.using}</Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    USD
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                    ],
-                                },
-                                {
-                                    style: { gap: 0 },
-                                    children: [
-                                        <>
-                                            <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{data?.using}</Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    {data?.symbol}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                        <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                <Elements.Text align={"right"}>$ {data?.using}</Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    USD
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                    ],
-                                },
-                            ],
-                        ],
-                    },
-                ],
-            }))
-        );
-    };
 
     return (
         <>
@@ -121,12 +27,10 @@ export default function View(props: View) {
                     slides={[
                         {
                             background: {
-                                img: {
-                                    src: 4,
-                                },
+                                img: { src: 4 },
                             },
                             children: (
-                                <Layouts.Col align={"left"} gap={1}>
+                                <Layouts.Col gap={1}>
                                     <Elements.Text type={"h4"}>Much Faster and Much Easier Coin Exchange</Elements.Text>
                                     <Elements.Text weight={"normal"} responsive={{ device: "mobile", size: 4 }}>
                                         Start with your new experience coin trading system on Coinmeca.
@@ -136,12 +40,10 @@ export default function View(props: View) {
                         },
                         {
                             background: {
-                                img: {
-                                    src: 4,
-                                },
+                                img: { src: 4 },
                             },
                             children: (
-                                <Layouts.Col align={"left"} gap={1}>
+                                <Layouts.Col gap={1}>
                                     <Elements.Text type={"h4"}>Meet Brand New Finance</Elements.Text>
                                     <Elements.Text weight={"normal"}>Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.</Elements.Text>
                                 </Layouts.Col>
@@ -156,7 +58,7 @@ export default function View(props: View) {
                         <Layouts.Menu
                             menu={[
                                 {
-                                    style: { padding: props?.responsive && "1em 0" },
+                                    style: { padding: !props?.responsive && "1em 0" },
                                     children: [
                                         [
                                             <>
@@ -171,44 +73,16 @@ export default function View(props: View) {
                                             </>,
                                         ],
                                         [
-                                            <>
-                                                <AnimatePresence mode="wait">
-                                                    {tab === "vault" ? (
-                                                        <Controls.Tab
-                                                            key="listing"
-                                                            iconLeft={"plus"}
-                                                            // as={motion.div}
-                                                            // initial={{ opacity: 0 }}
-                                                            // animate={{ opacity: 1 }}
-                                                            // exit={{ opacity: 0 }}
-                                                            // transition={{ ease: "easeInOut", duration: 0.15 }}
-                                                            // layout
-                                                        >
-                                                            Listing
-                                                        </Controls.Tab>
-                                                    ) : (
-                                                        <Controls.Tab
-                                                            key="create"
-                                                            iconLeft={"plus"}
-                                                            // as={motion.div}
-                                                            // initial={{ opacity: 0 }}
-                                                            // animate={{ opacity: 1 }}
-                                                            // exit={{ opacity: 0 }}
-                                                            // transition={{ ease: "easeInOut", duration: 0.15 }}
-                                                            // layout
-                                                        >
-                                                            Create
-                                                        </Controls.Tab>
-                                                    )}
-                                                </AnimatePresence>
-                                            </>,
+                                            <Controls.Tab key="listing" iconLeft={"plus"} style={{ ...(!props?.responsive && { paddingRight: "1em" }) }}>
+                                                {tab === "vault" ? "Listing" : "Create"}
+                                            </Controls.Tab>,
                                         ],
                                     ],
                                 },
                             ]}
                         />
                         <Layouts.Menu
-                            style={{ maxWidth: props?.responsive && "max-content" }}
+                            style={{ maxWidth: !props?.responsive && "max-content" }}
                             menu={[
                                 {
                                     style: { padding: "1em 0" },
@@ -229,15 +103,11 @@ export default function View(props: View) {
                         contents={[
                             {
                                 active: tab === "vault",
-                                children: <Layouts.List list={assetListFormatter(props?.assets)} />,
+                                children: <Vault.Containers.Assets assets={props?.assets} onSelect={props?.onSelect} responsive={props?.responsive} />,
                             },
                             {
                                 active: tab === "farm",
-                                children: (
-                                    <>
-                                        <Layouts.List list={assetListFormatter(props?.assets)} />
-                                    </>
-                                ),
+                                children: <>{/* <Layouts.List list={assetListFormatter(props?.assets)} /> */}</>,
                             },
                         ]}
                     />

@@ -20,7 +20,7 @@ export default function Page() {
 
     return (
         <Layouts.Page>
-            <Layouts.Box fit change={parseFloat(market?.change) > 0 ? "var(--green)" : parseFloat(market?.change) < 0 && "var(--red)"}>
+            <Layouts.Box fit change={parseFloat(market?.change) > 0 ? "green" : parseFloat(market?.change) < 0 && "red"}>
                 <AnimatePresence mode="wait">
                     <Layouts.Contents.InnerContent>
                         <Layouts.Row fix style={{ alignItems: "center" }}>

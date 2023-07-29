@@ -4,12 +4,13 @@ export interface Row {
     children?: any;
     style?: object;
     gap?: number;
+    change?: string | false;
     align?: "left" | "center" | "right" | "stretch";
-    fit?: boolean;
     show?: "desktop" | "laptop" | "tablet" | "mobile";
     hide?: "desktop" | "laptop" | "tablet" | "mobile";
     responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     reverse?: boolean;
+    fit?: boolean;
     fix?: boolean;
 }
 
@@ -21,7 +22,7 @@ export default function Row(props: Row) {
     const fix = props?.fix || false;
 
     return (
-        <Style style={props?.style} $gap={gap} $fit={fit} $responsive={props?.responsive} $reverse={reverse} $fix={fix} data-row={align} data-show={props?.show} data-hide={props?.hide}>
+        <Style style={props?.style} $gap={gap} $change={props?.change || undefined} $fit={fit} $responsive={props?.responsive} $reverse={reverse} $fix={fix} data-row={align} data-show={props?.show} data-hide={props?.hide}>
             {props.children}
         </Style>
     );

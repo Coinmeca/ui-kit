@@ -134,6 +134,12 @@ export function Format(value: number | string, type?: 'email' | 'number' | 'curr
     }
 }
 
+export function Sign(value: number | string): string {
+    value = parseFloat(value?.toString());
+    if (isNaN(value)) return '';
+    return value > 0 ? '+' : value < 0 ? '-' : '';
+}
+
 export function getFees(n: number | string, fee: number, divider?: number) {
     return (parseFloat(Format(n, 'number', false).toString()) * fee) / (divider || 10000);
 }
