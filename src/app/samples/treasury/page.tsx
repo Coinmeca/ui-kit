@@ -49,7 +49,7 @@ export default function Page() {
                                     setAsset(undefined);
                                     setFarm(undefined);
                                 }}
-                                responsive={!props?.responsive}
+                                responsive={props?.responsive}
                             />
                         ),
                     },

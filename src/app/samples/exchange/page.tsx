@@ -252,70 +252,72 @@ export default function Page() {
                                     area: "book",
                                     children: (
                                         <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "orderbook"}>
-                                            <Layouts.Menu
-                                                menu={{
-                                                    style: { overflow: "initial" },
-                                                    children: [
-                                                        [
+                                            <Layouts.Contents.InnerContent>
+                                                <Layouts.Menu
+                                                    menu={{
+                                                        style: { overflow: "initial" },
+                                                        children: [
+                                                            [
+                                                                <>
+                                                                    <Controls.Tab
+                                                                        active={marketTab === "orderbook"}
+                                                                        onClick={() => {
+                                                                            setMarketTab("orderbook");
+                                                                            // setMobile("orderbook");
+                                                                        }}
+                                                                    >
+                                                                        Orderbook
+                                                                    </Controls.Tab>
+                                                                </>,
+                                                                <>
+                                                                    <Controls.Tab
+                                                                        active={marketTab === "history"}
+                                                                        onClick={() => {
+                                                                            setMarketTab("history");
+                                                                            // setMobile("history");
+                                                                        }}
+                                                                    >
+                                                                        Trades
+                                                                    </Controls.Tab>
+                                                                </>,
+                                                            ],
                                                             <>
-                                                                <Controls.Tab
-                                                                    active={marketTab === "orderbook"}
-                                                                    onClick={() => {
-                                                                        setMarketTab("orderbook");
-                                                                        // setMobile("orderbook");
+                                                                <Controls.Dropdown
+                                                                    option={props?.orderbookView[view]}
+                                                                    options={props?.orderbookView}
+                                                                    onClickItem={(e: any, v: any, k: any) => {
+                                                                        setView(k);
                                                                     }}
-                                                                >
-                                                                    Orderbook
-                                                                </Controls.Tab>
-                                                            </>,
-                                                            <>
-                                                                <Controls.Tab
-                                                                    active={marketTab === "history"}
-                                                                    onClick={() => {
-                                                                        setMarketTab("history");
-                                                                        // setMobile("history");
-                                                                    }}
-                                                                >
-                                                                    Trades
-                                                                </Controls.Tab>
+                                                                />
                                                             </>,
                                                         ],
-                                                        <>
-                                                            <Controls.Dropdown
-                                                                option={props?.orderbookView[view]}
-                                                                options={props?.orderbookView}
-                                                                onClickItem={(e: any, v: any, k: any) => {
-                                                                    setView(k);
-                                                                }}
-                                                            />
-                                                        </>,
-                                                    ],
-                                                }}
-                                                hide={"mobile"}
-                                            />
-                                            <Layouts.Contents.TabContainer
-                                                contents={[
-                                                    {
-                                                        active: marketTab === "orderbook" || mobile === "orderbook",
-                                                        style: { padding: 0 },
-                                                        children: (
-                                                            <Exchange.Containers.Orderbook
-                                                                view={view}
-                                                                asks={props?.orderbook?.asks}
-                                                                bids={props?.orderbook?.bids}
-                                                                base={props?.market?.base?.symbol}
-                                                                quote={props?.market?.quote?.symbol}
-                                                                responsive={{ device: "mobile", vertical: windowSize.width < 640 }}
-                                                                guidance
-                                                            />
-                                                        ),
-                                                    },
-                                                    {
-                                                        active: marketTab === "history" || mobile === "history",
-                                                        children: <></>,
-                                                    },
-                                                ]}
-                                            />
+                                                    }}
+                                                    hide={"mobile"}
+                                                />
+                                                <Layouts.Contents.TabContainer
+                                                    contents={[
+                                                        {
+                                                            active: marketTab === "orderbook" || mobile === "orderbook",
+                                                            style: { padding: 0 },
+                                                            children: (
+                                                                <Exchange.Containers.Orderbook
+                                                                    view={view}
+                                                                    asks={props?.orderbook?.asks}
+                                                                    bids={props?.orderbook?.bids}
+                                                                    base={props?.market?.base?.symbol}
+                                                                    quote={props?.market?.quote?.symbol}
+                                                                    responsive={{ device: "mobile", vertical: windowSize.width < 640 }}
+                                                                    guidance
+                                                                />
+                                                            ),
+                                                        },
+                                                        {
+                                                            active: marketTab === "history" || mobile === "history",
+                                                            children: <></>,
+                                                        },
+                                                    ]}
+                                                />
+                                            </Layouts.Contents.InnerContent>
                                         </Layouts.Contents.SlideContent>
                                     ),
                                     responsive: [

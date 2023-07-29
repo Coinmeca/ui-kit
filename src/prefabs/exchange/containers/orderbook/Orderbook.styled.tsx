@@ -83,6 +83,7 @@ export const Tick = styled.div`
     display: table;
     border-collapse: collapse;
     font-feature-settings: "tnum" on, "lnum" on;
+    scroll-snap-align: start;
     cursor: pointer;
     -webkit-user-drag: none;
     -webkit-touch-callout: none;
@@ -91,6 +92,10 @@ export const Tick = styled.div`
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    &:last-child {
+        scroll-snap-align: end;
+    }
 
     & > * {
         display: table-row;
@@ -149,7 +154,7 @@ export const Tick = styled.div`
     }
 `;
 
-export const Asks = styled.div<{ $show: boolean }>`
+export const Ticks = (color: string, show: boolean) => css`
     font-size: 1em;
     display: flex;
     flex-direction: column-reverse;
@@ -157,13 +162,15 @@ export const Asks = styled.div<{ $show: boolean }>`
     height: 100%;
     max-height: 100%;
     overflow: hidden auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
     transition: 0.3s ease;
 
-    ${({ $show }) => !$show && `max-height: 0;`}
+    ${!show && `max-height: 0;`}
 
     & > ${Tick} {
-        color: rgb(var(--red));
-        ${Balance("red")}
+        color: rgb(var(--${color}));
+        ${Balance(color)}
 
         & > * > * > * {
             &:nth-child(1) {
@@ -175,30 +182,12 @@ export const Asks = styled.div<{ $show: boolean }>`
     }
 `;
 
+export const Asks = styled.div<{ $show: boolean }>`
+    ${({ $show }) => Ticks("red", $show)}
+`;
+
 export const Bids = styled.div<{ $show: boolean }>`
-    font-size: 1em;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
-    overflow: hidden auto;
-    transition: 0.3s ease;
-
-    ${({ $show }) => !$show && `max-height: 0;`}
-
-    & > ${Tick} {
-        color: rgb(var(--green));
-        ${Balance("green")}
-
-        & > * > * > * {
-            &:nth-child(1) {
-                & > span {
-                    left: 0.5em;
-                }
-            }
-        }
-    }
+    ${({ $show }) => Ticks("green", $show)}
 `;
 
 const Responsive = (vertical?: boolean) => css`
