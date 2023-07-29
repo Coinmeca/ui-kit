@@ -115,7 +115,7 @@ export default function View(props: any) {
     };
 
     return (
-        <>
+        <Layouts.Contents.InnerContent>
             <Layouts.Row fix style={{ minHeight: "4em", alignItems: "center" }}>
                 <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
                     <Layouts.Row responsive={"mobile"} gap={1} fit>
@@ -346,6 +346,6 @@ export default function View(props: any) {
                     },
                 ]}
             />
-        </>
+        </Layouts.Contents.InnerContent>
     );
 }

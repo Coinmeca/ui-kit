@@ -38,6 +38,7 @@ const Style = styled.div<{ $active?: boolean; $change?: string; $event: boolean 
     font-feature-settings: "tnum" on, "lnum" on;
     cursor: ${({ $event }) => ($event ? "pointer" : "default")};
     pointer-events: ${({ $event }) => ($event ? "inherit" : "none")};
+    scroll-snap-align: start;
     transition: 0.3s ease;
 
     ${({ $change }) => $change && `--change: ${$change};`}
@@ -61,6 +62,10 @@ const Style = styled.div<{ $active?: boolean; $change?: string; $event: boolean 
             css`
                 background: rgba(var(--white), var(--o015));
             `};
+    }
+
+    &:last-child {
+        scroll-snap-align: end;
     }
 
     @media all and (max-width: ${Root.Device.Mobile}px) {

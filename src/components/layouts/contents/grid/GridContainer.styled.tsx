@@ -65,6 +65,14 @@ export const Grid = styled.div<{
     display: grid;
     transition: 0.3s ease;
 
+    & > * {
+        scroll-snap-align: start;
+
+        &:last-child {
+            scroll-snap-align: end;
+        }
+    }
+
     ${({ $area, $direction, $gap, $width, $height }) => Layout($area, $direction, $gap, $width, $height)}
 
     ${({ $responsive }) => {
