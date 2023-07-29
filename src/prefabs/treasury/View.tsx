@@ -73,7 +73,7 @@ export default function View(props: View) {
                                             </>,
                                         ],
                                         [
-                                            <Controls.Tab key="listing" iconLeft={"plus"} style={{ ...(!props?.responsive && { paddingRight: "1em" }) }}>
+                                            <Controls.Tab key="listing" iconLeft={"plus"} style={{ ...(!props?.responsive && { marginRight: "1em" }) }}>
                                                 {tab === "vault" ? "Listing" : "Create"}
                                             </Controls.Tab>,
                                         ],
