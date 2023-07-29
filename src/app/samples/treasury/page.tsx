@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Root } from "lib/style";
 import { Layouts } from "components";
 import { Treasury } from "prefabs";

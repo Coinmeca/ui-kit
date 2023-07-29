@@ -53,10 +53,8 @@ export default function Assets(props: Assets) {
                                     children: [
                                         <>
                                             <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"} change>
-                                                    {data?.exchange_rate}
-                                                </Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }} change>
+                                                <Elements.Text align={"right"}>{data?.exchange_rate}</Elements.Text>
+                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
                                                     MECA
                                                 </Elements.Text>
                                             </Layouts.Row>

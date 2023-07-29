@@ -9,6 +9,7 @@ import { Root } from "lib/style";
 import { Capitalize, Format } from "lib/utils";
 import usePortal from "hooks/usePortal";
 import useWindowSize from "hooks/useWindowSize";
+import type { Price, Volume } from "components/charts/Candle";
 
 export interface Detail {
     asset: Token;
@@ -19,10 +20,14 @@ export interface Detail {
             time: number | string;
             type?: string;
         }[];
-        tvl?: {
+        value?: {
             value: number;
-            time: number | string;
+            time: string;
         }[];
+        rate?: {
+            price: Price[];
+            volume?: Volume[];
+        };
     };
     history?: Data[];
     responsive?: boolean;
@@ -34,6 +39,7 @@ export default function Detail(props: Detail) {
 
     const [mobile, setMobile] = useState("chart");
     const [tab, setTab] = useState("liquidity");
+    const [chart, setChart] = useState("rate");
     const colorset = {
         DEPOSIT: "orange",
         WITHDRAW: "blue",
@@ -252,22 +258,67 @@ export default function Detail(props: Detail) {
                             area: "chart",
                             children: (
                                 <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "chart" : true}>
-                                    <Layouts.Menu
-                                        hide="mobile"
-                                        menu={[
-                                            [
-                                                <>
-                                                    <Controls.Tab disabled>Chart</Controls.Tab>
-                                                </>,
-                                            ],
-                                        ]}
-                                    />
-                                    <Charts.Histogram
-                                        data={props?.charts?.volume}
-                                        up={"DEPOSIT"}
-                                        down={"WITHDRAW"}
-                                        color={{ default: "0,64,255", up: "255, 160, 0", down: "0,64,255" }}
-                                    />
+                                    <Layouts.Contents.InnerContent>
+                                        <Layouts.Menu
+                                            menu={[
+                                                [
+                                                    <>
+                                                        <Controls.Tab active={chart === "rate"} onClick={() => setChart("rate")}>
+                                                            Exchange Rate
+                                                        </Controls.Tab>
+                                                    </>,
+                                                    <>
+                                                        <Controls.Tab active={chart === "volume"} onClick={() => setChart("volume")}>
+                                                            Volume
+                                                        </Controls.Tab>
+                                                    </>,
+                                                    <>
+                                                        <Controls.Tab active={chart === "value"} onClick={() => setChart("value")}>
+                                                            Value
+                                                        </Controls.Tab>
+                                                    </>,
+                                                ],
+                                            ]}
+                                        />
+                                        <Layouts.Contents.TabContainer
+                                            contents={[
+                                                {
+                                                    active: chart === "rate",
+                                                    children: (
+                                                        <Charts.Candle
+                                                            price={props?.charts?.rate?.price}
+                                                            volume={props?.charts?.rate?.volume}
+                                                            up={"DEPOSIT"}
+                                                            down={"WITHDRAW"}
+                                                            // color={{ up: "255, 160, 0", down: "0,64,255" }}
+                                                        />
+                                                    ),
+                                                },
+                                                {
+                                                    active: chart === "volume",
+                                                    children: (
+                                                        <Charts.Histogram
+                                                            data={props?.charts?.volume}
+                                                            up={"DEPOSIT"}
+                                                            down={"WITHDRAW"}
+                                                            color={{ default: "0,64,255", up: "255, 160, 0", down: "0,64,255" }}
+                                                        />
+                                                    ),
+                                                },
+                                                {
+                                                    active: chart === "value",
+                                                    children: (
+                                                        <Charts.Area
+                                                            data={props?.charts?.value!}
+                                                            up={"DEPOSIT"}
+                                                            down={"WITHDRAW"}
+                                                            color={{ default: "0,64,255" }}
+                                                        />
+                                                    ),
+                                                },
+                                            ]}
+                                        />
+                                    </Layouts.Contents.InnerContent>
                                 </Layouts.Contents.SlideContent>
                             ),
                             responsive: [
@@ -352,8 +403,8 @@ export default function Detail(props: Detail) {
                                                         price={props?.info?.token_per}
                                                         fee={0.1}
                                                         responsive={
-                                                            (windowSize.width <= Root.Device.Tablet && windowSize.width > 840) ||
-                                                            (windowSize.width <= Root.Device.Tablet && windowSize.width < 640)
+                                                            (windowSize.width <= Root.Device.Tablet && windowSize.width > Root.Device.Mobile) ||
+                                                            windowSize.width <= Root.Device.Mobile
                                                         }
                                                     />
                                                 ),

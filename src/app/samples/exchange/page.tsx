@@ -165,7 +165,7 @@ export default function Page() {
                                                                     bids={props?.orderbook?.bids}
                                                                     base={props?.market?.base?.symbol}
                                                                     quote={props?.market?.quote?.symbol}
-                                                                    responsive={{ device: "mobile", vertical: windowSize.width < 640 }}
+                                                                    responsive={{ device: "mobile", vertical: windowSize.width < Root.Device.Mobile }}
                                                                     guidance
                                                                 />
                                                             ),
@@ -269,7 +269,7 @@ export default function Page() {
                                                                 option={option}
                                                                 responsive={
                                                                     (windowSize.width <= Root.Device.Tablet && windowSize.width > 840) ||
-                                                                    (windowSize.width <= Root.Device.Tablet && windowSize.width < 640)
+                                                                    (windowSize.width <= Root.Device.Tablet && windowSize.width < Root.Device.Mobile)
                                                                 }
                                                             />
                                                         ),

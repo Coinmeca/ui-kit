@@ -1,7 +1,7 @@
 "use client";
 import { Contents, Controls, Layouts } from "components";
 import { Treasury } from "prefabs";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { Token } from "types/web3";
 import Data from "app/samples/treasury/data";
 
@@ -23,7 +23,7 @@ export default function Detail(props: Detail) {
                         asset={props?.asset}
                         info={vault?.info}
                         history={vault?.history}
-                        charts={{ volume: vault.volume }}
+                        charts={{ rate: vault?.charts?.rate, value: vault?.charts?.value, volume: vault?.charts?.volume }}
                         responsive={props?.responsive}
                         onBack={props?.onBack}
                     />

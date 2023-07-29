@@ -3,6 +3,7 @@ import { Elements, Layouts } from "components";
 import { Token } from "types/web3";
 import { Format, Sign } from "lib/utils";
 import useWindowSize from "hooks/useWindowSize";
+import { Root } from "lib/style";
 
 export interface Info {
     asset: Token;
@@ -35,9 +36,9 @@ export default function Info(props: Info) {
 
     return (
         <Layouts.Contents.InnerContent
-            scroll={windowSize.width > 840 || windowSize.width <= 640}
+            scroll={windowSize.width > Root.Device.Tablet || windowSize.width <= Root.Device.Mobile}
             style={{
-                ...(windowSize.width <= 840 && windowSize.width > 640 && { flexDirection: "row" }),
+                ...(windowSize.width <= Root.Device.Tablet && windowSize.width > Root.Device.Mobile && { flexDirection: "row" }),
             }}
         >
             <Layouts.Row
@@ -197,7 +198,7 @@ export default function Info(props: Info) {
                     </Layouts.Row>
                 </Layouts.Col>
             </Layouts.Row>
-            <Layouts.Divider margin={1} vertical={windowSize.width <= 840 && windowSize.width > 640} />
+            <Layouts.Divider margin={1} vertical={windowSize.width <= 840 && windowSize.width > Root.Device.Mobile} />
             <Layouts.Row
                 fix
                 responsive="mobile"

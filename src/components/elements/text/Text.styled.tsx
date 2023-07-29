@@ -30,6 +30,14 @@ export const H1 = styled.h1<{
             min-width: max-content;
             max-width: max-content;
         `}
+    ${({ $change }) =>
+        $change &&
+        css`
+            ::selection {
+                color: var(--white);
+                background: rgb(var(--change));
+            }
+        `}
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
         font-size: 6em;
@@ -63,6 +71,15 @@ export const H2 = styled.h2<{
             min-width: max-content;
             max-width: max-content;
         `}
+    ${({ $change }) =>
+        $change &&
+        css`
+            ::selection {
+                color: var(--white);
+                background: rgb(var(--change));
+            }
+        `}
+
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
         font-size: 4em;
@@ -96,6 +113,15 @@ export const H3 = styled.h3<{
             min-width: max-content;
             max-width: max-content;
         `}
+    ${({ $change }) =>
+        $change &&
+        css`
+            ::selection {
+                color: var(--white);
+                background: rgb(var(--change));
+            }
+        `}
+
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
         font-size: 3em;
@@ -129,6 +155,15 @@ export const H4 = styled.h4<{
             min-width: max-content;
             max-width: max-content;
         `}
+    ${({ $change }) =>
+        $change &&
+        css`
+            ::selection {
+                color: var(--white);
+                background: rgb(var(--change));
+            }
+        `}
+
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
         font-size: 2.5em;
@@ -162,6 +197,15 @@ export const H5 = styled.h5<{
             min-width: max-content;
             max-width: max-content;
         `}
+    ${({ $change }) =>
+        $change &&
+        css`
+            ::selection {
+                color: var(--white);
+                background: rgb(var(--change));
+            }
+        `}
+
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
         font-size: 2em;
@@ -194,6 +238,14 @@ export const H6 = styled.h6<{
         css`
             min-width: max-content;
             max-width: max-content;
+        `}
+    ${({ $change }) =>
+        $change &&
+        css`
+            ::selection {
+                color: var(--white);
+                background: rgb(var(--change));
+            }
         `}
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
@@ -228,6 +280,14 @@ export const Strong = styled.strong<{
             min-width: max-content;
             max-width: max-content;
         `}
+    ${({ $change }) =>
+        $change &&
+        css`
+            ::selection {
+                color: var(--white);
+                background: rgb(var(--change));
+            }
+        `}
 `;
 export const P = styled.p<{
     $color: string;
@@ -257,6 +317,14 @@ export const P = styled.p<{
             min-width: max-content;
             max-width: max-content;
         `}
+    ${({ $change }) =>
+        $change &&
+        css`
+            ::selection {
+                color: var(--white);
+                background: rgb(var(--change));
+            }
+        `}
 `;
 export const Desc = styled.p<{
     $color: string;
@@ -285,6 +353,14 @@ export const Desc = styled.p<{
         css`
             min-width: max-content;
             max-width: max-content;
+        `}
+    ${({ $change }) =>
+        $change &&
+        css`
+            ::selection {
+                color: var(--white);
+                background: rgb(var(--change));
+            }
         `}
 `;
 export const Text = styled.span<{
@@ -316,6 +392,14 @@ export const Text = styled.span<{
         css`
             min-width: max-content;
             max-width: max-content;
+        `}
+    ${({ $change }) =>
+        $change &&
+        css`
+            &::selection {
+                color: rgb(var(--black));
+                background: rgb(var(--change));
+            }
         `}
 
     ${({ $responsive }) => {

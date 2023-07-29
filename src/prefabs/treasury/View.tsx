@@ -31,30 +31,27 @@ export default function View(props: View) {
                             },
                             children: (
                                 <Layouts.Col gap={0}>
-                                    <Elements.Text weight={"normal"} responsive={{ device: "mobile", size: 4 }}>
-                                        {Format(Date.now(), "date")}
-                                    </Elements.Text>
-                                    <Elements.Text type={"h6"}>Total Value Locked</Elements.Text>
+                                    <Elements.Text type={"strong"}>Total Value Locked</Elements.Text>
+                                    <Elements.Text type={"h4"}>$ {Format(156785461234, "currency", true)}</Elements.Text>
                                 </Layouts.Col>
                             ),
                         },
                         {
                             background: {
-                                img: { src: 4 },
+                                filter: "black",
+                                img: { src: 8 },
                             },
                             children: (
                                 <Layouts.Col gap={0}>
-                                    <Elements.Text weight={"normal"} responsive={{ device: "mobile", size: 4 }}>
-                                        {Format(Date.now(), "date")}
-                                    </Elements.Text>
-                                    <Elements.Text type={"h6"}>Total Volume</Elements.Text>
+                                    <Elements.Text type={"strong"}>Total Volume</Elements.Text>
+                                    <Elements.Text type={"h4"}>$ {Format(156785461234, "currency", true)}</Elements.Text>
                                 </Layouts.Col>
                             ),
                         },
                     ]}
                 />
             </Layouts.Cover>
-            <Layouts.Box fit style={{ scrollSnapAlign: "start" }}>
+            <Layouts.Box fit style={{ paddingTop: "2em" }}>
                 <Layouts.Contents.InnerContent>
                     <Layouts.Row gap={0} responsive={"mobile"}>
                         <Layouts.Menu
