@@ -25,6 +25,8 @@ const Style = styled.section`
             width: 100%;
             height: 100%;
             overflow: hidden auto;
+            scroll-snap-type: y mandatory;
+            -webkit-overflow-scrolling: touch;
             z-index: 3;
 
             ${Page.default} {

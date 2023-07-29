@@ -3,12 +3,14 @@ import { styled } from "styled-components";
 
 const Style = styled.div`
     position: relative;
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     width: 100%;
     height: -webkit-fill-available;
     min-height: max-content;
     overflow: hidden auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
     transition: 0.3s ease;
     opacity: 1;
 
