@@ -29,7 +29,7 @@ export default function History(props: History) {
                 process={process}
                 title="Transaction Detail"
                 content={
-                    <Layouts.Col gap={2}>
+                    <Layouts.Col gap={2} style={{ height: "100%" }}>
                         <Layouts.Contents.InnerContent>
                             <Layouts.Col gap={1}>
                                 <Layouts.Row gap={1} fix>
