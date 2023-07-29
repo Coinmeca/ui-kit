@@ -23,7 +23,7 @@ export default function View(props: View) {
                 onClick: () => {
                     if (typeof props?.onSelect === "function") props?.onSelect(data);
                 },
-                style: { padding: props?.responsive && "2em" },
+                style: { padding: "2em" },
                 children: [
                     {
                         style: { flex: 1 },
