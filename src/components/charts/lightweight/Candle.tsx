@@ -107,7 +107,7 @@ export default function Candle(props: Candle) {
                 )
             );
         }
-    }, [props?.volume, up]);
+    }, [props?.volume, up, down, color]);
 
     useEffect(() => {
         // const chart = createChart(document.getElementById('container'), );

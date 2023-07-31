@@ -31,10 +31,10 @@ export default function Info(props: Info) {
 
     return (
         <Layouts.Contents.InnerContent
-            scroll={windowSize.width > 840 || windowSize.width <= Root.Device.Mobile}
             style={{
-                ...(windowSize.width <= 840 && windowSize.width > Root.Device.Mobile && { flexDirection: "row" }),
+                ...(windowSize.width <= Root.Device.Mobile && windowSize.width > Root.Device.Small && { flexDirection: "row" }),
             }}
+            scroll
         >
             <Layouts.Row
                 fix
@@ -203,7 +203,7 @@ export default function Info(props: Info) {
                     </Layouts.Row>
                 </Layouts.Col>
             </Layouts.Row>
-            <Layouts.Divider margin={1} vertical={windowSize.width <= 840 && windowSize.width > Root.Device.Mobile} />
+            <Layouts.Divider margin={1} vertical={windowSize.width <= Root.Device.Mobile && windowSize.width > Root.Device.Small} />
             <Layouts.Row
                 fix
                 responsive="mobile"
@@ -313,7 +313,7 @@ export default function Info(props: Info) {
                         }}
                     >
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                            Total Open Interest
+                            Total Open Interest Rate
                         </Elements.Text>
                         <Elements.Text
                             height={1}

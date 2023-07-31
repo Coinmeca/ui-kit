@@ -3,8 +3,9 @@ import { createGlobalStyle } from "styled-components";
 import { Device } from "./Root";
 
 const Global = createGlobalStyle`
-    html,body{
+    html,body,main{
         height:100%;
+        min-height:-webkit-fill-available;
     }
 
     html {

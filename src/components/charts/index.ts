@@ -1,6 +1,4 @@
-import Candle from "./Candle";
-import Histogram from "./Histogram";
-import Area from "./Area";
-import Line from "./Line";
+import ChartJS from './chartjs/ChartJS';
+import * as LightWeight from './lightweight';
 
-export { Candle, Histogram, Area, Line };
+export { ChartJS, LightWeight }

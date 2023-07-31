@@ -19,6 +19,10 @@ export default function Page() {
         assets: Dummy.assets,
         responsive: windowSize.width <= Root.Device.Mobile,
         asset: asset,
+        charts: {
+            value: Dummy.value,
+            volume: Dummy.volume,
+        },
     };
 
     return (
@@ -31,6 +35,7 @@ export default function Page() {
                             <Treasury.View
                                 assets={props?.assets}
                                 page={page}
+                                charts={props?.charts}
                                 onPage={(page?: "vault" | "farm") => setPage(page)}
                                 onSelect={(a?: Token, f?: any) => {
                                     setAsset(a);

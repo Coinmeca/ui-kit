@@ -1,7 +1,21 @@
 "use client";
 import { styled, css } from "styled-components";
 
-const Style = styled.div<{ $fix: boolean; $filter: string | undefined }>`
+export const Filter = styled.div<{ $filter?: string; $opacity: number }>`
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: ${({ $opacity }) => $opacity};
+    z-index: 0;
+
+    ${({ $filter }) =>
+        $filter &&
+        css`
+            background-color: ${$filter};
+        `}
+`;
+
+const Style = styled.div<{ $fix: boolean }>`
     position: absolute;
     display: flex;
     align-items: center;
@@ -18,22 +32,8 @@ const Style = styled.div<{ $fix: boolean; $filter: string | undefined }>`
         min-width: 100%;
         min-height: 100%;
         object-fit: cover;
-        opacity: 1;
+        /* opacity: 1; */
         transition: 0.3s ease;
-    }
-
-    & > div:last-child {
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0.45;
-        z-index: 0;
-
-        ${({ $filter }) =>
-            $filter &&
-            css`
-                background-color: ${$filter};
-            `}
     }
 `;
 

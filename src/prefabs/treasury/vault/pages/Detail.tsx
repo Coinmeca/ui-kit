@@ -9,7 +9,7 @@ import { Root } from "lib/style";
 import { Capitalize, Format } from "lib/utils";
 import usePortal from "hooks/usePortal";
 import useWindowSize from "hooks/useWindowSize";
-import type { Price, Volume } from "components/charts/Candle";
+import type { Price, Volume } from "components/charts/lightweight/Candle";
 import { Asset } from "prefabs";
 
 export interface Detail {
@@ -286,7 +286,7 @@ export default function Detail(props: Detail) {
                                                 {
                                                     active: chart === "rate",
                                                     children: (
-                                                        <Charts.Candle
+                                                        <Charts.LightWeight.Candle
                                                             price={props?.charts?.rate?.price}
                                                             volume={props?.charts?.rate?.volume}
                                                             up={"DEPOSIT"}
@@ -298,7 +298,7 @@ export default function Detail(props: Detail) {
                                                 {
                                                     active: chart === "volume",
                                                     children: (
-                                                        <Charts.Histogram
+                                                        <Charts.LightWeight.Histogram
                                                             data={props?.charts?.volume}
                                                             up={"DEPOSIT"}
                                                             down={"WITHDRAW"}
@@ -309,11 +309,23 @@ export default function Detail(props: Detail) {
                                                 {
                                                     active: chart === "value",
                                                     children: (
-                                                        <Charts.Area
-                                                            data={props?.charts?.value!}
+                                                        <Charts.LightWeight.Area
+                                                            data={props?.charts?.value}
                                                             up={"DEPOSIT"}
                                                             down={"WITHDRAW"}
                                                             color={{ default: "0,64,255" }}
+                                                        />
+                                                    ),
+                                                },
+                                                {
+                                                    active: chart === "value",
+                                                    children: (
+                                                        <Charts.LightWeight.Line
+                                                            data={props?.charts?.value}
+                                                            // volume={props?.charts?.volume!}
+                                                            up={"DEPOSIT"}
+                                                            down={"WITHDRAW"}
+                                                            color={{ default: "0,64,255", up: "255, 160, 0", down: "0,64,255" }}
                                                         />
                                                     ),
                                                 },

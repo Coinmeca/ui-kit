@@ -3,7 +3,7 @@ import { Root } from "lib/style";
 import * as Icon from "components/elements/icon/Icon.styled";
 
 const Style = styled.button<{
-    $type: "glass" | "line" | "solid" | undefined;
+    $type?: "glass" | "line" | "solid";
     $color: string;
     $scale: number;
     $fit?: boolean;

@@ -1,12 +1,17 @@
 "use client";
-import { Controls, Elements, Layouts } from "components";
+import { Charts, Controls, Elements, Layouts } from "components";
 import { Format } from "lib/utils";
+import { useState } from "react";
 import { Asset } from "types/web3";
 import { Vault } from ".";
 
 export interface View {
     assets?: Asset[];
     page?: "vault" | "farm";
+    charts?: {
+        value?: any;
+        volume?: any;
+    };
     responsive?: boolean;
     onPage?: Function;
     onSelect?: Function;
@@ -16,6 +21,8 @@ export default function View(props: View) {
     const handlePage = (page: "vault" | "farm") => {
         if (typeof props?.onPage === "function") props?.onPage(page);
     };
+
+    const [tvl, setTvl] = useState<any>();
 
     return (
         <>
@@ -28,11 +35,16 @@ export default function View(props: View) {
                         {
                             background: {
                                 img: { src: 4 },
+                                children: <Charts.ChartJS type={"line"} data={props?.charts?.value} onHover={(v: any) => setTvl(v)} />,
                             },
+                            style: { pointerEvent: "none" },
                             children: (
                                 <Layouts.Col gap={0}>
                                     <Elements.Text type={"strong"}>Total Value Locked</Elements.Text>
-                                    <Elements.Text type={"h4"}>$ {Format(156785461234, "currency", true)}</Elements.Text>
+                                    <Elements.Text type={"h4"}>$ {tvl?.formattedValue || "-"}</Elements.Text>
+                                    <div>
+                                        <Elements.Text opacity={0.6}>{tvl?.label?.split(" ")[0]}</Elements.Text>
+                                    </div>
                                 </Layouts.Col>
                             ),
                         },
