@@ -1,16 +1,20 @@
 "use client";
 import React, { Suspense, useEffect, useRef, useState } from "react";
-import { createChart } from "lightweight-charts";
+import { createChart, HistogramData } from "lightweight-charts";
 import type { LineData } from "lightweight-charts";
+import type { Volume } from "./Candle";
 import { Sort } from "lib/utils";
 import Style from "./Chart.styled";
 
 export interface Line {
     color?: {
         default?: string;
+        up?: string;
+        down?: string;
         theme?: string;
     };
     data?: LineData[];
+    volume?: Volume[];
     up?: string;
     down?: string;
     fallback?: any;
@@ -23,7 +27,9 @@ export default function Line(props: Line) {
 
     const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
     const [color, setColor] = useState({
-        default: props?.color?.default || `rgb(${theme})`,
+        default: props?.color?.default ? `rgb(${props?.color?.default})` : `rgb(${theme})`,
+        up: props?.color?.up || "0,192,96",
+        down: props?.color?.down || "255,0,64",
         theme: {
             strong: `rgba(${theme}, 0.6)`,
             semi: `rgba(${theme}, 0.45)`,
@@ -34,6 +40,7 @@ export default function Line(props: Line) {
     });
 
     const [data, setData] = useState<any>([]);
+    const [volume, setVolume] = useState<Volume[]>([]);
     const chartRef: any = useRef();
 
     useEffect(() => {
@@ -70,6 +77,27 @@ export default function Line(props: Line) {
             );
         }
     }, [props?.data]);
+
+    useEffect(() => {
+        if (props?.volume && props?.volume?.length > 0) {
+            setVolume(
+                Sort(
+                    props?.volume?.map((v: Volume) => {
+                        return {
+                            time: v?.time,
+                            value: v?.value,
+                            color:
+                                v?.type === up && color.up ? `rgba(${color.up}, 0.3)` : color.down ? `rgba(${color.down}, 0.3)` : `rgba(${color.default}, 0.3)`,
+                            // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
+                        };
+                    }),
+                    "time",
+                    "number",
+                    false
+                )
+            );
+        }
+    }, [props?.volume, up, down, color]);
 
     useEffect(() => {
         // const chart = createChart(document.getElementById('container'), );
@@ -131,14 +159,42 @@ export default function Line(props: Line) {
                 const series = chart.addLineSeries({
                     color: color.default,
                     priceFormat: {
-                        type: "volume",
+                        type: "price",
                     },
                     // set as an overlay by setting a blank priceScaleId
                     priceScaleId: "",
                     // set the positioning of the volume series
                 });
 
+                series.priceScale().applyOptions({
+                    scaleMargins: {
+                        // positioning the price scale for the area series
+                        top: 0.1,
+                        bottom: volume ? 0.4 : 0,
+                    },
+                });
+
                 series.setData(data);
+            }
+
+            if (volume) {
+                const volumeSeries = chart.addHistogramSeries({
+                    color: "yellow",
+                    priceFormat: {
+                        type: "volume",
+                    },
+                    priceScaleId: "", // set as an overlay by setting a blank priceScaleId
+                    // set the positioning of the volume series
+                });
+
+                volumeSeries.priceScale().applyOptions({
+                    scaleMargins: {
+                        top: 0.8, // highest point of the series will be 70% away from the top
+                        bottom: 0,
+                    },
+                });
+
+                volumeSeries.setData(volume as HistogramData[]);
             }
 
             props?.fit

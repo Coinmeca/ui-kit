@@ -200,7 +200,7 @@ export default function Page() {
                                                     ],
                                                 ]}
                                             />
-                                            <Charts.Candle price={props?.chart?.price} volume={props?.chart?.volume} up={"BUY"} down={"SELL"} />
+                                            <Charts.LightWeight.Candle price={props?.chart?.price} volume={props?.chart?.volume} up={"BUY"} down={"SELL"} />
                                         </Layouts.Contents.SlideContent>
                                     ),
                                     responsive: [

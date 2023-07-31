@@ -36,10 +36,10 @@ export default function Info(props: Info) {
 
     return (
         <Layouts.Contents.InnerContent
-            scroll={windowSize.width > Root.Device.Tablet || windowSize.width <= Root.Device.Mobile}
             style={{
                 ...(windowSize.width <= Root.Device.Tablet && windowSize.width > Root.Device.Mobile && { flexDirection: "row" }),
             }}
+            scroll
         >
             <Layouts.Row
                 fix

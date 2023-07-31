@@ -5,7 +5,7 @@ export const Style = styled.div<{
     $scale: number;
     $timer: number;
     $padding: number;
-    $nav: "top" | "bottom" | undefined;
+    $nav?: "top" | "bottom";
     $vertical: "top" | "center" | "bottom";
     $horizon: "left" | "center" | "right";
 }>`
@@ -102,7 +102,7 @@ export const Style = styled.div<{
                             & > *:nth-child(2),
                             & > *:nth-child(3) {
                                 transform: translateX(0%);
-                                opacity: 1;
+                                opacity: inherit;
                             }
                         }
                     }

@@ -7,6 +7,7 @@ import { Style } from "./Slide.styled";
 export interface SlideContent {
     active?: boolean;
     children?: any;
+    style?: object;
     onClick?: Function;
     background?: Background;
 }
@@ -52,14 +53,25 @@ export default function Slide(props: Slide) {
     }, [props?.slides, props?.event, timer]);
 
     return (
-        <Style style={props?.style} $scale={scale} $timer={timer} $padding={padding} $nav={props?.nav} $vertical={vertical} $horizon={horizon} data-align={props?.align?.horizon}>
+        <Style
+            style={props?.style}
+            $scale={scale}
+            $timer={timer}
+            $padding={padding}
+            $nav={props?.nav}
+            $vertical={vertical}
+            $horizon={horizon}
+            data-align={props?.align?.horizon}
+        >
             {props?.slides && props?.slides?.length > 0 && (
                 <>
                     <div>
                         {props?.slides?.map((slide: any, i: number) => (
                             <div key={i} data-active={slide?.active || slideNo === i} onClick={(e: any) => slide?.onClick && slide?.onClick(e)}>
                                 {slide?.background && <BG {...slide?.background} />}
-                                <div data-row={props?.align?.horizon}>{slide.children}</div>
+                                <div data-row={props?.align?.horizon} style={slide?.style}>
+                                    {slide.children}
+                                </div>
                             </div>
                         ))}
                     </div>
