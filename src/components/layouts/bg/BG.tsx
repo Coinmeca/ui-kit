@@ -21,7 +21,7 @@ export interface BG {
 
 export default function BG(props: BG) {
     const fix = props?.fix || false;
-    const src = typeof props?.img?.src === "number" ? require(`/src/assets/pictures/${props?.img?.src}.jpg`) : props?.img?.src;
+    const src = typeof props?.img?.src === "number" ? require(`../../../assets/pictures/${props?.img?.src}.jpg`) : props?.img?.src;
     const filter =
         (typeof props?.filter === "string" && props?.filter) ||
         (typeof props?.filter === "object" && typeof props?.filter?.color === "string" && props?.filter?.color) ||

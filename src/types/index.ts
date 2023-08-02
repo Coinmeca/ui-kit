@@ -1,1 +1,2 @@
-export type * from "./Contract";
+export * from './web3';
+export * from './history';
