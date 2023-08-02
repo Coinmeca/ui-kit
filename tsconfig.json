@@ -27,11 +27,19 @@
         "paths": {
             "": ["./src/*"],
             "~/*": ["./src/*"],
-            "@coinmeca/ui": ["../../packages/ui/src/index"],
-            "@coinmeca/ui/*": ["../../packages/ui/src/*"]
+            "@coinmeca/ui/*": ["@coinmeca/ui/dist/src/components/*"],
+            "@coinmeca/ui": ["@coinmeca/ui/dist/src/index"]
         }
     },
-    "references": [{ "path": "./packages/ui" }],
+    "files": [],
+    "references": [
+        {
+            "path": "packages/ui"
+        }
+        // {
+        //     "path": "packages/wallet-adapter"
+        // }
+    ],
     "include": ["src", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules", "packages"]
 }

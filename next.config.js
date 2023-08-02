@@ -7,14 +7,14 @@ const nextConfig = {
         });
         return config;
     },
+    transpilePackages: ["@coinmeca/ui"],
     compiler: {
         styledComponents: true,
     },
     swcMinify: true,
-    experimental: {
-        appDir: true,
-    },
-    transpilePackages: ["./packages/ui"],
+    // experimental: {
+    //     appDir: true,
+    // },
 };
 
 module.exports = nextConfig;
