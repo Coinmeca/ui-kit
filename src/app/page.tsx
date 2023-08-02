@@ -1,5 +1,5 @@
-import Link from "next/link";
+import { Elements } from "../../packages/ui/src/components";
 
-export default function Home() {
-    return <Link href={"/examples"}>View UIs example</Link>;
+export default function Page() {
+    return <Elements.Text>Text Test</Elements.Text>;
 }
