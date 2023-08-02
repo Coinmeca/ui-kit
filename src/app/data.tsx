@@ -305,15 +305,15 @@ export default function Data() {
             children: [
                 {
                     name: "Asset",
-                    path: "/samples/asset",
+                    path: "/asset",
                 },
                 {
                     name: "Exchange",
-                    path: "/samples/exchange",
+                    path: "/exchange",
                 },
                 {
                     name: "Treasury",
-                    path: "/samples/treasury",
+                    path: "/treasury",
                 },
             ],
         },
