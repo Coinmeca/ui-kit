@@ -7,7 +7,7 @@
         "skipLibCheck": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
-        "noEmit": true,
+        "noEmit": false,
         "esModuleInterop": true,
         "module": "esnext",
         "moduleResolution": "node",
@@ -15,6 +15,7 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
+        "composite": true,
         "plugins": [
             {
                 "name": "next",
@@ -26,12 +27,9 @@
         ],
         "paths": {
             "": ["./src/*"],
-            "~/*": ["./src/*"],
-            "@coinmeca/ui": ["../../packages/ui/src/index"],
-            "@coinmeca/ui/*": ["../../packages/ui/src/*"]
+            "~/*": ["./src/*"]
         }
     },
-    "references": [{ "path": "./packages/ui" }],
     "include": ["src", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
     "exclude": ["node_modules"]
 }

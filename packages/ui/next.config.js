@@ -14,7 +14,6 @@ const nextConfig = {
     experimental: {
         appDir: true,
     },
-    transpilePackages: ["./packages/ui"],
 };
 
 module.exports = nextConfig;
