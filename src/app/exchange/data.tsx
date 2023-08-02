@@ -1,6 +1,6 @@
 export default function Data() {
     const market = {
-        logo: require("/assets/coins/eth.png"),
+        logo: require("/src/assets/coins/eth.png"),
         base: {
             symbol: "eth",
             name: "ethereum",
