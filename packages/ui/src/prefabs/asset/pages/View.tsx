@@ -38,7 +38,7 @@ export default function View(props: any) {
                                     <>
                                         <Elements.Avatar
                                             size={props?.responsive ? 4 : 3.5}
-                                            img={require(`src/assets/coins/${data?.symbol?.toLowerCase()}.png`)}
+                                            img={require(`../../../assets/coins/${data?.symbol?.toLowerCase()}.png`)}
                                         />
                                     </>
                                 ),

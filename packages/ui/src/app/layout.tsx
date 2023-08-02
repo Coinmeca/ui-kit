@@ -12,7 +12,7 @@ export const metadata = {
     themeColor: "black",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: any }) {
     return (
         <html lang="en">
             <body>
