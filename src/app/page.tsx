@@ -1,5 +1,5 @@
-import { Elements } from "../../packages/ui/src/components";
+import { Elements } from "@coinmeca/ui/dist/components";
 
 export default function Page() {
-    return <Elements.Text>Text Test</Elements.Text>;
+    return <Elements.Text>Test Text</Elements.Text>;
 }

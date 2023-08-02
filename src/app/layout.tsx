@@ -1,5 +1,5 @@
 import "./global.scss";
-import { Style } from "lib";
+import { Style } from "@coinmeca/ui/dist/lib";
 
 export const metadata = {
     title: "Coinmeca",

@@ -36,7 +36,10 @@ export default function View(props: any) {
                                 style: { maxWidth: "max-content" },
                                 children: (
                                     <>
-                                        <Elements.Avatar size={props?.responsive ? 4 : 3.5} img={require(`/assets/coins/${data?.symbol?.toLowerCase()}.png`)} />
+                                        <Elements.Avatar
+                                            size={props?.responsive ? 4 : 3.5}
+                                            img={require(`src/assets/coins/${data?.symbol?.toLowerCase()}.png`)}
+                                        />
                                     </>
                                 ),
                             },
