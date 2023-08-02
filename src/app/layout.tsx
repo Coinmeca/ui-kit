@@ -1,5 +1,8 @@
+"use client";
 import "./global.scss";
 import { Style } from "@coinmeca/ui/dist/lib";
+import { Frames } from "@coinmeca/ui/dist/components";
+import Data from "./data";
 
 export const metadata = {
     title: "Coinmeca",
@@ -12,11 +15,16 @@ export const metadata = {
     themeColor: "black",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: any }) {
+    const { header, sidebars } = Data();
     return (
         <html lang="en">
             <body>
-                <Style.Initialize>{children}</Style.Initialize>
+                <Style.Initialize>
+                    <Frames.Frame header={header} sidebar={sidebars} align={"right"} background={{ img: { src: 2 } }} side={56}>
+                        {children}
+                    </Frames.Frame>
+                </Style.Initialize>
             </body>
         </html>
     );
