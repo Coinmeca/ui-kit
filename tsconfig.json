@@ -1,13 +1,16 @@
 {
     "compilerOptions": {
+        "rootDir": "src",
         "baseUrl": "src",
-        "target": "es5",
+        "outDir": "dist",
+        "target": "esnext",
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
-        "noEmit": true,
+        "allowSyntheticDefaultImports": true,
+        "noEmit": false,
         "esModuleInterop": true,
         "module": "esnext",
         "moduleResolution": "node",
@@ -15,6 +18,9 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
+        "composite": true,
+        "declaration": true,
+        "declarationDir": "dist",
         "plugins": [
             {
                 "name": "next",
@@ -25,10 +31,11 @@
             }
         ],
         "paths": {
-            "": ["./src/*"],
-            "~/*": ["./src/*"]
-        }
+            "": ["./*"],
+            "~/*": ["./*"]
+        },
+        "typeRoots": ["./src/@types", "./node_modules/@types"]
     },
-    "include": ["src", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-    "exclude": ["node_modules"]
+    "include": ["src", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "./dist/types/**/*.ts"],
+    "exclude": ["node_modules", "**/.*/", "next.config.json", "tsup.config.json", "tsup.config.ts", "dist", "build"]
 }

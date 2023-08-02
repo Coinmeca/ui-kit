@@ -1,7 +1,8 @@
 import "./global.scss";
+import { Metadata } from "next";
 import { Style } from "lib";
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "Coinmeca",
     description: "The next generation decentralized exchange for new finance.",
     viewport: {
@@ -12,7 +13,7 @@ export const metadata = {
     themeColor: "black",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: any }) {
     return (
         <html lang="en">
             <body>

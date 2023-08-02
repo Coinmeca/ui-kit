@@ -97,21 +97,21 @@ export default function Data() {
         },
         {
             value: "USDT",
-            img: "/src/assets/coins/eth.png",
+            img: "/assets/coins/eth.png",
         },
         {
             value: "ETH",
-            img: "/src/assets/coins/eth.png",
+            img: "/assets/coins/eth.png",
         },
         {
             value: "USDC",
-            img: "/src/assets/coins/eth.png",
+            img: "/assets/coins/eth.png",
         },
     ];
 
     const marketlist = [
         {
-            logo: require("/src/assets/coins/eth.png"),
+            logo: require("/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -119,7 +119,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-            logo: require("/src/assets/coins/arb.png"),
+            logo: require("/assets/coins/arb.png"),
             symbol: "ARB",
             market: "ARB/USDT",
             price: "4,678.05",
@@ -127,7 +127,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-            logo: require("/src/assets/coins/matic.png"),
+            logo: require("/assets/coins/matic.png"),
             symbol: "MATIC",
             market: "MATIC/USDT",
             price: "4,678.05",
@@ -135,7 +135,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-            logo: require("/src/assets/coins/dai.png"),
+            logo: require("/assets/coins/dai.png"),
             symbol: "DAI",
             market: "DAI/USDT",
             price: "4,678.05",
@@ -143,7 +143,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-            logo: require("/src/assets/coins/usdc.png"),
+            logo: require("/assets/coins/usdc.png"),
             symbol: "USDC",
             market: "USDC/USDT",
             price: "4,678.05",
@@ -151,7 +151,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-            logo: require("/src/assets/coins/weth.png"),
+            logo: require("/assets/coins/weth.png"),
             symbol: "WETH",
             market: "WETH/USDT",
             price: "4,678.05",
@@ -159,7 +159,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-            logo: require("/src/assets/coins/uni.png"),
+            logo: require("/assets/coins/uni.png"),
             symbol: "UNI",
             market: "UNI/USDT",
             price: "4,678.05",
@@ -167,7 +167,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-            logo: require("/src/assets/coins/avax.png"),
+            logo: require("/assets/coins/avax.png"),
             symbol: "AVAX",
             market: "AVAX/USDT",
             price: "4,678.05",
@@ -175,7 +175,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-            logo: require("/src/assets/coins/eth.png"),
+            logo: require("/assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/DAI",
             price: "4,678.05",
@@ -273,22 +273,22 @@ export default function Data() {
     const chains = [
         {
             key: 1,
-            img: require("/src/assets/coins/eth.png").default.src,
+            img: require("/assets/coins/eth.png").default.src,
             value: "Ethereum",
         },
         {
             key: 2,
-            img: require("/src/assets/coins/arb.png").default.src,
+            img: require("/assets/coins/arb.png").default.src,
             value: "Arbitrum",
         },
         {
             key: 3,
-            img: require("/src/assets/coins/op.png").default.src,
+            img: require("/assets/coins/op.png").default.src,
             value: "Optimism",
         },
         {
             key: 4,
-            img: require("/src/assets/coins/avax.png").default.src,
+            img: require("/assets/coins/avax.png").default.src,
             value: "Avalanche",
         },
     ];
@@ -296,7 +296,7 @@ export default function Data() {
     const header = {
         color: colorMap[path],
         logo: {
-            src: "/src/assets/coinmeca.svg",
+            src: "/assets/coinmeca.svg",
             width: 128,
             height: 48,
         },

@@ -16,7 +16,7 @@ export default function TableItem(props: ListItem) {
             data &&
             (typeof data !== "string" && data?.length > 0 ? (
                 data?.map((info: any, i: number) => (
-                    <Row key={i} $change={info?.change} style={...info?.style} data-row={info?.align}>
+                    <Row key={i} $change={info?.change} style={{ ...info?.style }} data-row={info?.align}>
                         {TableCell(info?.children || info)}
                     </Row>
                 ))
