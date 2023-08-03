@@ -21,6 +21,7 @@
         "composite": true,
         "declaration": true,
         "declarationDir": "dist",
+        "declarationMap":true,
         "plugins": [
             {
                 "name": "next",
@@ -34,8 +35,8 @@
             "": ["./*"],
             "~/*": ["./*"]
         },
-        "typeRoots": ["./src/@types", "./node_modules/@types"]
+        "typeRoots": ["src/types", "node_modules/@types"]
     },
-    "include": ["src", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "./dist/types/**/*.ts"],
+    "include": ["src", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
     "exclude": ["node_modules", "**/.*/", "next.config.json", "tsup.config.json", "tsup.config.ts", "dist", "build"]
 }
