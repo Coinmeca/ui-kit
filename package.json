@@ -45,5 +45,13 @@
     "exports": {
         ".": "./dist/index.js",
         "./*": "./dist/*"
+<<<<<<< HEAD
+=======
+    },
+    "typesVersions": {
+        "*": {
+            "*": ["./dist/*"]
+        }
+>>>>>>> a17eb0e8dff987295b45ea0b8f46916770e9d7fc
     }
 }
