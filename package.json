@@ -40,6 +40,10 @@
         "typescript-cp": "^0.1.9"
     },
     "files": [
-        "dist/**"
-    ]
+        "dist"
+    ],
+    "exports": {
+        ".": "./dist/index.js",
+        "./*": "./dist/*"
+    }
 }
