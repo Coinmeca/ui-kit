@@ -1,0 +1,3 @@
+$ tsc && tsc-alias && tscp
+Non-typescript files copied
+[32mui[0m
