@@ -190,17 +190,21 @@ export default function Page() {
                                     area: "chart",
                                     children: (
                                         <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "chart"}>
-                                            <Layouts.Menu
-                                                hide="mobile"
-                                                menu={[
-                                                    [
-                                                        <>
-                                                            <Controls.Tab disabled>Chart</Controls.Tab>
-                                                        </>,
-                                                    ],
-                                                ]}
-                                            />
-                                            <Charts.LightWeight.Candle price={props?.chart?.price} volume={props?.chart?.volume} up={"BUY"} down={"SELL"} />
+                                            <Layouts.Contents.InnerContent>
+                                                <Layouts.Menu
+                                                    hide="mobile"
+                                                    menu={[
+                                                        [
+                                                            <>
+                                                                <Controls.Tab disabled>Chart</Controls.Tab>
+                                                            </>,
+                                                        ],
+                                                    ]}
+                                                />
+                                                <Layouts.Contents.InnerContent>
+                                                    <Charts.LightWeight.Candle price={props?.chart?.price} volume={props?.chart?.volume} up={"BUY"} down={"SELL"} />
+                                                </Layouts.Contents.InnerContent>
+                                            </Layouts.Contents.InnerContent>
                                         </Layouts.Contents.SlideContent>
                                     ),
                                     responsive: [

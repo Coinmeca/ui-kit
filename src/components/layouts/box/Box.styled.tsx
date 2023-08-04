@@ -5,7 +5,11 @@ import * as Page from "components/layouts/page/Page.styled";
 import * as SlideContainer from "components/layouts/contents/slide/SlideContainer.styled";
 import * as InnerContent from "components/layouts/contents/inner/InnerContent.styled";
 
-const Style = styled.div<{ $change?: string; $fit?: boolean }>`
+const Style = styled.div<{
+    $padding: { top: number; left: number; right: number; bottom: number; };
+    $change?: string;
+    $fit?: boolean
+}>`
     scroll-snap-align: start;
     transition: 0.3s ease;
 
@@ -17,11 +21,14 @@ const Style = styled.div<{ $change?: string; $fit?: boolean }>`
         flex-direction: column;
         background: rgb(var(--dim));
         color: rgba(var(--black));
-        width: calc(100% - 8em);
-        ${({ $fit }) => ($fit ? `height: calc(100% - 8em); min-height: max-content;` : `height: max-content; min-height: calc(100% - 8em);`)}
-
-        padding: 4em;
         gap: 4em;
+        
+        ${({ $padding, $fit }) => css`
+            padding: ${$padding?.top}em ${$padding?.right}em ${$padding?.bottom}em ${$padding?.left}em;
+            width: calc(100% - ${$padding?.left + $padding?.right}em);
+            ${$fit ? `height: calc(100% - ${$padding?.top + $padding?.bottom}em); min-height: max-content;` : `height: max-content; min-height: calc(100% - ${$padding?.top + $padding?.bottom}em);`}
+        `} 
+
 
         @media (prefers-color-scheme: light) {
             --white: 0, 0, 0;
@@ -36,15 +43,21 @@ const Style = styled.div<{ $change?: string; $fit?: boolean }>`
         }
 
         @media all and (min-width: ${Root.Device.Desktop}px) {
-            width: calc(100% - 16em);
-            padding: 4em 8em;
+            ${({ $padding, $fit }) => css`
+                padding: ${$padding?.top}em ${$padding?.right * 2}em ${$padding?.bottom}em ${$padding?.left * 2}em;
+                width: calc(100% - ${$padding?.left + $padding?.right * 2}em);
+                ${$fit ? `height: calc(100% - ${$padding?.top + $padding?.bottom}em); min-height: max-content;` : `height: max-content; min-height: calc(100% - ${$padding?.top + $padding?.bottom}em);`}
+            `}
         }
 
         @media all and (max-width: ${Root.Device.Mobile}px) {
-            width: calc(100% - 4em);
-            ${({ $fit }) => ($fit ? `height: calc(100% - 4em); min-height: max-content;` : `height: max-content; min-height: calc(100% - 4em);`)}
             gap:2em;
-            padding: 2em;
+
+            ${({ $padding, $fit }) => css`
+                padding: ${$padding?.top / 2}em ${$padding?.right / 2}em ${$padding?.bottom / 2}em ${$padding?.left / 2}em;
+                width: calc(100% - ${$padding?.left + $padding?.right / 2}em);
+                ${$fit ? `height: calc(100% - ${$padding?.top + $padding?.bottom / 2}em); min-height: max-content;` : `height: max-content; min-height: calc(100% - ${$padding?.top + $padding?.bottom / 2}em);`}
+            `} 
         }
     }
 

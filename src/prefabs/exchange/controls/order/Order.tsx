@@ -125,14 +125,8 @@ export default function Order(props: OrderControl) {
             value={order.price}
             unit={[...assets][mode ? 0 : 1]?.symbol?.toUpperCase()}
             sub={{
-<<<<<<< HEAD
-                color: `${
-                    mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
-                }`,
-=======
                 color: `${mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
                     }`,
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
                 value: `${(pricePosition > 0 && "+ ") || (pricePosition < 0 && "- ") || ""}${Math.abs(pricePosition)}`,
                 unit: "%",
             }}
