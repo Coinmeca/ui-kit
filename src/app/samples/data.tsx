@@ -273,22 +273,22 @@ export default function Data() {
     const chains = [
         {
             key: 1,
-            img: require("../../assets/coins/eth.png").default.src,
+            img: require("../../assets/coins/eth.png"),
             value: "Ethereum",
         },
         {
             key: 2,
-            img: require("../../assets/coins/arb.png").default.src,
+            img: require("../../assets/coins/arb.png"),
             value: "Arbitrum",
         },
         {
             key: 3,
-            img: require("../../assets/coins/op.png").default.src,
+            img: require("../../assets/coins/op.png"),
             value: "Optimism",
         },
         {
             key: 4,
-            img: require("../../assets/coins/avax.png").default.src,
+            img: require("../../assets/coins/avax.png"),
             value: "Avalanche",
         },
     ];
@@ -296,7 +296,7 @@ export default function Data() {
     const header = {
         color: colorMap[path],
         logo: {
-            src: "assets/coinmeca.svg",
+            src: require("../../assets/coinmeca.svg"),
             width: 128,
             height: 48,
         },
