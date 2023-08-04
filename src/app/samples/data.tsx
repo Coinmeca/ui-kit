@@ -97,15 +97,15 @@ export default function Data() {
         },
         {
             value: "USDT",
-            img: "assets/coins/eth.png",
+            img: require("../../assets/coins/eth.png"),
         },
         {
             value: "ETH",
-            img: "assets/coins/eth.png",
+            img: require("../../assets/coins/eth.png"),
         },
         {
             value: "USDC",
-            img: "assets/coins/eth.png",
+            img: require("../../assets/coins/eth.png"),
         },
     ];
 
