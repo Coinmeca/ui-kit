@@ -291,7 +291,7 @@ export default function Detail(props: Detail) {
                                                             volume={props?.charts?.rate?.volume}
                                                             up={"DEPOSIT"}
                                                             down={"WITHDRAW"}
-                                                            // color={{ up: "255, 160, 0", down: "0,64,255" }}
+                                                        // color={{ up: "255, 160, 0", down: "0,64,255" }}
                                                         />
                                                     ),
                                                 },

@@ -1,6 +1,10 @@
 {
     "name": "@coinmeca/ui",
     "version": "0.1.0",
+<<<<<<< HEAD
+=======
+    "repository": "https://github.com/coinmeca/coinmeca-ui.git",
+>>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
     "private": true,
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -10,7 +14,11 @@
         "build": "tsc && tsc-alias && tscp",
         "build:tsup": "tsup",
         "build:next": "next build",
+<<<<<<< HEAD
         "clean": "rimraf ./dist ./build ./tsconfig.tsbuildinfo ./node_modules/.cache",
+=======
+        "clean": "rimraf ./dist ./build ./.next ./.turbo ./tsconfig.tsbuildinfo ./node_modules/.cache",
+>>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
         "start": "next start",
         "lint": "next lint"
     },

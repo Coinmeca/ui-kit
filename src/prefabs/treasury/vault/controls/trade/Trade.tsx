@@ -125,9 +125,8 @@ export default function Trade(props: TradeControl) {
             value={order.price}
             unit={[...assets][mode ? 0 : 1]?.symbol?.toUpperCase()}
             sub={{
-                color: `${
-                    mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
-                }`,
+                color: `${mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
+                    }`,
                 value: `${(pricePosition > 0 && "+ ") || (pricePosition < 0 && "- ") || ""}${Math.abs(pricePosition)}`,
                 unit: "%",
             }}
