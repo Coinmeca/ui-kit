@@ -16,7 +16,6 @@ const nextConfig = {
         };
         return config;
     },
-    distDir: "dist",
     compiler: {
         styledComponents: true,
     },

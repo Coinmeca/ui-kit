@@ -189,7 +189,7 @@ export default function Detail(props: Detail) {
                         <Controls.Button scale={0.875} icon={"chevron-left"} style={{ padding: "1em" }} onClick={props?.onBack} />
                         <Elements.Avatar
                             size={4}
-                            img={require(`../../../../assets/coins/${props?.asset?.symbol?.toLocaleLowerCase()}.png`)}
+                            img={require(`../../../..assets/coins/${props?.asset?.symbol?.toLocaleLowerCase()}.png`)}
                             style={{ marginLeft: "-1em" }}
                         />
                         <Layouts.Row responsive={"mobile"} gap={1} fit>
@@ -291,7 +291,7 @@ export default function Detail(props: Detail) {
                                                             volume={props?.charts?.rate?.volume}
                                                             up={"DEPOSIT"}
                                                             down={"WITHDRAW"}
-                                                            // color={{ up: "255, 160, 0", down: "0,64,255" }}
+                                                        // color={{ up: "255, 160, 0", down: "0,64,255" }}
                                                         />
                                                     ),
                                                 },

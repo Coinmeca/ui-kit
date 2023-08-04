@@ -10,8 +10,8 @@
         "dev": "next dev",
         "build": "tsc && tsc-alias && tscp",
         "build:tsup": "tsup",
-        "build:next": "tsc --rootDir '.' && next build",
-        "clean": "rimraf ./dist ./build ./tsconfig.tsbuildinfo ./node_modules/.cache",
+        "build:next": "next build",
+        "clean": "rimraf ./dist ./build ./.next ./tsconfig.tsbuildinfo ./node_modules/.cache",
         "start": "next start",
         "lint": "next lint"
     },
@@ -40,7 +40,6 @@
         "typescript-cp": "^0.1.9"
     },
     "sideEffects": false,
-    "type": "module",
     "exports": {
         ".": "./dist/index.js",
         "./*": "./dist/*"
