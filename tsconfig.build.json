@@ -6,7 +6,7 @@
         "module": "esnext",
         "jsx": "preserve",
         "moduleResolution": "node",
-        "incremental": false // dts with tsup requires rootDir if incremental (which does not work well aliases)
+        "incremental": true // dts with tsup requires rootDir if incremental (which does not work well aliases)
     },
     "exclude": ["node_modules", "dist"]
 }

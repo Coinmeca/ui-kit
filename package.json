@@ -43,7 +43,7 @@
         "dist"
     ],
     "exports": {
-        ".": "./dist/index.js",
+        ".": "./dist/index",
         "./*": "./dist/*"
     }
 }
