@@ -11,7 +11,7 @@
         "build": "tsc && tsc-alias && tscp",
         "build:tsup": "tsup",
         "build:next": "next build",
-        "clean": "rimraf ./dist ./build ./.next ./tsconfig.tsbuildinfo ./node_modules/.cache",
+        "clean": "rimraf ./dist ./build ./.next ./.turbo ./tsconfig.tsbuildinfo ./node_modules/.cache",
         "start": "next start",
         "lint": "next lint"
     },
