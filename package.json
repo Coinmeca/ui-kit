@@ -40,7 +40,6 @@
         "typescript-cp": "^0.1.9"
     },
     "sideEffects": false,
-    "type": "module",
     "exports": {
         ".": "./dist/index.js",
         "./*": "./dist/*"
