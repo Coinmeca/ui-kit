@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig((options: any) => ({
-  entry: ['src/**/*.ts'],
+  entry: ['./src/**/*.ts'],
   splitting: true,
   treeshake: true,
   clean: true,
