@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: any }) {
     return (
         <html lang="en">
-            <body>
+            <body suppressHydrationWarning={true}>
                 <Style.Initialize>{children}</Style.Initialize>
             </body>
         </html>

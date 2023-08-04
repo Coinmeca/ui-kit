@@ -43,7 +43,6 @@ const Layout = (
 
 const Area = (area?: string[]) => {
     if (area && area?.length > 0) {
-        console.log(area);
         let css = '';
         for (let i = 0; i < area?.length; i++) {
             css += `
@@ -52,7 +51,6 @@ const Area = (area?: string[]) => {
                 }
             `
         }
-        console.log(css);
         return css;
     }
 }
