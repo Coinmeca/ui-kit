@@ -7,13 +7,6 @@ const nextConfig = {
             test: /\.svg$/,
             use: ["@svgr/webpack"],
         });
-        config.module.rules.push({
-            test: /\.(png|svg|jpg|jpeg|gif)$/i,
-            type: "asset/resource",
-        });
-        config.resolve.fallback = {
-            path: require.resolve("path-browserify"),
-        };
         return config;
     },
     compiler: {

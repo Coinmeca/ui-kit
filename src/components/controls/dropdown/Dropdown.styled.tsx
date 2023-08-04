@@ -95,7 +95,7 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
             }
 
             & > img {
-                min-width: 2.5em;
+                width: 2.5em;
                 height: 2.5em;
                 vertical-align: middle;
                 border-radius: 2em;

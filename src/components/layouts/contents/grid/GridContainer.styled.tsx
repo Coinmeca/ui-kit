@@ -10,33 +10,28 @@ const Layout = (
     height?: number | string | { min?: number; max?: number }
 ) => css`
     ${area &&
-    `width:100%; height:100%; grid-template-areas: ${area}; ${typeof width === "string" && `grid-template-columns: ${width};`} ${
-        typeof height === "string" && `grid-template-rows: ${height};`
+    `width:100%; height:100%; grid-template-areas: ${area}; ${typeof width === "string" && `grid-template-columns: ${width};`} ${typeof height === "string" && `grid-template-rows: ${height};`
     } overflow:hidden;`}
 
     ${direction === "row"
         ? `
-        ${
-            typeof width === "number"
-                ? `grid-template-columns: ${width}em;`
-                : typeof width === "object" &&
-                  (typeof width?.min === "number" || typeof width?.max === "number") &&
-                  `grid-template-columns: repeat(auto-fill, minmax(${typeof width?.min === "number" ? `${width.min}em` : "1fr"}, ${
-                      typeof width?.max === "number" ? `${width.max}em` : "1fr"
-                  }));`
+        ${typeof width === "number"
+            ? `grid-template-columns: ${width}em;`
+            : typeof width === "object" &&
+            (typeof width?.min === "number" || typeof width?.max === "number") &&
+            `grid-template-columns: repeat(auto-fill, minmax(${typeof width?.min === "number" ? `${width.min}em` : "1fr"}, ${typeof width?.max === "number" ? `${width.max}em` : "1fr"
+            }));`
         }
         ${typeof height === "number" && `grid-auto-rows: ${height}em;`}
     `
         : direction === "col" &&
-          `
-        ${
-            typeof height === "number"
-                ? `grid-template-rows: ${height}em;`
-                : typeof height === "object" &&
-                  (typeof height?.min === "number" || typeof height?.max === "number") &&
-                  `grid-template-rows: repeat(auto-fill, minmax(${typeof height?.min === "number" ? `${height.min}em` : "1fr"}, ${
-                      typeof height?.max === "number" ? `${height.max}em` : "1fr"
-                  }));`
+        `
+        ${typeof height === "number"
+            ? `grid-template-rows: ${height}em;`
+            : typeof height === "object" &&
+            (typeof height?.min === "number" || typeof height?.max === "number") &&
+            `grid-template-rows: repeat(auto-fill, minmax(${typeof height?.min === "number" ? `${height.min}em` : "1fr"}, ${typeof height?.max === "number" ? `${height.max}em` : "1fr"
+            }));`
         }
         ${typeof width === "number" && `grid-auto-columns: ${width}em;`}
         `};
@@ -46,8 +41,25 @@ const Layout = (
         : `${typeof gap?.row === "number" ? `grid-row-gap: ${gap?.row}em;` : ""}${typeof gap?.col === "number" ? `grid-column-gap: ${gap?.col}em;` : ""}`}
 `;
 
+const Area = (area?: string[]) => {
+    if (area && area?.length > 0) {
+        console.log(area);
+        let css = '';
+        for (let i = 0; i < area?.length; i++) {
+            css += `
+                &:nth-child(${i + 1}) {
+                    grid-area: ${area[i]};
+                }
+            `
+        }
+        console.log(css);
+        return css;
+    }
+}
+
 export const Grid = styled.div<{
     $area?: string;
+    $contents?: string[];
     $direction?: "row" | "col";
     $gap: number | { row?: number; col?: number };
     $width?: number | string | { min?: number; max?: number };
@@ -71,7 +83,10 @@ export const Grid = styled.div<{
         &:last-child {
             scroll-snap-align: end;
         }
+
+        ${({ $contents }) => Area($contents)}
     }
+
 
     ${({ $area, $direction, $gap, $width, $height }) => Layout($area, $direction, $gap, $width, $height)}
 
