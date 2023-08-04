@@ -41,24 +41,17 @@
     "sideEffects": false,
     "type": "module",
     "exports": {
-        ".": "./src/index.ts",
-        "./*": [
-            "./src/*.ts",
-            "./src/*.tsx",
-            "./src/*/index.ts"
-        ],
-        "./tailwind": {
-            "require": "./src/tailwind.cjs"
-        }
+        ".": "./dist/index.js",
+        "./*": "./dist/*"
     },
     "files": [
-        "src"
+        "dist"
     ],
     "typesVersions": {
         "*": {
             "*": [
-                "src/*",
-                "src/*/index"
+                "dist/*",
+                "dist/*/index"
             ]
         }
     }
