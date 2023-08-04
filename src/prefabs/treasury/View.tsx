@@ -63,7 +63,7 @@ export default function View(props: View) {
                     ]}
                 />
             </Layouts.Cover>
-            <Layouts.Box fit style={{ paddingTop: "2em" }}>
+            <Layouts.Box padding={[2, '', '', '']} fit>
                 <Layouts.Contents.InnerContent>
                     <Layouts.Row gap={0} responsive={"mobile"}>
                         <Layouts.Menu
