@@ -5,19 +5,11 @@ import Style, { Filter } from "./BG.styled";
 export interface BG {
     background?: string;
     filter?:
-<<<<<<< HEAD
-        | string
-        | {
-              color?: string;
-              opacity?: number;
-          };
-=======
     | string
     | {
         color?: string;
         opacity?: number;
     };
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
     fix?: boolean;
     img?: {
         src: number | string;

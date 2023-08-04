@@ -97,17 +97,6 @@ export default function Data() {
         },
         {
             value: "USDT",
-<<<<<<< HEAD
-            img: "/assets/coins/eth.png",
-        },
-        {
-            value: "ETH",
-            img: "/assets/coins/eth.png",
-        },
-        {
-            value: "USDC",
-            img: "/assets/coins/eth.png",
-=======
             img: "assets/coins/eth.png",
         },
         {
@@ -117,17 +106,12 @@ export default function Data() {
         {
             value: "USDC",
             img: "assets/coins/eth.png",
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
         },
     ];
 
     const marketlist = [
         {
-<<<<<<< HEAD
-            logo: require("/assets/coins/eth.png"),
-=======
-            logo: require("assets/coins/eth.png"),
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            logo: require("../../assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/USDT",
             price: "4,678.05",
@@ -135,11 +119,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-<<<<<<< HEAD
-            logo: require("/assets/coins/arb.png"),
-=======
-            logo: require("assets/coins/arb.png"),
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            logo: require("../../assets/coins/arb.png"),
             symbol: "ARB",
             market: "ARB/USDT",
             price: "4,678.05",
@@ -147,11 +127,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-<<<<<<< HEAD
-            logo: require("/assets/coins/matic.png"),
-=======
-            logo: require("assets/coins/matic.png"),
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            logo: require("../../assets/coins/matic.png"),
             symbol: "MATIC",
             market: "MATIC/USDT",
             price: "4,678.05",
@@ -159,11 +135,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-<<<<<<< HEAD
-            logo: require("/assets/coins/dai.png"),
-=======
-            logo: require("assets/coins/dai.png"),
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            logo: require("../../assets/coins/dai.png"),
             symbol: "DAI",
             market: "DAI/USDT",
             price: "4,678.05",
@@ -171,11 +143,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-<<<<<<< HEAD
-            logo: require("/assets/coins/usdc.png"),
-=======
-            logo: require("assets/coins/usdc.png"),
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            logo: require("../../assets/coins/usdc.png"),
             symbol: "USDC",
             market: "USDC/USDT",
             price: "4,678.05",
@@ -183,11 +151,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-<<<<<<< HEAD
-            logo: require("/assets/coins/weth.png"),
-=======
-            logo: require("assets/coins/weth.png"),
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            logo: require("../../assets/coins/weth.png"),
             symbol: "WETH",
             market: "WETH/USDT",
             price: "4,678.05",
@@ -195,11 +159,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-<<<<<<< HEAD
-            logo: require("/assets/coins/uni.png"),
-=======
-            logo: require("assets/coins/uni.png"),
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            logo: require("../../assets/coins/uni.png"),
             symbol: "UNI",
             market: "UNI/USDT",
             price: "4,678.05",
@@ -207,11 +167,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-<<<<<<< HEAD
-            logo: require("/assets/coins/avax.png"),
-=======
-            logo: require("assets/coins/avax.png"),
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            logo: require("../../assets/coins/avax.png"),
             symbol: "AVAX",
             market: "AVAX/USDT",
             price: "4,678.05",
@@ -219,11 +175,7 @@ export default function Data() {
             volume: "73170731",
         },
         {
-<<<<<<< HEAD
-            logo: require("/assets/coins/eth.png"),
-=======
-            logo: require("assets/coins/eth.png"),
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            logo: require("../../assets/coins/eth.png"),
             symbol: "ETH",
             market: "ETH/DAI",
             price: "4,678.05",
@@ -247,11 +199,7 @@ export default function Data() {
                                         // length={8}
                                         size={3}
                                         img={data?.logo}
-<<<<<<< HEAD
-                                        // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
-=======
                                     // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
                                     />
                                 </>,
                                 [
@@ -325,38 +273,22 @@ export default function Data() {
     const chains = [
         {
             key: 1,
-<<<<<<< HEAD
-            img: require("/assets/coins/eth.png").default.src,
-=======
-            img: require("assets/coins/eth.png").default.src,
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            img: require("../../assets/coins/eth.png").default.src,
             value: "Ethereum",
         },
         {
             key: 2,
-<<<<<<< HEAD
-            img: require("/assets/coins/arb.png").default.src,
-=======
-            img: require("assets/coins/arb.png").default.src,
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            img: require("../../assets/coins/arb.png").default.src,
             value: "Arbitrum",
         },
         {
             key: 3,
-<<<<<<< HEAD
-            img: require("/assets/coins/op.png").default.src,
-=======
-            img: require("assets/coins/op.png").default.src,
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            img: require("../../assets/coins/op.png").default.src,
             value: "Optimism",
         },
         {
             key: 4,
-<<<<<<< HEAD
-            img: require("/assets/coins/avax.png").default.src,
-=======
-            img: require("assets/coins/avax.png").default.src,
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
+            img: require("../../assets/coins/avax.png").default.src,
             value: "Avalanche",
         },
     ];
@@ -364,11 +296,7 @@ export default function Data() {
     const header = {
         color: colorMap[path],
         logo: {
-<<<<<<< HEAD
-            src: "/assets/coinmeca.svg",
-=======
             src: "assets/coinmeca.svg",
->>>>>>> 6a8cc061816c49a2296f13f71d7b41211c18eeeb
             width: 128,
             height: 48,
         },
