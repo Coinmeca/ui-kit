@@ -34,7 +34,7 @@ export default function Detail(props: Detail) {
                                 <Controls.Button scale={0.875} icon={"chevron-left"} style={{ padding: "1em" }} onClick={handleBack} />
                                 <Elements.Avatar
                                     size={4}
-                                    img={require(`../../..assets/coins/${props?.asset?.symbol?.toLocaleLowerCase() || "btc"}.png`)}
+                                    img={require(`../../../assets/coins/${props?.asset?.symbol?.toLocaleLowerCase() || "btc"}.png`)}
                                     style={{ marginLeft: "-1em" }}
                                 />
                                 <Layouts.Row responsive={"mobile"} gap={1} fit>

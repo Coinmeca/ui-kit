@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Layouts } from "components";
 import Style, { Logo, Nav, MenuButton, Menu, Side } from "./Header.styled";
-import Coinmeca from "../..assets/coinmeca.svg";
+import Coinmeca from "../../assets/coinmeca.svg";
 import { animate, stagger } from "framer-motion";
 import useWindowSize from "hooks/useWindowSize";
 import { Root } from "lib/style";
