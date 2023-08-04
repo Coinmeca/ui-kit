@@ -10,7 +10,7 @@
         "dev": "next dev",
         "build": "tsc && tsc-alias && tscp",
         "build:tsup": "tsup",
-        "build:next": "tsc --config /path/to/a/tsconfig.json && next build",
+        "build:next": "tsc --rootDir . && build",
         "clean": "rimraf ./dist ./build ./tsconfig.tsbuildinfo ./node_modules/.cache",
         "start": "next start",
         "lint": "next lint"
