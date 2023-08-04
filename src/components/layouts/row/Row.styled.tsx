@@ -1,0 +1,110 @@
+"use client";
+import { Root } from "lib/style";
+import { styled, css } from "styled-components";
+
+const gap = css`
+    gap: var(--gap);
+
+    & > & {
+        gap: calc(var(--gap) / 2);
+
+        & > & {
+            gap: calc(var(--gap) / 4);
+
+            & > & {
+                gap: calc(var(--gap) / 8);
+
+                & > & {
+                    gap: calc(var(--gap) / 16);
+
+                    & > & {
+                        gap: calc(var(--gap) / 32);
+
+                        & > & {
+                            gap: calc(var(--gap) / 64);
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;
+const Style = styled.div<{
+    $gap: number;
+    $change?: string;
+    $responsive?: "desktop" | "laptop" | "tablet" | "mobile";
+    $reverse?: boolean;
+    $fit: boolean;
+    $fix?: boolean;
+}>`
+    --gap: ${({ $gap }) => ($gap === 0 ? 0 : $gap || 4)}em;
+
+    ${({ $change }) => $change && `--change: ${Root.Color($change)};`}
+
+    display: flex;
+    height: max-content;
+    /* align-items: center; */
+    flex-flow: ${({ $fix, $reverse }) => ($fix ? "row" : $reverse ? "row-reverse wrap" : "row wrap")};
+    width: ${({ $fit }) => ($fit ? "max-content" : "-webkit-fill-available")};
+    min-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
+    max-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
+
+    && > * {
+        ${({ $fit }) => !$fit && "flex: 1;"}/* display: flex; */
+        /* width: 100%; */
+    }
+
+    gap: calc(var(--gap));
+
+    & > & {
+        gap: calc(var(--gap) / 2);
+
+        & > & {
+            gap: calc(var(--gap) / 4);
+
+            & > & {
+                gap: calc(var(--gap) / 8);
+
+                & > & {
+                    gap: calc(var(--gap) / 16);
+
+                    & > & {
+                        gap: calc(var(--gap) / 32);
+                    }
+                }
+            }
+        }
+    }
+
+    ${({ $responsive, $reverse }) => {
+        switch ($responsive) {
+            case "laptop":
+                return css`
+                    @media all and (max-width: ${Root.Device.Laptop}px) {
+                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        ${gap}
+                    }
+                `;
+            case "tablet":
+                return css`
+                    @media all and (max-width: ${Root.Device.Tablet}px) {
+                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        ${gap}
+                    }
+                `;
+            case "mobile":
+                return css`
+                    @media all and (max-width: ${Root.Device.Mobile}px) {
+                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        ${gap}
+                    }
+                `;
+        }
+    }}
+
+    @media all and(max-width: ${Root.Device.Mobile}px) {
+        ${gap}
+    }
+`;
+
+export default Style;

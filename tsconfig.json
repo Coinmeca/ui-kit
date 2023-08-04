@@ -1,0 +1,42 @@
+{
+    "compilerOptions": {
+        "rootDir": "src",
+        "baseUrl": "src",
+        "outDir": "dist",
+        "target": "esnext",
+        "module": "esnext",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowSyntheticDefaultImports": true,
+        "noEmit": false,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "incremental": true,
+        "composite": true,
+        "declaration": true,
+        "declarationDir": "dist",
+        "declarationMap": true,
+        "plugins": [
+            {
+                "name": "next",
+                "presets": ["next/babel"],
+                "styled-components": {
+                    "ssr": true
+                }
+            }
+        ],
+        "paths": {
+            "": ["./*"],
+            "~/*": ["./*"]
+        },
+        "typeRoots": ["src/types", "node_modules/@types"]
+    },
+    "include": ["src", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    "exclude": ["node_modules", "**/.*/", "next.config.json", "tsup.config.json", "tsup.config.ts", "dist", "build"]
+}
