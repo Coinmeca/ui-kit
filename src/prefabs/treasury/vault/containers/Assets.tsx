@@ -31,7 +31,7 @@ export default function Assets(props: Assets) {
                                         <Elements.Avatar
                                             size={props?.responsive ? 3.5 : 4}
                                             style={{ maxWidth: "max-content" }}
-                                            img={require(`../../../..assets/coins/${data?.symbol?.toLowerCase()}.png`)}
+                                            img={require(`../../../../assets/coins/${data?.symbol?.toLowerCase()}.png`)}
                                         />
                                     ),
                                 },
