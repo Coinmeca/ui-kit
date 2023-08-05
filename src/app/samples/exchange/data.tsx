@@ -2,6 +2,7 @@ import { ChartingLibraryWidgetOptions, ResolutionString } from "trading-view/cha
 
 export default function Data() {
     const widget: Partial<ChartingLibraryWidgetOptions> = {
+        theme: "dark",
         symbol: "AAPL",
         interval: "1D" as ResolutionString,
         library_path: "/trading-view/charting_library/",
