@@ -1,7 +1,7 @@
 "use client";
 import Script from "next/script";
 import { useState, useEffect, useRef } from "react";
-import { ChartingLibraryWidgetOptions, LanguageCode, ResolutionString, widget } from "../../../../public/trading-view/charting_library";
+import { ChartingLibraryWidgetOptions, LanguageCode, ResolutionString, widget } from "trading-view/charting_library";
 import Style from "./Chart.styled";
 
 export interface TradingView extends Partial<ChartingLibraryWidgetOptions> {
