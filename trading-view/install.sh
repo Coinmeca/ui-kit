@@ -18,8 +18,11 @@ remove_if_directory_exists "$LATEST_HASH"
 
 git clone -q --depth 1 -b "$BRANCH" $REPOSITORY "$LATEST_HASH"
 
-remove_if_directory_exists "public/charting_library"
-remove_if_directory_exists "public/datafeeds"
+create_if_directory_does_not_exists 'public'
+create_if_directory_does_not_exists 'public/trading-view'
+
+remove_if_directory_exists "public/trading-view/charting_library"
+remove_if_directory_exists "public/trading-view/datafeeds"
 
 cp -r "$LATEST_HASH/charting_library" "public/trading-view"
 cp -r "$LATEST_HASH/datafeeds" "public/trading-view"

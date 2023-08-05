@@ -4,7 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
-/public/trading-view
+/**/static/charting_library
+/**/static/datafeeds
 
 # testing
 /coverage

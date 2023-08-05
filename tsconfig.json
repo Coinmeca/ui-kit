@@ -34,7 +34,7 @@
         "paths": {
             "": ["./*"],
             "~/*": ["./*"],
-            "trading-view/*": ["../public/trading-view/*"]
+            "trading-view/*": ["../public/static/*"]
         },
         "typeRoots": ["src/types", "node_modules/@types"]
     },
