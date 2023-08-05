@@ -41,23 +41,8 @@ const Layout = (
         : `${typeof gap?.row === "number" ? `grid-row-gap: ${gap?.row}em;` : ""}${typeof gap?.col === "number" ? `grid-column-gap: ${gap?.col}em;` : ""}`}
 `;
 
-const Area = (area?: string[]) => {
-    if (area && area?.length > 0) {
-        let css = '';
-        for (let i = 0; i < area?.length; i++) {
-            css += `
-                &:nth-child(${i + 1}) {
-                    grid-area: ${area[i]};
-                }
-            `
-        }
-        return css;
-    }
-}
-
 export const Grid = styled.div<{
     $area?: string;
-    $contents?: string[];
     $direction?: "row" | "col";
     $gap: number | { row?: number; col?: number };
     $width?: number | string | { min?: number; max?: number };
@@ -81,10 +66,7 @@ export const Grid = styled.div<{
         &:last-child {
             scroll-snap-align: end;
         }
-
-        ${({ $contents }) => Area($contents)}
     }
-
 
     ${({ $area, $direction, $gap, $width, $height }) => Layout($area, $direction, $gap, $width, $height)}
 

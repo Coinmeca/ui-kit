@@ -20,16 +20,15 @@ function GridContent(props: GridContent) {
         <div {...{ ...(props?.children?.props || props?.children?.children?.props) }}>{props?.children?.children || props?.children}</div>
     );
 
-    const Format =
+    const Area =
         (typeof props?.format === "function" &&
             props?.format({
                 ...props?.props,
                 children: Content?.props?.children || Content,
             })) ||
-        (props?.format?.$$typeof && (props?.format?.type !== Fragment ? <props.format.type {...props?.props}>{Content?.props?.children || Content}</props.format.type> : Content));
+        ((props?.format?.$$typeof && props?.format?.type !== Fragment) ? <props.format.type {...props?.props}>{Content?.props?.children || Content}</props.format.type> : Content);
 
-    if (Format) return <>{Format}</>;
-    return <>{Content}</>;
+    return Area;
 }
 
 export default memo(GridContent);
