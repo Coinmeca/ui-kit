@@ -9,7 +9,6 @@ import { AnimatePresence } from "framer-motion";
 
 import ExchangeData from "./data";
 import AssetData from "../asset/data";
-import Script from "next/script";
 
 export default function Page() {
     const { windowSize } = useWindowSize();
@@ -205,7 +204,7 @@ export default function Page() {
                                                     ]}
                                                 />
                                                 <Layouts.Contents.InnerContent>
-                                                    <Charts.TradingView {...props.widget} script={"/static/datafeeds/udf/dist/bundle.js"} />
+                                                    <Charts.TradingView {...props.widget} script={"/trading-view/datafeeds/udf/dist/bundle.js"} />
                                                     {/* <Charts.LightWeight.Candle
                                                         price={props?.chart?.price}
                                                         volume={props?.chart?.volume}
