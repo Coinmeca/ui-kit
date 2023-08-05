@@ -2,7 +2,7 @@ const path = require("path");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: "/",
+    basePath: "",
     webpack: (config, options) => {
         config.module.rules.push({
             test: /\.svg$/,
