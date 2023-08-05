@@ -1,5 +1,5 @@
 ﻿"use client";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { Elements, Layouts } from "components";
 import { AnimatePresence, motion } from "framer-motion";
 import Tooltip from "./Tooltip";
