@@ -4,11 +4,9 @@ export default function Data() {
     const widget: Partial<ChartingLibraryWidgetOptions> = {
         theme: "dark",
         symbol: "AAPL",
-        interval: "1D" as ResolutionString,
+        interval: "60" as ResolutionString,
+        // datafeedUrl: BONFIDA_DATA_FEED,
         library_path: "/trading-view/charting_library/",
-        locale: "en",
-        charts_storage_url: "https://saveload.tradingview.com",
-        charts_storage_api_version: "1.1",
         client_id: "coinmeca.net",
         user_id: "public_user_id",
         fullscreen: false,
