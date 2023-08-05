@@ -480,7 +480,7 @@ export default function Dummy() {
 
     const marketlist = [
         {
-            logo: require("/assets/coins/btc.png"),
+            logo: require("assets/coins/btc.png"),
             symbol: "BTC",
             market: "BTC/USDT",
             price: "4,678.05",
