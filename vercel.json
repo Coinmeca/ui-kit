@@ -1,0 +1,4 @@
+{
+    "public": true,
+    "ignoreCommand": "git diff --quiet HEAD^ HEAD ./"
+}
