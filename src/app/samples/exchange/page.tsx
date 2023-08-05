@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 
 import ExchangeData from "./data";
 import AssetData from "../asset/data";
+import Script from "next/script";
 
 export default function Page() {
     const { windowSize } = useWindowSize();
@@ -20,6 +21,7 @@ export default function Page() {
         orderbook: DummyExchange.orderbook,
         orderbookView: DummyExchange.orderbookView,
         chart: DummyExchange.chart,
+        widget: DummyExchange.widget,
         assets: DummyAsset.assets,
         history: DummyAsset.history,
         responsive: windowSize.width <= Root.Device.Mobile,
@@ -31,6 +33,7 @@ export default function Page() {
     const [tab, setTab] = useState<string>(option);
     const [view, setView] = useState(0);
 
+    const [ready, setReady] = useState(false);
     return (
         <Layouts.Page>
             <Layouts.Box fit change={parseFloat(props?.market?.change) > 0 ? "green" : parseFloat(props?.market?.change) < 0 && "red"}>
@@ -153,7 +156,6 @@ export default function Page() {
                                                     }}
                                                     hide={"mobile"}
                                                 />
-                                                {console.log(windowSize.width < Root.Device.Mobile)}
                                                 <Layouts.Contents.TabContainer
                                                     contents={[
                                                         {
@@ -203,12 +205,13 @@ export default function Page() {
                                                     ]}
                                                 />
                                                 <Layouts.Contents.InnerContent>
-                                                    <Charts.LightWeight.Candle
+                                                    <Charts.TradingView {...props.widget} script={"/trading-view/datafeeds/udf/dist/bundle.js"} />
+                                                    {/* <Charts.LightWeight.Candle
                                                         price={props?.chart?.price}
                                                         volume={props?.chart?.volume}
                                                         up={"BUY"}
                                                         down={"SELL"}
-                                                    />
+                                                    /> */}
                                                 </Layouts.Contents.InnerContent>
                                             </Layouts.Contents.InnerContent>
                                         </Layouts.Contents.SlideContent>

@@ -75,14 +75,11 @@ export default function Input(props: Input) {
     const [error, setError] = useState<boolean>(props?.error || false);
 
     useEffect(() => {
-        if (props?.value) setValue(props?.value);
-    }, [props?.value]);
-
-    useEffect(() => {
         if (props?.lock || props?.disabled) return;
-        if (value === "") setError(false);
-        setValue(Format(value, type, false, props?.fix).toString());
-    }, [value, type, props?.fix, props?.lock, props?.disabled]);
+        if (props?.value === "") setError(false);
+        console.log(Format(props?.value, type, false, props?.fix).toString());
+        setValue(Format(props?.value, type, false, props?.fix).toString());
+    }, [props?.value, type, props?.fix, props?.lock, props?.disabled]);
 
     const handleClick = (e: any) => {
         if (props?.lock || props?.disabled) return;
