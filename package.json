@@ -38,10 +38,11 @@
         "tsc-alias": "^1.8.7",
         "tsup": "^7.1.0",
         "typescript": "5.1.6",
-        "typescript-cp": "^0.1.9"
+        "typescript-cp": "^0.1.9",
+        "vercel": "^31.2.2"
     },
     "sideEffects": false,
-    "type": "module",
+    "type": "commonjs",
     "exports": {
         ".": "./dist/index.js",
         "./*": "./dist/*"
