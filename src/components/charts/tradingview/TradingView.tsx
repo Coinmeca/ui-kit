@@ -1,6 +1,6 @@
 "use client";
 import Script from "next/script";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { ChartingLibraryWidgetOptions, LanguageCode, ResolutionString, widget } from "trading-view/charting_library";
 import Style from "./Chart.styled";
 
@@ -25,7 +25,7 @@ export default function TradingView(props: TradingView) {
     );
 }
 
-function TradingViewChart(props: Partial<ChartingLibraryWidgetOptions>) {
+const TradingViewChart = memo((props: Partial<ChartingLibraryWidgetOptions>) => {
     const chartContainerRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
 
     useEffect(() => {
@@ -77,4 +77,4 @@ function TradingViewChart(props: Partial<ChartingLibraryWidgetOptions>) {
     }, [props]);
 
     return <div ref={chartContainerRef} />;
-}
+});
