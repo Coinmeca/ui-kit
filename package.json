@@ -7,10 +7,10 @@
     "types": "dist/index.d.ts",
     "module": "dist/index.esm.js",
     "scripts": {
-        "dev": "next dev",
-        "build": "tsc && tsc-alias && tscp",
-        "build:tsup": "tsup",
-        "build:next": "next build",
+        "dev": "npm pkg set type=commonjs && next dev",
+        "build": "npm pkg set type=module && tsc && tsc-alias && tscp",
+        "build:tsup": "npm pkg set type=module && tsup",
+        "build:next": "npm pkg set type=commonjs && next build",
         "clean": "rimraf ./dist ./build ./.next ./.turbo ./tsconfig.tsbuildinfo ./node_modules/.cache",
         "start": "next start",
         "lint": "next lint"
@@ -27,10 +27,10 @@
         "styled-components": "^6.0.3"
     },
     "devDependencies": {
+        "@svgr/webpack": "^8.0.1",
         "@types/node": "20.4.5",
         "@types/react": "18.2.18",
         "@types/react-dom": "18.2.7",
-        "@svgr/webpack": "^8.0.1",
         "eslint": "8.46.0",
         "eslint-config-next": "13.4.12",
         "path-browserify": "^1.0.1",
@@ -40,7 +40,7 @@
         "typescript-cp": "^0.1.9"
     },
     "sideEffects": false,
-    "type": "module",
+    "type": "commonjs",
     "exports": {
         ".": "./dist/index.js",
         "./*": "./dist/*"
