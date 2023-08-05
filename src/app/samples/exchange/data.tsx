@@ -1,3 +1,5 @@
+import { ChartingLibraryWidgetOptions, ResolutionString } from "trading-view/charting_library";
+
 export default function Data() {
     const market = {
         logo: require("../../../assets/coins/eth.png"),
@@ -144,5 +146,18 @@ export default function Data() {
         ],
     };
 
-    return { market, orderbook, info, orderbookView, chart };
+    const widget: Partial<ChartingLibraryWidgetOptions> = {
+        symbol: "AAPL",
+        interval: "1D" as ResolutionString,
+        library_path: "/static/charting_library/",
+        locale: "en",
+        charts_storage_url: "https://saveload.tradingview.com",
+        charts_storage_api_version: "1.1",
+        client_id: "tradingview.com",
+        user_id: "public_user_id",
+        fullscreen: false,
+        autosize: true,
+    };
+
+    return { market, orderbook, info, orderbookView, chart, widget };
 }

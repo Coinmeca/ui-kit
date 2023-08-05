@@ -5,8 +5,7 @@
         "target": "esnext",
         "module": "esnext",
         "jsx": "preserve",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "incremental": true // dts with tsup requires rootDir if incremental (which does not work well aliases)
-    },
-    "exclude": ["node_modules", "dist"]
+    }
 }
