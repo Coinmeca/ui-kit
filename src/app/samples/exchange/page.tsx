@@ -153,6 +153,7 @@ export default function Page() {
                                                     }}
                                                     hide={"mobile"}
                                                 />
+                                                {console.log(windowSize.width < Root.Device.Mobile)}
                                                 <Layouts.Contents.TabContainer
                                                     contents={[
                                                         {
@@ -202,7 +203,12 @@ export default function Page() {
                                                     ]}
                                                 />
                                                 <Layouts.Contents.InnerContent>
-                                                    <Charts.LightWeight.Candle price={props?.chart?.price} volume={props?.chart?.volume} up={"BUY"} down={"SELL"} />
+                                                    <Charts.LightWeight.Candle
+                                                        price={props?.chart?.price}
+                                                        volume={props?.chart?.volume}
+                                                        up={"BUY"}
+                                                        down={"SELL"}
+                                                    />
                                                 </Layouts.Contents.InnerContent>
                                             </Layouts.Contents.InnerContent>
                                         </Layouts.Contents.SlideContent>

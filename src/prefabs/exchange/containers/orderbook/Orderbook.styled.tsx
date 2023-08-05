@@ -157,7 +157,6 @@ export const Tick = styled.div`
 export const Ticks = (color: string, show: boolean) => css`
     font-size: 1em;
     display: flex;
-    flex-direction: column-reverse;
     width: 100%;
     height: 100%;
     max-height: 100%;
@@ -183,10 +182,12 @@ export const Ticks = (color: string, show: boolean) => css`
 `;
 
 export const Asks = styled.div<{ $show: boolean }>`
+    flex-direction: column-reverse;
     ${({ $show }) => Ticks("red", $show)}
 `;
 
 export const Bids = styled.div<{ $show: boolean }>`
+    flex-direction: column;
     ${({ $show }) => Ticks("green", $show)}
 `;
 
