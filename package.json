@@ -11,7 +11,7 @@
         "build": "npm pkg set type=module && tsc && tsc-alias && tscp",
         "build:tsup": "npm pkg set type=module && tsup",
         "build:next": "npm pkg set type=commonjs && next build",
-        "clean": "rimraf ./dist ./build ./.next ./.turbo ./tsconfig.tsbuildinfo ./node_modules/.cache",
+        "clean": "rimraf ./dist ./build ./.next ./.vercel ./.turbo ./tsconfig.tsbuildinfo ./node_modules/.cache",
         "start": "next start",
         "lint": "next lint"
     },
