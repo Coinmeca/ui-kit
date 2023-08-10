@@ -34,10 +34,10 @@
         "paths": {
             "": ["./*"],
             "~/*": ["./*"],
-            "trading-view/*": ["../public/trading-view/*"]
+            "trading-view/*": ["../trading-view/*"]
         },
         "typeRoots": ["src/types", "node_modules/@types"]
     },
     "include": ["src", "next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
-    "exclude": ["node_modules", "**/.*/", "next.config.json", "tsup.config.json", "tsup.config.ts", "dist", "build"]
+    "exclude": ["node_modules", "**/.*/", "next.config.json", "tsup.config.json", "tsup.config.ts", "dist", "build", "**/trading-view"]
 }

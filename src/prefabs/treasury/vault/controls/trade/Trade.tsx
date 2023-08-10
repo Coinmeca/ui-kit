@@ -1,12 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
-import { Token } from "types/web3";
-import { Format } from "lib/utils";
 import { Exchange } from "prefabs";
-import useOrder from "hooks/useOrder";
-import usePortal from "hooks/usePortal";
-import useMobile from "hooks/useMobile";
+import { useOrder, usePortal, useMobile } from "hooks";
+import { Format } from "lib/utils";
+import type { Token } from "types/web3";
 
 export interface TradeControl {
     mode: boolean;
@@ -52,9 +50,9 @@ export default function Trade(props: TradeControl) {
             fees: 0,
             total: 0,
         },
-        available,
+        mode,
         0.01,
-        mode
+        available
     );
 
     const color = {
@@ -125,8 +123,9 @@ export default function Trade(props: TradeControl) {
             value={order.price}
             unit={[...assets][mode ? 0 : 1]?.symbol?.toUpperCase()}
             sub={{
-                color: `${mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
-                    }`,
+                color: `${
+                    mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
+                }`,
                 value: `${(pricePosition > 0 && "+ ") || (pricePosition < 0 && "- ") || ""}${Math.abs(pricePosition)}`,
                 unit: "%",
             }}
@@ -205,7 +204,7 @@ export default function Trade(props: TradeControl) {
             />
             <Controls.Range
                 color={mode ? color.buy : color.sell}
-                value={(order.amount / available) * 100}
+                value={(order.amount! / available) * 100}
                 min={range.min}
                 max={range.max}
                 step={range.step}

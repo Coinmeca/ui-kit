@@ -1,11 +1,10 @@
 "use client";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { Controls, Layouts } from "components";
 import { Exchange } from "prefabs";
 import { Token } from "types/web3";
-import type { Order as O } from "prefabs/exchange/controls/order/Order";
-import useWindowSize from "hooks/useWindowSize";
 import usePortal from "hooks/usePortal";
+import type { Order as O } from "types/order";
 import { Vault } from "prefabs/treasury";
 
 export interface TradeControl {

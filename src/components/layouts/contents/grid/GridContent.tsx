@@ -12,8 +12,10 @@ export interface GridContent {
     }[];
 }
 
-function GridContent(props: GridContent) {
-    const Child = (props?.children?.children?.type !== Fragment && props.children?.children?.$$typeof && props?.children?.children?.type) || (props?.children?.type !== Fragment && props?.children?.$$typeof && props?.children?.type);
+export default function GridContent(props: GridContent) {
+    const Child =
+        (props?.children?.children?.type !== Fragment && props.children?.children?.$$typeof && props?.children?.children?.type) ||
+        (props?.children?.type !== Fragment && props?.children?.$$typeof && props?.children?.type);
     const Content = Child ? (
         <Child {...{ ...(props?.children?.props || props?.children?.children?.props) }}>{props?.children?.props?.children || props?.children?.children}</Child>
     ) : (
@@ -26,9 +28,13 @@ function GridContent(props: GridContent) {
                 ...props?.props,
                 children: Content?.props?.children || Content,
             })) ||
-        ((props?.format?.$$typeof && props?.format?.type !== Fragment) ? <props.format.type {...props?.props}>{Content?.props?.children || Content}</props.format.type> : Content);
+        (props?.format?.$$typeof && props?.format?.type !== Fragment ? (
+            <props.format.type {...props?.props}>{Content?.props?.children || Content}</props.format.type>
+        ) : (
+            Content
+        ));
 
     return Area;
 }
 
-export default memo(GridContent);
+// export default memo(GridContent);

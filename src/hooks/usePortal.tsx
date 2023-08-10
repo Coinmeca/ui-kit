@@ -15,7 +15,7 @@ export default function usePortal(initial?: any, initialProps?: any) {
         !root && setRoot(createRoot(document?.createElement("section")));
         return () => {
             root?.render(null);
-            root?.unmount();
+            // root?.unmount();
             setActive(false);
             setChildren(null);
             setRoot(undefined);

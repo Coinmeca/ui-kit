@@ -5,13 +5,14 @@ import { Modals } from "containers";
 import type { List } from "components/layouts/list/List";
 import { Format } from "lib/utils";
 import { Token } from "types/web3";
-import { Order } from "types/history";
+import type { History as H } from "types/history";
 import usePortal from "hooks/usePortal";
 
 export interface History extends List {
     assets?: Token[];
-    list?: Order[];
+    list?: H[];
     responsive?: boolean;
+    fallback?: any;
 }
 
 export default function HistoryShort(props: History) {
@@ -114,12 +115,12 @@ export default function HistoryShort(props: History) {
         );
     };
 
-    const historyFormatter = (data?: Order[]) => {
+    const historyFormatter = (data?: H[]) => {
         return (
             data &&
             typeof data !== "string" &&
             data?.length > 0 &&
-            data?.map((data: Order) => {
+            data?.map((data: H) => {
                 // console.log(props?.assets?.find((a: Token) => console.log(a)));
                 const pay: any = props?.assets?.find((a: Token) => a?.address === data?.pay)?.symbol;
                 const item: any = props?.assets?.find((a: Token) => a?.address === data?.item)?.symbol;

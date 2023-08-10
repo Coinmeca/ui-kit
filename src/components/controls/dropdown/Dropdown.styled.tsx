@@ -1,8 +1,129 @@
 import { css, styled } from "styled-components";
+import * as BottomSheet from "containers/bottomsheets/BottomSheet.styled";
 
-export const Item = styled.li``;
+export const Item = styled.li`
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    width: calc(100% - 5em);
+    // min-width: max-content;
+    gap: 1em;
+    padding: 1em;
+    padding-right: 4em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
 
-const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: number; $disabled: boolean }>`
+    & > span {
+        font-size: 1.5em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    & > img {
+        width: 2.5em;
+        height: 2.5em;
+        vertical-align: middle;
+        border-radius: 2em;
+        margin-top: -0.25em;
+        margin-bottom: -0.25em;
+    }
+
+    & i {
+        font-size: 2.5em;
+        svg {
+            fill: rgba(var(--white), var(--o045));
+        }
+    }
+
+    &:hover,
+    &:active {
+        background: rgba(var(--white), var(--o015));
+        color: rgba(var(--white), var(--o1));
+        & i svg {
+            fill: rgba(var(--white), var(--o1));
+        }
+    }
+
+    &[data-disabled="true"] {
+        opacity: 0.15;
+        cursor: initial;
+        pointer-events: none;
+    }
+
+    ${BottomSheet.default} & {
+        padding: 1.5em;
+        width: initial;
+    }
+`;
+
+export const Option = styled.ul`
+    height: 100%;
+    max-height: 100%;
+
+    ${Item} {
+        height: 100%;
+        max-height: 100%;
+        overflow: hidden;
+
+        &:hover {
+            background: none;
+        }
+
+        & > *:last-child:not(span) {
+            position: absolute;
+            right: 0.25em;
+            transition: 0.3s ease;
+        }
+    }
+
+    [data-active="true"] > & > ${Item} {
+        &,
+        &:hover,
+        &:active {
+            background: transparent;
+            color: rgba(var(--white), var(--o03));
+            & i svg {
+                fill: rgba(var(--white), var(--o03));
+            }
+        }
+        & > *:last-child:not(span) {
+            transform: rotate(180deg);
+        }
+    }
+`;
+
+export const Options = styled.ul`
+    height: auto;
+    overflow: hidden scroll;
+    transition: 0.3s ease;
+    z-index: 10;
+
+    & i svg {
+        fill: rgba(var(--white), var(--o045));
+    }
+
+    & ::-webkit-scrollbar {
+        width: 0.5em;
+    }
+
+    & ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 0 rgba(var(--black), var(--o045));
+    }
+
+    & ::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 0.2em rgba(var(--white), var(--o045));
+    }
+
+    [data-active="true"] > & {
+        background: rgba(var(--white), var(--o015));
+    }
+`;
+
+const Style = styled.div<{ $open: boolean; $height: number; $fit: boolean; $scale: number; $disabled: boolean }>`
     font-size: ${({ $scale }) => $scale}em;
     background: transparent;
     color: rgba(var(--white), var(--o045));
@@ -20,135 +141,22 @@ const Style = styled.div<{ $open: boolean; $max: number; $fit: boolean; $scale: 
     transition: 0.3s ease;
     backdrop-filter: var(--blur);
 
-    & > ul {
+    ${Option}, ${Options} {
         position: relative;
         display: flex;
         flex-direction: column;
-        height: 100%;
+    }
 
-        &:first-child {
-            max-height: 100%;
-
-            ${Item} {
-                height: 100%;
-                max-height: 100%;
-                overflow: hidden;
-
-                &:hover {
-                    background: none;
-                }
-
-                & > *:last-child:not(span) {
-                    position: absolute;
-                    right: 0.25em;
-                    transition: 0.3s ease;
-                }
-            }
-        }
-
-        &:last-child {
-            height: auto;
-            max-height: 0;
-            overflow: hidden scroll;
-            transition: 0.3s ease;
-            z-index: 10;
-
-            background: rgba(var(--white), var(--o0075));
-
-            & i svg {
-                fill: rgba(var(--white), var(--o045));
-            }
-
-            & ::-webkit-scrollbar {
-                width: 0.5em;
-            }
-
-            & ::-webkit-scrollbar-track {
-                -webkit-box-shadow: inset 0 0 0 rgba(var(--black), var(--o045));
-            }
-
-            & ::-webkit-scrollbar-thumb {
-                -webkit-box-shadow: inset 0 0 0.2em rgba(var(--white), var(--o045));
-            }
-        }
-
-        & > ${Item} {
-            position: relative;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: start;
-            width: calc(100% - 5em);
-            // min-width: max-content;
-            gap: 1em;
-            padding: 1em;
-            padding-right: 4em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s ease;
-
-            & > span {
-                font-size: 1.5em;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-            }
-
-            & > img {
-                width: 2.5em;
-                height: 2.5em;
-                vertical-align: middle;
-                border-radius: 2em;
-                margin-top: -0.25em;
-                margin-bottom: -0.25em;
-            }
-
-            & i {
-                font-size: 2.5em;
-                svg {
-                    fill: rgba(var(--white), var(--o045));
-                }
-            }
-
-            &:hover,
-            &:active {
-                background: rgba(var(--white), var(--o015));
-                color: rgba(var(--white), var(--o1));
-                & i svg {
-                    fill: rgba(var(--white), var(--o1));
-                }
-            }
-
-            &[data-disabled="true"] {
-                opacity: 0.15;
-                cursor: initial;
-                pointer-events: none;
-            }
-        }
+    & ${Options} {
+        max-height: 0;
+        background: rgba(var(--white), var(--o0075));
     }
 
     &[data-active="true"] {
         background: rgba(var(--white), var(--o0075));
 
-        & > ul {
-            &:first-child > li {
-                &,
-                &:hover,
-                &:active {
-                    background: transparent;
-                    color: rgba(var(--white), var(--o03));
-                    & i svg {
-                        fill: rgba(var(--white), var(--o03));
-                    }
-                }
-                & > *:last-child:not(span) {
-                    transform: rotate(180deg);
-                }
-            }
-            &:last-child {
-                background: rgba(var(--white), var(--o015));
-                ${({ $max }) => $max && `max-height: ${$max}em;`}
-            }
+        ${Options} {
+            ${({ $height }) => $height && `max-height: ${$height}em;`}
         }
     }
 

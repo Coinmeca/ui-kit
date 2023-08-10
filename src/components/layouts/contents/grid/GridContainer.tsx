@@ -1,10 +1,10 @@
 "use client";
-import { Fragment, useCallback, useEffect, useId, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Style, { Grid } from "./GridContainer.styled";
 import GridContent from "./GridContent";
 import { GridArea as Area } from "./GridContent.styled";
-import type { GridContent as Content } from "./GridContent";
 import { createGlobalStyle } from "styled-components";
+import type { GridContent as Content } from "./GridContent";
 
 export interface GridContainer {
     format?: any;
@@ -28,7 +28,7 @@ export interface GridContainer {
 }
 
 export default function GridContainer(props: GridContainer) {
-    const gap = props?.gap || 4;
+    const gap = props?.gap || 0;
     const [grid, setGrid] = useState<string | undefined>();
 
     useEffect(() => {
@@ -48,23 +48,21 @@ export default function GridContainer(props: GridContainer) {
                     $responsive={props?.responsive}
                     style={props?.style}
                 >
-                    <>
-                        {props?.contents && props?.contents?.length > 0
-                            ? props?.contents?.map((v: any, k: number) => (
-                                  <Fragment key={k}>
-                                      <GridContent className={k} format={props?.format} {...v} />
-                                      <GridArea {...{ $parent: grid, $id: k, $area: v?.area, $responsive: v?.responsive }} />
-                                  </Fragment>
-                              ))
-                            : props?.children && props.children?.length > 0
-                            ? props?.children?.map((v: any, k: number) => (
-                                  <Fragment key={k}>
-                                      <Fragment>{v}</Fragment>
-                                      <GridArea {...{ $parent: grid, $id: k, $area: v?.area, $responsive: v?.responsive }} />
-                                  </Fragment>
-                              ))
-                            : props?.children}
-                    </>
+                    {props?.contents && props?.contents?.length > 0
+                        ? props?.contents?.map((v: any, k: number) => (
+                              <Fragment key={k}>
+                                  <GridContent format={props?.format} {...v} />
+                                  <GridArea {...{ $parent: grid, $id: k, $area: v?.area, $responsive: v?.responsive }} />
+                              </Fragment>
+                          ))
+                        : props?.children && props.children?.length > 0
+                        ? props?.children?.map((v: any, k: number) => (
+                              <Fragment key={k}>
+                                  <Fragment>{v}</Fragment>
+                                  <GridArea {...{ $parent: grid, $id: k, $area: v?.area, $responsive: v?.responsive }} />
+                              </Fragment>
+                          ))
+                        : props?.children}
                 </Grid>
             )}
         </Style>

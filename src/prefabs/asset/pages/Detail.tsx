@@ -3,22 +3,21 @@ import { useState } from "react";
 import { Contents, Controls, Elements, Layouts } from "components";
 import { Asset } from "prefabs";
 import { Format } from "lib/utils";
-import { Token } from "types/web3";
-import { Order } from "types/history";
 import { AnimatePresence } from "framer-motion";
+import type { Token, History } from "types";
 
 export interface Detail {
     info?: any;
     assets?: Token[];
     asset?: Token;
-    history?: Order[];
+    history?: History[];
     onBack?: Function;
     responsive?: boolean;
 }
 
 export default function Detail(props: Detail) {
     const [mobile, setMobile] = useState("history");
-    const [history, setHistory] = useState<Order[]>(props?.history || []);
+    const [history, setHistory] = useState<History[]>(props?.history || []);
 
     const handleBack = () => {
         if (typeof props?.onBack === "function") props?.onBack(undefined);

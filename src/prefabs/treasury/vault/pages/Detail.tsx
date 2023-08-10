@@ -2,15 +2,14 @@
 import { useState } from "react";
 import { Charts, Controls, Elements, Layouts } from "components";
 import { Modal } from "containers";
-import { Vault } from "prefabs/treasury";
-import { Token } from "types/web3";
-import { Trade as Data } from "types/history";
-import { Root } from "lib/style";
-import { Capitalize, Format } from "lib/utils";
-import usePortal from "hooks/usePortal";
-import useWindowSize from "hooks/useWindowSize";
-import type { Price, Volume } from "components/charts/lightweight/Candle";
 import { Asset } from "prefabs";
+import { Vault } from "prefabs/treasury";
+import { usePortal, useWindowSize } from "hooks";
+import { Capitalize, Format } from "lib/utils";
+import { Root } from "lib/style";
+import type { Token } from "types/web3";
+import type { Trade as Data } from "types/history";
+import type { Price, Volume } from "components/charts/lightweight/Candle";
 
 export interface Detail {
     asset: Token;
@@ -291,7 +290,7 @@ export default function Detail(props: Detail) {
                                                             volume={props?.charts?.rate?.volume}
                                                             up={"DEPOSIT"}
                                                             down={"WITHDRAW"}
-                                                        // color={{ up: "255, 160, 0", down: "0,64,255" }}
+                                                            // color={{ up: "255, 160, 0", down: "0,64,255" }}
                                                         />
                                                     ),
                                                 },
