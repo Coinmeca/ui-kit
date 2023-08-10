@@ -44,7 +44,7 @@
         "vercel": "^31.2.2"
     },
     "sideEffects": false,
-    "type": "commonjs",
+    "type": "module",
     "exports": {
         ".": "./dist/index.js",
         "./*": "./dist/*"
