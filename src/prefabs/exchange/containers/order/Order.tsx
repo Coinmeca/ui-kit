@@ -2,10 +2,9 @@
 import { useState } from "react";
 import { Controls, Layouts } from "components";
 import { Exchange } from "prefabs";
-import { Token } from "types/web3";
-import type { Order as O } from "prefabs/exchange/controls/order/Order";
-import useWindowSize from "hooks/useWindowSize";
-import usePortal from "hooks/usePortal";
+import { usePortal } from "hooks";
+import type { Token } from "types/web3";
+import type { Order as O } from "types/order";
 
 export interface OrderControl {
     base: Token;
@@ -19,8 +18,6 @@ export interface OrderControl {
 }
 
 export default function Order(props: OrderControl) {
-    const { windowSize } = useWindowSize();
-
     const [mode, setMode] = useState(true);
     const option = props?.option || "market";
     const responsive = props?.responsive || false;

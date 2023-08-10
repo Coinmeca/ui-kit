@@ -3,7 +3,7 @@ import { css } from "styled-components";
 
 export const Device = {
     Small: 360,
-    Mobile: 720,
+    Mobile: 640,
     Tablet: 960,
     Laptop: 1280,
     Desktop: 1920,

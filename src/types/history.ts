@@ -1,4 +1,4 @@
-export interface Order {
+export interface History {
     time: number;
     category: number;
     state: number;

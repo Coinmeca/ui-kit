@@ -2,7 +2,8 @@
 import { Contents, Controls, Layouts } from "components";
 import { Treasury } from "prefabs";
 import { AnimatePresence } from "framer-motion";
-import { Token } from "types/web3";
+import type { Token } from "types/web3";
+
 import Data from "app/samples/treasury/data";
 
 export interface Detail {

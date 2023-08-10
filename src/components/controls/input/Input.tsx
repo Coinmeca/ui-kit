@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useEffect, createRef } from "react";
+import { Controls } from "components";
 import { Format } from "lib/utils";
-
-import { Controls, Elements } from "components";
 import Style, { Side } from "./Input.styled";
 
 export interface Input {
@@ -71,15 +70,24 @@ export default function Input(props: Input) {
     const [fold, setFold] = useState<boolean>(false);
     const [extend, setExtend] = useState<boolean>(false);
 
-    const [value, setValue] = useState<number | string>(props?.value || "");
+    const formatter = (value?: number | string) => {
+        if (!value || value === "") return "";
+        if (type === "number" || type === "currency") {
+            value = Format(value, type, props?.lock, props?.fix) as number;
+            value = typeof props?.min === "number" && props?.min > value ? props?.min : value;
+            value = typeof props?.max === "number" && props?.max < value ? props?.max : value;
+        } else {
+            value = Format(value, type, props?.lock, props?.fix).toString();
+        }
+        return value;
+    };
+
+    const [value, setValue] = useState<number | string>(formatter(props?.value));
     const [error, setError] = useState<boolean>(props?.error || false);
 
     useEffect(() => {
-        if (props?.lock || props?.disabled) return;
-        if (props?.value === "") setError(false);
-        console.log(Format(props?.value, type, false, props?.fix).toString());
-        setValue(Format(props?.value, type, false, props?.fix).toString());
-    }, [props?.value, type, props?.fix, props?.lock, props?.disabled]);
+        setValue(formatter(props?.value));
+    }, [props?.value, type, props?.fix, props?.min, props?.max, props?.readOnly, props?.lock, props?.disabled]);
 
     const handleClick = (e: any) => {
         if (props?.lock || props?.disabled) return;
@@ -96,18 +104,11 @@ export default function Input(props: Input) {
         }
     };
 
-    // const handleInput = useCallback(
-    //     (event: ChangeEvent<HTMLInputElement>) => {
-    //     onUserInput(event.target.value)
-    //     },
-    //     [onUserInput]
-    // )
-
     const handleChange = (e: any) => {
         if (props?.lock || props?.disabled) return;
-        const value = typeof e !== "object" ? e : e.target.value;
+        const value = typeof e === "object" ? e?.target?.value : e;
         setError(false);
-        setValue(Format(value, type, true, props?.fix, props?.max));
+        setValue(formatter(value));
         if (typeof props?.onChange === "function") props?.onChange(e, value);
     };
 
@@ -134,7 +135,7 @@ export default function Input(props: Input) {
             key === 109 ||
             key === 189
         ) {
-            let copy: number | undefined;
+            let copy: number = 0;
             if (key === 38 || key === 107 || key === 187) {
                 if (e.shiftKey && e.ctrlKey) {
                     copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step * 100);
@@ -142,15 +143,9 @@ export default function Input(props: Input) {
                     copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step * 10);
                 } else {
                     copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step);
-                    console.log("copy", copy);
                 }
-                const result = typeof props?.max !== "undefined" ? (copy > props?.max ? props?.max : copy) : copy;
-                if (type === "currency") {
-                    setValue(Format(result));
-                } else {
-                    setValue(result);
-                }
-                if (typeof props?.onChange === "function") props?.onChange(e, result);
+                setValue(formatter(copy));
+                if (typeof props?.onChange === "function") props?.onChange(e, copy);
             }
             if (key === 40 || key === 109 || key === 189) {
                 if (e.shiftKey && e.ctrlKey) {
@@ -160,13 +155,8 @@ export default function Input(props: Input) {
                 } else {
                     copy = value.toString() === "" ? 0 : parseFloat(value.toString().replaceAll(",", "")) - Math.abs(step);
                 }
-                const result = copy <= 0 ? 0 : copy;
-                if (type === "currency") {
-                    setValue(Format(result, type));
-                } else {
-                    setValue(result);
-                }
-                if (typeof props?.onChange === "function") props?.onChange(e, result);
+                setValue(formatter(copy));
+                if (typeof props?.onChange === "function") props?.onChange(e, copy);
             }
         }
         if (typeof props?.onKeyDown === "function") {

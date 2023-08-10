@@ -39,7 +39,7 @@ const format = {
     currency: /^[,.0-9]*$/,
 }
 
-export function Format(value?: number | string, type?: 'email' | 'number' | 'currency' | 'date' | string, display?: boolean, fix?: number | 'auto', max?: number | string, auto?: boolean): number | string {
+export function Format(value?: number | string, type?: 'email' | 'number' | 'currency' | 'date' | string, display?: boolean, fix?: number | 'auto', max?: number | string): number | string {
 
     switch (type) {
         case 'email': {

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Modals } from "containers";
-import type { Order as O } from "prefabs/exchange/controls/order/Order";
+import type { Order as O } from "types/order";
 
 export interface Confirmation {
     mode?: boolean;
