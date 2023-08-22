@@ -7,7 +7,12 @@ export const Pad = styled.div`
     flex: 3;
 `;
 
-const Style = styled.div<{ $scale: number; $width?: number; $padding: number; $reverse?: boolean }>`
+const Style = styled.div<{
+    $scale: number;
+    $width?: number;
+    $padding: number;
+    $reverse?: boolean;
+}>`
     display: flex;
     align-items: center;
     justify-content: center;

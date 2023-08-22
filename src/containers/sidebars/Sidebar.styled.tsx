@@ -47,7 +47,11 @@ export const Lower = styled.section`
     }
 `;
 
-const Style = styled.aside<{ $scale: number; $width: number; $active: boolean }>`
+const Style = styled.aside<{
+    $scale: number;
+    $width: number;
+    $active: boolean;
+}>`
     font-size: ${({ $scale }) => $scale}em;
     width: ${({ $width }) => $width}em;
     position: relative;

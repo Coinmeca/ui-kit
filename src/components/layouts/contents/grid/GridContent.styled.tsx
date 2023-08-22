@@ -62,19 +62,22 @@ const Style = styled.div<{
                 switch ($responsive[i]?.device) {
                     case "laptop":
                         return css`
-                            @media all and (max-width: ${Root.Device.Laptop}px) {
+                            @media all and (max-width: ${Root.Device
+                                    .Laptop}px) {
                                 ${Responsive($responsive[i].area)}
                             }
                         `;
                     case "tablet":
                         return css`
-                            @media all and (max-width: ${Root.Device.Tablet}px) {
+                            @media all and (max-width: ${Root.Device
+                                    .Tablet}px) {
                                 ${Responsive($responsive[i].area)}
                             }
                         `;
                     case "mobile":
                         return css`
-                            @media all and (max-width: ${Root.Device.Mobile}px) {
+                            @media all and (max-width: ${Root.Device
+                                    .Mobile}px) {
                                 ${Responsive($responsive[i].area)}
                             }
                         `;
@@ -115,19 +118,22 @@ export const GridArea = css<{
                 switch ($responsive[i]?.device) {
                     case "laptop":
                         return css`
-                            @media all and (max-width: ${Root.Device.Laptop}px) {
+                            @media all and (max-width: ${Root.Device
+                                    .Laptop}px) {
                                 ${Responsive($responsive[i].area)}
                             }
                         `;
                     case "tablet":
                         return css`
-                            @media all and (max-width: ${Root.Device.Tablet}px) {
+                            @media all and (max-width: ${Root.Device
+                                    .Tablet}px) {
                                 ${Responsive($responsive[i].area)}
                             }
                         `;
                     case "mobile":
                         return css`
-                            @media all and (max-width: ${Root.Device.Mobile}px) {
+                            @media all and (max-width: ${Root.Device
+                                    .Mobile}px) {
                                 ${Responsive($responsive[i].area)}
                             }
                         `;

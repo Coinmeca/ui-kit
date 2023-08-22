@@ -13,5 +13,12 @@ export default function Process(props: Process) {
         if (typeof props?.onClose === "function") props?.onClose(e);
     };
 
-    return <Modal {...{ ...props }} onClose={(e: any) => handleClose(e)} content={<Contents.Process {...props} />} close />;
+    return (
+        <Modal
+            {...{ ...props }}
+            onClose={(e: any) => handleClose(e)}
+            content={<Contents.Process {...props} />}
+            close
+        />
+    );
 }

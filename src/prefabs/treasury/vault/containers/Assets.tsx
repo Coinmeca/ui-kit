@@ -17,7 +17,8 @@ export default function Assets(props: Assets) {
             data?.length > 0 &&
             data?.map((data: Asset) => ({
                 onClick: () => {
-                    if (typeof props?.onSelect === "function") props?.onSelect(data);
+                    if (typeof props?.onSelect === "function")
+                        props?.onSelect(data);
                 },
                 style: { padding: "2em" },
                 children: [
@@ -37,8 +38,14 @@ export default function Assets(props: Assets) {
                                 },
                                 <>
                                     <Layouts.Col gap={0}>
-                                        <Elements.Text height={1.25}>{data?.symbol}</Elements.Text>
-                                        <Elements.Text height={1.25} opacity={0.3} fix>
+                                        <Elements.Text height={1.25}>
+                                            {data?.symbol}
+                                        </Elements.Text>
+                                        <Elements.Text
+                                            height={1.25}
+                                            opacity={0.3}
+                                            fix
+                                        >
                                             {data?.name}
                                         </Elements.Text>
                                     </Layouts.Col>
@@ -53,8 +60,13 @@ export default function Assets(props: Assets) {
                                     children: [
                                         <>
                                             <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{data?.exchange_rate}</Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
+                                                <Elements.Text align={"right"}>
+                                                    {data?.exchange_rate}
+                                                </Elements.Text>
+                                                <Elements.Text
+                                                    opacity={0.6}
+                                                    style={{ maxWidth: "6em" }}
+                                                >
                                                     MECA
                                                 </Elements.Text>
                                             </Layouts.Row>
@@ -62,12 +74,27 @@ export default function Assets(props: Assets) {
                                         <>
                                             <Layouts.Row
                                                 gap={1}
-                                                change={Sign(data?.exchange_rate) === "+" ? "green" : Sign(data?.exchange_rate) === "-" && "red"}
+                                                change={
+                                                    Sign(
+                                                        data?.exchange_rate,
+                                                    ) === "+"
+                                                        ? "green"
+                                                        : Sign(
+                                                              data?.exchange_rate,
+                                                          ) === "-" && "red"
+                                                }
                                             >
-                                                <Elements.Text align={"right"} change>
+                                                <Elements.Text
+                                                    align={"right"}
+                                                    change
+                                                >
                                                     {data?.exchange_rate_change}
                                                 </Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }} change>
+                                                <Elements.Text
+                                                    opacity={0.6}
+                                                    style={{ maxWidth: "6em" }}
+                                                    change
+                                                >
                                                     %
                                                 </Elements.Text>
                                             </Layouts.Row>
@@ -75,22 +102,47 @@ export default function Assets(props: Assets) {
                                     ],
                                 },
                                 {
-                                    style: { gap: 0, ...(props?.responsive && { display: "none" }) },
+                                    style: {
+                                        gap: 0,
+                                        ...(props?.responsive && {
+                                            display: "none",
+                                        }),
+                                    },
                                     children: [
                                         <>
                                             <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{Format(data?.tv, "currency", true)}</Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
+                                                <Elements.Text align={"right"}>
+                                                    {Format(
+                                                        data?.tv,
+                                                        "currency",
+                                                        true,
+                                                    )}
+                                                </Elements.Text>
+                                                <Elements.Text
+                                                    opacity={0.6}
+                                                    style={{ maxWidth: "6em" }}
+                                                >
                                                     {data?.symbol}
                                                 </Elements.Text>
                                             </Layouts.Row>
                                         </>,
                                         <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
+                                            <Layouts.Row
+                                                gap={1}
+                                                style={{ opacity: 0.3 }}
+                                            >
                                                 <Elements.Text align={"right"}>
-                                                    {Sign(data?.tv_change)} {Format(data?.tv_change, "currency", true)}
+                                                    {Sign(data?.tv_change)}{" "}
+                                                    {Format(
+                                                        data?.tv_change,
+                                                        "currency",
+                                                        true,
+                                                    )}
                                                 </Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
+                                                <Elements.Text
+                                                    opacity={0.6}
+                                                    style={{ maxWidth: "6em" }}
+                                                >
                                                     {data?.symbol}
                                                 </Elements.Text>
                                             </Layouts.Row>
@@ -98,17 +150,42 @@ export default function Assets(props: Assets) {
                                     ],
                                 },
                                 {
-                                    style: { gap: 0, ...(props?.responsive && { display: "none" }) },
+                                    style: {
+                                        gap: 0,
+                                        ...(props?.responsive && {
+                                            display: "none",
+                                        }),
+                                    },
                                     children: [
                                         <>
                                             <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>$ {Format(data?.tvl, "currency", true)}</Elements.Text>
+                                                <Elements.Text align={"right"}>
+                                                    ${" "}
+                                                    {Format(
+                                                        data?.tvl,
+                                                        "currency",
+                                                        true,
+                                                    )}
+                                                </Elements.Text>
                                             </Layouts.Row>
                                         </>,
                                         <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                <Elements.Text align={"right"} fix>
-                                                    {Sign(data?.tvl_change)}$ {Math.abs(Format(data?.tvl_change, "currency", true) as number)}
+                                            <Layouts.Row
+                                                gap={1}
+                                                style={{ opacity: 0.3 }}
+                                            >
+                                                <Elements.Text
+                                                    align={"right"}
+                                                    fix
+                                                >
+                                                    {Sign(data?.tvl_change)}${" "}
+                                                    {Math.abs(
+                                                        Format(
+                                                            data?.tvl_change,
+                                                            "currency",
+                                                            true,
+                                                        ) as number,
+                                                    )}
                                                 </Elements.Text>
                                             </Layouts.Row>
                                         </>,

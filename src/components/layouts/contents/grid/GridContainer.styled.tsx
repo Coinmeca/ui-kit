@@ -6,10 +6,12 @@ const Layout = (
     direction?: "row" | "col",
     gap?: number | { row?: number; col?: number },
     width?: number | string | { min?: number; max?: number },
-    height?: number | string | { min?: number; max?: number }
+    height?: number | string | { min?: number; max?: number },
 ) => css`
     ${area &&
-    `width:100%; height:100%; grid-template-areas: ${area}; ${typeof width === "string" && `grid-template-columns: ${width};`} ${
+    `width:100%; height:100%; grid-template-areas: ${area}; ${
+        typeof width === "string" && `grid-template-columns: ${width};`
+    } ${
         typeof height === "string" && `grid-template-rows: ${height};`
     } overflow:hidden;`}
 
@@ -19,8 +21,11 @@ const Layout = (
             typeof width === "number"
                 ? `grid-template-columns: ${width}em;`
                 : typeof width === "object" &&
-                  (typeof width?.min === "number" || typeof width?.max === "number") &&
-                  `grid-template-columns: repeat(auto-fill, minmax(${typeof width?.min === "number" ? `${width.min}em` : "1fr"}, ${
+                  (typeof width?.min === "number" ||
+                      typeof width?.max === "number") &&
+                  `grid-template-columns: repeat(auto-fill, minmax(${
+                      typeof width?.min === "number" ? `${width.min}em` : "1fr"
+                  }, ${
                       typeof width?.max === "number" ? `${width.max}em` : "1fr"
                   }));`
         }
@@ -32,9 +37,16 @@ const Layout = (
             typeof height === "number"
                 ? `grid-template-rows: ${height}em;`
                 : typeof height === "object" &&
-                  (typeof height?.min === "number" || typeof height?.max === "number") &&
-                  `grid-template-rows: repeat(auto-fill, minmax(${typeof height?.min === "number" ? `${height.min}em` : "1fr"}, ${
-                      typeof height?.max === "number" ? `${height.max}em` : "1fr"
+                  (typeof height?.min === "number" ||
+                      typeof height?.max === "number") &&
+                  `grid-template-rows: repeat(auto-fill, minmax(${
+                      typeof height?.min === "number"
+                          ? `${height.min}em`
+                          : "1fr"
+                  }, ${
+                      typeof height?.max === "number"
+                          ? `${height.max}em`
+                          : "1fr"
                   }));`
         }
         ${typeof width === "number" && `grid-auto-columns: ${width}em;`}
@@ -42,7 +54,13 @@ const Layout = (
 
     ${typeof gap === "number"
         ? `gap: ${gap}em;`
-        : `${typeof gap?.row === "number" ? `grid-row-gap: ${gap?.row}em;` : ""}${typeof gap?.col === "number" ? `grid-column-gap: ${gap?.col}em;` : ""}`}
+        : `${
+              typeof gap?.row === "number" ? `grid-row-gap: ${gap?.row}em;` : ""
+          }${
+              typeof gap?.col === "number"
+                  ? `grid-column-gap: ${gap?.col}em;`
+                  : ""
+          }`}
 `;
 
 export const Grid = styled.div<{
@@ -72,7 +90,8 @@ export const Grid = styled.div<{
         }
     }
 
-    ${({ $area, $direction, $gap, $width, $height }) => Layout($area, $direction, $gap, $width, $height)}
+    ${({ $area, $direction, $gap, $width, $height }) =>
+        Layout($area, $direction, $gap, $width, $height)}
 
     ${({ $responsive }) => {
         if ($responsive && $responsive.length > 0) {
@@ -80,20 +99,41 @@ export const Grid = styled.div<{
                 switch ($responsive[i]?.device) {
                     case "laptop":
                         return css`
-                            @media all and (max-width: ${Root.Device.Laptop}px) {
-                                ${Layout($responsive[i]?.area, $responsive[i]?.direction, $responsive[i]?.gap, $responsive[i]?.width, $responsive[i]?.height)}
+                            @media all and (max-width: ${Root.Device
+                                    .Laptop}px) {
+                                ${Layout(
+                                    $responsive[i]?.area,
+                                    $responsive[i]?.direction,
+                                    $responsive[i]?.gap,
+                                    $responsive[i]?.width,
+                                    $responsive[i]?.height,
+                                )}
                             }
                         `;
                     case "tablet":
                         return css`
-                            @media all and (max-width: ${Root.Device.Tablet}px) {
-                                ${Layout($responsive[i]?.area, $responsive[i]?.direction, $responsive[i]?.gap, $responsive[i]?.width, $responsive[i]?.height)}
+                            @media all and (max-width: ${Root.Device
+                                    .Tablet}px) {
+                                ${Layout(
+                                    $responsive[i]?.area,
+                                    $responsive[i]?.direction,
+                                    $responsive[i]?.gap,
+                                    $responsive[i]?.width,
+                                    $responsive[i]?.height,
+                                )}
                             }
                         `;
                     case "mobile":
                         return css`
-                            @media all and (max-width: ${Root.Device.Mobile}px) {
-                                ${Layout($responsive[i]?.area, $responsive[i]?.direction, $responsive[i]?.gap, $responsive[i]?.width, $responsive[i]?.height)}
+                            @media all and (max-width: ${Root.Device
+                                    .Mobile}px) {
+                                ${Layout(
+                                    $responsive[i]?.area,
+                                    $responsive[i]?.direction,
+                                    $responsive[i]?.gap,
+                                    $responsive[i]?.width,
+                                    $responsive[i]?.height,
+                                )}
                             }
                         `;
                 }

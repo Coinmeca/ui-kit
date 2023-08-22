@@ -10,7 +10,15 @@ export interface Input {
     form?: string;
     fold?: boolean;
     type?: string;
-    inputMode?: "email" | "text" | "search" | "none" | "tel" | "url" | "numeric" | "decimal";
+    inputMode?:
+        | "email"
+        | "text"
+        | "search"
+        | "none"
+        | "tel"
+        | "url"
+        | "numeric"
+        | "decimal";
     value?: number | string;
     align?: "left" | "center" | "right";
     scale?: number;
@@ -57,7 +65,8 @@ export interface Input {
 
 export default function Input(props: Input) {
     const input: any = createRef();
-    const type = props?.type === "password" ? "password" : props?.type || "text";
+    const type =
+        props?.type === "password" ? "password" : props?.type || "text";
     const placeholder = props?.placeholder?.toString() || "Type";
     const step = props?.step || 1;
     const scale = props?.scale || 1;
@@ -74,20 +83,37 @@ export default function Input(props: Input) {
         if (!value || value === "") return "";
         if (type === "number" || type === "currency") {
             value = Format(value, type, props?.lock, props?.fix) as number;
-            value = typeof props?.min === "number" && props?.min > value ? props?.min : value;
-            value = typeof props?.max === "number" && props?.max < value ? props?.max : value;
+            value =
+                typeof props?.min === "number" && props?.min > value
+                    ? props?.min
+                    : value;
+            value =
+                typeof props?.max === "number" && props?.max < value
+                    ? props?.max
+                    : value;
         } else {
             value = Format(value, type, props?.lock, props?.fix).toString();
         }
         return value;
     };
 
-    const [value, setValue] = useState<number | string>(formatter(props?.value));
+    const [value, setValue] = useState<number | string>(
+        formatter(props?.value),
+    );
     const [error, setError] = useState<boolean>(props?.error || false);
 
     useEffect(() => {
         setValue(formatter(props?.value));
-    }, [props?.value, type, props?.fix, props?.min, props?.max, props?.readOnly, props?.lock, props?.disabled]);
+    }, [
+        props?.value,
+        type,
+        props?.fix,
+        props?.min,
+        props?.max,
+        props?.readOnly,
+        props?.lock,
+        props?.disabled,
+    ]);
 
     const handleClick = (e: any) => {
         if (props?.lock || props?.disabled) return;
@@ -127,7 +153,10 @@ export default function Input(props: Input) {
         if (props?.lock || props?.disabled) return;
         const key = e.keyCode;
         if (
-            ((type === "currency" || type === "number") && ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key === 110 && key === 190))) ||
+            ((type === "currency" || type === "number") &&
+                ((key >= 48 && key <= 57) ||
+                    (key >= 96 && key <= 105) ||
+                    (key === 110 && key === 190))) ||
             key === 38 ||
             key === 107 ||
             key === 187 ||
@@ -138,25 +167,51 @@ export default function Input(props: Input) {
             let copy: number = 0;
             if (key === 38 || key === 107 || key === 187) {
                 if (e.shiftKey && e.ctrlKey) {
-                    copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step * 100);
+                    copy =
+                        value.toString() === ""
+                            ? step
+                            : parseFloat(value.toString().replaceAll(",", "")) +
+                              Math.abs(step * 100);
                 } else if (e.shiftKey) {
-                    copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step * 10);
+                    copy =
+                        value.toString() === ""
+                            ? step
+                            : parseFloat(value.toString().replaceAll(",", "")) +
+                              Math.abs(step * 10);
                 } else {
-                    copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step);
+                    copy =
+                        value.toString() === ""
+                            ? step
+                            : parseFloat(value.toString().replaceAll(",", "")) +
+                              Math.abs(step);
                 }
                 setValue(formatter(copy));
-                if (typeof props?.onChange === "function") props?.onChange(e, copy);
+                if (typeof props?.onChange === "function")
+                    props?.onChange(e, copy);
             }
             if (key === 40 || key === 109 || key === 189) {
                 if (e.shiftKey && e.ctrlKey) {
-                    copy = value.toString() === "" ? 0 : parseFloat(value.toString().replaceAll(",", "")) - Math.abs(step * 100);
+                    copy =
+                        value.toString() === ""
+                            ? 0
+                            : parseFloat(value.toString().replaceAll(",", "")) -
+                              Math.abs(step * 100);
                 } else if (e.shiftKey) {
-                    copy = value.toString() === "" ? 0 : parseFloat(value.toString().replaceAll(",", "")) - Math.abs(step * 10);
+                    copy =
+                        value.toString() === ""
+                            ? 0
+                            : parseFloat(value.toString().replaceAll(",", "")) -
+                              Math.abs(step * 10);
                 } else {
-                    copy = value.toString() === "" ? 0 : parseFloat(value.toString().replaceAll(",", "")) - Math.abs(step);
+                    copy =
+                        value.toString() === ""
+                            ? 0
+                            : parseFloat(value.toString().replaceAll(",", "")) -
+                              Math.abs(step);
                 }
                 setValue(formatter(copy));
-                if (typeof props?.onChange === "function") props?.onChange(e, copy);
+                if (typeof props?.onChange === "function")
+                    props?.onChange(e, copy);
             }
         }
         if (typeof props?.onKeyDown === "function") {
@@ -184,7 +239,10 @@ export default function Input(props: Input) {
             <div>
                 <div style={props?.style}>
                     {props?.left && (
-                        <Side $width={props?.left?.width} style={props?.left?.style}>
+                        <Side
+                            $width={props?.left?.width}
+                            style={props?.left?.style}
+                        >
                             {props?.left?.children}
                         </Side>
                     )}
@@ -194,7 +252,13 @@ export default function Input(props: Input) {
                                 icon={"x"}
                                 fit
                                 hide={value.toString().length === 0}
-                                onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")}
+                                onClick={() =>
+                                    setValue(
+                                        props?.type === ("number" || "currency")
+                                            ? 0
+                                            : "",
+                                    )
+                                }
                             />
                         )}
                         <input
@@ -221,25 +285,41 @@ export default function Input(props: Input) {
                                 icon={"x"}
                                 fit
                                 hide={value.toString().length === 0}
-                                onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")}
+                                onClick={() =>
+                                    setValue(
+                                        props?.type === ("number" || "currency")
+                                            ? 0
+                                            : "",
+                                    )
+                                }
                             />
                         )}
                     </div>
                     {(props?.unit || props?.right) && (
-                        <Side $width={props?.right?.width} style={props?.right?.style}>
+                        <Side
+                            $width={props?.right?.width}
+                            style={props?.right?.style}
+                        >
                             {props?.right?.children}
                             {props?.unit && <span>{props?.unit}</span>}
                         </Side>
                     )}
                 </div>
-                {props?.error && props?.message && <p className="message">{props?.message}</p>}
+                {props?.error && props?.message && (
+                    <p className="message">{props?.message}</p>
+                )}
             </div>
         </Style>
     );
 
     if (fold) {
         return (
-            <div onClick={() => setExtend(true)} onBlur={handleBlur} data-show={props?.show} data-hide={props?.hide}>
+            <div
+                onClick={() => setExtend(true)}
+                onBlur={handleBlur}
+                data-show={props?.show}
+                data-hide={props?.hide}
+            >
                 <div>{Input}</div>
             </div>
         );

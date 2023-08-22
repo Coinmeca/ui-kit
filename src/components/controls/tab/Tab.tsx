@@ -29,7 +29,13 @@ export default function Tab(props: Tab) {
     const fit = props?.fit || false;
 
     const Icons = (icon?: string | Icon) => {
-        return typeof icon === "object" ? <Elements.Icon {...icon} scale={scale} /> : typeof icon === "string" ? <Elements.Icon icon={icon} scale={scale} /> : <></>;
+        return typeof icon === "object" ? (
+            <Elements.Icon {...icon} scale={scale} />
+        ) : typeof icon === "string" ? (
+            <Elements.Icon icon={icon} scale={scale} />
+        ) : (
+            <></>
+        );
     };
 
     const handleClick = (e: any) => {
@@ -64,7 +70,10 @@ export default function Tab(props: Tab) {
                         {props?.children && <span>{props?.children}</span>}
                     </>
                 )}
-                {(!props?.iconLeft || props?.iconLeft === "") && (!props?.iconRight || props?.iconRight === "") && <span>{props?.children}</span>}
+                {(!props?.iconLeft || props?.iconLeft === "") &&
+                    (!props?.iconRight || props?.iconRight === "") && (
+                        <span>{props?.children}</span>
+                    )}
                 {props?.iconRight && (
                     <>
                         {props?.children && <span>{props?.children}</span>}

@@ -13,7 +13,9 @@ export interface Process {
 }
 
 export default function Process(props: Process) {
-    const [process, setProcess] = useState<boolean | null | undefined>(props?.process);
+    const [process, setProcess] = useState<boolean | null | undefined>(
+        props?.process,
+    );
 
     useEffect(() => {
         setProcess(props?.process);
@@ -29,8 +31,18 @@ export default function Process(props: Process) {
                 ) : (
                     <Layouts.Contents.SlideContainer
                         contents={[
-                            { active: !props?.loading?.active, children: props?.content },
-                            { active: props?.loading?.active, children: <Contents.States.Loading {...props?.loading} /> },
+                            {
+                                active: !props?.loading?.active,
+                                children: props?.content,
+                            },
+                            {
+                                active: props?.loading?.active,
+                                children: (
+                                    <Contents.States.Loading
+                                        {...props?.loading}
+                                    />
+                                ),
+                            },
                         ]}
                     />
                 )

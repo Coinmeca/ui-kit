@@ -27,7 +27,9 @@ export default function Tooltip(props: any) {
                         <Elements.Text opacity={0.6} fit>
                             Avg Price:
                         </Elements.Text>
-                        <Elements.Text align={"right"}>{Format(props?.price, "currency", true, 4)}</Elements.Text>
+                        <Elements.Text align={"right"}>
+                            {Format(props?.price, "currency", true, 4)}
+                        </Elements.Text>
                     </Layouts.Row>
                 )}
                 {props?.amount && (
@@ -35,7 +37,9 @@ export default function Tooltip(props: any) {
                         <Elements.Text opacity={0.6} fit>
                             Sum {props?.quote?.toUpperCase()}:
                         </Elements.Text>
-                        <Elements.Text align={"right"}>{Format(props?.amount, "currency", true, 4)}</Elements.Text>
+                        <Elements.Text align={"right"}>
+                            {Format(props?.amount, "currency", true, 4)}
+                        </Elements.Text>
                     </Layouts.Row>
                 )}
                 {props?.balance && (
@@ -43,7 +47,9 @@ export default function Tooltip(props: any) {
                         <Elements.Text opacity={0.6} fit>
                             Sum {props?.base?.toUpperCase()}:
                         </Elements.Text>
-                        <Elements.Text align={"right"}>{Format(props?.balance, "currency", true, 4)}</Elements.Text>
+                        <Elements.Text align={"right"}>
+                            {Format(props?.balance, "currency", true, 4)}
+                        </Elements.Text>
                     </Layouts.Row>
                 )}
             </Layouts.Col>

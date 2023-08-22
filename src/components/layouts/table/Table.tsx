@@ -18,7 +18,8 @@ export default function Table(props: Table) {
         <Style style={props?.style}>
             <AnimatePresence>
                 {props?.list &&
-                    (typeof props?.list !== "string" && props?.list?.length > 0 ? (
+                    (typeof props?.list !== "string" &&
+                    props?.list?.length > 0 ? (
                         props?.list?.map((data: any, i: number) => (
                             <TableItem
                                 key={i}
@@ -27,7 +28,10 @@ export default function Table(props: Table) {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                transition={{ ease: "easeInOut", duration: 0.3 }}
+                                transition={{
+                                    ease: "easeInOut",
+                                    duration: 0.3,
+                                }}
                                 layout
                             >
                                 {data?.children ? data?.children : data}

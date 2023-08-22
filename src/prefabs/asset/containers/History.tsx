@@ -15,7 +15,18 @@ export interface History extends List {
 }
 
 export default function History(props: History) {
-    const category = ["Order", "Buy", "Sell", "Deposit", "Withdraw", "Stake", "Unstake", "Claim", "Futures", "Perpetual"];
+    const category = [
+        "Order",
+        "Buy",
+        "Sell",
+        "Deposit",
+        "Withdraw",
+        "Stake",
+        "Unstake",
+        "Claim",
+        "Futures",
+        "Perpetual",
+    ];
     const state = ["Pending", "Complete", "Cancel", "Claimable", "Liquidation"];
     const colorset = ["white", "green", "red", "orange", "blue"];
 
@@ -30,22 +41,42 @@ export default function History(props: History) {
                 title="Transaction Detail"
                 content={
                     <Layouts.Col gap={2} style={{ height: "100%" }}>
-                        <Layouts.Contents.InnerContent style={{ fontFeatureSettings: `'tnum' on, 'lnum' on` }}>
+                        <Layouts.Contents.InnerContent
+                            style={{
+                                fontFeatureSettings: `'tnum' on, 'lnum' on`,
+                            }}
+                        >
                             <Layouts.Col gap={1}>
                                 <Layouts.Row gap={1} fix>
                                     <Layouts.Col gap={0}>
-                                        <Elements.Text height={1.5} color={colorset[data?.category]}>
+                                        <Elements.Text
+                                            height={1.5}
+                                            color={colorset[data?.category]}
+                                        >
                                             {category[data?.category]}
                                         </Elements.Text>
-                                        <Elements.Text height={1.5} opacity={data?.state === 1 ? 0.3 : 1}>
+                                        <Elements.Text
+                                            height={1.5}
+                                            opacity={
+                                                data?.state === 1 ? 0.3 : 1
+                                            }
+                                        >
                                             {state[data?.state]}
                                         </Elements.Text>
                                     </Layouts.Col>
                                     <Layouts.Col gap={0}>
-                                        <Elements.Text height={1.5} opacity={0.3} align={"right"}>
+                                        <Elements.Text
+                                            height={1.5}
+                                            opacity={0.3}
+                                            align={"right"}
+                                        >
                                             {data?.date}
                                         </Elements.Text>
-                                        <Elements.Text height={1.5} opacity={0.3} align={"right"}>
+                                        <Elements.Text
+                                            height={1.5}
+                                            opacity={0.3}
+                                            align={"right"}
+                                        >
                                             {data?.time}
                                         </Elements.Text>
                                     </Layouts.Col>
@@ -55,8 +86,13 @@ export default function History(props: History) {
                                     <Elements.Text opacity={0.3} fit>
                                         Price
                                     </Elements.Text>
-                                    <Elements.Text align={"right"}>{Format(data?.price, "currency", true)}</Elements.Text>
-                                    <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
+                                    <Elements.Text align={"right"}>
+                                        {Format(data?.price, "currency", true)}
+                                    </Elements.Text>
+                                    <Elements.Text
+                                        opacity={0.3}
+                                        style={{ maxWidth: "6em" }}
+                                    >
                                         {data?.quote}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -65,8 +101,13 @@ export default function History(props: History) {
                                     <Elements.Text opacity={0.3} fit>
                                         Amount
                                     </Elements.Text>
-                                    <Elements.Text align={"right"}>{Format(data?.amount, "currency", true)}</Elements.Text>
-                                    <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
+                                    <Elements.Text align={"right"}>
+                                        {Format(data?.amount, "currency", true)}
+                                    </Elements.Text>
+                                    <Elements.Text
+                                        opacity={0.3}
+                                        style={{ maxWidth: "6em" }}
+                                    >
                                         {data?.quote}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -74,8 +115,17 @@ export default function History(props: History) {
                                     <Elements.Text opacity={0.3} fit>
                                         Quantity
                                     </Elements.Text>
-                                    <Elements.Text align={"right"}>{Format(data?.quantity, "currency", true)}</Elements.Text>
-                                    <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
+                                    <Elements.Text align={"right"}>
+                                        {Format(
+                                            data?.quantity,
+                                            "currency",
+                                            true,
+                                        )}
+                                    </Elements.Text>
+                                    <Elements.Text
+                                        opacity={0.3}
+                                        style={{ maxWidth: "6em" }}
+                                    >
                                         {data?.base}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -84,10 +134,16 @@ export default function History(props: History) {
                                     <Elements.Text opacity={0.3} fit>
                                         Fees
                                     </Elements.Text>
-                                    <Elements.Text opacity={0.6} align={"right"}>
+                                    <Elements.Text
+                                        opacity={0.6}
+                                        align={"right"}
+                                    >
                                         - {Format(data?.fees, "currency", true)}
                                     </Elements.Text>
-                                    <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
+                                    <Elements.Text
+                                        opacity={0.3}
+                                        style={{ maxWidth: "6em" }}
+                                    >
                                         {data?.base}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -95,8 +151,17 @@ export default function History(props: History) {
                                     <Elements.Text opacity={0.3} fit>
                                         Total
                                     </Elements.Text>
-                                    <Elements.Text align={"right"}>{Format(data?.quantity - data?.fees, "currency", true)}</Elements.Text>
-                                    <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
+                                    <Elements.Text align={"right"}>
+                                        {Format(
+                                            data?.quantity - data?.fees,
+                                            "currency",
+                                            true,
+                                        )}
+                                    </Elements.Text>
+                                    <Elements.Text
+                                        opacity={0.3}
+                                        style={{ maxWidth: "6em" }}
+                                    >
                                         {data?.base}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -104,7 +169,9 @@ export default function History(props: History) {
                         </Layouts.Contents.InnerContent>
                         <Layouts.Row fix style={{ marginTop: "2em" }}>
                             <Controls.Button>Undo</Controls.Button>
-                            <Controls.Button onClick={() => closeDetail()}>Close</Controls.Button>
+                            <Controls.Button onClick={() => closeDetail()}>
+                                Close
+                            </Controls.Button>
                         </Layouts.Row>
                     </Layouts.Col>
                 }
@@ -121,8 +188,12 @@ export default function History(props: History) {
             data?.length > 0 &&
             data?.map((data: H) => {
                 // console.log(props?.assets?.find((a: Token) => console.log(a)));
-                const pay: any = props?.assets?.find((a: Token) => a?.address === data?.pay)?.symbol;
-                const item: any = props?.assets?.find((a: Token) => a?.address === data?.item)?.symbol;
+                const pay: any = props?.assets?.find(
+                    (a: Token) => a?.address === data?.pay,
+                )?.symbol;
+                const item: any = props?.assets?.find(
+                    (a: Token) => a?.address === data?.item,
+                )?.symbol;
 
                 const date = (Format(data?.time, "date") as string).split(" ");
                 return {
@@ -143,21 +214,48 @@ export default function History(props: History) {
                     style: { padding: "2em" },
                     children: [
                         {
-                            style: { flex: 1, maxWidth: !props?.responsive && "20%" },
+                            style: {
+                                flex: 1,
+                                maxWidth: !props?.responsive && "20%",
+                            },
                             children: [
                                 {
-                                    style: { flexDirection: props?.responsive && "row-reverse" },
+                                    style: {
+                                        flexDirection:
+                                            props?.responsive && "row-reverse",
+                                    },
                                     children: [
                                         {
-                                            style: { gap: "0", maxWidth: "10em" },
+                                            style: {
+                                                gap: "0",
+                                                maxWidth: "10em",
+                                            },
                                             children: [
                                                 <>
-                                                    <Elements.Text opacity={0.3} style={{ ...(props?.responsive && { width: "100%", textAlign: "right" }) }}>
+                                                    <Elements.Text
+                                                        opacity={0.3}
+                                                        style={{
+                                                            ...(props?.responsive && {
+                                                                width: "100%",
+                                                                textAlign:
+                                                                    "right",
+                                                            }),
+                                                        }}
+                                                    >
                                                         {date[0]}
                                                     </Elements.Text>
                                                 </>,
                                                 <>
-                                                    <Elements.Text opacity={0.3} style={{ ...(props?.responsive && { width: "100%", textAlign: "right" }) }}>
+                                                    <Elements.Text
+                                                        opacity={0.3}
+                                                        style={{
+                                                            ...(props?.responsive && {
+                                                                width: "100%",
+                                                                textAlign:
+                                                                    "right",
+                                                            }),
+                                                        }}
+                                                    >
                                                         {date[1]}
                                                     </Elements.Text>
                                                 </>,
@@ -167,10 +265,30 @@ export default function History(props: History) {
                                             style: { gap: "0" },
                                             children: [
                                                 <>
-                                                    <Elements.Text color={colorset[data?.category]}>{category[data?.category]}</Elements.Text>
+                                                    <Elements.Text
+                                                        color={
+                                                            colorset[
+                                                                data?.category
+                                                            ]
+                                                        }
+                                                    >
+                                                        {
+                                                            category[
+                                                                data?.category
+                                                            ]
+                                                        }
+                                                    </Elements.Text>
                                                 </>,
                                                 <>
-                                                    <Elements.Text opacity={data?.state === 1 ? 0.3 : 1}>{state[data?.state]}</Elements.Text>
+                                                    <Elements.Text
+                                                        opacity={
+                                                            data?.state === 1
+                                                                ? 0.3
+                                                                : 1
+                                                        }
+                                                    >
+                                                        {state[data?.state]}
+                                                    </Elements.Text>
                                                 </>,
                                             ],
                                         },
@@ -187,16 +305,49 @@ export default function History(props: History) {
                                         children: [
                                             <>
                                                 <Layouts.Row gap={1}>
-                                                    <Elements.Text align={"right"}>{Format(data?.amount || 0, "currency", true)}</Elements.Text>
-                                                    <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
+                                                    <Elements.Text
+                                                        align={"right"}
+                                                    >
+                                                        {Format(
+                                                            data?.amount || 0,
+                                                            "currency",
+                                                            true,
+                                                        )}
+                                                    </Elements.Text>
+                                                    <Elements.Text
+                                                        align={"left"}
+                                                        opacity={0.6}
+                                                        style={{
+                                                            maxWidth: "4em",
+                                                        }}
+                                                        fit
+                                                    >
                                                         {pay}
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                             </>,
                                             <>
-                                                <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                    <Elements.Text align={"right"}>{Format(data?.price || 0, "currency", true)}</Elements.Text>
-                                                    <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
+                                                <Layouts.Row
+                                                    gap={1}
+                                                    style={{ opacity: 0.3 }}
+                                                >
+                                                    <Elements.Text
+                                                        align={"right"}
+                                                    >
+                                                        {Format(
+                                                            data?.price || 0,
+                                                            "currency",
+                                                            true,
+                                                        )}
+                                                    </Elements.Text>
+                                                    <Elements.Text
+                                                        align={"left"}
+                                                        opacity={0.6}
+                                                        style={{
+                                                            maxWidth: "4em",
+                                                        }}
+                                                        fit
+                                                    >
                                                         {pay}
                                                     </Elements.Text>
                                                 </Layouts.Row>
@@ -208,16 +359,50 @@ export default function History(props: History) {
                                         children: [
                                             <>
                                                 <Layouts.Row gap={1}>
-                                                    <Elements.Text align={"right"}>{Format(data?.quantity || 0, "currency", true)}</Elements.Text>
-                                                    <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
+                                                    <Elements.Text
+                                                        align={"right"}
+                                                    >
+                                                        {Format(
+                                                            data?.quantity || 0,
+                                                            "currency",
+                                                            true,
+                                                        )}
+                                                    </Elements.Text>
+                                                    <Elements.Text
+                                                        align={"left"}
+                                                        opacity={0.6}
+                                                        style={{
+                                                            maxWidth: "4em",
+                                                        }}
+                                                        fit
+                                                    >
                                                         {item}
                                                     </Elements.Text>
                                                 </Layouts.Row>
                                             </>,
                                             <>
-                                                <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                    <Elements.Text align={"right"}>- {Format(data?.fees || 0, "currency", true)}</Elements.Text>
-                                                    <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "4em" }} fit>
+                                                <Layouts.Row
+                                                    gap={1}
+                                                    style={{ opacity: 0.3 }}
+                                                >
+                                                    <Elements.Text
+                                                        align={"right"}
+                                                    >
+                                                        -{" "}
+                                                        {Format(
+                                                            data?.fees || 0,
+                                                            "currency",
+                                                            true,
+                                                        )}
+                                                    </Elements.Text>
+                                                    <Elements.Text
+                                                        align={"left"}
+                                                        opacity={0.6}
+                                                        style={{
+                                                            maxWidth: "4em",
+                                                        }}
+                                                        fit
+                                                    >
                                                         {item}
                                                     </Elements.Text>
                                                 </Layouts.Row>
@@ -233,5 +418,10 @@ export default function History(props: History) {
         );
     };
 
-    return <Layouts.List list={historyFormatter(history)} fallback={props?.fallback} />;
+    return (
+        <Layouts.List
+            list={historyFormatter(history)}
+            fallback={props?.fallback}
+        />
+    );
 }

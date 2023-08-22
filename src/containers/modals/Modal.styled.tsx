@@ -2,7 +2,7 @@
 import { styled } from "styled-components";
 import * as Button from "components/controls/button/Button.styled";
 import * as InnerContent from "components/layouts/contents/inner/InnerContent.styled";
-import { Box } from "components/layouts";
+import * as Box from "components/layouts/box/Box.styled";
 import { Root } from "lib/style";
 
 export const ButtonArea = styled.div`
@@ -31,7 +31,7 @@ export const Close = styled.div`
     }
 `;
 
-const Style = styled(Box)<{ $width: { min: number; max: number }; $active: boolean }>`
+const Style = styled.div<{ $width: { min: number; max: number }; $active: boolean }>`
     font-size: var(--unit);
     position: ${({ $active }) => ($active ? "relative" : "absolute")};
     display: flex;
@@ -53,6 +53,10 @@ const Style = styled(Box)<{ $width: { min: number; max: number }; $active: boole
         gap: 4em;
         padding: 4em;
         transition: 0.3s ease;
+    }
+
+    & > ${Box.default} {
+        background: rgba(var(--white), var(--o0045));
     }
 
     & > * > ${InnerContent.default} {

@@ -2,8 +2,13 @@
 import { Root } from "lib/style";
 import { styled } from "styled-components";
 
-const Style = styled.section<{ $active: boolean; $color?: string; $fix?: boolean }>`
-    ${({ $color }) => $color && `background: rgba(${Root.Color($color)}, var(--o06));`}
+const Style = styled.section<{
+    $active: boolean;
+    $color?: string;
+    $fix?: boolean;
+}>`
+    ${({ $color }) =>
+        $color && `background: rgba(${Root.Color($color)}, var(--o06));`}
     top: 0;
     left: 0;
     display: flex;

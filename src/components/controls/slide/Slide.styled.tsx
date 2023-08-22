@@ -24,11 +24,17 @@ export const Style = styled.div<{
                 left: 0;
                 display: flex;
                 justify-content: center;
-                align-items: ${({ $vertical }) => ($vertical === "top" ? "flex-start" : $vertical === "bottom" ? "flex-end" : "center")};
+                align-items: ${({ $vertical }) =>
+                    $vertical === "top"
+                        ? "flex-start"
+                        : $vertical === "bottom"
+                        ? "flex-end"
+                        : "center"};
                 width: -webkit-fill-available;
                 height: -webkit-fill-available;
                 padding: ${({ $padding }) => `${$padding}em`};
-                ${({ $nav, $padding }) => $nav && `padding-${$nav}: ${$padding * 2}em`};
+                ${({ $nav, $padding }) =>
+                    $nav && `padding-${$nav}: ${$padding * 2}em`};
                 text-align: center;
                 transition: 0.3s ease;
                 overflow: hidden;
@@ -110,11 +116,13 @@ export const Style = styled.div<{
 
                 @media all and (min-width: ${Root.Device.Desktop}px) {
                     padding: ${({ $padding }) => `${$padding}em`};
-                    ${({ $nav, $padding }) => $nav && `padding-${$nav}: ${$padding}em`};
+                    ${({ $nav, $padding }) =>
+                        $nav && `padding-${$nav}: ${$padding}em`};
                 }
 
                 @media all and (max-width: ${Root.Device.Tablet}px) {
-                    ${({ $nav, $padding }) => $nav && `padding-${$nav}: ${$padding / 2}em`};
+                    ${({ $nav, $padding }) =>
+                        $nav && `padding-${$nav}: ${$padding / 2}em`};
                 }
             }
         }
@@ -151,7 +159,10 @@ export const Style = styled.div<{
 
                         &[data-active="true"] {
                             width: 8em;
-                            background-image: linear-gradient(rgb(var(--white)), rgb(var(--white)));
+                            background-image: linear-gradient(
+                                rgb(var(--white)),
+                                rgb(var(--white))
+                            );
                             background-size: 100% 100%;
                             background-position: left;
                             background-repeat: no-repeat;

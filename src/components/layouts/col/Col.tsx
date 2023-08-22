@@ -6,6 +6,7 @@ export interface Col {
     align?: "left" | "center" | "right" | "stretch";
     style?: object;
     fit?: boolean;
+    fill?: boolean;
     show?: "desktop" | "laptop" | "tablet" | "mobile";
     hide?: "desktop" | "laptop" | "tablet" | "mobile";
     responsive?: "desktop" | "laptop" | "tablet" | "mobile";
@@ -14,12 +15,22 @@ export interface Col {
 
 export default function Col(props: Col) {
     const gap = props?.gap === 0 ? 0 : props?.gap || 4;
-    const align = props?.align || "left";
     const fit = props?.fit || false;
+    const fill = props?.fill || false;
     const reverse = props?.reverse || false;
 
     return (
-        <Style style={props?.style} $gap={gap} $fit={fit} $responsive={props?.responsive} $reverse={reverse} data-col={align} data-show={props?.show} data-hide={props?.hide}>
+        <Style
+            style={props?.style}
+            $gap={gap}
+            $fit={fit}
+            $fill={fill}
+            $responsive={props?.responsive}
+            $reverse={reverse}
+            data-col={props?.align}
+            data-show={props?.show}
+            data-hide={props?.hide}
+        >
             {props.children}
         </Style>
     );

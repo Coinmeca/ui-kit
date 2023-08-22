@@ -123,7 +123,13 @@ export const Options = styled.ul`
     }
 `;
 
-const Style = styled.div<{ $open: boolean; $height: number; $fit: boolean; $scale: number; $disabled: boolean }>`
+const Style = styled.div<{
+    $open: boolean;
+    $height: number;
+    $fit: boolean;
+    $scale: number;
+    $disabled: boolean;
+}>`
     font-size: ${({ $scale }) => $scale}em;
     background: transparent;
     color: rgba(var(--white), var(--o045));

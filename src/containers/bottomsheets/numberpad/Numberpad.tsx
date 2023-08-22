@@ -13,7 +13,16 @@ export default function Numberpad(props: Numberpad) {
 
     const min = (typeof props?.height === "object" && props?.height?.min) || 40;
     const max = (typeof props?.height === "object" && props?.height?.max) || 64;
-    const height = { min: (typeof props?.height === "object" ? props?.height?.min : props?.height) || min, max: (typeof props?.height === "object" ? props?.height?.min : props?.height) || max };
+    const height = {
+        min:
+            (typeof props?.height === "object"
+                ? props?.height?.min
+                : props?.height) || min,
+        max:
+            (typeof props?.height === "object"
+                ? props?.height?.min
+                : props?.height) || max,
+    };
 
     return (
         <BottomSheet {...props} active={props?.active} height={height}>

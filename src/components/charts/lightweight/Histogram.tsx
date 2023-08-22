@@ -28,7 +28,10 @@ export default function Histogram(props: Histogram) {
     const up = props?.up || "up";
     const down = props?.down || "down";
 
-    const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
+    const theme =
+        props?.color?.theme && props?.color?.theme === "light"
+            ? "0,0,0"
+            : "255,255,255";
     const [color, setColor] = useState({
         default: props?.color?.default || `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
@@ -46,21 +49,23 @@ export default function Histogram(props: Histogram) {
     const chartRef: any = useRef();
 
     useEffect(() => {
-        globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
-            const scheme = !theme && matches ? "0,0,0" : "255,255,255";
-            setColor((color) => {
-                return {
-                    ...color,
-                    theme: {
-                        strong: `rgba(${scheme}, 0.6)`,
-                        semi: `rgba(${scheme}, 0.45)`,
-                        medium: `rgba(${scheme}, 0.3)`,
-                        regular: `rgba(${scheme}, 0.15)`,
-                        light: `rgba(${scheme}, 0.05)`,
-                    },
-                };
+        globalThis
+            .matchMedia("(prefers-color-scheme: dark)")
+            .addEventListener("change", ({ matches }) => {
+                const scheme = !theme && matches ? "0,0,0" : "255,255,255";
+                setColor((color) => {
+                    return {
+                        ...color,
+                        theme: {
+                            strong: `rgba(${scheme}, 0.6)`,
+                            semi: `rgba(${scheme}, 0.45)`,
+                            medium: `rgba(${scheme}, 0.3)`,
+                            regular: `rgba(${scheme}, 0.15)`,
+                            light: `rgba(${scheme}, 0.05)`,
+                        },
+                    };
+                });
             });
-        });
     }, [props?.color, theme]);
 
     useEffect(() => {
@@ -71,14 +76,25 @@ export default function Histogram(props: Histogram) {
                         return {
                             ...v,
                             ...(v?.type && {
-                                color: `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`,
+                                color: `rgb(${
+                                    color[
+                                        (v?.type === up
+                                            ? "up"
+                                            : v?.type === down
+                                            ? "down"
+                                            : "theme") as
+                                            | "up"
+                                            | "down"
+                                            | "theme"
+                                    ]
+                                })`,
                             }),
                         };
                     }),
                     "time",
                     "number",
-                    false
-                )
+                    false,
+                ),
             );
         }
     }, [props?.data]);

@@ -17,7 +17,11 @@ export function Configure({ children }: { children: any }) {
 
     if (typeof window !== "undefined") return <>{children}</>;
 
-    return <StyleSheetManager sheet={styleSheet.instance}>{children}</StyleSheetManager>;
+    return (
+        <StyleSheetManager sheet={styleSheet.instance}>
+            {children}
+        </StyleSheetManager>
+    );
 }
 
 export default function Initialize({ children }: { children: any }) {

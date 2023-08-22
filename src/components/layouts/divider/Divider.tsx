@@ -22,7 +22,17 @@ export default function Divider(props: Divider) {
     const color = props?.color || "white";
 
     return (
-        <Style $color={color} $vertical={vertical} $responsive={props?.responsive} $margin={margin} $gap={gap} $strong={strong} style={props?.style} data-show={props?.show} data-hide={props?.hide}>
+        <Style
+            $color={color}
+            $vertical={vertical}
+            $responsive={props?.responsive}
+            $margin={margin}
+            $gap={gap}
+            $strong={strong}
+            style={props?.style}
+            data-show={props?.show}
+            data-hide={props?.hide}
+        >
             {props?.children ? (
                 <>
                     {props?.align !== "right" && <div />}

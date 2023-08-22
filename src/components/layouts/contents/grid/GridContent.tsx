@@ -12,14 +12,30 @@ export interface GridContent {
     }[];
 }
 
-export default function GridContent(props: GridContent) {
+const GridContent = (props: GridContent) => {
     const Child =
-        (props?.children?.children?.type !== Fragment && props.children?.children?.$$typeof && props?.children?.children?.type) ||
-        (props?.children?.type !== Fragment && props?.children?.$$typeof && props?.children?.type);
+        (props?.children?.children?.type !== Fragment &&
+            props.children?.children?.$$typeof &&
+            props?.children?.children?.type) ||
+        (props?.children?.type !== Fragment &&
+            props?.children?.$$typeof &&
+            props?.children?.type);
     const Content = Child ? (
-        <Child {...{ ...(props?.children?.props || props?.children?.children?.props) }}>{props?.children?.props?.children || props?.children?.children}</Child>
+        <Child
+            {...{
+                ...(props?.children?.props || props?.children?.children?.props),
+            }}
+        >
+            {props?.children?.props?.children || props?.children?.children}
+        </Child>
     ) : (
-        <div {...{ ...(props?.children?.props || props?.children?.children?.props) }}>{props?.children?.children || props?.children}</div>
+        <div
+            {...{
+                ...(props?.children?.props || props?.children?.children?.props),
+            }}
+        >
+            {props?.children?.children || props?.children}
+        </div>
     );
 
     const Area =
@@ -29,12 +45,14 @@ export default function GridContent(props: GridContent) {
                 children: Content?.props?.children || Content,
             })) ||
         (props?.format?.$$typeof && props?.format?.type !== Fragment ? (
-            <props.format.type {...props?.props}>{Content?.props?.children || Content}</props.format.type>
+            <props.format.type {...props?.props}>
+                {Content?.props?.children || Content}
+            </props.format.type>
         ) : (
             Content
         ));
 
     return Area;
-}
+};
 
-// export default memo(GridContent);
+export default memo(GridContent);

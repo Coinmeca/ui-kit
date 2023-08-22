@@ -50,7 +50,12 @@ export const Nav = styled.nav<{ $scale: number; $color: string }>`
     &:after {
         content: "";
         font-size: ${({ $scale }) => $scale}em;
-        background-image: linear-gradient(90deg, transparent, white, transparent);
+        background-image: linear-gradient(
+            90deg,
+            transparent,
+            white,
+            transparent
+        );
         position: absolute;
         bottom: 0;
         width: 0;
@@ -309,7 +314,12 @@ export const Side = styled.div<{ $scale: number; $width: number }>`
     }
 `;
 
-const Style = styled.header<{ $scale: number; $color: string; $height: number; $side: number }>`
+const Style = styled.header<{
+    $scale: number;
+    $color: string;
+    $height: number;
+    $side: number;
+}>`
     position: relative;
     font-size: ${({ $scale }) => $scale}em;
     display: flex;

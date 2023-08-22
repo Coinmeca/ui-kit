@@ -15,7 +15,12 @@ export default function Cover(props: Cover) {
     const height = props?.height || 32;
 
     return (
-        <Style ref={props?.ref} style={props?.style} $height={height} $fullsize={props?.fullsize}>
+        <Style
+            ref={props?.ref}
+            style={props?.style}
+            $height={height}
+            $fullsize={props?.fullsize}
+        >
             {props?.background && <BG {...props?.background} />}
             {props?.children}
         </Style>

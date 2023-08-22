@@ -22,11 +22,20 @@ export default function Frame(props: Frame) {
         <>
             <Layouts.BG {...props?.background} />
             <Style>
-                {props?.header && <Headers.Header {...props?.header} side={{ ...props?.header?.side, width: width }} />}
+                {props?.header && (
+                    <Headers.Header
+                        {...props?.header}
+                        side={{ ...props?.header?.side, width: width }}
+                    />
+                )}
                 <section>
-                    {align === "left" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
+                    {align === "left" && props?.sidebar && (
+                        <Sidebar {...props?.sidebar} width={width} />
+                    )}
                     <main>{props?.children}</main>
-                    {align === "right" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
+                    {align === "right" && props?.sidebar && (
+                        <Sidebar {...props?.sidebar} width={width} />
+                    )}
                 </section>
             </Style>
         </>

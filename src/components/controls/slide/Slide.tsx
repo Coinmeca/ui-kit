@@ -67,9 +67,20 @@ export default function Slide(props: Slide) {
                 <>
                     <div>
                         {props?.slides?.map((slide: any, i: number) => (
-                            <div key={i} data-active={slide?.active || slideNo === i} onClick={(e: any) => slide?.onClick && slide?.onClick(e)}>
-                                {slide?.background && <BG {...slide?.background} />}
-                                <div data-row={props?.align?.horizon} style={slide?.style}>
+                            <div
+                                key={i}
+                                data-active={slide?.active || slideNo === i}
+                                onClick={(e: any) =>
+                                    slide?.onClick && slide?.onClick(e)
+                                }
+                            >
+                                {slide?.background && (
+                                    <BG {...slide?.background} />
+                                )}
+                                <div
+                                    data-row={props?.align?.horizon}
+                                    style={slide?.style}
+                                >
                                     {slide.children}
                                 </div>
                             </div>

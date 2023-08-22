@@ -18,10 +18,17 @@ export interface OrderPad extends CurrencyPad, Sheet {
 export default function OrderPad(props: OrderPad) {
     const width = 64;
     const min = (typeof props?.height === "object" && props?.height?.min) || 36;
-    const max = (typeof props?.height === "object" && props?.height?.max) || "60vh";
+    const max =
+        (typeof props?.height === "object" && props?.height?.max) || "60vh";
     const height = {
-        min: (typeof props?.height === "object" ? props?.height?.min : props?.height) || min,
-        max: (typeof props?.height === "object" ? props?.height?.min : props?.height) || max,
+        min:
+            (typeof props?.height === "object"
+                ? props?.height?.min
+                : props?.height) || min,
+        max:
+            (typeof props?.height === "object"
+                ? props?.height?.min
+                : props?.height) || max,
     };
     const padding = props?.padding || 2;
     const [value, setValue] = useState(props?.value || "");
@@ -38,13 +45,31 @@ export default function OrderPad(props: OrderPad) {
     return (
         <BottomSheet {...props} height={height}>
             <Layouts.Col gap={0} align="center">
-                <Layouts.Row gap={2} style={{ alignItems: "center", padding: `${padding / 2}em ${padding / 1.5}em`, maxWidth: `${width}` }}>
+                <Layouts.Row
+                    gap={2}
+                    style={{
+                        alignItems: "center",
+                        padding: `${padding / 2}em ${padding / 1.5}em`,
+                        maxWidth: `${width}`,
+                    }}
+                >
                     {props?.sub && (
                         <>
-                            <Elements.Text type={"p"} color={props?.sub?.color} weight={"bold"} align={"right"}>
+                            <Elements.Text
+                                type={"p"}
+                                color={props?.sub?.color}
+                                weight={"bold"}
+                                align={"right"}
+                            >
                                 {props?.sub?.value}
                             </Elements.Text>
-                            <Elements.Text type={"p"} color={props?.sub?.color} weight={"bold"} opacity={0.6} style={{ maxWidth: "4em" }}>
+                            <Elements.Text
+                                type={"p"}
+                                color={props?.sub?.color}
+                                weight={"bold"}
+                                opacity={0.6}
+                                style={{ maxWidth: "4em" }}
+                            >
                                 {props?.sub?.unit}
                             </Elements.Text>
                         </>
@@ -59,13 +84,20 @@ export default function OrderPad(props: OrderPad) {
                     onChange={(e: any, v: string) => handleChange(e, v)}
                     left={{
                         children: props?.label && (
-                            <Elements.Text style={{ fontSize: "1.25em" }} weight={"bold"} opacity={0.6}>
+                            <Elements.Text
+                                style={{ fontSize: "1.25em" }}
+                                weight={"bold"}
+                                opacity={0.6}
+                            >
                                 {props?.label}
                             </Elements.Text>
                         ),
                     }}
                     inputMode={"none"}
-                    style={{ fontSize: "1.125em", padding: `0.125em ${padding / 2}em` }}
+                    style={{
+                        fontSize: "1.125em",
+                        padding: `0.125em ${padding / 2}em`,
+                    }}
                     autoFocus
                 />
                 <Numberpads.Currency

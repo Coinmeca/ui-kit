@@ -28,14 +28,20 @@ export const Col = styled.div<{ $change?: string }>`
     }
 `;
 
-const Style = styled.div<{ $active?: boolean; $change?: string; $event: boolean }>`
+const Style = styled.div<{
+    $active?: boolean;
+    $change?: string;
+    $event: boolean;
+}>`
     display: flex;
     align-items: center;
     font-size: 0.6666em;
     padding: 1em;
     gap: 1em;
     border-spacing: 1em;
-    font-feature-settings: "tnum" on, "lnum" on;
+    font-feature-settings:
+        "tnum" on,
+        "lnum" on;
     cursor: ${({ $event }) => ($event ? "pointer" : "default")};
     pointer-events: ${({ $event }) => ($event ? "inherit" : "none")};
     scroll-snap-align: start;

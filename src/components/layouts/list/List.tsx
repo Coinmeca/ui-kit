@@ -8,17 +8,20 @@ import ListItem from "./ListItem";
 export interface List {
     list?: any;
     fallback?: string | ReactNode | JSX.Element | Function;
+    fill?: boolean;
     style?: object;
 }
 
 export default function List(props: List) {
     const fallback = props?.fallback || "There is no data.";
+    const fill = props?.fill || false;
 
     return (
-        <Style style={props?.style}>
+        <Style $fill={fill} style={props?.style}>
             <AnimatePresence>
                 {props?.list &&
-                    (typeof props?.list !== "string" && props?.list?.length > 0 ? (
+                    (typeof props?.list !== "string" &&
+                    props?.list?.length > 0 ? (
                         props?.list?.map((data: any, i: number) => (
                             <ListItem
                                 key={i}
@@ -27,7 +30,10 @@ export default function List(props: List) {
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.9, opacity: 0 }}
-                                transition={{ ease: "easeInOut", duration: 0.3 }}
+                                transition={{
+                                    ease: "easeInOut",
+                                    duration: 0.3,
+                                }}
                                 layout
                             >
                                 {data?.children ? data?.children : data}

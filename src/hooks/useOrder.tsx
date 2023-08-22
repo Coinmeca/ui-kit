@@ -2,7 +2,12 @@
 import { useState } from "react";
 import type { Order } from "types";
 
-export default function useOrder(initial: Order, mode: boolean, fee: number, available?: number) {
+export default function useOrder(
+    initial: Order,
+    mode: boolean,
+    fee: number,
+    available?: number,
+) {
     const [order, setOrder] = useState<Order>({
         base: initial?.base || "",
         quote: initial?.quote || "",
@@ -30,7 +35,10 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
 
     const maxQuantity = (price?: number): number | undefined => {
         const p = price || order?.price;
-        return (available && p !== 0 && (mode ? available / p : available * p)) || undefined;
+        return (
+            (available && p !== 0 && (mode ? available / p : available * p)) ||
+            undefined
+        );
     };
 
     const base = (base: string) => {
@@ -58,7 +66,9 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
                 };
             });
         }
-        mode ? amount(order?.amount || 0, price) : quantity(order?.quantity || 0, price);
+        mode
+            ? amount(order?.amount || 0, price)
+            : quantity(order?.quantity || 0, price);
     };
 
     const amount = (amount: number, price?: number) => {
@@ -129,5 +139,14 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
 
     const fees = (quantity: number) => (quantity === 0 ? 0 : quantity * fee);
 
-    return { order, base, quote, price, amount, quantity, maxAmount, maxQuantity };
+    return {
+        order,
+        base,
+        quote,
+        price,
+        amount,
+        quantity,
+        maxAmount,
+        maxQuantity,
+    };
 }

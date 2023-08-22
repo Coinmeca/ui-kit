@@ -1,3 +1,3 @@
 import Line from "./ChartJS";
 
-export { Line }
+export { Line };

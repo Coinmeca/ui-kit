@@ -57,7 +57,8 @@ const Style = styled.button<{
     ${({ $type, $color }) => {
         switch ($type) {
             case "glass":
-                const glass: string = $color === "black" ? "var(--white)" : "var(--theme)";
+                const glass: string =
+                    $color === "black" ? "var(--white)" : "var(--theme)";
                 return css`
                     background: rgba(${glass}, var(--o015));
                     color: rgb(${glass});
@@ -72,7 +73,8 @@ const Style = styled.button<{
                     }
                 `;
             case "line":
-                const line: string = $color === "white" ? "var(--white)" : "var(--black)";
+                const line: string =
+                    $color === "white" ? "var(--white)" : "var(--black)";
                 return css`
                     background: transparent;
                     border: 1px solid rgb(var(--theme));
@@ -82,7 +84,7 @@ const Style = styled.button<{
                     }
                     &:hover {
                         background: rgba(var(--theme), var(--o1));
-                        color: rgb(${line});
+                        color: ${$color === "black" ? "rgb(var(--white))" : "rgb(var(--black))"};n
                         & i svg {
                             fill: rgb(${line});
                         }
@@ -96,7 +98,8 @@ const Style = styled.button<{
                     }
                 `;
             case "solid":
-                const solid: string = $color === "black" ? "var(--white)" : "var(--black)";
+                const solid: string =
+                    $color === "black" ? "var(--white)" : "var(--black)";
                 return css`
                     background: rgb(var(--theme), var(--o1));
                     color: rgba(${solid});

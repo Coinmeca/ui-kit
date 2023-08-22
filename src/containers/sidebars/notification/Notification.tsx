@@ -7,7 +7,11 @@ import Style from "./Notification.styled";
 export default function Notification({ list }: { list: Content[] }) {
     return (
         <Style>
-            <Layouts.Contents.InnerContent>{list && list?.length > 0 && list?.map((v: any, k: number) => <Notify key={k} {...v} />)}</Layouts.Contents.InnerContent>
+            <Layouts.Contents.InnerContent>
+                {list &&
+                    list?.length > 0 &&
+                    list?.map((v: any, k: number) => <Notify key={k} {...v} />)}
+            </Layouts.Contents.InnerContent>
         </Style>
     );
 }

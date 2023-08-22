@@ -13,7 +13,11 @@ export default function SlideContainer(props: SlideContainer) {
             {props?.contents &&
                 (props?.contents?.length > 0 ? (
                     props?.contents.map((content, i) => (
-                        <SlideContent key={i} active={content.active} style={content?.style}>
+                        <SlideContent
+                            key={i}
+                            active={content.active}
+                            style={content?.style}
+                        >
                             {content.children}
                         </SlideContent>
                     ))

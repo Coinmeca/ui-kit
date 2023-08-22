@@ -8,25 +8,45 @@ export default function Page() {
     return (
         <Layouts.Page>
             <Layouts.Cover fullsize>
-                <Controls.Slide slides={slides} padding={0} nav={"bottom"} style={{ zIndex: 4 }} />
+                <Controls.Slide
+                    slides={slides}
+                    padding={0}
+                    nav={"bottom"}
+                    style={{ zIndex: 4 }}
+                />
             </Layouts.Cover>
             <Layouts.Box fit>
                 <Layouts.Contents.InnerContent>
                     <Layouts.Menu menu={menu} />
                     <Layouts.Row>
-                        <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
+                        <Controls.Tab
+                            active={tab === "icon"}
+                            onClick={() => setTab("icon")}
+                        >
                             Icon
                         </Controls.Tab>
-                        <Controls.Tab active={tab === "button"} onClick={() => setTab("button")}>
+                        <Controls.Tab
+                            active={tab === "button"}
+                            onClick={() => setTab("button")}
+                        >
                             Button
                         </Controls.Tab>
-                        <Controls.Tab active={tab === "dropdown"} onClick={() => setTab("dropdown")}>
+                        <Controls.Tab
+                            active={tab === "dropdown"}
+                            onClick={() => setTab("dropdown")}
+                        >
                             Dropdown
                         </Controls.Tab>
-                        <Controls.Tab active={tab === "input"} onClick={() => setTab("input")}>
+                        <Controls.Tab
+                            active={tab === "input"}
+                            onClick={() => setTab("input")}
+                        >
                             Input
                         </Controls.Tab>
-                        <Controls.Tab active={tab === "range"} onClick={() => setTab("range")}>
+                        <Controls.Tab
+                            active={tab === "range"}
+                            onClick={() => setTab("range")}
+                        >
                             Range
                         </Controls.Tab>
                     </Layouts.Row>

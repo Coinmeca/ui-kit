@@ -116,7 +116,11 @@ export default function Dummy() {
                                         </Elements.Text>
                                     </>,
                                     <>
-                                        <Elements.Text type="p" height={1} style={{ opacity: 0.45 }}>
+                                        <Elements.Text
+                                            type="p"
+                                            height={1}
+                                            style={{ opacity: 0.45 }}
+                                        >
                                             {data?.market}
                                         </Elements.Text>
                                     </>,
@@ -167,8 +171,16 @@ export default function Dummy() {
                     <Elements.Icon scale={0.5} icon={"swap"} title={"swap"} />
                     <Elements.Icon scale={1} icon={"account"} />
                     <Elements.Icon color={"#6080FF"} scale={2} icon={"bank"} />
-                    <Elements.Icon color={"yellow"} scale={3} icon={"chevron-left"} />
-                    <Elements.Icon color={"red"} scale={4} icon={"chart-area"} />
+                    <Elements.Icon
+                        color={"yellow"}
+                        scale={3}
+                        icon={"chevron-left"}
+                    />
+                    <Elements.Icon
+                        color={"red"}
+                        scale={4}
+                        icon={"chart-area"}
+                    />
                     <Elements.Icon icon={""} />
                 </Layouts.Row>
             ),
@@ -193,19 +205,34 @@ export default function Dummy() {
                         >
                             Add Notify
                         </Controls.Tab>
-                        <Controls.Tab iconLeft="sort-up-bold" active={active} onClick={() => setActive(!active)}>
+                        <Controls.Tab
+                            iconLeft="sort-up-bold"
+                            active={active}
+                            onClick={() => setActive(!active)}
+                        >
                             Tab
                         </Controls.Tab>
                         <Controls.Tab>Tab</Controls.Tab>
                         <Controls.Tab>Tab</Controls.Tab>
                     </Layouts.Row>
                     <Layouts.Row>
-                        <Controls.Button iconLeft="bank">Button</Controls.Button>
-                        <Controls.Button color="blue" icon="money" fit />
-                        <Controls.Button color="orange" iconLeft="swap" title="Let's swap">
+                        <Controls.Button iconLeft="bank">
                             Button
                         </Controls.Button>
-                        <Controls.Button color="green" iconLeft="swap" iconRight="identity" onClick={() => alert("1")}>
+                        <Controls.Button color="blue" icon="money" fit />
+                        <Controls.Button
+                            color="orange"
+                            iconLeft="swap"
+                            title="Let's swap"
+                        >
+                            Button
+                        </Controls.Button>
+                        <Controls.Button
+                            color="green"
+                            iconLeft="swap"
+                            iconRight="identity"
+                            onClick={() => alert("1")}
+                        >
                             Button
                         </Controls.Button>
                     </Layouts.Row>
@@ -241,26 +268,60 @@ export default function Dummy() {
             children: (
                 <Layouts.Col>
                     <Controls.Input />
-                    <Controls.Input left={{ children: <Elements.Icon icon={"user"} /> }} />
+                    <Controls.Input
+                        left={{ children: <Elements.Icon icon={"user"} /> }}
+                    />
                     <Controls.Input clearable />
-                    <Controls.Input clearable right={{ children: <Controls.Dropdown options={dropdown} /> }} />
-                    <Controls.Input type={"currency"} align={"right"} clearable right={{ children: <Controls.Dropdown options={dropdown} /> }} />
+                    <Controls.Input
+                        clearable
+                        right={{
+                            children: <Controls.Dropdown options={dropdown} />,
+                        }}
+                    />
+                    <Controls.Input
+                        type={"currency"}
+                        align={"right"}
+                        clearable
+                        right={{
+                            children: <Controls.Dropdown options={dropdown} />,
+                        }}
+                    />
 
-                    <Controls.Input clearable left={{ children: <Controls.Button>Button</Controls.Button> }} />
+                    <Controls.Input
+                        clearable
+                        left={{
+                            children: <Controls.Button>Button</Controls.Button>,
+                        }}
+                    />
                     <Controls.Input
                         clearable
                         right={{
                             children: (
-                                <Controls.Button type={"solid"} iconRight={"send"}>
+                                <Controls.Button
+                                    type={"solid"}
+                                    iconRight={"send"}
+                                >
                                     Send
                                 </Controls.Button>
                             ),
                         }}
                     />
-                    <Controls.Input clearable right={{ children: <Controls.Button>Button</Controls.Button> }} />
+                    <Controls.Input
+                        clearable
+                        right={{
+                            children: <Controls.Button>Button</Controls.Button>,
+                        }}
+                    />
 
                     <Controls.Input type={"currency"} error={true} unit={"%"} />
-                    <Controls.Input type={"currency"} value={value} onChange={(v: any) => setValue(Format(v, "number") as number)} unit={"%"} />
+                    <Controls.Input
+                        type={"currency"}
+                        value={value}
+                        onChange={(v: any) =>
+                            setValue(Format(v, "number") as number)
+                        }
+                        unit={"%"}
+                    />
                 </Layouts.Col>
             ),
         },
@@ -270,13 +331,68 @@ export default function Dummy() {
             children: (
                 <Layouts.Col>
                     <Layouts.Divider />
-                    <Controls.Range color={"green"} value={value} onChange={(v: any) => setValue(v)} />
-                    <Controls.Range color={"orange"} step={10} value={value} zero onChange={(v: any) => setValue(v)} />
-                    <Controls.Range color={"red"} snap step={11} value={value} zero onChange={(v: any) => setValue(v)} />
-                    <Controls.Range color={"black"} snap step={11} min={-100} max={100} value={value} zero onChange={(v: any) => setValue(v)} />
-                    <Controls.Range color={"white"} snap step={11} min={-50} max={150} unit={"USD"} value={value} zero onChange={(v: any) => setValue(v)} />
-                    <Controls.Range color={"purple"} snap step={11} min={-150} max={50} unit={"USD"} value={value} zero onChange={(v: any) => setValue(v)} />
-                    <Controls.Range color={"blue"} step={11} min={-150} max={50} unit={"USD"} value={value} zero onChange={(v: any) => setValue(v)} />
+                    <Controls.Range
+                        color={"green"}
+                        value={value}
+                        onChange={(v: any) => setValue(v)}
+                    />
+                    <Controls.Range
+                        color={"orange"}
+                        step={10}
+                        value={value}
+                        zero
+                        onChange={(v: any) => setValue(v)}
+                    />
+                    <Controls.Range
+                        color={"red"}
+                        snap
+                        step={11}
+                        value={value}
+                        zero
+                        onChange={(v: any) => setValue(v)}
+                    />
+                    <Controls.Range
+                        color={"black"}
+                        snap
+                        step={11}
+                        min={-100}
+                        max={100}
+                        value={value}
+                        zero
+                        onChange={(v: any) => setValue(v)}
+                    />
+                    <Controls.Range
+                        color={"white"}
+                        snap
+                        step={11}
+                        min={-50}
+                        max={150}
+                        unit={"USD"}
+                        value={value}
+                        zero
+                        onChange={(v: any) => setValue(v)}
+                    />
+                    <Controls.Range
+                        color={"purple"}
+                        snap
+                        step={11}
+                        min={-150}
+                        max={50}
+                        unit={"USD"}
+                        value={value}
+                        zero
+                        onChange={(v: any) => setValue(v)}
+                    />
+                    <Controls.Range
+                        color={"blue"}
+                        step={11}
+                        min={-150}
+                        max={50}
+                        unit={"USD"}
+                        value={value}
+                        zero
+                        onChange={(v: any) => setValue(v)}
+                    />
                 </Layouts.Col>
             ),
         },
@@ -296,11 +412,22 @@ export default function Dummy() {
                         <Elements.Text type={"h2"} align={"center"}>
                             Much Faster and Much Easier Coin Exchange
                         </Elements.Text>
-                        <Elements.Text size={2} weight={"normal"} responsive={{ device: "mobile", size: 4 }} align={"center"}>
-                            Start with your new experience coin trading system on Coinmeca.
+                        <Elements.Text
+                            size={2}
+                            weight={"normal"}
+                            responsive={{ device: "mobile", size: 4 }}
+                            align={"center"}
+                        >
+                            Start with your new experience coin trading system
+                            on Coinmeca.
                         </Elements.Text>
                     </Layouts.Col>
-                    <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
+                    <Controls.Button
+                        type="glass"
+                        style={{ padding: "1em 2em" }}
+                        color="white"
+                        fit
+                    >
                         Get Started with Sign up
                     </Controls.Button>
                 </Layouts.Col>
@@ -325,11 +452,21 @@ export default function Dummy() {
                         <Elements.Text type={"h2"} align={"center"}>
                             Meet Brand New Finance
                         </Elements.Text>
-                        <Elements.Text size={2} weight={"normal"} align={"center"}>
-                            Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.
+                        <Elements.Text
+                            size={2}
+                            weight={"normal"}
+                            align={"center"}
+                        >
+                            Start your crypto financial life on Coinmeca.
+                            Receive it, Pay it, Trade it.
                         </Elements.Text>
                     </Layouts.Col>
-                    <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
+                    <Controls.Button
+                        type="glass"
+                        style={{ padding: "1em 2em" }}
+                        color="white"
+                        fit
+                    >
                         Get Started with Sign up
                     </Controls.Button>
                 </Layouts.Col>
@@ -348,11 +485,21 @@ export default function Dummy() {
                         <Elements.Text type={"h2"} align={"center"}>
                             Make Profits While Spending Money
                         </Elements.Text>
-                        <Elements.Text size={2} weight={"normal"} align={"center"}>
-                            Lets get earned Coinmeca Token free according your service usage. And just sell it market.
+                        <Elements.Text
+                            size={2}
+                            weight={"normal"}
+                            align={"center"}
+                        >
+                            Lets get earned Coinmeca Token free according your
+                            service usage. And just sell it market.
                         </Elements.Text>
                     </Layouts.Col>
-                    <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
+                    <Controls.Button
+                        type="glass"
+                        style={{ padding: "1em 2em" }}
+                        color="white"
+                        fit
+                    >
                         Get Started with Sign up
                     </Controls.Button>
                 </Layouts.Col>
@@ -371,9 +518,15 @@ export default function Dummy() {
             children: (
                 <Layouts.Col align={"left"}>
                     <Layouts.Col>
-                        <Elements.Text type={"h4"}>Much Faster and Much Easier Coin Exchange</Elements.Text>
-                        <Elements.Text weight={"normal"} responsive={{ device: "mobile", size: 4 }}>
-                            Start with your new experience coin trading system on Coinmeca.
+                        <Elements.Text type={"h4"}>
+                            Much Faster and Much Easier Coin Exchange
+                        </Elements.Text>
+                        <Elements.Text
+                            weight={"normal"}
+                            responsive={{ device: "mobile", size: 4 }}
+                        >
+                            Start with your new experience coin trading system
+                            on Coinmeca.
                         </Elements.Text>
                     </Layouts.Col>
                 </Layouts.Col>
@@ -395,8 +548,13 @@ export default function Dummy() {
             children: (
                 <Layouts.Col align={"left"}>
                     <Layouts.Col>
-                        <Elements.Text type={"h4"}>Meet Brand New Finance</Elements.Text>
-                        <Elements.Text weight={"normal"}>Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.</Elements.Text>
+                        <Elements.Text type={"h4"}>
+                            Meet Brand New Finance
+                        </Elements.Text>
+                        <Elements.Text weight={"normal"}>
+                            Start your crypto financial life on Coinmeca.
+                            Receive it, Pay it, Trade it.
+                        </Elements.Text>
                     </Layouts.Col>
                 </Layouts.Col>
             ),
@@ -411,9 +569,12 @@ export default function Dummy() {
             children: (
                 <Layouts.Col align={"left"}>
                     <Layouts.Col align={"left"}>
-                        <Elements.Text type={"h4"}>Make Profits While Spending Money</Elements.Text>
+                        <Elements.Text type={"h4"}>
+                            Make Profits While Spending Money
+                        </Elements.Text>
                         <Elements.Text weight={"normal"}>
-                            Lets get earned Coinmeca Token free according your service usage. And just sell it market.
+                            Lets get earned Coinmeca Token free according your
+                            service usage. And just sell it market.
                         </Elements.Text>
                     </Layouts.Col>
                 </Layouts.Col>
@@ -652,7 +813,11 @@ export default function Dummy() {
             children: (
                 <>
                     <Controls.Tab
-                        onClick={() => (mobileMenu === "notify" ? setMobileMenu("") : setMobileMenu("notify"))}
+                        onClick={() =>
+                            mobileMenu === "notify"
+                                ? setMobileMenu("")
+                                : setMobileMenu("notify")
+                        }
                         active={mobileMenu === "notify"}
                         iconLeft={{ icon: "bell", count: 24 }}
                         toggle
@@ -660,7 +825,11 @@ export default function Dummy() {
                         onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
-                        onClick={() => (mobileMenu === "market" ? setMobileMenu("") : setMobileMenu("market"))}
+                        onClick={() =>
+                            mobileMenu === "market"
+                                ? setMobileMenu("")
+                                : setMobileMenu("market")
+                        }
                         active={mobileMenu === "market"}
                         iconLeft={"sidebar"}
                         toggle
@@ -668,7 +837,11 @@ export default function Dummy() {
                         onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
-                        onClick={() => (mobileMenu === "setting" ? setMobileMenu("") : setMobileMenu("setting"))}
+                        onClick={() =>
+                            mobileMenu === "setting"
+                                ? setMobileMenu("")
+                                : setMobileMenu("setting")
+                        }
                         active={mobileMenu === "setting"}
                         iconLeft={"gear"}
                         toggle
@@ -727,7 +900,14 @@ export default function Dummy() {
                     </Layouts.Row>
                     {/* <Controls.Button fit>Connect</Controls.Button> */}
                     <Controls.Button iconRight={"chevron-down-bold"} fit>
-                        <Elements.Avatar length={8} size={3} display={4} name={"0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"} />
+                        <Elements.Avatar
+                            length={8}
+                            size={3}
+                            display={4}
+                            name={
+                                "0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"
+                            }
+                        />
                     </Controls.Button>
                 </>
             ),
@@ -743,35 +923,72 @@ export default function Dummy() {
                     active: true,
                     children: (
                         <>
-                            <Layouts.Row fit style={{ padding: "0.5em 1em" }} gap={0}>
-                                <Controls.Tab active={sidebarTab === "exchange"} onClick={() => setSidebarTab("exchange")}>
+                            <Layouts.Row
+                                fit
+                                style={{ padding: "0.5em 1em" }}
+                                gap={0}
+                            >
+                                <Controls.Tab
+                                    active={sidebarTab === "exchange"}
+                                    onClick={() => setSidebarTab("exchange")}
+                                >
                                     Exchange
                                 </Controls.Tab>
-                                <Controls.Tab active={sidebarTab === "alert"} onClick={() => setSidebarTab("alert")}>
+                                <Controls.Tab
+                                    active={sidebarTab === "alert"}
+                                    onClick={() => setSidebarTab("alert")}
+                                >
                                     Alert
                                 </Controls.Tab>
-                                <Controls.Tab active={sidebarTab === "asset"} onClick={() => setSidebarTab("asset")}>
+                                <Controls.Tab
+                                    active={sidebarTab === "asset"}
+                                    onClick={() => setSidebarTab("asset")}
+                                >
                                     Assets
                                 </Controls.Tab>
                             </Layouts.Row>
                             <Controls.Input
-                                left={{ children: <Elements.Icon icon={"search"} /> }}
-                                right={{ children: <Controls.Dropdown options={markets} /> }}
+                                left={{
+                                    children: <Elements.Icon icon={"search"} />,
+                                }}
+                                right={{
+                                    children: (
+                                        <Controls.Dropdown options={markets} />
+                                    ),
+                                }}
                             />
                             <Layouts.Contents.InnerContent>
                                 <Layouts.Contents.SlideContainer
                                     contents={[
                                         {
                                             active: sidebarTab === "exchange",
-                                            children: <Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
+                                            children: (
+                                                <Sidebars.Market
+                                                    list={sidebarMarketListFormatter(
+                                                        marketlist,
+                                                    )}
+                                                />
+                                            ),
                                         },
                                         {
                                             active: sidebarTab === "alert",
-                                            children: <Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
+                                            children: (
+                                                <Sidebars.Market
+                                                    list={sidebarMarketListFormatter(
+                                                        marketlist,
+                                                    )}
+                                                />
+                                            ),
                                         },
                                         {
                                             active: sidebarTab === "asset",
-                                            children: <Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
+                                            children: (
+                                                <Sidebars.Market
+                                                    list={sidebarMarketListFormatter(
+                                                        marketlist,
+                                                    )}
+                                                />
+                                            ),
                                         },
                                     ]}
                                 />
@@ -782,7 +999,9 @@ export default function Dummy() {
             ],
         },
         upper: {
-            active: mobileMenu === "notify" /* || menuMobile === 'something' || menuMobile === 'else' */,
+            active:
+                mobileMenu ===
+                "notify" /* || menuMobile === 'something' || menuMobile === 'else' */,
             children: [
                 {
                     active: mobileMenu === "notify",
@@ -792,5 +1011,22 @@ export default function Dummy() {
         },
     };
 
-    return { value, setValue, tab, setTab, active, setActive, dropdown, tabs, slides, slides2, menu, markets, marketlist, notilist, header, sidebars };
+    return {
+        value,
+        setValue,
+        tab,
+        setTab,
+        active,
+        setActive,
+        dropdown,
+        tabs,
+        slides,
+        slides2,
+        menu,
+        markets,
+        marketlist,
+        notilist,
+        header,
+        sidebars,
+    };
 }

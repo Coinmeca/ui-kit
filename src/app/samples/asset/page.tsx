@@ -33,8 +33,12 @@ export default function Page() {
                                 <Asset.Pages.View
                                     info={props?.info}
                                     assets={props?.assets}
-                                    onSelect={(a: Token | undefined) => setAsset(a)}
-                                    responsive={windowSize.width < Root.Device.Mobile}
+                                    onSelect={(a: Token | undefined) =>
+                                        setAsset(a)
+                                    }
+                                    responsive={
+                                        windowSize.width < Root.Device.Mobile
+                                    }
                                 />
                             ),
                         },
@@ -48,7 +52,9 @@ export default function Page() {
                                     history={history}
                                     positions={props?.positions}
                                     onBack={() => setAsset(undefined)}
-                                    responsive={windowSize.width <= Root.Device.Mobile}
+                                    responsive={
+                                        windowSize.width <= Root.Device.Mobile
+                                    }
                                 />
                             ),
                         },

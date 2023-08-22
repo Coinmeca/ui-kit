@@ -224,7 +224,10 @@ export default function Page() {
         <Layouts.Page>
             <div style={{ height: "320px" }} />
             <Layouts.Box>
-                <Layouts.Table list={formatter(data)} fallback="There is no data." />
+                <Layouts.Table
+                    list={formatter(data)}
+                    fallback="There is no data."
+                />
             </Layouts.Box>
         </Layouts.Page>
     );

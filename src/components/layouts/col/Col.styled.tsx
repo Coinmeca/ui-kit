@@ -31,12 +31,15 @@ const Style = styled.div<{
     $responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     $reverse?: boolean;
     $fix?: boolean;
+    $fill?: boolean;
 }>`
     --gap: ${({ $gap }) => ($gap === 0 ? 0 : $gap || 4)}em;
 
     display: flex;
-    flex-direction: ${({ $reverse }) => ($reverse ? "column-reverse" : "column")};
+    flex-direction: ${({ $reverse }) =>
+        $reverse ? "column-reverse" : "column"};
     width: ${({ $fit }) => ($fit ? "max-content" : "100%")};
+    ${({ $fill }) => $fill && "height:100%;"}
 
     & > * {
         width: -webkit-fill-available;

@@ -24,7 +24,11 @@ export default function Detail(props: Detail) {
                         asset={props?.asset}
                         info={vault?.info}
                         history={vault?.history}
-                        charts={{ rate: vault?.charts?.rate, value: vault?.charts?.value, volume: vault?.charts?.volume }}
+                        charts={{
+                            rate: vault?.charts?.rate,
+                            value: vault?.charts?.value,
+                            volume: vault?.charts?.volume,
+                        }}
                         responsive={props?.responsive}
                         onBack={props?.onBack}
                     />
@@ -32,7 +36,9 @@ export default function Detail(props: Detail) {
                     <></>
                 ) : (
                     <Contents.States.Failure message={"Oops, something wrong"}>
-                        <Controls.Button onClick={props?.onBack}>Go Back</Controls.Button>
+                        <Controls.Button onClick={props?.onBack}>
+                            Go Back
+                        </Controls.Button>
                     </Contents.States.Failure>
                 )}
             </AnimatePresence>

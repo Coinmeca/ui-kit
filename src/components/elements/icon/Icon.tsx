@@ -18,10 +18,23 @@ function Icon(props: Icon) {
     const title = props?.title || "";
     const count = props?.count && props?.count > 9999 ? 9999 : props?.count;
 
-    const Icons: any = dynamic(() => import(`../../../assets/icons/${(props?.icon !== "" && props?.icon) || "empty"}.svg`));
+    const Icons: any = dynamic(
+        () =>
+            import(
+                `../../../assets/icons/${
+                    (props?.icon !== "" && props?.icon) || "empty"
+                }.svg`
+            ),
+    );
 
     return (
-        <Style title={title} $scale={scale} $color={color} $change={props?.change} style={props?.style}>
+        <Style
+            title={title}
+            $scale={scale}
+            $color={color}
+            $change={props?.change}
+            style={props?.style}
+        >
             <Icons />
             {count && count > 0 && <Count $color={color}>{count}</Count>}
         </Style>

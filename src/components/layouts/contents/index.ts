@@ -7,4 +7,13 @@ import SlideContent from "./slide/SlideContent";
 import GridContainer from "./grid/GridContainer";
 import PartContainer from "./part/PartContainer";
 
-export { Page, InnerContent, TabContainer, TabContent, SlideContainer, SlideContent, GridContainer, PartContainer };
+export {
+    Page,
+    InnerContent,
+    TabContainer,
+    TabContent,
+    SlideContainer,
+    SlideContent,
+    GridContainer,
+    PartContainer,
+};
