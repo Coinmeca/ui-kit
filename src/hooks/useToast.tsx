@@ -49,5 +49,14 @@ export default function useToast(list?: Notify[]) {
         setNotis(notis.filter((noti) => noti.id !== id));
     }
 
-    return { toasts, notis, setToasts, setNotis, AddToast, RemoveToast, AddNotify, RemoveNotify };
+    return {
+        toasts,
+        notis,
+        setToasts,
+        setNotis,
+        AddToast,
+        RemoveToast,
+        AddNotify,
+        RemoveNotify,
+    };
 }

@@ -30,7 +30,15 @@ export default function Range(props: Slider) {
     const disabled = props?.disabled || false;
 
     useEffect(() => {
-        typeof props?.value === "number" && !isNaN(props?.value) ? setValue(props?.value < min ? min : props?.value > max ? max : props?.value) : 0;
+        typeof props?.value === "number" && !isNaN(props?.value)
+            ? setValue(
+                  props?.value < min
+                      ? min
+                      : props?.value > max
+                      ? max
+                      : props?.value,
+              )
+            : 0;
     }, [props?.value, min, max]);
 
     useEffect(() => {
@@ -39,7 +47,12 @@ export default function Range(props: Slider) {
 
     const handleChange = (e: any) => {
         const range = max - min;
-        let value = parseFloat(e.target.value) >= max ? max : parseFloat(e.target.value) <= min ? min : parseFloat(e.target.value);
+        let value =
+            parseFloat(e.target.value) >= max
+                ? max
+                : parseFloat(e.target.value) <= min
+                ? min
+                : parseFloat(e.target.value);
 
         if (snap) {
             const tick = range / (step - 1);
@@ -62,21 +75,46 @@ export default function Range(props: Slider) {
                 draggable={false}
                 $color={color}
                 $value={
-                    (max.toString().length > min.toString().length ? max.toString().length : min.toString().length) +
+                    (max.toString().length > min.toString().length
+                        ? max.toString().length
+                        : min.toString().length) +
                     (props?.unit ? props?.unit.toString().length + 1 : 0)
                 }
                 data-show={props?.show}
                 data-hide={props?.hide}
             >
-                <input type="range" min={min} max={max} value={value} onChange={(e) => handleChange(e)} />
+                <input
+                    type="range"
+                    min={min}
+                    max={max}
+                    value={value}
+                    onChange={(e) => handleChange(e)}
+                />
                 <div>
                     <div>
                         <div style={{ backgroundSize: `${percent}% 100%` }}>
                             {zero && max % ((max - min) / (step - 1)) !== 0 && (
-                                <div className={`zero${value >= 0 ? " on" : ""}`} style={{ left: `${(Math.abs(min) / (max - min)) * 100}%` }} />
+                                <div
+                                    className={`zero${value >= 0 ? " on" : ""}`}
+                                    style={{
+                                        left: `${
+                                            (Math.abs(min) / (max - min)) * 100
+                                        }%`,
+                                    }}
+                                />
                             )}
                             {[...Array(step)].map((_, i) => (
-                                <div key={i} className={percent >= ((((max - min) / (step - 1)) * i) / (max - min)) * 100 ? "on" : ""} />
+                                <div
+                                    key={i}
+                                    className={
+                                        percent >=
+                                        ((((max - min) / (step - 1)) * i) /
+                                            (max - min)) *
+                                            100
+                                            ? "on"
+                                            : ""
+                                    }
+                                />
                             ))}
                         </div>
                     </div>

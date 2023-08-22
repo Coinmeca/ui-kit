@@ -1,6 +1,11 @@
 import { css, styled } from "styled-components";
 
-const Style = styled.button<{ $scale: number; $padding: number; $gap: number; $event: boolean }>`
+const Style = styled.button<{
+    $scale: number;
+    $padding: number;
+    $gap: number;
+    $event: boolean;
+}>`
     font-size: ${({ $scale }) => $scale}em;
     padding: ${({ $padding }) => $padding}em;
     background: transparent;

@@ -1,3 +1,3 @@
-import * as Style from './style';
+import * as Style from "./style";
 
-export { Style }
+export { Style };

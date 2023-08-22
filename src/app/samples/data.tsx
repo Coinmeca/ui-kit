@@ -3,7 +3,8 @@ import { Elements, Layouts, Controls } from "components";
 import { useState } from "react";
 import useToast from "hooks/useToast";
 import { usePathname } from "next/navigation";
-import { Sidebars } from "containers";
+import { Modals, Sidebars } from "containers";
+import { usePortal } from "hooks";
 
 export default function Data() {
     const [value, setValue] = useState<number>(0);
@@ -199,17 +200,26 @@ export default function Data() {
                                         // length={8}
                                         size={3}
                                         img={data?.logo}
-                                    // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
+                                        // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
                                     />
                                 </>,
                                 [
                                     <>
-                                        <Elements.Text type="strong" case={"upper"} height={1.25}>
+                                        <Elements.Text
+                                            type="strong"
+                                            case={"upper"}
+                                            height={1.25}
+                                        >
                                             {data?.symbol}
                                         </Elements.Text>
                                     </>,
                                     <>
-                                        <Elements.Text type="p" case={"upper"} height={1.25} style={{ opacity: 0.45 }}>
+                                        <Elements.Text
+                                            type="p"
+                                            case={"upper"}
+                                            height={1.25}
+                                            style={{ opacity: 0.45 }}
+                                        >
                                             {data?.market}
                                         </Elements.Text>
                                     </>,
@@ -219,7 +229,10 @@ export default function Data() {
                     ],
                     {
                         align: "right",
-                        change: parseFloat(data?.change) > 0 ? "var(--green)" : parseFloat(data?.change) < 0 && "var(--red)",
+                        change:
+                            parseFloat(data?.change) > 0
+                                ? "var(--green)"
+                                : parseFloat(data?.change) < 0 && "var(--red)",
                         children: [
                             <>
                                 <Elements.Text type="strong" height={1.25}>
@@ -227,14 +240,25 @@ export default function Data() {
                                 </Elements.Text>
                             </>,
                             <>
-                                <Elements.Text type="strong" height={1.25} change>
+                                <Elements.Text
+                                    type="strong"
+                                    height={1.25}
+                                    change
+                                >
                                     {parseFloat(data?.change) > 0 && "+"}
                                     {data?.change} %
                                 </Elements.Text>
                             </>,
                         ],
                     },
-                    [{ align: "right", children: <Elements.Text>{data?.volume}</Elements.Text> }],
+                    [
+                        {
+                            align: "right",
+                            children: (
+                                <Elements.Text>{data?.volume}</Elements.Text>
+                            ),
+                        },
+                    ],
                 ],
                 onClick: (props: any) => alert(props.children),
             }))
@@ -293,6 +317,75 @@ export default function Data() {
         },
     ];
 
+    const chainList = {
+        runkeby: {
+            id: 421611,
+            name: "Arbitrum Rinkeby",
+            rpc: [
+                // "Safe" URLs
+                "https://rinkeby.arbitrum.io/rpc",
+            ],
+            // logo: "https://l2beat.com/icons/arbitrum.png",
+            logo: "/../../assets/coins/eth.png",
+        },
+        testnet: {
+            id: 421613,
+            name: "Arbitrum Testnet",
+            rpc: [
+                // "Safe" URLs
+                "https://goerli-rollup.arbitrum.io/rpc",
+            ],
+            explorer: ["https://goerli.arbiscan.io/"],
+            // logo: "https://l2beat.com/icons/arbitrum.png",
+            logo: "/../../assets/coins/eth.png",
+        },
+    };
+
+    const walletList = {
+        MetaMask: {
+            name: "MetaMask",
+            url: "https://metamask.io/",
+            // logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/120px-MetaMask_Fox.svg.png",
+            logo: "/../../assets/coins/eth.png",
+            adapter(url?: any) {
+                // return new MetaMaskWalletAdapter();
+                return alert("MetaMask");
+            },
+        },
+        "Coinbase Wallet": {
+            name: "Coinbase Wallet",
+            url: "https://www.coinbase.com/wallet",
+            // logo: "https://avatars.githubusercontent.com/u/18060234?s=280&v=4",
+            logo: "/../../assets/coins/eth.png",
+            adapter(url?: any) {
+                // return new CoinbaseWalletAdapter();
+                return alert("Coinbase Wallet");
+            },
+        },
+    };
+
+    const handleChain = (chain: any) => {
+        fetchWalletList(chain);
+    };
+
+    const fetchWalletList = (chain?: any): any[] => {
+        console.log(chain);
+        // return walletList.filter((w: any) => w?.chain);
+        return Object.values(walletList);
+    };
+
+    const Connect = () => (
+        <Modals.Connect
+            width={48}
+            chains={chainList}
+            wallets={fetchWalletList()}
+            onClose={closeConnect}
+            onChain={(c: any) => handleChain(c)}
+            close
+        />
+    );
+    const [handleConnect, closeConnect] = usePortal(<Connect />);
+
     const header = {
         color: colorMap[path],
         logo: {
@@ -322,7 +415,11 @@ export default function Data() {
             children: (
                 <>
                     <Controls.Tab
-                        onClick={() => (mobileMenu === "notify" ? setMobileMenu("") : setMobileMenu("notify"))}
+                        onClick={() =>
+                            mobileMenu === "notify"
+                                ? setMobileMenu("")
+                                : setMobileMenu("notify")
+                        }
                         active={mobileMenu === "notify"}
                         iconLeft={{ icon: "bell", count: 24 }}
                         toggle
@@ -330,7 +427,11 @@ export default function Data() {
                         onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
-                        onClick={() => (mobileMenu === "market" ? setMobileMenu("") : setMobileMenu("market"))}
+                        onClick={() =>
+                            mobileMenu === "market"
+                                ? setMobileMenu("")
+                                : setMobileMenu("market")
+                        }
                         active={mobileMenu === "market"}
                         iconLeft={"sidebar"}
                         show={"tablet"}
@@ -339,7 +440,11 @@ export default function Data() {
                         onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
-                        onClick={() => (mobileMenu === "setting" ? setMobileMenu("") : setMobileMenu("setting"))}
+                        onClick={() =>
+                            mobileMenu === "setting"
+                                ? setMobileMenu("")
+                                : setMobileMenu("setting")
+                        }
                         active={mobileMenu === "setting"}
                         iconLeft={"gear"}
                         show={"tablet"}
@@ -354,12 +459,31 @@ export default function Data() {
             children: (
                 <>
                     <Layouts.Row fit>
-                        <Controls.Dropdown option={languages[0]} options={languages} fit />
-                        <Controls.Dropdown option={chains[0]} options={chains} fit />
+                        <Controls.Dropdown
+                            option={languages[0]}
+                            options={languages}
+                            fit
+                        />
+                        <Controls.Dropdown
+                            option={chains[0]}
+                            options={chains}
+                            fit
+                        />
                     </Layouts.Row>
                     {/* <Controls.Button fit>Connect</Controls.Button> */}
-                    <Controls.Button iconRight={"chevron-down-bold"} fit>
-                        <Elements.Avatar length={8} scale={0.6667} display={4} name={"0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"} />
+                    <Controls.Button
+                        iconRight={"chevron-down-bold"}
+                        onClick={handleConnect}
+                        fit
+                    >
+                        <Elements.Avatar
+                            length={8}
+                            scale={0.6667}
+                            display={4}
+                            name={
+                                "0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"
+                            }
+                        />
                     </Controls.Button>
                 </>
             ),
@@ -375,35 +499,72 @@ export default function Data() {
                     active: true,
                     children: (
                         <>
-                            <Layouts.Row fit style={{ padding: "0.5em 1em" }} gap={0}>
-                                <Controls.Tab active={sidebarTab === "exchange"} onClick={() => setSidebarTab("exchange")}>
+                            <Layouts.Row
+                                fit
+                                style={{ padding: "0.5em 1em" }}
+                                gap={0}
+                            >
+                                <Controls.Tab
+                                    active={sidebarTab === "exchange"}
+                                    onClick={() => setSidebarTab("exchange")}
+                                >
                                     Exchange
                                 </Controls.Tab>
-                                <Controls.Tab active={sidebarTab === "alert"} onClick={() => setSidebarTab("alert")}>
+                                <Controls.Tab
+                                    active={sidebarTab === "alert"}
+                                    onClick={() => setSidebarTab("alert")}
+                                >
                                     Alert
                                 </Controls.Tab>
-                                <Controls.Tab active={sidebarTab === "asset"} onClick={() => setSidebarTab("asset")}>
+                                <Controls.Tab
+                                    active={sidebarTab === "asset"}
+                                    onClick={() => setSidebarTab("asset")}
+                                >
                                     Assets
                                 </Controls.Tab>
                             </Layouts.Row>
                             <Controls.Input
-                                left={{ children: <Elements.Icon icon={"search"} /> }}
-                                right={{ children: <Controls.Dropdown options={markets} /> }}
+                                left={{
+                                    children: <Elements.Icon icon={"search"} />,
+                                }}
+                                right={{
+                                    children: (
+                                        <Controls.Dropdown options={markets} />
+                                    ),
+                                }}
                             />
                             <Layouts.Contents.InnerContent>
                                 <Layouts.Contents.SlideContainer
                                     contents={[
                                         {
                                             active: sidebarTab === "exchange",
-                                            children: <Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
+                                            children: (
+                                                <Sidebars.Market
+                                                    list={sidebarMarketListFormatter(
+                                                        marketlist,
+                                                    )}
+                                                />
+                                            ),
                                         },
                                         {
                                             active: sidebarTab === "alert",
-                                            children: <Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
+                                            children: (
+                                                <Sidebars.Market
+                                                    list={sidebarMarketListFormatter(
+                                                        marketlist,
+                                                    )}
+                                                />
+                                            ),
                                         },
                                         {
                                             active: sidebarTab === "asset",
-                                            children: <Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
+                                            children: (
+                                                <Sidebars.Market
+                                                    list={sidebarMarketListFormatter(
+                                                        marketlist,
+                                                    )}
+                                                />
+                                            ),
                                         },
                                     ]}
                                 />
@@ -414,7 +575,9 @@ export default function Data() {
             ],
         },
         upper: {
-            active: mobileMenu === "notify" /* || menuMobile === 'something' || menuMobile === 'else' */,
+            active:
+                mobileMenu ===
+                "notify" /* || menuMobile === 'something' || menuMobile === 'else' */,
             children: [
                 {
                     active: mobileMenu === "notify",
@@ -424,5 +587,17 @@ export default function Data() {
         },
     };
 
-    return { value, setValue, tab, setTab, active, setActive, markets, marketlist, notilist, header, sidebars };
+    return {
+        value,
+        setValue,
+        tab,
+        setTab,
+        active,
+        setActive,
+        markets,
+        marketlist,
+        notilist,
+        header,
+        sidebars,
+    };
 }

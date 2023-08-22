@@ -15,7 +15,12 @@ export default function Page() {
     // };
 
     const [handleModal, closeDialogue] = usePortal(
-        <Modal title={"This is a Modal."} message={"This is a modal content test message."} onClose={() => closeDialogue()} close />
+        <Modal
+            title={"This is a Modal."}
+            message={"This is a modal content test message."}
+            onClose={() => closeDialogue()}
+            close
+        />,
     );
 
     const [process, setProcess] = useState<boolean | null>(null);
@@ -80,30 +85,51 @@ export default function Page() {
                 closeProcessModal();
             }}
             close
-        />
+        />,
     );
 
     return (
         <Layouts.Page>
             <Layouts.Cover>
-                <Controls.Slide slides={slides2} padding={0} align={{ vertical: "top", horizon: "left" }} nav={"top"} style={{ zIndex: 4 }} />
+                <Controls.Slide
+                    slides={slides2}
+                    padding={0}
+                    align={{ vertical: "top", horizon: "left" }}
+                    nav={"top"}
+                    style={{ zIndex: 4 }}
+                />
             </Layouts.Cover>
             <Layouts.Box>
                 <Layouts.Contents.InnerContent>
                     <Layouts.Row fix>
-                        <Controls.Tab active={tab === "icon"} onClick={() => setTab("icon")}>
+                        <Controls.Tab
+                            active={tab === "icon"}
+                            onClick={() => setTab("icon")}
+                        >
                             Icon
                         </Controls.Tab>
-                        <Controls.Tab active={tab === "button"} onClick={() => setTab("button")}>
+                        <Controls.Tab
+                            active={tab === "button"}
+                            onClick={() => setTab("button")}
+                        >
                             Button
                         </Controls.Tab>
-                        <Controls.Tab active={tab === "dropdown"} onClick={() => setTab("dropdown")}>
+                        <Controls.Tab
+                            active={tab === "dropdown"}
+                            onClick={() => setTab("dropdown")}
+                        >
                             Dropdown
                         </Controls.Tab>
-                        <Controls.Tab active={tab === "input"} onClick={() => setTab("input")}>
+                        <Controls.Tab
+                            active={tab === "input"}
+                            onClick={() => setTab("input")}
+                        >
                             Input
                         </Controls.Tab>
-                        <Controls.Tab active={tab === "range"} onClick={() => setTab("range")}>
+                        <Controls.Tab
+                            active={tab === "range"}
+                            onClick={() => setTab("range")}
+                        >
                             Range
                         </Controls.Tab>
                     </Layouts.Row>

@@ -58,11 +58,17 @@ export default function Header(props: Header) {
 
     useEffect(() => {
         if (windowSize.width <= Root.Device.Tablet) {
-            animate("nav", mobileMenu ? { opacity: 1, transform: "translateY(0)" } : { opacity: 0, transform: "translateY(-15%)" }, {
-                ease: "easeInOut",
-                duration: 0.3,
-                delay: mobileMenu ? stagger(0.05) : 0,
-            });
+            animate(
+                "nav",
+                mobileMenu
+                    ? { opacity: 1, transform: "translateY(0)" }
+                    : { opacity: 0, transform: "translateY(-15%)" },
+                {
+                    ease: "easeInOut",
+                    duration: 0.3,
+                    delay: mobileMenu ? stagger(0.05) : 0,
+                },
+            );
         } else {
             animate(
                 "nav",
@@ -71,7 +77,7 @@ export default function Header(props: Header) {
                     ease: "easeInOut",
                     duration: 0.3,
                     delay: mobileMenu ? stagger(0.05) : 0,
-                }
+                },
             );
         }
     }, [mobileMenu, windowSize.width]);
@@ -81,7 +87,10 @@ export default function Header(props: Header) {
             <Layouts.Row gap={0}>
                 <Layouts.Row>
                     <Layouts.Row>
-                        <MenuButton $active={mobileMenu} onClick={() => setMobileMenu(!mobileMenu)}>
+                        <MenuButton
+                            $active={mobileMenu}
+                            onClick={() => setMobileMenu(!mobileMenu)}
+                        >
                             <div>
                                 <div></div>
                                 <div></div>
@@ -94,30 +103,50 @@ export default function Header(props: Header) {
                                 {/* <Image src={props?.logo?.src} width={props?.logo?.width} height={props?.logo?.height} title={props?.logo?.title} alt={props?.logo?.alt || ""} /> */}
                             </Logo>
                         )}
-                        {props?.menu?.children && props?.menu?.children?.length > 0 && (
-                            <Menu data-active={mobileMenu} onClick={() => setMobileMenu(false)}>
-                                {props?.menu?.children?.map((v: Menu, k: number) => (
-                                    <Nav
-                                        key={k}
-                                        $scale={scale}
-                                        $color={color}
-                                        data-active={path.startsWith(v?.path || "")}
-                                        onClick={() => setMobileMenu(false)}
-                                    >
-                                        <Link href={v?.path || ""}>{v?.name}</Link>
-                                    </Nav>
-                                ))}
-                            </Menu>
-                        )}
+                        {props?.menu?.children &&
+                            props?.menu?.children?.length > 0 && (
+                                <Menu
+                                    data-active={mobileMenu}
+                                    onClick={() => setMobileMenu(false)}
+                                >
+                                    {props?.menu?.children?.map(
+                                        (v: Menu, k: number) => (
+                                            <Nav
+                                                key={k}
+                                                $scale={scale}
+                                                $color={color}
+                                                data-active={path.startsWith(
+                                                    v?.path || "",
+                                                )}
+                                                onClick={() =>
+                                                    setMobileMenu(false)
+                                                }
+                                            >
+                                                <Link href={v?.path || ""}>
+                                                    {v?.name}
+                                                </Link>
+                                            </Nav>
+                                        ),
+                                    )}
+                                </Menu>
+                            )}
                     </Layouts.Row>
                     {props?.option?.children && (
-                        <Layouts.Row gap={0} fit data-active={props?.option?.active}>
+                        <Layouts.Row
+                            gap={0}
+                            fit
+                            data-active={props?.option?.active}
+                        >
                             {props?.option?.children}
                         </Layouts.Row>
                     )}
                 </Layouts.Row>
                 {props?.side?.children && (
-                    <Side $scale={scale} $width={side} data-active={props?.side?.active}>
+                    <Side
+                        $scale={scale}
+                        $width={side}
+                        data-active={props?.side?.active}
+                    >
                         <Layouts.Row>{props?.side?.children}</Layouts.Row>
                     </Side>
                 )}

@@ -5,7 +5,8 @@ import * as Dropdown from "components/controls/dropdown/Dropdown.styled";
 export const Side = styled.div<{ $width?: number }>`
     display: flex;
     // min-width: max-content;
-    min-width: ${({ $width }) => ($width ? `calc(var(--unit) * ${$width})` : "max-content")};
+    min-width: ${({ $width }) =>
+        $width ? `calc(var(--unit) * ${$width})` : "max-content"};
 
     &:first-child {
         margin-left: -1em;
@@ -61,21 +62,32 @@ const Style = styled.div<{
     user-select: none;
     transition: 0.3s ease;
 
-    background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o01));
+    background: rgba(
+        var(--${({ $error }) => (!$error ? "white" : "red")}),
+        var(--o01)
+    );
 
     &:hover {
-        background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o03));
+        background: rgba(
+            var(--${({ $error }) => (!$error ? "white" : "red")}),
+            var(--o03)
+        );
     }
 
     &:active {
-        /* background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o03)); */
+        /* background: rgba(var(--${({ $error }) =>
+            !$error ? "white" : "red"}), var(--o03)); */
     }
 
     &[data-active="true"] {
-        background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o015));
+        background: rgba(
+            var(--${({ $error }) => (!$error ? "white" : "red")}),
+            var(--o015)
+        );
 
         /* ${Box.default} {
-            background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o01));
+            background: rgba(var(--${({ $error }) =>
+            !$error ? "white" : "red"}), var(--o01));
         } */
     }
 
@@ -96,7 +108,9 @@ const Style = styled.div<{
 
             & > ${Side} {
                 & > i > svg {
-                    fill: rgb(var(--${({ $error }) => ($error ? "red" : "white")}));
+                    fill: rgb(
+                        var(--${({ $error }) => ($error ? "red" : "white")})
+                    );
                 }
             }
 

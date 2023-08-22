@@ -84,9 +84,14 @@ const Style = styled.div<{ $color: string; $value: number }>`
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        width: calc(100% - (${$value > 3 ? `${width}` : "4em"}));
-                        // margin-left: ${$value > 3 ? `calc((${width}) / -2)` : "-0.5em"};
-                        padding: 0 ${$value > 3 ? `calc((${width}) / 2)` : "2em"};
+                        width: calc(
+                            100% - (${$value > 3 ? `${width}` : "4em"})
+                        );
+                        // margin-left: ${$value > 3
+                            ? `calc((${width}) / -2)`
+                            : "-0.5em"};
+                        padding: 0
+                            ${$value > 3 ? `calc((${width}) / 2)` : "2em"};
 
                         & > div {
                             position: relative;
@@ -94,7 +99,10 @@ const Style = styled.div<{ $color: string; $value: number }>`
                             align-items: center;
                             justify-content: space-between;
                             background: rgba(var(--white), var(--o015));
-                            background-image: linear-gradient(rgb(${color}), rgb(${color}));
+                            background-image: linear-gradient(
+                                rgb(${color}),
+                                rgb(${color})
+                            );
                             background-repeat: no-repeat;
                             background-position: left;
                             width: 100%;
@@ -144,7 +152,9 @@ const Style = styled.div<{ $color: string; $value: number }>`
                         z-index: 2;
 
                         & > span {
-                            color: ${$color === "white" ? "rgb(var(--black))" : "white"};
+                            color: ${$color === "white"
+                                ? "rgb(var(--black))"
+                                : "white"};
                             min-width: max-content;
                             text-align: center;
                             font-size: 1.25em;

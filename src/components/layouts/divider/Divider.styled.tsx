@@ -24,7 +24,14 @@ const Responsive = (vertical: boolean, margin?: number) => {
           `;
 };
 
-const Style = styled.div<{ $color: string; $vertical: boolean; $gap: number; $margin: number; $strong: boolean; $responsive?: "desktop" | "laptop" | "tablet" | "mobile" }>`
+const Style = styled.div<{
+    $color: string;
+    $vertical: boolean;
+    $gap: number;
+    $margin: number;
+    $strong: boolean;
+    $responsive?: "desktop" | "laptop" | "tablet" | "mobile";
+}>`
     font-size: 1em;
     min-width: max-content;
     min-height: max-content;
@@ -35,7 +42,10 @@ const Style = styled.div<{ $color: string; $vertical: boolean; $gap: number; $ma
     gap: ${({ $gap }) => $gap || 2}em;
 
     & > div {
-        background: rgba(${({ $color }) => Root.Color($color)}, ${({ $strong }) => ($strong ? "var(--o1)" : "var(--o015)")});
+        background: rgba(
+            ${({ $color }) => Root.Color($color)},
+            ${({ $strong }) => ($strong ? "var(--o1)" : "var(--o015)")}
+        );
         width: inherit;
         height: inherit;
     }

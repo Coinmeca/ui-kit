@@ -23,8 +23,14 @@ export default function Modal(props: Modal) {
     const min = 56;
     const max = 64;
     const width = {
-        min: (typeof props?.width === "object" ? props?.width?.min : props?.width) || min,
-        max: (typeof props?.width === "object" ? props?.width?.min : props?.width) || max,
+        min:
+            (typeof props?.width === "object"
+                ? props?.width?.min
+                : props?.width) || min,
+        max:
+            (typeof props?.width === "object"
+                ? props?.width?.min
+                : props?.width) || max,
     };
 
     useEffect(() => {
@@ -67,11 +73,18 @@ export default function Modal(props: Modal) {
                                     {props?.title}
                                 </Elements.Text>
                             )}
-                            {(props?.message || props?.content || props?.children) && (
+                            {(props?.message ||
+                                props?.content ||
+                                props?.children) && (
                                 <Layouts.Contents.InnerContent scroll>
                                     {props?.message &&
                                         (typeof props?.message === "string" ? (
-                                            <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
+                                            <Elements.Text
+                                                type={"strong"}
+                                                height={2}
+                                                opacity={0.6}
+                                                align={"center"}
+                                            >
                                                 {props?.message}
                                             </Elements.Text>
                                         ) : (
@@ -81,10 +94,15 @@ export default function Modal(props: Modal) {
                                     {props?.children}
                                 </Layouts.Contents.InnerContent>
                             )}
-                            {props?.buttonArea && <ButtonArea>{props?.buttonArea}</ButtonArea>}
+                            {props?.buttonArea && (
+                                <ButtonArea>{props?.buttonArea}</ButtonArea>
+                            )}
                             {props?.close && (
                                 <Close>
-                                    <Controls.Button icon={"x"} onClick={(e: any) => handleClose(e)} />
+                                    <Controls.Button
+                                        icon={"x"}
+                                        onClick={(e: any) => handleClose(e)}
+                                    />
                                 </Close>
                             )}
                         </div>

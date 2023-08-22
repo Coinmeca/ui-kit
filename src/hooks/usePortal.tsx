@@ -30,17 +30,27 @@ export default function usePortal(initial?: any, initialProps?: any) {
                           ? typeof initial === "function"
                               ? initial(childrenProps)
                               : initial
-                          : children && (typeof children === "function" ? children(childrenProps) : children),
-                      document?.body
+                          : children &&
+                                (typeof children === "function"
+                                    ? children(childrenProps)
+                                    : children),
+                      document?.body,
                   )
-                : null
+                : null,
         );
     }, [root, initial, children, childrenProps, active]);
 
     return [
         (children?: Function | ReactNode | null, props?: object) => {
             children &&
-                (typeof children === "function" ? setChildren(children({ ...(initialProps && initialProps), ...(props && props) })) : setChildren(children));
+                (typeof children === "function"
+                    ? setChildren(
+                          children({
+                              ...(initialProps && initialProps),
+                              ...(props && props),
+                          }),
+                      )
+                    : setChildren(children));
             props &&
                 setChildrenProps((state: any) => {
                     return { ...state, ...props };

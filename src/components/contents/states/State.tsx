@@ -17,7 +17,10 @@ export interface State {
 }
 
 export default function State(props: State) {
-    const img = (typeof props?.img?.src === "string" && props?.img?.src !== "" ? props?.img?.src : props?.img?.src?.default?.src) || "";
+    const img =
+        (typeof props?.img?.src === "string" && props?.img?.src !== ""
+            ? props?.img?.src
+            : props?.img?.src?.default?.src) || "";
     // const img = props?.img?.src && props?.img?.src === 'object' ? require(props?.img?.src) : props?.img?.src !== "" ? props?.img?.src : '';
     const width = props?.img?.width || 14;
     const height = props?.img?.height || 14;
@@ -25,8 +28,17 @@ export default function State(props: State) {
     return (
         <Style $width={width} $height={height} style={props?.style}>
             <Layouts.Contents.InnerContent>
-                {props?.img?.src && <Image src={img} width={0} height={0} alt={props?.img?.alt || ""} />}
-                {props?.message && (typeof props?.message === "number" || typeof props?.message === "string") ? (
+                {props?.img?.src && (
+                    <Image
+                        src={img}
+                        width={0}
+                        height={0}
+                        alt={props?.img?.alt || ""}
+                    />
+                )}
+                {props?.message &&
+                (typeof props?.message === "number" ||
+                    typeof props?.message === "string") ? (
                     <span>
                         <Elements.Text type={"p"} opacity={0.6}>
                             {props?.message}

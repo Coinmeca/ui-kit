@@ -36,7 +36,9 @@ export default function Page() {
                                 assets={props?.assets}
                                 page={page}
                                 charts={props?.charts}
-                                onPage={(page?: "vault" | "farm") => setPage(page)}
+                                onPage={(page?: "vault" | "farm") =>
+                                    setPage(page)
+                                }
                                 onSelect={(a?: Token, f?: any) => {
                                     setAsset(a);
                                     setFarm(f);

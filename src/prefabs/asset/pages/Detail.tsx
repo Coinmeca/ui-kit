@@ -29,11 +29,24 @@ export default function Detail(props: Detail) {
                 <>
                     <Layouts.Contents.InnerContent>
                         <Layouts.Row fix style={{ alignItems: "center" }}>
-                            <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
-                                <Controls.Button scale={0.875} icon={"chevron-left"} style={{ padding: "1em" }} onClick={handleBack} />
+                            <Layouts.Row
+                                fix
+                                style={{ alignItems: "center" }}
+                                gap={2}
+                                fit
+                            >
+                                <Controls.Button
+                                    scale={0.875}
+                                    icon={"chevron-left"}
+                                    style={{ padding: "1em" }}
+                                    onClick={handleBack}
+                                />
                                 <Elements.Avatar
                                     size={4}
-                                    img={require(`../../../assets/coins/${props?.asset?.symbol?.toLocaleLowerCase() || "btc"}.png`)}
+                                    img={require(`../../../assets/coins/${
+                                        props?.asset?.symbol?.toLocaleLowerCase() ||
+                                        "btc"
+                                    }.png`)}
                                     style={{ marginLeft: "-1em" }}
                                 />
                                 <Layouts.Row responsive={"mobile"} gap={1} fit>
@@ -42,19 +55,48 @@ export default function Detail(props: Detail) {
                                         height={1}
                                         case={"upper"}
                                         style={{ marginRight: "1em" }}
-                                        responsive={{ device: "mobile", size: 1.5 }}
+                                        responsive={{
+                                            device: "mobile",
+                                            size: 1.5,
+                                        }}
                                     >
                                         {props?.asset?.symbol}
                                     </Elements.Text>
-                                    <Elements.Text size={2.5} height={1} case={"capital"} responsive={{ device: "mobile", size: 1.5 }}>
+                                    <Elements.Text
+                                        size={2.5}
+                                        height={1}
+                                        case={"capital"}
+                                        responsive={{
+                                            device: "mobile",
+                                            size: 1.5,
+                                        }}
+                                    >
                                         {props?.asset?.name}
                                     </Elements.Text>
                                 </Layouts.Row>
                             </Layouts.Row>
                             <Layouts.Row fix align="right">
-                                <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
-                                    <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 2 }} change>
-                                        $ {Format("1,567,851,378.516", "currency", true)}
+                                <Layouts.Row
+                                    fix
+                                    fit
+                                    gap={1}
+                                    style={{ alignItems: "center" }}
+                                >
+                                    <Elements.Text
+                                        size={2.5}
+                                        height={1}
+                                        responsive={{
+                                            device: "mobile",
+                                            size: 2,
+                                        }}
+                                        change
+                                    >
+                                        ${" "}
+                                        {Format(
+                                            "1,567,851,378.516",
+                                            "currency",
+                                            true,
+                                        )}
                                     </Elements.Text>
                                 </Layouts.Row>
                             </Layouts.Row>
@@ -62,10 +104,16 @@ export default function Detail(props: Detail) {
                         <Layouts.Divider style={{ marginTop: "1em" }} />
                         <Layouts.Col show={"mobile"} gap={0}>
                             <Layouts.Row gap={1} fix>
-                                <Controls.Tab active={mobile === "info"} onClick={() => setMobile("info")}>
+                                <Controls.Tab
+                                    active={mobile === "info"}
+                                    onClick={() => setMobile("info")}
+                                >
                                     Info
                                 </Controls.Tab>
-                                <Controls.Tab active={mobile === "history"} onClick={() => setMobile("history")}>
+                                <Controls.Tab
+                                    active={mobile === "history"}
+                                    onClick={() => setMobile("history")}
+                                >
                                     History
                                 </Controls.Tab>
                             </Layouts.Row>
@@ -90,8 +138,17 @@ export default function Detail(props: Detail) {
                                 {
                                     area: "info",
                                     children: (
-                                        <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "info" : true}>
-                                            <Asset.Containers.Info info={props?.info} responsive={props?.responsive} />
+                                        <Layouts.Contents.SlideContent
+                                            active={
+                                                props?.responsive
+                                                    ? mobile === "info"
+                                                    : true
+                                            }
+                                        >
+                                            <Asset.Containers.Info
+                                                info={props?.info}
+                                                responsive={props?.responsive}
+                                            />
                                         </Layouts.Contents.SlideContent>
                                     ),
                                     responsive: [
@@ -104,13 +161,23 @@ export default function Detail(props: Detail) {
                                 {
                                     area: "history",
                                     children: (
-                                        <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "history" : true}>
+                                        <Layouts.Contents.SlideContent
+                                            active={
+                                                props?.responsive
+                                                    ? mobile === "history"
+                                                    : true
+                                            }
+                                        >
                                             <Layouts.Menu
                                                 hide="mobile"
                                                 menu={[
                                                     [
                                                         <>
-                                                            <Controls.Tab disabled>History</Controls.Tab>
+                                                            <Controls.Tab
+                                                                disabled
+                                                            >
+                                                                History
+                                                            </Controls.Tab>
                                                         </>,
                                                     ],
                                                 ]}
@@ -119,7 +186,9 @@ export default function Detail(props: Detail) {
                                                 assets={props?.assets}
                                                 list={history}
                                                 responsive={props?.responsive}
-                                                fallback={"There is no assets yet."}
+                                                fallback={
+                                                    "There is no assets yet."
+                                                }
                                             />
                                         </Layouts.Contents.SlideContent>
                                     ),
@@ -144,7 +213,9 @@ export default function Detail(props: Detail) {
                 </>
             ) : (
                 <Contents.States.Failure message={"Oops, something wrong"}>
-                    <Controls.Button onClick={handleBack}>Go Back</Controls.Button>
+                    <Controls.Button onClick={handleBack}>
+                        Go Back
+                    </Controls.Button>
                 </Contents.States.Failure>
             )}
         </AnimatePresence>

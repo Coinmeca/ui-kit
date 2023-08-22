@@ -7,7 +7,13 @@ export default function SamplesLayout(props: any) {
 
     return (
         <>
-            <Frames.Frame header={header} sidebar={sidebars} align={"right"} background={{ img: { src: 2 } }} side={56}>
+            <Frames.Frame
+                header={header}
+                sidebar={sidebars}
+                align={"right"}
+                background={{ img: { src: 2 } }}
+                side={56}
+            >
                 {props?.children}
             </Frames.Frame>
         </>

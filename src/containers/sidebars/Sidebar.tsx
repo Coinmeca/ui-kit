@@ -20,13 +20,21 @@ export default function Sidebar(props: Sidebars) {
     const width = props?.width || 60;
 
     const handleBlur = (e: any) => {
-        if (props?.lower?.active && props?.lower?.onBlur) props?.lower?.onBlur(e);
-        if (props?.upper?.active && props?.upper?.onBlur) props?.upper?.onBlur(e);
+        if (props?.lower?.active && props?.lower?.onBlur)
+            props?.lower?.onBlur(e);
+        if (props?.upper?.active && props?.upper?.onBlur)
+            props?.upper?.onBlur(e);
         if (props?.onBlur) props?.onBlur(e);
     };
 
     return (
-        <Style tabIndex={10} $scale={scale} $active={active} $width={width} onBlur={(e: any) => handleBlur(e)}>
+        <Style
+            tabIndex={10}
+            $scale={scale}
+            $active={active}
+            $width={width}
+            onBlur={(e: any) => handleBlur(e)}
+        >
             {props?.lower?.children && props?.lower?.children?.length > 0 && (
                 <Lower data-active={props?.lower?.active}>
                     {props?.lower?.children?.map((v: any, k: number) => (

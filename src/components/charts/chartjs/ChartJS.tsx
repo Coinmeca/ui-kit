@@ -3,7 +3,15 @@ import { useState, useEffect, useRef, Suspense } from "react";
 import { Chart } from "chart.js/auto";
 
 export interface ChartJS {
-    type?: "bar" | "line" | "scatter" | "bubble" | "pie" | "doughnut" | "polarArea" | "radar";
+    type?:
+        | "bar"
+        | "line"
+        | "scatter"
+        | "bubble"
+        | "pie"
+        | "doughnut"
+        | "polarArea"
+        | "radar";
     color?: {
         default?: string;
         theme?: string;
@@ -22,9 +30,14 @@ export default function ChartJS(props: ChartJS) {
     const chartRef: any = useRef();
 
     const [data, setData] = useState<any>();
-    const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
+    const theme =
+        props?.color?.theme && props?.color?.theme === "light"
+            ? "0,0,0"
+            : "255,255,255";
     const [color, setColor] = useState({
-        default: props?.color?.default ? `rgb(${props?.color?.default})` : `rgb(${theme})`,
+        default: props?.color?.default
+            ? `rgb(${props?.color?.default})`
+            : `rgb(${theme})`,
         theme: {
             strong: `rgba(${theme}, 0.6)`,
             semi: `rgba(${theme}, 0.45)`,
@@ -80,7 +93,8 @@ export default function ChartJS(props: ChartJS) {
                     //     };
                     // },
                     label: (value: any) => {
-                        if (typeof props?.onHover === "function") props?.onHover(value);
+                        if (typeof props?.onHover === "function")
+                            props?.onHover(value);
                         return "";
                     },
                     title: function () {

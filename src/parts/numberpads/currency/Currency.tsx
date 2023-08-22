@@ -19,16 +19,23 @@ export default function Currency(props: CurrencyPad) {
     }, [props?.value]);
 
     const handleClick = (e: any) => {
-        if (typeof props?.button?.onClick === "function") props?.button?.onClick(e, value);
+        if (typeof props?.button?.onClick === "function")
+            props?.button?.onClick(e, value);
     };
 
     const handleChange = (e: any, v: string) => {
         let input: number | string = "";
         if (v === "plus") {
-            const number: number = value === "" ? 0 : parseFloat(Format(value, "number").toString());
+            const number: number =
+                value === ""
+                    ? 0
+                    : parseFloat(Format(value, "number").toString());
             input = number + step;
         } else if (v === "minus") {
-            const number: number = value === "" ? 0 : parseFloat(Format(value, "number").toString());
+            const number: number =
+                value === ""
+                    ? 0
+                    : parseFloat(Format(value, "number").toString());
             input = number - step;
             if (input <= 0) input = "0";
         } else input = v;
@@ -47,10 +54,30 @@ export default function Currency(props: CurrencyPad) {
             right={{
                 children: (
                     <>
-                        <Controls.Button onClick={(e: any) => handleChange(e, "plus")} icon={"plus-small-bold"} scale={0.875} />
-                        <Controls.Button onClick={(e: any) => handleChange(e, "minus")} icon={"minus-small-bold"} scale={0.875} />
-                        <Controls.Button onClick={(e: any) => handleChange(e, ".")} icon={"dot"} scale={0.875} />
-                        <Controls.Button {...props?.button} onClick={(e: any) => handleClick(e)} color={props?.button?.color} style={{ ...props?.button?.style, ...(props?.reverse && { order: -1 }) }}>
+                        <Controls.Button
+                            onClick={(e: any) => handleChange(e, "plus")}
+                            icon={"plus-small-bold"}
+                            scale={0.875}
+                        />
+                        <Controls.Button
+                            onClick={(e: any) => handleChange(e, "minus")}
+                            icon={"minus-small-bold"}
+                            scale={0.875}
+                        />
+                        <Controls.Button
+                            onClick={(e: any) => handleChange(e, ".")}
+                            icon={"dot"}
+                            scale={0.875}
+                        />
+                        <Controls.Button
+                            {...props?.button}
+                            onClick={(e: any) => handleClick(e)}
+                            color={props?.button?.color}
+                            style={{
+                                ...props?.button?.style,
+                                ...(props?.reverse && { order: -1 }),
+                            }}
+                        >
                             {props?.button?.children || "OK"}
                         </Controls.Button>
                     </>

@@ -32,7 +32,8 @@ export default function Text(props: Text) {
     const weight = props?.weight || "bold";
     const height = props?.height || 1.5;
     const color = props?.color || "white";
-    const opacity = props?.opacity && props?.opacity > 1 ? 1 : props?.opacity || 1;
+    const opacity =
+        props?.opacity && props?.opacity > 1 ? 1 : props?.opacity || 1;
 
     switch (props?.type) {
         case "h1":

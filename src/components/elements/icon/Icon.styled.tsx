@@ -29,7 +29,12 @@ const Style = styled.i<{ $color?: string; $change?: boolean; $scale?: number }>`
     & svg {
         width: 100%;
         height: 100%;
-        fill: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color ? `rgb(${Root.Color($color)})` : $color)};
+        fill: ${({ $color, $change }) =>
+            $change
+                ? "rgb(var(--change))"
+                : $color
+                ? `rgb(${Root.Color($color)})`
+                : $color};
         transition: 0.3s ease;
     }
 `;

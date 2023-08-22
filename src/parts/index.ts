@@ -1,4 +1,4 @@
-﻿import Numberpad from './numberpads/Numberpad';
-import * as Numberpads from './numberpads';
+﻿import Numberpad from "./numberpads/Numberpad";
+import * as Numberpads from "./numberpads";
 
-export { Numberpad, Numberpads }
+export { Numberpad, Numberpads };

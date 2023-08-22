@@ -26,7 +26,11 @@ export default function View(props: View) {
 
     return (
         <>
-            <Layouts.Cover height={32} background={{ filter: "black" }} style={{ scrollSnapAlign: "start" }}>
+            <Layouts.Cover
+                height={32}
+                background={{ filter: "black" }}
+                style={{ scrollSnapAlign: "start" }}
+            >
                 <Controls.Slide
                     timer={0}
                     slideNo={props?.page === "vault" ? 0 : 1}
@@ -35,15 +39,27 @@ export default function View(props: View) {
                         {
                             background: {
                                 img: { src: 4 },
-                                children: <Charts.ChartJS type={"line"} data={props?.charts?.value} onHover={(v: any) => setTvl(v)} />,
+                                children: (
+                                    <Charts.ChartJS
+                                        type={"line"}
+                                        data={props?.charts?.value}
+                                        onHover={(v: any) => setTvl(v)}
+                                    />
+                                ),
                             },
                             style: { pointerEvent: "none" },
                             children: (
                                 <Layouts.Col gap={0}>
-                                    <Elements.Text type={"strong"}>Total Value Locked</Elements.Text>
-                                    <Elements.Text type={"h4"}>$ {tvl?.formattedValue || "-"}</Elements.Text>
+                                    <Elements.Text type={"strong"}>
+                                        Total Value Locked
+                                    </Elements.Text>
+                                    <Elements.Text type={"h4"}>
+                                        $ {tvl?.formattedValue || "-"}
+                                    </Elements.Text>
                                     <div>
-                                        <Elements.Text opacity={0.6}>{tvl?.label?.split(" ")[0]}</Elements.Text>
+                                        <Elements.Text opacity={0.6}>
+                                            {tvl?.label?.split(" ")[0]}
+                                        </Elements.Text>
                                     </div>
                                 </Layouts.Col>
                             ),
@@ -55,37 +71,68 @@ export default function View(props: View) {
                             },
                             children: (
                                 <Layouts.Col gap={0}>
-                                    <Elements.Text type={"strong"}>Total Volume</Elements.Text>
-                                    <Elements.Text type={"h4"}>$ {Format(156785461234, "currency", true)}</Elements.Text>
+                                    <Elements.Text type={"strong"}>
+                                        Total Volume
+                                    </Elements.Text>
+                                    <Elements.Text type={"h4"}>
+                                        ${" "}
+                                        {Format(156785461234, "currency", true)}
+                                    </Elements.Text>
                                 </Layouts.Col>
                             ),
                         },
                     ]}
                 />
             </Layouts.Cover>
-            <Layouts.Box padding={[2, '', '', '']} fit>
+            <Layouts.Box padding={[2, "", "", ""]} fit>
                 <Layouts.Contents.InnerContent>
                     <Layouts.Row gap={0} responsive={"mobile"}>
                         <Layouts.Menu
                             menu={[
                                 {
-                                    style: { padding: !props?.responsive && "1em 0" },
+                                    style: {
+                                        padding: !props?.responsive && "1em 0",
+                                    },
                                     children: [
                                         [
                                             <>
-                                                <Controls.Tab active={props?.page === "vault"} onClick={() => handlePage("vault")}>
+                                                <Controls.Tab
+                                                    active={
+                                                        props?.page === "vault"
+                                                    }
+                                                    onClick={() =>
+                                                        handlePage("vault")
+                                                    }
+                                                >
                                                     Vault
                                                 </Controls.Tab>
                                             </>,
                                             <>
-                                                <Controls.Tab active={props?.page === "farm"} onClick={() => handlePage("farm")}>
+                                                <Controls.Tab
+                                                    active={
+                                                        props?.page === "farm"
+                                                    }
+                                                    onClick={() =>
+                                                        handlePage("farm")
+                                                    }
+                                                >
                                                     Farm
                                                 </Controls.Tab>
                                             </>,
                                         ],
                                         [
-                                            <Controls.Tab key="listing" iconLeft={"plus"} style={{ ...(!props?.responsive && { marginRight: "1em" }) }}>
-                                                {props?.page === "vault" ? "Listing" : "Create"}
+                                            <Controls.Tab
+                                                key="listing"
+                                                iconLeft={"plus"}
+                                                style={{
+                                                    ...(!props?.responsive && {
+                                                        marginRight: "1em",
+                                                    }),
+                                                }}
+                                            >
+                                                {props?.page === "vault"
+                                                    ? "Listing"
+                                                    : "Create"}
                                             </Controls.Tab>,
                                         ],
                                     ],
@@ -93,7 +140,9 @@ export default function View(props: View) {
                             ]}
                         />
                         <Layouts.Menu
-                            style={{ maxWidth: !props?.responsive && "max-content" }}
+                            style={{
+                                maxWidth: !props?.responsive && "max-content",
+                            }}
                             menu={[
                                 {
                                     style: { padding: "1em 0" },
@@ -101,7 +150,13 @@ export default function View(props: View) {
                                         <>
                                             <Controls.Input
                                                 style={{ width: "100%" }}
-                                                left={{ children: <Elements.Icon icon={"search"} /> }}
+                                                left={{
+                                                    children: (
+                                                        <Elements.Icon
+                                                            icon={"search"}
+                                                        />
+                                                    ),
+                                                }}
                                                 placeholder={"Search"}
                                             />
                                         </>
@@ -114,11 +169,21 @@ export default function View(props: View) {
                         contents={[
                             {
                                 active: props?.page === "vault",
-                                children: <Vault.Containers.Assets assets={props?.assets} onSelect={props?.onSelect} responsive={props?.responsive} />,
+                                children: (
+                                    <Vault.Containers.Assets
+                                        assets={props?.assets}
+                                        onSelect={props?.onSelect}
+                                        responsive={props?.responsive}
+                                    />
+                                ),
                             },
                             {
                                 active: props?.page === "farm",
-                                children: <>{/* <Layouts.List list={assetListFormatter(props?.assets)} /> */}</>,
+                                children: (
+                                    <>
+                                        {/* <Layouts.List list={assetListFormatter(props?.assets)} /> */}
+                                    </>
+                                ),
                             },
                         ]}
                     />

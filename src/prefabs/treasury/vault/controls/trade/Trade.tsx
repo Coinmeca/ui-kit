@@ -52,7 +52,7 @@ export default function Trade(props: TradeControl) {
         },
         mode,
         0.01,
-        available
+        available,
     );
 
     const color = {
@@ -105,17 +105,31 @@ export default function Trade(props: TradeControl) {
     };
 
     const handleChangeAmount = (a: number | string) => {
-        currency === 0 ? quantity(Format(a, "number", true) as number) : amount(Format(a, "number", true) as number);
+        currency === 0
+            ? quantity(Format(a, "number", true) as number)
+            : amount(Format(a, "number", true) as number);
     };
 
     const handleChangeRange = (v: number) => {
         if (available > 0)
             currency === 0
-                ? quantity((((Format(available, "number", true) as number) / order.price) * (Format(v, "number", true) as number)) / 100)
-                : amount(((Format(available, "number", true) as number) * (Format(v, "number", true) as number)) / 100);
+                ? quantity(
+                      (((Format(available, "number", true) as number) /
+                          order.price) *
+                          (Format(v, "number", true) as number)) /
+                          100,
+                  )
+                : amount(
+                      ((Format(available, "number", true) as number) *
+                          (Format(v, "number", true) as number)) /
+                          100,
+                  );
     };
 
-    const pricePosition = order.price === 0 ? 0 : (1 - parseFloat(props?.price?.toString()) / order.price) * 100;
+    const pricePosition =
+        order.price === 0
+            ? 0
+            : (1 - parseFloat(props?.price?.toString()) / order.price) * 100;
     const [handlePricePad, closePricePad] = usePortal(
         <Exchange.BottomSheets.OrderPad
             label={"Price"}
@@ -124,14 +138,22 @@ export default function Trade(props: TradeControl) {
             unit={[...assets][mode ? 0 : 1]?.symbol?.toUpperCase()}
             sub={{
                 color: `${
-                    mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
+                    mode
+                        ? (pricePosition > 0 && "red") ||
+                          (pricePosition < 0 && "green")
+                        : (pricePosition > 0 && "green") ||
+                          (pricePosition < 0 && "red")
                 }`,
-                value: `${(pricePosition > 0 && "+ ") || (pricePosition < 0 && "- ") || ""}${Math.abs(pricePosition)}`,
+                value: `${
+                    (pricePosition > 0 && "+ ") ||
+                    (pricePosition < 0 && "- ") ||
+                    ""
+                }${Math.abs(pricePosition)}`,
                 unit: "%",
             }}
             button={{ children: "OK", onClick: () => closePricePad() }}
             onChange={(e: any, v: any) => handleChangePrice(v)}
-        />
+        />,
     );
 
     const [handleAmountPad, closeAmountPad] = usePortal(
@@ -141,26 +163,50 @@ export default function Trade(props: TradeControl) {
             value={currency === 0 ? order.quantity : order.amount}
             unit={[...assets].reverse()[currency]?.symbol?.toUpperCase()}
             sub={{
-                value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", true)}`,
+                value: `= ${Format(
+                    currency === 0 ? order.amount : order.quantity || 0,
+                    "currency",
+                    true,
+                )}`,
                 unit: assets[currency]?.symbol?.toUpperCase(),
             }}
-            button={{ color: mode ? color.buy : color.sell, children: mode ? "BUY" : "SELL", onClick: () => closeAmountPad() }}
+            button={{
+                color: mode ? color.buy : color.sell,
+                children: mode ? "BUY" : "SELL",
+                onClick: () => closeAmountPad(),
+            }}
             onChange={(e: any, v: any) => handleChangeAmount(v)}
             onClose={() => closeAmountPad()}
-        />
+        />,
     );
 
     return (
-        <Layouts.Col gap={gap.col.big} style={{ paddingTop: `${gap.col.small}em` }}>
+        <Layouts.Col
+            gap={gap.col.big}
+            style={{ paddingTop: `${gap.col.small}em` }}
+        >
             <Layouts.Row gap={gap.row} style={gap.space.big} fix>
-                <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                <Elements.Text
+                    height={text.height}
+                    opacity={text.opacity}
+                    style={text.label}
+                    fit
+                >
                     Available
                 </Elements.Text>
                 <Layouts.Row gap={gap.row} fix>
-                    <Elements.Text height={text.height} align={"right"} style={text.setting}>
+                    <Elements.Text
+                        height={text.height}
+                        align={"right"}
+                        style={text.setting}
+                    >
                         {Format(assets[0]?.balance as number, "currency", true)}
                     </Elements.Text>
-                    <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                    <Elements.Text
+                        height={text.height}
+                        opacity={text.opacity}
+                        style={text.width}
+                    >
                         {assets[0]?.symbol?.toUpperCase()}
                     </Elements.Text>
                 </Layouts.Row>
@@ -174,7 +220,14 @@ export default function Trade(props: TradeControl) {
                 onClick={() => isMobile && handlePricePad()}
                 inputMode={isMobile ? "none" : undefined}
                 left={{ children: <span>Price</span> }}
-                right={{ width: gap.width, children: <span style={{ justifyContent: "flex-start" }}>{assets[mode ? 0 : 1]?.symbol?.toUpperCase()}</span> }}
+                right={{
+                    width: gap.width,
+                    children: (
+                        <span style={{ justifyContent: "flex-start" }}>
+                            {assets[mode ? 0 : 1]?.symbol?.toUpperCase()}
+                        </span>
+                    ),
+                }}
                 style={text.setting}
                 lock={option === "market"}
             />
@@ -183,11 +236,19 @@ export default function Trade(props: TradeControl) {
                 type={"currency"}
                 align={"right"}
                 value={currency === 0 ? order?.quantity : order?.amount}
-                max={currency === 0 ? (order?.quantity || 1) / order.price : order.amount}
+                max={
+                    currency === 0
+                        ? (order?.quantity || 1) / order.price
+                        : order.amount
+                }
                 onChange={(e: any, v: any) => handleChangeAmount(v)}
                 onClick={() => isMobile && handleAmountPad()}
                 inputMode={isMobile ? "none" : undefined}
-                left={{ children: <span>{currency === 0 ? "Qunatity" : "Amount"}</span> }}
+                left={{
+                    children: (
+                        <span>{currency === 0 ? "Qunatity" : "Amount"}</span>
+                    ),
+                }}
                 right={{
                     width: gap.width,
                     children: (
@@ -213,27 +274,53 @@ export default function Trade(props: TradeControl) {
             />
             <Layouts.Col gap={gap.col.big}>
                 <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                    <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                    <Elements.Text
+                        height={text.height}
+                        opacity={text.opacity}
+                        style={text.label}
+                        fit
+                    >
                         Fees
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
-                        <Elements.Text height={text.height} align={"right"} style={text.setting}>
+                        <Elements.Text
+                            height={text.height}
+                            align={"right"}
+                            style={text.setting}
+                        >
                             - {Format(order.fees as number, "currency", true)}
                         </Elements.Text>
-                        <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                        <Elements.Text
+                            height={text.height}
+                            opacity={text.opacity}
+                            style={text.width}
+                        >
                             {assets[1]?.symbol?.toUpperCase()}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>
                 <Layouts.Row gap={gap.row} style={gap.space.small} fix>
-                    <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
+                    <Elements.Text
+                        height={text.height}
+                        opacity={text.opacity}
+                        style={text.label}
+                        fit
+                    >
                         Total
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
-                        <Elements.Text height={text.height} align={"right"} style={text.setting}>
+                        <Elements.Text
+                            height={text.height}
+                            align={"right"}
+                            style={text.setting}
+                        >
                             {Format(order.total as number, "currency", true)}
                         </Elements.Text>
-                        <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
+                        <Elements.Text
+                            height={text.height}
+                            opacity={text.opacity}
+                            style={text.width}
+                        >
                             {assets[1]?.symbol?.toUpperCase()}
                         </Elements.Text>
                     </Layouts.Row>

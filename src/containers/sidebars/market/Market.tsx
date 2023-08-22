@@ -24,7 +24,10 @@ export default function Market(props: Market) {
             </Layouts.Row>
             <Layouts.Divider strong />
             <Layouts.Contents.InnerContent scroll>
-                <Layouts.Table list={props?.list} fallback="There is no data." />
+                <Layouts.Table
+                    list={props?.list}
+                    fallback="There is no data."
+                />
             </Layouts.Contents.InnerContent>
         </>
     );

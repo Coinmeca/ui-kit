@@ -13,7 +13,9 @@ export interface PartContainer {
 }
 
 export default function PartContainer(props: PartContainer) {
-    const [state, setState] = useState<boolean | null | undefined>(props?.state);
+    const [state, setState] = useState<boolean | null | undefined>(
+        props?.state,
+    );
 
     useEffect(() => {
         return () => {
@@ -28,10 +30,12 @@ export default function PartContainer(props: PartContainer) {
     useEffect(() => {
         switch (state) {
             case true:
-                if (typeof props?.right?.onClick === "function") props?.right?.onClick();
+                if (typeof props?.right?.onClick === "function")
+                    props?.right?.onClick();
                 break;
             case false:
-                if (typeof props?.left?.onClick === "function") props?.left?.onClick();
+                if (typeof props?.left?.onClick === "function")
+                    props?.left?.onClick();
                 break;
             default:
                 if (typeof props?.onBack === "function") props?.onBack();
@@ -41,7 +45,17 @@ export default function PartContainer(props: PartContainer) {
 
     return (
         <Style $state={state} style={props?.style}>
-            <div style={{ transform: `translateX(${typeof state === "undefined" || state === null ? "-100%" : state ? "-200%" : "0"}` }}>
+            <div
+                style={{
+                    transform: `translateX(${
+                        typeof state === "undefined" || state === null
+                            ? "-100%"
+                            : state
+                            ? "-200%"
+                            : "0"
+                    }`,
+                }}
+            >
                 <Part $state={state} style={{}}>
                     {props?.left?.children}
                 </Part>

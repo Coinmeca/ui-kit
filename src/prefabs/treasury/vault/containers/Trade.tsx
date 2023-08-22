@@ -31,12 +31,25 @@ export default function Trade(props: TradeControl) {
         withdraw: "blue",
     };
 
-    const [handleConfirm, closeConfirm] = usePortal(<Exchange.Modals.Confirmation mode={mode} color={color} onClose={() => closeConfirm()} />);
+    const [handleConfirm, closeConfirm] = usePortal(
+        <Exchange.Modals.Confirmation
+            mode={mode}
+            color={color}
+            onClose={() => closeConfirm()}
+        />,
+    );
 
     const ButtonName = (name: string, condition: boolean) => {
         if (!name && name === "") return;
         return (
-            <span style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span
+                style={{
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
                 {Object.values(name).map((character: string, i: number) => {
                     return (
                         <span
@@ -67,7 +80,10 @@ export default function Trade(props: TradeControl) {
                     contents={[
                         {
                             active: responsive ? mode === true : true,
-                            style: { height: "max-content", overflow: "hidden" },
+                            style: {
+                                height: "max-content",
+                                overflow: "hidden",
+                            },
                             children: (
                                 <Vault.Controls.Trade
                                     mode={true}
@@ -81,7 +97,10 @@ export default function Trade(props: TradeControl) {
                         },
                         {
                             active: responsive ? mode === false : true,
-                            style: { height: "max-content", overflow: "hidden" },
+                            style: {
+                                height: "max-content",
+                                overflow: "hidden",
+                            },
                             children: (
                                 <Vault.Controls.Trade
                                     mode={false}
@@ -97,28 +116,48 @@ export default function Trade(props: TradeControl) {
                 />
                 <Layouts.Row fix>
                     <Layouts.Row gap={!responsive ? 6 : 4} fix>
-                        <Controls.Button icon={"revert-bold"} hide={!responsive} fit />
+                        <Controls.Button
+                            icon={"revert-bold"}
+                            hide={!responsive}
+                            fit
+                        />
                         <Controls.Button
                             type={"solid"}
                             color={color.deposit}
-                            style={{ ...(responsive && mode === false ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
+                            style={{
+                                ...(responsive && mode === false
+                                    ? { maxWidth: "4em" }
+                                    : { maxWidth: "100%" }),
+                            }}
                             onClick={(e: any, o: O) => {
                                 mode === false && setMode(true);
-                                (mode === true || !responsive) && handleConfirm(null, { order: o });
+                                (mode === true || !responsive) &&
+                                    handleConfirm(null, { order: o });
                             }}
                         >
-                            {ButtonName("DEPOSIT", responsive && mode === false)}
+                            {ButtonName(
+                                "DEPOSIT",
+                                responsive && mode === false,
+                            )}
                         </Controls.Button>
                         <Controls.Button
                             type={"solid"}
                             color={color.withdraw}
-                            style={{ ...(responsive && mode ? { maxWidth: "4em" } : { maxWidth: "100%" }) }}
+                            style={{
+                                ...(responsive && mode
+                                    ? { maxWidth: "4em" }
+                                    : { maxWidth: "100%" }),
+                            }}
                             onClick={(e: any, o: O) => {
                                 mode === true && setMode(false);
-                                (mode === false || !responsive) && handleConfirm(null, { order: o });
+                                (mode === false || !responsive) &&
+                                    handleConfirm(null, { order: o });
                             }}
                         >
-                            {ButtonName("WITHDRAW", responsive && mode === true)}
+                            {ButtonName(
+                                "WITHDRAW",
+                                responsive && mode === true,
+                            )}
                         </Controls.Button>
                     </Layouts.Row>
                 </Layouts.Row>

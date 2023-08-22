@@ -37,7 +37,9 @@ const Style = styled.div<{ $change?: string; $event: boolean }>`
     display: table-row;
     align-items: center;
     gap: 1em;
-    font-feature-settings: "tnum" on, "lnum" on;
+    font-feature-settings:
+        "tnum" on,
+        "lnum" on;
     cursor: ${({ $event }) => ($event ? "pointer" : "default")};
     pointer-events: ${({ $event }) => ($event ? "inherit" : "none")};
     scroll-snap-align: start;
@@ -59,7 +61,10 @@ const Style = styled.div<{ $change?: string; $event: boolean }>`
         }
     }
     &:hover {
-        background: rgba(${({ $event }) => ($event ? "var(--white)" : "var(--black)")}, var(--o0075));
+        background: rgba(
+            ${({ $event }) => ($event ? "var(--white)" : "var(--black)")},
+            var(--o0075)
+        );
     }
 
     &:active {

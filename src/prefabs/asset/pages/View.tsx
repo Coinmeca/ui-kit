@@ -48,10 +48,15 @@ export default function View(props: any) {
                                     style: { gap: "0" },
                                     children: [
                                         <>
-                                            <Elements.Text height={1.25}>{data?.symbol}</Elements.Text>
+                                            <Elements.Text height={1.25}>
+                                                {data?.symbol}
+                                            </Elements.Text>
                                         </>,
                                         <>
-                                            <Elements.Text height={1.25} opacity={0.3}>
+                                            <Elements.Text
+                                                height={1.25}
+                                                opacity={0.3}
+                                            >
                                                 {data?.name}
                                             </Elements.Text>
                                         </>,
@@ -69,16 +74,31 @@ export default function View(props: any) {
                                     children: [
                                         <>
                                             <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{data?.balance}</Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
+                                                <Elements.Text align={"right"}>
+                                                    {data?.balance}
+                                                </Elements.Text>
+                                                <Elements.Text
+                                                    align={"left"}
+                                                    opacity={0.6}
+                                                    style={{ maxWidth: "6em" }}
+                                                >
                                                     {data?.symbol}
                                                 </Elements.Text>
                                             </Layouts.Row>
                                         </>,
                                         <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                <Elements.Text align={"right"}>$ {data?.using}</Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
+                                            <Layouts.Row
+                                                gap={1}
+                                                style={{ opacity: 0.3 }}
+                                            >
+                                                <Elements.Text align={"right"}>
+                                                    $ {data?.using}
+                                                </Elements.Text>
+                                                <Elements.Text
+                                                    align={"left"}
+                                                    opacity={0.6}
+                                                    style={{ maxWidth: "6em" }}
+                                                >
                                                     USD
                                                 </Elements.Text>
                                             </Layouts.Row>
@@ -90,16 +110,31 @@ export default function View(props: any) {
                                     children: [
                                         <>
                                             <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{data?.using}</Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
+                                                <Elements.Text align={"right"}>
+                                                    {data?.using}
+                                                </Elements.Text>
+                                                <Elements.Text
+                                                    align={"left"}
+                                                    opacity={0.6}
+                                                    style={{ maxWidth: "6em" }}
+                                                >
                                                     {data?.symbol}
                                                 </Elements.Text>
                                             </Layouts.Row>
                                         </>,
                                         <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                <Elements.Text align={"right"}>$ {data?.using}</Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
+                                            <Layouts.Row
+                                                gap={1}
+                                                style={{ opacity: 0.3 }}
+                                            >
+                                                <Elements.Text align={"right"}>
+                                                    $ {data?.using}
+                                                </Elements.Text>
+                                                <Elements.Text
+                                                    align={"left"}
+                                                    opacity={0.6}
+                                                    style={{ maxWidth: "6em" }}
+                                                >
                                                     USD
                                                 </Elements.Text>
                                             </Layouts.Row>
@@ -119,14 +154,29 @@ export default function View(props: any) {
             <Layouts.Row fix style={{ minHeight: "4em", alignItems: "center" }}>
                 <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
                     <Layouts.Row responsive={"mobile"} gap={1} fit>
-                        <Elements.Text size={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", size: 2 }}>
+                        <Elements.Text
+                            size={2.5}
+                            height={1}
+                            style={{ marginRight: "1em" }}
+                            responsive={{ device: "mobile", size: 2 }}
+                        >
                             All Assets
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>
                 <Layouts.Row fix align="right">
-                    <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
-                        <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 2 }} change>
+                    <Layouts.Row
+                        fix
+                        fit
+                        gap={1}
+                        style={{ alignItems: "center" }}
+                    >
+                        <Elements.Text
+                            size={2.5}
+                            height={1}
+                            responsive={{ device: "mobile", size: 2 }}
+                            change
+                        >
                             $ {Format("1,567,851,378.516", "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
@@ -135,10 +185,16 @@ export default function View(props: any) {
             <Layouts.Divider style={{ marginTop: "1em" }} />
             <Layouts.Col show={"mobile"} gap={0}>
                 <Layouts.Row gap={1} fix>
-                    <Controls.Tab active={mobile === "info"} onClick={() => setMobile("info")}>
+                    <Controls.Tab
+                        active={mobile === "info"}
+                        onClick={() => setMobile("info")}
+                    >
                         Info
                     </Controls.Tab>
-                    <Controls.Tab active={mobile === "asset"} onClick={() => setMobile("asset")}>
+                    <Controls.Tab
+                        active={mobile === "asset"}
+                        onClick={() => setMobile("asset")}
+                    >
                         Assets
                     </Controls.Tab>
                 </Layouts.Row>
@@ -163,8 +219,15 @@ export default function View(props: any) {
                     {
                         area: "info",
                         children: (
-                            <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "info" : true}>
-                                <Asset.Containers.Info info={props?.info} responsive={props?.responsive} />
+                            <Layouts.Contents.SlideContent
+                                active={
+                                    props?.responsive ? mobile === "info" : true
+                                }
+                            >
+                                <Asset.Containers.Info
+                                    info={props?.info}
+                                    responsive={props?.responsive}
+                                />
                             </Layouts.Contents.SlideContent>
                         ),
                         responsive: [
@@ -177,18 +240,29 @@ export default function View(props: any) {
                     {
                         area: "asset",
                         children: (
-                            <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "asset" : true}>
+                            <Layouts.Contents.SlideContent
+                                active={
+                                    props?.responsive
+                                        ? mobile === "asset"
+                                        : true
+                                }
+                            >
                                 <Layouts.Menu
                                     hide="mobile"
                                     menu={[
                                         [
                                             <>
-                                                <Controls.Tab disabled>Assets</Controls.Tab>
+                                                <Controls.Tab disabled>
+                                                    Assets
+                                                </Controls.Tab>
                                             </>,
                                         ],
                                     ]}
                                 />
-                                <Layouts.List list={assetListFormatter(props?.assets)} fallback={"There is no assets yet."} />
+                                <Layouts.List
+                                    list={assetListFormatter(props?.assets)}
+                                    fallback={"There is no assets yet."}
+                                />
                             </Layouts.Contents.SlideContent>
                         ),
                         responsive: [

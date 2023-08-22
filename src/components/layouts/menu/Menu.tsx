@@ -23,15 +23,32 @@ export default function Menu(props: Menu) {
 
     const Items = (menu: any) => {
         return (typeof menu !== "string" && menu?.length) > 0 ? (
-            <Row $scale={scale} style={menu?.style} $fix={menu?.fix} data-show={menu?.show} data-hide={menu?.hide}>
+            <Row
+                $scale={scale}
+                style={menu?.style}
+                $fix={menu?.fix}
+                data-show={menu?.show}
+                data-hide={menu?.hide}
+            >
                 {menu?.map((v: any, k: number) => (
-                    <Fragment key={k}>{Items(v?.children || (!v?.style && v))}</Fragment>
+                    <Fragment key={k}>
+                        {Items(v?.children || (!v?.style && v))}
+                    </Fragment>
                 ))}
             </Row>
-        ) : (typeof menu?.children !== "string" && menu?.children?.length) > 0 ? (
-            <Row $scale={scale} style={menu?.style} $fix={menu?.fix} data-show={menu?.show} data-hide={menu?.hide}>
+        ) : (typeof menu?.children !== "string" && menu?.children?.length) >
+          0 ? (
+            <Row
+                $scale={scale}
+                style={menu?.style}
+                $fix={menu?.fix}
+                data-show={menu?.show}
+                data-hide={menu?.hide}
+            >
                 {menu?.children?.map((v: any, k: number) => (
-                    <Fragment key={k}>{Items(v?.children || (!v?.style && v))}</Fragment>
+                    <Fragment key={k}>
+                        {Items(v?.children || (!v?.style && v))}
+                    </Fragment>
                 ))}
             </Row>
         ) : (
@@ -42,7 +59,12 @@ export default function Menu(props: Menu) {
     const Menus = (menu: any) => {
         return (
             <>
-                <Row $scale={scale} style={menu?.style} data-show={menu?.show} data-hide={menu?.hide}>
+                <Row
+                    $scale={scale}
+                    style={menu?.style}
+                    data-show={menu?.show}
+                    data-hide={menu?.hide}
+                >
                     {Items(menu?.children || (!menu?.style && menu))}
                 </Row>
                 <Layouts.Divider />
@@ -52,9 +74,16 @@ export default function Menu(props: Menu) {
 
     return (
         props?.menu && (
-            <Style style={props?.style} $scale={scale} data-show={props?.show} data-hide={props?.hide}>
+            <Style
+                style={props?.style}
+                $scale={scale}
+                data-show={props?.show}
+                data-hide={props?.hide}
+            >
                 {typeof props?.menu !== "string" && props?.menu?.length > 0 ? (
-                    props?.menu?.map((v: any, k: number) => <Fragment key={k}>{Menus(v)}</Fragment>)
+                    props?.menu?.map((v: any, k: number) => (
+                        <Fragment key={k}>{Menus(v)}</Fragment>
+                    ))
                 ) : (
                     <>
                         {Items(props?.menu)}

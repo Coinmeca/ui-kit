@@ -93,12 +93,12 @@ const Global = createGlobalStyle`
     }
 
     [data-row="left"] {
-        justify-content: flex-start;
+        justify-content: flex-start!important;
         text-align: left;
     }
 
     [data-row="center"] {
-        justify-content: center;
+        justify-content: center!important;
         text-align: center;
 
         & > *{
@@ -107,17 +107,17 @@ const Global = createGlobalStyle`
     }
 
     [data-row="right"] {
-        justify-content: flex-end;
+        justify-content: flex-end!important;
         text-align: right;
     }
 
     [data-col="left"] {
-        align-items: flex-start;
+        justify-content: flex-start!important;
         text-align: left;
     }
 
     [data-col="center"] {
-        align-items: center;
+        justify-content: center!important;
         text-align: center;
 
         & > *{
@@ -126,7 +126,7 @@ const Global = createGlobalStyle`
     }
 
     [data-col="right"] {
-        align-items: flex-end;
+        justify-content: flex-end!important;
         text-align: right;
     }
 
@@ -221,14 +221,18 @@ const Global = createGlobalStyle`
         }
     }
 
-    @media all and (min-width: ${Device.Laptop + 1}px) and (max-width: ${Device.Desktop}px) {
+    @media all and (min-width: ${Device.Laptop + 1}px) and (max-width: ${
+        Device.Desktop
+    }px) {
         [data-show="laptop"],
         [data-show="tablet"],
         [data-show="mobile"] {
             display:none!important;
         }
     }
-    @media all and (min-width: ${Device.Tablet + 1}px) and (max-width: ${Device.Laptop}px) {
+    @media all and (min-width: ${Device.Tablet + 1}px) and (max-width: ${
+        Device.Laptop
+    }px) {
         [data-show="tablet"],
         [data-show="mobile"] {
             display:none!important;
@@ -238,7 +242,9 @@ const Global = createGlobalStyle`
             display:none!important;
         }
     }
-    @media all and (min-width: ${Device.Mobile + 1}px) and (max-width: ${Device.Tablet}px) {
+    @media all and (min-width: ${Device.Mobile + 1}px) and (max-width: ${
+        Device.Tablet
+    }px) {
         [data-show="mobile"] {
             display:none!important;
         }

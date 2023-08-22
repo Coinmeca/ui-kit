@@ -14,8 +14,7 @@
         "clean": "rimraf ./dist ./build ./.next ./.vercel ./.turbo ./tsconfig.tsbuildinfo ./node_modules/.cache",
         "start": "next start",
         "lint": "next lint",
-        "prebuild": "yarn clean && yarn install:external",
-        "install:external": "sh trading-view/install.sh"
+        "prebuild": "yarn clean"
     },
     "dependencies": {
         "chart.js": "^4.3.2",
@@ -44,7 +43,7 @@
         "vercel": "^31.2.2"
     },
     "sideEffects": false,
-    "type": "module",
+    "type": "commonjs",
     "exports": {
         ".": "./dist/index.js",
         "./*": "./dist/*"

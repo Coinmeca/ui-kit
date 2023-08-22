@@ -14,8 +14,7 @@ export interface Avatar {
 }
 
 export default function Avatar(props: Avatar) {
-    const x = props?.name?.substring(0, 1) === "0x";
-    const name = x ? props?.name?.substring(3) : props?.name?.substring(2);
+    const name = props?.name;
     const scale = props?.scale || 1;
     const size = props?.size || 3;
     const color = props?.color || "white";
@@ -25,12 +24,23 @@ export default function Avatar(props: Avatar) {
 
     return (
         <>
-            {((props?.img && props?.img !== "") || (props?.name && props?.name !== "")) && (
-                <Style $color={color} $scale={scale} $size={size} style={props?.style}>
+            {((props?.img && props?.img !== "") ||
+                (props?.name && props?.name !== "")) && (
+                <Style
+                    $color={color}
+                    $scale={scale}
+                    $size={size}
+                    style={props?.style}
+                >
                     {(name || (props?.img && props?.img !== "")) && (
                         <div>
                             {props?.img && props?.img !== "" ? (
-                                <Image src={props?.img} fill sizes="100%" alt={""} />
+                                <Image
+                                    src={props?.img}
+                                    fill
+                                    sizes="100%"
+                                    alt={""}
+                                />
                             ) : (
                                 name &&
                                 name !== "" && (
@@ -43,8 +53,13 @@ export default function Avatar(props: Avatar) {
                     )}
                     {!hideName && name && name !== "" && (
                         <span>
-                            {x ? "" : "0x"}
-                            {name?.length > length! ? `${name?.substring(0, display) + "..." + name?.substring(name?.length - display)}` : name}
+                            {name?.length > length!
+                                ? `${
+                                      name?.substring(0, display) +
+                                      "..." +
+                                      name?.substring(name?.length - display)
+                                  }`
+                                : name}
                         </span>
                     )}
                 </Style>

@@ -34,6 +34,7 @@ const Style = styled.div<{
     $change?: string;
     $responsive?: "desktop" | "laptop" | "tablet" | "mobile";
     $reverse?: boolean;
+    $fill: boolean;
     $fit: boolean;
     $fix?: boolean;
 }>`
@@ -42,16 +43,14 @@ const Style = styled.div<{
     ${({ $change }) => $change && `--change: ${Root.Color($change)};`}
 
     display: flex;
-    height: max-content;
-    /* align-items: center; */
     flex-flow: ${({ $fix, $reverse }) => ($fix ? "row" : $reverse ? "row-reverse wrap" : "row wrap")};
-    width: ${({ $fit }) => ($fit ? "max-content" : "-webkit-fill-available")};
+    ${({ $fit, $fill }) => ($fit ? "width: max-content" : $fill ? "width: -webkit-fill-available" : "width: inherit")};
+    ${({ $fill }) => ($fill ? "height:100%" : "height: max-content;")};
     min-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
     max-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
 
-    && > * {
-        ${({ $fit }) => !$fit && "flex: 1;"}/* display: flex; */
-        /* width: 100%; */
+    & > * {
+        ${({ $fit }) => !$fit && "flex: 1;"}
     }
 
     gap: calc(var(--gap));
@@ -81,21 +80,27 @@ const Style = styled.div<{
             case "laptop":
                 return css`
                     @media all and (max-width: ${Root.Device.Laptop}px) {
-                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        flex-direction: ${$reverse
+                            ? "column-reverse"
+                            : "column"};
                         ${gap}
                     }
                 `;
             case "tablet":
                 return css`
                     @media all and (max-width: ${Root.Device.Tablet}px) {
-                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        flex-direction: ${$reverse
+                            ? "column-reverse"
+                            : "column"};
                         ${gap}
                     }
                 `;
             case "mobile":
                 return css`
                     @media all and (max-width: ${Root.Device.Mobile}px) {
-                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        flex-direction: ${$reverse
+                            ? "column-reverse"
+                            : "column"};
                         ${gap}
                     }
                 `;

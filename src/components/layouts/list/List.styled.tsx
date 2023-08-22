@@ -9,11 +9,11 @@ export const NoData = styled.div`
     height: 100%;
 `;
 
-const Style = styled.div`
+const Style = styled.div<{ $fill: boolean }>`
     display: flex;
     flex-direction: column;
     width: 100%;
-    /* height: 100%; */
+    ${({ $fill }) => $fill && "height: 100%;"}
     overflow: hidden auto;
     scroll-snap-type: y mandatory;
     -webkit-overflow-scrolling: touch;

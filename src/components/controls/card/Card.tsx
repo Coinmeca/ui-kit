@@ -14,7 +14,12 @@ export default function Card(props: Card) {
     const gap = props?.gap || 1;
 
     return (
-        <Style $scale={scale} $padding={padding} $gap={gap} $event={typeof props?.onClick === "function" ? true : false}>
+        <Style
+            $scale={scale}
+            $padding={padding}
+            $gap={gap}
+            $event={typeof props?.onClick === "function" ? true : false}
+        >
             <div>{props?.children}</div>
         </Style>
     );

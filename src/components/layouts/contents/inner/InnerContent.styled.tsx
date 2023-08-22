@@ -12,7 +12,8 @@ const Style = styled.div<{
     overflow: hidden ${({ $scroll }) => $scroll && "auto"};
 
     ${({ $padding }) => css`
-        padding: ${$padding?.top}em ${$padding?.right}em ${$padding?.bottom}em ${$padding?.left}em;
+        padding: ${$padding?.top}em ${$padding?.right}em ${$padding?.bottom}em
+            ${$padding?.left}em;
         height: calc(100% - ${$padding?.top + $padding?.bottom}em);
     `}
 `;

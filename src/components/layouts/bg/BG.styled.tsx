@@ -1,4 +1,3 @@
-"use client";
 import { styled, css } from "styled-components";
 
 export const Filter = styled.div<{ $filter?: string; $opacity: number }>`
