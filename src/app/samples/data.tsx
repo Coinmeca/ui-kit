@@ -205,21 +205,12 @@ export default function Data() {
                                 </>,
                                 [
                                     <>
-                                        <Elements.Text
-                                            type="strong"
-                                            case={"upper"}
-                                            height={1.25}
-                                        >
+                                        <Elements.Text type="strong" case={"upper"} height={1.25}>
                                             {data?.symbol}
                                         </Elements.Text>
                                     </>,
                                     <>
-                                        <Elements.Text
-                                            type="p"
-                                            case={"upper"}
-                                            height={1.25}
-                                            style={{ opacity: 0.45 }}
-                                        >
+                                        <Elements.Text type="p" case={"upper"} height={1.25} style={{ opacity: 0.45 }}>
                                             {data?.market}
                                         </Elements.Text>
                                     </>,
@@ -229,10 +220,7 @@ export default function Data() {
                     ],
                     {
                         align: "right",
-                        change:
-                            parseFloat(data?.change) > 0
-                                ? "var(--green)"
-                                : parseFloat(data?.change) < 0 && "var(--red)",
+                        change: parseFloat(data?.change) > 0 ? "var(--green)" : parseFloat(data?.change) < 0 && "var(--red)",
                         children: [
                             <>
                                 <Elements.Text type="strong" height={1.25}>
@@ -240,11 +228,7 @@ export default function Data() {
                                 </Elements.Text>
                             </>,
                             <>
-                                <Elements.Text
-                                    type="strong"
-                                    height={1.25}
-                                    change
-                                >
+                                <Elements.Text type="strong" height={1.25} change>
                                     {parseFloat(data?.change) > 0 && "+"}
                                     {data?.change} %
                                 </Elements.Text>
@@ -254,9 +238,7 @@ export default function Data() {
                     [
                         {
                             align: "right",
-                            children: (
-                                <Elements.Text>{data?.volume}</Elements.Text>
-                            ),
+                            children: <Elements.Text>{data?.volume}</Elements.Text>,
                         },
                     ],
                 ],
@@ -375,14 +357,7 @@ export default function Data() {
     };
 
     const Connect = () => (
-        <Modals.Connect
-            width={48}
-            chains={chainList}
-            wallets={fetchWalletList()}
-            onClose={closeConnect}
-            onChain={(c: any) => handleChain(c)}
-            close
-        />
+        <Modals.Connect width={48} chains={chainList} wallets={fetchWalletList()} onClose={() => closeConnect()} onChain={(c: any) => handleChain(c)} close />
     );
     const [handleConnect, closeConnect] = usePortal(<Connect />);
 
@@ -415,11 +390,7 @@ export default function Data() {
             children: (
                 <>
                     <Controls.Tab
-                        onClick={() =>
-                            mobileMenu === "notify"
-                                ? setMobileMenu("")
-                                : setMobileMenu("notify")
-                        }
+                        onClick={() => (mobileMenu === "notify" ? setMobileMenu("") : setMobileMenu("notify"))}
                         active={mobileMenu === "notify"}
                         iconLeft={{ icon: "bell", count: 24 }}
                         toggle
@@ -427,11 +398,7 @@ export default function Data() {
                         onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
-                        onClick={() =>
-                            mobileMenu === "market"
-                                ? setMobileMenu("")
-                                : setMobileMenu("market")
-                        }
+                        onClick={() => (mobileMenu === "market" ? setMobileMenu("") : setMobileMenu("market"))}
                         active={mobileMenu === "market"}
                         iconLeft={"sidebar"}
                         show={"tablet"}
@@ -440,11 +407,7 @@ export default function Data() {
                         onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
-                        onClick={() =>
-                            mobileMenu === "setting"
-                                ? setMobileMenu("")
-                                : setMobileMenu("setting")
-                        }
+                        onClick={() => (mobileMenu === "setting" ? setMobileMenu("") : setMobileMenu("setting"))}
                         active={mobileMenu === "setting"}
                         iconLeft={"gear"}
                         show={"tablet"}
@@ -459,31 +422,12 @@ export default function Data() {
             children: (
                 <>
                     <Layouts.Row fit>
-                        <Controls.Dropdown
-                            option={languages[0]}
-                            options={languages}
-                            fit
-                        />
-                        <Controls.Dropdown
-                            option={chains[0]}
-                            options={chains}
-                            fit
-                        />
+                        <Controls.Dropdown option={languages[0]} options={languages} fit />
+                        <Controls.Dropdown option={chains[0]} options={chains} fit />
                     </Layouts.Row>
                     {/* <Controls.Button fit>Connect</Controls.Button> */}
-                    <Controls.Button
-                        iconRight={"chevron-down-bold"}
-                        onClick={handleConnect}
-                        fit
-                    >
-                        <Elements.Avatar
-                            length={8}
-                            scale={0.6667}
-                            display={4}
-                            name={
-                                "0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"
-                            }
-                        />
+                    <Controls.Button iconRight={"chevron-down-bold"} onClick={handleConnect} fit>
+                        <Elements.Avatar length={8} scale={0.6667} display={4} name={"0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"} />
                     </Controls.Button>
                 </>
             ),
@@ -499,27 +443,14 @@ export default function Data() {
                     active: true,
                     children: (
                         <>
-                            <Layouts.Row
-                                fit
-                                style={{ padding: "0.5em 1em" }}
-                                gap={0}
-                            >
-                                <Controls.Tab
-                                    active={sidebarTab === "exchange"}
-                                    onClick={() => setSidebarTab("exchange")}
-                                >
+                            <Layouts.Row fit style={{ padding: "0.5em 1em" }} gap={0}>
+                                <Controls.Tab active={sidebarTab === "exchange"} onClick={() => setSidebarTab("exchange")}>
                                     Exchange
                                 </Controls.Tab>
-                                <Controls.Tab
-                                    active={sidebarTab === "alert"}
-                                    onClick={() => setSidebarTab("alert")}
-                                >
+                                <Controls.Tab active={sidebarTab === "alert"} onClick={() => setSidebarTab("alert")}>
                                     Alert
                                 </Controls.Tab>
-                                <Controls.Tab
-                                    active={sidebarTab === "asset"}
-                                    onClick={() => setSidebarTab("asset")}
-                                >
+                                <Controls.Tab active={sidebarTab === "asset"} onClick={() => setSidebarTab("asset")}>
                                     Assets
                                 </Controls.Tab>
                             </Layouts.Row>
@@ -528,9 +459,7 @@ export default function Data() {
                                     children: <Elements.Icon icon={"search"} />,
                                 }}
                                 right={{
-                                    children: (
-                                        <Controls.Dropdown options={markets} />
-                                    ),
+                                    children: <Controls.Dropdown options={markets} />,
                                 }}
                             />
                             <Layouts.Contents.InnerContent>
@@ -538,33 +467,15 @@ export default function Data() {
                                     contents={[
                                         {
                                             active: sidebarTab === "exchange",
-                                            children: (
-                                                <Sidebars.Market
-                                                    list={sidebarMarketListFormatter(
-                                                        marketlist,
-                                                    )}
-                                                />
-                                            ),
+                                            children: <Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
                                         },
                                         {
                                             active: sidebarTab === "alert",
-                                            children: (
-                                                <Sidebars.Market
-                                                    list={sidebarMarketListFormatter(
-                                                        marketlist,
-                                                    )}
-                                                />
-                                            ),
+                                            children: <Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
                                         },
                                         {
                                             active: sidebarTab === "asset",
-                                            children: (
-                                                <Sidebars.Market
-                                                    list={sidebarMarketListFormatter(
-                                                        marketlist,
-                                                    )}
-                                                />
-                                            ),
+                                            children: <Sidebars.Market list={sidebarMarketListFormatter(marketlist)} />,
                                         },
                                     ]}
                                 />
@@ -575,9 +486,7 @@ export default function Data() {
             ],
         },
         upper: {
-            active:
-                mobileMenu ===
-                "notify" /* || menuMobile === 'something' || menuMobile === 'else' */,
+            active: mobileMenu === "notify" /* || menuMobile === 'something' || menuMobile === 'else' */,
             children: [
                 {
                     active: mobileMenu === "notify",
