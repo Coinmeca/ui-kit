@@ -8,8 +8,9 @@ export interface Connect extends Process {
     chains?: any;
     wallets?: any;
     onClose: Function;
-    onChain: Function;
-    onWallet: Function;
+    onChain?: Function;
+    onWallet?: Function;
+    onConnect?: Function;
 }
 
 export default function Connect(props: any) {
@@ -19,9 +20,7 @@ export default function Connect(props: any) {
     const [process, setProcess] = useState<boolean | null>(
         props?.process || null
     );
-    const [loading, setLoading] = useState<boolean>(
-        props?.loading?.active || false
-    );
+    const [walletError, setWalletError] = useState<string>();
 
     const handleClose = (e: any) => {
         if (typeof props?.onClose === "function") props?.onClose(e);
@@ -45,7 +44,7 @@ export default function Connect(props: any) {
         });
     };
 
-    const walletFormatter = (data: any): any[] | undefined => {
+    const walletListFormatter = (data: any): any[] | undefined => {
         const wallets =
             typeof data === "object"
                 ? Object.values(data)
@@ -53,15 +52,35 @@ export default function Connect(props: any) {
         return wallets?.map((w: any) => {
             return {
                 children: (
-                    <Elements.Avatar img={w.strategy.image} name={w?.name} />
+                    <Elements.Avatar img={w?.strategy.image} name={w?.name} />
                 ),
                 onClick: (e: any) => {
-                    setWallet(w);
                     if (typeof props?.onWallet === "function")
                         props?.onWallet(w, e);
+                    setWallet(w);
+                    handleConnect(w);
                 },
             };
         });
+    };
+
+    const handleConnect = async (wallet?: any) => {
+        try {
+            if (!wallet) throw Error;
+            if (typeof props?.onConnect === "function")
+                props?.onConnect(wallet);
+            await wallet?.adapter();
+            setProcess(true);
+        } catch (e: any) {
+            setProcess(false);
+            setWallet(null);
+            setWalletError(e.toString());
+        }
+    };
+
+    const handleBack = (e: any) => {
+        setProcess(null);
+        setWalletError(undefined);
     };
 
     return (
@@ -113,7 +132,7 @@ export default function Connect(props: any) {
                                         scroll
                                     >
                                         <Layouts.List
-                                            list={walletFormatter(
+                                            list={walletListFormatter(
                                                 props?.wallets
                                             )}
                                         />
@@ -131,19 +150,17 @@ export default function Connect(props: any) {
             }
             failure={{
                 message:
-                    props?.failure?.message || "Processing has been failed.",
+                    walletError ||
+                    props?.failure?.message ||
+                    "Processing has been failed.",
                 children: (
-                    <Controls.Button
-                        onClick={(e: any) => {
-                            setProcess(null);
-                        }}
-                    >
+                    <Controls.Button onClick={(e: any) => handleBack(e)}>
                         Go Back
                     </Controls.Button>
                 ),
             }}
             loading={{
-                active: loading,
+                active: wallet,
                 message:
                     props?.loading?.message ||
                     "Please wait until the processing is complete.",
@@ -165,7 +182,7 @@ export default function Connect(props: any) {
                         onClick={(e: any) => {
                             handleClose(e);
                             setProcess(null);
-                            setLoading(false);
+                            setWallet(null);
                         }}
                     >
                         OK
@@ -175,7 +192,7 @@ export default function Connect(props: any) {
             onClose={(e: any) => {
                 handleClose(e);
             }}
-            close={!loading}
+            close={!wallet}
         />
     );
 }
