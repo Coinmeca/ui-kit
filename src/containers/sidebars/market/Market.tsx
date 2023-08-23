@@ -23,11 +23,10 @@ export default function Market(props: Market) {
                 </Layouts.Row>
             </Layouts.Row>
             <Layouts.Divider strong />
-            <Layouts.Contents.InnerContent scroll>
-                <Layouts.Table
-                    list={props?.list}
-                    fallback="There is no data."
-                />
+            <Layouts.Contents.InnerContent>
+                <Layouts.Contents.InnerContent scroll>
+                    <Layouts.Table list={props?.list} fallback="There is no data." />
+                </Layouts.Contents.InnerContent>
             </Layouts.Contents.InnerContent>
         </>
     );
