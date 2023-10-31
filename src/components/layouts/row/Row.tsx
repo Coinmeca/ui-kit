@@ -1,14 +1,14 @@
-import Style from "./Row.styled";
+import Style from './Row.styled';
 
 export interface Row {
 	children?: any;
 	style?: object;
 	gap?: number;
 	change?: string | false;
-	align?: "left" | "center" | "right" | "stretch";
-	show?: "desktop" | "laptop" | "tablet" | "mobile";
-	hide?: "desktop" | "laptop" | "tablet" | "mobile";
-	responsive?: "desktop" | "laptop" | "tablet" | "mobile";
+	align?: 'left' | 'center' | 'right' | 'stretch';
+	show?: 'desktop' | 'laptop' | 'tablet' | 'mobile';
+	hide?: 'desktop' | 'laptop' | 'tablet' | 'mobile';
+	responsive?: 'desktop' | 'laptop' | 'tablet' | 'mobile';
 	reverse?: boolean;
 	fill?: boolean;
 	fit?: boolean;

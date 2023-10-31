@@ -1,3 +1,3 @@
-﻿import OrderPad from "./OrderPad";
+﻿import OrderPad from './OrderPad';
 
-export { OrderPad };
+export {OrderPad};

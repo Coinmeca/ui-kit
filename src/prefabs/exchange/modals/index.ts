@@ -1,3 +1,3 @@
-import Confirmation from "./confirmation/Confirmation";
+import Confirmation from './confirmation/Confirmation';
 
-export { Confirmation };
+export {Confirmation};

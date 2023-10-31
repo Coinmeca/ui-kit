@@ -1,3 +1,3 @@
-import Trade from "./trade/Trade";
+import Trade from './trade/Trade';
 
-export { Trade };
+export {Trade};
