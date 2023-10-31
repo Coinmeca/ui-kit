@@ -1,17 +1,17 @@
-"use client";
-import { useState } from "react";
-import { Root } from "lib/style";
-import { Charts, Controls, Elements, Layouts } from "components";
-import { Asset, Exchange } from "prefabs";
-import { Capitalize, Format } from "lib/utils";
-import useWindowSize from "hooks/useWindowSize";
-import { AnimatePresence } from "framer-motion";
+'use client';
+import {useState} from 'react';
+import {Root} from 'lib/style';
+import {Charts, Controls, Elements, Layouts} from 'components';
+import {Asset, Exchange} from 'prefabs';
+import {Capitalize, Format} from 'lib/utils';
+import useWindowSize from 'hooks/useWindowSize';
+import {AnimatePresence} from 'framer-motion';
 
-import ExchangeData from "./data";
-import AssetData from "../asset/data";
+import ExchangeData from './data';
+import AssetData from '../asset/data';
 
 export default function Page() {
-	const { windowSize } = useWindowSize();
+	const {windowSize} = useWindowSize();
 	const DummyExchange = ExchangeData();
 	const DummyAsset = AssetData();
 	const props = {
@@ -23,47 +23,32 @@ export default function Page() {
 		widget: DummyExchange.widget,
 		assets: DummyAsset.assets,
 		history: DummyAsset.history,
-		responsive: windowSize.width <= Root.Device.Mobile,
+		responsive: windowSize.width <= Root.Device.Mobile
 	};
 
-	const [mobile, setMobile] = useState("orderbook");
-	const [marketTab, setMarketTab] = useState("orderbook");
-	const [option, setOption] = useState<"market" | "limit">("market");
+	const [mobile, setMobile] = useState('orderbook');
+	const [marketTab, setMarketTab] = useState('orderbook');
+	const [option, setOption] = useState<'market' | 'limit'>('market');
 	const [tab, setTab] = useState<string>(option);
 	const [view, setView] = useState(0);
 
 	const [ready, setReady] = useState(false);
 	return (
 		<Layouts.Page>
-			<Layouts.Box
-				fit
-				change={
-					parseFloat(props?.market?.change) > 0
-						? "green"
-						: parseFloat(props?.market?.change) < 0 && "red"
-				}
-			>
+			<Layouts.Box fit change={parseFloat(props?.market?.change) > 0 ? 'green' : parseFloat(props?.market?.change) < 0 && 'red'}>
 				<AnimatePresence mode="wait">
 					<Layouts.Contents.InnerContent>
-						<Layouts.Row fix style={{ alignItems: "center" }}>
-							<Layouts.Row
-								fix
-								style={{ alignItems: "center" }}
-								gap={2}
-								fit
-							>
-								<Elements.Avatar
-									img={props?.market?.logo}
-									scale={1.3334}
-								/>
-								<Layouts.Row responsive={"mobile"} gap={1} fit>
+						<Layouts.Row fix style={{alignItems: 'center'}}>
+							<Layouts.Row fix style={{alignItems: 'center'}} gap={2} fit>
+								<Elements.Avatar img={props?.market?.logo} scale={1.3334} />
+								<Layouts.Row responsive={'mobile'} gap={1} fit>
 									<Elements.Text
 										size={2.5}
 										height={1}
-										style={{ marginRight: "1em" }}
+										style={{marginRight: '1em'}}
 										responsive={{
-											device: "mobile",
-											size: 1.5,
+											device: 'mobile',
+											size: 1.5
 										}}
 									>
 										{props?.market?.base?.symbol?.toUpperCase()}
@@ -72,66 +57,41 @@ export default function Page() {
 										size={2.5}
 										height={1}
 										responsive={{
-											device: "mobile",
-											size: 1.5,
+											device: 'mobile',
+											size: 1.5
 										}}
 									>
-										{Capitalize(
-											props?.market?.base?.name || ""
-										)}
+										{Capitalize(props?.market?.base?.name || '')}
 									</Elements.Text>
 								</Layouts.Row>
 							</Layouts.Row>
 							<Layouts.Row fix align="right">
-								<Layouts.Row
-									fix
-									fit
-									gap={1}
-									style={{ alignItems: "center" }}
-								>
-									<Elements.Icon
-										scale={1.5}
-										icon={"caret-up"}
-										change
-									/>
+								<Layouts.Row fix fit gap={1} style={{alignItems: 'center'}}>
+									<Elements.Icon scale={1.5} icon={'caret-up'} change />
 									<Elements.Text
 										size={2.5}
 										height={1}
 										responsive={{
-											device: "mobile",
-											size: 1.75,
+											device: 'mobile',
+											size: 1.75
 										}}
 										change
 									>
-										${" "}
-										{Format(
-											props?.market?.price,
-											"currency",
-											true
-										)}
+										$ {Format(props?.market?.price, 'currency', true)}
 									</Elements.Text>
 								</Layouts.Row>
 							</Layouts.Row>
 						</Layouts.Row>
-						<Layouts.Divider style={{ marginTop: "1em" }} />
-						<Layouts.Col show={"mobile"} gap={0}>
+						<Layouts.Divider style={{marginTop: '1em'}} />
+						<Layouts.Col show={'mobile'} gap={0}>
 							<Layouts.Row gap={1} fix>
-								<Controls.Tab
-									active={mobile === "info"}
-									onClick={() => setMobile("info")}
-								>
+								<Controls.Tab active={mobile === 'info'} onClick={() => setMobile('info')}>
 									Info
 								</Controls.Tab>
-								<Controls.Tab
-									active={mobile === "orderbook"}
-									onClick={() => setMobile("orderbook")}
-								>
+								<Controls.Tab active={mobile === 'orderbook'} onClick={() => setMobile('orderbook')}>
 									Orderbook
 								</Controls.Tab>
-								<Controls.Tab
-									active={mobile === "chart"}
-									onClick={() => setMobile("chart")}
-								>
+								<Controls.Tab active={mobile === 'chart'} onClick={() => setMobile('chart')}>
 									Chart
 								</Controls.Tab>
 							</Layouts.Row>
@@ -140,40 +100,23 @@ export default function Page() {
 						<Layouts.Contents.GridContainer
 							fullsize
 							area={`'info info' 'book chart' 'book order'`}
-							width={`${
-								windowSize.width < Root.Device.Tablet
-									? "0.75fr"
-									: "40em"
-							} 1fr`}
-							height={`max-content 1fr ${
-								tab === "history" ? "minmax(34em, 1fr)" : "34em"
-							}`}
+							width={`${windowSize.width < Root.Device.Tablet ? '0.75fr' : '40em'} 1fr`}
+							height={`max-content 1fr ${tab === 'history' ? 'minmax(34em, 1fr)' : '34em'}`}
 							gap={3}
 							responsive={[
 								{
-									device: "mobile",
+									device: 'mobile',
 									area: `'up' 'down'`,
-									width: "1fr",
-									height: `1fr ${
-										tab === "history"
-											? "minmax(34em, 1fr)"
-											: "34em"
-									}`,
-									gap: { col: 0, row: 2 },
-								},
+									width: '1fr',
+									height: `1fr ${tab === 'history' ? 'minmax(34em, 1fr)' : '34em'}`,
+									gap: {col: 0, row: 2}
+								}
 							]}
 							contents={[
 								{
-									area: "info",
+									area: 'info',
 									children: (
-										<Layouts.Contents.SlideContent
-											active={
-												windowSize.width >
-												Root.Device.Mobile
-													? true
-													: mobile === "info"
-											}
-										>
+										<Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === 'info'}>
 											<Exchange.Containers.Info
 												base={props?.market?.base}
 												quote={props?.market?.quote}
@@ -184,40 +127,28 @@ export default function Page() {
 									),
 									responsive: [
 										{
-											device: "mobile",
-											area: "up",
-										},
-									],
+											device: 'mobile',
+											area: 'up'
+										}
+									]
 								},
 								{
-									area: "book",
+									area: 'book',
 									children: (
-										<Layouts.Contents.SlideContent
-											active={
-												windowSize.width >
-												Root.Device.Mobile
-													? true
-													: mobile === "orderbook"
-											}
-										>
+										<Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === 'orderbook'}>
 											<Layouts.Contents.InnerContent>
 												<Layouts.Menu
 													menu={{
 														style: {
-															overflow: "initial",
+															overflow: 'initial'
 														},
 														children: [
 															[
 																<>
 																	<Controls.Tab
-																		active={
-																			marketTab ===
-																			"orderbook"
-																		}
+																		active={marketTab === 'orderbook'}
 																		onClick={() => {
-																			setMarketTab(
-																				"orderbook"
-																			);
+																			setMarketTab('orderbook');
 																			// setMobile("orderbook");
 																		}}
 																	>
@@ -226,103 +157,55 @@ export default function Page() {
 																</>,
 																<>
 																	<Controls.Tab
-																		active={
-																			marketTab ===
-																			"history"
-																		}
+																		active={marketTab === 'history'}
 																		onClick={() => {
-																			setMarketTab(
-																				"history"
-																			);
+																			setMarketTab('history');
 																			// setMobile("history");
 																		}}
 																	>
 																		Trades
 																	</Controls.Tab>
-																</>,
+																</>
 															],
 															<>
 																<Controls.Dropdown
-																	option={
-																		props
-																			?.orderbookView[
-																			view
-																		]
-																	}
-																	options={
-																		props?.orderbookView
-																	}
-																	onClickItem={(
-																		e: any,
-																		v: any,
-																		k: any
-																	) => {
-																		setView(
-																			k
-																		);
+																	option={props?.orderbookView[view]}
+																	options={props?.orderbookView}
+																	onClickItem={(e: any, v: any, k: any) => {
+																		setView(k);
 																	}}
 																/>
-															</>,
-														],
+															</>
+														]
 													}}
-													hide={"mobile"}
+													hide={'mobile'}
 												/>
 												<Layouts.Contents.TabContainer
 													contents={[
 														{
-															active:
-																marketTab ===
-																	"orderbook" ||
-																mobile ===
-																	"orderbook",
+															active: marketTab === 'orderbook' || mobile === 'orderbook',
 															style: {
-																padding: 0,
+																padding: 0
 															},
 															children: (
 																<Exchange.Containers.Orderbook
 																	view={view}
-																	asks={
-																		props
-																			?.orderbook
-																			?.asks
-																	}
-																	bids={
-																		props
-																			?.orderbook
-																			?.bids
-																	}
-																	base={
-																		props
-																			?.market
-																			?.base
-																			?.symbol
-																	}
-																	quote={
-																		props
-																			?.market
-																			?.quote
-																			?.symbol
-																	}
+																	asks={props?.orderbook?.asks}
+																	bids={props?.orderbook?.bids}
+																	base={props?.market?.base?.symbol}
+																	quote={props?.market?.quote?.symbol}
 																	responsive={{
-																		device: "mobile",
-																		vertical:
-																			windowSize.width <
-																			Root
-																				.Device
-																				.Mobile,
+																		device: 'mobile',
+																		vertical: windowSize.width < Root.Device.Mobile
 																	}}
 																	guidance
 																/>
-															),
+															)
 														},
 														{
-															active:
-																marketTab ===
-																	"history" ||
-																mobile ===
-																	"history",
-															children: <></>,
-														},
+															active: marketTab === 'history' || mobile === 'history',
+															children: <></>
+														}
 													]}
 												/>
 											</Layouts.Contents.InnerContent>
@@ -330,44 +213,28 @@ export default function Page() {
 									),
 									responsive: [
 										{
-											device: "mobile",
-											area: "up",
-										},
-									],
+											device: 'mobile',
+											area: 'up'
+										}
+									]
 								},
 								{
-									area: "chart",
+									area: 'chart',
 									children: (
-										<Layouts.Contents.SlideContent
-											active={
-												windowSize.width >
-												Root.Device.Mobile
-													? true
-													: mobile === "chart"
-											}
-										>
+										<Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === 'chart'}>
 											<Layouts.Contents.InnerContent>
 												<Layouts.Menu
 													hide="mobile"
 													menu={[
 														[
 															<>
-																<Controls.Tab
-																	disabled
-																>
-																	Chart
-																</Controls.Tab>
-															</>,
-														],
+																<Controls.Tab disabled>Chart</Controls.Tab>
+															</>
+														]
 													]}
 												/>
 												<Layouts.Contents.InnerContent>
-													<Charts.TradingView
-														{...props.widget}
-														script={
-															"/../trading-view/datafeeds/udf/dist/bundle.js"
-														}
-													/>
+													<Charts.TradingView {...props.widget} script={'/../trading-view/datafeeds/udf/dist/bundle.js'} />
 													{/* <Charts.LightWeight.Candle
                                                         price={props?.chart?.price}
                                                         volume={props?.chart?.volume}
@@ -380,13 +247,13 @@ export default function Page() {
 									),
 									responsive: [
 										{
-											device: "mobile",
-											area: "up",
-										},
-									],
+											device: 'mobile',
+											area: 'up'
+										}
+									]
 								},
 								{
-									area: "order",
+									area: 'order',
 									children: (
 										<Layouts.Contents.InnerContent>
 											<Layouts.Menu
@@ -395,17 +262,10 @@ export default function Page() {
 														[
 															<>
 																<Controls.Tab
-																	active={
-																		tab ===
-																		"market"
-																	}
+																	active={tab === 'market'}
 																	onClick={() => {
-																		setTab(
-																			"market"
-																		);
-																		setOption(
-																			"market"
-																		);
+																		setTab('market');
+																		setOption('market');
 																	}}
 																>
 																	Market
@@ -413,118 +273,72 @@ export default function Page() {
 															</>,
 															<>
 																<Controls.Tab
-																	active={
-																		tab ===
-																		"limit"
-																	}
+																	active={tab === 'limit'}
 																	onClick={() => {
-																		setTab(
-																			"limit"
-																		);
-																		setOption(
-																			"limit"
-																		);
+																		setTab('limit');
+																		setOption('limit');
 																	}}
 																>
 																	Limit
 																</Controls.Tab>
-															</>,
+															</>
 														],
 														[
 															<>
 																<Controls.Tab
-																	active={
-																		tab ===
-																		"history"
-																	}
+																	active={tab === 'history'}
 																	onClick={() => {
-																		setTab(
-																			"history"
-																		);
+																		setTab('history');
 																	}}
 																>
 																	History
 																</Controls.Tab>
-															</>,
-														],
-													],
+															</>
+														]
+													]
 												]}
 											/>
 											<Layouts.Contents.TabContainer
 												contents={[
 													{
-														active:
-															tab !== "history",
+														active: tab !== 'history',
 														children: (
 															<Exchange.Containers.Order
-																base={
-																	props
-																		?.market
-																		?.base
-																}
-																quote={
-																	props
-																		?.market
-																		?.quote
-																}
-																price={
-																	props
-																		?.market
-																		?.price
-																}
+																base={props?.market?.base}
+																quote={props?.market?.quote}
+																price={props?.market?.price}
 																fee={0.1}
 																option={option}
 																responsive={
-																	(windowSize.width <=
-																		Root
-																			.Device
-																			.Tablet &&
-																		windowSize.width >
-																			840) ||
-																	(windowSize.width <=
-																		Root
-																			.Device
-																			.Tablet &&
-																		windowSize.width <
-																			Root
-																				.Device
-																				.Mobile)
+																	(windowSize.width <= Root.Device.Tablet && windowSize.width > 840) ||
+																	(windowSize.width <= Root.Device.Tablet && windowSize.width < Root.Device.Mobile)
 																}
 															/>
-														),
+														)
 													},
 													{
-														active:
-															tab === "history",
+														active: tab === 'history',
 														children: (
-															<Layouts.Contents.InnerContent
-																scroll
-															>
+															<Layouts.Contents.InnerContent scroll>
 																<Asset.Containers.History
-																	assets={
-																		props?.assets
-																	}
-																	list={
-																		props?.history
-																	}
-																	responsive={
-																		props?.responsive
-																	}
+																	assets={props?.assets}
+																	list={props?.history}
+																	responsive={props?.responsive}
 																/>
 															</Layouts.Contents.InnerContent>
-														),
-													},
+														)
+													}
 												]}
 											/>
 										</Layouts.Contents.InnerContent>
 									),
 									responsive: [
 										{
-											device: "mobile",
-											area: "down",
-										},
-									],
-								},
+											device: 'mobile',
+											area: 'down'
+										}
+									]
+								}
 							]}
 						/>
 					</Layouts.Contents.InnerContent>

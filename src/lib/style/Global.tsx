@@ -1,6 +1,6 @@
-"use client";
-import { createGlobalStyle } from "styled-components";
-import { Device } from "./Root";
+'use client';
+import {createGlobalStyle} from 'styled-components';
+import {Device} from './Root';
 
 const Global = createGlobalStyle`
     html,body,main{
@@ -221,18 +221,14 @@ const Global = createGlobalStyle`
         }
     }
 
-    @media all and (min-width: ${Device.Laptop + 1}px) and (max-width: ${
-        Device.Desktop
-    }px) {
+    @media all and (min-width: ${Device.Laptop + 1}px) and (max-width: ${Device.Desktop}px) {
         [data-show="laptop"],
         [data-show="tablet"],
         [data-show="mobile"] {
             display:none!important;
         }
     }
-    @media all and (min-width: ${Device.Tablet + 1}px) and (max-width: ${
-        Device.Laptop
-    }px) {
+    @media all and (min-width: ${Device.Tablet + 1}px) and (max-width: ${Device.Laptop}px) {
         [data-show="tablet"],
         [data-show="mobile"] {
             display:none!important;
@@ -242,9 +238,7 @@ const Global = createGlobalStyle`
             display:none!important;
         }
     }
-    @media all and (min-width: ${Device.Mobile + 1}px) and (max-width: ${
-        Device.Tablet
-    }px) {
+    @media all and (min-width: ${Device.Mobile + 1}px) and (max-width: ${Device.Tablet}px) {
         [data-show="mobile"] {
             display:none!important;
         }
