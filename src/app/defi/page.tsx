@@ -1,9 +1,9 @@
 "use client";
 
-import { Controls, Elements, Layouts } from "@coinmeca/ui/components";
-import { Modal } from "@coinmeca/ui/containers";
-import { usePortal } from "@coinmeca/ui/hooks";
-import { Capitalize, Format } from "@coinmeca/ui/lib/utils";
+import { Controls, Elements, Layouts } from "components";
+import { Modal } from "containers";
+import { usePortal } from "hooks";
+import { Capitalize, Format } from "lib/utils";
 import { useEffect, useState } from "react";
 
 interface Asset {
@@ -42,8 +42,14 @@ export default function Page() {
                 data?.length > 0 &&
                 data?.map((asset: Asset) => {
                     const base = [
-                        { align: "left", children: <Elements.Text>{asset?.symbol}</Elements.Text> },
-                        { align: "right", children: <Elements.Text>{asset?.amount}</Elements.Text> },
+                        {
+                            align: "left",
+                            children: <Elements.Text>{asset?.symbol}</Elements.Text>,
+                        },
+                        {
+                            align: "right",
+                            children: <Elements.Text>{asset?.amount}</Elements.Text>,
+                        },
                     ];
 
                     return props?.vault
@@ -91,7 +97,10 @@ export default function Page() {
                         return exist
                             ? state?.map((a: Asset) => {
                                   if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
-                                      return { ...a, amount: (a?.amount || 0) + (asset?.amount || 0) };
+                                      return {
+                                          ...a,
+                                          amount: (a?.amount || 0) + (asset?.amount || 0),
+                                      };
                                   } else {
                                       return a;
                                   }
@@ -110,7 +119,13 @@ export default function Page() {
                                       return a;
                                   }
                               })
-                            : [...state, { ...asset, amount: typeof asset?.amount === "number" ? asset?.amount : 0 }];
+                            : [
+                                  ...state,
+                                  {
+                                      ...asset,
+                                      amount: typeof asset?.amount === "number" ? asset?.amount : 0,
+                                  },
+                              ];
                     });
                 }
                 break;
@@ -126,7 +141,10 @@ export default function Page() {
                                     assets: [
                                         ...u?.assets?.map((a: Asset) => {
                                             if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
-                                                return { symbol: a?.symbol?.toUpperCase(), amount: a?.amount! + asset?.amount! };
+                                                return {
+                                                    symbol: a?.symbol?.toUpperCase(),
+                                                    amount: a?.amount! + asset?.amount!,
+                                                };
                                             } else {
                                                 return a;
                                             }
@@ -136,7 +154,13 @@ export default function Page() {
                             } else {
                                 return {
                                     ...u,
-                                    assets: [...u?.assets, { ...asset, amount: typeof asset?.amount === "number" ? asset?.amount : 0 }],
+                                    assets: [
+                                        ...u?.assets,
+                                        {
+                                            ...asset,
+                                            amount: typeof asset?.amount === "number" ? asset?.amount : 0,
+                                        },
+                                    ],
                                     initial: asset?.amount || 0 * (values.find((f: Asset) => f?.symbol === asset?.symbol)?.value || 0),
                                 };
                             }
@@ -168,7 +192,7 @@ export default function Page() {
                           return {
                               ...a,
                               amount: a?.amount || 0 + amount,
-                              need: a?.need || 0 + amount,
+                              need: a?.need && (a?.need || 0) + amount,
                               weight: a?.weight || 0 + mint,
                           };
                       } else {
@@ -241,14 +265,18 @@ export default function Page() {
                         align={"right"}
                         value={symbol}
                         onChange={(e: any, v: any) => setSymbol(v)}
-                        left={{ children: <Elements.Text>Symbol</Elements.Text> }}
+                        left={{
+                            children: <Elements.Text>Symbol</Elements.Text>,
+                        }}
                     />
                     <Controls.Input
                         placeholder={0}
                         align={"right"}
                         value={amount}
                         onChange={(e: any, v: any) => setAmount(Format(v, "number", true) as number)}
-                        left={{ children: <Elements.Text>Amount</Elements.Text> }}
+                        left={{
+                            children: <Elements.Text>Amount</Elements.Text>,
+                        }}
                     />
                     {type === "key" && (
                         <Controls.Input
@@ -256,12 +284,22 @@ export default function Page() {
                             align={"right"}
                             value={value}
                             onChange={(e: any, v: any) => setValue(Format(v, "number", true) as number)}
-                            left={{ children: <Elements.Text>Value</Elements.Text> }}
+                            left={{
+                                children: <Elements.Text>Value</Elements.Text>,
+                            }}
                         />
                     )}
                     <Controls.Button
                         onClick={() => {
-                            handleAddAsset(props?.type, { symbol: symbol?.toUpperCase(), amount: amount, value: value }, props?.index);
+                            handleAddAsset(
+                                props?.type,
+                                {
+                                    symbol: symbol?.toUpperCase(),
+                                    amount: amount,
+                                    value: value,
+                                },
+                                props?.index
+                            );
                             closeAddAssetModal();
                         }}
                     >
@@ -286,7 +324,13 @@ export default function Page() {
             setFilter(
                 exist
                     ? filter
-                    : [...filter, { symbol: values?.find((f: Asset) => f?.symbol?.toUpperCase() === pair?.symbol?.toUpperCase())?.symbol, amount: 0 }]
+                    : [
+                          ...filter,
+                          {
+                              symbol: values?.find((f: Asset) => f?.symbol?.toUpperCase() === pair?.symbol?.toUpperCase())?.symbol,
+                              amount: 0,
+                          },
+                      ]
             );
         };
 
@@ -313,7 +357,13 @@ export default function Page() {
         const handleListing = () => {
             filter?.map((a: Asset) => {
                 (a?.amount || 0) > 0 && deposit(a, user!);
-                setMarket((state: Market[]) => [...state, { name: `${asset?.symbol}-${a?.symbol}}`, price: (a?.amount || 1) / (asset?.amount || 1) }]);
+                setMarket((state: Market[]) => [
+                    ...state,
+                    {
+                        name: `${asset?.symbol}-${a?.symbol}`,
+                        price: (a?.amount || 1) / (asset?.amount || 1),
+                    },
+                ]);
             });
             handleAddAsset("vault", asset!, user!);
             handleAddAsset("user", { ...asset, amount: -asset?.amount! }, user!);
@@ -402,7 +452,9 @@ export default function Page() {
                                                                 value={a?.amount}
                                                                 align={"right"}
                                                                 onChange={(e: any, v: any) => handleChangeListingPairAmount(v, a)}
-                                                                left={{ children: <Elements.Text>{a?.symbol?.toUpperCase()}</Elements.Text> }}
+                                                                left={{
+                                                                    children: <Elements.Text>{a?.symbol?.toUpperCase()}</Elements.Text>,
+                                                                }}
                                                                 error={
                                                                     (users[user]?.assets?.find(
                                                                         (f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase()
@@ -440,13 +492,24 @@ export default function Page() {
                                                 {filter?.map((f: Asset, i: number) => (
                                                     <Layouts.Col key={i} gap={0.5}>
                                                         <Elements.Text>{f?.symbol?.toUpperCase()}</Elements.Text>
-                                                        <div style={{ height: "1em", background: "white", backgroundSize: "100% 100%" }}></div>
+                                                        <div
+                                                            style={{
+                                                                height: "1em",
+                                                                background: "white",
+                                                                backgroundSize: "100% 100%",
+                                                            }}
+                                                        ></div>
                                                     </Layouts.Col>
                                                 ))}
                                             </Layouts.Col>
                                         </>
                                     ) : (
-                                        <Layouts.Contents.InnerContent style={{ alignItems: "center", justifyContent: "center" }}>
+                                        <Layouts.Contents.InnerContent
+                                            style={{
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                            }}
+                                        >
                                             <Elements.Text>There is no selected pair(s) yet.</Elements.Text>
                                         </Layouts.Contents.InnerContent>
                                     )}
@@ -533,7 +596,14 @@ export default function Page() {
                         <Layouts.Row gap={1} fill>
                             <Layouts.Contents.InnerContent>
                                 <Layouts.Row gap={1}>
-                                    <Controls.Button type={"solid"} onClick={() => handleAddAssetModal(null, { type: "vault" })}>
+                                    <Controls.Button
+                                        type={"solid"}
+                                        onClick={() =>
+                                            handleAddAssetModal(null, {
+                                                type: "vault",
+                                            })
+                                        }
+                                    >
                                         Add Asset
                                     </Controls.Button>
                                     <Controls.Button type={"solid"} onClick={() => handleListingModal()}>
@@ -550,7 +620,18 @@ export default function Page() {
                                 </Layouts.Row>
                             </Layouts.Contents.InnerContent>
                             <Layouts.Divider vertical />
-                            <Layouts.Col></Layouts.Col>
+                            <Layouts.Col>
+                                {market?.map((m: Market, i: number) => (
+                                    <Layouts.Box key={i}>
+                                        <Layouts.Col>
+                                            <Elements.Text>{m?.name}</Elements.Text>
+                                            <Layouts.Row>
+                                                <Elements.Text>{m?.price}</Elements.Text>
+                                            </Layouts.Row>
+                                        </Layouts.Col>
+                                    </Layouts.Box>
+                                ))}
+                            </Layouts.Col>
                             <Layouts.Divider vertical />
                             <Layouts.Contents.InnerContent>
                                 <Layouts.Col gap={2} fill>
@@ -570,7 +651,9 @@ export default function Page() {
                                                             setUser(undefined);
                                                         }
                                                     }}
-                                                    style={{ border: user === i ? "1px solid white" : "1px solid transparent" }}
+                                                    style={{
+                                                        border: user === i ? "1px solid white" : "1px solid transparent",
+                                                    }}
                                                 >
                                                     <Layouts.Box padding={2}>
                                                         <Layouts.Col gap={1}>
@@ -610,7 +693,14 @@ export default function Page() {
                                                             <Layouts.Divider />
                                                             <Layouts.Row gap={1}>
                                                                 <Controls.Button onClick={() => handleSetUserAsset(i)}>Set</Controls.Button>
-                                                                <Controls.Button onClick={() => handleAddAssetModal(null, { type: "user", index: i })}>
+                                                                <Controls.Button
+                                                                    onClick={() =>
+                                                                        handleAddAssetModal(null, {
+                                                                            type: "user",
+                                                                            index: i,
+                                                                        })
+                                                                    }
+                                                                >
                                                                     Add Asset
                                                                 </Controls.Button>
                                                             </Layouts.Row>
