@@ -1,21 +1,10 @@
 {
     "name": "@coinmeca/ui",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "keywords": [
         "coinmeca",
-        "smart-contract",
-        "solidity",
-        "ethereum",
-        "ethers",
-        "ether",
-        "helper",
-        "utility",
-        "eip",
-        "2535",
-        "eip2535",
-        "eip-2535",
-        "diamond",
-        "diamond pattern"
+        "interface",
+        "ui"
     ],
     "repository": {
         "type": "git",
@@ -43,7 +32,6 @@
             ]
         }
     },
-    "private": true,
     "scripts": {
         "dev": "npm pkg set type=commonjs && next dev",
         "build": "npm pkg set type=module && tsc && tsc-alias && tscp",
@@ -54,30 +42,30 @@
         "lint": "next lint",
         "prebuild": "yarn clean"
     },
-    "dependencies": {
-        "chart.js": "^4.3.2",
-        "framer-motion": "^10.13.0",
-        "lightweight-charts": "^4.0.1",
-        "next": "13.4.12",
-        "react": "18.2.0",
-        "react-dom": "18.2.0",
-        "sass": "^1.63.6",
-        "shape": "^0.0.1",
-        "styled-components": "^6.0.3"
-    },
     "devDependencies": {
-        "@svgr/webpack": "^8.0.1",
-        "@types/node": "20.4.5",
-        "@types/react": "18.2.18",
-        "@types/react-dom": "18.2.7",
-        "eslint": "8.46.0",
-        "eslint-config-next": "13.4.12",
+        "@svgr/webpack": "^8.1.0",
+        "@types/node": "20.8.10",
+        "@types/react": "18.2.33",
+        "@types/react-dom": "18.2.14",
+        "eslint": "8.52.0",
+        "eslint-config-next": "14.0.1",
         "eslint-plugin-jsdoc": "^46.4.6",
         "path-browserify": "^1.0.1",
-        "tsc-alias": "^1.8.7",
+        "tsc-alias": "^1.8.8",
         "tsup": "^7.1.0",
-        "typescript": "5.1.6",
+        "typescript": "5.2.2",
         "typescript-cp": "^0.1.9",
-        "vercel": "^31.2.2"
+        "vercel": "^32.5.0"
+    },
+    "dependencies": {
+        "chart.js": "^4.4.0",
+        "framer-motion": "^10.16.4",
+        "lightweight-charts": "^4.1.1",
+        "next": "14.0.1",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "sass": "^1.69.5",
+        "shape": "^0.0.1",
+        "styled-components": "^6.1.0"
     }
 }
