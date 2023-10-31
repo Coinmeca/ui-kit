@@ -1,5 +1,5 @@
 import ChartJS from './chartjs/ChartJS';
 import * as LightWeight from './lightweight';
-import TradingView from './tradingview/TradingView';
+// import TradingView from './tradingview/TradingView';
 
-export {ChartJS, LightWeight, TradingView};
+export { ChartJS, LightWeight };
