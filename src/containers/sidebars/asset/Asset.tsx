@@ -1,3 +1,3 @@
 export default function Asset() {
-    return;
+	return;
 }

@@ -1,3 +1,3 @@
-import Order from "./order/Order";
+import Order from './order/Order';
 
-export { Order };
+export {Order};

@@ -1,1 +1,1 @@
-export * as Col from "./";
+export * as Col from './';

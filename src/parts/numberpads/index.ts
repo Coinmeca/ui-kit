@@ -1,3 +1,3 @@
-import Currency from "./currency/Currency";
+import Currency from './currency/Currency';
 
-export { Currency };
+export {Currency};
