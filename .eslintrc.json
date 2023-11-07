@@ -1,3 +1,3 @@
 {
-    "extends": ["next/core-web-vitals", "jsdoc"]
+  "extends": ["next/core-web-vitals"]
 }
