@@ -54,28 +54,28 @@ export default function Page() {
 
                     return props?.vault
                         ? [
-                              ...[
-                                  base,
-                                  typeof asset?.need !== "undefined" &&
-                                      asset?.need > 0 && [
-                                          <>
-                                              <Elements.Text>Need:</Elements.Text>
-                                          </>,
-                                          <>
-                                              <Elements.Text>{asset?.need}</Elements.Text>
-                                          </>,
-                                      ],
-                                  typeof asset?.weight !== "undefined" &&
-                                      asset?.weight > 0 && [
-                                          <>
-                                              <Elements.Text>Weight:</Elements.Text>
-                                          </>,
-                                          <>
-                                              <Elements.Text>{asset?.weight}</Elements.Text>
-                                          </>,
-                                      ],
-                              ],
-                          ]
+                            ...[
+                                base,
+                                typeof asset?.need !== "undefined" &&
+                                asset?.need > 0 && [
+                                    <>
+                                        <Elements.Text>Need:</Elements.Text>
+                                    </>,
+                                    <>
+                                        <Elements.Text>{asset?.need}</Elements.Text>
+                                    </>,
+                                ],
+                                typeof asset?.weight !== "undefined" &&
+                                asset?.weight > 0 && [
+                                    <>
+                                        <Elements.Text>Weight:</Elements.Text>
+                                    </>,
+                                    <>
+                                        <Elements.Text>{asset?.weight}</Elements.Text>
+                                    </>,
+                                ],
+                            ],
+                        ]
                         : base;
                 })
             );
@@ -96,15 +96,15 @@ export default function Page() {
                         const exist = state?.find((a: Asset) => a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
                         return exist
                             ? state?.map((a: Asset) => {
-                                  if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
-                                      return {
-                                          ...a,
-                                          amount: (a?.amount || 0) + (asset?.amount || 0),
-                                      };
-                                  } else {
-                                      return a;
-                                  }
-                              })
+                                if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
+                                    return {
+                                        ...a,
+                                        amount: (a?.amount || 0) + (asset?.amount || 0),
+                                    };
+                                } else {
+                                    return a;
+                                }
+                            })
                             : [...state, asset];
                     });
                 }
@@ -113,19 +113,19 @@ export default function Page() {
                         const exist = state?.find((a: Asset) => a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
                         return exist
                             ? state?.map((a: Asset) => {
-                                  if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
-                                      return { ...a, value: asset?.value };
-                                  } else {
-                                      return a;
-                                  }
-                              })
+                                if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
+                                    return { ...a, value: asset?.value };
+                                } else {
+                                    return a;
+                                }
+                            })
                             : [
-                                  ...state,
-                                  {
-                                      ...asset,
-                                      amount: typeof asset?.amount === "number" ? asset?.amount : 0,
-                                  },
-                              ];
+                                ...state,
+                                {
+                                    ...asset,
+                                    amount: typeof asset?.amount === "number" ? asset?.amount : 0,
+                                },
+                            ];
                     });
                 }
                 break;
@@ -188,17 +188,17 @@ export default function Page() {
         setVault((state: Asset[]) =>
             exist
                 ? state?.map((a: Asset) => {
-                      if (a?.symbol === asset?.symbol) {
-                          return {
-                              ...a,
-                              amount: a?.amount || 0 + amount,
-                              need: a?.need && (a?.need || 0) + amount,
-                              weight: a?.weight || 0 + mint,
-                          };
-                      } else {
-                          return a;
-                      }
-                  })
+                    if (a?.symbol === asset?.symbol) {
+                        return {
+                            ...a,
+                            amount: a?.amount || 0 + amount,
+                            need: a?.need && (a?.need || 0) + amount,
+                            weight: a?.weight || 0 + mint,
+                        };
+                    } else {
+                        return a;
+                    }
+                })
                 : [...state, { ...asset, weight: asset?.weight || 0 + mint }]
         );
 
@@ -325,12 +325,12 @@ export default function Page() {
                 exist
                     ? filter
                     : [
-                          ...filter,
-                          {
-                              symbol: values?.find((f: Asset) => f?.symbol?.toUpperCase() === pair?.symbol?.toUpperCase())?.symbol,
-                              amount: 0,
-                          },
-                      ]
+                        ...filter,
+                        {
+                            symbol: values?.find((f: Asset) => f?.symbol?.toUpperCase() === pair?.symbol?.toUpperCase())?.symbol,
+                            amount: 0,
+                        },
+                    ]
             );
         };
 
@@ -378,7 +378,7 @@ export default function Page() {
             if (filter && filter?.length > 0)
                 setValue(
                     ((filter[0]?.amount || 1) * (values?.find((f) => f?.symbol?.toUpperCase() === filter[0]?.symbol?.toUpperCase())?.value || 1)) /
-                        (asset?.amount || 1)
+                    (asset?.amount || 1)
                 );
             setTokens(
                 values?.filter((a: Asset) => {
@@ -419,7 +419,7 @@ export default function Page() {
                                             Balance:{" "}
                                             {asset
                                                 ? users[user]?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase())?.amount ||
-                                                  0
+                                                0
                                                 : "-"}
                                         </Elements.Text>
                                         <Controls.Input
