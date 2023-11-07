@@ -1,18 +1,5 @@
-import {ChartingLibraryWidgetOptions, ResolutionString} from 'trading-view/charting_library';
 
 export default function Data() {
-	const widget: Partial<ChartingLibraryWidgetOptions> = {
-		theme: 'dark',
-		symbol: 'AAPL',
-		interval: '60' as ResolutionString,
-		// datafeedUrl: BONFIDA_DATA_FEED,
-		library_path: '/trading-view/charting_library/',
-		client_id: 'coinmeca.net',
-		user_id: 'public_user_id',
-		fullscreen: false,
-		autosize: true
-	};
-
 	const market = {
 		logo: require('../../../assets/coins/eth.png'),
 		base: {
@@ -45,50 +32,50 @@ export default function Data() {
 	};
 
 	const asks = [
-		{price: 1511, balance: 800},
-		{price: 1512, balance: 1200},
-		{price: 1513, balance: 700},
-		{price: 1514, balance: 900},
-		{price: 1515, balance: 600},
-		{price: 1516, balance: 400},
-		{price: 1517, balance: 1200},
-		{price: 1518, balance: 700},
-		{price: 1519, balance: 600},
-		{price: 1521, balance: 50},
-		{price: 1522, balance: 100},
-		{price: 1523, balance: 400},
-		{price: 1524, balance: 200},
-		{price: 1525, balance: 300},
-		{price: 1526, balance: 600},
-		{price: 1527, balance: 800},
-		{price: 1528, balance: 700},
-		{price: 1529, balance: 500},
-		{price: 1530, balance: 100}
+		{ price: 1511, balance: 800 },
+		{ price: 1512, balance: 1200 },
+		{ price: 1513, balance: 700 },
+		{ price: 1514, balance: 900 },
+		{ price: 1515, balance: 600 },
+		{ price: 1516, balance: 400 },
+		{ price: 1517, balance: 1200 },
+		{ price: 1518, balance: 700 },
+		{ price: 1519, balance: 600 },
+		{ price: 1521, balance: 50 },
+		{ price: 1522, balance: 100 },
+		{ price: 1523, balance: 400 },
+		{ price: 1524, balance: 200 },
+		{ price: 1525, balance: 300 },
+		{ price: 1526, balance: 600 },
+		{ price: 1527, balance: 800 },
+		{ price: 1528, balance: 700 },
+		{ price: 1529, balance: 500 },
+		{ price: 1530, balance: 100 }
 	];
 
 	const bids = [
-		{price: 1510, balance: 100},
-		{price: 1509, balance: 500},
-		{price: 1508, balance: 700},
-		{price: 1507, balance: 800},
-		{price: 1506, balance: 600},
-		{price: 1505, balance: 300},
-		{price: 1504, balance: 200},
-		{price: 1503, balance: 400},
-		{price: 1502, balance: 100},
-		{price: 1501, balance: 50},
-		{price: 1500, balance: 600},
-		{price: 1499, balance: 700},
-		{price: 1498, balance: 1200},
-		{price: 1497, balance: 400},
-		{price: 1496, balance: 600},
-		{price: 1495, balance: 900},
-		{price: 1494, balance: 700},
-		{price: 1493, balance: 1200},
-		{price: 1492, balance: 800}
+		{ price: 1510, balance: 100 },
+		{ price: 1509, balance: 500 },
+		{ price: 1508, balance: 700 },
+		{ price: 1507, balance: 800 },
+		{ price: 1506, balance: 600 },
+		{ price: 1505, balance: 300 },
+		{ price: 1504, balance: 200 },
+		{ price: 1503, balance: 400 },
+		{ price: 1502, balance: 100 },
+		{ price: 1501, balance: 50 },
+		{ price: 1500, balance: 600 },
+		{ price: 1499, balance: 700 },
+		{ price: 1498, balance: 1200 },
+		{ price: 1497, balance: 400 },
+		{ price: 1496, balance: 600 },
+		{ price: 1495, balance: 900 },
+		{ price: 1494, balance: 700 },
+		{ price: 1493, balance: 1200 },
+		{ price: 1492, balance: 800 }
 	];
 
-	const orderbook = {asks: asks, bids: bids};
+	const orderbook = { asks: asks, bids: bids };
 	const orderbookView = ['All', 'Ask', 'Bid'];
 
 	const chart = {
@@ -305,38 +292,38 @@ export default function Data() {
 			}
 		],
 		volume: [
-			{time: '2023-05-13', value: 24.5, type: 'SELL'},
-			{time: '2023-05-14', value: 27.1, type: 'BUY'},
-			{time: '2023-05-15', value: 24.3, type: 'SELL'},
-			{time: '2023-05-16', value: 27.1, type: 'BUY'},
-			{time: '2023-05-17', value: 32.3, type: 'SELL'},
-			{time: '2023-05-18', value: 27.1, type: 'BUY'},
-			{time: '2023-05-19', value: 24.5, type: 'SELL'},
-			{time: '2023-05-20', value: 27.3, type: 'BUY'},
-			{time: '2023-05-21', value: 27.1, type: 'BUY'},
-			{time: '2023-05-22', value: 24.4, type: 'SELL'},
-			{time: '2023-05-23', value: 27.3, type: 'BUY'},
-			{time: '2023-05-24', value: 24.5, type: 'SELL'},
-			{time: '2023-05-25', value: 24.5, type: 'SELL'},
-			{time: '2023-05-26', value: 27.1, type: 'BUY'},
-			{time: '2023-05-27', value: 27.3, type: 'BUY'},
-			{time: '2023-05-28', value: 27.3, type: 'BUY'},
-			{time: '2023-05-29', value: 32.4, type: 'SELL'},
-			{time: '2023-05-30', value: 32.4, type: 'SELL'},
-			{time: '2023-05-31', value: 24.1, type: 'BUY'},
-			{time: '2023-06-01', value: 24.5, type: 'SELL'},
-			{time: '2023-06-02', value: 18.9, type: 'SELL'},
-			{time: '2023-06-03', value: 24.7, type: 'SELL'},
-			{time: '2023-06-04', value: 27.2, type: 'BUY'},
-			{time: '2023-06-05', value: 24.1, type: 'BUY'},
-			{time: '2023-06-06', value: 18.3, type: 'SELL'},
-			{time: '2023-06-07', value: 27.1, type: 'BUY'},
-			{time: '2023-06-08', value: 24.1, type: 'BUY'},
-			{time: '2023-06-09', value: 32.4, type: 'SELL'},
-			{time: '2023-06-10', value: 24.2, type: 'SELL'},
-			{time: '2023-06-11', value: 32.4, type: 'SELL'}
+			{ time: '2023-05-13', value: 24.5, type: 'SELL' },
+			{ time: '2023-05-14', value: 27.1, type: 'BUY' },
+			{ time: '2023-05-15', value: 24.3, type: 'SELL' },
+			{ time: '2023-05-16', value: 27.1, type: 'BUY' },
+			{ time: '2023-05-17', value: 32.3, type: 'SELL' },
+			{ time: '2023-05-18', value: 27.1, type: 'BUY' },
+			{ time: '2023-05-19', value: 24.5, type: 'SELL' },
+			{ time: '2023-05-20', value: 27.3, type: 'BUY' },
+			{ time: '2023-05-21', value: 27.1, type: 'BUY' },
+			{ time: '2023-05-22', value: 24.4, type: 'SELL' },
+			{ time: '2023-05-23', value: 27.3, type: 'BUY' },
+			{ time: '2023-05-24', value: 24.5, type: 'SELL' },
+			{ time: '2023-05-25', value: 24.5, type: 'SELL' },
+			{ time: '2023-05-26', value: 27.1, type: 'BUY' },
+			{ time: '2023-05-27', value: 27.3, type: 'BUY' },
+			{ time: '2023-05-28', value: 27.3, type: 'BUY' },
+			{ time: '2023-05-29', value: 32.4, type: 'SELL' },
+			{ time: '2023-05-30', value: 32.4, type: 'SELL' },
+			{ time: '2023-05-31', value: 24.1, type: 'BUY' },
+			{ time: '2023-06-01', value: 24.5, type: 'SELL' },
+			{ time: '2023-06-02', value: 18.9, type: 'SELL' },
+			{ time: '2023-06-03', value: 24.7, type: 'SELL' },
+			{ time: '2023-06-04', value: 27.2, type: 'BUY' },
+			{ time: '2023-06-05', value: 24.1, type: 'BUY' },
+			{ time: '2023-06-06', value: 18.3, type: 'SELL' },
+			{ time: '2023-06-07', value: 27.1, type: 'BUY' },
+			{ time: '2023-06-08', value: 24.1, type: 'BUY' },
+			{ time: '2023-06-09', value: 32.4, type: 'SELL' },
+			{ time: '2023-06-10', value: 24.2, type: 'SELL' },
+			{ time: '2023-06-11', value: 32.4, type: 'SELL' }
 		]
 	};
 
-	return {market, orderbook, info, orderbookView, chart, widget};
+	return { market, orderbook, info, orderbookView, chart };
 }
