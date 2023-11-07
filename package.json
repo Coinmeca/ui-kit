@@ -13,7 +13,7 @@
     "author": "Coinmeca Team <dev@coinmeca.net>",
     "license": "MIT",
     "sideEffects": false,
-    "type": "module",
+    "type": "commonjs",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "module": "dist/index.esm.js",
@@ -43,15 +43,14 @@
         "prebuild": "yarn clean"
     },
     "devDependencies": {
-        "@svgr/webpack": "^8.1.0",
+        "@svgr/webpack": "^8.0.1",
         "@types/node": "20.8.10",
         "@types/react": "18.2.36",
         "@types/react-dom": "18.2.14",
         "eslint": "8.53.0",
         "eslint-config-next": "14.0.1",
-        "eslint-plugin-jsdoc": "^46.4.6",
         "path-browserify": "^1.0.1",
-        "tsc-alias": "^1.8.8",
+        "tsc-alias": "^1.8.7",
         "tsup": "^7.1.0",
         "typescript": "5.2.2",
         "typescript-cp": "^0.1.9",
@@ -64,8 +63,8 @@
         "next": "14.0.1",
         "react": "18.2.0",
         "react-dom": "18.2.0",
-        "sass": "^1.69.5",
-        "shape": "^0.0.1",
-        "styled-components": "^6.1.0"
+        "sass": "^1.63.6",
+        "sharp": "^0.32.6",
+        "styled-components": "^6.0.3"
     }
 }
