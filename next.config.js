@@ -14,7 +14,7 @@ const nextConfig = {
 	},
 	swcMinify: true,
 	experimental: {
-		appDir: true
+		webpackBuildWorker: true
 	}
 };
 
