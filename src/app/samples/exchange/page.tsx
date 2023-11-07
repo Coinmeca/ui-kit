@@ -1,17 +1,17 @@
 'use client';
-import {useState} from 'react';
-import {Root} from 'lib/style';
-import {Charts, Controls, Elements, Layouts} from 'components';
-import {Asset, Exchange} from 'prefabs';
-import {Capitalize, Format} from 'lib/utils';
+import { useState } from 'react';
+import { Root } from 'lib/style';
+import { Charts, Controls, Elements, Layouts } from 'components';
+import { Asset, Exchange } from 'prefabs';
+import { Capitalize, Format } from 'lib/utils';
 import useWindowSize from 'hooks/useWindowSize';
-import {AnimatePresence} from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 import ExchangeData from './data';
 import AssetData from '../asset/data';
 
 export default function Page() {
-	const {windowSize} = useWindowSize();
+	const { windowSize } = useWindowSize();
 	const DummyExchange = ExchangeData();
 	const DummyAsset = AssetData();
 	const props = {
@@ -20,7 +20,6 @@ export default function Page() {
 		orderbook: DummyExchange.orderbook,
 		orderbookView: DummyExchange.orderbookView,
 		chart: DummyExchange.chart,
-		widget: DummyExchange.widget,
 		assets: DummyAsset.assets,
 		history: DummyAsset.history,
 		responsive: windowSize.width <= Root.Device.Mobile
@@ -38,14 +37,14 @@ export default function Page() {
 			<Layouts.Box fit change={parseFloat(props?.market?.change) > 0 ? 'green' : parseFloat(props?.market?.change) < 0 && 'red'}>
 				<AnimatePresence mode="wait">
 					<Layouts.Contents.InnerContent>
-						<Layouts.Row fix style={{alignItems: 'center'}}>
-							<Layouts.Row fix style={{alignItems: 'center'}} gap={2} fit>
+						<Layouts.Row fix style={{ alignItems: 'center' }}>
+							<Layouts.Row fix style={{ alignItems: 'center' }} gap={2} fit>
 								<Elements.Avatar img={props?.market?.logo} scale={1.3334} />
 								<Layouts.Row responsive={'mobile'} gap={1} fit>
 									<Elements.Text
 										size={2.5}
 										height={1}
-										style={{marginRight: '1em'}}
+										style={{ marginRight: '1em' }}
 										responsive={{
 											device: 'mobile',
 											size: 1.5
@@ -66,7 +65,7 @@ export default function Page() {
 								</Layouts.Row>
 							</Layouts.Row>
 							<Layouts.Row fix align="right">
-								<Layouts.Row fix fit gap={1} style={{alignItems: 'center'}}>
+								<Layouts.Row fix fit gap={1} style={{ alignItems: 'center' }}>
 									<Elements.Icon scale={1.5} icon={'caret-up'} change />
 									<Elements.Text
 										size={2.5}
@@ -82,7 +81,7 @@ export default function Page() {
 								</Layouts.Row>
 							</Layouts.Row>
 						</Layouts.Row>
-						<Layouts.Divider style={{marginTop: '1em'}} />
+						<Layouts.Divider style={{ marginTop: '1em' }} />
 						<Layouts.Col show={'mobile'} gap={0}>
 							<Layouts.Row gap={1} fix>
 								<Controls.Tab active={mobile === 'info'} onClick={() => setMobile('info')}>
@@ -109,7 +108,7 @@ export default function Page() {
 									area: `'up' 'down'`,
 									width: '1fr',
 									height: `1fr ${tab === 'history' ? 'minmax(34em, 1fr)' : '34em'}`,
-									gap: {col: 0, row: 2}
+									gap: { col: 0, row: 2 }
 								}
 							]}
 							contents={[
@@ -234,13 +233,12 @@ export default function Page() {
 													]}
 												/>
 												<Layouts.Contents.InnerContent>
-													<Charts.TradingView {...props.widget} script={'/../trading-view/datafeeds/udf/dist/bundle.js'} />
-													{/* <Charts.LightWeight.Candle
-                                                        price={props?.chart?.price}
-                                                        volume={props?.chart?.volume}
-                                                        up={"BUY"}
-                                                        down={"SELL"}
-                                                    /> */}
+													<Charts.LightWeight.Candle
+														price={props?.chart?.price}
+														volume={props?.chart?.volume}
+														up={"BUY"}
+														down={"SELL"}
+													/>
 												</Layouts.Contents.InnerContent>
 											</Layouts.Contents.InnerContent>
 										</Layouts.Contents.SlideContent>
