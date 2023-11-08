@@ -1,9 +1,9 @@
 'use client';
-import {css, styled} from 'styled-components';
-import {Root} from 'lib/style';
+import { css, styled } from 'styled-components';
+import { Root } from 'lib/style';
 
 import * as Input from 'components/controls/input/Input.styled';
-import * as ListItem from 'components/layouts/list/ListItem.style';
+import * as ListItem from '../../components/layouts/list/ListItem.styled';
 import * as TableItem from 'components/layouts/table/TableItem.styled';
 
 export const Upper = styled.section`
@@ -52,8 +52,8 @@ const Style = styled.aside<{
 	$width: number;
 	$active: boolean;
 }>`
-	font-size: ${({$scale}) => $scale}em;
-	width: ${({$width}) => $width}em;
+	font-size: ${({ $scale }) => $scale}em;
+	width: ${({ $width }) => $width}em;
 	position: relative;
 	display: flex;
 	height: 100%;
@@ -78,7 +78,7 @@ const Style = styled.aside<{
 		}
 	}
 
-	${({$width, $active}) =>
+	${({ $width, $active }) =>
 		$active &&
 		css`
 			min-width: ${$active ? $width : 0}em;

@@ -1,13 +1,13 @@
 'use client';
-import {css, styled} from 'styled-components';
-import {Root} from 'lib/style';
+import { css, styled } from 'styled-components';
+import { Root } from 'lib/style';
 
-export const Row = styled.div<{$change?: string}>`
+export const Row = styled.div<{ $change?: string }>`
 	display: flex;
 	flex-direction: row;
 	gap: 1em;
 
-	${({$change}) => $change && `--change: ${$change};`}
+	${({ $change }) => $change && `--change: ${$change};`}
 
 	&>span {
 		width: 100%;
@@ -17,13 +17,13 @@ export const Row = styled.div<{$change?: string}>`
 	}
 `;
 
-export const Cell = styled.div<{$change?: string}>`
+export const Cell = styled.div<{ $change?: string }>`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	gap: 0.167em;
+	gap: 0.5em;
 
-	${({$change}) => $change && `--change: ${$change};`}
+	${({ $change }) => $change && `--change: ${$change};`}
 
 	&>span {
 		width: 100%;
@@ -33,19 +33,19 @@ export const Cell = styled.div<{$change?: string}>`
 	}
 `;
 
-const Style = styled.div<{$change?: string; $event: boolean}>`
+const Style = styled.div<{ $change?: string; $event: boolean }>`
 	display: table-row;
 	align-items: center;
 	gap: 1em;
 	font-feature-settings:
 		'tnum' on,
 		'lnum' on;
-	cursor: ${({$event}) => ($event ? 'pointer' : 'default')};
-	pointer-events: ${({$event}) => ($event ? 'inherit' : 'none')};
+	cursor: ${({ $event }) => ($event ? 'pointer' : 'default')};
+	pointer-events: ${({ $event }) => ($event ? 'inherit' : 'none')};
 	scroll-snap-align: start;
 	transition: 0.3s ease;
 
-	${({$change}) => $change && `--change: ${$change};`}
+	${({ $change }) => $change && `--change: ${$change};`}
 
 	& > * {
 		display: table-cell;
@@ -61,13 +61,13 @@ const Style = styled.div<{$change?: string; $event: boolean}>`
 		}
 	}
 	&:hover {
-		background: rgba(${({$event}) => ($event ? 'var(--white)' : 'var(--black)')}, var(--o0075));
+		background: rgba(${({ $event }) => ($event ? 'var(--white)' : 'var(--black)')}, var(--o0075));
 	}
 
 	&:active {
-		${({$event}) =>
-			$event &&
-			css`
+		${({ $event }) =>
+		$event &&
+		css`
 				background: rgba(var(--white), var(--o015));
 			`};
 	}

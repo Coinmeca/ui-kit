@@ -1,5 +1,5 @@
 'use client';
-import Style, {Row, Col} from './ListItem.style';
+import Style, { Row, Col } from './ListItem.styled';
 
 export interface ListItem {
 	children?: any;
