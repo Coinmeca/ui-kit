@@ -70,7 +70,7 @@ export default function Input(props: Input) {
     const formatter = useCallback(
         (value?: number | string) => {
             if (!value || value === "") return "";
-            if (type === "number" || type === "currency") {
+            if (!value.toString().endsWith(".") && (type === "number" || type === "currency")) {
                 value = Format(value, "number", props?.lock, props?.fix) as number;
                 value =
                     typeof props?.min === "number" && props?.min > value
