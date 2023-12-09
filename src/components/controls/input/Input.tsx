@@ -72,11 +72,6 @@ export default function Input(props: Input) {
             if (!value || value === "") return "";
             if (type === "number" || type === "currency") {
                 value = Format(value, "number", props?.lock, props?.fix) as number;
-                console.log("check");
-                console.log(props?.max! < value);
-                console.log("max", props?.max!);
-                console.log("value", value);
-                console.log("type", typeof value);
                 value =
                     typeof props?.min === "number" && props?.min > value
                         ? props?.min
@@ -84,7 +79,6 @@ export default function Input(props: Input) {
                         ? props?.max
                         : value;
             }
-            console.log("format", Format(value, type, props?.lock, props?.fix));
             return Format(value, type, props?.lock, props?.fix);
         },
         [type, props.min, props.max, props.lock, props.fix]
@@ -113,10 +107,9 @@ export default function Input(props: Input) {
 
     const handleChange = (e: any) => {
         if (props?.lock || props?.disabled) return;
-        const value = typeof e === "object" ? formatter(e?.target?.value) : e.toString();
-        console.log("change", value);
+        const value = typeof e === "object" ? e?.target?.value : e;
         setError(false);
-        setValue(value);
+        setValue(formatter(value));
         if (typeof props?.onChange === "function") props?.onChange(e, value);
     };
 
