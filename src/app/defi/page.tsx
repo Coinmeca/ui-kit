@@ -54,28 +54,28 @@ export default function Page() {
 
                     return props?.vault
                         ? [
-                            ...[
-                                base,
-                                typeof asset?.need !== "undefined" &&
-                                asset?.need > 0 && [
-                                    <>
-                                        <Elements.Text>Need:</Elements.Text>
-                                    </>,
-                                    <>
-                                        <Elements.Text>{asset?.need}</Elements.Text>
-                                    </>,
-                                ],
-                                typeof asset?.weight !== "undefined" &&
-                                asset?.weight > 0 && [
-                                    <>
-                                        <Elements.Text>Weight:</Elements.Text>
-                                    </>,
-                                    <>
-                                        <Elements.Text>{asset?.weight}</Elements.Text>
-                                    </>,
-                                ],
-                            ],
-                        ]
+                              ...[
+                                  base,
+                                  typeof asset?.need !== "undefined" &&
+                                      asset?.need > 0 && [
+                                          <>
+                                              <Elements.Text>Need:</Elements.Text>
+                                          </>,
+                                          <>
+                                              <Elements.Text>{asset?.need}</Elements.Text>
+                                          </>,
+                                      ],
+                                  typeof asset?.weight !== "undefined" &&
+                                      asset?.weight > 0 && [
+                                          <>
+                                              <Elements.Text>Weight:</Elements.Text>
+                                          </>,
+                                          <>
+                                              <Elements.Text>{asset?.weight}</Elements.Text>
+                                          </>,
+                                      ],
+                              ],
+                          ]
                         : base;
                 })
             );
@@ -96,15 +96,15 @@ export default function Page() {
                         const exist = state?.find((a: Asset) => a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
                         return exist
                             ? state?.map((a: Asset) => {
-                                if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
-                                    return {
-                                        ...a,
-                                        amount: (a?.amount || 0) + (asset?.amount || 0),
-                                    };
-                                } else {
-                                    return a;
-                                }
-                            })
+                                  if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
+                                      return {
+                                          ...a,
+                                          amount: (a?.amount || 0) + (asset?.amount || 0),
+                                      };
+                                  } else {
+                                      return a;
+                                  }
+                              })
                             : [...state, asset];
                     });
                 }
@@ -113,19 +113,19 @@ export default function Page() {
                         const exist = state?.find((a: Asset) => a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
                         return exist
                             ? state?.map((a: Asset) => {
-                                if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
-                                    return { ...a, value: asset?.value };
-                                } else {
-                                    return a;
-                                }
-                            })
+                                  if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
+                                      return { ...a, value: asset?.value };
+                                  } else {
+                                      return a;
+                                  }
+                              })
                             : [
-                                ...state,
-                                {
-                                    ...asset,
-                                    amount: typeof asset?.amount === "number" ? asset?.amount : 0,
-                                },
-                            ];
+                                  ...state,
+                                  {
+                                      ...asset,
+                                      amount: typeof asset?.amount === "number" ? asset?.amount : 0,
+                                  },
+                              ];
                     });
                 }
                 break;
@@ -188,17 +188,17 @@ export default function Page() {
         setVault((state: Asset[]) =>
             exist
                 ? state?.map((a: Asset) => {
-                    if (a?.symbol === asset?.symbol) {
-                        return {
-                            ...a,
-                            amount: a?.amount || 0 + amount,
-                            need: a?.need && (a?.need || 0) + amount,
-                            weight: a?.weight || 0 + mint,
-                        };
-                    } else {
-                        return a;
-                    }
-                })
+                      if (a?.symbol === asset?.symbol) {
+                          return {
+                              ...a,
+                              amount: a?.amount || 0 + amount,
+                              need: a?.need && (a?.need || 0) + amount,
+                              weight: a?.weight || 0 + mint,
+                          };
+                      } else {
+                          return a;
+                      }
+                  })
                 : [...state, { ...asset, weight: asset?.weight || 0 + mint }]
         );
 
@@ -325,12 +325,12 @@ export default function Page() {
                 exist
                     ? filter
                     : [
-                        ...filter,
-                        {
-                            symbol: values?.find((f: Asset) => f?.symbol?.toUpperCase() === pair?.symbol?.toUpperCase())?.symbol,
-                            amount: 0,
-                        },
-                    ]
+                          ...filter,
+                          {
+                              symbol: values?.find((f: Asset) => f?.symbol?.toUpperCase() === pair?.symbol?.toUpperCase())?.symbol,
+                              amount: 0,
+                          },
+                      ]
             );
         };
 
@@ -378,7 +378,7 @@ export default function Page() {
             if (filter && filter?.length > 0)
                 setValue(
                     ((filter[0]?.amount || 1) * (values?.find((f) => f?.symbol?.toUpperCase() === filter[0]?.symbol?.toUpperCase())?.value || 1)) /
-                    (asset?.amount || 1)
+                        (asset?.amount || 1)
                 );
             setTokens(
                 values?.filter((a: Asset) => {
@@ -419,7 +419,7 @@ export default function Page() {
                                             Balance:{" "}
                                             {asset
                                                 ? users[user]?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase())?.amount ||
-                                                0
+                                                  0
                                                 : "-"}
                                         </Elements.Text>
                                         <Controls.Input
@@ -528,6 +528,88 @@ export default function Page() {
     };
     const [handleListingModal, closeListingModal] = usePortal(<ListingModal />);
 
+    const DepositModal = () => {
+        const [asset, setAsset] = useState<Asset>();
+        const [assets, setAssets] = useState<Asset[]>([]);
+        const [amount, setAmount] = useState<number>();
+
+        useEffect(() => {
+            if (typeof user !== "undefined") {
+                if (users[user]?.assets && users[user]?.assets?.length > 0) {
+                    setAsset(users[user]?.assets[0]);
+                }
+                setAssets(
+                    users[user]?.assets?.filter((a: Asset) => {
+                        const exist = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase() || f?.symbol?.toUpperCase() === "MECA");
+                        if (!exist) return a;
+                        else return undefined;
+                    })
+                );
+            }
+        }, [users, user]);
+
+        const handleChangeAmount = (v: any) => {
+            v = Format(v, "number") as number;
+            if (asset && typeof asset?.amount === "number" && typeof v === "number") {
+                asset?.amount < v ? setAmount(asset?.amount) : setAmount(v);
+            }
+        };
+
+        useEffect(() => {
+            console.log(amount);
+            if (asset && typeof asset?.amount === "number" && typeof amount === "number") {
+                asset?.amount < amount ? setAmount(asset?.amount) : setAmount(amount);
+            }
+        }, [asset, amount]);
+
+        return (
+            <Modal width={64} title={`Deposit`} onClose={() => closeDepositModal()} close>
+                <Layouts.Col gap={2} fill>
+                    {typeof user !== "undefined" ? (
+                        assets?.length > 0 ? (
+                            <Layouts.Row gap={2} fill fix>
+                                <Layouts.Col gap={1} fill>
+                                    <Elements.Text type={"desc"} align="left">
+                                        Balance: {`${asset?.amount}`}
+                                    </Elements.Text>
+                                    <Controls.Input
+                                        placeholder={"amount"}
+                                        type="currency"
+                                        value={amount}
+                                        onChange={(e: any, v: any) => handleChangeAmount(v)}
+                                        max={asset?.amount}
+                                        align={"right"}
+                                        right={{
+                                            children: (
+                                                <Controls.Dropdown
+                                                    option={asset}
+                                                    options={assets}
+                                                    keyName={"symbol"}
+                                                    onClickItem={(e: any, v: Asset, k: number) => setAsset(v)}
+                                                />
+                                            ),
+                                        }}
+                                    ></Controls.Input>
+                                </Layouts.Col>
+                            </Layouts.Row>
+                        ) : (
+                            <>
+                                <Elements.Text type="p">User {`${user}`} doesn't have any asset.</Elements.Text>
+                                <Controls.Button onClick={closeDepositModal}>Close</Controls.Button>
+                            </>
+                        )
+                    ) : (
+                        <>
+                            <Elements.Text type="p">There is no selected user.</Elements.Text>
+                            <Controls.Button onClick={closeDepositModal}>Close</Controls.Button>
+                        </>
+                    )}
+                </Layouts.Col>
+            </Modal>
+        );
+    };
+    const [handleDepositModal, closeDepositModal] = usePortal(<DepositModal />);
+
     const handleAddNewUser = () => {
         setUsers((users: any) => [...users, { name: `User ${users.length}`, assets: [] }]);
     };
@@ -608,6 +690,9 @@ export default function Page() {
                                     </Controls.Button>
                                     <Controls.Button type={"solid"} onClick={() => handleListingModal()}>
                                         Listing
+                                    </Controls.Button>
+                                    <Controls.Button type={"solid"} onClick={() => handleDepositModal()}>
+                                        Deposit
                                     </Controls.Button>
                                 </Layouts.Row>
                                 <Layouts.Contents.InnerContent>
