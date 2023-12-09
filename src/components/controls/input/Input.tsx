@@ -70,14 +70,16 @@ export default function Input(props: Input) {
     const formatter = useCallback(
         (value?: number | string) => {
             if (!value || value === "") return "";
-            if (!value.toString().endsWith(".") && (type === "number" || type === "currency")) {
-                value = Format(value, "number", props?.lock, props?.fix) as number;
-                value =
-                    typeof props?.min === "number" && props?.min > value
-                        ? props?.min
-                        : typeof props?.max === "number" && props?.max < value
-                        ? props?.max
-                        : value;
+            if (type === "number" || type === "currency") {
+                if (!props.readOnly && !value.toString().endsWith(".")) {
+                    value = Format(value, "number", props?.lock, props?.fix) as number;
+                    value =
+                        typeof props?.min === "number" && props?.min > value
+                            ? props?.min
+                            : typeof props?.max === "number" && props?.max < value
+                            ? props?.max
+                            : value;
+                }
             }
             return Format(value, type, props?.lock, props?.fix);
         },
