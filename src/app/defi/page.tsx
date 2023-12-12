@@ -4,7 +4,7 @@ import { Controls, Elements, Layouts } from "components";
 import { Modal } from "containers";
 import { usePortal } from "hooks";
 import { Capitalize, Format } from "lib/utils";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 interface Asset {
     key?: boolean;
@@ -13,9 +13,12 @@ interface Asset {
     value?: number;
     weight?: number;
     need?: number;
+    markets?: string[];
 }
 
 interface Market {
+    base: string;
+    quote: string;
     name: string;
     price: number;
 }
@@ -26,14 +29,67 @@ interface User {
     assets: Asset[];
 }
 
+// const init = {
+//     values: [
+//         { symbol: "MECA", value: 1 },
+//         { symbol: "ETH", value: 2 },
+//         { symbol: "DAI", value: 1 },
+//         { symbol: "USDT", value: 1 },
+//         { symbol: "USDC", value: 1 },
+//     ] as Asset[],
+//     users: [
+//         {
+//             assets: [
+//                 { symbol: "ETH", amount: 10 },
+//                 { symbol: "DAI", amount: 10 },
+//                 { symbol: "USDT", amount: 10 },
+//             ],
+//         },
+//     ],
+// };
+
+const init = {
+    supply: 20,
+    values: [
+        { key: true, symbol: "MECA", value: 2 },
+        { key: true, symbol: "ETH", value: 2 },
+        { key: true, symbol: "DAI", value: 1 },
+        { key: true, symbol: "USDT", value: 1 },
+        { key: true, symbol: "USDC", value: 1 },
+    ],
+    vault: [
+        { symbol: "ETH", amount: 100, weight: 10 },
+        { symbol: "DAI", amount: 100, weight: 5 },
+        { symbol: "USDT", amount: 100, weight: 5 },
+    ],
+    markets: [
+        { name: "ETH/DAI", base: "ETH", quote: "DAI", price: 2 },
+        { name: "ETH/USDT", base: "ETH", quote: "USDT", price: 2 },
+    ],
+    users: [
+        {
+            name: "User 0",
+            assets: [{ symbol: "MECA", amount: 20 }],
+        },
+        {
+            name: "User 1",
+            assets: [
+                { symbol: "SHIT", amount: 100 },
+                { symbol: "DAI", amount: 100 },
+            ],
+        },
+    ],
+};
+
 export default function Page() {
-    const [vault, setVault] = useState<Asset[]>([]);
-    const [values, setValues] = useState<Asset[]>([{ symbol: "MECA", value: 1 }]);
-    const [users, setUsers] = useState<User[]>([]);
-    const [user, setUser] = useState<number | undefined>();
-    const [meca, setMeca] = useState<number>(0);
+    const [values, setValues] = useState<Asset[]>(init.values || []);
+    // let vault = (init.vault || []);
+    const [vault, setVault] = useState<Asset[]>(init.vault || []);
+    const [market, setMarket] = useState<Market[]>(init.markets || []);
+    const [users, setUsers] = useState<User[]>(init.users || []);
+    const [user, setUser] = useState<number | undefined>(0);
+    const [supply, setSupply] = useState<number>(init.supply || 0);
     const [tvl, setTVL] = useState(0);
-    const [market, setMarket] = useState<Market[]>([]);
 
     const Formatter = (props: { data?: Asset[]; vault?: boolean }) => {
         const formatter = (data: Asset[]) => {
@@ -173,33 +229,141 @@ export default function Page() {
         }
     };
 
-    const deposit = (asset: Asset, user: number) => {
+    const handleRemoveAsset = (type: "vault" | "user", asset: Asset, index?: number) => {
+        switch (type) {
+            case "vault":
+                if (asset?.amount && asset?.amount > 0) {
+                    setVault((state: Asset[]) => {
+                        const exist = state?.find((a: Asset) => a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
+                        return exist
+                            ? state?.map((a: Asset) => {
+                                  if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
+                                      return {
+                                          ...a,
+                                          amount: (a?.amount || 0) - (asset?.amount || 0),
+                                      };
+                                  } else {
+                                      return a;
+                                  }
+                              })
+                            : [...state, asset];
+                    });
+                }
+                if (asset?.value && asset?.value > 0) {
+                    setValues((state: Asset[]) => {
+                        const exist = state?.find((a: Asset) => a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
+                        return exist
+                            ? state?.map((a: Asset) => {
+                                  if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
+                                      return { ...a, value: asset?.value };
+                                  } else {
+                                      return a;
+                                  }
+                              })
+                            : [
+                                  ...state,
+                                  {
+                                      ...asset,
+                                      amount: typeof asset?.amount === "number" ? asset?.amount : 0,
+                                  },
+                              ];
+                    });
+                }
+                break;
+            case "user":
+                if (typeof index !== "number") return;
+                setUsers((state: User[]) =>
+                    state?.map((u: User, i: number) => {
+                        if (i === index) {
+                            const exist = u?.assets?.find((a) => a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
+                            if (exist) {
+                                return {
+                                    ...u,
+                                    assets: [
+                                        ...u?.assets?.map((a: Asset) => {
+                                            if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
+                                                return {
+                                                    symbol: a?.symbol?.toUpperCase(),
+                                                    amount: a?.amount! - asset?.amount!,
+                                                };
+                                            } else {
+                                                return a;
+                                            }
+                                        }),
+                                    ],
+                                };
+                            } else {
+                                return {
+                                    ...u,
+                                    assets: [
+                                        ...u?.assets,
+                                        {
+                                            ...asset,
+                                            amount: typeof asset?.amount === "number" ? asset?.amount : 0,
+                                        },
+                                    ],
+                                    initial: asset?.amount || 0 * (values.find((f: Asset) => f?.symbol === asset?.symbol)?.value || 0),
+                                };
+                            }
+                        } else {
+                            return u;
+                        }
+                    })
+                );
+                break;
+        }
+    };
+
+    const estimate = (base: string, amount: number, quote = "MECA") => {
+        let token = (assets: Asset[], symbol: string) => {
+            return assets?.find((f: Asset) => f?.symbol?.toUpperCase() === symbol.toUpperCase());
+        };
+
+        const b = (base === "MECA" ? token(values, base) : token(vault, base)) || token(values, base);
+        const q = (quote === "MECA" ? token(values, quote) : token(vault, quote)) || token(values, quote);
+
+        if (!b || !q) return 0;
+        return typeof b?.weight === "undefined" ? (b?.amount || 0 + amount * b?.value!) / q?.value! : (b?.weight / (b?.amount || 1)) * amount;
+    };
+
+    const exchange = (base: string, amount: number, quote = "MECA") => {
+        const b = (base === "MECA" ? values : vault)?.find((f: Asset) => f?.symbol?.toUpperCase() === base.toUpperCase());
+        const q = (quote === "MECA" ? values : vault)?.find((f: Asset) => f?.symbol?.toUpperCase() === quote.toUpperCase());
+
+        if (!b || !q) return undefined;
+        let rate: number =
+            (((b?.amount || 0) + amount) / (b?.weight || 1)) * amount * (((b?.amount || 0) + amount || 1) / ((b?.amount || 0) - (b?.need || 0) || 1));
+        rate = rate * (supply / (supply + rate)) * 0.99;
+        return rate;
+    };
+
+    const deposit = (...args: [Asset, number] | [Asset, number, boolean | number | undefined] | [Asset, number, boolean | number, number]) => {
+        const asset: Asset = args[0];
+        const user: number = args[1];
+        const lp: boolean = args.length >= 3 && typeof args[2] === "boolean" ? args[2] : true;
+        const weight: number | undefined =
+            args.length === 4 && typeof args[3] === "number" ? args[3] : args.length === 3 && typeof args[2] === "number" ? args[2] : undefined;
+
         const exist = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
-        const exchange = values?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
-        const initial = values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA");
 
-        if (!exist && !exchange) return;
-
-        const deposit = asset?.amount! * exchange?.value!;
         const amount = asset?.amount!;
-        const mint = (typeof exist?.weight === "undefined" ? deposit / initial?.value! : amount / exist?.weight) * 0.99;
+        const mint =
+            typeof weight === "number"
+                ? weight
+                : (typeof exist === "object" ? exchange(asset?.symbol!, asset?.amount!) : estimate(asset?.symbol!, asset?.amount!)) || 0;
 
-        setMeca(meca + mint);
+        if (lp) setSupply((state: number) => state + mint);
+
         setVault((state: Asset[]) =>
             exist
-                ? state?.map((a: Asset) => {
-                      if (a?.symbol === asset?.symbol) {
-                          return {
-                              ...a,
-                              amount: a?.amount || 0 + amount,
-                              need: a?.need && (a?.need || 0) + amount,
-                              weight: a?.weight || 0 + mint,
-                          };
-                      } else {
-                          return a;
-                      }
-                  })
-                : [...state, { ...asset, weight: asset?.weight || 0 + mint }]
+                ? [
+                      ...state?.map((f: Asset) => {
+                          return f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()
+                              ? { ...f, amount: (f?.amount || 0) + amount, need: (f?.need || 0) - amount, weight: (f?.weight || 0) + mint }
+                              : f;
+                      }),
+                  ]
+                : [...state, { ...asset, weight: mint }]
         );
 
         setUsers((state: User[]) =>
@@ -209,30 +373,77 @@ export default function Page() {
                     const meca = u?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA");
                     let assets = u?.assets;
 
-                    if (exist) {
-                        assets = [...assets]?.map((a: Asset) => {
-                            if (a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()) {
-                                return { ...a, amount: a?.amount! - amount };
-                            } else {
-                                return a;
-                            }
-                        });
-                    } else {
-                        assets = [...assets, { ...asset, amount: -amount }];
-                    }
+                    assets = exist
+                        ? [
+                              ...assets?.map((f: Asset) => {
+                                  return f?.symbol?.toUpperCase() !== exist?.symbol?.toUpperCase() ? f : { ...f, amount: (f?.amount || 0) - amount };
+                              }),
+                          ]
+                        : [...assets, { ...asset, amount: -amount }];
 
-                    if (meca) {
-                        assets = [...assets]?.map((a: Asset) => {
-                            if (a?.symbol?.toUpperCase() === "MECA") {
-                                return { ...a, amount: a?.amount! + mint };
-                            } else {
-                                return a;
-                            }
-                        });
-                    } else {
-                        assets = [...assets, { symbol: "MECA", amount: mint }];
+                    if (lp) {
+                        assets = meca
+                            ? [
+                                  ...assets.map((f: Asset) => {
+                                      return f?.symbol?.toUpperCase() === "MECA" ? { ...f, amount: (f?.amount || 0) + mint } : f;
+                                  }),
+                              ]
+                            : [...assets, { symbol: "MECA", amount: mint }];
                     }
+                    return { ...u, assets };
+                } else {
+                    return u;
+                }
+            })
+        );
 
+        return mint;
+    };
+
+    const withdraw = (burn: number, symbol: string, user: number, lp = true) => {
+        const weight = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === symbol?.toUpperCase())?.weight || 1 / burn;
+        burn = burn > weight ? weight : burn;
+        const asset = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === symbol?.toUpperCase());
+        if (!asset) return;
+
+        // math
+        let w = (((asset?.weight || 0) - burn || 1) / (asset?.amount || 1)) * burn * (((asset?.weight || 0) - burn || 1) / (asset?.weight || 1));
+        const amount = w * ((supply - w) / supply) * 0.99;
+        if (!weight || !amount) return;
+        if (lp) setSupply(supply - burn);
+
+        setVault((state: Asset[]) => [
+            ...state?.map((f: Asset) => {
+                return f?.symbol?.toUpperCase() !== asset?.symbol?.toUpperCase()
+                    ? f
+                    : { ...f, amount: (f?.amount || 0) - amount, need: (f?.need || 0) + amount, weight: (f?.weight || 0) - burn };
+            }),
+        ]);
+
+        setUsers((state: User[]) =>
+            state?.map((u: User, i: number) => {
+                if (i === user) {
+                    const exist = u?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
+                    const meca = u?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA");
+                    let assets = u?.assets;
+
+                    assets = exist
+                        ? [
+                              ...assets?.map((f: Asset) => {
+                                  return f?.symbol?.toUpperCase() !== exist?.symbol?.toUpperCase() ? f : { ...exist, amount: (exist?.amount || 0) + amount };
+                              }),
+                          ]
+                        : [...assets, { ...asset, amount: amount }];
+
+                    if (lp) {
+                        assets = meca
+                            ? [
+                                  ...assets.map((f: Asset) => {
+                                      return f?.symbol?.toUpperCase() === "MECA" ? { ...f, amount: (f?.amount || 0) - burn } : f;
+                                  }),
+                              ]
+                            : [...assets, { symbol: "MECA", amount: 0 }];
+                    }
                     return { ...u, assets };
                 } else {
                     return u;
@@ -316,6 +527,7 @@ export default function Page() {
         const [tokens, setTokens] = useState<Asset[]>(values);
         const [asset, setAsset] = useState<Asset | undefined>();
         const [value, setValue] = useState(0);
+        const [colors, setColors] = useState<string[]>([]);
 
         const handleAddFilter = (pair: Asset) => {
             if (!pair) return;
@@ -332,6 +544,7 @@ export default function Page() {
                           },
                       ]
             );
+            setColors([...colors, [...Array(6)].map(() => Math.floor(Math.random() * 16).toString(16)).join("")]);
         };
 
         const handleChangeListingPairAmount = (v: number, t: Asset) => {
@@ -355,18 +568,127 @@ export default function Page() {
         };
 
         const handleListing = () => {
+            let mint = 0;
+            let v = vault;
+            let u = users;
+            let m: Market[] = [];
             filter?.map((a: Asset) => {
-                (a?.amount || 0) > 0 && deposit(a, user!);
-                setMarket((state: Market[]) => [
-                    ...state,
-                    {
-                        name: `${asset?.symbol}-${a?.symbol}`,
+                if ((a?.amount || 0) > 0) {
+                    const exist = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase());
+                    const weight = estimate(a?.symbol!, a?.amount!) / filter?.length;
+                    mint += weight;
+                    // mint += deposit(a, user!, exist ? undefined : estimate(a?.symbol!, a?.amount!));
+
+                    const market = {
+                        base: `${asset?.symbol}`,
+                        quote: `${a?.symbol}`,
+                        name: `${asset?.symbol}/${a?.symbol}`,
                         price: (a?.amount || 1) / (asset?.amount || 1),
-                    },
-                ]);
+                    };
+                    m.push(market);
+                    v = exist
+                        ? [
+                              ...v?.map((f: Asset) =>
+                                  f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase()
+                                      ? {
+                                            ...f,
+                                            amount: (f?.amount || 0) + (a?.amount || 0),
+                                            weight: (f?.weight || 0) + weight,
+                                            markets: f?.markets
+                                                ? [...f?.markets?.filter((m: string) => m?.toLowerCase() !== market.name?.toUpperCase()), market.name]
+                                                : [market.name],
+                                        }
+                                      : f
+                              ),
+                          ]
+                        : [
+                              ...v,
+                              {
+                                  ...a,
+                                  amount: a?.amount || 0,
+                                  weight: weight,
+                                  markets: a?.markets
+                                      ? [...a?.markets?.filter((m: string) => m?.toLowerCase() !== market.name?.toUpperCase()), market.name]
+                                      : [market.name],
+                              },
+                          ];
+                    u = [
+                        ...u?.map((s: User, i: number) => {
+                            return i === user
+                                ? {
+                                      ...s,
+                                      assets: [
+                                          ...s?.assets?.map((f: Asset) =>
+                                              f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase() ? { ...f, amount: (f?.amount || 0) - (a?.amount || 0) } : f
+                                          ),
+                                      ],
+                                  }
+                                : s;
+                        }),
+                    ];
+                }
             });
-            handleAddAsset("vault", asset!, user!);
-            handleAddAsset("user", { ...asset, amount: -asset?.amount! }, user!);
+
+            setMarket((state: Market[]) => [...state, ...m]);
+            setValues((state: Asset[]) => [
+                ...state,
+                {
+                    symbol: asset?.symbol?.toUpperCase(),
+                    value:
+                        filter?.reduce((a, b) => {
+                            const value = values?.find((f: Asset) => f?.symbol?.toUpperCase() === b?.symbol?.toUpperCase());
+                            return a + (b?.amount || 0) * (value?.value || 0);
+                        }, 0) / (asset?.amount || 1),
+                },
+            ]);
+            setVault([
+                ...v,
+                {
+                    ...asset,
+                    amount: asset?.amount || 0,
+                    weight: (asset?.weight || 0) + mint,
+                    markets: asset?.markets
+                        ? [
+                              ...asset?.markets?.filter(
+                                  (f: string) => f?.toLowerCase() === m?.find((r: Market) => r?.name?.toUpperCase())?.name?.toUpperCase()
+                              ),
+                              ...m?.map((f: Market) => f?.name?.toUpperCase()),
+                          ]
+                        : [...m?.map((f: Market) => f?.name?.toUpperCase())],
+                },
+            ]);
+            setUsers([
+                ...u?.map((s: User, i: number) => {
+                    if (i === user) {
+                        const meca = s?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA");
+                        return meca
+                            ? {
+                                  ...s,
+                                  assets: [
+                                      ...s?.assets?.map((f: Asset) =>
+                                          f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()
+                                              ? { ...f, amount: (f?.amount || 0) - (asset?.amount || 0) }
+                                              : f?.symbol?.toUpperCase() === "MECA"
+                                              ? { ...f, amount: (f?.amount || 0) + mint }
+                                              : f
+                                      ),
+                                  ],
+                              }
+                            : {
+                                  ...s,
+                                  assets: [
+                                      ...s?.assets?.map((f: Asset) =>
+                                          f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()
+                                              ? { ...f, amount: (f?.amount || 0) - (asset?.amount || 0) }
+                                              : f
+                                      ),
+                                      { symbol: "MECA", amount: mint },
+                                  ],
+                              };
+                    } else return s;
+                }),
+            ]);
+            setSupply((state: number) => state + mint);
             closeListingModal();
         };
 
@@ -381,13 +703,7 @@ export default function Page() {
                         (asset?.amount || 1)
                 );
             setTokens(
-                values?.filter((a: Asset) => {
-                    const exist =
-                        filter?.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase()) ||
-                        a?.symbol?.toUpperCase() === asset?.symbol ||
-                        a?.symbol?.toUpperCase() === "MECA";
-                    if (!exist) return a;
-                })
+                users[user!]?.assets?.filter((u: Asset) => u?.symbol?.toUpperCase() !== "MECA" && u?.symbol?.toUpperCase() !== asset?.symbol?.toUpperCase())
             );
         }, [asset, filter]);
 
@@ -396,13 +712,21 @@ export default function Page() {
             if (typeof user !== "undefined") {
                 setList(
                     users[user]?.assets?.filter((a: Asset) => {
-                        const exist = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase() || f?.symbol?.toUpperCase() === "MECA");
-                        if (!exist) return a;
+                        const exist = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase());
+                        if (!exist && a?.symbol?.toUpperCase() !== "MECA") return a;
                         else return undefined;
                     })
                 );
             }
         }, [users, user]);
+
+        const [max, setMax] = useState<number>(1);
+        useEffect(() => {
+            const a = [{ asset, amount: asset?.amount! / filter.length }, ...filter];
+            if (a.length > 0) {
+                setMax(Math.max(...a.map((a: Asset | undefined) => a?.amount || 0)));
+            }
+        }, [asset, filter]);
 
         const condition =
             values?.filter((f: Asset) => f?.symbol?.toUpperCase() !== "MECA")?.length > 0 || vault?.filter((f: Asset) => f?.key)?.length > 0 || user;
@@ -425,6 +749,9 @@ export default function Page() {
                                         <Controls.Input
                                             value={asset?.amount}
                                             onChange={(e: any, v: any) => handleChangeListingAmount(v)}
+                                            max={
+                                                users[user]?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase())?.amount || 0
+                                            }
                                             right={{
                                                 children: (
                                                     <Controls.Dropdown keyName={"symbol"} onClickItem={(e: any, v: Asset) => setAsset(v)} options={list} />
@@ -452,6 +779,11 @@ export default function Page() {
                                                                 value={a?.amount}
                                                                 align={"right"}
                                                                 onChange={(e: any, v: any) => handleChangeListingPairAmount(v, a)}
+                                                                max={
+                                                                    users[user]?.assets?.find(
+                                                                        (f: Asset) => f?.symbol?.toLocaleUpperCase() === a?.symbol?.toUpperCase()
+                                                                    )?.amount || 0
+                                                                }
                                                                 left={{
                                                                     children: <Elements.Text>{a?.symbol?.toUpperCase()}</Elements.Text>,
                                                                 }}
@@ -475,7 +807,7 @@ export default function Page() {
                                                 );
                                             }
                                         })}
-                                    {tokens && tokens?.length > 0 && (
+                                    {tokens && tokens?.length > 0 && tokens?.length !== filter?.length && (
                                         <Controls.Dropdown
                                             placeholder={asset ? "Select Pair" : "Select your asset first"}
                                             keyName={"symbol"}
@@ -486,20 +818,50 @@ export default function Page() {
                                 </Layouts.Col>
                                 <Layouts.Divider vertical />
                                 <Layouts.Box padding={2}>
-                                    {filter && filter?.length > 0 ? (
+                                    {asset || (filter && filter?.length > 0) ? (
                                         <>
-                                            <Layouts.Col>
+                                            <Layouts.Col gap={4}>
                                                 {filter?.map((f: Asset, i: number) => (
-                                                    <Layouts.Col key={i} gap={0.5}>
-                                                        <Elements.Text>{f?.symbol?.toUpperCase()}</Elements.Text>
-                                                        <div
-                                                            style={{
-                                                                height: "1em",
-                                                                background: "white",
-                                                                backgroundSize: "100% 100%",
-                                                            }}
-                                                        ></div>
-                                                    </Layouts.Col>
+                                                    <>
+                                                        <Layouts.Col key={i} gap={1}>
+                                                            {asset && (
+                                                                <Layouts.Col gap={0.5}>
+                                                                    <Layouts.Row>
+                                                                        <Elements.Text align={"left"}>{asset?.symbol?.toUpperCase()}</Elements.Text>
+                                                                        <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
+                                                                            {(asset?.amount || filter.length) / filter.length} {asset?.symbol?.toUpperCase()}
+                                                                        </Elements.Text>
+                                                                    </Layouts.Row>
+                                                                    <div
+                                                                        style={{
+                                                                            height: "1em",
+                                                                            backgroundImage: `linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.3))`,
+                                                                            backgroundSize: `${((asset?.amount || 1) * 100) / filter?.length / max}% 100%`,
+                                                                            backgroundPosition: "left center",
+                                                                            backgroundRepeat: "no-repeat",
+                                                                        }}
+                                                                    />
+                                                                </Layouts.Col>
+                                                            )}
+                                                            <Layouts.Col key={i} gap={0.5}>
+                                                                <Layouts.Row>
+                                                                    <Elements.Text align={"left"}>{f?.symbol?.toUpperCase()}</Elements.Text>
+                                                                    <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
+                                                                        {f?.amount || 0} {f?.symbol?.toUpperCase()}
+                                                                    </Elements.Text>
+                                                                </Layouts.Row>
+                                                                <div
+                                                                    style={{
+                                                                        height: "1em",
+                                                                        backgroundImage: `linear-gradient(#${colors[i] || "fff"}, #${colors[i] || "fff"})`,
+                                                                        backgroundSize: `${((f?.amount || 1) * 100) / max}% 100%`,
+                                                                        backgroundPosition: "left center",
+                                                                        backgroundRepeat: "no-repeat",
+                                                                    }}
+                                                                />
+                                                            </Layouts.Col>
+                                                        </Layouts.Col>
+                                                    </>
                                                 ))}
                                             </Layouts.Col>
                                         </>
@@ -529,78 +891,180 @@ export default function Page() {
     const [handleListingModal, closeListingModal] = usePortal(<ListingModal />);
 
     const DepositModal = () => {
-        const [asset, setAsset] = useState<Asset>();
-        const [assets, setAssets] = useState<Asset[]>([]);
-        const [amount, setAmount] = useState<number>();
+        const assets = users[user!]?.assets?.filter((f: Asset) => f?.symbol?.toUpperCase() !== "MECA");
+        const [asset, setAsset] = useState<number>(0);
+        const [amount, setAmount] = useState<number>(0);
+        const [repeat, setRepeat] = useState<number>(1);
 
-        useEffect(() => {
-            if (typeof user !== "undefined") {
-                if (users[user]?.assets && users[user]?.assets?.length > 0) {
-                    setAsset(users[user]?.assets[0]);
+        const run = (lp = true) => {
+            if (!user) return;
+            let u = users;
+            let v = vault;
+            let p = supply;
+            let mint = 0;
+            let rate = 0;
+            [...Array(repeat)].map(() => {
+                const ast = { ...assets[asset], amount: amount };
+                const exist = v?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase());
+
+                const base = ast?.symbol?.toUpperCase();
+                const quote = "MECA";
+                if (exist) {
+                    const b = (base === "MECA" ? values : v)?.find((f: Asset) => f?.symbol?.toUpperCase() === base?.toUpperCase());
+                    const q = (quote === "MECA" ? values : v)?.find((f: Asset) => f?.symbol?.toUpperCase() === quote.toUpperCase());
+
+                    if (!b || !q) return undefined;
+                    if (b?.key) {
+                        rate =
+                            (((b?.amount || 0) + amount) / (b?.weight || 1)) *
+                            amount *
+                            (((b?.amount || 0) + amount || 1) / ((b?.amount || 0) - (b?.need || 0) || 1));
+                    } else {
+                        rate = ((b?.weight || 1) / ((b?.amount || 0) + amount)) * amount;
+                        console.log("rate", rate);
+                    }
+                    mint = rate * (p / (p + rate)) * 0.99;
+                    // console.log("mint", {
+                    //     rate: ((b?.amount || 0) + amount) / (b?.weight || 1),
+                    //     weight: ((b?.amount || 0) + amount || 1) / ((b?.amount || 0) - (b?.need || 0) || 1),
+                    //     mint: mint,
+                    // });
+                } else {
+                    let token = (a: Asset[], symbol: string) => {
+                        return a?.find((f: Asset) => f?.symbol?.toUpperCase() === symbol.toUpperCase());
+                    };
+                    const b = (base === "MECA" ? token(values, base) : token(v, base!)) || token(values, base!);
+                    const q = (quote === "MECA" ? token(values, quote) : token(v, quote)) || token(values, quote);
+
+                    if (!b || !q) return 0;
+                    return typeof b?.weight === "undefined" ? (b?.amount || 0 + amount * b?.value!) / q?.value! : (b?.weight / (b?.amount || 1)) * amount;
                 }
-                setAssets(
-                    users[user]?.assets?.filter((a: Asset) => {
-                        const exist = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase() || f?.symbol?.toUpperCase() === "MECA");
-                        if (!exist) return a;
-                        else return undefined;
-                    })
-                );
-            }
-        }, [users, user]);
 
-        const handleChangeAmount = (v: any) => {
-            v = Format(v, "number") as number;
-            if (asset && typeof asset?.amount === "number" && typeof v === "number") {
-                asset?.amount < v ? setAmount(asset?.amount) : setAmount(v);
-            }
+                if (lp) p += mint;
+                v = exist
+                    ? [
+                          ...v?.map((f: Asset) => {
+                              return f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase()
+                                  ? {
+                                        ...f,
+                                        amount: (f?.amount || 0) + amount,
+                                        // need: f?.key && (f?.need || 0) < 0 ? (amount - (f?.need || 0) > 0 ? 0 : (f?.need || 0) - amount) : f?.need,
+                                        need: (f?.need || 0) - amount,
+                                        weight: f?.key ? (f?.weight || 0) + mint : (f?.weight || 0) - mint,
+                                    }
+                                  : f;
+                          }),
+                      ]
+                    : [...v, { ...ast, weight: mint }];
+
+                u = u?.map((u: User, i: number) => {
+                    if (i === user) {
+                        const exist = u?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase());
+                        const meca = u?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA");
+                        let assets = u?.assets;
+
+                        assets = exist
+                            ? [
+                                  ...assets?.map((f: Asset) => {
+                                      return f?.symbol?.toUpperCase() !== exist?.symbol?.toUpperCase() ? f : { ...f, amount: (f?.amount || 0) - amount };
+                                  }),
+                              ]
+                            : [...assets, { ...ast, amount: -amount }];
+
+                        if (lp) {
+                            assets = meca
+                                ? [
+                                      ...assets.map((f: Asset) => {
+                                          return f?.symbol?.toUpperCase() === "MECA" ? { ...f, amount: (f?.amount || 0) + mint } : f;
+                                      }),
+                                  ]
+                                : [...assets, { symbol: "MECA", amount: mint }];
+                        }
+                        return { ...u, assets };
+                    } else {
+                        return u;
+                    }
+                });
+            });
+            setSupply((state: number) => state + p);
+            setVault(v);
+            setUsers(u);
         };
 
         useEffect(() => {
-            console.log(amount);
-            if (asset && typeof asset?.amount === "number" && typeof amount === "number") {
-                asset?.amount < amount ? setAmount(asset?.amount) : setAmount(amount);
+            if (asset && typeof assets[asset]?.amount! === "number" && typeof amount === "number") {
+                assets[asset]?.amount! < amount ? setAmount(assets[asset]?.amount!) : setAmount(amount);
             }
         }, [asset, amount]);
 
         return (
             <Modal width={64} title={`Deposit`} onClose={() => closeDepositModal()} close>
                 <Layouts.Col gap={2} fill>
-                    {typeof user !== "undefined" ? (
-                        assets?.length > 0 ? (
-                            <Layouts.Row gap={2} fill fix>
-                                <Layouts.Col gap={1} fill>
-                                    <Elements.Text type={"desc"} align="left">
-                                        Balance: {`${asset?.amount}`}
-                                    </Elements.Text>
-                                    <Controls.Input
-                                        placeholder={"amount"}
-                                        type="currency"
-                                        value={amount}
-                                        onChange={(e: any, v: any) => handleChangeAmount(v)}
-                                        max={asset?.amount}
-                                        align={"right"}
-                                        right={{
-                                            children: (
-                                                <Controls.Dropdown
-                                                    option={asset}
-                                                    options={assets}
-                                                    keyName={"symbol"}
-                                                    onClickItem={(e: any, v: Asset, k: number) => setAsset(v)}
-                                                />
-                                            ),
-                                        }}
-                                    ></Controls.Input>
-                                </Layouts.Col>
-                            </Layouts.Row>
+                    {vault?.length > 0 ? (
+                        typeof user !== "undefined" ? (
+                            assets[asset] && assets?.length > 0 ? (
+                                <>
+                                    <Layouts.Col gap={1} fill>
+                                        <Elements.Text type={"desc"} align="left">
+                                            Balance: {`${assets[asset]?.amount || 0}`}
+                                        </Elements.Text>
+                                        <Controls.Input
+                                            placeholder={"amount"}
+                                            type="currency"
+                                            value={amount}
+                                            onChange={(e: any, v: any) => setAmount(Format(v, "number") as number)}
+                                            max={assets[asset]?.amount || 0}
+                                            align={"right"}
+                                            right={{
+                                                children: (
+                                                    <Controls.Dropdown
+                                                        option={assets[asset]}
+                                                        options={assets}
+                                                        keyName={"symbol"}
+                                                        onClickItem={(e: any, v: Asset, k: number) => setAsset(k)}
+                                                    />
+                                                ),
+                                            }}
+                                        ></Controls.Input>
+                                    </Layouts.Col>
+                                    {assets[asset] && (
+                                        <>
+                                            <Controls.Input
+                                                placeholder={"repeat"}
+                                                type="number"
+                                                value={repeat}
+                                                onChange={(e: any, v: any) => setRepeat(Format(v, "number") as number)}
+                                                align={"right"}
+                                                right={{
+                                                    children: <Elements.Text opacity={0.6}>Repeat</Elements.Text>,
+                                                }}
+                                            ></Controls.Input>
+                                            <Controls.Button
+                                                onClick={() => {
+                                                    run();
+                                                    closeDepositModal();
+                                                }}
+                                            >
+                                                Deposit
+                                            </Controls.Button>
+                                        </>
+                                    )}
+                                </>
+                            ) : (
+                                <>
+                                    <Elements.Text type="strong">{`User ${user} doesn't have any asset.`}</Elements.Text>
+                                    <Controls.Button onClick={closeDepositModal}>Close</Controls.Button>
+                                </>
+                            )
                         ) : (
                             <>
-                                <Elements.Text type="p">User {`${user}`} doesn't have any asset.</Elements.Text>
+                                <Elements.Text type="p">There is no selected user.</Elements.Text>
                                 <Controls.Button onClick={closeDepositModal}>Close</Controls.Button>
                             </>
                         )
                     ) : (
                         <>
-                            <Elements.Text type="p">There is no selected user.</Elements.Text>
+                            <Elements.Text type="p">There is no asset can deposit.</Elements.Text>
                             <Controls.Button onClick={closeDepositModal}>Close</Controls.Button>
                         </>
                     )}
@@ -609,6 +1073,105 @@ export default function Page() {
         );
     };
     const [handleDepositModal, closeDepositModal] = usePortal(<DepositModal />);
+
+    const WithdrawModal = () => {
+        const [amount, setAmount] = useState<number>(0);
+        const [asset, setAsset] = useState<Asset>();
+        const exist = users[user!]?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA");
+
+        return (
+            <Modal width={64} title={`Withdraw`} onClose={() => closeWithdrawModal()} close>
+                <Layouts.Col gap={2} fill>
+                    {typeof exist === "object" ? (
+                        <>
+                            <Layouts.Col gap={0.5}>
+                                <Elements.Text type="desc" align="left">
+                                    Balance: {exist?.amount || 0}
+                                </Elements.Text>
+                                <Controls.Input
+                                    placeholder={"amount"}
+                                    left={{
+                                        children: (
+                                            <Controls.Dropdown keyName={"symbol"} options={vault} onClickItem={(e: any, v: Asset, k: number) => setAsset(v)} />
+                                        ),
+                                    }}
+                                    align={"right"}
+                                    type={"number"}
+                                    value={amount}
+                                    onChange={(e: any, v: any) => setAmount(Format(v, "number") as number)}
+                                    max={exist?.amount || 0}
+                                    right={{
+                                        children: (
+                                            <Elements.Text type="strong" opacity={0.6}>
+                                                MECA
+                                            </Elements.Text>
+                                        ),
+                                    }}
+                                />
+                            </Layouts.Col>
+                            <Controls.Button
+                                onClick={() => {
+                                    withdraw(amount, asset?.symbol!, user!);
+                                    closeWithdrawModal();
+                                }}
+                            >
+                                Withdraw
+                            </Controls.Button>
+                        </>
+                    ) : (
+                        <Elements.Text type="strong">There is no selected user.</Elements.Text>
+                    )}
+                </Layouts.Col>
+            </Modal>
+        );
+    };
+    const [handleWithdrawModal, closeWithdrawModal] = usePortal(<WithdrawModal />);
+
+    const BuyModal = (market: Market) => {
+        const [amount, setAmount] = useState<number>(0);
+        const exist = users[user!]?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === market.base);
+
+        return (
+            <Modal width={64} title={`Withdraw`} onClose={closeBuyModal} close>
+                <Layouts.Col gap={2} fill>
+                    {typeof exist === "object" ? (
+                        <>
+                            <Layouts.Col gap={0.5}>
+                                <Elements.Text type="desc" align="left">
+                                    Balance: {exist?.amount || 0}
+                                </Elements.Text>
+                                <Controls.Input
+                                    placeholder={"amount"}
+                                    align={"right"}
+                                    type={"number"}
+                                    value={amount}
+                                    onChange={(e: any, v: any) => setAmount(Format(v, "number") as number)}
+                                    max={exist?.amount || 0}
+                                    right={{
+                                        children: (
+                                            <Elements.Text type="strong" opacity={0.6}>
+                                                {market?.base?.toUpperCase()}
+                                            </Elements.Text>
+                                        ),
+                                    }}
+                                />
+                            </Layouts.Col>
+                            <Controls.Button
+                                onClick={() => {
+                                    closeBuyModal();
+                                }}
+                            >
+                                Order
+                            </Controls.Button>
+                        </>
+                    ) : (
+                        <Elements.Text type="strong">There is no selected user.</Elements.Text>
+                    )}
+                </Layouts.Col>
+            </Modal>
+        );
+    };
+    const [handleBuyModal, closeBuyModal] = usePortal((market: Market) => BuyModal(market));
 
     const handleAddNewUser = () => {
         setUsers((users: any) => [...users, { name: `User ${users.length}`, assets: [] }]);
@@ -631,6 +1194,12 @@ export default function Page() {
         );
     };
 
+    const getLiquidity = (base: string, quote: string) => {
+        const b = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === base?.toUpperCase());
+        const q = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === quote?.toUpperCase());
+        return ((q?.amount || 0) * ((b?.weight || 1) / supply)) / (b?.markets?.length || 1);
+    };
+
     useEffect(() => {
         let tvl = 0;
         vault?.map((a: Asset) => {
@@ -643,11 +1212,11 @@ export default function Page() {
     useEffect(() => {
         setValues(
             values?.map((a: Asset) => {
-                if (a?.symbol?.toUpperCase() === "MECA") return { ...a, value: tvl && meca ? tvl / meca : a?.value };
+                if (a?.symbol?.toUpperCase() === "MECA") return { ...a, value: tvl && supply ? tvl / supply : a?.value };
                 return a;
             })
         );
-    }, [tvl, meca]);
+    }, [tvl, supply]);
 
     return (
         <Layouts.Box fit>
@@ -656,15 +1225,15 @@ export default function Page() {
                     <Layouts.Row gap={1}>
                         <Elements.Text fix>MECA: ${values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value}</Elements.Text>
                         <Elements.Text>Value:</Elements.Text>
-                        <Elements.Text>Total Supply: {meca}</Elements.Text>
+                        <Elements.Text>Total Supply: {supply}</Elements.Text>
                     </Layouts.Row>
                     <Layouts.Divider />
-                    <Layouts.Contents.GridContainer direction="row" width={{ min: 16 }} height={4} gap={0.5}>
+                    <Layouts.Contents.GridContainer direction="row" width={{ min: 16 }} height={5} gap={0.5}>
                         {values
                             ?.filter((f: Asset) => f?.symbol?.toUpperCase() !== "MECA")
                             ?.map((a: Asset, i: number) => (
                                 <div key={i}>
-                                    <Layouts.Box padding={1}>
+                                    <Layouts.Box padding={1} style={a?.key ? { border: "1px solid white" } : undefined}>
                                         <Layouts.Row gap={0.5}>
                                             <Elements.Text>{a?.symbol}</Elements.Text>
                                             <Elements.Text align={"right"}>$ {a?.value}</Elements.Text>
@@ -677,49 +1246,117 @@ export default function Page() {
                     <Layouts.Contents.InnerContent>
                         <Layouts.Row gap={1} fill>
                             <Layouts.Contents.InnerContent>
-                                <Layouts.Row gap={1}>
-                                    <Controls.Button
-                                        type={"solid"}
-                                        onClick={() =>
-                                            handleAddAssetModal(null, {
-                                                type: "vault",
-                                            })
-                                        }
-                                    >
-                                        Add Asset
-                                    </Controls.Button>
-                                    <Controls.Button type={"solid"} onClick={() => handleListingModal()}>
-                                        Listing
-                                    </Controls.Button>
-                                    <Controls.Button type={"solid"} onClick={() => handleDepositModal()}>
-                                        Deposit
-                                    </Controls.Button>
-                                </Layouts.Row>
-                                <Layouts.Contents.InnerContent>
-                                    <Formatter data={vault} vault />
-                                </Layouts.Contents.InnerContent>
-                                <Layouts.Divider />
-                                <Layouts.Row gap={0.5}>
-                                    <Elements.Text>TVL:</Elements.Text>
-                                    <Elements.Text align={"right"}>$ {Format(tvl, "currency", true)}</Elements.Text>
-                                </Layouts.Row>
+                                <Layouts.Col gap={1} fill>
+                                    <Layouts.Row gap={1}>
+                                        <Controls.Button
+                                            type={"solid"}
+                                            onClick={() =>
+                                                handleAddAssetModal(null, {
+                                                    type: "vault",
+                                                })
+                                            }
+                                        >
+                                            Add Asset
+                                        </Controls.Button>
+                                        <Controls.Button type={"solid"} onClick={() => handleListingModal()}>
+                                            Listing
+                                        </Controls.Button>
+                                        <Controls.Button type={"solid"} onClick={() => handleDepositModal()}>
+                                            Deposit
+                                        </Controls.Button>
+                                        <Controls.Button type={"solid"} onClick={() => handleWithdrawModal()}>
+                                            Withdraw
+                                        </Controls.Button>
+                                    </Layouts.Row>
+                                    <Layouts.Contents.InnerContent>
+                                        <Layouts.Col gap={1}>
+                                            {vault.map((a: Asset, i: number) => (
+                                                <>
+                                                    <Layouts.Box key={i} padding={2} fit>
+                                                        <Layouts.Col gap={1}>
+                                                            <Layouts.Row>
+                                                                <Elements.Text type={"strong"}>{a?.symbol}</Elements.Text>
+                                                                <Layouts.Col gap={0}>
+                                                                    <Elements.Text type={"strong"} align={"right"}>
+                                                                        {a?.amount}
+                                                                    </Elements.Text>
+                                                                    <Elements.Text type={"desc"} align={"right"} opacity={0.45}>
+                                                                        = $
+                                                                        {a?.amount! *
+                                                                            (values.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase())
+                                                                                ?.value || 1)}
+                                                                    </Elements.Text>
+                                                                </Layouts.Col>
+                                                            </Layouts.Row>
+                                                            <Layouts.Row>
+                                                                <Layouts.Col gap={0}>
+                                                                    <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
+                                                                        Need
+                                                                    </Elements.Text>
+                                                                    <Elements.Text type={"strong"} align={"right"}>
+                                                                        {a?.need || 0}
+                                                                    </Elements.Text>
+                                                                </Layouts.Col>
+                                                                <Layouts.Col gap={0}>
+                                                                    <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
+                                                                        Weight
+                                                                    </Elements.Text>
+                                                                    <Elements.Text type={"strong"} align={"right"}>
+                                                                        {a?.weight || 0}
+                                                                    </Elements.Text>
+                                                                </Layouts.Col>
+                                                            </Layouts.Row>
+                                                        </Layouts.Col>
+                                                    </Layouts.Box>
+                                                </>
+                                            ))}
+                                        </Layouts.Col>
+                                    </Layouts.Contents.InnerContent>
+                                    <Layouts.Divider />
+                                    <Layouts.Row gap={0.5}>
+                                        <Elements.Text>TVL:</Elements.Text>
+                                        <Elements.Text align={"right"}>$ {Format(tvl, "currency", true)}</Elements.Text>
+                                    </Layouts.Row>
+                                </Layouts.Col>
                             </Layouts.Contents.InnerContent>
                             <Layouts.Divider vertical />
-                            <Layouts.Col>
-                                {market?.map((m: Market, i: number) => (
-                                    <Layouts.Box key={i}>
-                                        <Layouts.Col>
-                                            <Elements.Text>{m?.name}</Elements.Text>
-                                            <Layouts.Row>
-                                                <Elements.Text>{m?.price}</Elements.Text>
-                                            </Layouts.Row>
-                                        </Layouts.Col>
-                                    </Layouts.Box>
-                                ))}
-                            </Layouts.Col>
+                            <Layouts.Contents.InnerContent>
+                                <Layouts.Col gap={1}>
+                                    {market?.map((m: Market, i: number) => (
+                                        <Layouts.Box key={i} padding={2} fit>
+                                            <Layouts.Col gap={0.5}>
+                                                <Layouts.Row fill>
+                                                    <Elements.Text>{m?.name}</Elements.Text>
+                                                    <Elements.Text align="right">
+                                                        {m?.price} {m?.quote?.toUpperCase()}
+                                                    </Elements.Text>
+                                                </Layouts.Row>
+                                                <Layouts.Col gap={0}>
+                                                    <Layouts.Row fill>
+                                                        <Elements.Text opacity={0.6}>{`${m?.base?.toUpperCase()} → ${m?.quote?.toUpperCase()}`}</Elements.Text>
+                                                        <Elements.Text align="right">{getLiquidity(m?.base, m?.quote)}</Elements.Text>
+                                                    </Layouts.Row>
+                                                    <Layouts.Row fill>
+                                                        <Elements.Text opacity={0.6}>{`${m?.quote?.toUpperCase()} → ${m?.base?.toUpperCase()}`}</Elements.Text>
+                                                        <Elements.Text align="right">{getLiquidity(m?.quote, m?.base)}</Elements.Text>
+                                                    </Layouts.Row>
+                                                </Layouts.Col>
+                                                <Layouts.Row gap={1} fill>
+                                                    <Controls.Button type={"solid"} color={"green"}>
+                                                        Buy
+                                                    </Controls.Button>
+                                                    <Controls.Button type={"solid"} color={"red"}>
+                                                        Sell
+                                                    </Controls.Button>
+                                                </Layouts.Row>
+                                            </Layouts.Col>
+                                        </Layouts.Box>
+                                    ))}
+                                </Layouts.Col>
+                            </Layouts.Contents.InnerContent>
                             <Layouts.Divider vertical />
                             <Layouts.Contents.InnerContent>
-                                <Layouts.Col gap={2} fill>
+                                <Layouts.Col gap={1} fill>
                                     <Controls.Button type={"solid"} onClick={handleAddNewUser}>
                                         Add New User
                                     </Controls.Button>
@@ -743,8 +1380,14 @@ export default function Page() {
                                                     <Layouts.Box padding={2}>
                                                         <Layouts.Col gap={1}>
                                                             <Layouts.Col gap={1}>
-                                                                <Layouts.Row gap={2}>
-                                                                    <Elements.Text>User {i}</Elements.Text>
+                                                                <Layouts.Row gap={2} align="center">
+                                                                    <Elements.Text align="left">{u.name}</Elements.Text>
+                                                                    <Layouts.Row align="right" fit>
+                                                                        <Controls.Button
+                                                                            icon={"x"}
+                                                                            onClick={() => setUsers([...users.filter((f: User, k: number) => k !== i)])}
+                                                                        />
+                                                                    </Layouts.Row>
                                                                 </Layouts.Row>
                                                                 <Layouts.Row>
                                                                     <Elements.Text>Start:</Elements.Text>
@@ -759,7 +1402,7 @@ export default function Page() {
                                                                                 const value = values?.find(
                                                                                     (f: Asset) => f?.symbol?.toUpperCase() === b?.symbol?.toUpperCase()
                                                                                 );
-                                                                                return a + (b?.amount || 0) * (value?.value || 0);
+                                                                                return (a + (b?.amount || 0)) * (value?.value || 0);
                                                                             }, 0) - (u?.initial || 0),
                                                                             "currency",
                                                                             true
@@ -777,7 +1420,6 @@ export default function Page() {
                                                             )}
                                                             <Layouts.Divider />
                                                             <Layouts.Row gap={1}>
-                                                                <Controls.Button onClick={() => handleSetUserAsset(i)}>Set</Controls.Button>
                                                                 <Controls.Button
                                                                     onClick={() =>
                                                                         handleAddAssetModal(null, {
@@ -788,6 +1430,7 @@ export default function Page() {
                                                                 >
                                                                     Add Asset
                                                                 </Controls.Button>
+                                                                <Controls.Button onClick={() => handleSetUserAsset(i)}>Set</Controls.Button>
                                                             </Layouts.Row>
                                                         </Layouts.Col>
                                                     </Layouts.Box>
