@@ -58,9 +58,9 @@ const init = {
         { key: true, symbol: "USDC", value: 1 },
     ],
     vault: [
-        { symbol: "ETH", amount: 100, weight: 10 },
-        { symbol: "DAI", amount: 100, weight: 5 },
-        { symbol: "USDT", amount: 100, weight: 5 },
+        { symbol: "ETH", amount: 100, weight: 10, markets: ["ETH/DAI", "ETH/USDT"] },
+        { symbol: "DAI", amount: 100, weight: 5, markets: ["ETH/DAI"] },
+        { symbol: "USDT", amount: 100, weight: 5, markets: ["ETH/USDT"] },
     ],
     markets: [
         { name: "ETH/DAI", base: "ETH", quote: "DAI", price: 2 },
@@ -90,6 +90,7 @@ export default function Page() {
     const [user, setUser] = useState<number | undefined>(0);
     const [supply, setSupply] = useState<number>(init.supply || 0);
     const [tvl, setTVL] = useState(0);
+    const [last, setLast] = useState<number>(0);
 
     const Formatter = (props: { data?: Asset[]; vault?: boolean }) => {
         const formatter = (data: Asset[]) => {
@@ -629,6 +630,7 @@ export default function Page() {
                 }
             });
 
+            mint = mint * (filter?.length + 1);
             setMarket((state: Market[]) => [...state, ...m]);
             setValues((state: Asset[]) => [
                 ...state,
@@ -986,7 +988,8 @@ export default function Page() {
                     }
                 });
             });
-            setSupply((state: number) => state + p);
+            // setSupply((state: number) => state + mint);
+            setSupply(p);
             setVault(v);
             setUsers(u);
         };
@@ -1127,12 +1130,147 @@ export default function Page() {
     };
     const [handleWithdrawModal, closeWithdrawModal] = usePortal(<WithdrawModal />);
 
-    const BuyModal = (market: Market) => {
-        const [amount, setAmount] = useState<number>(0);
-        const exist = users[user!]?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === market.base);
+    const getTick = (price: number) => {
+        let zero = false;
+        const decimals = price.toString()?.replaceAll(",", "")?.split(".");
+        return parseFloat(
+            (decimals?.length > 1
+                ? 10 **
+                  -[...decimals[1]]?.reduce((a: number, b: string) => {
+                      if (!zero && b === "0") {
+                          return a + 1;
+                      } else {
+                          zero = true;
+                          return a;
+                      }
+                  }, 1)
+                : 10 ** (decimals[0]?.length - 4)
+            ).toString()
+        );
+    };
 
+    const convert = (amount: number, price: number, direction: boolean) => {
+        return direction ? amount / price : amount * price;
+    };
+
+    const getLiquidity = (base: string, quote: string) => {
+        const b = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === base?.toUpperCase());
+        const q = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === quote?.toUpperCase());
+        return ((q?.amount || 0) * ((b?.weight || 1) / (q?.weight || 1))) / (b?.markets?.length || 1);
+    };
+
+    const order = (market: string, amount: number, liquidity: number, price: number, direction: boolean) => {
+        let i = 0;
+        let tick = getTick(price);
+        let range = 0;
+        let rate = 0;
+        let length = 0;
+        let d = 0;
+        let a = 0;
+        let perTick = 0;
+        let tl = 0;
+        let amt = amount;
+        let quantity = 0;
+
+        while (true) {
+            liquidity -= perTick;
+            price =
+                tick?.toString()?.split(".").length > 1 && tick?.toString()?.split(".")[1]
+                    ? parseFloat(price.toFixed(tick?.toString()?.split(".")[1].length))
+                    : price;
+            range = parseFloat((price / tick).toString());
+            rate = liquidity / price;
+            length = range + i;
+            d = -rate * 8 + length / 2;
+            a = d / (length / 2) > 1 ? 1 : d / (length / 2) < -1 ? -1 : d / (length / 2);
+            perTick = ((liquidity / (3 * range)) * ((range * a - 4 * i * a) / range) + liquidity / range) * (1 + a / (3 - a));
+            tl = convert(perTick, price, !direction);
+            if (liquidity > 0) {
+                if (amt > tl) {
+                    quantity += perTick;
+                    amt -= tl;
+                } else {
+                    quantity += convert(amt, price, !direction);
+                    amt = 0;
+                    break;
+                }
+            } else {
+                break;
+            }
+
+            price = parseFloat((direction ? price + tick : price - tick).toString());
+            i++;
+        }
+        console.log("i", i);
+        amount = amount - amt;
+
+        setMarket((state: Market[]) => state?.map((m: Market) => (m?.name?.toUpperCase() === market?.toUpperCase() ? { ...m, price: price } : m)));
+        setVault((state: Asset[]) => {
+            const b = market?.split("/")[1];
+            const q = market?.split("/")[0];
+            const base = {
+                goal: direction ? getLiquidity(direction ? q : b, direction ? b : q) / price : getLiquidity(direction ? q : b, direction ? b : q) * price,
+                hold: getLiquidity(direction ? b : q, direction ? q : b),
+            };
+            const quote = {
+                goal: direction ? getLiquidity(direction ? b : q, direction ? q : b) * price : getLiquidity(direction ? b : q, direction ? q : b) / price,
+                hold: getLiquidity(direction ? q : b, direction ? b : q),
+            };
+
+            return state?.map((a: Asset) =>
+                a?.symbol?.toUpperCase() === (direction ? q : b)?.toUpperCase()
+                    ? {
+                          ...a,
+                          amount: (a?.amount || 0) - quantity,
+                          need: base.goal - base.hold,
+                      }
+                    : a?.symbol?.toUpperCase() === (direction ? b : q)?.toUpperCase()
+                    ? { ...a, amount: (a?.amount || 0) + amount, need: quote.goal - quote.hold }
+                    : a
+            );
+        });
+        quantity = quantity * 0.99;
+        setUsers((state: User[]) =>
+            state?.map((u: User, i) => {
+                if (i === user) {
+                    const exist = u?.assets?.find(
+                        (a: Asset) => a?.symbol?.toUpperCase() === (direction ? market?.split("/")[0] : market?.split("/")[1])?.toUpperCase()
+                    );
+                    return {
+                        ...u,
+                        assets: exist
+                            ? u?.assets?.map((a: Asset) =>
+                                  a?.symbol?.toUpperCase() === (direction ? market?.split("/")[0] : market?.split("/")[1])?.toUpperCase()
+                                      ? { ...a, amount: (a?.amount || 0) + quantity }
+                                      : a?.symbol?.toUpperCase() === (direction ? market?.split("/")[1] : market?.split("/")[0])?.toUpperCase()
+                                      ? { ...a, amount: (a?.amount || 0) - amount }
+                                      : a
+                              )
+                            : [
+                                  ...u?.assets?.map((a: Asset) =>
+                                      a?.symbol?.toUpperCase() === (direction ? market?.split("/")[0] : market?.split("/")[1])?.toUpperCase()
+                                          ? { ...a, amount: (a?.amount || 0) + quantity }
+                                          : a?.symbol?.toUpperCase() === (direction ? market?.split("/")[1] : market?.split("/")[0])?.toUpperCase()
+                                          ? { ...a, amount: (a?.amount || 0) - amount }
+                                          : a
+                                  ),
+                                  { symbol: (direction ? market?.split("/")[0] : market?.split("/")[1]).toUpperCase(), amount: quantity },
+                              ],
+                    };
+                } else {
+                    return u;
+                }
+            })
+        );
+    };
+
+    const BuyModal = (props: { market: Market }) => {
+        const market = props?.market;
+        let amount = 0;
+        // const [amount, setAmount] = useState<number>(0);
+        const exist = users[user!]?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === market.quote);
         return (
-            <Modal width={64} title={`Withdraw`} onClose={closeBuyModal} close>
+            <Modal width={64} title={`Buy`} onClose={closeBuyModal} close>
                 <Layouts.Col gap={2} fill>
                     {typeof exist === "object" ? (
                         <>
@@ -1145,7 +1283,55 @@ export default function Page() {
                                     align={"right"}
                                     type={"number"}
                                     value={amount}
-                                    onChange={(e: any, v: any) => setAmount(Format(v, "number") as number)}
+                                    onChange={(e: any, v: any) => (amount = Format(v, "number") as number)}
+                                    max={exist?.amount || 0}
+                                    right={{
+                                        children: (
+                                            <Elements.Text type="strong" opacity={0.6}>
+                                                {market?.quote?.toUpperCase()}
+                                            </Elements.Text>
+                                        ),
+                                    }}
+                                />
+                            </Layouts.Col>
+                            <Controls.Button
+                                onClick={() => {
+                                    order(market?.name, amount, getLiquidity(market?.quote, market?.base), market?.price, true);
+                                    closeBuyModal();
+                                }}
+                            >
+                                Order
+                            </Controls.Button>
+                        </>
+                    ) : (
+                        <Elements.Text type="strong">{`User doesn't have a quote asset for buying.`}</Elements.Text>
+                    )}
+                </Layouts.Col>
+            </Modal>
+        );
+    };
+    const [handleBuyModal, closeBuyModal] = usePortal(BuyModal);
+
+    const SellModal = (props: { market: Market }) => {
+        const market = props?.market;
+        let amount = 0;
+        // const [amount, setAmount] = useState<number>(0);
+        const exist = users[user!]?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === market.base);
+        return (
+            <Modal width={64} title={`Buy`} onClose={closeSellModal} close>
+                <Layouts.Col gap={2} fill>
+                    {typeof exist === "object" ? (
+                        <>
+                            <Layouts.Col gap={0.5}>
+                                <Elements.Text type="desc" align="left">
+                                    Balance: {exist?.amount || 0}
+                                </Elements.Text>
+                                <Controls.Input
+                                    placeholder={"amount"}
+                                    align={"right"}
+                                    type={"number"}
+                                    value={amount}
+                                    onChange={(e: any, v: any) => (amount = Format(v, "number") as number)}
                                     max={exist?.amount || 0}
                                     right={{
                                         children: (
@@ -1158,20 +1344,21 @@ export default function Page() {
                             </Layouts.Col>
                             <Controls.Button
                                 onClick={() => {
-                                    closeBuyModal();
+                                    order(market?.name, amount, getLiquidity(market?.base, market?.quote), market?.price, false);
+                                    closeSellModal();
                                 }}
                             >
                                 Order
                             </Controls.Button>
                         </>
                     ) : (
-                        <Elements.Text type="strong">There is no selected user.</Elements.Text>
+                        <Elements.Text type="strong">{`User doesn't have a quote asset for buying.`}</Elements.Text>
                     )}
                 </Layouts.Col>
             </Modal>
         );
     };
-    const [handleBuyModal, closeBuyModal] = usePortal((market: Market) => BuyModal(market));
+    const [handleSellModal, closeSellModal] = usePortal(SellModal);
 
     const handleAddNewUser = () => {
         setUsers((users: any) => [...users, { name: `User ${users.length}`, assets: [] }]);
@@ -1185,19 +1372,9 @@ export default function Page() {
 
         setUsers(
             users?.map((u: User, i: number) => {
-                if (i === index) {
-                    return { ...u, initial: initial };
-                } else {
-                    return u;
-                }
+                return i === index ? { ...u, initial: initial } : u;
             })
         );
-    };
-
-    const getLiquidity = (base: string, quote: string) => {
-        const b = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === base?.toUpperCase());
-        const q = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === quote?.toUpperCase());
-        return ((q?.amount || 0) * ((b?.weight || 1) / supply)) / (b?.markets?.length || 1);
     };
 
     useEffect(() => {
@@ -1210,9 +1387,13 @@ export default function Page() {
     }, [vault, values]);
 
     useEffect(() => {
-        setValues(
+        setValues((state: Asset[]) =>
             values?.map((a: Asset) => {
-                if (a?.symbol?.toUpperCase() === "MECA") return { ...a, value: tvl && supply ? tvl / supply : a?.value };
+                if (a?.symbol?.toUpperCase() === "MECA") {
+                    const v = { ...a, value: tvl && supply ? tvl / supply : a?.value };
+                    setLast(state?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value!);
+                    return v;
+                }
                 return a;
             })
         );
@@ -1223,8 +1404,27 @@ export default function Page() {
             <Layouts.Contents.InnerContent>
                 <Layouts.Col gap={2} fill>
                     <Layouts.Row gap={1}>
-                        <Elements.Text fix>MECA: ${values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value}</Elements.Text>
+                        <Layouts.Row gap={0.5}>
+                            <Elements.Text fix>MECA: ${values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value?.toFixed(3)}</Elements.Text>
+                            <Elements.Text
+                                color={
+                                    values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last > 0
+                                        ? "green"
+                                        : values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last < 0
+                                        ? "red"
+                                        : undefined
+                                }
+                            >
+                                {values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last > 0
+                                    ? "▲"
+                                    : values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last < 0
+                                    ? "▼"
+                                    : undefined}
+                                {(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last).toFixed(3)}
+                            </Elements.Text>
+                        </Layouts.Row>
                         <Elements.Text>Value:</Elements.Text>
+                        <Elements.Text>Weight: {vault?.reduce((a: number, b: Asset) => a + (b?.weight || 0), 0)}</Elements.Text>
                         <Elements.Text>Total Supply: {supply}</Elements.Text>
                     </Layouts.Row>
                     <Layouts.Divider />
@@ -1270,7 +1470,7 @@ export default function Page() {
                                     </Layouts.Row>
                                     <Layouts.Contents.InnerContent>
                                         <Layouts.Col gap={1}>
-                                            {vault.map((a: Asset, i: number) => (
+                                            {vault?.map((a: Asset, i: number) => (
                                                 <>
                                                     <Layouts.Box key={i} padding={2} fit>
                                                         <Layouts.Col gap={1}>
@@ -1342,10 +1542,10 @@ export default function Page() {
                                                     </Layouts.Row>
                                                 </Layouts.Col>
                                                 <Layouts.Row gap={1} fill>
-                                                    <Controls.Button type={"solid"} color={"green"}>
+                                                    <Controls.Button type={"solid"} color={"green"} onClick={() => handleBuyModal(null, { market: m })}>
                                                         Buy
                                                     </Controls.Button>
-                                                    <Controls.Button type={"solid"} color={"red"}>
+                                                    <Controls.Button type={"solid"} color={"red"} onClick={() => handleSellModal(null, { market: m })}>
                                                         Sell
                                                     </Controls.Button>
                                                 </Layouts.Row>
