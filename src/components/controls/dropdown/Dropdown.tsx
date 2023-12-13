@@ -50,14 +50,15 @@ export default function Dropdown(props: Dropdown) {
     const [option, setOption] = useState<any>(props?.option);
     const [open, setOpen] = useState<boolean>(props?.open || false);
 
-    const [width, setWidth] = useState<number>();
-
     const keyName = props?.keyName || "value";
     const keyIndex = props?.keyName || 0;
     const imgName = props?.imgName || "img";
 
     const disabled = props?.disabled || false;
     const device = props?.show;
+
+    const width = dropdown?.current?.offsetWidth;
+    // const width = dropdown?.current?.offsetWidth > dropbox?.current?.offsetWidth ? dropdown?.current?.offsetWidth : dropbox?.current?.offsetWidth;
 
     const handleSelect = (e: React.FormEvent, v: any, k: string | number) => {
         if (disabled) return;
@@ -72,7 +73,7 @@ export default function Dropdown(props: Dropdown) {
     const handleOpen = (e?: any) => {
         if (disabled) return;
         setOpen(!open);
-        openSelect(true);
+        openSelect();
         if (!option) return;
         if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
@@ -82,7 +83,7 @@ export default function Dropdown(props: Dropdown) {
         if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
 
-    const Select = (visible?: boolean) => (
+    const Select = (visible = true) => (
         <Options
             ref={dropbox}
             style={
@@ -90,7 +91,7 @@ export default function Dropdown(props: Dropdown) {
                     ? {
                           position: "absolute",
                           fontSize: `${scale}em`,
-                          minWidth: width && `${width / (8 * scale)}em`,
+                          width: width && `${width / (8 * scale)}em`,
                           background: "rgba(var(--white), var(--o0075))",
                           backdropFilter: "blur(4em)",
                           transition: "max-height .3s ease",
@@ -204,10 +205,6 @@ export default function Dropdown(props: Dropdown) {
         }
     }, [props?.options, option, keyName]);
 
-    useLayoutEffect(() => {
-        setWidth(dropdown?.current?.offsetWidth > dropbox?.current?.offsetWidth ? dropdown?.current?.offsetWidth : dropbox?.current?.offsetWidth);
-    }, [windowSize, dropdown, dropbox]);
-
     useEffect(() => {
         return () => closeSelect();
     }, []);
@@ -223,7 +220,7 @@ export default function Dropdown(props: Dropdown) {
             tabIndex={5}
             style={{
                 zIndex: open ? 10 : 1,
-                minWidth: width && `${width / 8}em`,
+                // maxWidth: width && `${width / 8}em`,
                 ...props?.style,
             }}
             onClick={() => (!props?.responsive ? handleOpen() : openSelectOnSheet(Select))}
@@ -270,7 +267,7 @@ export default function Dropdown(props: Dropdown) {
                     )}
                 </Item>
             </Option>
-            {!props?.responsive && Select()}
+            {!props?.responsive && Select(false)}
         </Style>
     );
 }

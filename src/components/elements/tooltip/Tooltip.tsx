@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Layouts } from "components";
-import Style from "./Tooltip.styled";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Layouts } from "components";
 import useWindowSize from "hooks/useWindowSize";
+import Style from "./Tooltip.styled";
 
 export interface Tooltip {
     active?: boolean;
@@ -21,18 +21,17 @@ export interface Tooltip {
 }
 
 export default function Tooltip(props: Tooltip) {
-    const { windowSize } = useWindowSize();
-
     const ref: any = useRef();
     props?.e?.stopPropagation();
+    const event = props?.e?.nativeEvent?.relatedTarget?.offsetParent?.getBoundingClientRect();
+
     const color = props?.color || "white";
     const margin = props?.margin || 8;
     const padding = props?.padding || 2;
 
-    const [event, setEvent] = useState(props?.e?.nativeEvent?.relatedTarget?.offsetParent?.getBoundingClientRect());
     const [active, setActive] = useState(props?.active || false);
 
-    const vertical = (): number | undefined => {
+    const vertical = useCallback((): number | undefined => {
         const offset: number = margin && typeof margin !== "number" ? (margin?.length >= 2 ? margin[1] : 8) : margin;
         let vertical: number | undefined;
         switch (props?.vertical) {
@@ -49,9 +48,9 @@ export default function Tooltip(props: Tooltip) {
                 vertical = event?.top + offset;
         }
         return isNaN(vertical as number) ? event?.top : vertical;
-    };
+    }, [margin, event?.top, props?.e?.target?.offsetHeight, props?.vertical]);
 
-    const horizon = (): number | undefined => {
+    const horizon = useCallback((): number | undefined => {
         const offset: number = margin && typeof margin !== "number" ? (margin?.length >= 1 ? margin[0] : 8) : margin;
         let horizon: number | undefined;
         switch (props?.horizon) {
@@ -68,10 +67,7 @@ export default function Tooltip(props: Tooltip) {
                 horizon = event?.left + offset;
         }
         return isNaN(horizon as number) ? event?.left : horizon;
-    };
-
-    const [top, setTop] = useState(vertical());
-    const [left, setLeft] = useState(horizon());
+    }, [margin, event?.left, event?.width, props?.horizon]);
 
     useEffect(() => {
         setActive(true);
@@ -79,14 +75,6 @@ export default function Tooltip(props: Tooltip) {
             setActive(false);
         };
     }, []);
-
-    useLayoutEffect(() => {
-        if (props?.e?.nativeEvent) {
-            setEvent(props?.e?.nativeEvent?.relatedTarget?.offsetParent?.getBoundingClientRect());
-            setTop(vertical());
-            setLeft(horizon());
-        }
-    }, [windowSize, props?.e]);
 
     return (
         <Layouts.Panel active={true} style={{ zIndex: 100, pointerEvents: "none" }} fix>
@@ -98,8 +86,8 @@ export default function Tooltip(props: Tooltip) {
                         $color={color}
                         $padding={padding}
                         style={{
-                            top: top,
-                            left: left,
+                            top: vertical(),
+                            left: horizon(),
                             minWidth: props?.width || (props?.fill && event?.width ? `calc(${event?.width}px - ${padding * 2}em)` : undefined),
                             maxWidth: props?.width || (props?.fit && event?.width ? `calc(${event?.width}px - ${padding * 2}em)` : undefined),
                             ...props?.style,
