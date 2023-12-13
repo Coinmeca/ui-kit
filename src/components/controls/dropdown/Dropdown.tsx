@@ -1,11 +1,11 @@
 "use client";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Controls, Elements, Layouts } from "components";
-import Style, { Item, Option, Options } from "./Dropdown.styled";
 import Image from "next/image";
-import { usePortal } from "hooks";
+import { useEffect, useRef, useState } from "react";
+import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
+import { usePortal } from "hooks";
 import useWindowSize from "hooks/useWindowSize";
+import Style, { Item, Option, Options } from "./Dropdown.styled";
 
 export interface Dropdown {
     style?: object;
