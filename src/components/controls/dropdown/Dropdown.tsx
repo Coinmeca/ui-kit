@@ -1,10 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import Style, { Item, Option, Options } from "./Dropdown.styled";
 import Image from "next/image";
 import { usePortal } from "hooks";
 import { BottomSheet } from "containers";
+import useWindowSize from "hooks/useWindowSize";
 
 export interface Dropdown {
     style?: object;
@@ -35,6 +36,10 @@ export interface Dropdown {
 }
 
 export default function Dropdown(props: Dropdown) {
+    const { windowSize } = useWindowSize();
+    const dropdown: any = useRef();
+    const dropbox: any = useRef();
+
     const form = props?.form;
     const height = props?.height || 16;
     const fit = props?.fit || false;
@@ -45,48 +50,14 @@ export default function Dropdown(props: Dropdown) {
     const [option, setOption] = useState<any>(props?.option);
     const [open, setOpen] = useState<boolean>(props?.open || false);
 
+    const [width, setWidth] = useState<number>();
+
     const keyName = props?.keyName || "value";
     const keyIndex = props?.keyName || 0;
     const imgName = props?.imgName || "img";
 
     const disabled = props?.disabled || false;
     const device = props?.show;
-
-    useEffect(() => {
-        setOption(props?.option);
-    }, [props?.option]);
-
-    useEffect(() => {
-        const options = props?.options;
-
-        if (Array.isArray(options) && !options[0]) {
-            let _options: any[] = [];
-            for (let i = 0; i < options.length; i++) {
-                if (Array.isArray(options[i])) {
-                    let _option = {};
-                    for (let j = 0; j < options[i].length; j++) {
-                        _option = {
-                            ..._option,
-                            [j]: options[i][j],
-                        };
-                    }
-                    _options.push({ ..._option });
-                } else {
-                    _options.push({
-                        [keyName]: options[i],
-                    });
-                    if (option === options[i]) {
-                        setOption({
-                            [keyName]: options[i],
-                        });
-                    }
-                }
-            }
-            setOptions(_options);
-        } else {
-            setOptions(options);
-        }
-    }, [props?.options, option, keyName]);
 
     const handleSelect = (e: React.FormEvent, v: any, k: string | number) => {
         if (disabled) return;
@@ -95,12 +66,13 @@ export default function Dropdown(props: Dropdown) {
         if (typeof v?.event === "function") v.event(e);
         if (typeof props?.onClickItem === "function") props?.onClickItem(e, v, k);
         setOpen(false);
-        closeSelect();
+        closeSelectOnSheet();
     };
 
     const handleOpen = (e?: any) => {
         if (disabled) return;
         setOpen(!open);
+        openSelect(true);
         if (!option) return;
         if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
@@ -110,8 +82,26 @@ export default function Dropdown(props: Dropdown) {
         if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
 
-    const Select = (
-        <Options>
+    const Select = (visible?: boolean) => (
+        <Options
+            ref={dropbox}
+            style={
+                visible
+                    ? {
+                          position: "absolute",
+                          fontSize: `${scale}em`,
+                          minWidth: width && `${width / (8 * scale)}em`,
+                          background: "rgba(var(--white), var(--o0075))",
+                          backdropFilter: "blur(4em)",
+                          transition: "max-height .3s ease",
+                          top: dropdown?.current?.getBoundingClientRect()?.top + dropdown?.current?.offsetHeight,
+                          left: dropdown?.current?.getBoundingClientRect()?.left,
+                          zIndex: 200,
+                          ...(open ? { maxHeight: "100em", overflowY: "hidden" } : { maxHeight: 0, overflowY: "scroll" }),
+                      }
+                    : { visibility: "hidden" }
+            }
+        >
             {options &&
                 options.length > 0 &&
                 options.map(
@@ -167,25 +157,76 @@ export default function Dropdown(props: Dropdown) {
         </Options>
     );
 
-    const [openSelect, closeSelect] = usePortal(
+    const [openSelect, closeSelect] = usePortal((v: boolean) => Select(v));
+
+    const [openSelectOnSheet, closeSelectOnSheet] = usePortal(
         <BottomSheet height={{ max: "60vh" }}>
             <Layouts.Col style={{ padding: "2em" }} gap={2}>
-                <Layouts.Contents.InnerContent>{Select}</Layouts.Contents.InnerContent>
-                <Controls.Button onClick={() => closeSelect()}>Close</Controls.Button>
+                <Layouts.Contents.InnerContent>{Select()}</Layouts.Contents.InnerContent>
+                <Controls.Button onClick={() => closeSelectOnSheet()}>Close</Controls.Button>
             </Layouts.Col>
         </BottomSheet>
     );
 
+    useEffect(() => {
+        setOption(props?.option);
+    }, [props?.option]);
+
+    useEffect(() => {
+        const options = props?.options;
+
+        if (Array.isArray(options) && !options[0]) {
+            let _options: any[] = [];
+            for (let i = 0; i < options.length; i++) {
+                if (Array.isArray(options[i])) {
+                    let _option = {};
+                    for (let j = 0; j < options[i].length; j++) {
+                        _option = {
+                            ..._option,
+                            [j]: options[i][j],
+                        };
+                    }
+                    _options.push({ ..._option });
+                } else {
+                    _options.push({
+                        [keyName]: options[i],
+                    });
+                    if (option === options[i]) {
+                        setOption({
+                            [keyName]: options[i],
+                        });
+                    }
+                }
+            }
+            setOptions(_options);
+        } else {
+            setOptions(options);
+        }
+    }, [props?.options, option, keyName]);
+
+    useLayoutEffect(() => {
+        setWidth(dropdown?.current?.offsetWidth > dropbox?.current?.offsetWidth ? dropdown?.current?.offsetWidth : dropbox?.current?.offsetWidth);
+    }, [windowSize, dropdown, dropbox]);
+
+    useEffect(() => {
+        return () => closeSelect();
+    }, []);
+
     return (
         <Style
+            ref={dropdown}
             $open={open}
             $height={height}
             $fit={fit}
             $scale={scale}
             $disabled={disabled}
             tabIndex={5}
-            style={{ zIndex: open ? 10 : 1, ...props?.style }}
-            onClick={() => (!props?.responsive ? handleOpen() : openSelect(Select))}
+            style={{
+                zIndex: open ? 10 : 1,
+                minWidth: width && `${width / 8}em`,
+                ...props?.style,
+            }}
+            onClick={() => (!props?.responsive ? handleOpen() : openSelectOnSheet(Select))}
             onBlur={handleClose}
             title={props?.title}
             data-active={open}
@@ -229,7 +270,7 @@ export default function Dropdown(props: Dropdown) {
                     )}
                 </Item>
             </Option>
-            {!props?.responsive && Select}
+            {!props?.responsive && Select()}
         </Style>
     );
 }
