@@ -1,4 +1,10 @@
-export function Sort(array: Array<any>, key: string, type: string, direction: boolean) {
+export interface Sorting {
+	key: string;
+	type: string;
+	direction?: boolean | undefined;
+}
+
+export function Sort(array: Array<any>, key: string, type: string, direction = false) {
 	switch (type) {
 		case 'string': {
 			return direction ? [...array].sort((a, b) => (a[key] > b[key] ? 1 : -1)) : [...array].sort((a, b) => (a[key] > b[key] ? -1 : 1));
