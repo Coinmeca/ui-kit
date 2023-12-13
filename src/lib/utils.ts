@@ -17,10 +17,10 @@ export function Sort(array: Array<any>, key: string, type: string, direction: bo
 export function Search(array: Array<any>, keyword: string) {
 	return array && array?.length
 		? [...array].filter((o) =>
-				Object.values(o).some((v) => {
-					if (typeof v === 'string') return v.toLowerCase().includes(keyword.toLowerCase());
-				})
-		  )
+			Object.values(o).some((v) => {
+				if (typeof v === 'string') return v.toLowerCase().includes(keyword.toLowerCase());
+			})
+		)
 		: [];
 }
 
@@ -63,7 +63,6 @@ export function Format(
 		case 'currency': {
 			if (typeof value === 'undefined') return 0;
 			value = value?.toString()?.replaceAll(',', '');
-
 			if (value === '' || value?.length <= 0) return display ? 0 : '';
 
 			let copy: any = '';

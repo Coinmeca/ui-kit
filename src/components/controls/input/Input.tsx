@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, createRef, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Controls } from "components";
 import { Format } from "lib/utils";
 import Style, { Side } from "./Input.styled";
@@ -56,7 +56,7 @@ export interface Input {
 }
 
 export default function Input(props: Input) {
-    const input: any = createRef();
+    const input: any = useRef();
 
     const type = props?.type === "password" ? "password" : props?.type || "text";
     const placeholder = props?.placeholder?.toString() || "Type";
@@ -109,10 +109,10 @@ export default function Input(props: Input) {
 
     const handleChange = (e: any) => {
         if (props?.lock || props?.disabled) return;
-        const value = typeof e === "object" ? e?.target?.value : e;
+        const v = formatter(typeof e === "object" ? e?.target?.value : e);
         setError(false);
-        setValue(formatter(value));
-        if (typeof props?.onChange === "function") props?.onChange(e, value);
+        setValue(v);
+        if (typeof props?.onChange === "function") props?.onChange(e, v);
     };
 
     const handleFocus = (e: any) => {

@@ -7,7 +7,7 @@ import { Capitalize, Format } from "lib/utils";
 import { use, useEffect, useState } from "react";
 
 interface Asset {
-    key?: boolean;
+    type?: number;
     symbol?: string;
     amount?: number;
     value?: number;
@@ -48,14 +48,24 @@ interface User {
 //     ],
 // };
 
+interface TokenType {
+    [x: number | string | symbol]: number;
+}
+
+const token: TokenType = {
+    high: 0,
+    medium: 1,
+    low: 2,
+};
+
 const init = {
     supply: 20,
     values: [
-        { key: true, symbol: "MECA", value: 2 },
-        { key: true, symbol: "ETH", value: 2 },
-        { key: true, symbol: "DAI", value: 1 },
-        { key: true, symbol: "USDT", value: 1 },
-        { key: true, symbol: "USDC", value: 1 },
+        { type: token.high, symbol: "MECA", value: 2 },
+        { type: token.high, symbol: "ETH", value: 2 },
+        { type: token.high, symbol: "DAI", value: 1 },
+        { type: token.high, symbol: "USDT", value: 1 },
+        { type: token.high, symbol: "USDC", value: 1 },
     ],
     vault: [
         { symbol: "ETH", amount: 100, weight: 10, markets: ["ETH/DAI", "ETH/USDT"] },
@@ -402,15 +412,54 @@ export default function Page() {
     };
 
     const withdraw = (burn: number, symbol: string, user: number, lp = true) => {
-        const weight = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === symbol?.toUpperCase())?.weight || 1 / burn;
-        burn = burn > weight ? weight : burn;
+        // const weight = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === symbol?.toUpperCase())?.weight || 1 / burn;
+        // burn = burn > weight ? weight : burn;
         const asset = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === symbol?.toUpperCase());
         if (!asset) return;
 
         // math
-        let w = (((asset?.weight || 0) - burn || 1) / (asset?.amount || 1)) * burn * (((asset?.weight || 0) - burn || 1) / (asset?.weight || 1));
-        const amount = w * ((supply - w) / supply) * 0.99;
-        if (!weight || !amount) return;
+        let w = 0;
+        switch (asset?.type) {
+            case 0: {
+                console.log(0);
+                w = (((asset?.weight || 0) - burn || 1) / (asset?.amount || 1)) * burn * (((asset?.weight || 0) - burn || 1) / (asset?.weight || 1));
+                break;
+            }
+            case 1: {
+                console.log(1);
+                w = ((asset?.weight || 1) / ((asset?.amount || 0) + burn)) * burn * (((asset?.weight || 0) - burn || 1) / (asset?.weight || 1));
+                break;
+            }
+            case 2: {
+                console.log(2);
+                w =
+                    ((asset?.amount || 1) / ((asset?.weight || 0) + burn)) * burn * (asset?.weight || 0) -
+                    burn * (((asset?.weight || 0) > burn ? (asset?.weight || 0) - burn : 1) / (asset?.weight || 1));
+                break;
+            }
+            case 3: {
+                console.log(3);
+                w =
+                    ((asset?.amount || 1) / ((asset?.weight || 0) + burn)) * burn * (asset?.weight || 0) -
+                    burn * ((asset?.weight || 1) / ((asset?.weight || 0) + burn));
+                break;
+            }
+            case 4: {
+                console.log(4);
+                w =
+                    ((asset?.amount || 1) / ((asset?.weight || 0) + burn)) * burn * (asset?.weight || 0) -
+                    burn * ((asset?.weight || 1) / ((asset?.weight || 0) + burn));
+                break;
+            }
+        }
+        // let w = ((asset?.amount || 1) / ((asset?.weight || 0) + burn)) * burn * (((asset?.weight || 0) - burn) / (asset?.weight || 1));
+        // const amount = w * 0.99;
+        console.log("supply", supply);
+        console.log("w", w);
+        const amount = w * ((supply - w < 0 ? 1 : supply - w) / supply) * 0.99;
+
+        // console.log(!weight || !amount);
+        // if (!weight || !amount) return;
         if (lp) setSupply(supply - burn);
 
         setVault((state: Asset[]) => [
@@ -418,16 +467,18 @@ export default function Page() {
                 return f?.symbol?.toUpperCase() !== asset?.symbol?.toUpperCase()
                     ? f
                     : { ...f, amount: (f?.amount || 0) - amount, need: (f?.need || 0) + amount, weight: (f?.weight || 0) - burn };
+                //  : { ...f, amount: (f?.amount || 0) - amount, need: (f?.need || 0) + amount, weight: (f?.weight || 0) + burn };
             }),
         ]);
 
-        setUsers((state: User[]) =>
-            state?.map((u: User, i: number) => {
+        setUsers((state: User[]) => [
+            ...state?.map((u: User, i: number) => {
                 if (i === user) {
                     const exist = u?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
                     const meca = u?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA");
                     let assets = u?.assets;
 
+                    console.log(amount);
                     assets = exist
                         ? [
                               ...assets?.map((f: Asset) => {
@@ -449,20 +500,20 @@ export default function Page() {
                 } else {
                     return u;
                 }
-            })
-        );
+            }),
+        ]);
     };
 
     const AddAssetModal = (props: { type: "vault" | "user"; index?: number }) => {
         const [symbol, setSymbol] = useState<string | undefined>();
         const [amount, setAmount] = useState<number | undefined>();
         const [value, setValue] = useState<number | undefined>();
-        const [type, setType] = useState<"token" | "key">("token");
+        const [type, setType] = useState<string>("");
 
         return (
             <Modal title={`Add Asset for ${Capitalize(props?.type)}${props?.index ? ` ${props?.index}` : ""}`} onClose={() => closeAddAssetModal()} close>
                 <Layouts.Col gap={2}>
-                    {props?.type === "vault" && (
+                    {/* {props?.type === "vault" && (
                         <Layouts.Row>
                             <Controls.Tab active={type === "token"} onClick={() => setType("token")}>
                                 Token
@@ -471,7 +522,7 @@ export default function Page() {
                                 Key Token
                             </Controls.Tab>
                         </Layouts.Row>
-                    )}
+                    )} */}
                     <Controls.Input
                         placeholder={" "}
                         align={"right"}
@@ -499,6 +550,11 @@ export default function Page() {
                             left={{
                                 children: <Elements.Text>Value</Elements.Text>,
                             }}
+                            right={{
+                                children: (
+                                    <Controls.Dropdown option={type} options={Object.keys(token)} onClickItem={(e: any, v: string, k: number) => setType(v)} />
+                                ),
+                            }}
                         />
                     )}
                     <Controls.Button
@@ -506,6 +562,7 @@ export default function Page() {
                             handleAddAsset(
                                 props?.type,
                                 {
+                                    type: token[`${type}`],
                                     symbol: symbol?.toUpperCase(),
                                     amount: amount,
                                     value: value,
@@ -577,7 +634,7 @@ export default function Page() {
                 if ((a?.amount || 0) > 0) {
                     const exist = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase());
                     const weight = estimate(a?.symbol!, a?.amount!) / filter?.length;
-                    mint += weight;
+
                     // mint += deposit(a, user!, exist ? undefined : estimate(a?.symbol!, a?.amount!));
 
                     const market = {
@@ -586,6 +643,7 @@ export default function Page() {
                         name: `${asset?.symbol}/${a?.symbol}`,
                         price: (a?.amount || 1) / (asset?.amount || 1),
                     };
+
                     m.push(market);
                     v = exist
                         ? [
@@ -613,6 +671,7 @@ export default function Page() {
                                       : [market.name],
                               },
                           ];
+
                     u = [
                         ...u?.map((s: User, i: number) => {
                             return i === user
@@ -627,10 +686,10 @@ export default function Page() {
                                 : s;
                         }),
                     ];
+                    mint += weight;
                 }
             });
 
-            mint = mint * (filter?.length + 1);
             setMarket((state: Market[]) => [...state, ...m]);
             setValues((state: Asset[]) => [
                 ...state,
@@ -659,6 +718,7 @@ export default function Page() {
                         : [...m?.map((f: Market) => f?.name?.toUpperCase())],
                 },
             ]);
+            mint = mint * (filter?.length + 1);
             setUsers([
                 ...u?.map((s: User, i: number) => {
                     if (i === user) {
@@ -731,7 +791,9 @@ export default function Page() {
         }, [asset, filter]);
 
         const condition =
-            values?.filter((f: Asset) => f?.symbol?.toUpperCase() !== "MECA")?.length > 0 || vault?.filter((f: Asset) => f?.key)?.length > 0 || user;
+            values?.filter((f: Asset) => f?.symbol?.toUpperCase() !== "MECA")?.length > 0 ||
+            vault?.filter((f: Asset) => f?.type === token.high)?.length > 0 ||
+            user;
 
         return (
             <Modal width={condition ? 96 : 64} title={`Listing`} onClose={() => closeListingModal()} close>
@@ -824,46 +886,44 @@ export default function Page() {
                                         <>
                                             <Layouts.Col gap={4}>
                                                 {filter?.map((f: Asset, i: number) => (
-                                                    <>
-                                                        <Layouts.Col key={i} gap={1}>
-                                                            {asset && (
-                                                                <Layouts.Col gap={0.5}>
-                                                                    <Layouts.Row>
-                                                                        <Elements.Text align={"left"}>{asset?.symbol?.toUpperCase()}</Elements.Text>
-                                                                        <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
-                                                                            {(asset?.amount || filter.length) / filter.length} {asset?.symbol?.toUpperCase()}
-                                                                        </Elements.Text>
-                                                                    </Layouts.Row>
-                                                                    <div
-                                                                        style={{
-                                                                            height: "1em",
-                                                                            backgroundImage: `linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.3))`,
-                                                                            backgroundSize: `${((asset?.amount || 1) * 100) / filter?.length / max}% 100%`,
-                                                                            backgroundPosition: "left center",
-                                                                            backgroundRepeat: "no-repeat",
-                                                                        }}
-                                                                    />
-                                                                </Layouts.Col>
-                                                            )}
-                                                            <Layouts.Col key={i} gap={0.5}>
+                                                    <Layouts.Col key={i} gap={1}>
+                                                        {asset && (
+                                                            <Layouts.Col gap={0.5}>
                                                                 <Layouts.Row>
-                                                                    <Elements.Text align={"left"}>{f?.symbol?.toUpperCase()}</Elements.Text>
+                                                                    <Elements.Text align={"left"}>{asset?.symbol?.toUpperCase()}</Elements.Text>
                                                                     <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
-                                                                        {f?.amount || 0} {f?.symbol?.toUpperCase()}
+                                                                        {(asset?.amount || filter.length) / filter.length} {asset?.symbol?.toUpperCase()}
                                                                     </Elements.Text>
                                                                 </Layouts.Row>
                                                                 <div
                                                                     style={{
                                                                         height: "1em",
-                                                                        backgroundImage: `linear-gradient(#${colors[i] || "fff"}, #${colors[i] || "fff"})`,
-                                                                        backgroundSize: `${((f?.amount || 1) * 100) / max}% 100%`,
+                                                                        backgroundImage: `linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.3))`,
+                                                                        backgroundSize: `${((asset?.amount || 1) * 100) / filter?.length / max}% 100%`,
                                                                         backgroundPosition: "left center",
                                                                         backgroundRepeat: "no-repeat",
                                                                     }}
                                                                 />
                                                             </Layouts.Col>
+                                                        )}
+                                                        <Layouts.Col key={i} gap={0.5}>
+                                                            <Layouts.Row>
+                                                                <Elements.Text align={"left"}>{f?.symbol?.toUpperCase()}</Elements.Text>
+                                                                <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
+                                                                    {f?.amount || 0} {f?.symbol?.toUpperCase()}
+                                                                </Elements.Text>
+                                                            </Layouts.Row>
+                                                            <div
+                                                                style={{
+                                                                    height: "1em",
+                                                                    backgroundImage: `linear-gradient(#${colors[i] || "fff"}, #${colors[i] || "fff"})`,
+                                                                    backgroundSize: `${((f?.amount || 1) * 100) / max}% 100%`,
+                                                                    backgroundPosition: "left center",
+                                                                    backgroundRepeat: "no-repeat",
+                                                                }}
+                                                            />
                                                         </Layouts.Col>
-                                                    </>
+                                                    </Layouts.Col>
                                                 ))}
                                             </Layouts.Col>
                                         </>
@@ -907,6 +967,7 @@ export default function Page() {
             let rate = 0;
             [...Array(repeat)].map(() => {
                 const ast = { ...assets[asset], amount: amount };
+                const type = [...values]?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase())?.type;
                 const exist = v?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase());
 
                 const base = ast?.symbol?.toUpperCase();
@@ -916,14 +977,28 @@ export default function Page() {
                     const q = (quote === "MECA" ? values : v)?.find((f: Asset) => f?.symbol?.toUpperCase() === quote.toUpperCase());
 
                     if (!b || !q) return undefined;
-                    if (b?.key) {
-                        rate =
-                            (((b?.amount || 0) + amount) / (b?.weight || 1)) *
-                            amount *
-                            (((b?.amount || 0) + amount || 1) / ((b?.amount || 0) - (b?.need || 0) || 1));
-                    } else {
-                        rate = ((b?.weight || 1) / ((b?.amount || 0) + amount)) * amount;
-                        console.log("rate", rate);
+                    switch (type) {
+                        case token.high: {
+                            // rate =
+                            //     (((b?.amount || 0) + amount) / (b?.weight || 1)) *
+                            //     amount *
+                            //     (((b?.amount || 0) + (b?.need || 0) || 1) / ((b?.amount || 0) + (b?.amount || 0) || 1));
+                            // console.log("rate", rate);
+                        }
+                        case token.medium: {
+                            rate =
+                                (((b?.amount || 0) + amount) / (b?.weight || 1)) *
+                                amount *
+                                (((b?.amount || 0) + amount || 1) / ((b?.amount || 0) - (b?.need || 0) || 1));
+                            break;
+                        }
+                        default: {
+                            rate =
+                                ((b?.weight || 1) / ((b?.amount || 0) + amount)) *
+                                amount *
+                                (((b?.amount || 0) + (b?.need || 0) || 1) / ((b?.amount || 0) + (b?.amount || 0) || 1));
+                            break;
+                        }
                     }
                     mint = rate * (p / (p + rate)) * 0.99;
                     // console.log("mint", {
@@ -952,7 +1027,8 @@ export default function Page() {
                                         amount: (f?.amount || 0) + amount,
                                         // need: f?.key && (f?.need || 0) < 0 ? (amount - (f?.need || 0) > 0 ? 0 : (f?.need || 0) - amount) : f?.need,
                                         need: (f?.need || 0) - amount,
-                                        weight: f?.key ? (f?.weight || 0) + mint : (f?.weight || 0) - mint,
+                                        weight: (f?.weight || 0) + mint,
+                                        // weight: key ? (f?.weight || 0) + mint : (f?.weight || 0) - mint,
                                     }
                                   : f;
                           }),
@@ -1156,7 +1232,8 @@ export default function Page() {
     const getLiquidity = (base: string, quote: string) => {
         const b = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === base?.toUpperCase());
         const q = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === quote?.toUpperCase());
-        return ((q?.amount || 0) * ((b?.weight || 1) / (q?.weight || 1))) / (b?.markets?.length || 1);
+        return ((q?.amount || 1) * ((b?.weight || 1) / (b?.markets?.length || 1))) / (q?.weight || 1);
+        // return ((q?.amount || 1) * (b?.weight || 1)) / (q?.weight || 1) / (q?.markets?.length || 1);
     };
 
     const order = (market: string, amount: number, liquidity: number, price: number, direction: boolean) => {
@@ -1318,7 +1395,7 @@ export default function Page() {
         // const [amount, setAmount] = useState<number>(0);
         const exist = users[user!]?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === market.base);
         return (
-            <Modal width={64} title={`Buy`} onClose={closeSellModal} close>
+            <Modal width={64} title={`Sell`} onClose={closeSellModal} close>
                 <Layouts.Col gap={2} fill>
                     {typeof exist === "object" ? (
                         <>
@@ -1399,6 +1476,10 @@ export default function Page() {
         );
     }, [tvl, supply]);
 
+    useEffect(() => {
+        setSupply(users?.reduce((a: number, b: User) => a + (b?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.amount || 0), 0));
+    }, [users]);
+
     return (
         <Layouts.Box fit>
             <Layouts.Contents.InnerContent>
@@ -1433,7 +1514,18 @@ export default function Page() {
                             ?.filter((f: Asset) => f?.symbol?.toUpperCase() !== "MECA")
                             ?.map((a: Asset, i: number) => (
                                 <div key={i}>
-                                    <Layouts.Box padding={1} style={a?.key ? { border: "1px solid white" } : undefined}>
+                                    <Layouts.Box
+                                        padding={0.5}
+                                        style={{
+                                            ...(a?.type === 0
+                                                ? { border: "1px solid white" }
+                                                : a?.type === 0
+                                                ? { border: "1px solid rgba(255,255,255,0.6)" }
+                                                : {}),
+                                            width: "auto",
+                                            minHeight: "initial",
+                                        }}
+                                    >
                                         <Layouts.Row gap={0.5}>
                                             <Elements.Text>{a?.symbol}</Elements.Text>
                                             <Elements.Text align={"right"}>$ {a?.value}</Elements.Text>
@@ -1494,7 +1586,7 @@ export default function Page() {
                                                                         Need
                                                                     </Elements.Text>
                                                                     <Elements.Text type={"strong"} align={"right"}>
-                                                                        {a?.need || 0}
+                                                                        {Format(a?.need || 0, "number", true, 8)}
                                                                     </Elements.Text>
                                                                 </Layouts.Col>
                                                                 <Layouts.Col gap={0}>
@@ -1502,7 +1594,7 @@ export default function Page() {
                                                                         Weight
                                                                     </Elements.Text>
                                                                     <Elements.Text type={"strong"} align={"right"}>
-                                                                        {a?.weight || 0}
+                                                                        {Format(a?.weight || 0, "number", true, 8)}
                                                                     </Elements.Text>
                                                                 </Layouts.Col>
                                                             </Layouts.Row>
