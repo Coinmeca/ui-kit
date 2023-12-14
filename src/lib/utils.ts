@@ -22,13 +22,15 @@ export function Sort(array: Array<any>, key: string, type: string, direction: bo
 	}
 }
 
-export function Search(array: Array<any>, keyword: string) {
-	return array && array?.length
-		? [...array].filter((o) =>
-			Object.values(o).some((v) => {
-				if (typeof v === 'string') return v.toLowerCase().includes(keyword.toLowerCase());
-			})
-		)
+export function Filter(array: Array<any>, keyword?: string) {
+	return array && array?.length > 0
+		? !keyword || keyword === '' || keyword.length === 0
+			? [...array]
+			: [...array].filter((o) =>
+				Object.values(o).some((v) => {
+					if (typeof v === 'string') return v.toLowerCase().includes(keyword.toLowerCase());
+				})
+			)
 		: [];
 }
 

@@ -2,9 +2,11 @@
 
 import { Controls, Elements, Layouts } from "components";
 import { useSort } from "hooks";
+import { Filter } from "lib/utils";
 
 export interface Market {
     list: any[];
+    filter?: string;
 }
 
 export default function Market(props: Market) {
@@ -107,7 +109,7 @@ export default function Market(props: Market) {
             </Layouts.Row>
             <Layouts.Divider strong />
             <Layouts.Contents.InnerContent scroll>
-                <Layouts.Table list={sorting(props?.list)} formatter={formatter} fallback="There is no data." />
+                <Layouts.Table list={Filter(sorting(props?.list), props?.filter)} formatter={formatter} fallback="There is no data." />
             </Layouts.Contents.InnerContent>
         </>
     );

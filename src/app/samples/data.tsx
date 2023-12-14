@@ -372,6 +372,7 @@ export default function Data() {
         },
     };
 
+    const [keyword, setKeyword] = useState<string>();
     const sidebars = {
         active: true,
         lower: {
@@ -393,6 +394,8 @@ export default function Data() {
                                 </Controls.Tab>
                             </Layouts.Row>
                             <Controls.Input
+                                value={keyword}
+                                onChange={(e: any, v: string, k: number) => setKeyword(v)}
                                 left={{
                                     children: <Elements.Icon icon={"search"} />,
                                 }}
@@ -406,15 +409,15 @@ export default function Data() {
                                         {
                                             active: sidebarTab === "exchange",
                                             style: { overflow: "hidden" },
-                                            children: <Sidebars.Market list={marketlist} />,
+                                            children: <Sidebars.Market list={marketlist} filter={keyword} />,
                                         },
                                         {
                                             active: sidebarTab === "alert",
-                                            children: <Sidebars.Market list={marketlist} />,
+                                            children: <Sidebars.Market list={marketlist} filter={keyword} />,
                                         },
                                         {
                                             active: sidebarTab === "asset",
-                                            children: <Sidebars.Market list={marketlist} />,
+                                            children: <Sidebars.Market list={marketlist} filter={keyword} />,
                                         },
                                     ]}
                                 />
