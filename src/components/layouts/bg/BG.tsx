@@ -28,12 +28,12 @@ export default function BG(props: BG) {
         undefined;
     const opacity = (typeof props?.filter === "object" && typeof props?.filter?.opacity === "string" && props?.filter?.opacity) || 0.45;
 
-    return (
-        <Style $fix={fix} style={{ background: props?.background }}>
-            {props?.img?.src && <Image src={src} style={props?.img?.style} fill alt={""} />}
-            {props?.video?.src && <video {...props?.video} />}
-            {props?.filter && <Filter $filter={filter} $opacity={opacity} />}
-            {props?.children && <div>{props?.children}</div>}
-        </Style>
-    );
+    // return (
+    //     <Style $fix={fix} style={{ background: props?.background }}>
+    //         {props?.img?.src && <Image src={src} style={props?.img?.style} fill alt={""} />}
+    //         {props?.video?.src && <video {...props?.video} />}
+    //         {props?.filter && <Filter $filter={filter} $opacity={opacity} />}
+    //         {props?.children && <div>{props?.children}</div>}
+    //     </Style>
+    // );
 }
