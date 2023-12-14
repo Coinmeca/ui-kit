@@ -65,7 +65,7 @@ export default function Slide(props: Slide) {
             data-align={props?.align?.horizon}
         >
             {props?.slides && props?.slides?.length > 0 && (
-                <AnimatePresence key={"slide"}>
+                <>
                     <div>
                         {props?.slides?.map((slide: any, i: number) => (
                             <div key={i} data-active={slide?.active || slideNo === i} onClick={(e: any) => slide?.onClick && slide?.onClick(e)}>
@@ -95,7 +95,7 @@ export default function Slide(props: Slide) {
                             />
                         ))}
                     </div>
-                </AnimatePresence>
+                </>
             )}
         </Style>
     );
