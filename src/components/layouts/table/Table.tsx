@@ -4,28 +4,23 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Elements } from "components";
 import Style, { NoData } from "./Table.styled";
 import TableItem from "./TableItem";
-import { useSort } from "hooks";
-import { type Sorting } from "lib/utils";
 
 export interface Table {
     list?: any;
-    sort?: Sorting;
+    formatter?: Function;
     fallback?: string | ReactNode | JSX.Element | Function;
     style?: object;
 }
 
 export default function Table(props: Table) {
-    const { sorting } = useSort();
     const fallback = props?.fallback || "There is no data.";
-
-    const list = sorting(props?.list);
 
     return (
         <Style style={props?.style}>
             <AnimatePresence>
-                {list &&
-                    (typeof list !== "string" && list?.length > 0 ? (
-                        list?.map((data: any, i: number) => (
+                {props?.list &&
+                    (typeof props?.list !== "string" && props?.list?.length > 0 ? (
+                        (typeof props?.formatter === "function" ? props?.formatter(props?.list) : props?.list)?.map((data: any, i: number) => (
                             <TableItem
                                 key={i}
                                 {...(data?.children && data)}

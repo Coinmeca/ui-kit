@@ -4,7 +4,7 @@ import { Root } from "lib/style";
 import { Charts, Controls, Elements, Layouts } from "components";
 import { Asset, Exchange } from "prefabs";
 import { Capitalize, Format } from "lib/utils";
-import useWindowSize from "hooks/useWindowSize";
+import { useWindowSize } from "hooks";
 import { AnimatePresence } from "framer-motion";
 
 import ExchangeData from "./data";

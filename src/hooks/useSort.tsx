@@ -8,9 +8,9 @@ export default function useSort() {
         (key: Sorting | string): "sort" | "sort-up" | "sort-down" => {
             switch (typeof key) {
                 case "string":
-                    return key === sort?.key ? (typeof sort?.direction === "boolean" ? (sort?.direction ? "sort-up" : "sort-down") : "sort") : "sort";
+                    return key === sort?.key ? (sort?.direction ? "sort-up" : "sort-down") : "sort";
                 case "object":
-                    return key?.key === sort?.key ? (typeof sort?.direction === "boolean" ? (sort?.direction ? "sort-up" : "sort-down") : "sort") : "sort";
+                    return key?.key === sort?.key ? (sort?.direction ? "sort-up" : "sort-down") : "sort";
                 default:
                     return "sort";
             }
@@ -22,7 +22,7 @@ export default function useSort() {
         update((state: Sorting | undefined) => {
             return {
                 ...sort,
-                direction: state?.key === sort?.key ? !state?.direction : true,
+                direction: state?.key === sort?.key ? !state?.direction : undefined,
             };
         });
     }, []);
