@@ -4,15 +4,17 @@ export interface Sorting {
 	direction?: boolean | undefined;
 }
 
-export function Sort(array: Array<any>, key: string, type: string, direction = false) {
+export function Sort(array: Array<any>, key: string, type: string, direction: boolean | undefined = false) {
 	switch (type) {
 		case 'string': {
-			return direction ? [...array].sort((a, b) => (a[key] > b[key] ? 1 : -1)) : [...array].sort((a, b) => (a[key] > b[key] ? -1 : 1));
+			return direction ? [...array].sort((a, b) => (a[key] > b[key] ? -1 : 1)) : [...array].sort((a, b) => (a[key] > b[key] ? 1 : -1));
 		}
 		case 'number': {
-			return direction
-				? [...array].sort((a, b) => parseFloat(a[key]) - parseFloat(b[key]))
-				: [...array].sort((a, b) => parseFloat(a[key]) + parseFloat(b[key]));
+			return typeof direction === 'undefined'
+				? [...array]
+				: direction
+					? [...array].sort((a, b) => parseFloat(a[key]) - parseFloat(b[key]))
+					: [...array].sort((a, b) => parseFloat(b[key]) - parseFloat(a[key]));
 		}
 		default: {
 			return [...array];

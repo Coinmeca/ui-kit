@@ -100,7 +100,7 @@ export default function Dropdown(props: Dropdown) {
                           zIndex: 200,
                           ...(open ? { maxHeight: "100em", overflowY: "hidden" } : { maxHeight: 0, overflowY: "scroll" }),
                       }
-                    : { visibility: "hidden" }
+                    : { visibility: "hidden", height: 0 }
             }
         >
             {options &&
