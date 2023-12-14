@@ -202,15 +202,23 @@ export default function Data() {
         },
         {
             key: 2,
-            value: "Korean",
+            value: "한국어",
         },
         {
             key: 3,
-            value: "Spanish",
+            value: "Español",
+        },
+        {
+            key: 3,
+            value: "Franch",
         },
         {
             key: 4,
-            value: "Japanese",
+            value: "日本語",
+        },
+        {
+            key: 4,
+            value: "中文",
         },
     ];
 
