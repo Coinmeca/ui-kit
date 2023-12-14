@@ -28,6 +28,7 @@ export default function BG(props: BG) {
         undefined;
     const opacity = (typeof props?.filter === "object" && typeof props?.filter?.opacity === "string" && props?.filter?.opacity) || 0.45;
 
+    return <></>;
     // return (
     //     <Style $fix={fix} style={{ background: props?.background }}>
     //         {props?.img?.src && <Image src={src} style={props?.img?.style} fill alt={""} />}
