@@ -1,6 +1,6 @@
-'use client';
-import {createGlobalStyle} from 'styled-components';
-import {Device} from './Root';
+"use client";
+import { createGlobalStyle } from "styled-components";
+import { Device } from "./Root";
 
 const Global = createGlobalStyle`
     html,body,main{
@@ -82,6 +82,7 @@ const Global = createGlobalStyle`
         --o0: 0;
 
         --blur: blur(4em);
+        --change: var(--white);
     }
 
     [data-direction="row"] {
@@ -159,7 +160,7 @@ const Global = createGlobalStyle`
     @media (prefers-color-scheme: dark) {
         :root {
             --white: 255,255,255;
-            --black: 0,0,0;
+            --black: 0, 0, 0;
             --dim: 32, 32, 32;
         }
 

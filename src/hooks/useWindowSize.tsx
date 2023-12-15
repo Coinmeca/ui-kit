@@ -1,39 +1,39 @@
-'use client';
-import {useState, useEffect} from 'react';
+"use client";
+import { useState, useEffect } from "react";
 
 export interface WindowSize {
-	width: number;
-	height: number;
+    width: number;
+    height: number;
 }
 
 export default function useWindowSize() {
-	// Initialize state with undefined width/height so server and client renders match
-	// Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
-	const [windowSize, setWindowSize] = useState<WindowSize>({
-		width: 1920,
-		height: 1080
-	});
+    // Initialize state with undefined width/height so server and client renders match
+    // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
+    const [windowSize, setWindowSize] = useState<WindowSize>({
+        width: 1920,
+        height: 1080,
+    });
 
-	useEffect(() => {
-		// only execute all the code below in client side
-		// Handler to call on window resize
-		function windowResize() {
-			// Set window width/height to state
-			setWindowSize({
-				width: window.innerWidth,
-				height: window.innerHeight
-			});
-		}
+    useEffect(() => {
+        // only execute all the code below in client side
+        // Handler to call on window resize
+        function windowResize() {
+            // Set window width/height to state
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        }
 
-		// Add event listener
-		window.addEventListener('resize', windowResize);
+        // Add event listener
+        window.addEventListener("resize", windowResize);
 
-		// Call handler right away so state gets updated with initial window size
-		windowResize();
+        // Call handler right away so state gets updated with initial window size
+        windowResize();
 
-		// Remove event listener on cleanup
-		return () => window.removeEventListener('resize', windowResize);
-	}, []); // Empty array ensures that effect is only run on mount
+        // Remove event listener on cleanup
+        return () => window.removeEventListener("resize", windowResize);
+    }, []); // Empty array ensures that effect is only run on mount
 
-	return {windowSize};
+    return { windowSize };
 }
