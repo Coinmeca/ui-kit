@@ -1,7 +1,7 @@
 "use client";
 import { Elements, Layouts, Controls } from "components";
 import { useState } from "react";
-import useToast from "hooks/useToast";
+import useToast from "../../hooks/useNotification";
 import { usePathname } from "next/navigation";
 import { Modals, Sidebars } from "containers";
 import { usePortal } from "hooks";

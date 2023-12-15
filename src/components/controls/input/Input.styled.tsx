@@ -7,8 +7,8 @@ export const Side = styled.div<{ $width?: number }>`
     // min-width: max-content;
     min-width: ${({ $width }) => ($width ? `calc(var(--unit) * ${$width})` : "max-content")};
 
-    /* &:not(> :is(h1, h2, h3, h4, h5, h6, strong, b, p, i)) { */
-    &:has(> :is(div, span)) {
+    &:not(:has(> :is(h1, h2, h3, h4, h5, h6, strong, b, p, i))) {
+        /* &:has(> :is(div, span)) { */
         &:first-child {
             margin-left: -1em;
         }

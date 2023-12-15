@@ -1,3 +1,4 @@
+"use client";
 import { useCallback, useState } from "react";
 import { Sort, type Sorting } from "lib/utils";
 
