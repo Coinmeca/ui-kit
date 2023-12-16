@@ -319,14 +319,17 @@ export default function Data() {
                 {
                     name: "Asset",
                     path: "/samples/asset",
+                    onClick: setMobileMenu(""),
                 },
                 {
                     name: "Exchange",
                     path: "/samples/exchange",
+                    onClick: setMobileMenu(""),
                 },
                 {
                     name: "Treasury",
                     path: "/samples/treasury",
+                    onClick: setMobileMenu(""),
                 },
             ],
         },

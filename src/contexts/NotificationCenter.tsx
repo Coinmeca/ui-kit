@@ -27,7 +27,7 @@ export interface NotificationContext {
     setRead: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Notification = createContext<NotificationContext>(null);
+export const Notification = createContext<NotificationContext>({} as NotificationContext);
 
 export function NotificationCenter({ children }: { children?: any }) {
     const [notis, setNotiList] = useState<Notify[]>([]);
