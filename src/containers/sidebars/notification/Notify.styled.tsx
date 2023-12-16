@@ -8,7 +8,14 @@ const Style = styled.div<{ $active: boolean; $close: boolean }>`
     max-height: 10em;
     scroll-snap-align: start;
     transition: 0.3s ease;
-    pointer-events: initial;
+
+    [data-active="true"] ${Box.default} {
+        pointer-events: initial;
+    }
+
+    [data-active="false"] ${Box.default} {
+        pointer-events: none;
+    }
 
     &:last-child {
         scroll-snap-align: end;
@@ -48,6 +55,8 @@ const Style = styled.div<{ $active: boolean; $close: boolean }>`
         !$active &&
         css`
             transform: scale(0.96);
+            pointer-events: none;
+
             ${Box.default} {
                 transform: translateY(100%);
                 opacity: 0;
@@ -59,6 +68,7 @@ const Style = styled.div<{ $active: boolean; $close: boolean }>`
             transform: scale(0.96);
             max-height: 0;
             opacity: 0;
+            pointer-events: none;
 
             ${Box.default} {
                 transform: translateX(100%);

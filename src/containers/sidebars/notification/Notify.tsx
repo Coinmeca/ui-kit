@@ -15,7 +15,14 @@ export default function Notify(props: Notify) {
 
     useEffect(() => {
         setActive(true);
-        if (props?.type === "toast" && props?.remain) setTimeout(() => removeToast(props?.id), props?.importance ? timer * 2 : timer);
+        if (props?.type === "toast" && props?.remain)
+            setTimeout(
+                () => {
+                    setClose(true);
+                    removeToast(props?.id);
+                },
+                props?.importance ? timer * 2 : timer
+            );
         return () => {
             setActive(false);
         };
