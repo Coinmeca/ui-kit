@@ -652,18 +652,22 @@ export default function Dummy() {
                 {
                     name: "Tab",
                     path: "/examples/tab",
+                    onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "Slide",
                     path: "/examples/slide",
+                    onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "List & Table",
                     path: "/examples/list-and-table",
+                    onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "Grid",
                     path: "/examples/grid",
+                    onClick: () => setMobileMenu(""),
                 },
             ],
         },
