@@ -32,7 +32,7 @@ export default function Frame(props: Frame) {
                     {align === "left" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
                     <main>{props?.children}</main>
                     {align === "right" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
-                    {toasts && toasts?.length > 0 && <Toast width={width} list={toasts} />}
+                    {toasts && toasts?.length > 0 && <Toast width={width} align={align} list={toasts} />}
                 </section>
             </Style>
         </>
