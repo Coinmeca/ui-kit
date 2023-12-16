@@ -112,7 +112,7 @@ export default function Input(props: Input) {
         const v = formatter(typeof e === "object" ? e?.target?.value : e);
         setError(false);
         setValue(v);
-        if (typeof props?.onChange === "function") props?.onChange(e, v);
+        if (typeof props?.onChange === "function") props?.onChange(e?.target, v);
     };
 
     const handleFocus = (e: any) => {
@@ -168,7 +168,9 @@ export default function Input(props: Input) {
     };
 
     useEffect(() => {
-        setValue(formatter(props?.value));
+        const v = formatter(props?.value);
+        setValue(v);
+        if (typeof props?.onChange === "function") props?.onChange(input?.current, v);
     }, [props?.value, type, props?.fix, props?.min, props?.max, props?.readOnly, props?.lock, props?.disabled, formatter]);
 
     const Input = (
@@ -214,11 +216,11 @@ export default function Input(props: Input) {
                             max={props?.max}
                             step={props?.step}
                             value={formatter(value)}
-                            onClick={(e: any) => handleClick(e)}
-                            onInput={(e) => handleChange(e)}
-                            onChange={(e) => handleChange(e)}
-                            onFocus={(e) => handleFocus(e)}
-                            onKeyDown={(e) => handleKeyDown(e)}
+                            onClick={handleClick}
+                            onInput={handleChange}
+                            onChange={handleChange}
+                            onFocus={handleFocus}
+                            onKeyDown={handleKeyDown}
                             autoFocus={extend || focus || props?.autoFocus}
                             disabled={props?.disabled}
                             readOnly={props?.lock || props?.disabled}

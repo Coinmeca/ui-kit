@@ -101,52 +101,51 @@ export default function Page() {
     const [supply, setSupply] = useState<number>(init.supply || 0);
     const [tvl, setTVL] = useState(0);
     const [last, setLast] = useState<number>(0);
+    const least = 0.001;
 
     const Formatter = (props: { data?: Asset[]; vault?: boolean }) => {
         const formatter = (data: Asset[]) => {
             return (
-                <>
-                    {data &&
-                        data?.length > 0 &&
-                        data?.map((asset: Asset) => {
-                            const base = [
-                                {
-                                    align: "left",
-                                    children: <Elements.Text>{asset?.symbol}</Elements.Text>,
-                                },
-                                {
-                                    align: "right",
-                                    children: <Elements.Text>{asset?.amount}</Elements.Text>,
-                                },
-                            ];
+                data &&
+                data?.length > 0 &&
+                data?.map((asset: Asset) => {
+                    const base = [
+                        {
+                            align: "left",
+                            children: <Elements.Text>{asset?.symbol}</Elements.Text>,
+                        },
+                        {
+                            align: "right",
+                            children: <Elements.Text>{asset?.amount}</Elements.Text>,
+                        },
+                    ];
 
-                            return props?.vault
-                                ? [
-                                      ...[
-                                          base,
-                                          typeof asset?.need !== "undefined" &&
-                                              asset?.need > 0 && [
-                                                  <>
-                                                      <Elements.Text>Need:</Elements.Text>
-                                                  </>,
-                                                  <>
-                                                      <Elements.Text>{asset?.need}</Elements.Text>
-                                                  </>,
-                                              ],
-                                          typeof asset?.weight !== "undefined" &&
-                                              asset?.weight > 0 && [
-                                                  <>
-                                                      <Elements.Text>Weight:</Elements.Text>
-                                                  </>,
-                                                  <>
-                                                      <Elements.Text>{asset?.weight}</Elements.Text>
-                                                  </>,
-                                              ],
+                    return props?.vault
+                        ? [
+                              ...[
+                                  base,
+                                  typeof asset?.need !== "undefined" &&
+                                      asset?.need > 0 && [
+                                          <>
+                                              <Elements.Text>Need:</Elements.Text>
+                                          </>,
+                                          <>
+                                              <Elements.Text>{asset?.need}</Elements.Text>
+                                          </>,
                                       ],
-                                  ]
-                                : base;
-                        })}
-                </>
+                                  typeof asset?.weight !== "undefined" &&
+                                      asset?.weight > 0 && [
+                                          <>
+                                              <Elements.Text>Weight:</Elements.Text>
+                                          </>,
+                                          <>
+                                              <Elements.Text>{asset?.weight}</Elements.Text>
+                                          </>,
+                                      ],
+                              ],
+                          ]
+                        : base;
+                })
             );
         };
 
@@ -416,8 +415,10 @@ export default function Page() {
     const withdraw = (burn: number, symbol: string, user: number, lp = true) => {
         // const weight = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === symbol?.toUpperCase())?.weight || 1 / burn;
         // burn = burn > weight ? weight : burn;
+        console.log(burn);
         const asset = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === symbol?.toUpperCase());
         if (!asset) return;
+        if (!asset?.amount || asset?.amount === 0 || !asset?.weight || asset?.weight === 0) return;
 
         // math
         let w = 0;
@@ -1173,14 +1174,21 @@ export default function Page() {
                                     placeholder={"amount"}
                                     left={{
                                         children: (
-                                            <Controls.Dropdown keyName={"symbol"} options={vault} onClickItem={(e: any, v: Asset, k: number) => setAsset(v)} />
+                                            <Controls.Dropdown
+                                                keyName={"symbol"}
+                                                options={vault.filter((f: Asset) => f?.weight && f?.weight > 0)}
+                                                onClickItem={(e: any, v: Asset, k: number) => setAsset(v)}
+                                            />
                                         ),
                                     }}
                                     align={"right"}
                                     type={"number"}
                                     value={amount}
-                                    onChange={(e: any, v: any) => setAmount(Format(v, "number") as number)}
-                                    max={exist?.amount || 0}
+                                    onChange={(e: any, v: any) => {
+                                        console.log(e);
+                                        setAmount(Format(v, "number") as number);
+                                    }}
+                                    max={asset?.weight && (asset?.weight === least ? 0 : asset?.weight - least)}
                                     right={{
                                         children: (
                                             <Elements.Text type="strong" opacity={0.6}>
