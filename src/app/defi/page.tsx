@@ -105,46 +105,48 @@ export default function Page() {
     const Formatter = (props: { data?: Asset[]; vault?: boolean }) => {
         const formatter = (data: Asset[]) => {
             return (
-                data &&
-                data?.length > 0 &&
-                data?.map((asset: Asset) => {
-                    const base = [
-                        {
-                            align: "left",
-                            children: <Elements.Text>{asset?.symbol}</Elements.Text>,
-                        },
-                        {
-                            align: "right",
-                            children: <Elements.Text>{asset?.amount}</Elements.Text>,
-                        },
-                    ];
+                <>
+                    {data &&
+                        data?.length > 0 &&
+                        data?.map((asset: Asset) => {
+                            const base = [
+                                {
+                                    align: "left",
+                                    children: <Elements.Text>{asset?.symbol}</Elements.Text>,
+                                },
+                                {
+                                    align: "right",
+                                    children: <Elements.Text>{asset?.amount}</Elements.Text>,
+                                },
+                            ];
 
-                    return props?.vault
-                        ? [
-                              ...[
-                                  base,
-                                  typeof asset?.need !== "undefined" &&
-                                      asset?.need > 0 && [
-                                          <>
-                                              <Elements.Text>Need:</Elements.Text>
-                                          </>,
-                                          <>
-                                              <Elements.Text>{asset?.need}</Elements.Text>
-                                          </>,
+                            return props?.vault
+                                ? [
+                                      ...[
+                                          base,
+                                          typeof asset?.need !== "undefined" &&
+                                              asset?.need > 0 && [
+                                                  <>
+                                                      <Elements.Text>Need:</Elements.Text>
+                                                  </>,
+                                                  <>
+                                                      <Elements.Text>{asset?.need}</Elements.Text>
+                                                  </>,
+                                              ],
+                                          typeof asset?.weight !== "undefined" &&
+                                              asset?.weight > 0 && [
+                                                  <>
+                                                      <Elements.Text>Weight:</Elements.Text>
+                                                  </>,
+                                                  <>
+                                                      <Elements.Text>{asset?.weight}</Elements.Text>
+                                                  </>,
+                                              ],
                                       ],
-                                  typeof asset?.weight !== "undefined" &&
-                                      asset?.weight > 0 && [
-                                          <>
-                                              <Elements.Text>Weight:</Elements.Text>
-                                          </>,
-                                          <>
-                                              <Elements.Text>{asset?.weight}</Elements.Text>
-                                          </>,
-                                      ],
-                              ],
-                          ]
-                        : base;
-                })
+                                  ]
+                                : base;
+                        })}
+                </>
             );
         };
 
@@ -1563,44 +1565,42 @@ export default function Page() {
                                     <Layouts.Contents.InnerContent>
                                         <Layouts.Col gap={1}>
                                             {vault?.map((a: Asset, i: number) => (
-                                                <>
-                                                    <Layouts.Box key={i} padding={2} fit>
-                                                        <Layouts.Col gap={1}>
-                                                            <Layouts.Row>
-                                                                <Elements.Text type={"strong"}>{a?.symbol}</Elements.Text>
-                                                                <Layouts.Col gap={0}>
-                                                                    <Elements.Text type={"strong"} align={"right"}>
-                                                                        {a?.amount}
-                                                                    </Elements.Text>
-                                                                    <Elements.Text type={"desc"} align={"right"} opacity={0.45}>
-                                                                        = $
-                                                                        {a?.amount! *
-                                                                            (values.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase())
-                                                                                ?.value || 1)}
-                                                                    </Elements.Text>
-                                                                </Layouts.Col>
-                                                            </Layouts.Row>
-                                                            <Layouts.Row>
-                                                                <Layouts.Col gap={0}>
-                                                                    <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
-                                                                        Need
-                                                                    </Elements.Text>
-                                                                    <Elements.Text type={"strong"} align={"right"}>
-                                                                        {Format(a?.need || 0, "number", true, 8)}
-                                                                    </Elements.Text>
-                                                                </Layouts.Col>
-                                                                <Layouts.Col gap={0}>
-                                                                    <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
-                                                                        Weight
-                                                                    </Elements.Text>
-                                                                    <Elements.Text type={"strong"} align={"right"}>
-                                                                        {Format(a?.weight || 0, "number", true, 8)}
-                                                                    </Elements.Text>
-                                                                </Layouts.Col>
-                                                            </Layouts.Row>
-                                                        </Layouts.Col>
-                                                    </Layouts.Box>
-                                                </>
+                                                <Layouts.Box key={i} padding={2} fit>
+                                                    <Layouts.Col gap={1}>
+                                                        <Layouts.Row>
+                                                            <Elements.Text type={"strong"}>{a?.symbol}</Elements.Text>
+                                                            <Layouts.Col gap={0}>
+                                                                <Elements.Text type={"strong"} align={"right"}>
+                                                                    {a?.amount}
+                                                                </Elements.Text>
+                                                                <Elements.Text type={"desc"} align={"right"} opacity={0.45}>
+                                                                    = $
+                                                                    {a?.amount! *
+                                                                        (values.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase())
+                                                                            ?.value || 1)}
+                                                                </Elements.Text>
+                                                            </Layouts.Col>
+                                                        </Layouts.Row>
+                                                        <Layouts.Row>
+                                                            <Layouts.Col gap={0}>
+                                                                <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
+                                                                    Need
+                                                                </Elements.Text>
+                                                                <Elements.Text type={"strong"} align={"right"}>
+                                                                    {Format(a?.need || 0, "number", true, 8)}
+                                                                </Elements.Text>
+                                                            </Layouts.Col>
+                                                            <Layouts.Col gap={0}>
+                                                                <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
+                                                                    Weight
+                                                                </Elements.Text>
+                                                                <Elements.Text type={"strong"} align={"right"}>
+                                                                    {Format(a?.weight || 0, "number", true, 8)}
+                                                                </Elements.Text>
+                                                            </Layouts.Col>
+                                                        </Layouts.Row>
+                                                    </Layouts.Col>
+                                                </Layouts.Box>
                                             ))}
                                         </Layouts.Col>
                                     </Layouts.Contents.InnerContent>

@@ -6,8 +6,9 @@ import Notify from "../notification/Notify";
 import { type Notify as Content } from "contexts/NotificationCenter";
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function Toast({ list, width }: { list?: Content[]; width?: number }) {
+export default function Toast({ list, width, align }: { list?: Content[]; width?: number; align: "left" | "right" }) {
     width = width || 60;
+    align = align === "left" || align === "right" ? align : "left";
 
     useEffect(() => {
         console.log("side toast change");
@@ -16,24 +17,24 @@ export default function Toast({ list, width }: { list?: Content[]; width?: numbe
     return (
         typeof list !== "undefined" &&
         list.length > 0 && (
-            <Style>
+            <Style $width={width} $align={align}>
                 <Layouts.Contents.InnerContent>
-                    {/* <AnimatePresence key={"notification"} mode="popLayout"> */}
-                    {list &&
-                        list?.length > 0 &&
-                        list?.map((v: any, k: number) => (
-                            <Notify
-                                key={k}
-                                // as={motion.div}
-                                // initial={{ y: "15%", opacity: 0 }}
-                                // animate={{ y: "0", opacity: 1 }}
-                                // exit={{ x: "15%", opacity: 0 }}
-                                // transition={{ ease: "easeInOut", duration: 0.3 }}
-                                // layout
-                                {...{ ...v, type: "toast" }}
-                            />
-                        ))}
-                    {/* </AnimatePresence> */}
+                    <AnimatePresence key={"notification"} mode="popLayout">
+                        {list &&
+                            list?.length > 0 &&
+                            list?.map((v: any, k: number) => (
+                                <Notify
+                                    key={k}
+                                    as={motion.div}
+                                    initial={{ y: "15%", opacity: 0 }}
+                                    animate={{ y: "0", opacity: 1 }}
+                                    exit={{ x: "15%", opacity: 0 }}
+                                    transition={{ ease: "easeInOut", duration: 0.3 }}
+                                    layout
+                                    {...{ ...v, type: "toast" }}
+                                />
+                            ))}
+                    </AnimatePresence>
                 </Layouts.Contents.InnerContent>
             </Style>
         )

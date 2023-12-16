@@ -8,14 +8,16 @@ const Style = styled.div<{ $active: boolean; $close: boolean }>`
     max-height: 10em;
     scroll-snap-align: start;
     transition: 0.3s ease;
+    pointer-events: initial;
 
     &:last-child {
         scroll-snap-align: end;
     }
 
     ${Box.default} {
-        background: rgba(var(--white), var(--o015));
-        backdrop-filter: blur(calc(var(--unit) * 16));
+        background: rgba(var(--black-abs), var(--o09));
+        background-image: linear-gradient(rgba(var(--white-abs), var(--o015)), rgba(var(--white-abs), var(--o015)));
+        backdrop-filter: blur(calc(var(--unit) / 8));
         width: auto;
         transition: 0.3s ease;
         padding: 1.25em 0 1.5em;

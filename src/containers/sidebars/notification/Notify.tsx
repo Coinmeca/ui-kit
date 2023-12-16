@@ -11,7 +11,7 @@ export default function Notify(props: Notify) {
     const [active, setActive] = useState<boolean>(false);
     const [close, setClose] = useState<boolean>(false);
 
-    const timer = props?.timer || 3000;
+    const timer = props?.timer || 5000;
 
     useEffect(() => {
         setActive(true);
