@@ -1,34 +1,33 @@
 "use client";
-import { useEffect } from "react";
-import useToast from "../../../hooks/useNotification";
-import type { Notify } from "../../../hooks/useNotification";
+import { useContext, useEffect, useState } from "react";
 import { Controls, Layouts } from "components";
 import { Text } from "components/elements";
 import Image from "next/image";
 import Style from "./Notify.styled";
+import { Notification, type Notify } from "contexts/NotificationCenter";
 
 export default function Notify(props: Notify) {
-    const { removeNotify } = useToast();
+    const { removeNotify, removeToast } = useContext(Notification);
+    const [active, setActive] = useState<boolean>(false);
+    const [close, setClose] = useState<boolean>(false);
 
     const timer = props?.timer || 3000;
-    const active = props?.id ? true : false;
 
     useEffect(() => {
-        const timeOut: any = setTimeout(
-            () => {
-                removeNotify(props?.id);
-            },
-            props?.importance ? timer * 2 : timer
-        );
-        timeOut;
-    }, [props?.id, props?.importance, timer]);
+        setActive(true);
+        if (props?.type === "toast" && props?.remain) setTimeout(() => removeToast(props?.id), props?.importance ? timer * 2 : timer);
+        return () => {
+            setActive(false);
+        };
+    }, []);
 
-    const handleRemove = (id?: string | number) => {
-        id && removeNotify(id);
+    const handleRemove = () => {
+        props?.type === "toast" ? removeToast(props?.id) : removeNotify(props?.id);
+        setClose(true);
     };
 
     return (
-        <Style $active={active}>
+        <Style $active={active} $close={close}>
             <Layouts.Box>
                 <Layouts.Col gap={1}>
                     <Layouts.Row fix>
@@ -38,9 +37,10 @@ export default function Notify(props: Notify) {
                         <Layouts.Row fix gap={1} style={{ minWidth: "max-content" }}>
                             <Text type={"desc"} align={"right"} weight={"bold"}>
                                 {/* "YYYY-MM-DD HH:mm:ss" */}
-                                {props?.date?.toLocaleString()}
+                                {/* {props?.date?.toLocaleString()} */}
+                                {props?.id}
                             </Text>
-                            <Controls.Button scale={0.75} icon={"x"} fit onClick={() => handleRemove(props?.id)} />
+                            <Controls.Button scale={0.75} icon={"x"} fit onClick={() => handleRemove()} />
                         </Layouts.Row>
                     </Layouts.Row>
                     {props?.img && <Image src={props?.img} width={0} height={0} alt={""} />}

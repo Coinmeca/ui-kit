@@ -1,23 +1,26 @@
-import './global.scss';
-import { Metadata } from 'next';
-import { Style } from 'lib';
+import "./global.scss";
+import { Metadata } from "next";
+import { Style } from "lib";
+import { NotificationCenter } from "contexts";
 
 export const metadata: Metadata = {
-    title: 'Coinmeca',
-    description: 'The next generation decentralized exchange for new finance.',
+    title: "Coinmeca",
+    description: "The next generation decentralized exchange for new finance.",
     viewport: {
-        width: 'device-width',
+        width: "device-width",
         initialScale: 1,
-        interactiveWidget: 'overlays-content'
+        interactiveWidget: "overlays-content",
     },
-    themeColor: 'black'
+    themeColor: "black",
 };
 
 export default function RootLayout({ children }: { children: any }) {
     return (
         <html lang="en">
             <body suppressHydrationWarning={true}>
-                <Style.Initialize>{children}</Style.Initialize>
+                <Style.Initialize>
+                    <NotificationCenter>{children}</NotificationCenter>
+                </Style.Initialize>
             </body>
         </html>
     );

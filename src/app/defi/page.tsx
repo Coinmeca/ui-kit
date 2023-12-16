@@ -4,7 +4,7 @@ import { Controls, Elements, Layouts } from "components";
 import { Modal } from "containers";
 import { usePortal } from "hooks";
 import { Capitalize, Format } from "lib/utils";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Asset {
     type?: number;
