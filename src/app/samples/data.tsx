@@ -1,7 +1,6 @@
 "use client";
 import { Elements, Layouts, Controls } from "components";
 import { useState } from "react";
-import useToast from "../../hooks/useNotification";
 import { usePathname } from "next/navigation";
 import { Modals, Sidebars } from "containers";
 import { usePortal } from "hooks";
@@ -89,7 +88,7 @@ export default function Data() {
         },
     ];
 
-    const { AddNotify, setNotis } = useToast(notilist);
+    // const { AddNotify, setNotis } = useToast(notilist);
     // setNotis(notilist);
 
     const markets = [

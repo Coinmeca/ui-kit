@@ -4,9 +4,11 @@ import * as InnerContent from "components/layouts/contents/inner/InnerContent.st
 import { Root } from "lib/style";
 
 const Style = styled.section`
+    position: absolute;
+    top: 0;
+    left: 0;
     width: -webkit-fill-available;
     height: -webkit-fill-available;
-    padding: 3em;
     overflow: hidden auto;
     scroll-snap-type: y mandatory;
     -webkit-overflow-scrolling: touch;
@@ -18,9 +20,8 @@ const Style = styled.section`
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
         & {
-            padding: 2em;
-
             ${InnerContent.default} {
+                padding: 2em;
                 gap: 1em;
                 height: max-content;
             }
