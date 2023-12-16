@@ -12,7 +12,7 @@ const Style = styled.button<{
 }>`
     ${({ $color }) => {
         return css`
-            --theme: ${Root.Color($color)};
+            --theme: ${$color === Root.Color($color) ? $color : Root.Color($color)};
         `;
     }};
 
