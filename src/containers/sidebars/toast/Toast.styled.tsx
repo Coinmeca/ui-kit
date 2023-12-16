@@ -27,7 +27,7 @@ const Style = styled.section<{ $width: number; $align: "left" | "right" }>`
     @media all and (max-width: ${Root.Device.Mobile}px) {
         & {
             ${InnerContent.default} {
-                max-width: ${({ $width }) => `calc(${$width} - 4em)`};
+                max-width: calc(100% - 4em);
                 padding: 2em;
                 gap: 1em;
                 height: max-content;
