@@ -112,7 +112,7 @@ export default function Input(props: Input) {
         const v = formatter(typeof e === "object" ? e?.target?.value : e);
         setError(false);
         setValue(v);
-        if (typeof props?.onChange === "function") props?.onChange(e?.target, v);
+        if (typeof props?.onChange === "function") props?.onChange(e?.target || input?.current, v);
     };
 
     const handleFocus = (e: any) => {
