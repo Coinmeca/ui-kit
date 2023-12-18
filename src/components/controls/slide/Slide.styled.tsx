@@ -126,7 +126,7 @@ export const Style = styled.div<{
                     position: absolute;
                     display: flex;
                     height: auto;
-                    ${$nav && `${$nav}: : 0;`}
+                    ${$nav && `${$nav}: 0;`}
                     ${$horizon !== "center" && `${$horizon}: 0;`}
                     padding: ${$padding}em;
                     gap: 1em;

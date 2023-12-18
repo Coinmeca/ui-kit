@@ -6,7 +6,7 @@ import { useOrder, usePortal, useMobile } from "hooks";
 import { Format } from "lib/utils";
 import type { Token } from "types/web3";
 
-export interface TradeControl {
+export interface StakeControl {
     mode: boolean;
     assets: Token[];
     price: number | string;
@@ -27,7 +27,7 @@ export interface Order {
     fees?: number | string;
 }
 
-export default function Trade(props: TradeControl) {
+export default function Stake(props: StakeControl) {
     const { isMobile } = useMobile();
 
     const mode = typeof props?.mode === "undefined" ? true : props?.mode;
@@ -169,7 +169,7 @@ export default function Trade(props: TradeControl) {
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Row>
-            <Controls.Input
+            {/* <Controls.Input
                 placeholder={"Price"}
                 type={"currency"}
                 align={"right"}
@@ -184,7 +184,7 @@ export default function Trade(props: TradeControl) {
                 }}
                 style={text.setting}
                 lock={option === "market"}
-            />
+            /> */}
             <Controls.Input
                 placeholder={"0"}
                 type={"currency"}
