@@ -29,8 +29,8 @@ export default function useSort() {
     }, []);
 
     const sorting = useCallback(
-        (list: any[]) => {
-            return sort && sort?.key !== "" && sort?.key?.length > 0 ? Sort(list, sort?.key, sort?.type, sort?.direction) : list;
+        (list?: any[]) => {
+            return list ? (sort && sort?.key !== "" && sort?.key?.length > 0 ? Sort(list, sort?.key, sort?.type, sort?.direction) : list) : [];
         },
         [sort]
     );
