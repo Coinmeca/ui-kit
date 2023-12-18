@@ -54,7 +54,7 @@ export default function History(props: History) {
                         >
                             <Layouts.Col gap={1}>
                                 <Layouts.Row gap={1} fix>
-                                    <Layouts.Col gap={0}>
+                                    <Layouts.Col align={"left"} gap={0}>
                                         <Elements.Text height={1.5} color={colorset[data?.category]}>
                                             {category[data?.category]}
                                         </Elements.Text>
@@ -77,7 +77,7 @@ export default function History(props: History) {
                                         Price
                                     </Elements.Text>
                                     <Elements.Text align={"right"}>{Format(data?.price, "currency", true)}</Elements.Text>
-                                    <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
+                                    <Elements.Text opacity={0.3} align={"left"} style={{ maxWidth: "6em" }}>
                                         {data?.quote}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -87,7 +87,7 @@ export default function History(props: History) {
                                         Amount
                                     </Elements.Text>
                                     <Elements.Text align={"right"}>{Format(data?.amount, "currency", true)}</Elements.Text>
-                                    <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
+                                    <Elements.Text opacity={0.3} align={"left"} style={{ maxWidth: "6em" }}>
                                         {data?.quote}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -96,7 +96,7 @@ export default function History(props: History) {
                                         Quantity
                                     </Elements.Text>
                                     <Elements.Text align={"right"}>{Format(data?.quantity, "currency", true)}</Elements.Text>
-                                    <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
+                                    <Elements.Text opacity={0.3} align={"left"} style={{ maxWidth: "6em" }}>
                                         {data?.base}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -108,7 +108,7 @@ export default function History(props: History) {
                                     <Elements.Text opacity={0.6} align={"right"}>
                                         - {Format(data?.fees, "currency", true)}
                                     </Elements.Text>
-                                    <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
+                                    <Elements.Text opacity={0.3} align={"left"} style={{ maxWidth: "6em" }}>
                                         {data?.base}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -117,7 +117,7 @@ export default function History(props: History) {
                                         Total
                                     </Elements.Text>
                                     <Elements.Text align={"right"}>{Format(data?.quantity - data?.fees, "currency", true)}</Elements.Text>
-                                    <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
+                                    <Elements.Text opacity={0.3} align={"left"} style={{ maxWidth: "6em" }}>
                                         {data?.base}
                                     </Elements.Text>
                                 </Layouts.Row>

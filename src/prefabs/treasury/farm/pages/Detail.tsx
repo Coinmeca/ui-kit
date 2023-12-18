@@ -38,7 +38,7 @@ export default function Detail(props: Detail) {
     const { windowSize } = useWindowSize();
 
     const [mobile, setMobile] = useState("chart");
-    const [tab, setTab] = useState("liquidity");
+    const [tab, setTab] = useState("staking");
     const [chart, setChart] = useState("rate");
     const colorset = {
         DEPOSIT: "orange",
@@ -406,12 +406,12 @@ export default function Detail(props: Detail) {
                                                 [
                                                     <>
                                                         <Controls.Tab
-                                                            active={tab === "liquidity"}
+                                                            active={tab === "staking"}
                                                             onClick={() => {
-                                                                setTab("liquidity");
+                                                                setTab("staking");
                                                             }}
                                                         >
-                                                            Liquidity
+                                                            Staking
                                                         </Controls.Tab>
                                                     </>,
                                                 ],
@@ -433,26 +433,21 @@ export default function Detail(props: Detail) {
                                     <Layouts.Contents.TabContainer
                                         contents={[
                                             {
-                                                active: tab === "liquidity",
+                                                active: tab === "staking",
                                                 children: (
-                                                    <></>
-                                                    // <Vault.Containers.Trade
-                                                    //     base={props?.asset}
-                                                    //     quote={{
-                                                    //         symbol: "MECA",
-                                                    //         name: "Coinmeca",
-                                                    //     }}
-                                                    //     price={props?.info?.token_per}
-                                                    //     fee={0.1}
-                                                    //     responsive={
-                                                    //         (windowSize.width <= Root.Device.Tablet && windowSize.width > Root.Device.Mobile) ||
-                                                    //         windowSize.width <= Root.Device.Mobile
-                                                    //     }
-                                                    // />
+                                                    <Farms.Containers.Stake
+                                                        asset={props?.farm?.stake}
+                                                        price={props?.info?.token_per}
+                                                        fee={0.1}
+                                                        responsive={
+                                                            (windowSize.width <= Root.Device.Tablet && windowSize.width > Root.Device.Mobile) ||
+                                                            windowSize.width <= Root.Device.Mobile
+                                                        }
+                                                    />
                                                 ),
                                             },
                                             {
-                                                active: tab === "liquidity",
+                                                active: tab === "history",
                                                 children: <Asset.Containers.History list={[]} responsive={props?.responsive} />,
                                             },
                                         ]}
