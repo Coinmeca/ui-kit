@@ -22,6 +22,7 @@ export default function View(props: View) {
         if (typeof props?.onPage === "function") props?.onPage(page);
     };
 
+    const [keyword, setKeyword] = useState<string>();
     const [tvl, setTvl] = useState<any>();
 
     return (
@@ -117,7 +118,8 @@ export default function View(props: View) {
                                                 left={{
                                                     children: <Elements.Icon icon={"search"} />,
                                                 }}
-                                                placeholder={"Search"}
+                                                onChange={(e: any, v: string) => setKeyword(v)}
+                                                placeholder={"Search asset"}
                                             />
                                         </>
                                     ),
@@ -129,7 +131,14 @@ export default function View(props: View) {
                         contents={[
                             {
                                 active: props?.page === "vault",
-                                children: <Vault.Containers.Assets assets={props?.assets} onSelect={props?.onSelect} responsive={props?.responsive} />,
+                                children: (
+                                    <Vault.Containers.Assets
+                                        assets={props?.assets}
+                                        filter={keyword}
+                                        onSelect={props?.onSelect}
+                                        responsive={props?.responsive}
+                                    />
+                                ),
                             },
                             {
                                 active: props?.page === "farm",

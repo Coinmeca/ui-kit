@@ -1,11 +1,12 @@
 "use client";
 import { Controls, Elements, Layouts } from "components";
-import { Format, Sign } from "lib/utils";
+import { Filter, Format, Sign } from "lib/utils";
 import { Asset } from "types/web3";
 import { useSort } from "hooks";
 
 export interface Assets {
     assets?: Asset[];
+    filter?: string;
     responsive?: boolean;
     onSelect?: Function;
 }
@@ -87,7 +88,7 @@ export default function Assets(props: Assets) {
                                     children: [
                                         <>
                                             <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{Format(data?.tv, "currency", true)}</Elements.Text>
+                                                <Elements.Text align={"right"}>{Format(data?.tl, "currency", true)}</Elements.Text>
                                                 <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
                                                     {data?.symbol}
                                                 </Elements.Text>
@@ -96,7 +97,7 @@ export default function Assets(props: Assets) {
                                         <>
                                             <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
                                                 <Elements.Text align={"right"}>
-                                                    {Sign(data?.tv_change)} {Format(data?.tv_change, "currency", true)}
+                                                    {Sign(data?.tl_change)} {Format(data?.tl_change, "currency", true)}
                                                 </Elements.Text>
                                                 <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
                                                     {data?.symbol}
@@ -183,7 +184,7 @@ export default function Assets(props: Assets) {
                 </Layouts.Row>
             </Layouts.Row>
             <Layouts.Divider />
-            <Layouts.List list={sorting(props?.assets)} formatter={assetListFormatter} />
+            <Layouts.List list={Filter(sorting(props?.assets), props?.filter)} formatter={assetListFormatter} />
         </Layouts.Contents.InnerContent>
     );
 }
