@@ -1,11 +1,11 @@
 "use client";
 import { Controls, Elements, Layouts } from "components";
 import { Filter, Format, Sign } from "lib/utils";
-import { Asset } from "types/web3";
+import { Farm } from "types/web3";
 import { useSort } from "hooks";
 
 export interface Assets {
-    assets?: Asset[];
+    farms?: Farm[];
     filter?: string;
     responsive?: boolean;
     onSelect?: Function;
@@ -14,12 +14,12 @@ export interface Assets {
 export default function Assets(props: Assets) {
     const { sorting, setSort, sortArrow } = useSort();
 
-    const formatter = (data: Asset[] | undefined) => {
+    const formatter = (data: Farm[] | undefined) => {
         return (
             data &&
             typeof data !== "string" &&
             data?.length > 0 &&
-            data?.map((data: Asset) => ({
+            data?.map((data: Farm) => ({
                 onClick: () => {
                     if (typeof props?.onSelect === "function") props?.onSelect(data);
                 },
@@ -35,15 +35,15 @@ export default function Assets(props: Assets) {
                                         <Elements.Avatar
                                             size={props?.responsive ? 3.5 : 4}
                                             style={{ maxWidth: "max-content" }}
-                                            img={require(`../../../../assets/coins/${data?.symbol?.toLowerCase()}.png`)}
+                                            img={require(`../../../../assets/coins/${data?.stake?.symbol?.toLowerCase()}.png`)}
                                         />
                                     ),
                                 },
                                 <>
                                     <Layouts.Col gap={0}>
-                                        <Elements.Text height={1.25}>{data?.symbol}</Elements.Text>
+                                        <Elements.Text height={1.25}>{data?.name}</Elements.Text>
                                         <Elements.Text height={1.25} opacity={0.3} fix>
-                                            {data?.name}
+                                            {data?.type === 0 ? "Main" : "Derive"}
                                         </Elements.Text>
                                     </Layouts.Col>
                                 </>,
@@ -57,19 +57,19 @@ export default function Assets(props: Assets) {
                                     children: [
                                         <>
                                             <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{Format(data?.exchange_rate, "currency", true)}</Elements.Text>
+                                                <Elements.Text align={"right"}>{Format(data?.rewards, "currency", true)}</Elements.Text>
                                                 <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    MECA
+                                                    {data?.reward?.symbol?.toUpperCase()}
                                                 </Elements.Text>
                                             </Layouts.Row>
                                         </>,
                                         <>
                                             <Layouts.Row
                                                 gap={1}
-                                                change={Sign(data?.exchange_rate) === "+" ? "green" : Sign(data?.exchange_rate) === "-" && "red"}
+                                                change={Sign(data?.rewards_rate) === "+" ? "green" : Sign(data?.rewards_rate) === "-" && "red"}
                                             >
                                                 <Elements.Text align={"right"} change>
-                                                    {Format(data?.exchange_rate_change, "currency", true)}
+                                                    {data?.rewards_rate}
                                                 </Elements.Text>
                                                 <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }} change>
                                                     %
@@ -90,7 +90,7 @@ export default function Assets(props: Assets) {
                                             <Layouts.Row gap={1}>
                                                 <Elements.Text align={"right"}>{Format(data?.tl, "currency", true)}</Elements.Text>
                                                 <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    {data?.symbol}
+                                                    {data?.stake?.symbol?.toUpperCase()}
                                                 </Elements.Text>
                                             </Layouts.Row>
                                         </>,
@@ -100,34 +100,34 @@ export default function Assets(props: Assets) {
                                                     {Sign(data?.tl_change)} {Format(data?.tl_change, "currency", true)}
                                                 </Elements.Text>
                                                 <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    {data?.symbol}
+                                                    {data?.stake?.symbol?.toUpperCase()}
                                                 </Elements.Text>
                                             </Layouts.Row>
                                         </>,
                                     ],
                                 },
-                                {
-                                    style: {
-                                        gap: 0,
-                                        ...(props?.responsive && {
-                                            display: "none",
-                                        }),
-                                    },
-                                    children: [
-                                        <>
-                                            <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>$ {Format(data?.tvl, "currency", true)}</Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                        <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                <Elements.Text align={"right"} fix>
-                                                    {Sign(data?.tvl_change)}$ {Math.abs(Format(data?.tvl_change, "currency", true) as number)}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                    ],
-                                },
+                                // {
+                                //     style: {
+                                //         gap: 0,
+                                //         ...(props?.responsive && {
+                                //             display: "none",
+                                //         }),
+                                //     },
+                                //     children: [
+                                //         <>
+                                //             <Layouts.Row gap={1}>
+                                //                 <Elements.Text align={"right"}>$ {Format(data?.tvl, "currency", true)}</Elements.Text>
+                                //             </Layouts.Row>
+                                //         </>,
+                                //         <>
+                                //             <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
+                                //                 <Elements.Text align={"right"} fix>
+                                //                     {Sign(data?.tvl_change)}$ {Math.abs(Format(data?.tvl_change, "currency", true) as number)}
+                                //                 </Elements.Text>
+                                //             </Layouts.Row>
+                                //         </>,
+                                //     ],
+                                // },
                             ],
                         },
                     ],
@@ -139,12 +139,10 @@ export default function Assets(props: Assets) {
     const sorts = {
         symbol: { key: "symbol", type: "string" },
         name: { key: "name", type: "string" },
-        exchange_rate: { key: "exchange_rate", type: "number" },
-        exchange_rate_change: { key: "exchange_rate_change", type: "number" },
+        rewards: { key: "rewards", type: "number" },
+        rewards_rate: { key: "rewards_rate", type: "number" },
         tl: { key: "tl", type: "number" },
         tl_change: { key: "tl_change", type: "number" },
-        tvl: { key: "tvl", type: "number" },
-        tvl_change: { key: "tvl_change", type: "number" },
     };
 
     return (
@@ -159,32 +157,32 @@ export default function Assets(props: Assets) {
                     </Controls.Tab>
                 </Layouts.Row>
                 <Layouts.Row gap={0} fix>
-                    <Controls.Tab iconLeft={sortArrow(sorts.exchange_rate)} onClick={() => setSort(sorts.exchange_rate)}>
-                        Exchange Rate
+                    <Controls.Tab iconLeft={sortArrow(sorts.rewards)} onClick={() => setSort(sorts.rewards)}>
+                        Interest
                     </Controls.Tab>
-                    <Controls.Tab iconLeft={sortArrow(sorts.exchange_rate_change)} onClick={() => setSort(sorts.exchange_rate_change)}>
-                        Change
+                    <Controls.Tab iconLeft={sortArrow(sorts.rewards_rate)} onClick={() => setSort(sorts.rewards_rate)}>
+                        Interest Rate
                     </Controls.Tab>
                 </Layouts.Row>
-                <Layouts.Row gap={0} fix>
+                {/* <Layouts.Row gap={0} fix>
                     <Controls.Tab iconLeft={sortArrow(sorts.tl)} onClick={() => setSort(sorts.tl)}>
-                        Total
+                        Rewards Change
                     </Controls.Tab>
                     <Controls.Tab iconLeft={sortArrow(sorts.tl_change)} onClick={() => setSort(sorts.tl_change)}>
-                        Total Change
+                        Rewards Change Rate
                     </Controls.Tab>
-                </Layouts.Row>
+                </Layouts.Row> */}
                 <Layouts.Row gap={0} fix>
-                    <Controls.Tab iconLeft={sortArrow(sorts.tvl)} onClick={() => setSort(sorts.tvl)}>
-                        TVL
+                    <Controls.Tab iconLeft={sortArrow(sorts.tl)} onClick={() => setSort(sorts.tl)}>
+                        Total Locked
                     </Controls.Tab>
-                    <Controls.Tab iconLeft={sortArrow(sorts.tvl_change)} onClick={() => setSort(sorts.tvl_change)}>
-                        TVL Change
+                    <Controls.Tab iconLeft={sortArrow(sorts.tl_change)} onClick={() => setSort(sorts.tl_change)}>
+                        Total Locked Change
                     </Controls.Tab>
                 </Layouts.Row>
             </Layouts.Row>
             <Layouts.Divider />
-            <Layouts.List list={Filter(sorting(props?.assets), props?.filter)} formatter={formatter} />
+            <Layouts.List list={Filter(sorting(props?.farms), props?.filter)} formatter={formatter} />
         </Layouts.Contents.InnerContent>
     );
 }

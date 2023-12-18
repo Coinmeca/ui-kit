@@ -1,12 +1,14 @@
 "use client";
+import { useState } from "react";
 import { Charts, Controls, Elements, Layouts } from "components";
 import { Format } from "lib/utils";
-import { useState } from "react";
-import { Asset } from "types/web3";
+import { Asset, Farm } from "types/web3";
 import { Vault } from ".";
+import { Farms } from ".";
 
 export interface View {
     assets?: Asset[];
+    farms?: Farm[];
     page?: "vault" | "farm";
     charts?: {
         value?: any;
@@ -142,7 +144,9 @@ export default function View(props: View) {
                             },
                             {
                                 active: props?.page === "farm",
-                                children: <>{/* <Layouts.List list={assetListFormatter(props?.assets)} /> */}</>,
+                                children: (
+                                    <Farms.Containers.Farms farms={props?.farms} filter={keyword} onSelect={props?.onSelect} responsive={props?.responsive} />
+                                ),
                             },
                         ]}
                     />

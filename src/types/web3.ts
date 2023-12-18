@@ -15,3 +15,14 @@ export interface Asset extends Token {
 	tvl: number | string;
 	tvl_change: number | string;
 }
+
+export interface Farm {
+	name: string;
+	type: number;
+	stake: Token;
+	reward: Token;
+	rewards: number;
+	rewards_rate: number;
+	tl: number;
+	tl_change: number;
+}
