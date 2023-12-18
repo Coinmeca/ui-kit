@@ -207,7 +207,7 @@ export default function View(props: any) {
                                                         ],
                                                     },
                                                     {
-                                                        style: { maxWidth: "64em" },
+                                                        style: { maxWidth: "80em" },
                                                         children: [
                                                             <>
                                                                 <Controls.Input
