@@ -101,7 +101,7 @@ export default function Page() {
     const [supply, setSupply] = useState<number>(init.supply || 0);
     const [tvl, setTVL] = useState(0);
     const [last, setLast] = useState<number>(0);
-    const least = 0.000000000000000001;
+    const least: number = 0.000000000000000001;
 
     const Formatter = (props: { data?: Asset[]; vault?: boolean }) => {
         const formatter = (data: Asset[]) => {
@@ -636,11 +636,23 @@ export default function Page() {
             let v = vault;
             let u = users;
             let m: Market[] = [];
+            let p = supply;
             filter?.map((a: Asset) => {
                 if ((a?.amount || 0) > 0) {
-                    const exist = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase());
-                    const weight = estimate(a?.symbol!, a?.amount!) / (filter?.length * 2);
+                    const exist = v?.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase());
+                    const need = exist ? parseFloat((exist?.need || 0).toString()) : 0;
+                    const hold = exist ? parseFloat((exist?.amount || 0).toString()) : 0;
+                    const weight = exist ? parseFloat((exist?.weight || 0).toString()) : 0;
+                    const amount = a?.amount || least;
 
+                    // (100 / 200 + 100) * 100 * (200 + 0 + 100) / (200 + 100)
+                    // let rate = exist
+                    //     ? ((weight || least) / ((hold || least) + amount)) * amount * ((hold - need || least) / (hold + amount))
+                    //     : estimate(a?.symbol!, a?.amount!);
+                    // rate = rate * (p / (p + rate)) * 0.99;
+                    let rate = estimate(a?.symbol!, a?.amount!);
+                    // console.log(rate);
+                    // mint = rate * 0.99;
                     // mint += deposit(a, user!, exist ? undefined : estimate(a?.symbol!, a?.amount!));
 
                     const market = {
@@ -658,7 +670,8 @@ export default function Page() {
                                       ? {
                                             ...f,
                                             amount: (f?.amount || 0) + (a?.amount || 0),
-                                            weight: (f?.weight || 0) + weight,
+                                            weight: (f?.weight || 0) + rate,
+                                            need: (f?.need || 0) < 0 ? (f?.need || 0) + (a?.amount || 0) : f?.need || 0,
                                             markets: f?.markets
                                                 ? [...f?.markets?.filter((m: string) => m?.toLowerCase() !== market.name?.toUpperCase()), market.name]
                                                 : [market.name],
@@ -671,7 +684,7 @@ export default function Page() {
                               {
                                   ...a,
                                   amount: a?.amount || 0,
-                                  weight: weight,
+                                  weight: rate,
                                   markets: a?.markets
                                       ? [...a?.markets?.filter((m: string) => m?.toLowerCase() !== market.name?.toUpperCase()), market.name]
                                       : [market.name],
@@ -692,7 +705,7 @@ export default function Page() {
                                 : s;
                         }),
                     ];
-                    mint += weight;
+                    mint += rate;
                 }
             });
 
@@ -740,7 +753,7 @@ export default function Page() {
                         : [...m?.map((f: Market) => f?.name?.toUpperCase())],
                 },
             ]);
-            mint = mint * filter?.length * 2;
+            // mint = mint * (filter?.length + 1);
             setUsers([
                 ...u?.map((s: User, i: number) => {
                     if (i === user) {
@@ -994,21 +1007,18 @@ export default function Page() {
             let u = users;
             let v = vault;
             let p = supply;
-            let mint = 0;
             let rate = 0;
+            let mint = 0;
+            let total = 0;
 
             const ast = { ...assets[asset], amount: parseFloat(amount?.toFixed(18)) };
             const type = values?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase())?.type;
             const exist = v?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase());
+            const balance = u?.find((u: User, i) => user === i)?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase());
             let amt = amount;
-            if (type !== token.high) {
-                amt =
-                    amount * repeat > (exist?.amount || 0)
-                        ? ((exist?.amount || least * 2) - least) / repeat
-                        : amount * repeat > (assets[asset]?.amount || 0)
-                        ? (assets[asset]?.amount || least) / repeat
-                        : amount;
-            }
+            // if (type !== token.high) {
+            amt = parseFloat((amount * repeat > (balance?.amount || 0) ? ((balance?.amount || least) - least || least) / repeat : amount).toString());
+            // }
             console.log(ast?.symbol, type);
             [...Array(repeat)].map(() => {
                 const base = ast?.symbol?.toUpperCase();
@@ -1018,34 +1028,42 @@ export default function Page() {
                     const q = (quote === "MECA" ? values : v)?.find((f: Asset) => f?.symbol?.toUpperCase() === quote.toUpperCase());
 
                     if (!b || !q) return undefined;
-                    switch (type) {
-                        case token.high: {
-                            rate =
-                                (((b?.amount || 0) + amt) / (b?.weight || 1)) *
-                                amt *
-                                (((b?.amount || 0) + (b?.need || 0) || 1) / ((b?.amount || 0) + (b?.amount || 0) || 1));
-                        }
-                        case token.medium: {
-                            rate =
-                                (((b?.amount || 0) + amt) / (b?.weight || 1)) *
-                                amt *
-                                (((b?.amount || 0) + amt || 1) / ((b?.amount || 0) - (b?.need || 0) || 1));
-                            break;
-                        }
-                        default: {
-                            rate =
-                                ((b?.weight || 1) / ((b?.amount || 0) + amt)) *
-                                amt *
-                                (((b?.amount || 0) + (b?.need || 0) || 1) / ((b?.amount || 0) + (b?.amount || 0) || 1));
-                            break;
-                        }
-                    }
-                    mint = parseFloat((rate * (p / (p + rate)) * 0.99)?.toFixed(18));
+                    // switch (type) {
+                    //     case token.high: {
+                    //         rate =
+                    //             (((b?.amount || 0) + amt) / (b?.weight || 1)) *
+                    //             amt *
+                    //             (((b?.amount || 0) + (b?.need || 0) || 1) / ((b?.amount || 0) + (b?.amount || 0) || 1));
+                    //     }
+                    //     case token.medium: {
+                    //         rate =
+                    //             (((b?.amount || 0) + amt) / (b?.weight || 1)) *
+                    //             amt *
+                    //             (((b?.amount || 0) + amt || 1) / ((b?.amount || 0) - (b?.need || 0) || 1));
+                    //         break;
+                    //     }
+                    //     default: {
+                    //         rate =
+                    //             ((b?.weight || 1) / ((b?.amount || 0) + amt)) *
+                    //             amt *
+                    //             (((b?.amount || 0) + (b?.need || 0) || 1) / ((b?.amount || 0) + (b?.amount || 0) || 1));
+                    //         break;
+                    //     }
+                    // }
+                    const need = parseFloat((b?.need || 0).toString());
+                    const hold = parseFloat((b?.amount || 0).toString());
+                    const weight = parseFloat((b?.weight || least).toString());
+
+                    // rate = (weight / (hold + amt)) * amt * ((hold + need + amt) / (hold + amt));
+                    rate = (weight / (hold + amt)) * amt * ((hold + need) / (hold + amt));
+                    // mint = rate * (p / (p + rate)) * 0.99;
+                    mint = rate * 0.99;
                     // console.log("mint", {
                     //     rate: ((b?.amount || 0) + amount) / (b?.weight || 1),
                     //     weight: ((b?.amount || 0) + amount || 1) / ((b?.amount || 0) - (b?.need || 0) || 1),
                     //     mint: mint,
                     // });
+                    total += parseFloat(mint.toString());
                 } else {
                     let token = (a: Asset[], symbol: string) => {
                         return a?.find((f: Asset) => f?.symbol?.toUpperCase() === symbol.toUpperCase());
@@ -1064,51 +1082,47 @@ export default function Page() {
                               return f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase()
                                   ? {
                                         ...f,
-                                        amount: (Format(f?.amount || 0, "number", false, 18) as number) + ast?.amount,
+                                        amount: parseFloat((f?.amount || 0).toString()) + amt,
                                         // need: f?.key && (f?.need || 0) < 0 ? (amount - (f?.need || 0) > 0 ? 0 : (f?.need || 0) - amount) : f?.need,
-                                        need: (f?.need || 0) - ast?.amount,
-                                        weight: (f?.weight || 0) + mint,
-                                        // weight: key ? (f?.weight || 0) + mint : (f?.weight || 0) - mint,
+                                        need: (f?.need || 0) - amt,
+                                        // weight: (f?.weight || 0) * ((supply + mint) / supply),
+                                        weight: ((f?.weight || 0) * ((f?.weight || 0) + mint)) / (f?.weight || least),
                                     }
                                   : f;
                           }),
                       ]
                     : [...v, { ...ast, weight: mint }];
+            });
 
-                u = u?.map((u: User, i: number) => {
-                    if (i === user) {
-                        const exist = u?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase());
-                        const meca = u?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA");
-                        let assets = u?.assets;
+            u = u?.map((u: User, i: number) => {
+                if (i === user) {
+                    const exist = u?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase());
+                    const meca = u?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA");
+                    let assets = u?.assets;
 
-                        assets = exist
+                    assets = exist
+                        ? [
+                              ...assets?.map((f: Asset) => {
+                                  return f?.symbol?.toUpperCase() === exist?.symbol?.toUpperCase() ? { ...f, amount: (f?.amount || 0) - amt * repeat } : f;
+                              }),
+                          ]
+                        : [...assets, { ...ast, amount: -(amt * repeat) }];
+
+                    if (lp)
+                        assets = meca
                             ? [
-                                  ...assets?.map((f: Asset) => {
-                                      return f?.symbol?.toUpperCase() !== exist?.symbol?.toUpperCase()
-                                          ? f
-                                          : { ...f, amount: (Format(f?.amount || 0, "number", false, 18) as number) - ast?.amount };
+                                  ...assets.map((f: Asset) => {
+                                      return f?.symbol?.toUpperCase() === "MECA" ? { ...f, amount: parseFloat((f?.amount || 0).toString()) + total } : f;
                                   }),
                               ]
-                            : [...assets, { ...ast, amount: -ast?.amount }];
+                            : [...assets, { symbol: "MECA", amount: total }];
 
-                        if (lp) {
-                            assets = meca
-                                ? [
-                                      ...assets.map((f: Asset) =>
-                                          f?.symbol?.toUpperCase() === "MECA"
-                                              ? { ...f, amount: (Format(f?.amount || 0, "number", false, 18) as number) + mint }
-                                              : f
-                                      ),
-                                  ]
-                                : [...assets, { symbol: "MECA", amount: parseFloat(mint.toFixed(18)) }];
-                        }
-                        return { ...u, assets };
-                    } else {
-                        return u;
-                    }
-                });
+                    return { ...u, assets };
+                } else {
+                    return u;
+                }
             });
-            console.log("user", user, "-> ", parseFloat(mint.toString()), "MECA");
+            console.log("user", user, "-> ", parseFloat(total.toString()), "MECA");
             // setSupply((state: number) => state + mint);
             setSupply(p);
             setVault(v);
@@ -1229,18 +1243,24 @@ export default function Page() {
             //             ? (assets[asset]?.amount || least) / repeat
             //             : amount;
             // }
-
+            let total = 0;
             [...Array(repeat)].map(() => {
                 ast = v?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
-                const weight = ast?.weight || least;
-                const balance = ast?.amount || least;
-                const b = burn > (ast?.weight || least) ? ((ast?.weight || least) === least ? 0 : ast?.weight || least) : burn;
+                const need = parseFloat((ast?.need || 0).toString());
+                const weight = parseFloat((ast?.weight || least).toString());
+                const hold = parseFloat((ast?.amount || least).toString());
+                // const b = burn >= (ast?.weight || least) ? (ast?.weight || least) - least || least : burn;
+                const b = burn;
                 if (b === least) return;
 
                 let test = 3;
-                w = (balance / (weight + b || 1)) * b;
-                w = w * ((balance - w) / (balance + (ast?.need || 0)));
-                w = w * ((supply - w) / supply) * 0.99;
+                // w = (hold / (weight + b || 1)) * b;
+                w = (hold / (weight + b)) * b;
+                w = w * ((hold - w) / (hold + need));
+                // w = w * (weight / (weight + burn));
+                // console.log((hold - w) / (hold + need), (hold + need - w) / (hold + need));
+                // w = w * ((p - b) / p) * 0.99;
+                w = w * 0.99;
                 // switch (test) {
                 //     case 0: {
                 //         w = ((weight - burn || 1) / balance) * burn * ((weight - burn || 1) / weight);
@@ -1265,14 +1285,13 @@ export default function Page() {
                 // }
                 // // let w = ((asset?.amount || 1) / ((asset?.weight || 0) + burn)) * burn * (((asset?.weight || 0) - burn) / (asset?.weight || 1));
                 // const amount = w * 0.99;
-                console.log("supply", supply);
-                console.log("w", w, b);
                 const amount = w;
+                total += amount;
                 // const amount = parseFloat((w * ((supply - burn < 0 ? 1 : supply - burn) / supply) * 0.99)?.toFixed(18));
 
                 // console.log(!weight || !amount);
                 // if (!weight || !amount) return;
-                if (lp) setSupply(supply - b);
+                p = p - b;
 
                 v = v?.map((f: Asset) => {
                     return f?.symbol?.toUpperCase() !== asset?.symbol?.toUpperCase()
@@ -1281,7 +1300,8 @@ export default function Page() {
                               ...f,
                               amount: (f?.amount || 0) - amount,
                               need: (f?.need || 0) + amount,
-                              weight: (f?.weight || least) * (b / supply) - (f?.weight || least),
+                              weight: (f?.weight || least) * ((supply - b) / supply),
+                              //   weight: (f?.weight || least) * ((supply - b) / supply),
                               //   type === token.high ? parseFloat((f?.weight || 0)?.toFixed(18)) - burn : parseFloat((f?.weight || 0)?.toFixed(18)) + burn,
                           };
                     // : { ...f, amount: (f?.amount || 0) - amount, need: (f?.need || 0) + amount, weight: (f?.weight || 0) - burn };
@@ -1298,7 +1318,7 @@ export default function Page() {
                                   ...assets?.map((f: Asset) => {
                                       return f?.symbol?.toUpperCase() !== exist?.symbol?.toUpperCase()
                                           ? f
-                                          : { ...exist, amount: parseFloat((exist?.amount || 0)?.toFixed(18)) + amount };
+                                          : { ...exist, amount: (exist?.amount || 0) + amount };
                                   }),
                               ]
                             : [...assets, { ...asset, amount: amount }];
@@ -1307,7 +1327,7 @@ export default function Page() {
                             assets = meca
                                 ? [
                                       ...assets.map((f: Asset) => {
-                                          return f?.symbol?.toUpperCase() === "MECA" ? { ...f, amount: parseFloat((f?.amount || 0).toString()) - b } : f;
+                                          return f?.symbol?.toUpperCase() === "MECA" ? { ...f, amount: (f?.amount || 0) - b } : f;
                                       }),
                                   ]
                                 : [...assets, { symbol: "MECA", amount: 0 }];
@@ -1318,7 +1338,9 @@ export default function Page() {
                     }
                 });
             });
+            console.log("user", user, "-> ", parseFloat(total.toString()), asset?.symbol?.toUpperCase());
 
+            setSupply(p);
             setVault(v);
             setUsers(u);
         };
@@ -1396,7 +1418,7 @@ export default function Page() {
         return parseFloat(
             (decimals?.length > 1
                 ? 10 **
-                  -[...decimals[1]]?.reduce((a: number, b: string) => {
+                  -decimals[1]?.split("")?.reduce((a: number, b: string) => {
                       if (!zero && b === "0") {
                           return a + 1;
                       } else {

@@ -1,5 +1,5 @@
 import "./global.scss";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { Style } from "lib";
 import { NotificationCenter } from "contexts";
 import { StrictMode } from "react";
@@ -7,11 +7,12 @@ import { StrictMode } from "react";
 export const metadata: Metadata = {
     title: "Coinmeca",
     description: "The next generation decentralized exchange for new finance.",
-    viewport: {
-        width: "device-width",
-        initialScale: 1,
-        interactiveWidget: "overlays-content",
-    },
+};
+
+export const viewport: Viewport = {
+    width: "device-width",
+    initialScale: 1,
+    interactiveWidget: "overlays-content",
     themeColor: "black",
 };
 

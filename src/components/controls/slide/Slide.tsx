@@ -64,39 +64,41 @@ export default function Slide(props: Slide) {
             $horizon={horizon}
             data-align={props?.align?.horizon}
         >
-            {props?.slides && props?.slides?.length > 0 && (
-                <>
-                    <div>
-                        {props?.slides?.map((slide: any, i: number) => (
-                            <div key={i} data-active={slide?.active || slideNo === i} onClick={(e: any) => slide?.onClick && slide?.onClick(e)}>
-                                {slide?.background && <BG {...slide?.background} />}
-                                <motion.div
-                                    data-row={props?.align?.horizon}
-                                    style={slide?.style}
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{ ease: "easeInOut", duration: 0.3 }}
-                                    layout
-                                >
-                                    {slide.children}
-                                </motion.div>
-                            </div>
-                        ))}
-                    </div>
-                    <div>
-                        {props?.slides.map((_, i) => (
-                            <div
-                                key={i}
-                                data-active={slideNo === i}
-                                onClick={() => {
-                                    setSlideNo(i);
-                                }}
-                            />
-                        ))}
-                    </div>
-                </>
-            )}
+            <AnimatePresence>
+                {props?.slides && props?.slides?.length > 0 && (
+                    <>
+                        <div>
+                            {props?.slides?.map((slide: any, i: number) => (
+                                <div key={i} data-active={slide?.active || slideNo === i} onClick={(e: any) => slide?.onClick && slide?.onClick(e)}>
+                                    {slide?.background && <BG {...slide?.background} />}
+                                    <motion.div
+                                        data-row={props?.align?.horizon}
+                                        style={slide?.style}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ ease: "easeInOut", duration: 0.3 }}
+                                        layout
+                                    >
+                                        {slide.children}
+                                    </motion.div>
+                                </div>
+                            ))}
+                        </div>
+                        <div>
+                            {props?.slides.map((_, i) => (
+                                <div
+                                    key={i}
+                                    data-active={slideNo === i}
+                                    onClick={() => {
+                                        setSlideNo(i);
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    </>
+                )}
+            </AnimatePresence>
         </Style>
     );
 }

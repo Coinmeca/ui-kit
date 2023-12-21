@@ -66,7 +66,7 @@ export default function Main() {
             <Layouts.Box>
                 <Layouts.Col gap={16}>
                     <Layouts.Col gap={8} align={"center"}>
-                        <Image src="/../../assets/graphics/part0.pngg" width={640} height={240} alt="" />
+                        <Image src="/../../../assets/graphics/part0.png" width={640} height={240} alt="" />
                         <Layouts.Row gap={8}>
                             <div />
                             <div>
@@ -104,8 +104,8 @@ export default function Main() {
                         </Layouts.Col>
                         <div style={{ aspectRatio: "1 / 1", background: "rgba(var(--white), var(--o0045))" }}>
                             <div />
-                            <img src="/assets/main/part1.png" alt="" />
-                            <img src="/assets/main/imac_trading.png" alt="" />
+                            <Image src={"/assets/main/part1.png"} alt="" width={640} height={240} />
+                            <Image src={"/assets/main/imac_trading.png"} alt="" width={640} height={240} />
                         </div>
                     </Layouts.Row>
                     <Layouts.Row gap={8} align={"center"} responsive={"mobile"} reverse>
@@ -123,14 +123,14 @@ export default function Main() {
                         </Layouts.Col>
                         <div style={{ aspectRatio: "1 / 1", background: "rgba(var(--white), var(--o0045))" }}>
                             <div />
-                            <img src={"/assets/main/part2.png"} alt={""} />
-                            <img src={"/assets/main/imac_analysis.png"} alt={""} />
+                            <Image src={"/assets/main/part2.png"} alt={""} width={640} height={240} />
+                            <Image src={"/assets/main/imac_analysis.png"} alt={""} width={640} height={240} />
                         </div>
                     </Layouts.Row>
                 </Layouts.Col>
             </Layouts.Box>
             <Layouts.Cover
-                height={32}
+                height={48}
                 background={{ background: "black", filter: { color: "black", opacity: 0.6 }, img: { src: "/assets/banner/inbox/1.png" } }}
                 style={{ scrollSnapAlign: "initial" }}
             >
@@ -204,7 +204,6 @@ export default function Main() {
                 </Layouts.Col>
             </Layouts.Box>
             <Layouts.Cover
-                height={32}
                 background={{
                     background: "/../../assets/main/mobile_screens.png",
                     filter: "black",
