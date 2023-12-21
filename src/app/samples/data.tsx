@@ -438,6 +438,7 @@ export default function Data() {
                     <Controls.Dropdown
                         keyName={"children"}
                         option={{
+                            title: "0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e",
                             children: (
                                 <Elements.Avatar
                                     length={8}
