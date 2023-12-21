@@ -4,6 +4,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Modals, Sidebars } from "containers";
 import { usePortal } from "hooks";
+import { Filter } from "../../lib/utils";
 
 export default function Data() {
     const [value, setValue] = useState<number>(0);
@@ -93,19 +94,23 @@ export default function Data() {
 
     const markets = [
         {
-            value: "All Markets",
+            name: "All Markets",
         },
         {
-            value: "USDT",
+            name: "USDT",
+            img: require("../../assets/coins/usdt.png"),
+        },
+        {
+            name: "ETH",
             img: require("../../assets/coins/eth.png"),
         },
         {
-            value: "ETH",
-            img: require("../../assets/coins/eth.png"),
+            name: "USDC",
+            img: require("../../assets/coins/usdc.png"),
         },
         {
-            value: "USDC",
-            img: require("../../assets/coins/eth.png"),
+            name: "DAI",
+            img: require("../../assets/coins/dai.png"),
         },
     ];
 
@@ -181,6 +186,62 @@ export default function Data() {
             price: "4,678.05",
             change: "23.12",
             volume: "73170731",
+        },
+    ];
+
+    const assetlist = [
+        {
+            logo: require("../../assets/coins/eth.png"),
+            address: "0x1234",
+            symbol: "ETH",
+            name: "Ethereum",
+            balance: 13.2156786156,
+            using: 0,
+            value: 20,
+        },
+        {
+            logo: require("../../assets/coins/weth.png"),
+            address: "0x2345",
+            symbol: "WETH",
+            name: "Wrapped Ethereum",
+            balance: 42.1897845689,
+            using: 0,
+            value: 20,
+        },
+        {
+            logo: require("../../assets/coins/meca.png"),
+            address: "0x3456",
+            symbol: "MECA",
+            name: "Coinmeca",
+            balance: 16.156781564,
+            using: 0,
+            value: 20,
+        },
+        {
+            logo: require("../../assets/coins/usdt.png"),
+            address: "0x4567",
+            symbol: "USDT",
+            name: "USD Tether",
+            balance: 16.156781564,
+            using: 0,
+            value: 20,
+        },
+        {
+            logo: require("../../assets/coins/arb.png"),
+            address: "0x5678",
+            symbol: "ARB",
+            name: "Arbitrum",
+            balance: 3261.156781564,
+            using: 0,
+        },
+        {
+            logo: require("../../assets/coins/avax.png"),
+            address: "0x6789",
+            symbol: "AVAX",
+            name: "Avalanche",
+            balance: 264.2156785612,
+            using: 0,
+            value: 20,
         },
     ];
 
@@ -383,6 +444,8 @@ export default function Data() {
     };
 
     const [keyword, setKeyword] = useState<string>();
+    const [selectedMarket, setSelectedMarket] = useState<number>(0);
+
     const sidebars = {
         active: true,
         lower: {
@@ -396,9 +459,9 @@ export default function Data() {
                                 <Controls.Tab active={sidebarTab === "exchange"} onClick={() => setSidebarTab("exchange")}>
                                     Exchange
                                 </Controls.Tab>
-                                <Controls.Tab active={sidebarTab === "alert"} onClick={() => setSidebarTab("alert")}>
+                                {/* <Controls.Tab active={sidebarTab === "alert"} onClick={() => setSidebarTab("alert")}>
                                     Alert
-                                </Controls.Tab>
+                                </Controls.Tab> */}
                                 <Controls.Tab active={sidebarTab === "asset"} onClick={() => setSidebarTab("asset")}>
                                     Assets
                                 </Controls.Tab>
@@ -410,7 +473,14 @@ export default function Data() {
                                     children: <Elements.Icon icon={"search"} />,
                                 }}
                                 right={{
-                                    children: <Controls.Dropdown options={markets} />,
+                                    children: (
+                                        <Controls.Dropdown
+                                            keyName={"name"}
+                                            option={markets[selectedMarket]}
+                                            options={markets}
+                                            onClickItem={(e: any, v: any, k: number) => setSelectedMarket(k)}
+                                        />
+                                    ),
                                 }}
                             />
                             <Layouts.Contents.InnerContent>
@@ -419,15 +489,21 @@ export default function Data() {
                                         {
                                             active: sidebarTab === "exchange",
                                             style: { overflow: "hidden" },
-                                            children: <Sidebars.Market list={marketlist} filter={keyword} />,
+                                            children: (
+                                                <Sidebars.Market
+                                                    list={Filter(marketlist, selectedMarket === 0 ? undefined : markets[selectedMarket]?.name)}
+                                                    filter={keyword}
+                                                />
+                                            ),
                                         },
-                                        {
-                                            active: sidebarTab === "alert",
-                                            children: <Sidebars.Market list={marketlist} filter={keyword} />,
-                                        },
+                                        // {
+                                        //     active: sidebarTab === "alert",
+                                        //     children: <Sidebars.Market list={marketlist} filter={keyword} />,
+                                        // },
                                         {
                                             active: sidebarTab === "asset",
-                                            children: <Sidebars.Market list={marketlist} filter={keyword} />,
+                                            style: { overflow: "hidden" },
+                                            children: <Sidebars.Asset list={assetlist} filter={keyword} />,
                                         },
                                     ]}
                                 />
@@ -457,6 +533,7 @@ export default function Data() {
         setActive,
         markets,
         marketlist,
+        assetlist,
         notilist,
         header,
         sidebars,

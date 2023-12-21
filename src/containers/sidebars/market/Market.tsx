@@ -2,11 +2,21 @@
 
 import { Controls, Elements, Layouts } from "components";
 import { useSort } from "hooks";
-import { Filter } from "lib/utils";
+import { Filter, Format } from "lib/utils";
 
 export interface Market {
-    list: any[];
+    list: MarketData[];
     filter?: string;
+}
+
+export interface MarketData {
+    logo?: string;
+    symbol?: string;
+    name?: string;
+    market?: string;
+    price?: number | string;
+    change?: number | string;
+    volume?: number | string;
 }
 
 export default function Market(props: Market) {
@@ -15,16 +25,17 @@ export default function Market(props: Market) {
     const sorts = {
         symbol: { key: "symbol", type: "string" },
         name: { key: "name", type: "string" },
+        market: { key: "market", type: "string" },
         price: { key: "price", type: "number" },
         change: { key: "change", type: "number" },
         volume: { key: "volume", type: "number" },
     };
 
-    const formatter = (data: any) => {
+    const formatter = (data: MarketData[]) => {
         return (
             typeof data !== "string" &&
             data?.length > 0 &&
-            data?.map((data: any) => ({
+            data?.map((data: MarketData) => ({
                 children: [
                     [
                         {
@@ -40,12 +51,12 @@ export default function Market(props: Market) {
                                 </>,
                                 [
                                     <>
-                                        <Elements.Text type="strong" case={"upper"} height={1.25}>
+                                        <Elements.Text type="strong" case={"upper"} height={1}>
                                             {data?.symbol}
                                         </Elements.Text>
                                     </>,
                                     <>
-                                        <Elements.Text type="p" case={"upper"} height={1.25} style={{ opacity: 0.45 }}>
+                                        <Elements.Text type="p" case={"upper"} height={1} opacity={0.45}>
                                             {data?.market}
                                         </Elements.Text>
                                     </>,
@@ -55,16 +66,18 @@ export default function Market(props: Market) {
                     ],
                     {
                         align: "right",
-                        change: parseFloat(data?.change) > 0 ? "var(--green)" : parseFloat(data?.change) < 0 && "var(--red)",
+                        change: data?.change
+                            ? (Format(data?.change, "number") as number) > 0
+                                ? "var(--green)"
+                                : (Format(data?.change, "number") as number) < 0 && "var(--red)"
+                            : "-",
                         children: [
                             <>
-                                <Elements.Text type="strong" height={1.25}>
-                                    $ {data?.price}
-                                </Elements.Text>
+                                <Elements.Text type="strong">$ {data?.price}</Elements.Text>
                             </>,
                             <>
-                                <Elements.Text type="strong" height={1.25} change>
-                                    {parseFloat(data?.change) > 0 && "+"}
+                                <Elements.Text type="strong" change>
+                                    {data?.change && (Format(data?.change, "number") as number) > 0 && "+"}
                                     {data?.change} %
                                 </Elements.Text>
                             </>,
