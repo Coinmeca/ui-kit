@@ -3,8 +3,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
-import { usePortal } from "hooks";
-import useWindowSize from "hooks/useWindowSize";
+import { useWindowSize, usePortal } from "hooks";
 import Style, { Item, Option, Options } from "./Dropdown.styled";
 
 export interface Dropdown {
@@ -29,6 +28,7 @@ export interface Dropdown {
     open?: boolean;
     onClick?: Function;
     onClickItem?: Function;
+    fix?: boolean;
 
     responsive?: boolean;
     show?: "desktop" | "laptop" | "tablet" | "mobile";
@@ -63,7 +63,7 @@ export default function Dropdown(props: Dropdown) {
     const handleSelect = (e: React.FormEvent, v: any, k: string | number) => {
         if (disabled) return;
         // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
-        setOption(v);
+        if (!props?.fix) setOption(v);
         if (typeof v?.event === "function") v.event(e);
         if (typeof props?.onClickItem === "function") props?.onClickItem(e, v, k);
         setOpen(false);
@@ -249,7 +249,9 @@ export default function Dropdown(props: Dropdown) {
                                             : typeof option[keyName] !== "undefined"
                                             ? option[keyName]
                                             : option
-                                        : option
+                                        : typeof option?.alt === "undefined"
+                                        ? option
+                                        : option?.title
                                 }
                             >
                                 {typeof option === "undefined"

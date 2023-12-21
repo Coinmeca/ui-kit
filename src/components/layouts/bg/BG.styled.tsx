@@ -1,4 +1,5 @@
 import { styled, css } from "styled-components";
+import { Root } from "lib/style";
 
 export const Filter = styled.div<{ $filter?: string; $opacity: number }>`
     position: absolute;
@@ -10,7 +11,7 @@ export const Filter = styled.div<{ $filter?: string; $opacity: number }>`
     ${({ $filter }) =>
         $filter &&
         css`
-            background-color: ${$filter};
+            background-color: ${$filter === Root.Color($filter) ? $filter : `rgb(${Root.Color($filter)})`};
         `}
 `;
 

@@ -4,12 +4,18 @@ import { Controls, Elements, Layouts } from "components";
 import { SlideContent } from "components/controls/slide/Slide";
 
 export default function Main() {
+    const filter = {
+        color: "black",
+        opacity: 0.6,
+    };
+
     const slides: SlideContent[] = [
         {
             background: {
                 img: {
                     src: 3,
                 },
+                filter,
             },
             children: (
                 <Layouts.Col align="center" gap={8}>
@@ -34,6 +40,7 @@ export default function Main() {
                     preload: "auto",
                     loop: true,
                 },
+                filter,
             },
             children: (
                 <Layouts.Col align="center" gap={8}>
@@ -52,6 +59,7 @@ export default function Main() {
                 img: {
                     src: 4,
                 },
+                filter,
             },
             children: (
                 <Layouts.Col align="center" gap={8}>
@@ -75,7 +83,7 @@ export default function Main() {
             <Layouts.Box>
                 <Layouts.Col gap={16}>
                     <Layouts.Col gap={8} align={"center"}>
-                        <Image src="/../../../assets/graphics/part0.png" width={640} height={240} alt="" />
+                        <Image src="/../../assets/graphics/part0.png" width={640} height={240} alt="" />
                         <Layouts.Row gap={8}>
                             <div />
                             <div>
@@ -113,8 +121,8 @@ export default function Main() {
                         </Layouts.Col>
                         <div style={{ aspectRatio: "1 / 1", background: "rgba(var(--white), var(--o0045))" }}>
                             <div />
-                            <Image src={"/assets/main/part1.png"} alt="" width={640} height={240} />
-                            <Image src={"/assets/main/imac_trading.png"} alt="" width={640} height={240} />
+                            <Image src={"/../../assets/main/part1.png"} alt="" width={640} height={240} />
+                            <Image src={"/../../assets/main/imac_trading.png"} alt="" width={640} height={240} />
                         </div>
                     </Layouts.Row>
                     <Layouts.Row gap={8} align={"center"} responsive={"mobile"} reverse>

@@ -288,8 +288,6 @@ export const Side = styled.div<{ $scale: number; $width: number }>`
             }
 
             & ${Dropdown.default} {
-                max-height: 4.8em;
-
                 ${Dropdown.Item} {
                     width: calc(100% - 6em);
                     padding: 1.5em;
