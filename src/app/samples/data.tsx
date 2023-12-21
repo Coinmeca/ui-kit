@@ -449,11 +449,16 @@ export default function Data() {
                             ),
                         }}
                         options={["Disconnect"]}
+                        onClickItem={(e: any, v: any, k: number) => handleUserOption(k)}
                         fix
                     />
                 </>
             ),
         },
+    };
+
+    const handleUserOption = (k: number) => {
+        if (k === 0) alert("disconnect");
     };
 
     const [keyword, setKeyword] = useState<string>();
