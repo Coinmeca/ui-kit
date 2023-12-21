@@ -364,8 +364,7 @@ const Style = styled.header<{
             }
         }
 
-        & > ${Row.default} > ${Row.default}:last-child:not(:only-child),
-        ${Menu}, ${Side} {
+        & > ${Row.default} > ${`${Row.default}:last-child:not(:only-child)`}, ${Menu}, ${Side} {
             &[data-active="false"] {
                 opacity: 0;
                 pointer-events: none;
