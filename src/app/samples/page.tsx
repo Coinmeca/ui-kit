@@ -1,11 +1,16 @@
+import "./page.scss";
 import Image from "next/image";
 import { Controls, Elements, Layouts } from "components";
-import "./page.scss";
+import { SlideContent } from "components/controls/slide/Slide";
 
 export default function Main() {
-    const slides = [
+    const slides: SlideContent[] = [
         {
-            background: { src: 5 },
+            background: {
+                img: {
+                    src: 3,
+                },
+            },
             children: (
                 <Layouts.Col align="center" gap={8}>
                     <Layouts.Col align="center" gap={4}>
@@ -43,7 +48,11 @@ export default function Main() {
             ),
         },
         {
-            background: { src: 4 },
+            background: {
+                img: {
+                    src: 4,
+                },
+            },
             children: (
                 <Layouts.Col align="center" gap={8}>
                     <Layouts.Col align="center" gap={4}>
