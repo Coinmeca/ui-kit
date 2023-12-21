@@ -9,4 +9,6 @@ import * as Modals from './modals';
 import BottomSheet from './bottomsheets/BottomSheet';
 import * as BottomSheets from './bottomsheets';
 
-export {Headers, Sidebar, Sidebars, Modal, Modals, BottomSheet, BottomSheets};
+import * as Blinds from './blinds';
+
+export { Headers, Sidebar, Sidebars, Modal, Modals, BottomSheet, BottomSheets, Blinds };

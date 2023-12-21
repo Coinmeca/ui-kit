@@ -27,7 +27,7 @@ export default function BG(props: BG) {
         (typeof props?.filter === "string" && props?.filter) ||
         (typeof props?.filter === "object" && typeof props?.filter?.color === "string" && props?.filter?.color) ||
         undefined;
-    const opacity = (typeof props?.filter === "object" && typeof props?.filter?.opacity === "string" && props?.filter?.opacity) || 0.45;
+    const opacity = (typeof props?.filter === "object" && typeof props?.filter?.opacity === "number" && props?.filter?.opacity) || 0.45;
 
     return (
         <Style $fix={fix} style={{ background: props?.background }}>

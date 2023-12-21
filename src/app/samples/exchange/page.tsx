@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 
 import ExchangeData from "./data";
 import AssetData from "../asset/data";
+import { Blinds } from "containers";
 
 export default function Page() {
     const { windowSize } = useWindowSize();
@@ -254,82 +255,85 @@ export default function Page() {
                                 {
                                     area: "order",
                                     children: (
-                                        <Layouts.Contents.InnerContent>
-                                            <Layouts.Menu
-                                                menu={[
-                                                    [
+                                        <>
+                                            <Blinds.Connect background={{ filter: { color: "dim", opacity: 0.75 } }} />
+                                            <Layouts.Contents.InnerContent>
+                                                <Layouts.Menu
+                                                    menu={[
                                                         [
-                                                            <>
-                                                                <Controls.Tab
-                                                                    active={tab === "market"}
-                                                                    onClick={() => {
-                                                                        setTab("market");
-                                                                        setOption("market");
-                                                                    }}
-                                                                >
-                                                                    Market
-                                                                </Controls.Tab>
-                                                            </>,
-                                                            <>
-                                                                <Controls.Tab
-                                                                    active={tab === "limit"}
-                                                                    onClick={() => {
-                                                                        setTab("limit");
-                                                                        setOption("limit");
-                                                                    }}
-                                                                >
-                                                                    Limit
-                                                                </Controls.Tab>
-                                                            </>,
+                                                            [
+                                                                <>
+                                                                    <Controls.Tab
+                                                                        active={tab === "market"}
+                                                                        onClick={() => {
+                                                                            setTab("market");
+                                                                            setOption("market");
+                                                                        }}
+                                                                    >
+                                                                        Market
+                                                                    </Controls.Tab>
+                                                                </>,
+                                                                <>
+                                                                    <Controls.Tab
+                                                                        active={tab === "limit"}
+                                                                        onClick={() => {
+                                                                            setTab("limit");
+                                                                            setOption("limit");
+                                                                        }}
+                                                                    >
+                                                                        Limit
+                                                                    </Controls.Tab>
+                                                                </>,
+                                                            ],
+                                                            [
+                                                                <>
+                                                                    <Controls.Tab
+                                                                        active={tab === "history"}
+                                                                        onClick={() => {
+                                                                            setTab("history");
+                                                                        }}
+                                                                    >
+                                                                        History
+                                                                    </Controls.Tab>
+                                                                </>,
+                                                            ],
                                                         ],
-                                                        [
-                                                            <>
-                                                                <Controls.Tab
-                                                                    active={tab === "history"}
-                                                                    onClick={() => {
-                                                                        setTab("history");
-                                                                    }}
-                                                                >
-                                                                    History
-                                                                </Controls.Tab>
-                                                            </>,
-                                                        ],
-                                                    ],
-                                                ]}
-                                            />
-                                            <Layouts.Contents.TabContainer
-                                                contents={[
-                                                    {
-                                                        active: tab !== "history",
-                                                        children: (
-                                                            <Exchange.Containers.Order
-                                                                base={props?.market?.base}
-                                                                quote={props?.market?.quote}
-                                                                price={props?.market?.price}
-                                                                fee={0.1}
-                                                                option={option}
-                                                                responsive={
-                                                                    (windowSize.width <= Root.Device.Tablet && windowSize.width > 840) ||
-                                                                    (windowSize.width <= Root.Device.Tablet && windowSize.width < Root.Device.Mobile)
-                                                                }
-                                                            />
-                                                        ),
-                                                    },
-                                                    {
-                                                        active: tab === "history",
-                                                        children: (
-                                                            <Layouts.Contents.InnerContent scroll>
-                                                                <Asset.Containers.History
-                                                                    assets={props?.assets}
-                                                                    list={props?.history}
-                                                                    responsive={props?.responsive}
+                                                    ]}
+                                                />
+                                                <Layouts.Contents.TabContainer
+                                                    contents={[
+                                                        {
+                                                            active: tab !== "history",
+                                                            children: (
+                                                                <Exchange.Containers.Order
+                                                                    base={props?.market?.base}
+                                                                    quote={props?.market?.quote}
+                                                                    price={props?.market?.price}
+                                                                    fee={0.1}
+                                                                    option={option}
+                                                                    responsive={
+                                                                        (windowSize.width <= Root.Device.Tablet && windowSize.width > 840) ||
+                                                                        (windowSize.width <= Root.Device.Tablet && windowSize.width < Root.Device.Mobile)
+                                                                    }
                                                                 />
-                                                            </Layouts.Contents.InnerContent>
-                                                        ),
-                                                    },
-                                                ]}
-                                            />
-                                        </Layouts.Contents.InnerContent>
+                                                            ),
+                                                        },
+                                                        {
+                                                            active: tab === "history",
+                                                            children: (
+                                                                <Layouts.Contents.InnerContent scroll>
+                                                                    <Asset.Containers.History
+                                                                        assets={props?.assets}
+                                                                        list={props?.history}
+                                                                        responsive={props?.responsive}
+                                                                    />
+                                                                </Layouts.Contents.InnerContent>
+                                                            ),
+                                                        },
+                                                    ]}
+                                                />
+                                            </Layouts.Contents.InnerContent>
+                                        </>
                                     ),
                                     responsive: [
                                         {

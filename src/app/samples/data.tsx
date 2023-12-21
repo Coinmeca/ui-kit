@@ -435,9 +435,21 @@ export default function Data() {
                         <Controls.Dropdown option={chains[0]} options={chains} fit />
                     </Layouts.Row>
                     {/* <Controls.Button fit>Connect</Controls.Button> */}
-                    <Controls.Button iconRight={"chevron-down-bold"} onClick={handleConnect} fit>
-                        <Elements.Avatar length={8} scale={0.6667} display={4} name={"0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"} />
-                    </Controls.Button>
+                    <Controls.Dropdown
+                        keyName={"children"}
+                        option={{
+                            children: (
+                                <Elements.Avatar
+                                    length={8}
+                                    scale={0.6667}
+                                    display={4}
+                                    name={"0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"}
+                                />
+                            ),
+                        }}
+                        options={["Disconnect"]}
+                        fix
+                    />
                 </>
             ),
         },
