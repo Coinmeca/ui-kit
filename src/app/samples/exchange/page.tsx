@@ -312,8 +312,8 @@ export default function Page() {
                                                                     fee={0.1}
                                                                     option={option}
                                                                     responsive={
-                                                                        (windowSize.width <= Root.Device.Tablet && windowSize.width > 840) ||
-                                                                        (windowSize.width <= Root.Device.Tablet && windowSize.width < Root.Device.Mobile)
+                                                                        (windowSize.width <= Root.Device.Tablet && windowSize.width > Root.Device.Mobile) ||
+                                                                        windowSize.width <= Root.Device.Middle
                                                                     }
                                                                 />
                                                             ),
