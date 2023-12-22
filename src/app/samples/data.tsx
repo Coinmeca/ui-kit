@@ -567,5 +567,6 @@ export default function Data() {
         notilist,
         header,
         sidebars,
+        toasts,
     };
 }
