@@ -183,8 +183,15 @@ export default function Dummy() {
                                 // () => alert(1)
                                 () =>
                                     addToast({
-                                        title: "notification",
-                                        message: "message",
+                                        title: "Notification",
+                                        message: (
+                                            <>
+                                                <Elements.Text type={"p"}>Your Transaction had been submitted.</Elements.Text>
+                                                <Elements.Text type={"link"} opacity={0.45}>
+                                                    View Transaction on the scanner <Elements.Icon icon={"external-link"} />
+                                                </Elements.Text>
+                                            </>
+                                        ),
                                         remain: true,
                                     })
                             }
@@ -828,6 +835,11 @@ export default function Dummy() {
         },
     };
 
+    const toast = {
+        active: toasts.length > 0 && mobileMenu !== "notify",
+        list: toasts,
+    };
+
     return {
         value,
         setValue,
@@ -846,5 +858,6 @@ export default function Dummy() {
         toasts,
         header,
         sidebars,
+        toast,
     };
 }

@@ -4,18 +4,22 @@ import * as Row from "components/layouts/row/Row.styled";
 import * as Col from "components/layouts/col/Col.styled";
 import * as Button from "components/controls/button/Button.styled";
 
-const Style = styled.div<{ $active: boolean; $close: boolean }>`
-    max-height: 10em;
+export const Content = styled.span`
+    &,
+    & > * {
+        line-height: 2em;
+    }
+
+    & > * {
+        display: inline-block;
+    }
+`;
+
+export const Style = styled.div<{ $active: boolean; $close: boolean }>`
+    min-height: max-content;
+    max-height: 0;
     scroll-snap-align: start;
     transition: 0.3s ease;
-
-    [data-active="true"] ${Box.default} {
-        pointer-events: initial;
-    }
-
-    [data-active="false"] ${Box.default} {
-        pointer-events: none;
-    }
 
     &:last-child {
         scroll-snap-align: end;
@@ -52,16 +56,23 @@ const Style = styled.div<{ $active: boolean; $close: boolean }>`
     }
 
     ${({ $active }) =>
-        !$active &&
-        css`
-            transform: scale(0.96);
-            pointer-events: none;
+        $active
+            ? css`
+                  max-height: 100vh;
 
-            ${Box.default} {
-                transform: translateY(100%);
-                opacity: 0;
-            }
-        `}
+                  ${Box.default} {
+                      opacity: 1;
+                  }
+              `
+            : css`
+                  transform: scale(0.96);
+                  pointer-events: none;
+
+                  ${Box.default} {
+                      transform: translateY(-100%);
+                      opacity: 0;
+                  }
+              `}
     ${({ $close }) =>
         $close &&
         css`

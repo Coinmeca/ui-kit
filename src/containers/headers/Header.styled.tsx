@@ -28,7 +28,7 @@ export const Nav = styled.nav<{ $scale: number; $color: string }>`
     max-width: max-content;
 
     & > a {
-        color: rgb(${({ $color }) => ($color === Root.Color($color) ? $color : Root.Color($color))});
+        color: ${({ $color }) => ($color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
         display: flex;
         align-items: center;
         justify-content: center;
@@ -339,7 +339,7 @@ const Style = styled.header<{
     &:after {
         position: absolute;
         content: "";
-        background-color: rgb(${({ $color }) => Root.Color($color)});
+        background-color: ${({ $color }) => ($color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
         width: 100%;
         min-height: 0.25em;
         bottom: 0;
@@ -347,7 +347,7 @@ const Style = styled.header<{
     }
 
     ${Divider.default} {
-        background-color: rgb(${({ $color }) => Root.Color($color)});
+        background-color: ${({ $color }) => ($color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
     }
 
     @media all and (max-width: ${Root.Device.Laptop}px) {

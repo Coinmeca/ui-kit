@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction, createContext, use, useCallback, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 
 export interface Notify {
     type?: "toast" | "noti";
@@ -7,7 +7,8 @@ export interface Notify {
     title?: string;
     date?: number | string | Date;
     img?: string;
-    message?: string;
+    style?: object;
+    message?: any | JSX.Element;
     timer?: number;
     importance?: boolean;
     remain?: boolean;
@@ -42,7 +43,6 @@ export function NotificationCenter({ children }: { children?: any }) {
     }
 
     function addToast(obj: Notify) {
-        console.log(1);
         if (!obj) return;
         if (!obj?.type) obj.type = obj?.remain ? "noti" : "toast";
         if (!obj?.id) {
@@ -68,21 +68,18 @@ export function NotificationCenter({ children }: { children?: any }) {
             setNonce(n);
         }
         if (!obj.date) obj.date = Date.now();
-
         if (!read) setCount(count + 1);
         setNotiList([...notis, obj]);
     }
 
     function removeToast(id?: number | string) {
         if (!id) return;
-        setTimeout(() => {}, 300);
-        setToasts(toasts.filter((n: Notify) => n?.id !== id));
+        setTimeout(() => setToasts((states: Notify[]) => states.filter((n: Notify) => n?.id !== id)), 300);
     }
 
     function removeNotify(id?: number | string) {
         if (!id) return;
-        setTimeout(() => {}, 300);
-        setNotiList(notis.filter((n: Notify) => n?.id !== id));
+        setTimeout(() => setNotiList((states: Notify[]) => states.filter((n: Notify) => n?.id !== id)), 300);
     }
 
     useEffect(() => {

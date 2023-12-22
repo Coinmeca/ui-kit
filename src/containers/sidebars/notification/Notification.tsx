@@ -7,13 +7,13 @@ import { type Notify as Content } from "contexts/NotificationCenter";
 export default function Notification({ list }: { list?: Content[] }) {
     return (
         <Style>
-            <Layouts.Contents.InnerContent>
+            <Layouts.Contents.InnerContent style={{ flexDirection: "column-reverse" }}>
                 {/* <AnimatePresence key={"notification"} mode="popLayout"> */}
                 {list &&
                     list?.length > 0 &&
                     list?.map((v: any, k: number) => (
                         <Notify
-                            key={k}
+                            key={v?.id || k}
                             // as={motion.div}
                             // initial={{ y: -300, opacity: 0 }}
                             // animate={{ y: 0, opacity: 1 }}
