@@ -610,7 +610,7 @@ export const Link = styled.a<{
     vertical-align: middle;
     text-decoration: underline;
     text-underline-offset: 0.25em;
-    padding: 0.045em 0.15em 0.45em 0.15em;
+    padding: 0 0.3em 0.15em 0.3em;
     transition: 0.3s ease;
     cursor: pointer;
     font-size: ${({ $size }) => ($size ? `${$size}em` : "inherit")};
