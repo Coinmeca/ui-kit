@@ -3,7 +3,7 @@ import { Frames } from "components";
 import Data from "./data";
 
 export default function SamplesLayout(props: any) {
-    const { header, sidebars, toasts } = Data();
+    const { header, sidebars, toast } = Data();
 
     return (
         <>

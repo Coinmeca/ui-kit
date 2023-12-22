@@ -554,6 +554,11 @@ export default function Data() {
         },
     };
 
+    const toast = {
+        active: toasts.length > 0 && mobileMenu !== "notify",
+        list: toasts,
+    };
+
     return {
         value,
         setValue,
@@ -567,6 +572,6 @@ export default function Data() {
         notilist,
         header,
         sidebars,
-        toasts,
+        toast,
     };
 }
