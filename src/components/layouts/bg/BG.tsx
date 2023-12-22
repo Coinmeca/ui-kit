@@ -17,6 +17,7 @@ export interface BG {
         style?: object;
     };
     video?: DetailedHTMLProps<VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>;
+    style?: object;
     children?: any;
 }
 
@@ -30,7 +31,7 @@ export default function BG(props: BG) {
     const opacity = (typeof props?.filter === "object" && typeof props?.filter?.opacity === "number" && props?.filter?.opacity) || 0.45;
 
     return (
-        <Style $fix={fix} style={{ background: props?.background }}>
+        <Style $fix={fix} style={{ ...props?.style, background: props?.background }}>
             {props?.img?.src && <Image src={src} style={props?.img?.style} fill alt={""} />}
             {props?.video?.src && <video {...props?.video} />}
             {props?.filter && <Filter $filter={filter} $opacity={opacity} />}

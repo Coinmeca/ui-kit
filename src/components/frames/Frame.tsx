@@ -5,6 +5,7 @@ import { Toast } from "containers/sidebars";
 import type { BG } from "components/layouts/bg/BG";
 import type { Header } from "containers/headers/Header";
 import type { Sidebars } from "containers/sidebars/Sidebar";
+import type { Toast as Toasts } from "containers/sidebars/toast/Toast";
 import Style from "./Frame.styled";
 import { Notification } from "contexts/NotificationCenter";
 
@@ -12,6 +13,7 @@ export interface Frame {
     children?: any;
     header?: Header;
     sidebar?: Sidebars;
+    toast?: Toasts;
     side?: number;
     background?: BG;
     align?: "left" | "right";
@@ -32,7 +34,7 @@ export default function Frame(props: Frame) {
                     {align === "left" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
                     <main>{props?.children}</main>
                     {align === "right" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
-                    {toasts && toasts?.length > 0 && <Toast width={width} align={align} list={toasts} />}
+                    {props?.toast && props?.toast?.list && props?.toast?.list?.length > 0 && <Toast {...props?.toast} width={width} align={align} />}
                 </section>
             </Style>
         </>

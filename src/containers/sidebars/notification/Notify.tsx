@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Controls, Layouts } from "components";
 import { Text } from "components/elements";
 import Image from "next/image";
-import Style from "./Notify.styled";
+import { Style, Content } from "./Notify.styled";
 import { Notification, type Notify } from "contexts/NotificationCenter";
 
 export default function Notify(props: Notify) {
@@ -11,26 +11,25 @@ export default function Notify(props: Notify) {
     const [active, setActive] = useState<boolean>(false);
     const [close, setClose] = useState<boolean>(false);
 
-    const timer = props?.timer || 3000;
+    const timer = props?.timer || 10000;
 
     useEffect(() => {
         setActive(true);
-        if (props?.type === "toast" && props?.remain)
-            setTimeout(
-                () => {
-                    setClose(true);
-                    removeToast(props?.id);
-                },
-                props?.importance ? timer * 2 : timer
-            );
-        return () => {
-            setActive(false);
-        };
+        if (props?.type === "toast")
+            return () => {
+                setTimeout(
+                    () => {
+                        setClose(true);
+                        removeToast(props?.id);
+                    },
+                    props?.importance ? timer * 2 : timer
+                );
+            };
     }, []);
 
     const handleRemove = () => {
-        props?.type === "toast" ? removeToast(props?.id) : removeNotify(props?.id);
         setClose(true);
+        props?.type === "toast" ? removeToast(props?.id) : removeNotify(props?.id);
     };
 
     return (
@@ -44,17 +43,18 @@ export default function Notify(props: Notify) {
                         <Layouts.Row fix gap={1} style={{ minWidth: "max-content" }}>
                             <Text type={"desc"} align={"right"} weight={"bold"}>
                                 {/* "YYYY-MM-DD HH:mm:ss" */}
-                                {/* {props?.date?.toLocaleString()} */}
-                                {props?.id}
+                                {props?.date?.toLocaleString()}
                             </Text>
                             <Controls.Button scale={0.75} icon={"x"} fit onClick={() => handleRemove()} />
                         </Layouts.Row>
                     </Layouts.Row>
                     {props?.img && <Image src={props?.img} width={0} height={0} alt={""} />}
-                    {props?.message && (
-                        <span>
+                    {typeof props?.message === "string" ? (
+                        <Content style={props?.style}>
                             <Text type={"p"}>{props?.message}</Text>
-                        </span>
+                        </Content>
+                    ) : (
+                        <Content style={props?.style}>{props?.message}</Content>
                     )}
                 </Layouts.Col>
             </Layouts.Box>

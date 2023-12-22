@@ -1,7 +1,8 @@
 "use client";
 import { styled } from "styled-components";
-import * as InnerContent from "components/layouts/contents/inner/InnerContent.styled";
 import { Root } from "lib/style";
+import * as InnerContent from "components/layouts/contents/inner/InnerContent.styled";
+import * as Box from "components/layouts/box/Box.styled";
 
 const Style = styled.section<{ $width: number; $align: "left" | "right" }>`
     position: absolute;
@@ -22,6 +23,14 @@ const Style = styled.section<{ $width: number; $align: "left" | "right" }>`
         padding: 3em;
         gap: 2em;
         height: max-content;
+    }
+
+    &[data-active="true"] ${Box.default} {
+        pointer-events: initial;
+    }
+
+    &[data-active="false"] ${Box.default} {
+        pointer-events: none;
     }
 
     @media all and (max-width: ${Root.Device.Mobile}px) {

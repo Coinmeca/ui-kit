@@ -26,7 +26,7 @@ const Style = styled.div<{ $fix: boolean }>`
     height: 100%;
     overflow: hidden;
     z-index: 0;
-    z-index: -1;
+    /* z-index: -1; */
 
     & > * {
         position: ${({ $fix }) => ($fix ? "fixed" : "absolute")};

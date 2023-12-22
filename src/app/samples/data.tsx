@@ -1,10 +1,11 @@
 "use client";
 import { Elements, Layouts, Controls } from "components";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Modals, Sidebars } from "containers";
 import { usePortal } from "hooks";
-import { Filter } from "../../lib/utils";
+import { Filter } from "lib/utils";
+import { Notification } from "contexts/NotificationCenter";
 
 export default function Data() {
     const [value, setValue] = useState<number>(0);
@@ -14,6 +15,8 @@ export default function Data() {
     // const [mobileMenu, setMobileMenu] = useState("market");
     const [sidebarTab, setSidebarTab] = useState("exchange");
 
+    const { notis, toasts, count, addToast, addNotify, setNotis, setRead } = useContext(Notification);
+
     const notilist = [
         {
             id: 12234231,
@@ -22,75 +25,76 @@ export default function Data() {
             message: "This is a Notification",
         },
         {
-            id: 12234231,
+            id: 12234232,
             date: "12:06:27 07-11-23",
             title: "Alert",
             message: "This is a Notification",
         },
         {
-            id: 12234231,
+            id: 12234233,
             date: "12:06:27 07-11-23",
             title: "Alert",
             message: "This is a Notification",
         },
         {
-            id: 12234231,
+            id: 12234234,
             date: "12:06:27 07-11-23",
             title: "Notification",
             message: "This is a Notification",
         },
         {
-            id: 12234231,
+            id: 12234235,
             date: "12:06:27 07-11-23",
             title: "Alert",
             message: "This is a Notification",
         },
         {
-            id: 12234231,
+            id: 12234236,
             date: "12:06:27 07-11-23",
             title: "Alert",
             message: "This is a Notification",
         },
         {
-            id: 12234231,
+            id: 12234237,
             date: "12:06:27 07-11-23",
             title: "Notification",
             message: "This is a Notification",
         },
         {
-            id: 12234231,
+            id: 12234238,
             date: "12:06:27 07-11-23",
             title: "Alert",
             message: "This is a Notification",
         },
         {
-            id: 12234231,
+            id: 12234239,
             date: "12:06:27 07-11-23",
             title: "Alert",
             message: "This is a Notification",
         },
         {
-            id: 12234231,
+            id: 12234240,
             date: "12:06:27 07-11-23",
             title: "Notification",
             message: "This is a Notification",
         },
         {
-            id: 12234231,
+            id: 12234241,
             date: "12:06:27 07-11-23",
             title: "Alert",
             message: "This is a Notification",
         },
         {
-            id: 12234231,
+            id: 12234242,
             date: "12:06:27 07-11-23",
             title: "Alert",
             message: "This is a Notification",
         },
     ];
 
-    // const { AddNotify, setNotis } = useToast(notilist);
-    // setNotis(notilist);
+    useEffect(() => {
+        setNotis(notilist);
+    }, []);
 
     const markets = [
         {
@@ -399,9 +403,17 @@ export default function Data() {
             children: (
                 <>
                     <Controls.Tab
-                        onClick={() => (mobileMenu === "notify" ? setMobileMenu("") : setMobileMenu("notify"))}
+                        onClick={() => {
+                            if (mobileMenu === "notify") {
+                                setMobileMenu("");
+                                setRead(false);
+                            } else {
+                                setRead(true);
+                                setMobileMenu("notify");
+                            }
+                        }}
                         active={mobileMenu === "notify"}
-                        iconLeft={{ icon: "bell", count: 24 }}
+                        iconLeft={{ icon: "bell", count: count }}
                         toggle
                         fit
                         onBlur={() => setMobileMenu("")}
@@ -536,7 +548,7 @@ export default function Data() {
             children: [
                 {
                     active: mobileMenu === "notify",
-                    children: <Sidebars.Notification list={notilist} />,
+                    children: <Sidebars.Notification list={notis} />,
                 },
             ],
         },
