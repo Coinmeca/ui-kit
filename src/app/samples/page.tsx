@@ -218,17 +218,19 @@ export default function Main() {
                             <Layouts.Col align={"center"} style={{ width: windowSize.width > Root.Device.Tablet ? "80%" : "100%", transition: ".3s ease" }}>
                                 <Layouts.Row responsive="tablet">
                                     <a style={{ background: `url(${Btn1?.src}) 0% 0% / cover` }}>
-                                        <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important", alignItems: "end" }} fill>
+                                        <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
                                             <Elements.Text size={2} weight={"bold"}>
                                                 Cryptocurrency
                                                 <br />
                                                 Trading Guide
                                             </Elements.Text>
-                                            <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            <Layouts.Row align={"right"}>
+                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            </Layouts.Row>
                                         </Layouts.Col>
                                     </a>
                                     <a style={{ background: `url(${Btn2?.src}) 0% 0% / cover` }}>
-                                        <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important", alignItems: "end" }} fill>
+                                        <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
                                             <Elements.Text size={2} weight={"bold"}>
                                                 Cryptocurrency
                                                 <br />
@@ -236,29 +238,35 @@ export default function Main() {
                                                 <br />
                                                 Guide
                                             </Elements.Text>
-                                            <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            <Layouts.Row align={"right"}>
+                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            </Layouts.Row>
                                         </Layouts.Col>
                                     </a>
                                 </Layouts.Row>
                                 <Layouts.Row responsive="tablet">
                                     <a style={{ background: `url(${Btn3?.src}) 0% 0% / cover` }}>
-                                        <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important", alignItems: "end" }} fill>
+                                        <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
                                             <Elements.Text size={2} weight={"bold"}>
                                                 Check Recent
                                                 <br />
                                                 Announcements
                                             </Elements.Text>
-                                            <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            <Layouts.Row align={"right"}>
+                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            </Layouts.Row>
                                         </Layouts.Col>
                                     </a>
                                     <a style={{ background: `url(${Btn4?.src}) 0% 0% / cover` }}>
-                                        <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important", alignItems: "end" }} fill>
+                                        <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
                                             <Elements.Text size={2} weight={"bold"}>
                                                 Join to
                                                 <br />
                                                 coinmeca
                                             </Elements.Text>
-                                            <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            <Layouts.Row align={"right"}>
+                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            </Layouts.Row>
                                         </Layouts.Col>
                                     </a>
                                 </Layouts.Row>
