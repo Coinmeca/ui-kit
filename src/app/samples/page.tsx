@@ -116,7 +116,7 @@ export default function Main() {
                                     <div />
                                     <Layouts.Col gap={2} align={"left"}>
                                         <Elements.Text type={"h2"}>coinmeca</Elements.Text>
-                                        <Elements.Text type={"p"} height={2} opacity={0.6}>
+                                        <Elements.Text type={"p"} opacity={0.6}>
                                             Let us experience this together, more than faster, easier trading and you can meet your variety to exchange now.
                                         </Elements.Text>
                                     </Layouts.Col>
