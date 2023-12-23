@@ -521,7 +521,7 @@ export default function Data() {
                                             style: { overflow: "hidden" },
                                             children: (
                                                 <Sidebars.Market
-                                                    list={Filter(marketlist, selectedMarket === 0 ? undefined : markets[selectedMarket]?.name)}
+                                                    list={Filter(marketlist, selectedMarket === 0 ? undefined : `/${markets[selectedMarket]?.name}`)}
                                                     filter={keyword}
                                                 />
                                             ),
