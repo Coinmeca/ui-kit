@@ -11,7 +11,7 @@ export const Filter = styled.div<{ $filter?: string; $opacity: number }>`
     ${({ $filter }) =>
         $filter &&
         css`
-            background-color: ${$filter === Root.Color($filter) ? $filter : `rgb(${Root.Color($filter)})`};
+            background: ${$filter === Root.Color($filter) ? $filter : `rgb(${Root.Color($filter)})`};
         `}
 `;
 

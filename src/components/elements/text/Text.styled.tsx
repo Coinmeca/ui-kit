@@ -658,7 +658,7 @@ export const Link = styled.a<{
     }
 
     &:active {
-        background-color: ${({ $color, $change }) =>
+        background: ${({ $color, $change }) =>
             $change
                 ? "rgba(var(--change),0.15)"
                 : $color

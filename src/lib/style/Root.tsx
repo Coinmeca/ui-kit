@@ -40,6 +40,8 @@ export const Color = (color: string) => {
             return "var(--purple)";
         case "sky":
             return "var(--sky)";
+        case "rainbow":
+            return "var(--rainbow)";
         case "color":
             return "var(--color)";
         default:

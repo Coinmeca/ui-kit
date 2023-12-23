@@ -339,7 +339,7 @@ export const Style = styled.header<{
     &:after {
         position: absolute;
         content: "";
-        background-color: ${({ $color }) => ($color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+        background: ${({ $color }) => ($color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
         width: 100%;
         min-height: 0.25em;
         bottom: 0;
@@ -347,7 +347,7 @@ export const Style = styled.header<{
     }
 
     ${Divider.default} {
-        background-color: ${({ $color }) => ($color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+        background: ${({ $color }) => ($color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
     }
 
     @media all and (max-width: ${Root.Device.Laptop}px) {
