@@ -8,7 +8,7 @@ const Style = styled.div<{ $color: string; $padding: number }>`
     display: flex;
     flex-direction: column;
     padding: ${({ $padding }) => $padding}em;
-    background-color: rgba(${({ $color }) => Root.Color($color)}, var(--o015));
+    background: rgba(${({ $color }) => Root.Color($color)}, var(--o015));
     backdrop-filter: var(--blur);
     transition: 0.15s ease;
 

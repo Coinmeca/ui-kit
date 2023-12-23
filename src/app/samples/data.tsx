@@ -252,7 +252,7 @@ export default function Data() {
     const path = usePathname();
 
     const colorMap: any = {
-        "/samples": "green",
+        "/samples": "var(--rainbow)",
         "/samples/asset": "red",
         "/samples/exchange": "orange",
         "/samples/treasury": "blue",
