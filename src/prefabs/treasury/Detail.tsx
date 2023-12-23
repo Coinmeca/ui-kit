@@ -38,9 +38,8 @@ export default function Detail(props: Detail) {
                         info={farm?.info}
                         history={farm?.history}
                         charts={{
-                            rate: farm?.charts?.rate,
-                            value: farm?.charts?.value,
-                            volume: farm?.charts?.volume,
+                            apr: farm?.charts?.apr,
+                            staking: farm?.charts?.staking,
                         }}
                         responsive={props?.responsive}
                         onBack={props?.onBack}

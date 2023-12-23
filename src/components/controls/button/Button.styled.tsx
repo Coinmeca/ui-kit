@@ -1,6 +1,7 @@
 import { styled, css } from "styled-components";
 import { Root } from "lib/style";
 import * as Icon from "components/elements/icon/Icon.styled";
+import * as Box from "components/layouts/box/Box.styled";
 
 const Style = styled.button<{
     $type?: "glass" | "line" | "solid";
@@ -12,7 +13,7 @@ const Style = styled.button<{
 }>`
     ${({ $color }) => {
         return css`
-            --theme: ${$color === Root.Color($color) ? $color : Root.Color($color)};
+            --theme: ${$color === "white" ? "var(--black)" : $color === "black" ? "var(--white)" : $color === Root.Color($color) ? $color : Root.Color($color)};
         `;
     }};
 
@@ -97,6 +98,7 @@ const Style = styled.button<{
                 `;
             case "solid":
                 const solid: string = $color === "black" ? "var(--white)" : "var(--black)";
+                const box_solid: string = $color === "white" ? "var(--white)" : "var(--black)";
                 return css`
                     background: rgb(var(--theme), var(--o1));
                     color: rgba(${solid});
@@ -109,6 +111,13 @@ const Style = styled.button<{
                     }
                     &:active {
                         background: rgba(var(--theme), var(--o045));
+                    }
+
+                    ${Box.default} & {
+                        color: rgba(${box_solid});
+                        & ${Icon.default} svg {
+                            fill: rgb(${box_solid});
+                        }
                     }
                 `;
             default:

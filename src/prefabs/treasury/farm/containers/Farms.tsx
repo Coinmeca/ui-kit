@@ -27,7 +27,6 @@ export default function Assets(props: Assets) {
                 children: [
                     [
                         {
-                            style: { flex: 1, maxWidth: "20%" },
                             children: [
                                 {
                                     style: { maxWidth: "max-content" },
@@ -50,7 +49,6 @@ export default function Assets(props: Assets) {
                             ],
                         },
                         {
-                            style: { flex: 3 },
                             children: [
                                 {
                                     style: { gap: 0 },

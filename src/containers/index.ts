@@ -1,4 +1,5 @@
 import * as Headers from './headers';
+import * as Footers from './footers';
 
 import Sidebar from './sidebars/Sidebar';
 import * as Sidebars from './sidebars';
@@ -11,4 +12,4 @@ import * as BottomSheets from './bottomsheets';
 
 import * as Blinds from './blinds';
 
-export { Headers, Sidebar, Sidebars, Modal, Modals, BottomSheet, BottomSheets, Blinds };
+export { Headers, Footers, Sidebar, Sidebars, Modal, Modals, BottomSheet, BottomSheets, Blinds };

@@ -144,7 +144,7 @@ export default function Main() {
                                     <div>
                                         <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
                                             <Layouts.Col gap={2}>
-                                                <Elements.Text type={"h5"}>Fast Trading</Elements.Text>
+                                                <Elements.Text type={"h5"}>Fully On-chain Orderbook</Elements.Text>
                                                 <Elements.Text type={"p"} opacity={0.6}>
                                                     The Convenient layout makes trading fast and easy. It is also possible to process the buy and sell
                                                     simultaneously on one screen.
@@ -169,10 +169,10 @@ export default function Main() {
                                     <div>
                                         <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
                                             <Layouts.Col gap={2}>
-                                                <Elements.Text type={"h5"}>Asset Analyze</Elements.Text>
+                                                <Elements.Text type={"h5"}>Position Tokenized</Elements.Text>
                                                 <Elements.Text type={"p"} opacity={0.6}>
-                                                    We analyze your assets in various ways by referring to your transaction records. You can be offered
-                                                    information about your asset management and profit. Check it out now.
+                                                    Trading position can be tokenized. We analyze your assets in various ways by referring to your transaction
+                                                    records. You can be offered information about your asset management and profit. Check it out now.
                                                 </Elements.Text>
                                             </Layouts.Col>
                                             <Controls.Button type={"solid"} color={"black"} fit>
@@ -224,9 +224,7 @@ export default function Main() {
                                                 <br />
                                                 Trading Guide
                                             </Elements.Text>
-                                            <Layouts.Row align={"right"}>
-                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
-                                            </Layouts.Row>
+                                            <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
                                         </Layouts.Col>
                                     </a>
                                     <a style={{ background: `url(${Btn2?.src}) 0% 0% / cover` }}>
@@ -238,9 +236,7 @@ export default function Main() {
                                                 <br />
                                                 Guide
                                             </Elements.Text>
-                                            <Layouts.Row align={"right"}>
-                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
-                                            </Layouts.Row>
+                                            <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
                                         </Layouts.Col>
                                     </a>
                                 </Layouts.Row>
@@ -252,21 +248,17 @@ export default function Main() {
                                                 <br />
                                                 Announcements
                                             </Elements.Text>
-                                            <Layouts.Row align={"right"}>
-                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
-                                            </Layouts.Row>
+                                            <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
                                         </Layouts.Col>
                                     </a>
                                     <a style={{ background: `url(${Btn4?.src}) 0% 0% / cover` }}>
                                         <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
                                             <Elements.Text size={2} weight={"bold"}>
-                                                Join to
+                                                Join
                                                 <br />
-                                                coinmeca
+                                                Our Community
                                             </Elements.Text>
-                                            <Layouts.Row align={"right"}>
-                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
-                                            </Layouts.Row>
+                                            <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
                                         </Layouts.Col>
                                     </a>
                                 </Layouts.Row>
@@ -275,7 +267,7 @@ export default function Main() {
                     </section>
                     <Layouts.Cover
                         background={{
-                            background: "rgba(var(--black),0.15)",
+                            background: "rgba(var(--white),0.045)",
                             img: { src: require("../../assets/main/mobile_screens.png") },
                         }}
                         style={{ height: `calc(100vh - 6em)`, scrollSnapAlign: "end" }}
@@ -286,17 +278,17 @@ export default function Main() {
                                 <Layouts.Col gap={4}>
                                     <Elements.Text type={"h3"}>Anytime, Anywhere</Elements.Text>
                                     <Elements.Text type={"p"}>
-                                        You can access it anywhere and whenever you want. Coinmeca will unfold out an amazing trading system out to your hand,
-                                        also an optimized user interface for the user.
+                                        You can access it anywhere and whenever you want. Coinmeca will unfold out an amazing decentralized trading system out
+                                        to your hand, also an optimized user interface for the user with responsive design.
                                     </Elements.Text>
                                 </Layouts.Col>
                                 <Layouts.Row align={"left"}>
-                                    <Controls.Button iconLeft={"bank"} fit>
-                                        Google Play
+                                    <Controls.Button iconLeft={"exchange"} fit>
+                                        {"Get started to trade"}
                                     </Controls.Button>
-                                    <Controls.Button iconLeft={"bank"} fit>
+                                    {/* <Controls.Button iconLeft={"bank"} fit>
                                         Apple Store
-                                    </Controls.Button>
+                                    </Controls.Button> */}
                                 </Layouts.Row>
                             </Layouts.Col>
                         </Layouts.Contents.InnerContent>
@@ -314,6 +306,18 @@ const NoScrollSnap = createGlobalStyle`
 `;
 
 const Style = styled.main`
+    @keyframes shake_right {
+        0% {
+            transform: translateX(0);
+        }
+        50% {
+            transform: translateX(-15%);
+        }
+        100% {
+            transform: translateX(0);
+        }
+    }
+
     & {
         iframe {
             position: relative;
@@ -366,7 +370,19 @@ const Style = styled.main`
                     justify-content: stretch;
                     padding: 4em;
                     width: calc(100% - 8em);
-                    aspect-ratio: 2 / 1;
+                    aspect-ratio: 2 / 0.75;
+                    cursor: pointer;
+
+                    & * {
+                        color: white;
+                        fill: white;
+                    }
+
+                    &:hover {
+                        i {
+                            animation: shake_right 0.3s ease 2;
+                        }
+                    }
                 }
             }
         }
@@ -471,7 +487,7 @@ const Style = styled.main`
 
             &.s4 {
                 a {
-                    aspect-ratio: 2 / 0.75;
+                    /* aspect-ratio: 2 / 0.75; */
                 }
             }
 

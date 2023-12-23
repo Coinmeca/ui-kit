@@ -231,7 +231,7 @@ export default function History(props: History) {
                                         style: { gap: 0 },
                                         children: [
                                             <>
-                                                <Layouts.Row gap={1}>
+                                                <Layouts.Row gap={1} fill>
                                                     <Elements.Text align={"right"}>{Format(data?.amount || 0, "currency", true)}</Elements.Text>
                                                     <Elements.Text
                                                         align={"left"}
@@ -246,7 +246,7 @@ export default function History(props: History) {
                                                 </Layouts.Row>
                                             </>,
                                             <>
-                                                <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
+                                                <Layouts.Row gap={1} style={{ opacity: 0.3 }} fill>
                                                     <Elements.Text align={"right"}>{Format(data?.price || 0, "currency", true)}</Elements.Text>
                                                     <Elements.Text
                                                         align={"left"}
@@ -266,7 +266,7 @@ export default function History(props: History) {
                                         style: { gap: 0 },
                                         children: [
                                             <>
-                                                <Layouts.Row gap={1}>
+                                                <Layouts.Row gap={1} fill>
                                                     <Elements.Text align={"right"}>{Format(data?.quantity || 0, "currency", true)}</Elements.Text>
                                                     <Elements.Text
                                                         align={"left"}
@@ -281,7 +281,7 @@ export default function History(props: History) {
                                                 </Layouts.Row>
                                             </>,
                                             <>
-                                                <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
+                                                <Layouts.Row gap={1} style={{ opacity: 0.3 }} fill>
                                                     <Elements.Text align={"right"}>- {Format(data?.fees || 0, "currency", true)}</Elements.Text>
                                                     <Elements.Text
                                                         align={"left"}
