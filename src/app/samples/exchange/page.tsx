@@ -313,7 +313,8 @@ export default function Page() {
                                                                     option={option}
                                                                     responsive={
                                                                         (windowSize.width <= Root.Device.Tablet && windowSize.width > Root.Device.Mobile) ||
-                                                                        windowSize.width <= Root.Device.Middle
+                                                                        windowSize.width <= Root.Device.Middle ||
+                                                                        windowSize.width <= 560
                                                                     }
                                                                 />
                                                             ),

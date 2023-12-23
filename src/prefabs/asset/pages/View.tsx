@@ -56,7 +56,7 @@ export default function View(props: any) {
                             },
                             [
                                 {
-                                    style: { gap: "0" },
+                                    gap: 0,
                                     children: [
                                         <>
                                             <Elements.Text height={1.25}>{data?.symbol}</Elements.Text>
@@ -76,45 +76,60 @@ export default function View(props: any) {
                         children: [
                             [
                                 {
-                                    style: { gap: 0 },
+                                    gap: 0,
+                                    align: "right",
                                     children: [
-                                        <>
-                                            <Layouts.Row gap={1} fill>
-                                                <Elements.Text align={"right"}>{data?.balance}</Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    {data?.symbol}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                        <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }} fill>
-                                                <Elements.Text align={"right"}>{data?.using}</Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    {data?.symbol}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
+                                        {
+                                            align: "right",
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"}>{data?.balance}</Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
+                                                        {data?.symbol}
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
+                                        {
+                                            align: "right",
+                                            style: { opacity: 0.3 },
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"}>{data?.using}</Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
+                                                        {data?.symbol}
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
                                     ],
                                 },
                                 {
-                                    style: { gap: 0 },
+                                    gap: 0,
                                     children: [
-                                        <>
-                                            <Layouts.Row gap={1} fill>
-                                                <Elements.Text align={"right"}>$ {data?.using}</Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    USD
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                        <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }} fill>
-                                                <Elements.Text align={"right"}>$ {data?.using}</Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    USD
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
+                                        {
+                                            align: "right",
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"}>$ {data?.using}</Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
+                                                        USD
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
+                                        {
+                                            align: "right",
+                                            style: { opacity: 0.3 },
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"}>$ {data?.using}</Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
+                                                        USD
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
                                     ],
                                 },
                             ],

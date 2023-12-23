@@ -53,29 +53,33 @@ export default function Assets(props: Assets) {
                             style: { flex: 3 },
                             children: [
                                 {
-                                    style: { gap: 0 },
+                                    gap: 0,
                                     children: [
-                                        <>
-                                            <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{Format(data?.exchange_rate, "currency", true)}</Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    MECA
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                        <>
-                                            <Layouts.Row
-                                                gap={1}
-                                                change={Sign(data?.exchange_rate) === "+" ? "green" : Sign(data?.exchange_rate) === "-" && "red"}
-                                            >
-                                                <Elements.Text align={"right"} change>
-                                                    {Format(data?.exchange_rate_change, "currency", true)}
-                                                </Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }} change>
-                                                    %
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
+                                        {
+                                            align: "right",
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"}>{Format(data?.exchange_rate, "currency", true)}</Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
+                                                        MECA
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
+                                        {
+                                            align: "right",
+                                            change: Sign(data?.exchange_rate) === "+" ? "green" : Sign(data?.exchange_rate) === "-" && "red",
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"} change>
+                                                        {Format(data?.exchange_rate_change, "currency", true)}
+                                                    </Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }} change>
+                                                        %
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
                                     ],
                                 },
                                 {
@@ -86,24 +90,31 @@ export default function Assets(props: Assets) {
                                         }),
                                     },
                                     children: [
-                                        <>
-                                            <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{Format(data?.tl, "currency", true)}</Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    {data?.symbol}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                        <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                <Elements.Text align={"right"}>
-                                                    {Sign(data?.tl_change)} {Format(data?.tl_change, "currency", true)}
-                                                </Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    {data?.symbol}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
+                                        {
+                                            align: "right",
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"}>{Format(data?.tl, "currency", true)}</Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
+                                                        {data?.symbol}
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
+                                        {
+                                            align: "right",
+                                            style: { opacity: 0.3 },
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"}>
+                                                        {Sign(data?.tl_change)} {Format(data?.tl_change, "currency", true)}
+                                                    </Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
+                                                        {data?.symbol}
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
                                     ],
                                 },
                                 {
@@ -114,18 +125,21 @@ export default function Assets(props: Assets) {
                                         }),
                                     },
                                     children: [
-                                        <>
-                                            <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>$ {Format(data?.tvl, "currency", true)}</Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                        <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                <Elements.Text align={"right"} fix>
-                                                    {Sign(data?.tvl_change)}$ {Math.abs(Format(data?.tvl_change, "currency", true) as number)}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
+                                        {
+                                            align: "right",
+                                            children: <Elements.Text align={"right"}>$ {Format(data?.tvl, "currency", true)}</Elements.Text>,
+                                        },
+                                        {
+                                            align: "right",
+                                            style: { opacity: 0.3 },
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"} fix>
+                                                        {Sign(data?.tvl_change)}$ {Math.abs(Format(data?.tvl_change, "currency", true) as number)}
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
                                     ],
                                 },
                             ],

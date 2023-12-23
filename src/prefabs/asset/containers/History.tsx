@@ -175,9 +175,10 @@ export default function History(props: History) {
                                     },
                                     children: [
                                         {
+                                            gap: 0,
                                             style: {
-                                                gap: "0",
                                                 maxWidth: "10em",
+                                                opacit: 0.3,
                                             },
                                             children: [
                                                 <>
@@ -195,7 +196,6 @@ export default function History(props: History) {
                                                 </>,
                                                 <>
                                                     <Elements.Text
-                                                        opacity={0.3}
                                                         style={{
                                                             ...(props?.responsive && {
                                                                 width: "100%",
@@ -209,7 +209,7 @@ export default function History(props: History) {
                                             ],
                                         },
                                         {
-                                            style: { gap: "0" },
+                                            gap: 0,
                                             children: [
                                                 <>
                                                     <Elements.Text color={colorset[data?.category]}>{category[data?.category]}</Elements.Text>
@@ -228,73 +228,85 @@ export default function History(props: History) {
                             children: [
                                 [
                                     {
-                                        style: { gap: 0 },
+                                        gap: 0,
                                         children: [
-                                            <>
-                                                <Layouts.Row gap={1} fill>
-                                                    <Elements.Text align={"right"}>{Format(data?.amount || 0, "currency", true)}</Elements.Text>
-                                                    <Elements.Text
-                                                        align={"left"}
-                                                        opacity={0.6}
-                                                        style={{
-                                                            maxWidth: "4em",
-                                                        }}
-                                                        fit
-                                                    >
-                                                        {pay}
-                                                    </Elements.Text>
-                                                </Layouts.Row>
-                                            </>,
-                                            <>
-                                                <Layouts.Row gap={1} style={{ opacity: 0.3 }} fill>
-                                                    <Elements.Text align={"right"}>{Format(data?.price || 0, "currency", true)}</Elements.Text>
-                                                    <Elements.Text
-                                                        align={"left"}
-                                                        opacity={0.6}
-                                                        style={{
-                                                            maxWidth: "4em",
-                                                        }}
-                                                        fit
-                                                    >
-                                                        {pay}
-                                                    </Elements.Text>
-                                                </Layouts.Row>
-                                            </>,
+                                            {
+                                                align: "right",
+                                                children: (
+                                                    <>
+                                                        <Elements.Text align={"right"}>{Format(data?.amount || 0, "currency", true)}</Elements.Text>
+                                                        <Elements.Text
+                                                            align={"left"}
+                                                            opacity={0.6}
+                                                            style={{
+                                                                maxWidth: "4em",
+                                                            }}
+                                                            fit
+                                                        >
+                                                            {pay}
+                                                        </Elements.Text>
+                                                    </>
+                                                ),
+                                            },
+                                            {
+                                                align: "right",
+                                                children: (
+                                                    <>
+                                                        <Elements.Text align={"right"}>{Format(data?.price || 0, "currency", true)}</Elements.Text>
+                                                        <Elements.Text
+                                                            align={"left"}
+                                                            opacity={0.6}
+                                                            style={{
+                                                                maxWidth: "4em",
+                                                            }}
+                                                            fit
+                                                        >
+                                                            {pay}
+                                                        </Elements.Text>
+                                                    </>
+                                                ),
+                                            },
                                         ],
                                     },
                                     {
-                                        style: { gap: 0 },
+                                        gap: 0,
                                         children: [
-                                            <>
-                                                <Layouts.Row gap={1} fill>
-                                                    <Elements.Text align={"right"}>{Format(data?.quantity || 0, "currency", true)}</Elements.Text>
-                                                    <Elements.Text
-                                                        align={"left"}
-                                                        opacity={0.6}
-                                                        style={{
-                                                            maxWidth: "4em",
-                                                        }}
-                                                        fit
-                                                    >
-                                                        {item}
-                                                    </Elements.Text>
-                                                </Layouts.Row>
-                                            </>,
-                                            <>
-                                                <Layouts.Row gap={1} style={{ opacity: 0.3 }} fill>
-                                                    <Elements.Text align={"right"}>- {Format(data?.fees || 0, "currency", true)}</Elements.Text>
-                                                    <Elements.Text
-                                                        align={"left"}
-                                                        opacity={0.6}
-                                                        style={{
-                                                            maxWidth: "4em",
-                                                        }}
-                                                        fit
-                                                    >
-                                                        {item}
-                                                    </Elements.Text>
-                                                </Layouts.Row>
-                                            </>,
+                                            {
+                                                align: "right",
+                                                children: (
+                                                    <>
+                                                        <Elements.Text align={"right"}>{Format(data?.quantity || 0, "currency", true)}</Elements.Text>
+                                                        <Elements.Text
+                                                            align={"left"}
+                                                            opacity={0.6}
+                                                            style={{
+                                                                maxWidth: "4em",
+                                                            }}
+                                                            fit
+                                                        >
+                                                            {item}
+                                                        </Elements.Text>
+                                                    </>
+                                                ),
+                                            },
+                                            {
+                                                align: "right",
+                                                children: (
+                                                    <>
+                                                        <Elements.Text align={"right"}>- {Format(data?.fees || 0, "currency", true)}</Elements.Text>
+                                                        <Elements.Text
+                                                            align={"left"}
+                                                            opacity={0.6}
+                                                            style={{
+                                                                maxWidth: "4em",
+                                                            }}
+                                                            fit
+                                                        >
+                                                            {item}
+                                                        </Elements.Text>
+                                                    </>
+                                                ),
+                                            },
                                         ],
                                     },
                                 ],
