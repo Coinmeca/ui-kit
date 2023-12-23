@@ -307,7 +307,7 @@ export const Side = styled.div<{ $scale: number; $width: number }>`
     }
 `;
 
-const Style = styled.header<{
+export const Style = styled.header<{
     $scale: number;
     $color: string;
     $height: number;

@@ -113,12 +113,12 @@ const Global = createGlobalStyle`
     }
 
     [data-col="left"] {
-        justify-content: flex-start!important;
+        align-items: flex-start!important;
         text-align: left;
     }
 
     [data-col="center"] {
-        justify-content: center!important;
+        align-items: center!important;
         text-align: center;
 
         & > *{
@@ -127,7 +127,7 @@ const Global = createGlobalStyle`
     }
 
     [data-col="right"] {
-        justify-content: flex-end!important;
+        align-items: flex-end!important;
         text-align: right;
     }
 

@@ -79,7 +79,7 @@ export default function View(props: any) {
                                     style: { gap: 0 },
                                     children: [
                                         <>
-                                            <Layouts.Row gap={1}>
+                                            <Layouts.Row gap={1} fill>
                                                 <Elements.Text align={"right"}>{data?.balance}</Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
                                                     {data?.symbol}
@@ -87,7 +87,7 @@ export default function View(props: any) {
                                             </Layouts.Row>
                                         </>,
                                         <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
+                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }} fill>
                                                 <Elements.Text align={"right"}>{data?.using}</Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
                                                     {data?.symbol}
@@ -100,7 +100,7 @@ export default function View(props: any) {
                                     style: { gap: 0 },
                                     children: [
                                         <>
-                                            <Layouts.Row gap={1}>
+                                            <Layouts.Row gap={1} fill>
                                                 <Elements.Text align={"right"}>$ {data?.using}</Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
                                                     USD
@@ -108,7 +108,7 @@ export default function View(props: any) {
                                             </Layouts.Row>
                                         </>,
                                         <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
+                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }} fill>
                                                 <Elements.Text align={"right"}>$ {data?.using}</Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
                                                     USD

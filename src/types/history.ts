@@ -19,3 +19,10 @@ export interface Trade {
 	meca: number | string;
 	share: number | string;
 }
+
+export interface Stake {
+	time?: number | string;
+	type: string;
+	volume: number | string;
+	share: number | string;
+}

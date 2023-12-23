@@ -157,7 +157,7 @@ export default function Detail(props: Detail) {
                                     style: { gap: 0 },
                                     children: [
                                         <>
-                                            <Layouts.Row gap={1}>
+                                            <Layouts.Row gap={1} fill>
                                                 <Elements.Text
                                                     align={"right"}
                                                     style={{
@@ -172,7 +172,7 @@ export default function Detail(props: Detail) {
                                             </Layouts.Row>
                                         </>,
                                         <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
+                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }} fill>
                                                 <Elements.Text
                                                     align={"right"}
                                                     style={{
@@ -338,22 +338,20 @@ export default function Detail(props: Detail) {
                                                         />
                                                     ),
                                                 },
-                                                {
-                                                    active: chart === "value",
-                                                    children: (
-                                                        <Charts.LightWeight.Line
-                                                            data={props?.charts?.value}
-                                                            // volume={props?.charts?.volume!}
-                                                            up={"DEPOSIT"}
-                                                            down={"WITHDRAW"}
-                                                            color={{
-                                                                default: "0,64,255",
-                                                                up: "255, 160, 0",
-                                                                down: "0,64,255",
-                                                            }}
-                                                        />
-                                                    ),
-                                                },
+                                                // {
+                                                //     active: chart === "value",
+                                                //     children: (
+                                                //         <Charts.LightWeight.Line
+                                                //             data={props?.charts?.value}
+                                                //             // volume={props?.charts?.volume!}
+                                                //             up={"DEPOSIT"}
+                                                //             down={"WITHDRAW"}
+                                                //             color={{
+                                                //                 default: "0,64,255",
+                                                //             }}
+                                                //         />
+                                                //     ),
+                                                // },
                                             ]}
                                         />
                                     </Layouts.Contents.InnerContent>

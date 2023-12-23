@@ -7,28 +7,27 @@ import { Root } from "lib/style";
 
 export interface Info {
     farm: Farm;
-    info?: VaultInfo;
+    info?: FarmInfo;
     responsive?: boolean;
 }
 
-export interface VaultInfo {
-    exchange: number | string;
-    exchange_rate: number | string;
-    exchange_rate_change: number | string;
-    tl: number | string;
-    tl_change: number | string;
-    tvl: number | string;
-    tvl_change: number | string;
-    weight: number | string;
-    weight_change: number | string;
-    deposit: number | string;
-    deposit_24h: number | string;
-    withdraw: number | string;
-    withdraw_24h: number | string;
-    per_token: number | string;
-    token_per: number | string;
-    burn: number | string;
-    earn: number | string;
+export interface FarmInfo {
+    total_staking: number;
+    total_staking_change: number;
+    tvl: number;
+    tvl_change: number;
+    total_interest: number;
+    total_interest_change: number;
+    apr: number;
+    staking_24h: number;
+    staking_24h_change: number;
+    unstaking_24h: number;
+    unstaking_24h_change: number;
+    interest_24h: number;
+    interest_change_24h: number;
+    ror: number;
+    staking: number;
+    claimable: number;
 }
 
 export default function Info(props: Info) {
@@ -68,7 +67,7 @@ export default function Info(props: Info) {
                             Total Staking
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.tl, "currency", true)}
+                            {Format(props?.info?.total_staking, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -87,9 +86,9 @@ export default function Info(props: Info) {
                             height={1}
                             align="right"
                             style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.tl_change) === "+" ? "green" : Sign(props?.info?.tl_change) === "-" && "red"}
+                            color={Sign(props?.info?.total_staking_change) === "+" ? "green" : Sign(props?.info?.total_staking_change) === "-" && "red"}
                         >
-                            {Sign(props?.info?.tl_change)} {Format(props?.info?.tl_change, "currency", true)}
+                            {Sign(props?.info?.total_staking_change)} {Format(props?.info?.total_staking_change, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -146,7 +145,7 @@ export default function Info(props: Info) {
                             Total Interest
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.deposit, "currency", true)}
+                            {Format(props?.info?.total_interest, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -161,8 +160,8 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Total Interest Change
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={Sign(props?.info?.deposit_24h) === "+" && "red"}>
-                            {Format(props?.info?.deposit_24h, "currency", true)}
+                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"green"}>
+                            {Format(props?.info?.total_interest_change, "currency", true)} %
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -177,10 +176,10 @@ export default function Info(props: Info) {
                         }}
                     >
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                            APY
+                            Your ROI
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.withdraw, "currency", true)} %
+                            {Format(props?.info?.apr, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -193,10 +192,10 @@ export default function Info(props: Info) {
                         }}
                     >
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                            Your ROR (Rate Of Return)
+                            Your ROR
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={Sign(props?.info?.withdraw_24h) === "+" && "red"}>
-                            {Format(props?.info?.withdraw_24h, "currency", true)}
+                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
+                            {Format(props?.info?.ror, "currency", true)} %
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -225,7 +224,7 @@ export default function Info(props: Info) {
                             Staking (24H)
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.weight, "currency", true)}
+                            {Format(props?.info?.staking_24h, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -240,13 +239,8 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Staking Change (24H)
                         </Elements.Text>
-                        <Elements.Text
-                            height={1}
-                            align="right"
-                            style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.weight_change) === "+" ? "green" : Sign(props?.info?.weight_change) === "-" && "red"}
-                        >
-                            {Sign(props?.info?.weight_change)} {Format(props?.info?.weight_change, "currency", true)}
+                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"green"}>
+                            {Sign(props?.info?.staking_24h_change)} {Format(props?.info?.staking_24h_change, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -264,7 +258,7 @@ export default function Info(props: Info) {
                             Unstaking (24H)
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            ${Format(props?.info?.token_per, "currency", true)}
+                            {Format(props?.info?.unstaking_24h, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -279,8 +273,8 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Unstaking Change (24H)
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            -{Format(props?.info?.per_token, "currency", true)}
+                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"red"}>
+                            -{Format(props?.info?.unstaking_24h_change, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -297,13 +291,8 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Interest (24H)
                         </Elements.Text>
-                        <Elements.Text
-                            height={1}
-                            align="right"
-                            style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.exchange_rate) === "+" ? "green" : Sign(props?.info?.exchange_rate) === "-" && "red"}
-                        >
-                            {Sign(props?.info?.exchange_rate)} {Format(props?.info?.exchange_rate, "currency", true)}
+                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
+                            {Format(props?.info?.interest_24h, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -318,13 +307,8 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Interest Change (24H)
                         </Elements.Text>
-                        <Elements.Text
-                            height={1}
-                            align="right"
-                            style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.exchange_rate_change) === "+" ? "green" : Sign(props?.info?.exchange_rate_change) === "-" && "red"}
-                        >
-                            {Sign(props?.info?.exchange_rate_change)} {Format(props?.info?.exchange_rate_change, "currency", true)} %
+                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"green"}>
+                            {Format(props?.info?.interest_change_24h, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -341,8 +325,8 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Your Staking
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={Sign(props?.info?.earn) === "+" && "green"}>
-                            {Format(props?.info?.earn, "currency", true)}
+                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
+                            {Format(props?.info?.staking, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -357,8 +341,8 @@ export default function Info(props: Info) {
                         <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
                             Your Claimable
                         </Elements.Text>
-                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={Sign(props?.info?.earn) === "+" && "red"}>
-                            {Format(props?.info?.burn, "currency", true)}
+                        <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
+                            {Format(props?.info?.claimable, "currency", true)}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>

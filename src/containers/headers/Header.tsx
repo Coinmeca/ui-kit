@@ -2,12 +2,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Layouts } from "components";
-import Style, { Logo, Nav, MenuButton, Menu, Side } from "./Header.styled";
-import Coinmeca from "assets/coinmeca.svg";
 import { animate, stagger } from "framer-motion";
-import useWindowSize from "hooks/useWindowSize";
+import { Layouts } from "components";
+import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
+import { Style, Logo, Nav, MenuButton, Menu, Side } from "./Header.styled";
+import Coinmeca from "assets/coinmeca.svg";
 
 export interface Header {
     logo?: Logo;

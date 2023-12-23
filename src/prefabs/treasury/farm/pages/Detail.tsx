@@ -8,26 +8,21 @@ import { usePortal, useWindowSize } from "hooks";
 import { Capitalize, Format } from "lib/utils";
 import { Root } from "lib/style";
 import type { Farm } from "types/web3";
-import type { Trade as Data } from "types/history";
-import type { Price, Volume } from "components/charts/lightweight/Candle";
+import type { Stake as Data } from "types/history";
 
 export interface Detail {
     farm: Farm;
     info?: any;
     charts?: {
-        volume?: {
-            value: number;
-            time: number | string;
-            type?: string;
-        }[];
-        value?: {
+        apr?: {
             value: number;
             time: string;
         }[];
-        rate?: {
-            price: Price[];
-            volume?: Volume[];
-        };
+        staking?: {
+            value: number;
+            time: string;
+            type?: string;
+        }[];
     };
     history?: Data[];
     responsive?: boolean;
@@ -39,10 +34,10 @@ export default function Detail(props: Detail) {
 
     const [mobile, setMobile] = useState("chart");
     const [tab, setTab] = useState("staking");
-    const [chart, setChart] = useState("rate");
+    const [chart, setChart] = useState("apr");
     const colorset = {
-        DEPOSIT: "orange",
-        WITHDRAW: "blue",
+        STAKING: "orange",
+        UNSTAKING: "blue",
     };
 
     const handleDetailModal = (data: any) => {
@@ -54,7 +49,7 @@ export default function Detail(props: Detail) {
                         <Layouts.Col gap={1}>
                             <Layouts.Row fix>
                                 <Layouts.Col>
-                                    <Elements.Text color={colorset[`${data?.type as "DEPOSIT" | "WITHDRAW"}`]} case={"capital"}>
+                                    <Elements.Text color={colorset[`${data?.type as "STAKING" | "UNSTAKING"}`]} case={"capital"}>
                                         {data?.type}
                                     </Elements.Text>
                                 </Layouts.Col>
@@ -70,14 +65,14 @@ export default function Detail(props: Detail) {
                             <Layouts.Divider />
                             <Layouts.Row fix>
                                 <Elements.Text opacity={0.6} fit>
-                                    Volume
+                                    Stake
                                 </Elements.Text>
                                 <Elements.Text align={"right"}>{data?.volume}</Elements.Text>
                                 <Elements.Text opacity={0.6} style={{ maxWidth: "4em" }}>
                                     {props?.farm?.stake?.symbol}
                                 </Elements.Text>
                             </Layouts.Row>
-                            <Layouts.Row fix>
+                            {/* <Layouts.Row fix>
                                 <Elements.Text opacity={0.6} fit>
                                     {data?.type === "DEPOSIT" ? "Earn" : "Burn"}
                                 </Elements.Text>
@@ -85,7 +80,7 @@ export default function Detail(props: Detail) {
                                 <Elements.Text opacity={0.6} style={{ maxWidth: "4em" }}>
                                     MECA
                                 </Elements.Text>
-                            </Layouts.Row>
+                            </Layouts.Row> */}
                             <Layouts.Divider />
                             <Layouts.Row fix>
                                 <Elements.Text opacity={0.6} fit>
@@ -119,7 +114,6 @@ export default function Detail(props: Detail) {
                             type: data?.type,
                             time: data?.time,
                             volume: data?.volume,
-                            meca: data?.meca,
                             share: data?.share,
                         });
                     },
@@ -131,7 +125,7 @@ export default function Detail(props: Detail) {
                                     style: { gap: 0, maxWidth: "max-content" },
                                     children: [
                                         <>
-                                            <Elements.Text color={colorset[`${data?.type as "DEPOSIT" | "WITHDRAW"}`]} case={"capital"} fit>
+                                            <Elements.Text color={colorset[`${data?.type as "STAKING" | "UNSTAKING"}`]} case={"capital"} fit>
                                                 {Capitalize(data?.type)}
                                             </Elements.Text>
                                         </>,
@@ -157,7 +151,7 @@ export default function Detail(props: Detail) {
                                     style: { gap: 0 },
                                     children: [
                                         <>
-                                            <Layouts.Row gap={1}>
+                                            <Layouts.Row gap={1} align="right" fill>
                                                 <Elements.Text
                                                     align={"right"}
                                                     style={{
@@ -172,14 +166,14 @@ export default function Detail(props: Detail) {
                                             </Layouts.Row>
                                         </>,
                                         <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
+                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }} fill>
                                                 <Elements.Text
                                                     align={"right"}
                                                     style={{
                                                         fontFeatureSettings: "initial",
                                                     }}
                                                 >
-                                                    {Format(data?.meca || 0, "currency", true)}
+                                                    0{/* {Format(data?.meca || 0, "currency", true)} */}
                                                 </Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ maxWidth: "4em" }} fit>
                                                     MECA
@@ -220,7 +214,7 @@ export default function Detail(props: Detail) {
                         <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
                             <Elements.Icon scale={1.5} icon={"caret-up"} change />
                             <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 1.75 }} change>
-                                {Format(props?.info.per_token, "currency", true)}
+                                {Format(props?.info?.apr, "currency", true)} %
                             </Elements.Text>
                         </Layouts.Row>
                     </Layouts.Row>
@@ -279,18 +273,13 @@ export default function Detail(props: Detail) {
                                             menu={[
                                                 [
                                                     <>
-                                                        <Controls.Tab active={chart === "rate"} onClick={() => setChart("rate")}>
-                                                            Exchange Rate
+                                                        <Controls.Tab active={chart === "apr"} onClick={() => setChart("apr")}>
+                                                            APR
                                                         </Controls.Tab>
                                                     </>,
                                                     <>
                                                         <Controls.Tab active={chart === "volume"} onClick={() => setChart("volume")}>
                                                             Volume
-                                                        </Controls.Tab>
-                                                    </>,
-                                                    <>
-                                                        <Controls.Tab active={chart === "value"} onClick={() => setChart("value")}>
-                                                            Value
                                                         </Controls.Tab>
                                                     </>,
                                                 ],
@@ -299,14 +288,13 @@ export default function Detail(props: Detail) {
                                         <Layouts.Contents.TabContainer
                                             contents={[
                                                 {
-                                                    active: chart === "rate",
+                                                    active: chart === "apr",
                                                     children: (
-                                                        <Charts.LightWeight.Candle
-                                                            price={props?.charts?.rate?.price}
-                                                            volume={props?.charts?.rate?.volume}
-                                                            up={"DEPOSIT"}
-                                                            down={"WITHDRAW"}
-                                                            // color={{ up: "255, 160, 0", down: "0,64,255" }}
+                                                        <Charts.LightWeight.Area
+                                                            data={props?.charts?.apr}
+                                                            color={{
+                                                                default: "0,64,255",
+                                                            }}
                                                         />
                                                     ),
                                                 },
@@ -314,38 +302,9 @@ export default function Detail(props: Detail) {
                                                     active: chart === "volume",
                                                     children: (
                                                         <Charts.LightWeight.Histogram
-                                                            data={props?.charts?.volume}
-                                                            up={"DEPOSIT"}
-                                                            down={"WITHDRAW"}
-                                                            color={{
-                                                                default: "0,64,255",
-                                                                up: "255, 160, 0",
-                                                                down: "0,64,255",
-                                                            }}
-                                                        />
-                                                    ),
-                                                },
-                                                {
-                                                    active: chart === "value",
-                                                    children: (
-                                                        <Charts.LightWeight.Area
-                                                            data={props?.charts?.value}
-                                                            up={"DEPOSIT"}
-                                                            down={"WITHDRAW"}
-                                                            color={{
-                                                                default: "0,64,255",
-                                                            }}
-                                                        />
-                                                    ),
-                                                },
-                                                {
-                                                    active: chart === "value",
-                                                    children: (
-                                                        <Charts.LightWeight.Line
-                                                            data={props?.charts?.value}
-                                                            // volume={props?.charts?.volume!}
-                                                            up={"DEPOSIT"}
-                                                            down={"WITHDRAW"}
+                                                            data={props?.charts?.staking}
+                                                            up={"STAKING"}
+                                                            down={"UNSTAKING"}
                                                             color={{
                                                                 default: "0,64,255",
                                                                 up: "255, 160, 0",

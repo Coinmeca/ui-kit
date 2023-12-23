@@ -1,6 +1,5 @@
+"use client";
 import { styled } from "styled-components";
-import { Root } from "lib/style";
-import * as BG from "components/layouts/bg/BG.styled";
 
 const Style = styled.div`
     position: absolute;

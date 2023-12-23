@@ -1,109 +1,109 @@
-'use client';
-import {Root} from 'lib/style';
-import {styled, css} from 'styled-components';
+"use client";
+import { Root } from "lib/style";
+import { styled, css } from "styled-components";
 
 const gap = css`
-	gap: var(--gap);
+    gap: var(--gap);
 
-	& > & {
-		gap: calc(var(--gap) / 2);
+    & > & {
+        gap: calc(var(--gap) / 2);
 
-		& > & {
-			gap: calc(var(--gap) / 4);
+        & > & {
+            gap: calc(var(--gap) / 4);
 
-			& > & {
-				gap: calc(var(--gap) / 8);
+            & > & {
+                gap: calc(var(--gap) / 8);
 
-				& > & {
-					gap: calc(var(--gap) / 16);
+                & > & {
+                    gap: calc(var(--gap) / 16);
 
-					& > & {
-						gap: calc(var(--gap) / 32);
+                    & > & {
+                        gap: calc(var(--gap) / 32);
 
-						& > & {
-							gap: calc(var(--gap) / 64);
-						}
-					}
-				}
-			}
-		}
-	}
+                        & > & {
+                            gap: calc(var(--gap) / 64);
+                        }
+                    }
+                }
+            }
+        }
+    }
 `;
 const Style = styled.div<{
-	$gap: number;
-	$change?: string;
-	$responsive?: 'desktop' | 'laptop' | 'tablet' | 'mobile';
-	$reverse?: boolean;
-	$fill: boolean;
-	$fit: boolean;
-	$fix?: boolean;
+    $gap: number;
+    $change?: string;
+    $responsive?: "desktop" | "laptop" | "tablet" | "mobile";
+    $reverse?: boolean;
+    $fill: boolean;
+    $fit: boolean;
+    $fix?: boolean;
 }>`
-	--gap: ${({$gap}) => ($gap === 0 ? 0 : $gap || 4)}em;
+    --gap: ${({ $gap }) => ($gap === 0 ? 0 : $gap || 4)}em;
 
-	${({$change}) => $change && `--change: ${Root.Color($change)};`}
+    ${({ $change }) => $change && `--change: ${Root.Color($change)};`}
 
-	display: flex;
-	flex-flow: ${({$fix, $reverse}) => ($fix ? 'row' : $reverse ? 'row-reverse wrap' : 'row wrap')};
-	${({$fit, $fill}) => ($fit ? 'width: max-content' : $fill ? 'width: -webkit-fill-available' : 'width: inherit')};
-	${({$fill}) => ($fill ? 'height:100%' : 'height: max-content;')};
-	min-width: ${({$fit}) => ($fit ? 'max-content' : 'initial')};
-	max-width: ${({$fit}) => ($fit ? 'max-content' : 'initial')};
+    display: flex;
+    flex-flow: ${({ $fix, $reverse }) => ($fix ? "row" : $reverse ? "row-reverse wrap" : "row wrap")};
+    ${({ $fit, $fill }) => ($fit ? "width: max-content" : $fill ? "width: -webkit-fill-available" : "")};
+    ${({ $fill }) => ($fill ? "height:100%" : "height: max-content;")};
+    min-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
+    max-width: ${({ $fit }) => ($fit ? "max-content" : "initial")};
 
-	& > * {
-		${({$fit}) => !$fit && 'flex: 1;'}
-	}
+    & > * {
+        ${({ $fit }) => !$fit && "flex: 1;"}
+    }
 
-	gap: calc(var(--gap));
+    gap: calc(var(--gap));
 
-	& > & {
-		gap: calc(var(--gap) / 2);
+    & > & {
+        gap: calc(var(--gap) / 2);
 
-		& > & {
-			gap: calc(var(--gap) / 4);
+        & > & {
+            gap: calc(var(--gap) / 4);
 
-			& > & {
-				gap: calc(var(--gap) / 8);
+            & > & {
+                gap: calc(var(--gap) / 8);
 
-				& > & {
-					gap: calc(var(--gap) / 16);
+                & > & {
+                    gap: calc(var(--gap) / 16);
 
-					& > & {
-						gap: calc(var(--gap) / 32);
-					}
-				}
-			}
-		}
-	}
+                    & > & {
+                        gap: calc(var(--gap) / 32);
+                    }
+                }
+            }
+        }
+    }
 
-	${({$responsive, $reverse}) => {
-		switch ($responsive) {
-			case 'laptop':
-				return css`
-					@media all and (max-width: ${Root.Device.Laptop}px) {
-						flex-direction: ${$reverse ? 'column-reverse' : 'column'};
-						${gap}
-					}
-				`;
-			case 'tablet':
-				return css`
-					@media all and (max-width: ${Root.Device.Tablet}px) {
-						flex-direction: ${$reverse ? 'column-reverse' : 'column'};
-						${gap}
-					}
-				`;
-			case 'mobile':
-				return css`
-					@media all and (max-width: ${Root.Device.Mobile}px) {
-						flex-direction: ${$reverse ? 'column-reverse' : 'column'};
-						${gap}
-					}
-				`;
-		}
-	}}
+    ${({ $responsive, $reverse }) => {
+        switch ($responsive) {
+            case "laptop":
+                return css`
+                    @media all and (max-width: ${Root.Device.Laptop}px) {
+                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        ${gap}
+                    }
+                `;
+            case "tablet":
+                return css`
+                    @media all and (max-width: ${Root.Device.Tablet}px) {
+                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        ${gap}
+                    }
+                `;
+            case "mobile":
+                return css`
+                    @media all and (max-width: ${Root.Device.Mobile}px) {
+                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        ${gap}
+                    }
+                `;
+        }
+    }}
 
-	@media all and(max-width: ${Root.Device.Mobile}px) {
-		${gap}
-	}
+    @media all and(max-width: ${Root.Device.Mobile}px) {
+        ${gap}
+    }
 `;
 
 export default Style;
