@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Elements, Layouts } from "components";
-import { Style, Logo, Nav } from "./Footer.styled";
+import { Style, Logo } from "./Footer.styled";
 import Coinmeca from "assets/coinmeca.svg";
 
 export interface Footer {
