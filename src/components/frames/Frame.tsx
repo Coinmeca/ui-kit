@@ -7,7 +7,6 @@ import type { Header } from "containers/headers/Header";
 import type { Sidebars } from "containers/sidebars/Sidebar";
 import type { Toast as Toasts } from "containers/sidebars/toast/Toast";
 import Style from "./Frame.styled";
-import { Notification } from "contexts/NotificationCenter";
 
 export interface Frame {
     children?: any;
@@ -32,7 +31,7 @@ export default function Frame(props: Frame) {
                     {align === "left" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
                     <main>
                         {props?.children}
-                        <Footers.Footer />
+                        {/* <Footers.Footer /> */}
                     </main>
                     {align === "right" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
                     {props?.toast && props?.toast?.list && props?.toast?.list?.length > 0 && <Toast {...props?.toast} width={width} align={align} />}

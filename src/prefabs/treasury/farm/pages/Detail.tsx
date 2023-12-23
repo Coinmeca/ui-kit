@@ -122,7 +122,8 @@ export default function Detail(props: Detail) {
                         [
                             [
                                 {
-                                    style: { gap: 0, maxWidth: "max-content" },
+                                    gap: 0,
+                                    style: { maxWidth: "max-content" },
                                     children: [
                                         <>
                                             <Elements.Text color={colorset[`${data?.type as "STAKING" | "UNSTAKING"}`]} case={"capital"} fit>
@@ -148,38 +149,47 @@ export default function Detail(props: Detail) {
                                     ],
                                 },
                                 {
-                                    style: { gap: 0 },
+                                    gap: 0,
                                     children: [
-                                        <>
-                                            <Layouts.Row gap={1} align="right" fill>
-                                                <Elements.Text
-                                                    align={"right"}
-                                                    style={{
-                                                        fontFeatureSettings: "initial",
-                                                    }}
-                                                >
-                                                    {Format(data?.volume || 0, "currency", true)}
-                                                </Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ maxWidth: "4em" }} fit>
-                                                    {props?.farm?.stake?.symbol}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                        <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }} fill>
-                                                <Elements.Text
-                                                    align={"right"}
-                                                    style={{
-                                                        fontFeatureSettings: "initial",
-                                                    }}
-                                                >
-                                                    0{/* {Format(data?.meca || 0, "currency", true)} */}
-                                                </Elements.Text>
-                                                <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ maxWidth: "4em" }} fit>
-                                                    MECA
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
+                                        {
+                                            gap: 1,
+                                            align: "right",
+                                            children: (
+                                                <>
+                                                    <Elements.Text
+                                                        align={"right"}
+                                                        style={{
+                                                            fontFeatureSettings: "initial",
+                                                        }}
+                                                    >
+                                                        {Format(data?.volume || 0, "currency", true)}
+                                                    </Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ maxWidth: "4em" }} fit>
+                                                        {props?.farm?.stake?.symbol}
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
+                                        {
+                                            gap: 1,
+                                            align: "right",
+                                            style: { opacity: 0.3 },
+                                            children: (
+                                                <>
+                                                    <Elements.Text
+                                                        align={"right"}
+                                                        style={{
+                                                            fontFeatureSettings: "initial",
+                                                        }}
+                                                    >
+                                                        0{/* {Format(data?.meca || 0, "currency", true)} */}
+                                                    </Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ maxWidth: "4em" }} fit>
+                                                        MECA
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
                                     ],
                                 },
                             ],

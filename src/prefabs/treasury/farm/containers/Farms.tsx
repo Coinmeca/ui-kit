@@ -27,6 +27,7 @@ export default function Assets(props: Assets) {
                 children: [
                     [
                         {
+                            style: { flex: 1 },
                             children: [
                                 {
                                     style: { maxWidth: "max-content" },
@@ -49,59 +50,71 @@ export default function Assets(props: Assets) {
                             ],
                         },
                         {
+                            style: { flex: 2 },
                             children: [
                                 {
-                                    style: { gap: 0 },
+                                    gap: 0,
                                     children: [
-                                        <>
-                                            <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{Format(data?.rewards, "currency", true)}</Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    {data?.reward?.symbol?.toUpperCase()}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                        <>
-                                            <Layouts.Row
-                                                gap={1}
-                                                change={Sign(data?.rewards_rate) === "+" ? "green" : Sign(data?.rewards_rate) === "-" && "red"}
-                                            >
-                                                <Elements.Text align={"right"} change>
-                                                    {data?.rewards_rate}
-                                                </Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }} change>
-                                                    %
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
+                                        {
+                                            align: "right",
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"}>{Format(data?.rewards, "currency", true)}</Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
+                                                        {data?.reward?.symbol?.toUpperCase()}
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
+                                        {
+                                            align: "right",
+                                            change: Sign(data?.rewards_rate) === "+" ? "green" : Sign(data?.rewards_rate) === "-" && "red",
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"} change>
+                                                        {data?.rewards_rate}
+                                                    </Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }} change>
+                                                        %
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
                                     ],
                                 },
                                 {
+                                    gap: 0,
                                     style: {
-                                        gap: 0,
                                         ...(props?.responsive && {
                                             display: "none",
                                         }),
                                     },
                                     children: [
-                                        <>
-                                            <Layouts.Row gap={1}>
-                                                <Elements.Text align={"right"}>{Format(data?.tl, "currency", true)}</Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    {data?.stake?.symbol?.toUpperCase()}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
-                                        <>
-                                            <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
-                                                <Elements.Text align={"right"}>
-                                                    {Sign(data?.tl_change)} {Format(data?.tl_change, "currency", true)}
-                                                </Elements.Text>
-                                                <Elements.Text opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                    {data?.stake?.symbol?.toUpperCase()}
-                                                </Elements.Text>
-                                            </Layouts.Row>
-                                        </>,
+                                        {
+                                            align: "right",
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"}>{Format(data?.tl, "currency", true)}</Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
+                                                        {data?.stake?.symbol?.toUpperCase()}
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
+                                        {
+                                            align: "right",
+                                            style: { opacity: 0.3 },
+                                            children: (
+                                                <>
+                                                    <Elements.Text align={"right"}>
+                                                        {Sign(data?.tl_change)} {Format(data?.tl_change, "currency", true)}
+                                                    </Elements.Text>
+                                                    <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
+                                                        {data?.stake?.symbol?.toUpperCase()}
+                                                    </Elements.Text>
+                                                </>
+                                            ),
+                                        },
                                     ],
                                 },
                                 // {
