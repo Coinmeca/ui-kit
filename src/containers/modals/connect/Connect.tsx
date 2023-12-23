@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Modals } from "containers";
 import type { Process } from "containers/modals/process/Process";
@@ -19,6 +19,10 @@ export default function Connect(props: any) {
 
     const [process, setProcess] = useState<boolean | null>(props?.process || null);
     const [walletError, setWalletError] = useState<string>();
+
+    useEffect(() => {
+        return () => setProcess(null);
+    }, []);
 
     const handleClose = (e: any) => {
         if (typeof props?.onClose === "function") props?.onClose(e);
@@ -42,18 +46,17 @@ export default function Connect(props: any) {
         const wallets = typeof data === "object" ? Object.values(data) : data?.length > 0 && data;
         return wallets?.map((w: any) => {
             return {
-                children: <Elements.Avatar img={w?.strategy?.image} name={w?.name} />,
+                children: <Elements.Avatar img={w?.strategy.image} name={w?.name} />,
                 onClick: async (e: any) => {
                     try {
                         setWallet(w);
-                        setProcess(true);
-
-                        // if (typeof props?.onWallet === 'function') await props?.onWallet(w, e);
+                        if (typeof props?.onWallet === "function") await props?.onWallet(w, e);
                         if (typeof props?.onConnect === "function") await props?.onConnect(wallet);
+                        setProcess(true);
                     } catch (error: any) {
                         setProcess(false);
                         setWallet(null);
-                        setWalletError(error.toString());
+                        setWalletError(error?.message || "");
                     }
                 },
             };
@@ -69,7 +72,7 @@ export default function Connect(props: any) {
         <Modals.Process
             {...props}
             title={"Connect Wallet"}
-            process={process}
+            // process={process}
             content={
                 <Layouts.Contents.SlideContainer
                     contents={[
@@ -92,7 +95,7 @@ export default function Connect(props: any) {
                             children: (
                                 <Layouts.Col gap={2} fill>
                                     <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
-                                        Please select chain will you use.
+                                        Please select wallet will you connect.
                                     </Elements.Text>
                                     <Layouts.Contents.InnerContent style={{ justifyContent: "center" }} scroll>
                                         <Layouts.List list={walletListFormatter(props?.wallets)} />
@@ -109,17 +112,8 @@ export default function Connect(props: any) {
                 children: <Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>,
             }}
             loading={{
-                active: wallet,
+                active: props?.loading?.active,
                 message: props?.loading?.message || "Please wait until the processing is complete.",
-                children: (
-                    <Controls.Button
-                        onClick={(e: any) => {
-                            setProcess(true);
-                        }}
-                    >
-                        {`Let's Finish`}
-                    </Controls.Button>
-                ),
             }}
             success={{
                 message: props?.loading?.message || "Processing has been succeed.",
