@@ -59,13 +59,13 @@ const Global = createGlobalStyle`
         --white-abs: 255, 255, 255;
         --black-abs: 0, 0, 0;
 
-        --rainbow: linear-gradient(90deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 80%, #00C0FF 100%)
         --red: 255, 0, 64;
         --green: 0, 192, 96;
         --orange: 255, 160, 0;
         --blue: 0, 64, 255;
         --sky: 0, 255, 255;
         --purple: 160, 0, 255;
+        --rainbow: linear-gradient(90deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 80%, #00C0FF 100%);
 
         --o1: 1;
         --o09: 0.9;
