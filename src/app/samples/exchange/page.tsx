@@ -102,19 +102,6 @@ export default function Page() {
                             </Layouts.Row>
                             <Layouts.Divider />
                         </Layouts.Col>
-                        {mobile === "orderbook" && (
-                            <Layouts.Col show={"mobile"} gap={0}>
-                                <Layouts.Row gap={1} fix>
-                                    <Controls.Tab active={marketTab === "orderbook"} onClick={() => setMarketTab("orderbook")}>
-                                        Orderbook
-                                    </Controls.Tab>
-                                    <Controls.Tab active={marketTab === "history"} onClick={() => setMarketTab("history")}>
-                                        Recent trades
-                                    </Controls.Tab>
-                                </Layouts.Row>
-                                <Layouts.Divider />
-                            </Layouts.Col>
-                        )}
                         <Layouts.Contents.GridContainer
                             fullsize
                             area={`'info info' 'book chart' 'book order'`}
@@ -198,6 +185,26 @@ export default function Page() {
                                                     }}
                                                     hide={"mobile"}
                                                 />
+                                                {/* {mobile === "orderbook" && ( */}
+                                                <Layouts.Col
+                                                    show={"mobile"}
+                                                    gap={0}
+                                                    style={{
+                                                        transition: ".3s ease",
+                                                        ...(mobile !== "orderbook" && { maxHeight: 0, opacity: 0, PointerEvent: "none" }),
+                                                    }}
+                                                >
+                                                    <Layouts.Row gap={1} fix>
+                                                        <Controls.Tab active={marketTab === "orderbook"} onClick={() => setMarketTab("orderbook")}>
+                                                            Orderbook
+                                                        </Controls.Tab>
+                                                        <Controls.Tab active={marketTab === "history"} onClick={() => setMarketTab("history")}>
+                                                            Recent trades
+                                                        </Controls.Tab>
+                                                    </Layouts.Row>
+                                                    <Layouts.Divider />
+                                                </Layouts.Col>
+                                                {/* )} */}
                                                 <Layouts.Contents.TabContainer
                                                     contents={[
                                                         {
