@@ -147,7 +147,13 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 				copy = e[0]?.split('.');
 				multiplier += parseFloat(e[1]) + 1;
 				if (multiplier < 0) {
-					value = '0.' + '0'.repeat(Math.abs(multiplier + 1)) + e[0]?.replaceAll('.', '');
+					if (copy.length < Math.abs(multiplier)) {
+						value = '0.' + '0'.repeat(Math.abs(multiplier + 2)) + e[0]?.replaceAll('.', '');
+					} else {
+						multiplier = Math.abs(multiplier);
+						value = (copy[0] + copy[1]) as string;
+						value = (parseFloat(value.substring(0, multiplier) + '.' + value.substring(multiplier, value.length)) * (10 ** multiplier)).toString();
+					}
 				} else if (multiplier < (copy[0].length + (copy[1]?.length || 0))) {
 					value = (copy[0] + copy[1]) as string;
 					value = (parseFloat(value.substring(0, multiplier) + '.' + value.substring(multiplier, value.length)) * (10 ** (multiplier + copy[0].length - value.substring(0, multiplier).length))).toString();
