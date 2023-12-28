@@ -91,10 +91,22 @@ export default function Page() {
                                     Info
                                 </Controls.Tab>
                                 <Controls.Tab
-                                    active={mobile === "orderbook" && (marketTab === "orderbook" || marketTab === "history")}
-                                    onClick={() => setMobile("orderbook")}
+                                    active={mobile === "orderbook" && marketTab === "orderbook"}
+                                    onClick={() => {
+                                        setMobile("orderbook");
+                                        setMarketTab("orderbook");
+                                    }}
                                 >
                                     Orderbook
+                                </Controls.Tab>
+                                <Controls.Tab
+                                    active={mobile === "history" && marketTab === "history"}
+                                    onClick={() => {
+                                        setMobile("history");
+                                        setMarketTab("history");
+                                    }}
+                                >
+                                    Recent trades
                                 </Controls.Tab>
                                 <Controls.Tab active={mobile === "chart"} onClick={() => setMobile("chart")}>
                                     Chart
@@ -140,7 +152,9 @@ export default function Page() {
                                 {
                                     area: "book",
                                     children: (
-                                        <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "orderbook"}>
+                                        <Layouts.Contents.SlideContent
+                                            active={windowSize.width > Root.Device.Mobile ? true : mobile === "orderbook" || mobile === "history"}
+                                        >
                                             <Layouts.Contents.InnerContent>
                                                 <Layouts.Menu
                                                     menu={{
@@ -165,10 +179,10 @@ export default function Page() {
                                                                         active={marketTab === "history"}
                                                                         onClick={() => {
                                                                             setMarketTab("history");
-                                                                            setMobile("orderbook");
+                                                                            setMobile("history");
                                                                         }}
                                                                     >
-                                                                        Trades
+                                                                        Recent trades
                                                                     </Controls.Tab>
                                                                 </>,
                                                             ],
@@ -185,26 +199,6 @@ export default function Page() {
                                                     }}
                                                     hide={"mobile"}
                                                 />
-                                                {/* {mobile === "orderbook" && ( */}
-                                                <Layouts.Col
-                                                    show={"mobile"}
-                                                    gap={0}
-                                                    style={{
-                                                        transition: ".3s ease",
-                                                        ...(mobile !== "orderbook" && { maxHeight: 0, opacity: 0, pointerEvents: "none" }),
-                                                    }}
-                                                >
-                                                    <Layouts.Row gap={1} fix>
-                                                        <Controls.Tab active={marketTab === "orderbook"} onClick={() => setMarketTab("orderbook")}>
-                                                            Orderbook
-                                                        </Controls.Tab>
-                                                        <Controls.Tab active={marketTab === "history"} onClick={() => setMarketTab("history")}>
-                                                            Recent trades
-                                                        </Controls.Tab>
-                                                    </Layouts.Row>
-                                                    <Layouts.Divider />
-                                                </Layouts.Col>
-                                                {/* )} */}
                                                 <Layouts.Contents.TabContainer
                                                     contents={[
                                                         {
