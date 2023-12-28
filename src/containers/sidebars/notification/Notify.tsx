@@ -43,7 +43,7 @@ export default function Notify(props: Notify) {
                         </Text>
                         <Layouts.Row fix gap={1} style={{ minWidth: "max-content" }}>
                             <Text type={"desc"} align={"right"} weight={"bold"}>
-                                {Format(props?.date, "date")}
+                                {Format(props?.date as number, "date")}
                             </Text>
                             <Controls.Button scale={0.75} icon={"x"} fit onClick={() => handleRemove()} />
                         </Layouts.Row>
