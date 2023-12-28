@@ -2,11 +2,11 @@
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Modals } from "containers";
-import type { List } from "components/layouts/list/List";
 import { Format } from "lib/utils";
 import { Token } from "types/web3";
+import { usePortal } from "hooks";
+import type { List } from "components/layouts/list/List";
 import type { History as H } from "types/history";
-import usePortal from "hooks/usePortal";
 
 export interface History extends List {
     assets?: Token[];
@@ -203,7 +203,7 @@ export default function HistoryShort(props: History) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"} fix>
-                                                                {Format(data?.amount || 0, "currency", true)}
+                                                                {Format(data?.amount || 0, "currency", { unit: 6, limit: 8, fix: 2 })}
                                                             </Elements.Text>
                                                             <Elements.Text
                                                                 align={"left"}
@@ -223,7 +223,7 @@ export default function HistoryShort(props: History) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"} fix>
-                                                                {Format(data?.price || 0, "currency", true)}
+                                                                {Format(data?.price || 0, "currency", { unit: 6, limit: 8, fix: 2 })}
                                                             </Elements.Text>
                                                             <Elements.Text
                                                                 align={"left"}
@@ -249,7 +249,7 @@ export default function HistoryShort(props: History) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"} fix>
-                                                                {Format(data?.quantity || 0, "currency", true)}
+                                                                {Format(data?.quantity || 0, "currency", { unit: 6, limit: 8, fix: 2 })}
                                                             </Elements.Text>
                                                             <Elements.Text
                                                                 align={"left"}
@@ -269,11 +269,11 @@ export default function HistoryShort(props: History) {
                                                     style: { opacity: 0.3 },
                                                     children: (
                                                         <>
-                                                            <Elements.Text align={"right"} fix>{`- ${Format(
-                                                                data?.fees || 0,
-                                                                "currency",
-                                                                true
-                                                            )}`}</Elements.Text>
+                                                            <Elements.Text align={"right"} fix>{`- ${Format(data?.fees || 0, "currency", {
+                                                                unit: 6,
+                                                                limit: 8,
+                                                                fix: 2,
+                                                            })}`}</Elements.Text>
                                                             <Elements.Text
                                                                 align={"left"}
                                                                 opacity={0.6}

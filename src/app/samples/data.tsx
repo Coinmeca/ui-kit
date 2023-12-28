@@ -1,7 +1,7 @@
 "use client";
-import { Elements, Layouts, Controls } from "components";
 import { useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { Elements, Layouts, Controls } from "components";
 import { Modals, Sidebars } from "containers";
 import { usePortal } from "hooks";
 import { Filter } from "lib/utils";
@@ -125,7 +125,7 @@ export default function Data() {
             market: "ETH/USDT",
             price: "4,678.05",
             change: "23.12",
-            volume: "73170731",
+            volume: "7345617015678731",
         },
         {
             logo: require("../../assets/coins/arb.png"),
@@ -133,7 +133,7 @@ export default function Data() {
             market: "ARB/USDT",
             price: "4,678.05",
             change: "-23.12",
-            volume: "73170731",
+            volume: "73170731489",
         },
         {
             logo: require("../../assets/coins/matic.png"),
@@ -141,7 +141,7 @@ export default function Data() {
             market: "MATIC/USDT",
             price: "4,678.05",
             change: "23.12",
-            volume: "73170731",
+            volume: "7317073148912",
         },
         {
             logo: require("../../assets/coins/dai.png"),
@@ -422,7 +422,7 @@ export default function Data() {
                         onClick={() => (mobileMenu === "market" ? setMobileMenu("") : setMobileMenu("market"))}
                         active={mobileMenu === "market"}
                         iconLeft={"sidebar"}
-                        show={"tablet"}
+                        hide={"laptop"}
                         toggle
                         fit
                         onBlur={() => setMobileMenu("")}
@@ -453,6 +453,7 @@ export default function Data() {
                             title: "0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e",
                             children: (
                                 <Elements.Avatar
+                                    color={colorMap[`${path}`]}
                                     length={8}
                                     scale={0.6667}
                                     display={4}

@@ -1,6 +1,7 @@
 export interface Token {
 	symbol: string;
 	name: string;
+	decimals?: number;
 	address?: string;
 	balance?: number | string;
 	using?: number | string;

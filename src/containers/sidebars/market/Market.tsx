@@ -86,7 +86,7 @@ export default function Market(props: Market) {
                     [
                         {
                             align: "right",
-                            children: <Elements.Text>{data?.volume}</Elements.Text>,
+                            children: <Elements.Text>{Format(data?.volume, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>,
                         },
                     ],
                 ],

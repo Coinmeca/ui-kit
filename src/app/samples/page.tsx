@@ -33,7 +33,7 @@ export default function Main() {
         {
             background: {
                 img: {
-                    src: 3,
+                    src: 10,
                 },
                 filter,
             },
@@ -51,18 +51,18 @@ export default function Main() {
         },
         {
             background: {
-                img: {
-                    src: 10,
-                },
-                // video: {
-                //     poster: "",
-                //     src: "https://firebasestorage.googleapis.com/v0/b/coinmeca-3e733.appspot.com/o/cm_bg.mp4?alt=media&token=fca0814a-8000-4af7-b4ca-f372e686bff7",
-                //     controls: false,
-                //     muted: true,
-                //     autoPlay: true,
-                //     preload: "auto",
-                //     loop: true,
+                // img: {
+                //     src: 3,
                 // },
+                video: {
+                    poster: "",
+                    src: "https://coinmeca.net/img/video/1.mp4",
+                    controls: false,
+                    muted: true,
+                    autoPlay: true,
+                    preload: "auto",
+                    loop: true,
+                },
                 filter,
             },
             children: (

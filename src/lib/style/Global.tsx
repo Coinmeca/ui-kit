@@ -223,8 +223,18 @@ const Global = createGlobalStyle`
         }
     }
 
-    @media all and (min-width: ${Device.Laptop + 1}px) and (max-width: ${Device.Desktop}px) {
+    @media all and (min-width: ${Device.Desktop}px) {
         [data-show="laptop"],
+        [data-show="tablet"],
+        [data-show="mobile"] {
+            display:none!important;
+        }
+        [data-hide="desktop"] {
+            display:none!important;
+        }
+    }
+
+    @media all and (min-width: ${Device.Laptop + 1}px) and (max-width: ${Device.Desktop - 1}px) {
         [data-show="tablet"],
         [data-show="mobile"] {
             display:none!important;
@@ -235,7 +245,6 @@ const Global = createGlobalStyle`
         [data-show="mobile"] {
             display:none!important;
         }
-
         [data-hide="laptop"] {
             display:none!important;
         }
@@ -244,7 +253,6 @@ const Global = createGlobalStyle`
         [data-show="mobile"] {
             display:none!important;
         }
-
         [data-hide="laptop"],
         [data-hide="tablet"] {
             display:none!important;
