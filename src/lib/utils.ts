@@ -256,7 +256,6 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			if (typeof value === 'undefined') return '-';
 			if (typeof value !== 'string') value = value.toString();
 			if (value?.length > 10) value = value.substring(0, 10);
-			console.log(value);
 
 			let copy: any = '';
 			for (let i = 0; i < value?.length; i++) {
