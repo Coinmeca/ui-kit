@@ -191,7 +191,7 @@ export default function Page() {
                                                     gap={0}
                                                     style={{
                                                         transition: ".3s ease",
-                                                        ...(mobile !== "orderbook" && { maxHeight: 0, opacity: 0, PointerEvent: "none" }),
+                                                        ...(mobile !== "orderbook" && { maxHeight: 0, opacity: 0, pointerEvents: "none" }),
                                                     }}
                                                 >
                                                     <Layouts.Row gap={1} fix>
