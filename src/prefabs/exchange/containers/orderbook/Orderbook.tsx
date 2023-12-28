@@ -1,13 +1,12 @@
 ﻿"use client";
 import { useEffect } from "react";
-import { Controls, Elements, Layouts } from "components";
+import { Elements, Layouts } from "components";
 import { AnimatePresence, motion } from "framer-motion";
 import Tooltip from "./Tooltip";
 import Style, { Asks, Bids, Tick as Ticks } from "./Orderbook.styled";
 import { Format, Sort } from "lib/utils";
 import { Root } from "lib/style";
-import useWindowSize from "hooks/useWindowSize";
-import usePortal from "hooks/usePortal";
+import { useWindowSize, usePortal } from "hooks";
 
 export interface Orderbook {
     asks?: Tick[];
