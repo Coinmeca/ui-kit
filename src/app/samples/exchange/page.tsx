@@ -23,6 +23,7 @@ export default function Page() {
         chart: DummyExchange.chart,
         assets: DummyAsset.assets,
         history: DummyAsset.history,
+        trades: DummyExchange.history,
         responsive: windowSize.width <= Root.Device.Mobile,
     };
 
@@ -150,7 +151,7 @@ export default function Page() {
                                                                         active={marketTab === "orderbook"}
                                                                         onClick={() => {
                                                                             setMarketTab("orderbook");
-                                                                            // setMobile("orderbook");
+                                                                            setMobile("orderbook");
                                                                         }}
                                                                     >
                                                                         Orderbook
@@ -161,7 +162,7 @@ export default function Page() {
                                                                         active={marketTab === "history"}
                                                                         onClick={() => {
                                                                             setMarketTab("history");
-                                                                            // setMobile("history");
+                                                                            setMobile("history");
                                                                         }}
                                                                     >
                                                                         Trades
@@ -205,7 +206,7 @@ export default function Page() {
                                                         },
                                                         {
                                                             active: marketTab === "history" || mobile === "history",
-                                                            children: <></>,
+                                                            children: <Exchange.Containers.History data={props?.trades as any} view={view} />,
                                                         },
                                                     ]}
                                                 />
