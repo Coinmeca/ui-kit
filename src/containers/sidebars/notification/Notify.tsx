@@ -5,6 +5,7 @@ import { Text } from "components/elements";
 import Image from "next/image";
 import { Style, Content } from "./Notify.styled";
 import { Notification, type Notify } from "contexts/NotificationCenter";
+import { Format } from "lib/utils";
 
 export default function Notify(props: Notify) {
     const { removeNotify, removeToast } = useContext(Notification);
@@ -42,8 +43,7 @@ export default function Notify(props: Notify) {
                         </Text>
                         <Layouts.Row fix gap={1} style={{ minWidth: "max-content" }}>
                             <Text type={"desc"} align={"right"} weight={"bold"}>
-                                {/* "YYYY-MM-DD HH:mm:ss" */}
-                                {props?.date?.toLocaleString()}
+                                {Format(props?.date, "date")}
                             </Text>
                             <Controls.Button scale={0.75} icon={"x"} fit onClick={() => handleRemove()} />
                         </Layouts.Row>
