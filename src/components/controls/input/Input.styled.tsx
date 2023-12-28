@@ -48,6 +48,7 @@ export const Side = styled.div<{ $width?: number }>`
 const Style = styled.div<{
     $clearable?: boolean;
     $scale: number;
+    $type: string;
     $focus: boolean;
     $align: "left" | "center" | "right";
     $lock?: boolean;
@@ -143,6 +144,12 @@ const Style = styled.div<{
                 &:disabled {
                     pointer-events: none;
                 }
+
+                ${({ $type }) =>
+                    ($type === "number" || $type === "currency") &&
+                    css`
+                        font-feature-settings: "tnum" on, "lnum" on;
+                    `}
             }
         }
     }

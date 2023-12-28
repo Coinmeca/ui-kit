@@ -1,9 +1,9 @@
 "use client";
-import { Elements, Layouts, Controls } from "components";
-import { Format } from "lib/utils";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { usePathname } from "next/navigation";
+import { Elements, Layouts, Controls } from "components";
 import { Sidebars } from "containers";
+import { Format } from "lib/utils";
 import { Notification } from "contexts/NotificationCenter";
 
 export default function Dummy() {
@@ -288,6 +288,10 @@ export default function Dummy() {
 
                     <Controls.Input type={"currency"} error={true} unit={"%"} />
                     <Controls.Input type={"currency"} value={value} onChange={(v: any) => setValue(Format(v, "number") as number)} unit={"%"} />
+                    <Elements.Text type={"h6"}>Test</Elements.Text>
+                    <Controls.Input />
+                    <Controls.Input placeholder={"number"} type={"number"} />
+                    <Controls.Input placeholder={"currency"} type={"currency"} />
                 </Layouts.Col>
             ),
         },
