@@ -1,15 +1,15 @@
 "use client";
 import { useState } from "react";
-import { Root } from "lib/style";
-import { Charts, Controls, Elements, Layouts } from "components";
-import { Asset, Exchange } from "prefabs";
-import { Capitalize, Format } from "lib/utils";
-import { useWindowSize } from "hooks";
 import { AnimatePresence } from "framer-motion";
+import { Charts, Controls, Elements, Layouts } from "components";
+import { Blinds } from "containers";
+import { Asset, Exchange } from "prefabs";
+import { useWindowSize } from "hooks";
+import { Capitalize, Format } from "lib/utils";
+import { Root } from "lib/style";
 
 import ExchangeData from "./data";
 import AssetData from "../asset/data";
-import { Blinds } from "containers";
 
 export default function Page() {
     const { windowSize } = useWindowSize();
@@ -90,7 +90,10 @@ export default function Page() {
                                 <Controls.Tab active={mobile === "info"} onClick={() => setMobile("info")}>
                                     Info
                                 </Controls.Tab>
-                                <Controls.Tab active={mobile === "orderbook"} onClick={() => setMobile("orderbook")}>
+                                <Controls.Tab
+                                    active={mobile === "orderbook" && (marketTab === "orderbook" || marketTab === "history")}
+                                    onClick={() => setMobile("orderbook")}
+                                >
                                     Orderbook
                                 </Controls.Tab>
                                 <Controls.Tab active={mobile === "chart"} onClick={() => setMobile("chart")}>
@@ -99,6 +102,19 @@ export default function Page() {
                             </Layouts.Row>
                             <Layouts.Divider />
                         </Layouts.Col>
+                        {mobile === "orderbook" && (
+                            <Layouts.Col show={"mobile"} gap={0}>
+                                <Layouts.Row gap={1} fix>
+                                    <Controls.Tab active={marketTab === "orderbook"} onClick={() => setMarketTab("orderbook")}>
+                                        Orderbook
+                                    </Controls.Tab>
+                                    <Controls.Tab active={marketTab === "history"} onClick={() => setMarketTab("history")}>
+                                        Recent trades
+                                    </Controls.Tab>
+                                </Layouts.Row>
+                                <Layouts.Divider />
+                            </Layouts.Col>
+                        )}
                         <Layouts.Contents.GridContainer
                             fullsize
                             area={`'info info' 'book chart' 'book order'`}
@@ -162,7 +178,7 @@ export default function Page() {
                                                                         active={marketTab === "history"}
                                                                         onClick={() => {
                                                                             setMarketTab("history");
-                                                                            setMobile("history");
+                                                                            setMobile("orderbook");
                                                                         }}
                                                                     >
                                                                         Trades
@@ -185,7 +201,7 @@ export default function Page() {
                                                 <Layouts.Contents.TabContainer
                                                     contents={[
                                                         {
-                                                            active: marketTab === "orderbook" || mobile === "orderbook",
+                                                            active: marketTab === "orderbook",
                                                             style: {
                                                                 padding: 0,
                                                             },
@@ -205,7 +221,7 @@ export default function Page() {
                                                             ),
                                                         },
                                                         {
-                                                            active: marketTab === "history" || mobile === "history",
+                                                            active: marketTab === "history",
                                                             children: <Exchange.Containers.History data={props?.trades as any} view={view} />,
                                                         },
                                                     ]}
