@@ -29,6 +29,21 @@ export default function Main() {
         opacity: 0.6,
     };
 
+    const story = [
+        {
+            head: "DEX that you never have experience till now",
+            body: "Orderbook trading makes it possible to order with much lower slippage, and also give a more comfortable trading experience with various order options.",
+        },
+        {
+            head: "Much cheaper, and more transparent",
+            body: "Coinmeca serves fully on-chain orderbook that the transparency of all transactions, and also with best optimized features for much cheaper gas fees.",
+        },
+        {
+            head: "DEX that never existed in the world till now.",
+            body: "",
+        },
+    ];
+
     const slides: SlideContent[] = [
         {
             background: {
@@ -40,8 +55,8 @@ export default function Main() {
             children: (
                 <Layouts.Col align="center" gap={8}>
                     <Layouts.Col align="center" gap={4}>
-                        <Elements.Text type={"h2"}>Much Faster and Much Easier Coin Exchange</Elements.Text>
-                        <Elements.Text type={"h6"}>Start with your new experience a decentralized coin trading system on Coinmeca.</Elements.Text>
+                        <Elements.Text type={"h2"}>{story[0].head}</Elements.Text>
+                        <Elements.Text type={"h6"}>{story[0].body}</Elements.Text>
                     </Layouts.Col>
                     <Controls.Button scale={1.25} fit>
                         Get Started to Exchange
@@ -68,8 +83,8 @@ export default function Main() {
             children: (
                 <Layouts.Col align="center" gap={8}>
                     <Layouts.Col align="center" gap={4}>
-                        <Elements.Text type={"h2"}>Meet Brand New Finance</Elements.Text>
-                        <Elements.Text type={"h6"}>Start your crypto financial life on Coinmeca. Receive it, Pay it, Trade it.</Elements.Text>
+                        <Elements.Text type={"h2"}>{story[1].head}</Elements.Text>
+                        <Elements.Text type={"h6"}>{story[1].body}</Elements.Text>
                     </Layouts.Col>
                     <Controls.Button scale={1.25} fit>
                         Get Started to Exchange
