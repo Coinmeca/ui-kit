@@ -498,6 +498,7 @@ export default function Data() {
                                 </Controls.Tab>
                             </Layouts.Row>
                             <Controls.Input
+                                placeholder={"Search by name or symbol..."}
                                 value={keyword}
                                 onChange={(e: any, v: string, k: number) => setKeyword(v)}
                                 left={{
@@ -510,6 +511,10 @@ export default function Data() {
                                             option={markets[selectedMarket]}
                                             options={markets}
                                             onClickItem={(e: any, v: any, k: number) => setSelectedMarket(k)}
+                                            style={{
+                                                transition: ".3s ease",
+                                                ...(sidebarTab !== "exchange" && { maxWidth: 0, opacity: 0, pointerEvents: "none" }),
+                                            }}
                                         />
                                     ),
                                 }}
