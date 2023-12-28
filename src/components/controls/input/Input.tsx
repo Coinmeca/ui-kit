@@ -256,6 +256,5 @@ export default function Input(props: Input) {
         );
     }
 
-    // Styled Components Caution */
     return <>{Input}</>;
 }
