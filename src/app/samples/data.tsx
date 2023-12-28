@@ -403,6 +403,15 @@ export default function Data() {
             children: (
                 <>
                     <Controls.Tab
+                        onClick={() => (mobileMenu === "market" ? setMobileMenu("") : setMobileMenu("market"))}
+                        active={mobileMenu === "market"}
+                        iconLeft={"sidebar"}
+                        hide={"desktop"}
+                        toggle
+                        fit
+                        onBlur={() => setMobileMenu("")}
+                    />
+                    <Controls.Tab
                         onClick={() => {
                             if (mobileMenu === "notify") {
                                 setMobileMenu("");
@@ -414,15 +423,6 @@ export default function Data() {
                         }}
                         active={mobileMenu === "notify"}
                         iconLeft={{ icon: "bell", count: count }}
-                        toggle
-                        fit
-                        onBlur={() => setMobileMenu("")}
-                    />
-                    <Controls.Tab
-                        onClick={() => (mobileMenu === "market" ? setMobileMenu("") : setMobileMenu("market"))}
-                        active={mobileMenu === "market"}
-                        iconLeft={"sidebar"}
-                        hide={"laptop"}
                         toggle
                         fit
                         onBlur={() => setMobileMenu("")}
