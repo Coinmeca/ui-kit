@@ -1,13 +1,13 @@
 "use client";
+import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { Controls, Layouts } from "components";
 import { Text } from "components/elements";
-import Image from "next/image";
-import { Style, Content } from "./Notify.styled";
 import { Notification, type Notify } from "contexts/NotificationCenter";
 import { Format } from "lib/utils";
+import { Style, Content } from "./Notify.styled";
 
-export default function Notify(props: Notify) {
+export default function Notify(props: Notify & { order?: number }) {
     const { removeNotify, removeToast } = useContext(Notification);
     const [active, setActive] = useState<boolean>(false);
     const [close, setClose] = useState<boolean>(false);
@@ -34,7 +34,7 @@ export default function Notify(props: Notify) {
     };
 
     return (
-        <Style $active={active} $close={close}>
+        <Style $active={active} $close={close} $order={props?.order}>
             <Layouts.Box>
                 <Layouts.Col gap={1}>
                     <Layouts.Row fix>

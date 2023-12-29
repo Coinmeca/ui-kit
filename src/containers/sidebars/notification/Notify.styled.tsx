@@ -15,11 +15,12 @@ export const Content = styled.span`
     }
 `;
 
-export const Style = styled.div<{ $active: boolean; $close: boolean }>`
+export const Style = styled.div<{ $active: boolean; $close: boolean; $order?: number }>`
     min-height: max-content;
     max-height: 0;
     scroll-snap-align: start;
     transition: 0.3s ease;
+    ${({ $order }) => typeof $order === "number" && `order: ${$order};`}
 
     &:last-child {
         scroll-snap-align: end;

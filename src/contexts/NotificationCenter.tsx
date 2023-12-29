@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 
 export interface Notify {
-    type?: "toast" | "noti";
+    type?: "toast" | "notify";
     id?: number | string;
     title?: string;
     date?: number | string | Date;
@@ -23,6 +23,7 @@ export interface NotificationContext {
     addToast: (obj: Notify) => void;
     removeNotify: (id?: number | string) => void;
     removeToast: (id?: number | string) => void;
+    resetCount: () => void;
     setNotis: (notis: Notify[]) => void;
     setToasts: Dispatch<SetStateAction<Notify[]>>;
     setRead: Dispatch<SetStateAction<boolean>>;
@@ -44,7 +45,7 @@ export function NotificationCenter({ children }: { children?: any }) {
 
     function addToast(obj: Notify) {
         if (!obj) return;
-        if (!obj?.type) obj.type = obj?.remain ? "noti" : "toast";
+        if (!obj?.type) obj.type = obj?.remain ? "notify" : "toast";
         if (!obj?.id) {
             const n = nonce + 1;
             obj.id = `${Date.now()}` + `${n}`;
@@ -54,21 +55,21 @@ export function NotificationCenter({ children }: { children?: any }) {
 
         setToasts([...toasts, obj]);
         if (obj?.remain) {
-            if (!read) setCount(count + 1);
+            setCount(count + 1);
             setNotiList([...notis, obj]);
         }
     }
 
     function addNotify(obj: Notify) {
         if (!obj) return;
-        if (!obj?.type) obj.type = "noti";
+        if (!obj?.type) obj.type = "notify";
         if (!obj.id) {
             const n = nonce + 1;
             obj.id = `${Date.now()}` + `${n}`;
             setNonce(n);
         }
         if (!obj.date) obj.date = Date.now();
-        if (!read) setCount(count + 1);
+        setCount(count + 1);
         setNotiList([...notis, obj]);
     }
 
@@ -79,15 +80,20 @@ export function NotificationCenter({ children }: { children?: any }) {
 
     function removeNotify(id?: number | string) {
         if (!id) return;
+        let c = count;
+        notis.map((n: Notify, i: number) => {
+            if (n?.id === id && i >= notis.length - c) c -= 1;
+        });
+        setCount(c);
         setTimeout(() => setNotiList((states: Notify[]) => states.filter((n: Notify) => n?.id !== id)), 300);
     }
 
-    useEffect(() => {
-        if (read) setCount(0);
-    }, [read]);
+    function resetCount() {
+        setCount(0);
+    }
 
     return (
-        <Notification.Provider value={{ notis, toasts, count, read, addNotify, addToast, removeNotify, removeToast, setNotis, setToasts, setRead }}>
+        <Notification.Provider value={{ notis, toasts, count, read, addNotify, addToast, removeNotify, removeToast, resetCount, setNotis, setToasts, setRead }}>
             {children}
         </Notification.Provider>
     );
