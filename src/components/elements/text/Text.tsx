@@ -10,6 +10,7 @@ export interface Text {
     color?: string | false;
     change?: boolean;
     href?: string;
+    target?: string;
     onClick?: Function;
     weight?: number | string;
     height?: number;
@@ -195,7 +196,8 @@ export default function Text(props: Text) {
                 <Texts.Link
                     style={props?.style}
                     href={props?.href}
-                    onClick={(e:any) => typeof props?.onClick === "function" && props?.onClick(e)}
+                    target={!props?.target && !props?.target?.startsWith("/") ? "_blank" : props?.target}
+                    onClick={(e: any) => typeof props?.onClick === "function" && props?.onClick(e)}
                     $size={size}
                     $color={color}
                     $change={props?.change}

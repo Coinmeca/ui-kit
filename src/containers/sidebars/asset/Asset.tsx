@@ -29,13 +29,12 @@ export default function Asset(props: Asset) {
         value: { key: "value", type: "number" },
     };
 
-    const totalFormat = (data: any) => {};
-
     const formatter = (data: AssetData[]) => {
         return (
             typeof data !== "string" &&
             data?.length > 0 &&
-            data?.map((data: AssetData) => ({
+            data?.map((data: AssetData, i: number) => ({
+                key: i,
                 children: [
                     [
                         {

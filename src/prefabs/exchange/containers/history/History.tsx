@@ -29,7 +29,7 @@ export default function History(props: History) {
                 {data && data?.length > 0 ? (
                     data?.map((d: MarketHistory, k: number) => (
                         <Tick
-                            key={d?.time}
+                            key={k}
                             // onClick={(e: any) => handleBid(bid, e)}
                             // onMouseEnter={(e: any) => handleBidHover(bid, k, e)}
                             as={motion.div}

@@ -89,7 +89,7 @@ export default function Dummy() {
         // },
     ];
 
-    const { notis, toasts, count, addToast, addNotify, setRead } = useContext(Notification);
+    const { notis, toasts, count, addToast, addNotify, setRead, resetCount } = useContext(Notification);
     const sidebarMarketListFormatter = (data: any) => {
         return (
             data?.length > 0 &&
@@ -187,7 +187,11 @@ export default function Dummy() {
                                         message: (
                                             <>
                                                 <Elements.Text type={"p"}>Your Transaction had been submitted.</Elements.Text>
-                                                <Elements.Text type={"link"} opacity={0.45}>
+                                                <Elements.Text
+                                                    type={"link"}
+                                                    opacity={0.45}
+                                                    href={"https://etherscan.io/tx/0x13306976466266cd92e938e95451e68e6ba5ac9af2c3832d63037efe72836ba1"}
+                                                >
                                                     View Transaction on the scanner <Elements.Icon icon={"external-link"} />
                                                 </Elements.Text>
                                             </>
@@ -690,17 +694,16 @@ export default function Dummy() {
                         onClick={() => {
                             if (mobileMenu === "notify") {
                                 setMobileMenu("");
-                                setRead(false);
+                                resetCount();
                             } else {
-                                setRead(true);
                                 setMobileMenu("notify");
+                                // setRead(true);
                             }
                         }}
                         active={mobileMenu === "notify"}
-                        iconLeft={{ icon: "bell", count: count }}
+                        iconLeft={{ icon: "bell", count: mobileMenu === "notify" ? 0 : count }}
                         toggle
                         fit
-                        onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
                         onClick={() => (mobileMenu === "market" ? setMobileMenu("") : setMobileMenu("market"))}
@@ -833,7 +836,7 @@ export default function Dummy() {
             children: [
                 {
                     active: mobileMenu === "notify",
-                    children: <Sidebars.Notification list={notis} />,
+                    children: <Sidebars.Notification list={notis} count={count} />,
                 },
             ],
         },

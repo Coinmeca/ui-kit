@@ -15,7 +15,7 @@ export default function Data() {
     // const [mobileMenu, setMobileMenu] = useState("market");
     const [sidebarTab, setSidebarTab] = useState("exchange");
 
-    const { notis, toasts, count, addToast, addNotify, setNotis, setRead } = useContext(Notification);
+    const { notis, toasts, count, addToast, addNotify, setNotis, resetCount } = useContext(Notification);
 
     const notilist = [
         {
@@ -415,14 +415,15 @@ export default function Data() {
                         onClick={() => {
                             if (mobileMenu === "notify") {
                                 setMobileMenu("");
-                                setRead(false);
+                                resetCount();
+                                // setRead(true);
                             } else {
-                                setRead(true);
+                                // setRead(false);
                                 setMobileMenu("notify");
                             }
                         }}
                         active={mobileMenu === "notify"}
-                        iconLeft={{ icon: "bell", count: count }}
+                        iconLeft={{ icon: "bell", count: mobileMenu === "notify" ? 0 : count }}
                         toggle
                         fit
                         onBlur={() => setMobileMenu("")}
@@ -554,7 +555,7 @@ export default function Data() {
             children: [
                 {
                     active: mobileMenu === "notify",
-                    children: <Sidebars.Notification list={notis} />,
+                    children: <Sidebars.Notification list={notis} count={count} />,
                 },
             ],
         },
