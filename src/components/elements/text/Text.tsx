@@ -31,13 +31,14 @@ export interface Responsive {
 }
 
 export default function Text(props: Text) {
+    const type = props?.href || props?.onClick ? "link" : props?.type;
     const size = props?.size || 1.5;
     const weight = props?.weight || "bold";
     const height = props?.height || 1.5;
     const color = props?.color || "white";
     const opacity = props?.opacity && props?.opacity > 1 ? 1 : props?.opacity || 1;
 
-    switch (props?.type) {
+    switch (type) {
         case "h1":
             return (
                 <Texts.H1

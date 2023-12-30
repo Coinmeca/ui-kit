@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { Controls, Elements, Layouts } from "components";
-import { SlideContent } from "components/controls/slide/Slide";
+import { type SlideContent } from "components/controls/slide/Slide";
 import { createGlobalStyle, styled } from "styled-components";
 import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
@@ -53,7 +53,7 @@ export default function Main() {
                 filter,
             },
             children: (
-                <Layouts.Col align="center" gap={8}>
+                <Layouts.Col align="center" gap={8} style={{ maxWidth: "96em" }}>
                     <Layouts.Col align="center" gap={4}>
                         <Elements.Text type={"h2"}>{story[0].head}</Elements.Text>
                         <Elements.Text type={"h6"}>{story[0].body}</Elements.Text>
@@ -81,7 +81,7 @@ export default function Main() {
                 filter,
             },
             children: (
-                <Layouts.Col align="center" gap={8}>
+                <Layouts.Col align="center" gap={8} style={{ maxWidth: "96em" }}>
                     <Layouts.Col align="center" gap={4}>
                         <Elements.Text type={"h2"}>{story[1].head}</Elements.Text>
                         <Elements.Text type={"h6"}>{story[1].body}</Elements.Text>
@@ -100,7 +100,7 @@ export default function Main() {
                 filter,
             },
             children: (
-                <Layouts.Col align="center" gap={8}>
+                <Layouts.Col align="center" gap={8} style={{ maxWidth: "96em" }}>
                     <Layouts.Col align="center" gap={4}>
                         <Elements.Text type={"h2"}>Make Profits with Trading</Elements.Text>
                         <Elements.Text type={"h6"}>{"Let's get earned Coinmeca Token free according your service usage."}</Elements.Text>
@@ -132,7 +132,9 @@ export default function Main() {
                                     <Layouts.Col gap={2} align={"left"}>
                                         <Elements.Text type={"h2"}>coinmeca</Elements.Text>
                                         <Elements.Text type={"p"} opacity={0.6}>
-                                            Let us experience this together, more than faster, easier trading and you can meet your variety to exchange now.
+                                            {
+                                                "Coinmeca imagines more than just a DEX. We strive to provide integrated and fully decentralized financial services based on DEX as an on-chain hub."
+                                            }
                                         </Elements.Text>
                                     </Layouts.Col>
                                 </Layouts.Row>
@@ -150,7 +152,7 @@ export default function Main() {
                         </section>
                         <section className="section s2">
                             <Layouts.Row
-                                gap={windowSize.width > Root.Device.Mobile ? 8 : 12}
+                                gap={windowSize.width > Root.Device.Mobile ? 8 : 4}
                                 align={"center"}
                                 responsive={"mobile"}
                                 reverse={windowSize.width > Root.Device.Mobile ? false : true}
@@ -159,13 +161,14 @@ export default function Main() {
                                     <div>
                                         <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
                                             <Layouts.Col gap={2}>
-                                                <Elements.Text type={"h5"}>Fully On-chain Orderbook</Elements.Text>
-                                                <Elements.Text type={"p"} opacity={0.6}>
-                                                    The Convenient layout makes trading fast and easy. It is also possible to process the buy and sell
-                                                    simultaneously on one screen.
+                                                <Elements.Text type={"h5"}>Automated Liquidity Distributor</Elements.Text>
+                                                <Elements.Text type={"p"} opacity={0.6} align={"left"}>
+                                                    {
+                                                        "The ALD algorithm is designed to automatically distribute liquidity across the order book. The order book provides a visual representation of the liquidity distribution. Users can make liquidity even more abundant by stacking amounts through orders on top of this base liquidity, giving them the possibility to try different trading strategies while further minimizing slippage."
+                                                    }
                                                 </Elements.Text>
                                             </Layouts.Col>
-                                            <Controls.Button type={"solid"} color={"black"} fit>
+                                            <Controls.Button type={"solid"} color={"black"} fit={windowSize.width > Root.Device.Mobile ? true : false}>
                                                 VIEW MORE
                                             </Controls.Button>
                                         </Layouts.Col>
@@ -179,18 +182,19 @@ export default function Main() {
                             </Layouts.Row>
                         </section>
                         <section className="section s3">
-                            <Layouts.Row gap={windowSize.width > Root.Device.Mobile ? 8 : 12} align={"center"} responsive={"mobile"} reverse>
+                            <Layouts.Row gap={windowSize.width > Root.Device.Mobile ? 8 : 4} align={"center"} responsive={"mobile"} reverse>
                                 <div className="content">
                                     <div>
                                         <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
                                             <Layouts.Col gap={2}>
-                                                <Elements.Text type={"h5"}>Position Tokenized</Elements.Text>
-                                                <Elements.Text type={"p"} opacity={0.6}>
-                                                    Trading position can be tokenized. We analyze your assets in various ways by referring to your transaction
-                                                    records. You can be offered information about your asset management and profit. Check it out now.
+                                                <Elements.Text type={"h5"}>Order NFT</Elements.Text>
+                                                <Elements.Text type={"p"} opacity={0.6} align={"left"}>
+                                                    {
+                                                        "The limit order is transformed into a tokenized form. Tokenized orders can be transferred to others, and can take advantage of good positions based on predictions through an order book that processes orders in the order they are executed. This type of trading is not just limited to spot trading but also enables options trading. Also, if your orders have been filled and can be billed, they could be used as collateral."
+                                                    }
                                                 </Elements.Text>
                                             </Layouts.Col>
-                                            <Controls.Button type={"solid"} color={"black"} fit>
+                                            <Controls.Button type={"solid"} color={"black"} fit={windowSize.width > Root.Device.Mobile ? true : false}>
                                                 VIEW MORE
                                             </Controls.Button>
                                         </Layouts.Col>
@@ -210,7 +214,7 @@ export default function Main() {
                     background={{
                         background: "black",
                         filter: { color: "black", opacity: 0.6 },
-                        img: { src: require("../../assets/banners/inbox/1.png") },
+                        img: { src: require("../assets/banners/inbox/1.png"), style: { objectFit: "none" } },
                     }}
                     style={{ scrollSnapAlign: "initial" }}
                 >
@@ -225,25 +229,33 @@ export default function Main() {
                 </Layouts.Cover>
                 <Layouts.Box padding={0}>
                     <section className="section s4">
-                        <Layouts.Col align={"center"} gap={windowSize.width > Root.Device.Tablet ? 16 : 8}>
+                        <Layouts.Col align={"center"} gap={windowSize.width > Root.Device.Tablet ? 8 : 4}>
                             <Layouts.Col align={"center"}>
                                 <Elements.Text type={"h3"}>Faster and Easier</Elements.Text>
-                                <Elements.Text type={"p"}>Optimized User Interface for you. Let experience now.</Elements.Text>
+                                <Elements.Text type={"p"}>
+                                    {"Optimizaed experience for you. Get more information or connect with people by joining the community."}
+                                </Elements.Text>
                             </Layouts.Col>
-                            <Layouts.Col align={"center"} style={{ width: windowSize.width > Root.Device.Tablet ? "80%" : "100%", transition: ".3s ease" }}>
-                                <Layouts.Row responsive="tablet">
-                                    <a style={{ background: `url(${Btn1?.src}) 0% 0% / cover` }}>
-                                        <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
+                            <Layouts.Col
+                                gap={4}
+                                align={"center"}
+                                style={{ width: windowSize.width > Root.Device.Tablet ? "80%" : "100%", transition: ".3s ease" }}
+                            >
+                                <Layouts.Row gap={2} responsive={"mobile"}>
+                                    <a style={{ background: `url(${Btn1?.src}) 0% 0% / cover` }} href={"https://docs.coinmeca.net"} target={"_blank"}>
+                                        <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
                                             <Elements.Text size={2} weight={"bold"}>
                                                 Cryptocurrency
                                                 <br />
                                                 Trading Guide
                                             </Elements.Text>
-                                            <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            <Layouts.Row align={"right"}>
+                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            </Layouts.Row>
                                         </Layouts.Col>
                                     </a>
-                                    <a style={{ background: `url(${Btn2?.src}) 0% 0% / cover` }}>
-                                        <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
+                                    <a style={{ background: `url(${Btn2?.src}) 0% 0% / cover` }} href={"https://docs.coinmeca.net"} target={"_blank"}>
+                                        <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
                                             <Elements.Text size={2} weight={"bold"}>
                                                 Cryptocurrency
                                                 <br />
@@ -251,29 +263,35 @@ export default function Main() {
                                                 <br />
                                                 Guide
                                             </Elements.Text>
-                                            <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            <Layouts.Row align={"right"}>
+                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            </Layouts.Row>
                                         </Layouts.Col>
                                     </a>
                                 </Layouts.Row>
-                                <Layouts.Row responsive="tablet">
-                                    <a style={{ background: `url(${Btn3?.src}) 0% 0% / cover` }}>
-                                        <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
+                                <Layouts.Row gap={2} responsive={"mobile"}>
+                                    <a style={{ background: `url(${Btn3?.src}) 0% 0% / cover` }} href={"https://twitter.com/coinmeca"} target={"_blank"}>
+                                        <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
                                             <Elements.Text size={2} weight={"bold"}>
                                                 Check Recent
                                                 <br />
                                                 Announcements
                                             </Elements.Text>
-                                            <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            <Layouts.Row align={"right"}>
+                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            </Layouts.Row>
                                         </Layouts.Col>
                                     </a>
-                                    <a style={{ background: `url(${Btn4?.src}) 0% 0% / cover` }}>
-                                        <Layouts.Col gap={0} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
+                                    <a style={{ background: `url(${Btn4?.src}) 0% 0% / cover` }} href={"https://discord.gg/m5Duwc9J"} target={"_blank"}>
+                                        <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
                                             <Elements.Text size={2} weight={"bold"}>
                                                 Join
                                                 <br />
                                                 Our Community
                                             </Elements.Text>
-                                            <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            <Layouts.Row align={"right"}>
+                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                            </Layouts.Row>
                                         </Layouts.Col>
                                     </a>
                                 </Layouts.Row>
@@ -283,12 +301,12 @@ export default function Main() {
                     <Layouts.Cover
                         background={{
                             background: "rgba(var(--white),0.045)",
-                            img: { src: require("../../assets/main/mobile_screens.png") },
+                            img: { src: require("../assets/main/mobile_screens.png") },
                         }}
                         style={{ height: `calc(100vh - 6em)`, scrollSnapAlign: "end" }}
                         fullsize
                     >
-                        <Layouts.Contents.InnerContent padding={windowSize.width > Root.Device.Tablet ? 16 : [8, 4]}>
+                        <Layouts.Contents.InnerContent padding={8}>
                             <Layouts.Col style={{ maxWidth: "70em" }}>
                                 <Layouts.Col gap={4}>
                                     <Elements.Text type={"h3"}>Anytime, Anywhere</Elements.Text>
@@ -383,8 +401,8 @@ const Style = styled.main`
                     display: flex;
                     align-items: end;
                     justify-content: stretch;
-                    padding: 4em;
-                    width: calc(100% - 8em);
+                    padding: 3em;
+                    width: calc(100% - 6em);
                     aspect-ratio: 2 / 0.75;
                     cursor: pointer;
 
@@ -411,12 +429,12 @@ const Style = styled.main`
                 right: 0;
 
                 & + * {
-                    margin-bottom: 10em;
+                    margin-bottom: 8em;
                 }
             }
 
             &.p2 {
-                top: -90%;
+                top: -110%;
                 right: -25%;
             }
 
@@ -472,9 +490,9 @@ const Style = styled.main`
             padding: 8em 4em;
 
             .video {
-                width: calc(100% + 8em);
-                margin-left: -4em;
-                margin-bottom: 8em;
+                width: 100vw;
+                /* margin-left: -4em; */
+                margin-bottom: 4em;
             }
         }
     }
@@ -493,16 +511,17 @@ const Style = styled.main`
             }
 
             &.s2 {
-                margin-bottom: 2em;
+                margin-bottom: 4em;
             }
 
             &.s3 {
+                padding-top: 4em;
                 margin-bottom: 4em;
             }
 
             &.s4 {
                 a {
-                    /* aspect-ratio: 2 / 0.75; */
+                    aspect-ratio: 2 / 1;
                 }
             }
 
@@ -515,7 +534,11 @@ const Style = styled.main`
                 z-index: 0;
 
                 &.p1 {
-                    top: 22.5em;
+                    top: 36%;
+
+                    & + * {
+                        margin-bottom: 4em;
+                    }
                 }
 
                 &.p2 {
@@ -525,7 +548,7 @@ const Style = styled.main`
             }
 
             .area {
-                margin-bottom: 4em;
+                margin-bottom: 10%;
 
                 img:last-child {
                     width: 150%;

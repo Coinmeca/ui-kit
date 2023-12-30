@@ -836,7 +836,7 @@ export default function Dummy() {
             children: [
                 {
                     active: mobileMenu === "notify",
-                    children: <Sidebars.Notification list={notis} count={count} />,
+                    children: <Sidebars.Notification list={notis} count={count} onBlur={resetCount} />,
                 },
             ],
         },
