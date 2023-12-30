@@ -1,5 +1,5 @@
 "use client";
-import { Root } from "ui/lib/style";
+import { Root } from "lib/style";
 import { styled } from "styled-components";
 
 export const Count = styled.span<{ $color: string }>`
