@@ -39,8 +39,8 @@ export default function Main() {
             body: "Coinmeca serves fully on-chain orderbook that the transparency of all transactions, and also with best optimized features for much cheaper gas fees.",
         },
         {
-            head: "DEX that never existed in the world till now.",
-            body: "",
+            head: "More powerful token utility.",
+            body: "Tokenomics, which is designed based on Token utility with various utilities such as payment, fees, collateral, and governance, further strengthens its value as a currency.",
         },
     ];
 
@@ -102,8 +102,8 @@ export default function Main() {
             children: (
                 <Layouts.Col align="center" gap={8} style={{ maxWidth: "96em" }}>
                     <Layouts.Col align="center" gap={4}>
-                        <Elements.Text type={"h2"}>Make Profits with Trading</Elements.Text>
-                        <Elements.Text type={"h6"}>{"Let's get earned Coinmeca Token free according your service usage."}</Elements.Text>
+                        <Elements.Text type={"h2"}>{story[2].head}</Elements.Text>
+                        <Elements.Text type={"h6"}>{story[2].body}</Elements.Text>
                     </Layouts.Col>
                     <Controls.Button scale={1.25} fit>
                         Get Started to Exchange
