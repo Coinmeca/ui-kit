@@ -214,7 +214,7 @@ export default function Main() {
                     background={{
                         background: "black",
                         filter: { color: "black", opacity: 0.6 },
-                        img: { src: require("../assets/banners/inbox/1.png"), style: { objectFit: "none" } },
+                        img: { src: require("../../assets/banners/inbox/1.png"), style: { objectFit: "none" } },
                     }}
                     style={{ scrollSnapAlign: "initial" }}
                 >
@@ -301,7 +301,7 @@ export default function Main() {
                     <Layouts.Cover
                         background={{
                             background: "rgba(var(--white),0.045)",
-                            img: { src: require("../assets/main/mobile_screens.png") },
+                            img: { src: require("../../assets/main/mobile_screens.png") },
                         }}
                         style={{ height: `calc(100vh - 6em)`, scrollSnapAlign: "end" }}
                         fullsize
