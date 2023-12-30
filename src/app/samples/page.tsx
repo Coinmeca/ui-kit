@@ -130,7 +130,7 @@ export default function Main() {
     return (
         <Style>
             <Layouts.Cover style={{ scrollSnapAlign: "start" }} fullsize>
-                <Controls.Slide timer={3000} align={{ vertical: "center", horizon: "center" }} nav={"bottom"} slides={slides} />
+                <Controls.Slide timer={5000} align={{ vertical: "center", horizon: "center" }} nav={"bottom"} slides={slides} />
             </Layouts.Cover>
             <NoScrollSnap />
             <Layouts.Page>
