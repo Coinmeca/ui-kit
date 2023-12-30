@@ -52,6 +52,11 @@ const Global = createGlobalStyle`
         list-style: none;
     }
 
+    a {
+        text-decoration:none;
+        cursor:pointer;
+        transition:.3s ease;
+    }
 
     :root {
         --unit: 8px;
