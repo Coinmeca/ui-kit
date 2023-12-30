@@ -55,8 +55,12 @@ export default function Main() {
             children: (
                 <Layouts.Col align="center" gap={8} style={{ maxWidth: "96em" }}>
                     <Layouts.Col align="center" gap={4}>
-                        <Elements.Text type={"h2"}>{story[0].head}</Elements.Text>
-                        <Elements.Text type={"h6"}>{story[0].body}</Elements.Text>
+                        <Elements.Text type={"h2"} style={{ wordBreak: "break-word" }}>
+                            {story[0].head}
+                        </Elements.Text>
+                        <Elements.Text type={"h6"} style={{ wordBreak: "break-word" }}>
+                            {story[0].body}
+                        </Elements.Text>
                     </Layouts.Col>
                     <Controls.Button scale={1.25} fit>
                         Get Started to Exchange
@@ -83,8 +87,12 @@ export default function Main() {
             children: (
                 <Layouts.Col align="center" gap={8} style={{ maxWidth: "96em" }}>
                     <Layouts.Col align="center" gap={4}>
-                        <Elements.Text type={"h2"}>{story[1].head}</Elements.Text>
-                        <Elements.Text type={"h6"}>{story[1].body}</Elements.Text>
+                        <Elements.Text type={"h2"} style={{ wordBreak: "break-word" }}>
+                            {story[1].head}
+                        </Elements.Text>
+                        <Elements.Text type={"h6"} style={{ wordBreak: "break-word" }}>
+                            {story[1].body}
+                        </Elements.Text>
                     </Layouts.Col>
                     <Controls.Button scale={1.25} fit>
                         Get Started to Exchange
@@ -102,8 +110,12 @@ export default function Main() {
             children: (
                 <Layouts.Col align="center" gap={8} style={{ maxWidth: "96em" }}>
                     <Layouts.Col align="center" gap={4}>
-                        <Elements.Text type={"h2"}>{story[2].head}</Elements.Text>
-                        <Elements.Text type={"h6"}>{story[2].body}</Elements.Text>
+                        <Elements.Text type={"h2"} style={{ wordBreak: "break-word" }}>
+                            {story[2].head}
+                        </Elements.Text>
+                        <Elements.Text type={"h6"} style={{ wordBreak: "break-word" }}>
+                            {story[2].body}
+                        </Elements.Text>
                     </Layouts.Col>
                     <Controls.Button scale={1.25} fit>
                         Get Started to Exchange
@@ -130,8 +142,10 @@ export default function Main() {
                                 <Layouts.Row gap={8}>
                                     <div />
                                     <Layouts.Col gap={2} align={"left"}>
-                                        <Elements.Text type={"h2"}>coinmeca</Elements.Text>
-                                        <Elements.Text type={"p"} opacity={0.6}>
+                                        <Elements.Text type={"h2"} style={{ wordBreak: "break-word" }}>
+                                            coinmeca
+                                        </Elements.Text>
+                                        <Elements.Text type={"p"} opacity={0.6} style={{ wordBreak: "break-word" }}>
                                             {
                                                 "Coinmeca imagines more than just a DEX. We strive to provide integrated and fully decentralized financial services based on DEX as an on-chain hub."
                                             }
@@ -161,8 +175,10 @@ export default function Main() {
                                     <div>
                                         <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
                                             <Layouts.Col gap={2}>
-                                                <Elements.Text type={"h5"}>Automated Liquidity Distributor</Elements.Text>
-                                                <Elements.Text type={"p"} opacity={0.6} align={"left"}>
+                                                <Elements.Text type={"h5"} style={{ wordBreak: "break-word" }}>
+                                                    Automated Liquidity Distributor
+                                                </Elements.Text>
+                                                <Elements.Text type={"p"} opacity={0.6} align={"left"} style={{ wordBreak: "break-word" }}>
                                                     {
                                                         "The ALD algorithm is designed to automatically distribute liquidity across the order book. The order book provides a visual representation of the liquidity distribution. Users can make liquidity even more abundant by stacking amounts through orders on top of this base liquidity, giving them the possibility to try different trading strategies while further minimizing slippage."
                                                     }
@@ -187,8 +203,10 @@ export default function Main() {
                                     <div>
                                         <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
                                             <Layouts.Col gap={2}>
-                                                <Elements.Text type={"h5"}>Order NFT</Elements.Text>
-                                                <Elements.Text type={"p"} opacity={0.6} align={"left"}>
+                                                <Elements.Text type={"h5"} style={{ wordBreak: "break-word" }}>
+                                                    Order NFT
+                                                </Elements.Text>
+                                                <Elements.Text type={"p"} opacity={0.6} align={"left"} style={{ wordBreak: "break-word" }}>
                                                     {
                                                         "The limit order is transformed into a tokenized form. Tokenized orders can be transferred to others, and can take advantage of good positions based on predictions through an order book that processes orders in the order they are executed. This type of trading is not just limited to spot trading but also enables options trading. Also, if your orders have been filled and can be billed, they could be used as collateral."
                                                     }
@@ -220,8 +238,10 @@ export default function Main() {
                 >
                     <Layouts.Row align={"center"} style={{ position: "relative", zIndex: 2 }} fill>
                         <Layouts.Col align={"center"} fit>
-                            <Elements.Text type={"h2"}>coinmeca</Elements.Text>
-                            <Elements.Text type={"p"} opacity={0.6}>
+                            <Elements.Text type={"h2"} style={{ wordBreak: "break-word" }}>
+                                coinmeca
+                            </Elements.Text>
+                            <Elements.Text type={"p"} opacity={0.6} style={{ wordBreak: "break-word" }}>
                                 Get new experience of crypto finance life on coinmeca.
                             </Elements.Text>
                         </Layouts.Col>
@@ -231,8 +251,10 @@ export default function Main() {
                     <section className="section s4">
                         <Layouts.Col align={"center"} gap={windowSize.width > Root.Device.Tablet ? 8 : 4}>
                             <Layouts.Col align={"center"}>
-                                <Elements.Text type={"h3"}>Faster and Easier</Elements.Text>
-                                <Elements.Text type={"p"}>
+                                <Elements.Text type={"h3"} style={{ wordBreak: "break-word" }}>
+                                    Faster and Easier
+                                </Elements.Text>
+                                <Elements.Text type={"p"} style={{ wordBreak: "break-word" }}>
                                     {"Optimizaed experience for you. Get more information or connect with people by joining the community."}
                                 </Elements.Text>
                             </Layouts.Col>
@@ -309,8 +331,10 @@ export default function Main() {
                         <Layouts.Contents.InnerContent padding={8}>
                             <Layouts.Col style={{ maxWidth: "70em" }}>
                                 <Layouts.Col gap={4}>
-                                    <Elements.Text type={"h3"}>Anytime, Anywhere</Elements.Text>
-                                    <Elements.Text type={"p"}>
+                                    <Elements.Text type={"h3"} style={{ wordBreak: "break-word" }}>
+                                        Anytime, Anywhere
+                                    </Elements.Text>
+                                    <Elements.Text type={"p"} style={{ wordBreak: "break-word" }}>
                                         You can access it anywhere and whenever you want. Coinmeca will unfold out an amazing decentralized trading system out
                                         to your hand, also an optimized user interface for the user with responsive design.
                                     </Elements.Text>
