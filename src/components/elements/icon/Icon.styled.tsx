@@ -1,5 +1,5 @@
 "use client";
-import { Root } from "lib/style";
+import { Root } from "ui/lib/style";
 import { styled } from "styled-components";
 
 export const Count = styled.span<{ $color: string }>`
@@ -20,6 +20,7 @@ const Style = styled.i<{ $color?: string; $change?: boolean; $scale?: number }>`
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: max-content;
     font-style: initial;
     font-size: ${({ $scale }) => ($scale || 1) * 2.5}em;
     width: 1em;
