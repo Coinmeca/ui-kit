@@ -42,10 +42,10 @@ const Style = styled.div<{
 
     & > * {
         font-size: 1.5em;
-        display: flex;
+        /* display: flex;
         flex-direction: row;
         align-items: center;
-        width: 100%;
+        width: 100%; */
     }
 
     &:hover {

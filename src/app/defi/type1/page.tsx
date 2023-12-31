@@ -116,7 +116,7 @@ export default function Page() {
                         },
                         {
                             align: "right",
-                            children: <Elements.Text>{asset?.amount}</Elements.Text>,
+                            children: <Elements.Text>{Format(asset?.amount, "number", true)}</Elements.Text>,
                         },
                     ];
 
@@ -130,7 +130,7 @@ export default function Page() {
                                               <Elements.Text>Need:</Elements.Text>
                                           </>,
                                           <>
-                                              <Elements.Text>{asset?.need}</Elements.Text>
+                                              <Elements.Text>{Format(asset?.need, "currency", true)}</Elements.Text>
                                           </>,
                                       ],
                                   typeof asset?.weight !== "undefined" &&
@@ -139,7 +139,7 @@ export default function Page() {
                                               <Elements.Text>Weight:</Elements.Text>
                                           </>,
                                           <>
-                                              <Elements.Text>{asset?.weight}</Elements.Text>
+                                              <Elements.Text>{Format(asset?.weight, "currency", true)}</Elements.Text>
                                           </>,
                                       ],
                               ],
@@ -1011,7 +1011,7 @@ export default function Page() {
             let mint = 0;
             let total = 0;
 
-            const ast = { ...assets[asset], amount: parseFloat(amount?.toFixed(18)) };
+            const ast = { ...assets[asset], amount: parseFloat(amount.toString()) };
             const type = values?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase())?.type;
             const exist = v?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase());
             const balance = u?.find((u: User, i) => user === i)?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase());
@@ -1053,9 +1053,11 @@ export default function Page() {
                     const need = parseFloat((b?.need || 0).toString());
                     const hold = parseFloat((b?.amount || 0).toString());
                     const weight = parseFloat((b?.weight || least).toString());
+                    const n = need < 0 && Math.abs(hold) < Math.abs(need) ? least : need;
 
                     // rate = (weight / (hold + amt)) * amt * ((hold + need + amt) / (hold + amt));
-                    rate = (weight / (hold + amt)) * amt * ((hold + need) / (hold + amt));
+                    // rate = (weight / (hold + amt)) * amt * ((hold + n) / (hold + amt));
+                    rate = (weight / (hold + amt)) * amt;
                     // mint = rate * (p / (p + rate)) * 0.99;
                     mint = rate * 0.99;
                     // console.log("mint", {
@@ -1250,13 +1252,14 @@ export default function Page() {
                 const weight = parseFloat((ast?.weight || least).toString());
                 const hold = parseFloat((ast?.amount || least).toString());
                 // const b = burn >= (ast?.weight || least) ? (ast?.weight || least) - least || least : burn;
-                const b = burn;
+                const b = parseFloat(burn.toString());
                 if (b === least) return;
 
                 let test = 3;
                 // w = (hold / (weight + b || 1)) * b;
-                w = (hold / (weight + b)) * b;
-                w = w * ((hold - w) / (hold + need));
+                // w = (hold / (weight + b)) * b;
+                w = (b * hold) / weight;
+                // w = w * ((hold - w) / (hold + need));
                 // w = w * (weight / (weight + burn));
                 // console.log((hold - w) / (hold + need), (hold + need - w) / (hold + need));
                 // w = w * ((p - b) / p) * 0.99;
@@ -1294,6 +1297,7 @@ export default function Page() {
                 p = p - b;
 
                 v = v?.map((f: Asset) => {
+                    console.log("famount", f?.amount || 0, "amount", amount);
                     return f?.symbol?.toUpperCase() !== asset?.symbol?.toUpperCase()
                         ? f
                         : {

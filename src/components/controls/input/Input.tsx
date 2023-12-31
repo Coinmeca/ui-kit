@@ -139,7 +139,7 @@ export default function Input(props: Input) {
             key === 109 ||
             key === 189
         ) {
-            let copy: number = 0;
+            let copy: any = 0;
             if (key === 38 || key === 107 || key === 187) {
                 if (e.shiftKey && e.ctrlKey) {
                     copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step * 100);
@@ -148,7 +148,8 @@ export default function Input(props: Input) {
                 } else {
                     copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step);
                 }
-                setValue(formatter(copy));
+                copy = formatter(copy);
+                setValue(copy);
                 if (typeof props?.onChange === "function") props?.onChange(e, copy);
             }
             if (key === 40 || key === 109 || key === 189) {
@@ -159,7 +160,8 @@ export default function Input(props: Input) {
                 } else {
                     copy = value.toString() === "" ? 0 : parseFloat(value.toString().replaceAll(",", "")) - Math.abs(step);
                 }
-                setValue(formatter(copy));
+                copy = formatter(copy);
+                setValue(copy);
                 if (typeof props?.onChange === "function") props?.onChange(e, copy);
             }
         }
