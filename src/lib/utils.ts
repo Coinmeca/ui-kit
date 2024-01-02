@@ -251,8 +251,8 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			copy[0] = value?.startsWith('-') ? '-' + copy[0] : copy[0];
 
 			const result = copy[0] + (point ? '.' : '') + decimals;
-			return u !== '' ? result + ' ' + u : display ? parseFloat(result) : result;
-			// return u !== '' ? result + ' ' + u : display && type === 'number' ? parseFloat(result) : result;
+			// return u !== '' ? result + ' ' + u : display ? parseFloat(result) : result;
+			return u !== '' ? result + ' ' + u : display && type === 'number' ? parseFloat(result) : result;
 		}
 		case 'date':
 			if (typeof value === 'undefined') return '-';
