@@ -50,7 +50,7 @@ export default function Info(props: Info) {
                         Volume ({props?.base?.symbol?.toUpperCase()})
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                        {Format(props?.info?.volume_base, "currency", true)}
+                        {Format(props?.info?.volume_base, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                 </Layouts.Row>
                 <Layouts.Row
@@ -66,8 +66,7 @@ export default function Info(props: Info) {
                         Volume ({props?.quote?.symbol?.toUpperCase()})
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                        {/* {Format(props?.info?.volume_quote, "currency", { unit: 9, limit: 12, fix: 3 })} */}
-                        {Format(0.0000000000001, "currency", { unit: 9, limit: 12, fix: 3 })}
+                        {Format(props?.info?.volume_quote, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Col>
@@ -85,7 +84,7 @@ export default function Info(props: Info) {
                         Highest
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"green"}>
-                        {Format(props?.info?.high, "currency", true)}
+                        {Format(props?.info?.high, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                 </Layouts.Row>
                 <Layouts.Row
@@ -101,7 +100,7 @@ export default function Info(props: Info) {
                         Lowest
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"red"}>
-                        {Format(props?.info?.low, "currency", true)}
+                        {Format(props?.info?.low, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Col>
@@ -119,7 +118,7 @@ export default function Info(props: Info) {
                         Change
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
-                        {Sign(props?.info?.change)} {Format(props?.info?.change, "currency", true)}
+                        {Sign(props?.info?.change)} {Format(props?.info?.change, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                     </Elements.Text>
                 </Layouts.Row>
                 <Layouts.Row
@@ -135,7 +134,7 @@ export default function Info(props: Info) {
                         Change Rate
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
-                        {Sign(props?.info?.change_rate)} {Format(props?.info?.change_rate, "currency", true)} %
+                        {Sign(props?.info?.change_rate)} {Format(props?.info?.change_rate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })} %
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Col>
@@ -153,7 +152,7 @@ export default function Info(props: Info) {
                         Balance
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                        {Format(props?.info?.volume_base, "currency", true)}
+                        {Format(props?.info?.volume_base, "currency")}
                     </Elements.Text>
                 </Layouts.Row>
                 <Layouts.Row
@@ -169,7 +168,7 @@ export default function Info(props: Info) {
                         Using
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                        {Format(props?.info?.volume_base, "currency", true)}
+                        {Format(props?.info?.volume_base, "currency")}
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Col>

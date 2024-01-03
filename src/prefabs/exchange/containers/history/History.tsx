@@ -1,9 +1,9 @@
 "use client";
 
 import { Elements, Layouts } from "components";
-import { Tick } from "../orderbook/Orderbook.styled";
 import { AnimatePresence, motion } from "framer-motion";
 import { Format } from "lib/utils";
+import { Tick } from "../orderbook/Orderbook.styled";
 
 export interface History {
     data?: MarketHistory[];
@@ -51,18 +51,20 @@ export default function History(props: History) {
                                                 d?.type === "buy" ? "green" : "red"
                                             }),0.15))`,
                                             backgroundSize: `${
-                                                ((Format(d?.quantity.toString(), "number", true) as number) / max) * 100 > 100
+                                                (parseFloat(Format(d?.quantity, "number", true)) / max) * 100 > 100
                                                     ? "100"
-                                                    : ((Format(d?.quantity?.toString(), "number", true) as number) / max) * 100 < 0
+                                                    : (parseFloat(Format(d?.quantity, "number", true)) / max) * 100 < 0
                                                     ? "0"
-                                                    : ((Format(d?.quantity?.toString(), "number", true) as number) / max) * 100
+                                                    : (parseFloat(Format(d?.quantity, "number", true)) / max) * 100
                                             }% 100%`,
                                         }}
                                     >
-                                        <span style={{ color: `${d?.type === "buy" ? "green" : "red"}` }}>{Format(d?.quantity, "currency", true)}</span>
+                                        <span style={{ color: `${d?.type === "buy" ? "green" : "red"}` }}>
+                                            {Format(d?.quantity, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                        </span>
                                     </div>
                                     <span style={{ display: "table-cell", padding: "0.5em 1em" }}>
-                                        <span>{Format(d?.price, "currency", true)}</span>
+                                        <span>{Format(d?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
                                     </span>
                                 </div>
                             </div>

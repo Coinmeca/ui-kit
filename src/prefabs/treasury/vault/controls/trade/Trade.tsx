@@ -32,7 +32,7 @@ export default function Trade(props: TradeControl) {
 
     const mode = typeof props?.mode === "undefined" ? true : props?.mode;
     const assets = props?.assets || [];
-    const available = Format(assets[0]?.balance || 0, "number", true) as number;
+    const available = parseFloat(Format(assets[0]?.balance || 0, "number", true));
 
     const option = props?.option || "market";
     const [currency, setCurrency] = useState(0);
@@ -44,7 +44,7 @@ export default function Trade(props: TradeControl) {
         {
             base: assets[0]?.address,
             quote: assets[1]?.address,
-            price: Format(props?.price || 1, "number", true) as number,
+            price: parseFloat(Format(props?.price || 1, "number", true)),
             amount: 0,
             quantity: 0,
             fees: 0,
@@ -101,18 +101,18 @@ export default function Trade(props: TradeControl) {
     }, [order]);
 
     const handleChangePrice = (p: number | string) => {
-        price(Format(p, "number", true) as number);
+        price(parseFloat(Format(p, "number", true)));
     };
 
     const handleChangeAmount = (a: number | string) => {
-        currency === 0 ? quantity(Format(a, "number", true) as number) : amount(Format(a, "number", true) as number);
+        currency === 0 ? quantity(parseFloat(Format(a, "number", true))) : amount(parseFloat(Format(a, "number", true)));
     };
 
     const handleChangeRange = (v: number) => {
         if (available > 0)
             currency === 0
-                ? quantity((((Format(available, "number", true) as number) / order.price) * (Format(v, "number", true) as number)) / 100)
-                : amount(((Format(available, "number", true) as number) * (Format(v, "number", true) as number)) / 100);
+                ? quantity(((parseFloat(Format(available, "number", true)) / order.price) * parseFloat(Format(v, "number", true))) / 100)
+                : amount((parseFloat(Format(available, "number", true)) * parseFloat(Format(v, "number", true))) / 100);
     };
 
     const pricePosition = order.price === 0 ? 0 : (1 - parseFloat(props?.price?.toString()) / order.price) * 100;
@@ -141,7 +141,7 @@ export default function Trade(props: TradeControl) {
             value={currency === 0 ? order.quantity : order.amount}
             unit={[...assets].reverse()[currency]?.symbol?.toUpperCase()}
             sub={{
-                value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", true)}`,
+                value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", { unit: 9, limit: 12, fix: 3 })}`,
                 unit: assets[currency]?.symbol?.toUpperCase(),
             }}
             button={{
@@ -162,7 +162,7 @@ export default function Trade(props: TradeControl) {
                 </Elements.Text>
                 <Layouts.Row gap={gap.row} fix>
                     <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                        {Format(assets[0]?.balance as number, "currency", true)}
+                        {Format(assets[0]?.balance as number, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                         {assets[0]?.symbol?.toUpperCase()}
@@ -227,7 +227,7 @@ export default function Trade(props: TradeControl) {
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
                         <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                            - {Format(order.fees as number, "currency", true)}
+                            - {Format(order.fees as number, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                             {assets[1]?.symbol?.toUpperCase()}
@@ -240,7 +240,7 @@ export default function Trade(props: TradeControl) {
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
                         <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                            {Format(order.total as number, "currency", true)}
+                            {Format(order.total as number, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                             {assets[1]?.symbol?.toUpperCase()}

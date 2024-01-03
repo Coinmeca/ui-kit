@@ -2,7 +2,7 @@
 
 import { Controls, Elements, Layouts } from "components";
 import { useSort } from "hooks";
-import { Filter, Format } from "lib/utils";
+import { Filter, Format, Sign } from "lib/utils";
 
 export interface Market {
     list: MarketData[];
@@ -66,19 +66,14 @@ export default function Market(props: Market) {
                     ],
                     {
                         align: "right",
-                        change: data?.change
-                            ? (Format(data?.change, "number") as number) > 0
-                                ? "var(--green)"
-                                : (Format(data?.change, "number") as number) < 0 && "var(--red)"
-                            : "-",
+                        change: data?.change ? (Sign(data?.change) === "+" ? "var(--green)" : Sign(data?.change) === "-" && "var(--red)") : "",
                         children: [
                             <>
-                                <Elements.Text type="strong">$ {data?.price}</Elements.Text>
+                                <Elements.Text type="strong">$ {Format(data?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                             </>,
                             <>
                                 <Elements.Text type="strong" change>
-                                    {data?.change && (Format(data?.change, "number") as number) > 0 && "+"}
-                                    {data?.change} %
+                                    {Sign(data?.change)} {Format(data?.change, "number", { sign: false })} %
                                 </Elements.Text>
                             </>,
                         ],

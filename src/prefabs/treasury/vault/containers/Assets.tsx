@@ -1,8 +1,8 @@
 "use client";
 import { Controls, Elements, Layouts } from "components";
+import { useSort } from "hooks";
 import { Filter, Format, Sign } from "lib/utils";
 import { Asset } from "types/web3";
-import { useSort } from "hooks";
 
 export interface Assets {
     assets?: Asset[];
@@ -26,124 +26,140 @@ export default function Assets(props: Assets) {
                 style: { padding: "2em" },
                 children: [
                     [
-                        {
-                            style: { flex: 1, maxWidth: "20%" },
-                            children: [
-                                {
-                                    style: { maxWidth: "max-content" },
-                                    children: (
-                                        <Elements.Avatar
-                                            size={props?.responsive ? 3.5 : 4}
-                                            style={{ maxWidth: "max-content" }}
-                                            img={require(`../../../../assets/coins/${data?.symbol?.toLowerCase()}.png`)}
-                                        />
-                                    ),
-                                },
-                                <>
-                                    <Layouts.Col gap={0}>
-                                        <Elements.Text height={1.25}>{data?.symbol}</Elements.Text>
-                                        <Elements.Text height={1.25} opacity={0.3} fix>
-                                            {data?.name}
-                                        </Elements.Text>
-                                    </Layouts.Col>
-                                </>,
-                            ],
-                        },
-                        {
-                            style: { flex: 3 },
-                            children: [
-                                {
-                                    gap: 0,
-                                    children: [
+                        [
+                            {
+                                style: { flex: 1, maxWidth: "20%" },
+                                children: [
+                                    [
                                         {
-                                            align: "right",
+                                            style: { maxWidth: "max-content" },
                                             children: (
-                                                <>
-                                                    <Elements.Text align={"right"}>{Format(data?.exchange_rate, "currency", true)}</Elements.Text>
-                                                    <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
-                                                        MECA
-                                                    </Elements.Text>
-                                                </>
+                                                <Elements.Avatar
+                                                    size={props?.responsive ? 3.5 : 4}
+                                                    style={{ maxWidth: "max-content" }}
+                                                    img={require(`../../../../assets/coins/${data?.symbol?.toLowerCase()}.png`)}
+                                                />
                                             ),
                                         },
+                                        <>
+                                            <Layouts.Col gap={0}>
+                                                <Elements.Text height={1.25}>{data?.symbol}</Elements.Text>
+                                                <Elements.Text height={1.25} opacity={0.3} fix>
+                                                    {data?.name}
+                                                </Elements.Text>
+                                            </Layouts.Col>
+                                        </>,
+                                    ],
+                                ],
+                            },
+                            {
+                                style: { flex: 3 },
+                                children: [
+                                    [
                                         {
-                                            align: "right",
-                                            change: Sign(data?.exchange_rate) === "+" ? "green" : Sign(data?.exchange_rate) === "-" && "red",
-                                            children: (
-                                                <>
-                                                    <Elements.Text align={"right"} change>
-                                                        {Format(data?.exchange_rate_change, "currency", true)}
-                                                    </Elements.Text>
-                                                    <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }} change>
-                                                        %
-                                                    </Elements.Text>
-                                                </>
-                                            ),
+                                            gap: 0,
+                                            children: [
+                                                {
+                                                    align: "right",
+                                                    children: (
+                                                        <>
+                                                            <Elements.Text align={"right"}>
+                                                                {Format(data?.exchange_rate, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                            </Elements.Text>
+                                                            <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
+                                                                MECA
+                                                            </Elements.Text>
+                                                        </>
+                                                    ),
+                                                },
+                                                {
+                                                    align: "right",
+                                                    change: Sign(data?.exchange_rate) === "+" ? "green" : Sign(data?.exchange_rate) === "-" && "red",
+                                                    children: (
+                                                        <>
+                                                            <Elements.Text align={"right"} change>
+                                                                {Format(data?.exchange_rate_change, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                                                            </Elements.Text>
+                                                            <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }} change>
+                                                                %
+                                                            </Elements.Text>
+                                                        </>
+                                                    ),
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            style: {
+                                                gap: 0,
+                                                ...(props?.responsive && {
+                                                    display: "none",
+                                                }),
+                                            },
+                                            children: [
+                                                {
+                                                    align: "right",
+                                                    children: (
+                                                        <>
+                                                            <Elements.Text align={"right"}>
+                                                                {Format(data?.tl, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                            </Elements.Text>
+                                                            <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
+                                                                {data?.symbol}
+                                                            </Elements.Text>
+                                                        </>
+                                                    ),
+                                                },
+                                                {
+                                                    align: "right",
+                                                    style: { opacity: 0.3 },
+                                                    children: (
+                                                        <>
+                                                            <Elements.Text align={"right"}>
+                                                                {Sign(data?.tl_change)}{" "}
+                                                                {Format(data?.tl_change, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                                                            </Elements.Text>
+                                                            <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
+                                                                {data?.symbol}
+                                                            </Elements.Text>
+                                                        </>
+                                                    ),
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            style: {
+                                                gap: 0,
+                                                ...(props?.responsive && {
+                                                    display: "none",
+                                                }),
+                                            },
+                                            children: [
+                                                {
+                                                    align: "right",
+                                                    children: (
+                                                        <Elements.Text align={"right"}>
+                                                            $ {Format(data?.tvl, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                        </Elements.Text>
+                                                    ),
+                                                },
+                                                {
+                                                    align: "right",
+                                                    style: { opacity: 0.3 },
+                                                    children: (
+                                                        <>
+                                                            <Elements.Text align={"right"} fix>
+                                                                {Sign(data?.tvl_change)}${" "}
+                                                                {Format(data?.tvl_change, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                                                            </Elements.Text>
+                                                        </>
+                                                    ),
+                                                },
+                                            ],
                                         },
                                     ],
-                                },
-                                {
-                                    style: {
-                                        gap: 0,
-                                        ...(props?.responsive && {
-                                            display: "none",
-                                        }),
-                                    },
-                                    children: [
-                                        {
-                                            align: "right",
-                                            children: (
-                                                <>
-                                                    <Elements.Text align={"right"}>{Format(data?.tl, "currency", true)}</Elements.Text>
-                                                    <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
-                                                        {data?.symbol}
-                                                    </Elements.Text>
-                                                </>
-                                            ),
-                                        },
-                                        {
-                                            align: "right",
-                                            style: { opacity: 0.3 },
-                                            children: (
-                                                <>
-                                                    <Elements.Text align={"right"}>
-                                                        {Sign(data?.tl_change)} {Format(data?.tl_change, "currency", true)}
-                                                    </Elements.Text>
-                                                    <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
-                                                        {data?.symbol}
-                                                    </Elements.Text>
-                                                </>
-                                            ),
-                                        },
-                                    ],
-                                },
-                                {
-                                    style: {
-                                        gap: 0,
-                                        ...(props?.responsive && {
-                                            display: "none",
-                                        }),
-                                    },
-                                    children: [
-                                        {
-                                            align: "right",
-                                            children: <Elements.Text align={"right"}>$ {Format(data?.tvl, "currency", true)}</Elements.Text>,
-                                        },
-                                        {
-                                            align: "right",
-                                            style: { opacity: 0.3 },
-                                            children: (
-                                                <>
-                                                    <Elements.Text align={"right"} fix>
-                                                        {Sign(data?.tvl_change)}$ {Math.abs(Format(data?.tvl_change, "currency", true) as number)}
-                                                    </Elements.Text>
-                                                </>
-                                            ),
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
+                                ],
+                            },
+                        ],
                     ],
                 ],
             }))

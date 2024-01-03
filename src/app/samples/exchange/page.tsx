@@ -79,7 +79,7 @@ export default function Page() {
                                         }}
                                         change
                                     >
-                                        $ {Format(props?.market?.price, "currency", true)}
+                                        $ {Format(props?.market?.price, "currency", { unit: 9, limit: 12, fix: 3 })}
                                     </Elements.Text>
                                 </Layouts.Row>
                             </Layouts.Row>

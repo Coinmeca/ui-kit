@@ -67,7 +67,7 @@ export default function Info(props: Info) {
                             Total Staking
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.total_staking, "currency", true)}
+                            {Format(props?.info?.total_staking, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -88,7 +88,8 @@ export default function Info(props: Info) {
                             style={{ minWidth: "max-content" }}
                             color={Sign(props?.info?.total_staking_change) === "+" ? "green" : Sign(props?.info?.total_staking_change) === "-" && "red"}
                         >
-                            {Sign(props?.info?.total_staking_change)} {Format(props?.info?.total_staking_change, "currency", true)}
+                            {Sign(props?.info?.total_staking_change)}{" "}
+                            {Format(props?.info?.total_staking_change, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -106,7 +107,7 @@ export default function Info(props: Info) {
                             Total Value Locked
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            $ {Format(props?.info?.tvl, "currency", true)}
+                            $ {Format(props?.info?.tvl, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -127,7 +128,7 @@ export default function Info(props: Info) {
                             style={{ minWidth: "max-content" }}
                             color={Sign(props?.info?.tvl_change) === "+" ? "green" : Sign(props?.info?.tvl_change) === "-" && "red"}
                         >
-                            {Sign(props?.info?.tvl_change)}$ {Format(props?.info?.tvl_change, "currency", true)}
+                            {Sign(props?.info?.tvl_change)}$ {Format(props?.info?.tvl_change, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -145,7 +146,7 @@ export default function Info(props: Info) {
                             Total Interest
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.total_interest, "currency", true)}
+                            {Format(props?.info?.total_interest, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -161,7 +162,7 @@ export default function Info(props: Info) {
                             Total Interest Change
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"green"}>
-                            {Format(props?.info?.total_interest_change, "currency", true)} %
+                            {Format(props?.info?.total_interest_change, "currency", { unit: 9, limit: 12, fix: 3 })} %
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -179,7 +180,7 @@ export default function Info(props: Info) {
                             Your ROI
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.apr, "currency", true)}
+                            {Format(props?.info?.apr, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -195,7 +196,7 @@ export default function Info(props: Info) {
                             Your ROR
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.ror, "currency", true)} %
+                            {Format(props?.info?.ror, "currency", { unit: 9, limit: 12, fix: 3 })} %
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -224,7 +225,7 @@ export default function Info(props: Info) {
                             Staking (24H)
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.staking_24h, "currency", true)}
+                            {Format(props?.info?.staking_24h, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -240,7 +241,8 @@ export default function Info(props: Info) {
                             Staking Change (24H)
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"green"}>
-                            {Sign(props?.info?.staking_24h_change)} {Format(props?.info?.staking_24h_change, "currency", true)}
+                            {Sign(props?.info?.staking_24h_change)}{" "}
+                            {Format(props?.info?.staking_24h_change, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -258,7 +260,7 @@ export default function Info(props: Info) {
                             Unstaking (24H)
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.unstaking_24h, "currency", true)}
+                            {Format(props?.info?.unstaking_24h, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -274,7 +276,7 @@ export default function Info(props: Info) {
                             Unstaking Change (24H)
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"red"}>
-                            -{Format(props?.info?.unstaking_24h_change, "currency", true)}
+                            -{Format(props?.info?.unstaking_24h_change, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -292,7 +294,7 @@ export default function Info(props: Info) {
                             Interest (24H)
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.interest_24h, "currency", true)}
+                            {Format(props?.info?.interest_24h, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -308,7 +310,7 @@ export default function Info(props: Info) {
                             Interest Change (24H)
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"green"}>
-                            {Format(props?.info?.interest_change_24h, "currency", true)}
+                            {Format(props?.info?.interest_change_24h, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -326,7 +328,7 @@ export default function Info(props: Info) {
                             Your Staking
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.staking, "currency", true)}
+                            {Format(props?.info?.staking, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -342,7 +344,7 @@ export default function Info(props: Info) {
                             Your Claimable
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.claimable, "currency", true)}
+                            {Format(props?.info?.claimable, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
