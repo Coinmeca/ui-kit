@@ -82,16 +82,16 @@ export default function Input(props: Input) {
             if (value?.toString() === "NaN") value = "";
             if (type === "number" || type === "currency") {
                 if (!props.readOnly && !value.toString().endsWith(".")) {
-                    let copy = parseFloat(Format(value, "number", props?.lock, props?.fix) as string);
+                    let copy = parseFloat(Format(value, "number", props?.lock, props?.fix, props?.max));
                     value =
-                        typeof props?.min === "number" && props?.min > copy
+                        typeof props?.min === "number" && props?.min >= copy
                             ? props?.min
-                            : typeof props?.max === "number" && props?.max < copy
+                            : typeof props?.max === "number" && props?.max <= copy
                             ? props?.max
                             : value;
                 }
             }
-            return Format(value, type, props?.lock, props?.fix);
+            return Format(value, type, props?.lock, props?.fix, props?.max);
         },
         [type, props.min, props.max, props.lock, props.fix, props?.readOnly]
     );
