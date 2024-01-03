@@ -55,6 +55,15 @@ export interface Input {
     disabled?: boolean;
 }
 
+interface format {
+    display?: boolean | number;
+    limit?: number;
+    unit?: boolean | number;
+    fix?: number | "auto";
+    max?: number;
+    sign?: boolean;
+}
+
 export default function Input(props: Input) {
     const input: any = useRef();
 
