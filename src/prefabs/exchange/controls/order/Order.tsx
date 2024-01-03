@@ -1,4 +1,5 @@
 "use client";
+"currency";
 import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Exchange } from "prefabs";
@@ -26,7 +27,7 @@ export default function Order(props: OrderControl) {
 
     const mode = typeof props?.mode === "undefined" ? true : props?.mode;
     const assets = props?.assets || [];
-    const available = Format(assets[0]?.balance || 0, "number", true) as number;
+    const available = parseFloat(Format(assets[0]?.balance || 0, "number", true));
 
     const option = props?.option || "market";
     const [currency, setCurrency] = useState(0);
@@ -38,7 +39,7 @@ export default function Order(props: OrderControl) {
         {
             base: assets[1]?.address,
             quote: assets[0]?.address,
-            price: Format(props?.price, "number", true) as number,
+            price: parseFloat(Format(props?.price, "number", true)),
         },
         mode,
         0.01,
@@ -94,22 +95,22 @@ export default function Order(props: OrderControl) {
     }, [order]);
 
     useEffect(() => {
-        if (option === "market") price(Format(props?.price, "number", true) as number);
-        if (option === "limit") price(Format(limit, "number", true) as number);
+        if (option === "market") price(parseFloat(Format(props?.price, "number", true)));
+        if (option === "limit") price(parseFloat(Format(limit, "number", true)));
     }, [option]);
 
     const handleChangePrice = (p: number | string) => {
-        price(Format(p, "number", true) as number);
+        price(parseFloat(Format(p, "number", true)));
     };
 
     const handleChangeAmount = (a: number | string) => {
         mode
             ? currency === 0
-                ? quantity(Format(a, "number", true) as number)
-                : amount(Format(a, "number", true) as number)
+                ? quantity(parseFloat(Format(a, "number", true)))
+                : amount(parseFloat(Format(a, "number", true)))
             : currency === 0
-            ? amount(Format(a, "number", true) as number)
-            : quantity(Format(a, "number", true) as number);
+            ? amount(parseFloat(Format(a, "number", true)))
+            : quantity(parseFloat(Format(a, "number", true)));
     };
 
     const handleChangeRange = (v: number) => {
@@ -118,11 +119,11 @@ export default function Order(props: OrderControl) {
         if (a && q) {
             mode
                 ? currency === 0
-                    ? quantity((q * (Format(v, "number", true) as number)) / 100)
-                    : amount((a * (Format(v, "number", true) as number)) / 100)
+                    ? quantity((q * parseFloat(Format(v, "number", true))) / 100)
+                    : amount((a * parseFloat(Format(v, "number", true))) / 100)
                 : currency === 0
-                ? amount((a * (Format(v, "number", true) as number)) / 100)
-                : quantity((q * (Format(v, "number", true) as number)) / 100);
+                ? amount((a * parseFloat(Format(v, "number", true))) / 100)
+                : quantity((q * parseFloat(Format(v, "number", true))) / 100);
         }
     };
 
