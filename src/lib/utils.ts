@@ -105,7 +105,6 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 	let unit = (typeof option === 'object' && typeof option?.unit !== 'undefined');
 	let upper = (typeof option === 'object' && typeof option?.unit === 'number') ? option?.unit : 0;
 	let sign = typeof option === 'object' && typeof option?.sign === 'boolean' ? option?.sign : true;
-	console.log(value, sign);
 	fix = typeof option === 'object' ? option?.fix : fix === 'auto' ? 3 : fix;
 	max = typeof option === 'object' ? option?.max : max;
 
@@ -144,7 +143,6 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 					multiplier = 3;
 				}
 			}
-			console.log(value);
 			value = copy[0] as string;
 
 			let e = value?.split('e');
@@ -172,7 +170,6 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 					// value = (parseFloat(e[0]) * (10 ** multiplier)).toString();
 				}
 			} else {
-				console.log(value, copy);
 				// if (value?.length > multiplier) {
 				// 	value = [...value!.toString()].splice(value?.length - multiplier, 0, '.').join();
 				// } else {
@@ -187,7 +184,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			copy = '';
 			for (let i = 0; i < value?.length; i++) {
 				if ((!display && !point && value[i] === '0') || (!point && value[i] === '.') || !isNaN(parseInt(value[i]))) {
-					if (point && num && value[i] === '0') break;
+					if (display && point && num && value[i] === '0') break;
 					if (point && !num && value[i] === '0') zero++;
 					if (point && value[i] !== '0') num = true;
 					if (!point && value[i] === '.') point = true;
@@ -196,8 +193,9 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			}
 
 			if (max) {
+				let result: string = '';
 				max = parseFloat(max.toString().replaceAll(',', ''));
-				if (parseFloat(copy) > parseFloat(max.toString())) return type === 'currency' ? copy.toLocaleString() : max;
+				if (parseFloat(copy) >= parseFloat(max.toString())) type === 'currency' ? copy.toLocaleString() : max;
 			}
 
 			copy = copy.split('.');
@@ -228,8 +226,8 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 
 			if (display) {
 				copy[0] = parseInt(copy[0]);
-				if (copy[0]?.split('0')[0] === '0' && zero === 0) copy = '0';
-				else if (type === 'currency') copy[0] = copy[0].toLocaleString();
+				if (!num && copy[0] === 0) { point = false; copy = [0]; };
+				if (type === 'currency') copy[0] = copy[0].toLocaleString();
 			} else if (type === 'currency') {
 				let number: string = '';
 				for (let i = 0; i < copy[0].length; i++) {
@@ -252,7 +250,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 				for (let i = 0; i < copy[1]?.length; i++) {
 					if (typeof fix === 'number' && !isNaN(fix) && i === fix && fix > zero) break;
 					if (!isNaN(parseInt(copy[1][i]))) {
-						if (copy[1][i] === '0' && num) break;
+						if (display && copy[1][i] === '0' && num) break;
 						if (copy[1][i] !== '0') num = true;
 						decimals += copy[1][i].toString();
 						if (display && typeof fix === 'number' && !isNaN(fix) && !isNaN(copy[1][i]) && copy[1][i] !== '0' && fix <= zero) break;
