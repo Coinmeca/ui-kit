@@ -146,22 +146,22 @@ export default function View(props: any) {
         <Layouts.Contents.InnerContent>
             <Layouts.Row fix style={{ minHeight: "4em", alignItems: "center" }}>
                 <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
-                    <Layouts.Row responsive={"mobile"} gap={1} fit>
-                        <Elements.Text size={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "mobile", size: 2 }}>
+                    <Layouts.Row responsive={"tablet"} gap={1} fit>
+                        <Elements.Text size={2.5} height={1} style={{ marginRight: "1em" }} responsive={{ device: "tablet", size: 2 }}>
                             All Assets
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>
                 <Layouts.Row fix align="right">
                     <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
-                        <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 2 }} change>
+                        <Elements.Text size={2.5} height={1} responsive={{ device: "tablet", size: 2 }} change>
                             $ {Format("1,567,851,378.516", "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>
             </Layouts.Row>
             <Layouts.Divider style={{ marginTop: "1em" }} />
-            <Layouts.Col show={"mobile"} gap={0}>
+            <Layouts.Col show={"tablet"} gap={0}>
                 <Layouts.Row gap={1} fix>
                     <Controls.Tab active={mobile === "info"} onClick={() => setMobile("info")}>
                         Info
@@ -180,7 +180,7 @@ export default function View(props: any) {
                 gap={3}
                 responsive={[
                     {
-                        device: "mobile",
+                        device: "tablet",
                         area: `'area'`,
                         width: "1fr",
                         height: "1fr max-content",
@@ -197,7 +197,7 @@ export default function View(props: any) {
                         ),
                         responsive: [
                             {
-                                device: "mobile",
+                                device: "tablet",
                                 area: "area",
                             },
                         ],
@@ -208,13 +208,13 @@ export default function View(props: any) {
                             <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "asset" : true}>
                                 <Layouts.Contents.InnerContent>
                                     <Layouts.Menu
-                                        // hide="mobile"
+                                        // hide="tablet"
                                         menu={[
                                             {
                                                 style: { padding: "1em 0" },
                                                 children: [
                                                     {
-                                                        hide: "mobile",
+                                                        hide: "tablet",
                                                         children: [
                                                             <>
                                                                 <Controls.Tab disabled>Assets</Controls.Tab>
@@ -222,7 +222,7 @@ export default function View(props: any) {
                                                         ],
                                                     },
                                                     {
-                                                        style: { maxWidth: "80em" },
+                                                        style: { maxWidth: "initial" },
                                                         children: [
                                                             <>
                                                                 <Controls.Input
@@ -276,7 +276,7 @@ export default function View(props: any) {
                         ),
                         responsive: [
                             {
-                                device: "mobile",
+                                device: "tablet",
                                 area: "area",
                             },
                         ],
