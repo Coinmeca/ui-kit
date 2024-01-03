@@ -34,7 +34,7 @@ export default function Page() {
                                     info={props?.info}
                                     assets={props?.assets}
                                     onSelect={(a: Token | undefined) => setAsset(a)}
-                                    responsive={windowSize.width < Root.Device.Mobile}
+                                    responsive={windowSize.width < Root.Device.Tablet}
                                 />
                             ),
                         },

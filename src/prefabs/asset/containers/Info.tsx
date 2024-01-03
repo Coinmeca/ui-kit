@@ -1,7 +1,7 @@
 "use client";
 import { Elements, Layouts } from "components";
+import { useWindowSize } from "hooks";
 import { Format, Sign } from "lib/utils";
-import useWindowSize from "hooks/useWindowSize";
 import { Root } from "lib/style";
 
 export interface Info {
@@ -32,8 +32,8 @@ export default function Info(props: Info) {
     return (
         <Layouts.Contents.InnerContent
             style={{
-                ...(windowSize.width <= Root.Device.Mobile &&
-                    windowSize.width > Root.Device.Small && {
+                ...(windowSize.width <= Root.Device.Tablet &&
+                    windowSize.width > 560 && {
                         flexDirection: "row",
                     }),
             }}
@@ -41,9 +41,10 @@ export default function Info(props: Info) {
         >
             <Layouts.Row
                 fix
-                responsive="mobile"
+                responsive="tablet"
                 gap={props?.responsive ? 1 : 4}
                 style={{
+                    flex: 1,
                     marginTop: "0.5em",
                     alignItems: "center",
                     ...(props?.responsive && { height: "100%" }),
@@ -88,6 +89,7 @@ export default function Info(props: Info) {
                         fix
                         gap={1}
                         style={{
+                            width: "-webkit-fill-available",
                             alignItems: "center",
                             padding: "0.5em",
                             ...(props?.responsive && { height: "100%" }),
@@ -208,12 +210,13 @@ export default function Info(props: Info) {
                     </Layouts.Row>
                 </Layouts.Col>
             </Layouts.Row>
-            <Layouts.Divider margin={1} vertical={windowSize.width <= Root.Device.Mobile && windowSize.width > Root.Device.Small} />
+            {/* <Layouts.Divider margin={1} vertical={windowSize.width <= Root.Device.Tablet && windowSize.width > 560} />
             <Layouts.Row
                 fix
-                responsive="mobile"
+                responsive="tablet"
                 gap={props?.responsive ? 1 : 4}
                 style={{
+                    flex: 1,
                     alignItems: "center",
                     ...(props?.responsive && { height: "100%" }),
                 }}
@@ -378,7 +381,7 @@ export default function Info(props: Info) {
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
-            </Layouts.Row>
+            </Layouts.Row> */}
         </Layouts.Contents.InnerContent>
     );
 }
