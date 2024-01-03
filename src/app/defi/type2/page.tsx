@@ -1832,7 +1832,7 @@ export default function Page() {
                                     <Layouts.Divider />
                                     <Layouts.Row gap={0.5}>
                                         <Elements.Text>TVL:</Elements.Text>
-                                        <Elements.Text align={"right"}>$ {Format(tvl, "currency", true)}</Elements.Text>
+                                        <Elements.Text align={"right"}>$ {Format(tvl, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                                     </Layouts.Row>
                                 </Layouts.Col>
                             </Layouts.Contents.InnerContent>
@@ -1910,7 +1910,9 @@ export default function Page() {
                                                                 </Layouts.Row>
                                                                 <Layouts.Row>
                                                                     <Elements.Text>Start:</Elements.Text>
-                                                                    <Elements.Text align={"right"}>$ {Format(u?.initial, "currency", true)}</Elements.Text>
+                                                                    <Elements.Text align={"right"}>
+                                                                        $ {Format(u?.initial, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                                    </Elements.Text>
                                                                 </Layouts.Row>
                                                                 <Layouts.Row>
                                                                     <Elements.Text>PNL:</Elements.Text>

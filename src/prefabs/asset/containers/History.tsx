@@ -76,7 +76,7 @@ export default function History(props: History) {
                                     <Elements.Text opacity={0.3} fit>
                                         Price
                                     </Elements.Text>
-                                    <Elements.Text align={"right"}>{Format(data?.price, "currency", true)}</Elements.Text>
+                                    <Elements.Text align={"right"}>{Format(data?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                                     <Elements.Text opacity={0.3} align={"left"} style={{ maxWidth: "6em" }}>
                                         {data?.quote}
                                     </Elements.Text>
@@ -86,7 +86,7 @@ export default function History(props: History) {
                                     <Elements.Text opacity={0.3} fit>
                                         Amount
                                     </Elements.Text>
-                                    <Elements.Text align={"right"}>{Format(data?.amount, "currency", true)}</Elements.Text>
+                                    <Elements.Text align={"right"}>{Format(data?.amount, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                                     <Elements.Text opacity={0.3} align={"left"} style={{ maxWidth: "6em" }}>
                                         {data?.quote}
                                     </Elements.Text>
@@ -95,7 +95,7 @@ export default function History(props: History) {
                                     <Elements.Text opacity={0.3} fit>
                                         Quantity
                                     </Elements.Text>
-                                    <Elements.Text align={"right"}>{Format(data?.quantity, "currency", true)}</Elements.Text>
+                                    <Elements.Text align={"right"}>{Format(data?.quantity, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                                     <Elements.Text opacity={0.3} align={"left"} style={{ maxWidth: "6em" }}>
                                         {data?.base}
                                     </Elements.Text>
@@ -106,7 +106,7 @@ export default function History(props: History) {
                                         Fees
                                     </Elements.Text>
                                     <Elements.Text opacity={0.6} align={"right"}>
-                                        - {Format(data?.fees, "currency", true)}
+                                        - {Format(data?.fees, "currency", { unit: 9, limit: 12, fix: 3 })}
                                     </Elements.Text>
                                     <Elements.Text opacity={0.3} align={"left"} style={{ maxWidth: "6em" }}>
                                         {data?.base}
@@ -116,7 +116,9 @@ export default function History(props: History) {
                                     <Elements.Text opacity={0.3} fit>
                                         Total
                                     </Elements.Text>
-                                    <Elements.Text align={"right"}>{Format(data?.quantity - data?.fees, "currency", true)}</Elements.Text>
+                                    <Elements.Text align={"right"}>
+                                        {Format(data?.quantity - data?.fees, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                    </Elements.Text>
                                     <Elements.Text opacity={0.3} align={"left"} style={{ maxWidth: "6em" }}>
                                         {data?.base}
                                     </Elements.Text>
@@ -234,7 +236,9 @@ export default function History(props: History) {
                                                 align: "right",
                                                 children: (
                                                     <>
-                                                        <Elements.Text align={"right"}>{Format(data?.amount || 0, "currency", true)}</Elements.Text>
+                                                        <Elements.Text align={"right"}>
+                                                            {Format(data?.amount || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                        </Elements.Text>
                                                         <Elements.Text
                                                             align={"left"}
                                                             opacity={0.6}
@@ -252,7 +256,9 @@ export default function History(props: History) {
                                                 align: "right",
                                                 children: (
                                                     <>
-                                                        <Elements.Text align={"right"}>{Format(data?.price || 0, "currency", true)}</Elements.Text>
+                                                        <Elements.Text align={"right"}>
+                                                            {Format(data?.price || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                        </Elements.Text>
                                                         <Elements.Text
                                                             align={"left"}
                                                             opacity={0.6}
@@ -275,7 +281,9 @@ export default function History(props: History) {
                                                 align: "right",
                                                 children: (
                                                     <>
-                                                        <Elements.Text align={"right"}>{Format(data?.quantity || 0, "currency", true)}</Elements.Text>
+                                                        <Elements.Text align={"right"}>
+                                                            {Format(data?.quantity || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                        </Elements.Text>
                                                         <Elements.Text
                                                             align={"left"}
                                                             opacity={0.6}
@@ -293,7 +301,9 @@ export default function History(props: History) {
                                                 align: "right",
                                                 children: (
                                                     <>
-                                                        <Elements.Text align={"right"}>- {Format(data?.fees || 0, "currency", true)}</Elements.Text>
+                                                        <Elements.Text align={"right"}>
+                                                            - {Format(data?.fees || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                        </Elements.Text>
                                                         <Elements.Text
                                                             align={"left"}
                                                             opacity={0.6}

@@ -1,12 +1,12 @@
 ﻿"use client";
 import { useEffect } from "react";
-import { Elements, Layouts } from "components";
 import { AnimatePresence, motion } from "framer-motion";
-import Tooltip from "./Tooltip";
-import Style, { Asks, Bids, Tick as Ticks } from "./Orderbook.styled";
+import { Elements, Layouts } from "components";
+import { useWindowSize, usePortal } from "hooks";
 import { Format, Sort } from "lib/utils";
 import { Root } from "lib/style";
-import { useWindowSize, usePortal } from "hooks";
+import Tooltip from "./Tooltip";
+import Style, { Asks, Bids, Tick as Ticks } from "./Orderbook.styled";
 
 export interface Orderbook {
     asks?: Tick[];
@@ -39,8 +39,8 @@ export default function Ordrebook(props: Orderbook) {
     const asks = props?.asks ? Sort(props?.asks, "price", "number", true) : [];
     const bids = props?.bids ? Sort(props?.bids, "price", "number", false) : [];
 
-    const ask_max: number = (asks && asks?.length > 0 && Math.max(...asks?.map((o: Tick) => parseFloat(o?.balance?.toString())))) || 0;
-    const bid_max: number = (bids && bids?.length > 0 && Math.max(...bids?.map((o: Tick) => parseFloat(o?.balance?.toString())))) || 0;
+    const ask_max: number = (asks && asks?.length > 0 && Math.max(...asks?.map((o: Tick) => parseFloat(Format(o?.balance, "number"))))) || 0;
+    const bid_max: number = (bids && bids?.length > 0 && Math.max(...bids?.map((o: Tick) => parseFloat(Format(o?.balance, "number"))))) || 0;
 
     const view = props?.view || 0;
     const guidance = props?.guidance || false;
@@ -123,7 +123,7 @@ export default function Ordrebook(props: Orderbook) {
                                 <div>
                                     <div>
                                         <div>
-                                            <span>{Format(ask?.balance, "currency", true)}</span>
+                                            <span>{Format(ask?.balance, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
                                         </div>
                                         <div
                                             style={{
@@ -136,7 +136,7 @@ export default function Ordrebook(props: Orderbook) {
                                                 }% 100%`,
                                             }}
                                         >
-                                            <span>{Format(ask?.price, "currency", true)}</span>
+                                            <span>{Format(ask?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -179,20 +179,20 @@ export default function Ordrebook(props: Orderbook) {
                                 <div onMouseEnter={(e) => e?.stopPropagation()}>
                                     <div>
                                         <div>
-                                            <span>{Format(bid?.balance, "currency", true)}</span>
+                                            <span>{Format(bid?.balance, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
                                         </div>
                                         <div
                                             style={{
                                                 backgroundSize: `${
-                                                    (parseFloat(bid?.balance.toString()) / bid_max) * 100 > 100
+                                                    (parseFloat(Format(bid?.balance, "number")) / bid_max) * 100 > 100
                                                         ? "100"
-                                                        : (parseFloat(bid?.balance.toString()) / bid_max) * 100 < 0
+                                                        : (parseFloat(Format(bid?.balance, "number")) / bid_max) * 100 < 0
                                                         ? "0"
-                                                        : (parseFloat(bid?.balance.toString()) / bid_max) * 100
+                                                        : (parseFloat(Format(bid?.balance, "number")) / bid_max) * 100
                                                 }% 100%`,
                                             }}
                                         >
-                                            <span>{Format(bid?.price, "currency", true)}</span>
+                                            <span>{Format(bid?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
                                         </div>
                                     </div>
                                 </div>

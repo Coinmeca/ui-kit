@@ -152,7 +152,7 @@ export default function Order(props: OrderControl) {
             value={currency === 0 ? order?.quantity : order?.amount}
             unit={[...assets].reverse()[currency]?.symbol?.toUpperCase()}
             sub={{
-                value: `= ${Format(currency === 0 ? order?.amount : order?.quantity || 0, "currency", true)}`,
+                value: `= ${Format(currency === 0 ? order?.amount : order?.quantity || 0, "currency", { unit: 9, limit: 12, fix: 3 })}`,
                 unit: assets[currency]?.symbol?.toUpperCase(),
             }}
             button={{
@@ -173,7 +173,7 @@ export default function Order(props: OrderControl) {
                 </Elements.Text>
                 <Layouts.Row gap={gap.row} fix>
                     <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                        {Format(assets[0]?.balance as number, "currency", true)}
+                        {Format(assets[0]?.balance as number, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                         {assets[0]?.symbol?.toUpperCase()}

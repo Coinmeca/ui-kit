@@ -13,8 +13,8 @@ export function Sort(array: Array<any>, key: string, type: string, direction: bo
 			return typeof direction === 'undefined'
 				? [...array]
 				: direction
-					? [...array].sort((a, b) => (Format(a[key], 'number', true) as number) - (Format(b[key], 'number', true) as number))
-					: [...array].sort((a, b) => (Format(b[key], 'number', true) as number) - (Format(a[key], 'number', true) as number));
+					? [...array].sort((a, b) => parseFloat(a[key]) - parseFloat(b[key]))
+					: [...array].sort((a, b) => parseFloat(b[key]) - parseFloat(a[key]));
 		}
 		default: {
 			return [...array];
@@ -50,11 +50,12 @@ const format = {
 type input = 'email' | 'number' | 'currency' | 'date' | string;
 
 interface format {
-	display?: boolean | number,
+	display?: boolean | number;
 	limit?: number;
-	unit?: boolean | number,
-	fix?: number | 'auto',
-	max?: number
+	unit?: boolean | number;
+	fix?: number | 'auto';
+	max?: number;
+	sign?: boolean;
 }
 
 export function Unit(value: number | string, upper?: number) {
@@ -98,11 +99,12 @@ export function Unit(value: number | string, upper?: number) {
 	return unit;
 }
 
-export function Format(value?: number | string, type?: input, option?: boolean | format | number, fix?: number | 'auto', max?: number): number | string {
+export function Format(value?: number | string, type?: input, option?: boolean | format | number, fix?: number | 'auto', max?: number): string {
 	let display = (typeof option === 'object' && typeof option?.display !== 'undefined') || typeof option !== 'undefined';
 	let limit = (typeof option === 'object' && typeof option?.display === 'number') ? option?.display : typeof option === 'number' ? option : undefined;
 	let unit = (typeof option === 'object' && typeof option?.unit !== 'undefined');
 	let upper = (typeof option === 'object' && typeof option?.unit === 'number') ? option?.unit : 0;
+	let sign = typeof option === 'object' && typeof option?.sign === 'boolean' ? option?.sign : true;
 	fix = typeof option === 'object' ? option?.fix : fix === 'auto' ? 3 : fix;
 	max = typeof option === 'object' ? option?.max : max;
 
@@ -123,9 +125,9 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 		}
 		case 'number':
 		case 'currency': {
-			if (typeof value === 'undefined') return 0;
+			if (typeof value === 'undefined') return '0';
 			value = value?.toString()?.replaceAll(',', '');
-			if (value === '' || value?.length <= 0) return display ? 0 : '';
+			if (value === '' || value?.length <= 0) return display ? '0' : '';
 
 			let copy: any = value.split(' ');
 			let multiplier = 0;
@@ -158,7 +160,13 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 					value = (copy[0] + copy[1]) as string;
 					value = (parseFloat(value.substring(0, multiplier) + '.' + value.substring(multiplier, value.length)) * (10 ** (multiplier + copy[0].length - value.substring(0, multiplier).length))).toString();
 				} else {
-					value = (parseFloat(e[0]) * (10 ** multiplier)).toString();
+					if (copy[1].length > multiplier) {
+						value = copy[0] + copy[1];
+						value = [...value!.toString()].splice(copy[1].legnth - multiplier, 0, '.').join();
+					} else {
+						value = copy[0] + copy[1] + '0'.repeat(Math.abs(multiplier - copy[1].length));
+					}
+					// value = (parseFloat(e[0]) * (10 ** multiplier)).toString();
 				}
 			} else {
 				value = (parseFloat(value) * (10 ** multiplier)).toString();
@@ -169,11 +177,12 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			let zero = 0;
 			copy = '';
 			for (let i = 0; i < value?.length; i++) {
-				if ((!point && value[i] === '.') || !isNaN(parseInt(value[i]))) {
+				if ((sign && value[i] === '+') || (sign && value[i] === '-') || (!point && value[i] === '.') || !isNaN(parseInt(value[i]))) {
 					if (point && num && value[i] === '0') break;
 					if (point && !num && value[i] === '0') zero++;
 					if (point && value[i] !== '0') num = true;
 					if (!point && value[i] === '.') point = true;
+					console.log(value[i])
 					copy += value[i];
 				}
 			}
@@ -188,19 +197,19 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 
 			let u = '';
 			if (copy[0].length > 3 && unit) {
-				let n: any = parseFloat(copy[0]);
+				let n: any = copy[0];
 
 				if (copy[0]?.length > 12 && 12 > upper) {
-					n = n / (10 ** 12);
+					n = copy[0]?.substring(0, copy[0]?.length - 12);
 					u = 'T';
 				} else if (copy[0]?.length > 9 && 9 > upper) {
-					n = n / (10 ** 9);
+					n = copy[0]?.substring(0, copy[0]?.length - 9);
 					u = 'B';
 				} else if (copy[0]?.length > 6 && 6 > upper) {
-					n = n / (10 ** 6);
+					n = copy[0]?.substring(0, copy[0]?.length - 6);
 					u = 'M';
 				} else if (copy[0]?.length > 3 && 3 > upper) {
-					n = n / (10 ** 3);
+					n = copy[0]?.substring(0, copy[0]?.length - 3);
 					u = 'K';
 				}
 
@@ -248,11 +257,10 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 
 				if (copy[1].length > 0) point = true;
 			}
-			copy[0] = value?.startsWith('-') ? '-' + copy[0] : copy[0];
 
 			const result = copy[0] + (point ? '.' : '') + decimals;
-			// return u !== '' ? result + ' ' + u : display ? parseFloat(result) : result;
-			return u !== '' ? result + ' ' + u : display && type === 'number' ? parseFloat(result) : result;
+			return u !== '' ? result + ' ' + u : result;
+			// return u !== '' ? result + ' ' + u : display && type === 'number' ? parseFloat(result) : result;
 		}
 		case 'date':
 			if (typeof value === 'undefined') return '-';
@@ -272,16 +280,19 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			return date + ' ' + time;
 		default: {
 			if (typeof value === 'undefined') return '';
-			return value;
+			return value.toString();
 		}
 	}
 }
 
 export function Sign(value?: number | string): string {
 	if (typeof value === 'undefined') return '';
-	value = parseFloat(value?.toString());
-	if (isNaN(value)) return '';
-	return value > 0 ? '+' : value < 0 ? '-' : '';
+	if (typeof value === 'string') return !value.includes('+') && !value.includes('-') ? '+' : value.startsWith('+') ? '+' : value.startsWith('-') ? '-' : '';
+	else {
+		value = parseFloat(value?.toString());
+		if (isNaN(value)) return '';
+		return value > 0 ? '+' : value < 0 ? '-' : '';
+	}
 }
 
 export function getFees(n: number | string, fee: number, divider?: number) {

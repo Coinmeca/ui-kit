@@ -71,7 +71,12 @@ export default function Asset(props: Asset) {
                             </>,
                             <>
                                 <Elements.Text type="p" opacity={0.45}>
-                                    $ {Format((Format(data?.balance, "number") as number) * (Format(data?.value, "number") as number), "currency", true)}
+                                    ${" "}
+                                    {Format(parseFloat(Format(data?.balance, "number")) * parseFloat(Format(data?.value, "number")), "currency", {
+                                        unit: 9,
+                                        limit: 12,
+                                        fix: 3,
+                                    })}
                                     {/* {data?.using} */}
                                 </Elements.Text>
                             </>,
@@ -82,7 +87,7 @@ export default function Asset(props: Asset) {
                     //         align: "right",
                     //         children: (
                     //             <Elements.Text>
-                    //                 $ {Format((Format(data?.balance, "number") as number) * (Format(data?.value, "number") as number), "currency", true)}
+                    //                 $ {Format((Format(data?.balance, "number") as number) * (Format(data?.value, "number") as number), "currency", { unit: 9, limit: 12, fix: 3 })}
                     //             </Elements.Text>
                     //         ),
                     //     },
@@ -132,7 +137,7 @@ export default function Asset(props: Asset) {
                                 align: "right",
                                 children: (
                                     <>
-                                        <Elements.Text align={"right"}>$ {Format(123456789, "currency", true)}</Elements.Text>
+                                        <Elements.Text align={"right"}>$ {Format(123456789, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                                     </>
                                 ),
                             },
