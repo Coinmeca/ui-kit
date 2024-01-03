@@ -291,7 +291,7 @@ export default function Dummy() {
                     />
 
                     <Controls.Input type={"currency"} error={true} unit={"%"} />
-                    <Controls.Input type={"currency"} value={value} onChange={(v: any) => setValue(Format(v, "number") as number)} unit={"%"} />
+                    <Controls.Input type={"currency"} value={value} onChange={(v: any) => setValue(parseFloat(v))} unit={"%"} />
                     <Elements.Text type={"h6"}>Test</Elements.Text>
                     <Controls.Input />
                     <Controls.Input placeholder={"number"} type={"number"} />

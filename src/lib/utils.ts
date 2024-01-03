@@ -128,6 +128,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			if (typeof value === 'undefined') return '0';
 			value = value?.toString()?.replaceAll(',', '');
 			if (value === '' || value?.length <= 0) return display ? '0' : '';
+			let sig = sign && Sign(value) === '+' ? '' : '-';
 
 			let copy: any = value.split(' ');
 			let multiplier = 0;
@@ -142,6 +143,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 					multiplier = 3;
 				}
 			}
+			console.log(value);
 			value = copy[0] as string;
 
 			let e = value?.split('e');
@@ -162,14 +164,20 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 				} else {
 					if (copy[1].length > multiplier) {
 						value = copy[0] + copy[1];
-						value = [...value!.toString()].splice(copy[1].legnth - multiplier, 0, '.').join();
+						value = [...value!.toString()].splice(copy[1].length - multiplier, 0, '.').join();
 					} else {
 						value = copy[0] + copy[1] + '0'.repeat(Math.abs(multiplier - copy[1].length));
 					}
 					// value = (parseFloat(e[0]) * (10 ** multiplier)).toString();
 				}
 			} else {
-				value = (parseFloat(value) * (10 ** multiplier)).toString();
+				console.log(value, copy);
+				// if (value?.length > multiplier) {
+				// 	value = [...value!.toString()].splice(value?.length - multiplier, 0, '.').join();
+				// } else {
+				// 	value = value + '0'.repeat(Math.abs(multiplier - value.length));
+				// }
+				// value = (parseFloat(value) * (10 ** multiplier)).toString();
 			}
 
 			let point = false;
@@ -177,12 +185,11 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			let zero = 0;
 			copy = '';
 			for (let i = 0; i < value?.length; i++) {
-				if ((sign && value[i] === '+') || (sign && value[i] === '-') || (!point && value[i] === '.') || !isNaN(parseInt(value[i]))) {
+				if ((!display && !point && value[i] === '0') || (!point && value[i] === '.') || !isNaN(parseInt(value[i]))) {
 					if (point && num && value[i] === '0') break;
 					if (point && !num && value[i] === '0') zero++;
 					if (point && value[i] !== '0') num = true;
 					if (!point && value[i] === '.') point = true;
-					console.log(value[i])
 					copy += value[i];
 				}
 			}
@@ -246,7 +253,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 						if (copy[1][i] === '0' && num) break;
 						if (copy[1][i] !== '0') num = true;
 						decimals += copy[1][i].toString();
-						if (typeof fix === 'number' && !isNaN(fix) && !isNaN(copy[1][i]) && copy[1][i] !== '0' && fix <= zero) break;
+						if (display && typeof fix === 'number' && !isNaN(fix) && !isNaN(copy[1][i]) && copy[1][i] !== '0' && fix <= zero) break;
 					}
 				}
 
@@ -259,7 +266,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			}
 
 			const result = copy[0] + (point ? '.' : '') + decimals;
-			return u !== '' ? result + ' ' + u : result;
+			return sig + (u !== '' ? result + ' ' + u : result);
 			// return u !== '' ? result + ' ' + u : display && type === 'number' ? parseFloat(result) : result;
 		}
 		case 'date':
