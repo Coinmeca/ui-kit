@@ -20,8 +20,7 @@ export interface MarketHistory {
 export default function History(props: History) {
     const view = props?.view || 0;
     const data = props?.data?.filter((f: MarketHistory) => (view === 1 ? f?.type === "sell" : view === 2 ? f?.type === "buy" : f)) || [];
-    const max: number =
-        (data && data?.length > 0 && Math.max(...data?.map((d: MarketHistory) => Format(d?.quantity?.toString(), "number", true) as number))) || 0;
+    const max: number = (data && data?.length > 0 && Math.max(...data?.map((d: MarketHistory) => parseFloat(Format(d?.quantity, "number", true))))) || 0;
 
     return (
         <Layouts.Contents.InnerContent scroll>

@@ -105,6 +105,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 	let unit = (typeof option === 'object' && typeof option?.unit !== 'undefined');
 	let upper = (typeof option === 'object' && typeof option?.unit === 'number') ? option?.unit : 0;
 	let sign = typeof option === 'object' && typeof option?.sign === 'boolean' ? option?.sign : true;
+	console.log(value, sign);
 	fix = typeof option === 'object' ? option?.fix : fix === 'auto' ? 3 : fix;
 	max = typeof option === 'object' ? option?.max : max;
 
@@ -128,7 +129,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			if (typeof value === 'undefined') return '0';
 			value = value?.toString()?.replaceAll(',', '');
 			if (value === '' || value?.length <= 0) return display ? '0' : '';
-			let sig = sign && Sign(value) === '+' ? '' : '-';
+			let sig = sign ? (Sign(value) === '+' && '') : '';
 
 			let copy: any = value.split(' ');
 			let multiplier = 0;
@@ -227,7 +228,8 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 
 			if (display) {
 				copy[0] = parseInt(copy[0]);
-				if (type === 'currency') copy[0] = copy[0].toLocaleString();
+				if (copy[0]?.split('0')[0] === '0' && zero === 0) copy = '0';
+				else if (type === 'currency') copy[0] = copy[0].toLocaleString();
 			} else if (type === 'currency') {
 				let number: string = '';
 				for (let i = 0; i < copy[0].length; i++) {
