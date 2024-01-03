@@ -541,7 +541,7 @@ export default function Page() {
                         align={"right"}
                         type={"number"}
                         // value={amount}
-                        onChange={(e: any, v: any) => setAmount(Format(v, "number", true) as number)}
+                        onChange={(e: any, v: any) => setAmount(parseFloat(v))}
                         left={{
                             children: <Elements.Text>Amount</Elements.Text>,
                         }}
@@ -552,7 +552,7 @@ export default function Page() {
                             align={"right"}
                             type={"number"}
                             // value={value}
-                            onChange={(e: any, v: any) => setValue(Format(v, "number", true) as number)}
+                            onChange={(e: any, v: any) => setValue(parseFloat(v))}
                             left={{
                                 children: <Elements.Text>Value</Elements.Text>,
                             }}
@@ -612,7 +612,7 @@ export default function Page() {
         };
 
         const handleChangeListingPairAmount = (v: number, t: Asset) => {
-            const amount = Format(v, "number", true) as number;
+            const amount = v;
             const value = values?.find((a: Asset) => a?.symbol?.toUpperCase() === t?.symbol?.toUpperCase())?.value || 1;
 
             setFilter((state: Asset[]) =>
@@ -1154,7 +1154,7 @@ export default function Page() {
                                             placeholder={"amount"}
                                             type="currency"
                                             // value={amount}
-                                            onChange={(e: any, v: any) => setAmount(Format(v, "number") as number)}
+                                            onChange={(e: any, v: any) => setAmount(parseFloat(v))}
                                             max={assets[asset]?.amount}
                                             align={"right"}
                                             right={{
@@ -1175,7 +1175,7 @@ export default function Page() {
                                                 placeholder={"repeat"}
                                                 type="number"
                                                 value={repeat}
-                                                onChange={(e: any, v: any) => setRepeat(Format(v, "number") as number)}
+                                                onChange={(e: any, v: any) => setRepeat(parseFloat(v))}
                                                 align={"right"}
                                                 right={{
                                                     children: <Elements.Text opacity={0.6}>Repeat</Elements.Text>,
@@ -1380,7 +1380,7 @@ export default function Page() {
                                     align={"right"}
                                     type={"number"}
                                     // value={burn}
-                                    onChange={(e: any, v: any) => setBurn(Format(v, "number") as number)}
+                                    onChange={(e: any, v: any) => setBurn(parseFloat(v))}
                                     max={type === token.low ? undefined : asset?.weight && (asset?.weight === least ? 0 : asset?.weight - least)}
                                     right={{
                                         children: (
@@ -1395,7 +1395,7 @@ export default function Page() {
                                 placeholder={"repeat"}
                                 type="number"
                                 value={repeat}
-                                onChange={(e: any, v: any) => setRepeat(Format(v, "number") as number)}
+                                onChange={(e: any, v: any) => setRepeat(parseFloat(v))}
                                 align={"right"}
                                 right={{
                                     children: <Elements.Text opacity={0.6}>Repeat</Elements.Text>,
@@ -1580,7 +1580,7 @@ export default function Page() {
                                     align={"right"}
                                     type={"number"}
                                     // value={amount}
-                                    onChange={(e: any, v: any) => (amount = Format(v, "number") as number)}
+                                    onChange={(e: any, v: any) => (amount = parseFloat(v))}
                                     max={exist?.amount || 0}
                                     right={{
                                         children: (
@@ -1628,7 +1628,7 @@ export default function Page() {
                                     align={"right"}
                                     type={"number"}
                                     // value={amount}
-                                    onChange={(e: any, v: any) => (amount = Format(v, "number") as number)}
+                                    onChange={(e: any, v: any) => (amount = parseFloat(v))}
                                     max={exist?.amount || 0}
                                     right={{
                                         children: (
