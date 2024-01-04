@@ -128,25 +128,35 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			if (typeof value === 'undefined') return '0';
 			value = value?.toString()?.replaceAll(',', '');
 			if (value === '' || value?.length <= 0) return display ? '0' : '';
-			let sig = sign ? (Sign(value) === '+' && '') : '';
+			let sig = (sign && (Sign(value) === "+" ? '' : Sign(value))) || '';
 
 			let copy: any = value.split(' ');
 			let multiplier = 0;
 			if (copy[1] && copy[1]?.length > 0) {
-				if (copy[1]?.includes('T')) {
+				if (copy[1]?.includes('T') || copy[1].length > 12) {
 					multiplier = 12;
-				} else if (copy[1]?.includes('M')) {
+				} else if (copy[1]?.includes('M') || copy[1].length > 9) {
 					multiplier = 9;
-				} else if (copy[1]?.includes('B')) {
+				} else if (copy[1]?.includes('B') || copy[1].length > 6) {
 					multiplier = 6;
-				} else if (copy[1]?.includes('K')) {
+				} else if (copy[1]?.includes('K') || copy[1].length > 3) {
+					multiplier = 3;
+				}
+			} else {
+				if (copy[0].length > 12) {
+					multiplier = 12;
+				} else if (copy[0].length > 9) {
+					multiplier = 9;
+				} else if (copy[0].length > 6) {
+					multiplier = 6;
+				} else if (copy[0].length > 3) {
 					multiplier = 3;
 				}
 			}
 			value = copy[0] as string;
 
 			let e = value?.split('e');
-			if (e[1] && e[1]?.length > 0 && !isNaN(parseFloat(e[1]))) {
+			if (e?.length > 0 && !isNaN(parseFloat(e[1]))) {
 				copy = e[0]?.split('.');
 				multiplier += parseFloat(e[1]) + 1;
 				if (multiplier < 0) {
@@ -163,19 +173,15 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 				} else {
 					if (copy[1].length > multiplier) {
 						value = copy[0] + copy[1];
-						value = [...value!.toString()].splice(copy[1].length - multiplier, 0, '.').join();
+						value = [...value!.toString()].splice(copy[1].length - multiplier, 0, '.').join('');
 					} else {
 						value = copy[0] + copy[1] + '0'.repeat(Math.abs(multiplier - copy[1].length));
 					}
-					// value = (parseFloat(e[0]) * (10 ** multiplier)).toString();
 				}
-			} else {
-				// if (value?.length > multiplier) {
-				// 	value = [...value!.toString()].splice(value?.length - multiplier, 0, '.').join();
-				// } else {
-				// 	value = value + '0'.repeat(Math.abs(multiplier - value.length));
-				// }
-				// value = (parseFloat(value) * (10 ** multiplier)).toString();
+			} else if (unit && copy[0].length > upper) {
+				if (copy[0].length > multiplier) {
+					value = [...copy[0]].splice(0, copy[0].length - multiplier).join('') + '.' + [...copy[0]].splice(copy[0].length - multiplier).join('') + (copy[1] || '');
+				}
 			}
 
 			let point = false;
@@ -191,6 +197,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 					copy += value[i];
 				}
 			}
+			copy = copy?.split('.');
 
 			if (max) {
 				let result: string = '';
@@ -198,30 +205,17 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 				if (parseFloat(copy) >= parseFloat(max.toString())) type === 'currency' ? copy.toLocaleString() : max;
 			}
 
-			copy = copy.split('.');
-			copy[0] = copy[0] === '' ? '0' : copy[0];
-
 			let u = '';
-			if (copy[0].length > 3 && unit) {
-				let n: any = copy[0];
-
-				if (copy[0]?.length > 12 && 12 > upper) {
-					n = copy[0]?.substring(0, copy[0]?.length - 12);
+			if (unit && multiplier >= upper) {
+				if (multiplier > 12) {
 					u = 'T';
-				} else if (copy[0]?.length > 9 && 9 > upper) {
-					n = copy[0]?.substring(0, copy[0]?.length - 9);
+				} else if (multiplier > 9) {
 					u = 'B';
-				} else if (copy[0]?.length > 6 && 6 > upper) {
-					n = copy[0]?.substring(0, copy[0]?.length - 6);
+				} else if (multiplier > 6) {
 					u = 'M';
-				} else if (copy[0]?.length > 3 && 3 > upper) {
-					n = copy[0]?.substring(0, copy[0]?.length - 3);
+				} else if (multiplier > 3) {
 					u = 'K';
 				}
-
-				n = n?.toString()?.split('.');
-				copy[0] = n[0];
-				copy[1] = (n[1] || '') + (copy[1] || '');
 			}
 
 			if (display) {
@@ -294,7 +288,6 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 
 export function Sign(value?: number | string): string {
 	if (typeof value === 'undefined') return '';
-	if (typeof value === 'string') return !value.includes('+') && !value.includes('-') ? '+' : value.startsWith('+') ? '+' : value.startsWith('-') ? '-' : '';
 	else {
 		value = parseFloat(value?.toString());
 		if (isNaN(value)) return '';
