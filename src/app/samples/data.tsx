@@ -409,7 +409,7 @@ export default function Data() {
                         hide={"desktop"}
                         toggle
                         fit
-                        onBlur={() => setMobileMenu("")}
+                        // onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
                         onClick={() => {
@@ -426,7 +426,7 @@ export default function Data() {
                         iconLeft={{ icon: "bell", count: mobileMenu === "notify" ? 0 : count }}
                         toggle
                         fit
-                        onBlur={() => setMobileMenu("")}
+                        // onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
                         onClick={() => (mobileMenu === "setting" ? setMobileMenu("") : setMobileMenu("setting"))}
@@ -481,6 +481,7 @@ export default function Data() {
     const sidebars = {
         active: true,
         lower: {
+            onBlur: () => setMobileMenu(""),
             active: mobileMenu === "market",
             children: [
                 {
