@@ -163,10 +163,11 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			}
 			value = copy[0] as string;
 
+			console.log(value);
 			let e = value?.split('e');
+			copy = e[0]?.split('.');
 			value = e[0];
 			if (e?.length > 0 && !isNaN(parseFloat(e[1]))) {
-				copy = e[0]?.split('.');
 				multiplier += parseFloat(e[1]);
 
 				if (multiplier < 0) {
