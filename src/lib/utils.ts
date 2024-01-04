@@ -13,8 +13,8 @@ export function Sort(array: Array<any>, key: string, type: string, direction: bo
 			return typeof direction === 'undefined'
 				? [...array]
 				: direction
-					? [...array].sort((a, b) => parseFloat(Format(a[key], "number")) - parseFloat(Format(b[key], "number")))
-					: [...array].sort((a, b) => parseFloat(Format(b[key], "number")) - parseFloat(Format(a[key], "number")));
+					? [...array].sort((a, b) => parseFloat(a[key]) - parseFloat(b[key]))
+					: [...array].sort((a, b) => parseFloat(b[key]) - parseFloat(a[key]));
 		}
 		default: {
 			return [...array];
@@ -198,7 +198,6 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			} else if (unit && copy[0].length > upper) {
 				if (copy[0].length > multiplier) {
 					value = copy[0].substring(0, copy[0].length - multiplier) + '.' + copy[0].substring(copy[0].length - multiplier, copy[0].length);
-					console.log(1, value, multiplier);
 				} else {
 					value = copy[0] + '0'.repeat(multiplier);
 				}

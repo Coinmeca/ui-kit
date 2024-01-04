@@ -82,7 +82,7 @@ export default function Candle(props: Candle) {
                         };
                     }),
                     "time",
-                    "number",
+                    typeof props?.price[0]?.time === "number" ? "number" : "string",
                     false
                 )
             );
@@ -101,7 +101,7 @@ export default function Candle(props: Candle) {
                             // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
                         };
                     }),
-                    "time",
+                    typeof props?.volume[0]?.time === "number" ? "number" : "string",
                     "number",
                     false
                 )
@@ -110,8 +110,8 @@ export default function Candle(props: Candle) {
     }, [props?.volume, up, down, color]);
 
     useEffect(() => {
+        console.log(price);
         // const chart = createChart(document.getElementById('container'), );
-
         if (chartRef?.current) {
             const handleResize = () => {
                 chart.applyOptions({
@@ -119,7 +119,6 @@ export default function Candle(props: Candle) {
                     height: chartRef?.current?.clientHeight,
                 });
             };
-
             const chart = createChart(chartRef?.current, {
                 layout: {
                     background: {
@@ -145,7 +144,6 @@ export default function Candle(props: Candle) {
                     // Change mode from default 'magnet' to 'normal'.
                     // Allows the crosshair to move freely without snapping to datapoints
                     mode: 0,
-
                     // Vertical crosshair line (showing Date in Label)
                     vertLine: {
                         width: 4,
@@ -154,7 +152,6 @@ export default function Candle(props: Candle) {
                         style: 0,
                         labelBackgroundColor: color.theme.medium,
                     },
-
                     // Horizontal crosshair line (showing Price in Label)
                     horzLine: {
                         color: color.theme.semi,
@@ -164,7 +161,6 @@ export default function Candle(props: Candle) {
                 width: chartRef?.current?.clientWidth,
                 height: chartRef?.current?.clientHeight,
             });
-
             if (price) {
                 const candleSeries = chart.addCandlestickSeries({
                     upColor: `rgb(${color.up})`,
@@ -177,7 +173,6 @@ export default function Candle(props: Candle) {
                     // wickUpColor: `rgb(var(--${color.up}))`,
                     // wickDownColor: `rgb(var(--${color.down}))`,
                 });
-
                 candleSeries.priceScale().applyOptions({
                     scaleMargins: {
                         // positioning the price scale for the area series
@@ -185,10 +180,8 @@ export default function Candle(props: Candle) {
                         bottom: volume ? 0.4 : 0,
                     },
                 });
-
                 candleSeries.setData(price as CandlestickData[]);
             }
-
             if (volume) {
                 const volumeSeries = chart.addHistogramSeries({
                     color: "yellow",
@@ -198,25 +191,20 @@ export default function Candle(props: Candle) {
                     priceScaleId: "", // set as an overlay by setting a blank priceScaleId
                     // set the positioning of the volume series
                 });
-
                 volumeSeries.priceScale().applyOptions({
                     scaleMargins: {
                         top: 0.8, // highest point of the series will be 70% away from the top
                         bottom: 0,
                     },
                 });
-
                 volumeSeries.setData(volume as HistogramData[]);
             }
-
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
                       barSpacing: 10,
                   });
-
             globalThis.addEventListener("resize", handleResize);
-
             return () => {
                 globalThis.removeEventListener("resize", handleResize);
                 chart.remove();
