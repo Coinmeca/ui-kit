@@ -36,6 +36,10 @@ const Style = styled.div<{ $fix: boolean }>`
         /* opacity: 1; */
         transition: 0.3s ease;
     }
+
+    & ~ * {
+        z-index: 1;
+    }
 `;
 
 export default Style;

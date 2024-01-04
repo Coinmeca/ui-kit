@@ -40,7 +40,7 @@ const Style = styled.div<{
     width: ${({ $fit }) => ($fit ? "max-content" : "100%")};
     ${({ $fill }) => $fill && "height:100%;"}
 
-    & > * {
+    & > *:not(img) {
         width: -webkit-fill-available;
     }
 
