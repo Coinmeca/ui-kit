@@ -13,8 +13,8 @@ export function Sort(array: Array<any>, key: string, type: string, direction: bo
 			return typeof direction === 'undefined'
 				? [...array]
 				: direction
-					? [...array].sort((a, b) => parseFloat(a[key]) - parseFloat(b[key]))
-					: [...array].sort((a, b) => parseFloat(b[key]) - parseFloat(a[key]));
+					? [...array].sort((a, b) => parseFloat(Format(a[key], "number")) - parseFloat(Format(b[key], "number")))
+					: [...array].sort((a, b) => parseFloat(Format(b[key], "number")) - parseFloat(Format(a[key], "number")));
 		}
 		default: {
 			return [...array];
@@ -101,8 +101,8 @@ export function Unit(value: number | string, upper?: number) {
 
 export function Format(value?: number | string, type?: input, option?: boolean | format | number, fix?: number | 'auto', max?: number): string {
 	let display = (typeof option === 'object' && typeof option?.display !== 'undefined') || typeof option !== 'undefined';
-	let limit = (typeof option === 'object' && typeof option?.display === 'number') ? option?.display : typeof option === 'number' ? option : undefined;
-	let unit = (typeof option === 'object' && typeof option?.unit !== 'undefined');
+	let limit = typeof option === 'object' && (typeof option?.display === 'number') ? option?.display : typeof option === 'number' ? option : undefined;
+	let unit = typeof option === 'object' && (typeof option?.unit === 'boolean' ? option?.unit : (typeof option?.unit === 'number' ? true : false));
 	let upper = (typeof option === 'object' && typeof option?.unit === 'number') ? option?.unit : 0;
 	let sign = typeof option === 'object' && typeof option?.sign === 'boolean' ? option?.sign : true;
 	fix = typeof option === 'object' ? option?.fix : fix === 'auto' ? 3 : fix;
@@ -131,7 +131,11 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			let sig = (sign && (Sign(value) === "+" ? '' : Sign(value))) || '';
 
 			let copy: any = value.split(' ');
+			let point = false;
+			let num = false;
+			let zero = 0;
 			let multiplier = 0;
+
 			if (copy[1] && copy[1]?.length > 0) {
 				if (copy[1]?.includes('T') || copy[1].length > 12) {
 					multiplier = 12;
@@ -143,6 +147,8 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 					multiplier = 3;
 				}
 			} else {
+				copy = copy[0].split('.');
+				if (copy?.length > 1) point = true;
 				if (copy[0].length > 12) {
 					multiplier = 12;
 				} else if (copy[0].length > 9) {
@@ -152,41 +158,52 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 				} else if (copy[0].length > 3) {
 					multiplier = 3;
 				}
+				copy[0] = point ? copy[0] + '.' + (copy[1] || '') : copy.join('');
+				point = false;
 			}
 			value = copy[0] as string;
 
 			let e = value?.split('e');
+			value = e[0];
 			if (e?.length > 0 && !isNaN(parseFloat(e[1]))) {
 				copy = e[0]?.split('.');
-				multiplier += parseFloat(e[1]) + 1;
+				multiplier += parseFloat(e[1]);
+
 				if (multiplier < 0) {
-					if (copy.length < Math.abs(multiplier)) {
-						value = '0.' + '0'.repeat(Math.abs(multiplier + 2)) + e[0]?.replaceAll('.', '');
+					copy[0] = copy.join('');
+					if (copy[0].length + multiplier < 0) {
+						// 123 -> 0.123
+						value = '0.' + '0'.repeat(Math.abs(copy[0].length + multiplier)) + e[0]?.replaceAll('.', '');
 					} else {
-						multiplier = Math.abs(multiplier);
-						value = (copy[0] + copy[1]) as string;
-						value = (parseFloat(value.substring(0, multiplier) + '.' + value.substring(multiplier, value.length)) * (10 ** multiplier)).toString();
+						// 123 -> 12.3
+						if (copy[0].length + multiplier >= copy[0].length) {
+							value = copy[0] + '0'.repeat(multiplier - copy[0].length);
+						} else if (copy[0].length + multiplier < copy[0].length) {
+							value = (copy[0].substring(0, copy[0].length + multiplier) || '0') + '.' + copy[0].substring(copy[0].length + multiplier);
+							// 123 -> 12300
+						}
 					}
-				} else if (multiplier < (copy[0].length + (copy[1]?.length || 0))) {
-					value = (copy[0] + copy[1]) as string;
-					value = (parseFloat(value.substring(0, multiplier) + '.' + value.substring(multiplier, value.length)) * (10 ** (multiplier + copy[0].length - value.substring(0, multiplier).length))).toString();
-				} else {
-					if (copy[1].length > multiplier) {
-						value = copy[0] + copy[1];
-						value = [...value!.toString()].splice(copy[1].length - multiplier, 0, '.').join('');
+				} else if (multiplier > 0) {
+					if (copy[1]) {
+						let m = multiplier - copy[1].length;
+						if (m > 0) {
+							value = copy.join('') + '0'.repeat(copy[1].legnth - multiplier);
+						} else if (m < 0) {
+							value = copy[0] + copy[1].substring(0, copy[1].length - multiplier - 1) + '.' + copy[1].substring(copy[1].length - multiplier - 1, copy[1].length);
+						}
 					} else {
-						value = copy[0] + copy[1] + '0'.repeat(Math.abs(multiplier - copy[1].length));
+						value = copy.join('') + '0'.repeat(multiplier);
 					}
 				}
 			} else if (unit && copy[0].length > upper) {
 				if (copy[0].length > multiplier) {
-					value = [...copy[0]].splice(0, copy[0].length - multiplier).join('') + '.' + [...copy[0]].splice(copy[0].length - multiplier).join('') + (copy[1] || '');
+					value = copy[0].substring(0, copy[0].length - multiplier) + '.' + copy[0].substring(copy[0].length - multiplier, copy[0].length);
+					console.log(1, value, multiplier);
+				} else {
+					value = copy[0] + '0'.repeat(multiplier);
 				}
 			}
 
-			let point = false;
-			let num = false;
-			let zero = 0;
 			copy = '';
 			for (let i = 0; i < value?.length; i++) {
 				if ((!display && !point && value[i] === '0') || (!point && value[i] === '.') || !isNaN(parseInt(value[i]))) {
@@ -207,13 +224,13 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 
 			let u = '';
 			if (unit && multiplier >= upper) {
-				if (multiplier > 12) {
+				if (multiplier > 11) {
 					u = 'T';
-				} else if (multiplier > 9) {
+				} else if (multiplier > 8) {
 					u = 'B';
-				} else if (multiplier > 6) {
+				} else if (multiplier > 5) {
 					u = 'M';
-				} else if (multiplier > 3) {
+				} else if (multiplier > 2) {
 					u = 'K';
 				}
 			}
@@ -260,7 +277,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			}
 
 			const result = copy[0] + (point ? '.' : '') + decimals;
-			return sig + (u !== '' ? result + ' ' + u : result);
+			return sig + (unit ? result + ' ' + u : result);
 			// return u !== '' ? result + ' ' + u : display && type === 'number' ? parseFloat(result) : result;
 		}
 		case 'date':
