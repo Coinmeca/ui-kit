@@ -21,16 +21,23 @@ export default function Home() {
                 }}
                 filter={"black"}
             />
-            <Layouts.Col align="center" fit>
-                <Image src={MECA} width="256" height="256" alt="" />
-                <Layouts.Col>
-                    <Elements.Text type={"h2"}>Coinmeca UI</Elements.Text>
-                    <Layouts.Row gap={1} responsive="mobile">
-                        <Controls.Button onClick={() => router.push("/examples")}>View Examples</Controls.Button>
-                        <Controls.Button onClick={() => router.push("/samples")}>View Samples</Controls.Button>
-                    </Layouts.Row>
-                </Layouts.Col>
-            </Layouts.Col>
+            <Layouts.Panel style={{ flexDirection: "column" }}>
+                <Layouts.Panel>
+                    <Layouts.Col align="center" fit>
+                        <Image src={MECA} width="256" height="256" alt="" />
+                        <Layouts.Col>
+                            <Elements.Text type={"h2"}>Coinmeca UI</Elements.Text>
+                            <Layouts.Row gap={1} responsive="mobile">
+                                <Controls.Button onClick={() => router.push("/examples")}>View Examples</Controls.Button>
+                                <Controls.Button onClick={() => router.push("/samples")}>View Samples</Controls.Button>
+                            </Layouts.Row>
+                        </Layouts.Col>
+                    </Layouts.Col>
+                </Layouts.Panel>
+                <Elements.Text opacity={0.6} style={{ padding: "4em" }}>
+                    ⓒ coinmeca. All rights reserved.
+                </Elements.Text>
+            </Layouts.Panel>
         </Layouts.Panel>
     );
 }
