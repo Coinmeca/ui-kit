@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { Controls, Elements, Layouts } from "components";
 import { type SlideContent } from "components/controls/slide/Slide";
