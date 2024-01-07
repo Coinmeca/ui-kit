@@ -272,7 +272,8 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 				}
 
 				if (display && (copy[1].length === 0 || !num)) {
-					decimals = ''; point = false;
+					decimals = '';
+					point = false;
 				}
 			}
 
