@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import { Controls, Elements, Layouts } from "components";
 import { type SlideContent } from "components/controls/slide/Slide";
@@ -19,7 +18,6 @@ import Btn3 from "assets/main/btn3.png";
 import Btn4 from "assets/main/btn4.png";
 
 import * as Row from "components/layouts/row/Row.styled";
-import { createRef, useRef } from "react";
 
 export default function Main() {
     const { windowSize } = useWindowSize();
@@ -124,8 +122,6 @@ export default function Main() {
             ),
         },
     ];
-
-    const ref = createRef();
 
     return (
         <Style>
