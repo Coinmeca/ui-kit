@@ -101,7 +101,7 @@ export function Unit(value: number | string, upper?: number) {
 
 export function Format(value?: number | string, type?: input, option?: boolean | format | number, fix?: number | 'auto', max?: number): string {
 	let display = (typeof option === 'object' && typeof option?.display !== 'undefined') || typeof option !== 'undefined';
-	let limit = typeof option === 'object' && (typeof option?.display === 'number') ? option?.display : typeof option === 'number' ? option : undefined;
+	let limit = typeof option === 'object' && (typeof option?.limit === 'number' ? option?.limit : typeof option === 'number' ? option : undefined);
 	let unit = typeof option === 'object' && (typeof option?.unit === 'boolean' ? option?.unit : (typeof option?.unit === 'number' ? true : false));
 	let upper = (typeof option === 'object' && typeof option?.unit === 'number') ? option?.unit : 0;
 	let sign = typeof option === 'object' && typeof option?.sign === 'boolean' ? option?.sign : true;
@@ -137,51 +137,46 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			let multiplier = 0;
 
 			if (copy[1] && copy[1]?.length > 0) {
-				if (copy[1]?.includes('T') || copy[1].length > 12) {
+				if (copy[1]?.includes('T')) {
 					multiplier = 12;
-				} else if (copy[1]?.includes('M') || copy[1].length > 9) {
+				} else if (copy[1]?.includes('M')) {
 					multiplier = 9;
-				} else if (copy[1]?.includes('B') || copy[1].length > 6) {
+				} else if (copy[1]?.includes('B')) {
 					multiplier = 6;
-				} else if (copy[1]?.includes('K') || copy[1].length > 3) {
+				} else if (copy[1]?.includes('K')) {
 					multiplier = 3;
 				}
-			} else {
-				copy = copy[0].split('.');
-				if (copy?.length > 1) point = true;
-				if (copy[0].length > 12) {
-					multiplier = 12;
-				} else if (copy[0].length > 9) {
-					multiplier = 9;
-				} else if (copy[0].length > 6) {
-					multiplier = 6;
-				} else if (copy[0].length > 3) {
-					multiplier = 3;
-				}
-				copy[0] = point ? copy[0] + '.' + (copy[1] || '') : copy.join('');
-				point = false;
 			}
 			value = copy[0] as string;
 
-			console.log(value);
 			let e = value?.split('e');
 			copy = e[0]?.split('.');
-			value = e[0];
+			if (copy?.length > 1) point = true;
+			if (copy[0].length > 12) {
+				multiplier += 12;
+			} else if (copy[0].length > 9) {
+				multiplier += 9;
+			} else if (copy[0].length > 6) {
+				multiplier += 6;
+			} else if (copy[0].length > 3) {
+				multiplier += 3;
+			}
+			copy[0] = point ? copy[0] + '.' + (copy[1] || '') : copy.join('');
+			point = false;
+
+			value = copy[0] as string;
 			if (e?.length > 0 && !isNaN(parseFloat(e[1]))) {
-				multiplier += parseFloat(e[1]);
+				multiplier += parseFloat(e[1]) - (copy[1]?.length || 0);
 
 				if (multiplier < 0) {
 					copy[0] = copy.join('');
 					if (copy[0].length + multiplier < 0) {
-						// 123 -> 0.123
-						value = '0.' + '0'.repeat(Math.abs(copy[0].length + multiplier)) + e[0]?.replaceAll('.', '');
+						value = '0.' + '0'.repeat(Math.abs(copy[0].length + (copy[1].length || 0) + multiplier)) + e[0]?.replaceAll('.', '');
 					} else {
-						// 123 -> 12.3
 						if (copy[0].length + multiplier >= copy[0].length) {
 							value = copy[0] + '0'.repeat(multiplier - copy[0].length);
 						} else if (copy[0].length + multiplier < copy[0].length) {
 							value = (copy[0].substring(0, copy[0].length + multiplier) || '0') + '.' + copy[0].substring(copy[0].length + multiplier);
-							// 123 -> 12300
 						}
 					}
 				} else if (multiplier > 0) {
@@ -236,7 +231,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			}
 
 			if (display) {
-				copy[0] = parseInt(copy[0]);
+				copy[0] = parseInt(copy[0]).toString();
 				if (!num && copy[0] === 0) { point = false; copy = [0]; };
 				if (type === 'currency') copy[0] = copy[0].toLocaleString();
 			} else if (type === 'currency') {
@@ -250,12 +245,20 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 
 			let decimals: string | number = '';
 			num = false;
+			point = false;
 			if (copy.length > 1) {
+				point = true;
 				if (copy.length > 2) {
 					for (let i = 2; i < copy.length; i++) {
 						copy[1] += copy[i].toString();
 					}
 					copy[1] = copy[1].toString();
+				}
+
+				if (limit) {
+					let l = limit - copy[0].length;
+					l = l > (copy[1].length || 0) ? copy[1].length : l;
+					if (l > 0) copy[1] = copy[1].substring(0, l);
 				}
 
 				for (let i = 0; i < copy[1]?.length; i++) {
@@ -268,12 +271,9 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 					}
 				}
 
-				if (limit) {
-					let l = (limit - copy[0].length) > 0 ? (limit - copy[0].length) : 0;
-					if (l > 0) decimals = decimals.toString().substring(0, l);
+				if (display && (copy[1].length === 0 || !num)) {
+					decimals = ''; point = false;
 				}
-
-				if (copy[1].length > 0) point = true;
 			}
 
 			const result = copy[0] + (point ? '.' : '') + decimals;

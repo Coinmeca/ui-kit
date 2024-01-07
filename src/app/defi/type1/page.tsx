@@ -4,7 +4,7 @@ import { Controls, Elements, Layouts } from "components";
 import { Modal } from "containers";
 import { usePortal } from "hooks";
 import { Capitalize, Format } from "lib/utils";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 interface Asset {
     type?: number;
@@ -103,6 +103,7 @@ export default function Page() {
     const [supply, setSupply] = useState<number>(init.supply || 0);
     const [tvl, setTVL] = useState(0);
     const [last, setLast] = useState<number>(0);
+    const [totalWeight, setTotalWeight] = useState<number>(0);
     const least: number = 0.000000000000000001;
 
     const Formatter = (props: { data?: Asset[]; vault?: boolean }) => {
@@ -648,11 +649,12 @@ export default function Page() {
                     const amount = a?.amount || least;
 
                     // (100 / 200 + 100) * 100 * (200 + 0 + 100) / (200 + 100)
-                    // let rate = exist
-                    //     ? ((weight || least) / ((hold || least) + amount)) * amount * ((hold - need || least) / (hold + amount))
-                    //     : estimate(a?.symbol!, a?.amount!);
+                    const n = need < 0 && Math.abs(hold) < Math.abs(need) ? least : need;
+
+                    // let rate = exist ? (weight / (hold + amount)) * amount * ((hold + n) / (hold + amount)) : estimate(a?.symbol!, a?.amount!);
+                    let rate = exist ? (weight / hold) * amount : estimate(a?.symbol!, a?.amount!);
                     // rate = rate * (p / (p + rate)) * 0.99;
-                    let rate = estimate(a?.symbol!, a?.amount!);
+                    // let rate = estimate(a?.symbol!, a?.amount!);
                     // console.log(rate);
                     // mint = rate * 0.99;
                     // mint += deposit(a, user!, exist ? undefined : estimate(a?.symbol!, a?.amount!));
@@ -671,14 +673,14 @@ export default function Page() {
                                   f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase()
                                       ? {
                                             ...f,
-                                            amount: (f?.amount || 0) + (a?.amount || 0),
-                                            // weight: (f?.weight || 0) + rate,
+                                            amount: (f?.amount || 0) + parseFloat((a?.amount || 0).toString()),
+                                            weight: ((f?.weight || 0) + rate) * (supply / (supply + rate)),
                                             need: (f?.need || 0) < 0 ? (f?.need || 0) + (a?.amount || 0) : f?.need || 0,
                                             markets: f?.markets
                                                 ? [...f?.markets?.filter((m: string) => m?.toLowerCase() !== market.name?.toUpperCase()), market.name]
                                                 : [market.name],
                                         }
-                                      : f
+                                      : { ...f, weight: (f?.weight || 0) * (supply / (supply + rate)) }
                               ),
                           ]
                         : [
@@ -707,7 +709,7 @@ export default function Page() {
                                 : s;
                         }),
                     ];
-                    mint += rate;
+                    mint += rate * (supply / (supply + rate));
                 }
             });
 
@@ -1052,7 +1054,7 @@ export default function Page() {
                     // }
                     const need = parseFloat((b?.need || 0).toString());
                     const hold = parseFloat((b?.amount || 0).toString());
-                    const weight = parseFloat((b?.weight || least).toString());
+                    const weight = parseFloat((b?.weight || least).toString()) * (supply / totalWeight);
                     const n = need < 0 && Math.abs(hold) < Math.abs(need) ? least : need;
 
                     // rate = (weight / (hold + amt)) * amt * ((hold + need + amt) / (hold + amt));
@@ -1065,11 +1067,10 @@ export default function Page() {
                     //     weight: ((b?.amount || 0) + amount || 1) / ((b?.amount || 0) - (b?.need || 0) || 1),
                     //     mint: mint,
                     // });
+                    // console.log("mint", mint);
                     total += parseFloat(mint.toString());
                 } else {
-                    let token = (a: Asset[], symbol: string) => {
-                        return a?.find((f: Asset) => f?.symbol?.toUpperCase() === symbol.toUpperCase());
-                    };
+                    let token = (a: Asset[], symbol: string) => a?.find((f: Asset) => f?.symbol?.toUpperCase() === symbol.toUpperCase());
                     const b = (base === "MECA" ? token(values, base) : token(v, base!)) || token(values, base!);
                     const q = (quote === "MECA" ? token(values, quote) : token(v, quote)) || token(values, quote);
 
@@ -1077,24 +1078,24 @@ export default function Page() {
                     return typeof b?.weight === "undefined" ? (b?.amount || 0 + amt * b?.value!) / q?.value! : (b?.weight / (b?.amount || 1)) * amt;
                 }
 
-                if (lp) p += mint;
                 v = exist
                     ? [
-                          ...v?.map((f: Asset) => {
-                              return f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase()
+                          ...v?.map((f: Asset) =>
+                              f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase()
                                   ? {
                                         ...f,
                                         amount: parseFloat((f?.amount || 0).toString()) + amt,
                                         // need: f?.key && (f?.need || 0) < 0 ? (amount - (f?.need || 0) > 0 ? 0 : (f?.need || 0) - amount) : f?.need,
                                         need: (f?.need || 0) - amt,
-                                        weight: parseFloat((f?.weight || 0).toString()) + parseFloat(total.toString()),
-                                        // weight: (f?.weight || 0) * ((supply + mint) / supply),
+                                        weight: (f?.weight || 0) * ((p + mint) / p),
+                                        // weight: parseFloat((f?.weight || 0).toString()) * ((supply + parseFloat(mint?.toString())) / supply),
                                         // weight: ((f?.weight || 0) * ((f?.weight || 0) + mint)) / (f?.weight || least),
                                     }
-                                  : f;
-                          }),
+                                  : { ...f, weight: (f?.weight || 0) * ((p + mint) / p) }
+                          ),
                       ]
                     : [...v, { ...ast, weight: mint }];
+                if (lp) p += mint;
             });
 
             u = u?.map((u: User, i: number) => {
@@ -1250,7 +1251,7 @@ export default function Page() {
             [...Array(repeat)].map(() => {
                 ast = v?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
                 const need = parseFloat((ast?.need || 0).toString());
-                const weight = parseFloat((ast?.weight || least).toString());
+                const weight = parseFloat((ast?.weight || least).toString()) * (supply / totalWeight);
                 const hold = parseFloat((ast?.amount || least).toString());
                 // const b = burn >= (ast?.weight || least) ? (ast?.weight || least) - least || least : burn;
                 const b = parseFloat(burn.toString());
@@ -1295,23 +1296,24 @@ export default function Page() {
 
                 // console.log(!weight || !amount);
                 // if (!weight || !amount) return;
-                p = p - b;
-
-                v = v?.map((f: Asset) => {
-                    const weight = (f?.weight || least) * ((supply - b) / supply) || least;
-                    return f?.symbol?.toUpperCase() !== asset?.symbol?.toUpperCase()
-                        ? f
-                        : {
-                              ...f,
-                              amount: (f?.amount || 0) - amount,
-                              need: (f?.need || 0) + amount,
-                              //   weight: weight,
-                              weight: (f?.weight || least) * ((supply - b) / supply),
-                              //   type === token.high ? parseFloat((f?.weight || 0)?.toFixed(18)) - burn : parseFloat((f?.weight || 0)?.toFixed(18)) + burn,
-                          };
+                // console.log(weight);
+                v = v?.map(
+                    (f: Asset) =>
+                        f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase()
+                            ? {
+                                  ...f,
+                                  amount: (f?.amount || 0) - amount,
+                                  need: (f?.need || 0) + amount,
+                                  weight: weight * ((p - b) / p),
+                                  //   weight: (f?.weight || least) * ((f?.weight || least) / ((f?.weight || 0) + burn)),
+                                  // weight: (f?.weight || least) * ((hold - amount) / hold),
+                                  //   weight: (f?.weight || least) * (hold / (hold + amount)),
+                                  //   type === token.high ? parseFloat((f?.weight || 0)?.toFixed(18)) - burn : parseFloat((f?.weight || 0)?.toFixed(18)) + burn,
+                              }
+                            : { ...f, weight: (f?.weight || least) * ((p - b) / p) }
                     // : { ...f, amount: (f?.amount || 0) - amount, need: (f?.need || 0) + amount, weight: (f?.weight || 0) - burn };
                     //  : { ...f, amount: (f?.amount || 0) - amount, need: (f?.need || 0) + amount, weight: (f?.weight || 0) + burn };
-                });
+                );
 
                 u = u?.map((u: User, i: number) => {
                     if (i === user) {
@@ -1342,6 +1344,7 @@ export default function Page() {
                         return u;
                     }
                 });
+                p = p - b;
             });
             console.log("user", user, "-> ", parseFloat(total.toString()), asset?.symbol?.toUpperCase());
 
@@ -1444,7 +1447,9 @@ export default function Page() {
         const b = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === base?.toUpperCase());
         const q = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === quote?.toUpperCase());
         // return ((q?.amount || 0) * ((b?.weight || 1) / (b?.markets?.length || 1))) / (q?.weight || 1) / (q?.markets?.length || 1);
-        return ((q?.amount || 0) * (b?.weight || 0)) / (b?.markets?.length || 0) / (q?.weight || 0);
+        const b_weight = (b?.weight || least) * (supply / totalWeight);
+        const q_weight = (q?.weight || least) * (supply / totalWeight);
+        return ((q?.amount || 0) * b_weight) / (b?.markets?.length || 0) / q_weight;
         // return ((q?.amount || 1) * (b?.weight || 1)) / (q?.weight || 1) / (q?.markets?.length || 1);
     };
 
@@ -1497,14 +1502,18 @@ export default function Page() {
 
         setMarket((state: Market[]) => state?.map((m: Market) => (m?.name?.toUpperCase() === market?.toUpperCase() ? { ...m, price: price } : m)));
         setVault((state: Asset[]) => {
-            const b = market?.split("/")[1];
-            const q = market?.split("/")[0];
+            const b = market?.split("/")[0]; // ETH
+            const q = market?.split("/")[1]; // USDT
+            // direction ? quote amount / price = base goal amount : base amount * price = quote goal amount
+
+            // buy = quote ↑ -> ↓ base goal amount
             const base = {
-                goal: direction ? getLiquidity(direction ? q : b, direction ? b : q) / price : getLiquidity(direction ? q : b, direction ? b : q) * price,
+                goal: direction ? getLiquidity(direction ? b : q, direction ? q : b) / price : getLiquidity(direction ? q : b, direction ? b : q) * price,
                 hold: getLiquidity(direction ? b : q, direction ? q : b),
             };
             const quote = {
-                goal: direction ? getLiquidity(direction ? b : q, direction ? q : b) * price : getLiquidity(direction ? b : q, direction ? q : b) / price,
+                // goal: direction ? getLiquidity(direction ? q : b, direction ? b : q) * price : getLiquidity(direction ? b : q, direction ? q : b) / price,
+                goal: direction ? base.goal * price : base.goal / price,
                 hold: getLiquidity(direction ? q : b, direction ? b : q),
             };
 
@@ -1689,6 +1698,10 @@ export default function Page() {
     }, [tvl, supply]);
 
     useEffect(() => {
+        setTotalWeight(vault?.reduce((a: number, b: Asset) => a + parseFloat((b?.weight || least).toString()), 0));
+    }, [vault]);
+
+    useEffect(() => {
         setSupply(users?.reduce((a: number, b: User) => a + (b?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.amount || 0), 0));
     }, [users]);
 
@@ -1781,10 +1794,15 @@ export default function Page() {
                                                             <Layouts.Col gap={0}>
                                                                 <Elements.Text type={"strong"}>{a?.symbol}</Elements.Text>
                                                                 <Elements.Text type={"desc"} opacity={0.6}>
-                                                                    1 : {(a?.amount || least) / (a?.weight || least)} ($
-                                                                    {((a?.amount || least) / (a?.weight || least)) *
-                                                                        (values.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase())
-                                                                            ?.value || least)}
+                                                                    1 : {Format((a?.amount || least) / (a?.weight || least), "number", { limit: 10, fix: 3 })}{" "}
+                                                                    ($
+                                                                    {Format(
+                                                                        ((a?.amount || least) / (a?.weight || least)) *
+                                                                            (values.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase())
+                                                                                ?.value || least),
+                                                                        "number",
+                                                                        { limit: 10, fix: 3 }
+                                                                    )}
                                                                     )
                                                                 </Elements.Text>
                                                             </Layouts.Col>
@@ -1794,9 +1812,14 @@ export default function Page() {
                                                                 </Elements.Text>
                                                                 <Elements.Text type={"desc"} align={"right"} opacity={0.45}>
                                                                     = $
-                                                                    {a?.amount! *
-                                                                        (values.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase())
-                                                                            ?.value || 1)}
+                                                                    {Format(
+                                                                        a?.amount! *
+                                                                            (values.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase())
+                                                                                ?.value || 1),
+                                                                        "number",
+                                                                        true,
+                                                                        8
+                                                                    )}
                                                                 </Elements.Text>
                                                             </Layouts.Col>
                                                         </Layouts.Row>
@@ -1806,8 +1829,8 @@ export default function Page() {
                                                                     Need
                                                                 </Elements.Text>
                                                                 <Elements.Text type={"strong"} align={"right"}>
-                                                                    {a?.need || 0}
-                                                                    {/* {Format(a?.need || 0, "number", true, 8)} */}
+                                                                    {/* {a?.need || 0} */}
+                                                                    {Format(a?.need || 0, "number", true, 8)}
                                                                 </Elements.Text>
                                                             </Layouts.Col>
                                                             <Layouts.Col gap={0}>
@@ -1816,7 +1839,12 @@ export default function Page() {
                                                                 </Elements.Text>
                                                                 <Elements.Text type={"strong"} align={"right"}>
                                                                     {/* {a?.weight || 0} */}
-                                                                    {Format(a?.weight || 0, "number", true, 8)}
+                                                                    {Format(
+                                                                        parseFloat((a?.weight || 0).toString()) * (supply / totalWeight),
+                                                                        "number",
+                                                                        true,
+                                                                        8
+                                                                    )}
                                                                 </Elements.Text>
                                                             </Layouts.Col>
                                                         </Layouts.Row>

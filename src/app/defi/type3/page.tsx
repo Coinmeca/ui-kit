@@ -643,14 +643,14 @@ export default function Page() {
                     const need = exist ? parseFloat((exist?.need || 0).toString()) : 0;
                     const hold = exist ? parseFloat((exist?.amount || 0).toString()) : 0;
                     const weight = exist ? parseFloat((exist?.weight || 0).toString()) : 0;
-                    const amount = a?.amount || least;
+                    const amount = parseFloat((a?.amount || least).toString());
 
                     // (100 / 200 + 100) * 100 * (200 + 0 + 100) / (200 + 100)
-                    // let rate = exist
-                    //     ? ((weight || least) / ((hold || least) + amount)) * amount * ((hold - need || least) / (hold + amount))
-                    //     : estimate(a?.symbol!, a?.amount!);
+                    const n = need < 0 && Math.abs(hold) < Math.abs(need) ? least : need;
+
+                    let rate = exist ? (weight / (hold + amount)) * amount : estimate(a?.symbol!, a?.amount!);
                     // rate = rate * (p / (p + rate)) * 0.99;
-                    let rate = estimate(a?.symbol!, a?.amount!);
+                    // let rate = estimate(a?.symbol!, a?.amount!);
                     // console.log(rate);
                     // mint = rate * 0.99;
                     // mint += deposit(a, user!, exist ? undefined : estimate(a?.symbol!, a?.amount!));
@@ -669,7 +669,7 @@ export default function Page() {
                                   f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase()
                                       ? {
                                             ...f,
-                                            amount: (f?.amount || 0) + (a?.amount || 0),
+                                            amount: (f?.amount || 0) + parseFloat((a?.amount || 0).toString()),
                                             weight: (f?.weight || 0) + rate,
                                             need: (f?.need || 0) < 0 ? (f?.need || 0) + (a?.amount || 0) : f?.need || 0,
                                             markets: f?.markets
@@ -1085,6 +1085,7 @@ export default function Page() {
                                         amount: parseFloat((f?.amount || 0).toString()) + amt,
                                         // need: f?.key && (f?.need || 0) < 0 ? (amount - (f?.need || 0) > 0 ? 0 : (f?.need || 0) - amount) : f?.need,
                                         need: (f?.need || 0) - amt,
+                                        weight: (f?.weight || least) - mint,
                                         // weight: (f?.weight || 0) * ((supply + mint) / supply),
                                         // weight: ((f?.weight || 0) * ((f?.weight || 0) + mint)) / (f?.weight || least),
                                     }
@@ -1302,6 +1303,7 @@ export default function Page() {
                               ...f,
                               amount: (f?.amount || 0) - amount,
                               need: (f?.need || 0) + amount,
+                              weight: (f?.weight || least) + b,
                               //   weight: (f?.weight || least) * ((supply - b) / supply),
                               //   type === token.high ? parseFloat((f?.weight || 0)?.toFixed(18)) - burn : parseFloat((f?.weight || 0)?.toFixed(18)) + burn,
                           };
@@ -1439,8 +1441,12 @@ export default function Page() {
     const getLiquidity = (base: string, quote: string) => {
         const b = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === base?.toUpperCase());
         const q = vault?.find((f: Asset) => f?.symbol?.toUpperCase() === quote?.toUpperCase());
-        return ((q?.amount || 1) * ((b?.weight || 1) / (b?.markets?.length || 1))) / (q?.weight || 1);
-        // return ((q?.amount || 1) * (b?.weight || 1)) / (q?.weight || 1) / (q?.markets?.length || 1);
+        // return (q?.amount || 1) / (q?.markets?.length || 1);
+
+        const b_weight = ((b?.weight || least) * parseFloat((b?.amount || 0).toString())) / (b?.markets?.length || 1);
+        const q_weight = ((q?.weight || least) * parseFloat((q?.amount || 0).toString())) / (q?.markets?.length || 1);
+        return (q?.amount || least) * (b_weight / (q_weight / (q?.markets?.length || 1)));
+        // return ((q?.amount || 0) * b_weight) / (b?.markets?.length || 0) / q_weight;
     };
 
     const order = (market: string, amount: number, liquidity: number, price: number, direction: boolean) => {
@@ -1810,8 +1816,10 @@ export default function Page() {
                                                                     Weight
                                                                 </Elements.Text>
                                                                 <Elements.Text type={"strong"} align={"right"}>
-                                                                    {a?.weight || 0}
-                                                                    {/* {Format(a?.weight || 0, "number", true, 8)} */}
+                                                                    {a?.weight || 0}(
+                                                                    {((a?.weight || least) * parseFloat((a?.amount || 0).toString())) /
+                                                                        (a?.markets?.length || 1)}
+                                                                    ){/* {Format(a?.weight || 0, "number", true, 8)} */}
                                                                 </Elements.Text>
                                                             </Layouts.Col>
                                                         </Layouts.Row>

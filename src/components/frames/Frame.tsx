@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { Layouts } from "components";
 import { Footers, Headers, Sidebar } from "containers";
 import { Toast } from "containers/sidebars";
