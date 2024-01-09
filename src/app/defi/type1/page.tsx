@@ -1666,7 +1666,7 @@ export default function Page() {
                                         {
                                             active: windowSize.width > Root.Device.Mobile || tab === "vault",
                                             children: (
-                                                <Layouts.Row gap={2} fill>
+                                                <Layouts.Row gap={1} fill>
                                                     <Layouts.Contents.InnerContent>
                                                         <Layouts.Col gap={1} fill>
                                                             <Layouts.Row gap={0.5}>
@@ -1781,14 +1781,18 @@ export default function Page() {
                                                             </Layouts.Row>
                                                         </Layouts.Col>
                                                     </Layouts.Contents.InnerContent>
-                                                    <Layouts.Divider vertical hide="mobile" />
+                                                    <Layouts.Divider
+                                                        vertical
+                                                        style={{ ...(windowSize.width > Root.Device.Mobile && { marginRight: "1em" }) }}
+                                                        hide="mobile"
+                                                    />
                                                 </Layouts.Row>
                                             ),
                                         },
                                         {
                                             active: windowSize.width > Root.Device.Mobile || tab === "markets",
                                             children: (
-                                                <Layouts.Row gap={2}>
+                                                <Layouts.Row gap={1} fill>
                                                     <Layouts.Contents.InnerContent>
                                                         <Layouts.Col gap={1}>
                                                             {market?.map((m: Market, i: number) => (
@@ -1847,8 +1851,11 @@ export default function Page() {
                                                             ))}
                                                         </Layouts.Col>
                                                     </Layouts.Contents.InnerContent>
-
-                                                    <Layouts.Divider vertical hide="mobile" />
+                                                    <Layouts.Divider
+                                                        vertical
+                                                        style={{ ...(windowSize.width > Root.Device.Mobile && { marginRight: "1em" }) }}
+                                                        hide="mobile"
+                                                    />
                                                 </Layouts.Row>
                                             ),
                                         },
