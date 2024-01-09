@@ -3,7 +3,7 @@ import { memo, useEffect, useState } from "react";
 import { Layouts } from "components";
 import Style from "./Toast.styled";
 import Notify from "../notification/Notify";
-import { type Notify as Content } from "contexts/NotificationCenter";
+import { type Notify as Content } from "../../../contexts/Notification";
 import { AnimatePresence, motion } from "framer-motion";
 
 export interface Toast {

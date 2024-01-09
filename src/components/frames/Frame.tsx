@@ -1,5 +1,6 @@
+"use client";
 import { Layouts } from "components";
-import { Footers, Headers, Sidebar } from "containers";
+import { Headers, Sidebar } from "containers";
 import { Toast } from "containers/sidebars";
 import type { BG } from "components/layouts/bg/BG";
 import type { Header } from "containers/headers/Header";

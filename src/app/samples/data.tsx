@@ -3,9 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Elements, Layouts, Controls } from "components";
 import { Modals, Sidebars } from "containers";
-import { usePortal } from "hooks";
+import { useNotification, usePortal } from "hooks";
 import { Filter } from "lib/utils";
-import { Notification } from "contexts/NotificationCenter";
 
 export default function Data() {
     const [value, setValue] = useState<number>(0);
@@ -15,7 +14,7 @@ export default function Data() {
     // const [mobileMenu, setMobileMenu] = useState("market");
     const [sidebarTab, setSidebarTab] = useState("exchange");
 
-    const { notis, toasts, count, addToast, addNotify, setNotis, resetCount } = useContext(Notification);
+    const { notis, toasts, count, addToast, addNotify, setNotis, resetCount } = useNotification();
 
     const notilist = [
         {

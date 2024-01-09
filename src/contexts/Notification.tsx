@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, createContext, useState } from "react";
 
 export interface Notify {
     type?: "toast" | "notify";
@@ -29,9 +29,9 @@ export interface NotificationContext {
     setRead: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Notification = createContext<NotificationContext>({} as NotificationContext);
+export const NotificationContext = createContext<NotificationContext>({} as NotificationContext);
 
-export function NotificationCenter({ children }: { children?: any }) {
+export default function Notification({ children }: { children?: any }) {
     const [notis, setNotiList] = useState<Notify[]>([]);
     const [toasts, setToasts] = useState<Notify[]>([]);
     const [nonce, setNonce] = useState<number>(0);
@@ -93,10 +93,10 @@ export function NotificationCenter({ children }: { children?: any }) {
     }
 
     return (
-        <Notification.Provider value={{ notis, toasts, count, read, addNotify, addToast, removeNotify, removeToast, resetCount, setNotis, setToasts, setRead }}>
+        <NotificationContext.Provider
+            value={{ notis, toasts, count, read, addNotify, addToast, removeNotify, removeToast, resetCount, setNotis, setToasts, setRead }}
+        >
             {children}
-        </Notification.Provider>
+        </NotificationContext.Provider>
     );
 }
-
-export default NotificationCenter;

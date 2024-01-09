@@ -73,7 +73,7 @@ export default function Market(props: Market) {
                             </>,
                             <>
                                 <Elements.Text type="strong" change>
-                                    {Sign(data?.change)} {Format(data?.change, "number", { sign: false })} %
+                                    {Sign(data?.change)} {Format(data?.change, "currency", { sign: false })} %
                                 </Elements.Text>
                             </>,
                         ],

@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { Elements, Layouts, Controls } from "components";
 import { Sidebars } from "containers";
 import { Format } from "lib/utils";
-import { Notification } from "contexts/NotificationCenter";
+import { NotificationContext } from "contexts/Notification";
 
 export default function Dummy() {
     const [value, setValue] = useState<number>(0);
@@ -89,7 +89,7 @@ export default function Dummy() {
         // },
     ];
 
-    const { notis, toasts, count, addToast, addNotify, setRead, resetCount } = useContext(Notification);
+    const { notis, toasts, count, addToast, addNotify, setRead, resetCount } = useContext(NotificationContext);
     const sidebarMarketListFormatter = (data: any) => {
         return (
             data?.length > 0 &&
