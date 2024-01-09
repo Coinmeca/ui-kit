@@ -1338,9 +1338,11 @@ export default function Page() {
         if (amount >= convert(liquidity, price, !direction)) amount = convert(liquidity, price, !direction) - least;
         let amt = amount;
         let quantity = 0;
+        const l = liquidity;
 
         if (convert(liquidity, price, !direction) <= 0) return;
         while (true) {
+            if (liquidity < perTick) break;
             liquidity -= perTick;
             price =
                 tick?.toString()?.split(".").length > 1 && tick?.toString()?.split(".")[1]
@@ -1358,7 +1360,10 @@ export default function Page() {
                     quantity += perTick;
                     amt -= tl;
                 } else {
-                    quantity += convert(amt, price, !direction);
+                    const qty = quantity + convert(amt, price, !direction);
+
+                    if (liquidity > qty) break;
+                    quantity = qty;
                     amt = 0;
                     break;
                 }
@@ -1372,6 +1377,7 @@ export default function Page() {
         console.log("i", i);
         amount = amount - amt;
 
+        let gap = 0;
         setMarket((state: Market[]) => state?.map((m: Market) => (m?.name?.toUpperCase() === market?.toUpperCase() ? { ...m, price: price } : m)));
         setVault((state: Asset[]) => {
             const b = market?.split("/")[0]; // ETH
@@ -1380,28 +1386,33 @@ export default function Page() {
 
             // buy = quote ↑ -> ↓ base goal amount
             const base = {
-                goal: direction ? getLiquidity(direction ? b : q, direction ? q : b) / price : getLiquidity(direction ? q : b, direction ? b : q) * price,
-                hold: getLiquidity(direction ? b : q, direction ? q : b),
+                goal: direction
+                    ? (getLiquidity(direction ? b : q, direction ? q : b) + amount) / price
+                    : (getLiquidity(direction ? b : q, direction ? q : b) + amount) * price,
+                hold: (l + (l - quantity)) / (state?.find((f) => f?.symbol?.toUpperCase() === (direction ? b : q)?.toUpperCase())?.markets?.length || 1),
             };
+
             const quote = {
                 // goal: direction ? getLiquidity(direction ? q : b, direction ? b : q) * price : getLiquidity(direction ? b : q, direction ? q : b) / price,
                 goal: direction ? base.goal * price : base.goal / price,
                 hold: getLiquidity(direction ? q : b, direction ? b : q),
             };
 
-            return state?.map((a: Asset) =>
-                a?.symbol?.toUpperCase() === (direction ? q : b)?.toUpperCase()
-                    ? {
-                          ...a,
-                          amount: (a?.amount || 0) - quantity,
-                          need: base.goal - base.hold,
-                      }
-                    : a?.symbol?.toUpperCase() === (direction ? b : q)?.toUpperCase()
-                    ? { ...a, amount: (a?.amount || 0) + amount, need: quote.goal - quote.hold }
-                    : a
-            );
+            return state?.map((a: Asset) => {
+                if (a?.symbol?.toUpperCase() === (direction ? b : q)?.toUpperCase()) {
+                    gap = (a?.amount || 0) - quantity;
+                    return {
+                        ...a,
+                        amount: gap < 0 ? least : gap,
+                        need: base.goal - base.hold,
+                    };
+                } else {
+                    return a?.symbol?.toUpperCase() === (direction ? q : b)?.toUpperCase() ? { ...a, amount: (a?.amount || 0) + amount } : a;
+                }
+            });
         });
-        quantity = quantity * 0.99;
+
+        quantity = (gap < 0 ? quantity - Math.abs(gap) : quantity) * 0.99;
         setUsers((state: User[]) =>
             state?.map((u: User, i) => {
                 if (i === user) {
