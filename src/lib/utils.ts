@@ -171,7 +171,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 				if (multiplier < 0) {
 					copy[0] = copy.join('');
 					if (copy[0].length + multiplier < 0) {
-						value = '0.' + '0'.repeat(Math.abs(copy[0].length + (copy[1].length || 0) + multiplier)) + e[0]?.replaceAll('.', '');
+						value = '0.' + '0'.repeat(Math.abs(copy[0].length + (copy[1]?.length || 0) + multiplier)) + e[0]?.replaceAll('.', '');
 					} else {
 						if (copy[0].length + multiplier >= copy[0].length) {
 							value = copy[0] + '0'.repeat(multiplier - copy[0].length);
