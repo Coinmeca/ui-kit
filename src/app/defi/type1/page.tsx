@@ -1887,13 +1887,13 @@ export default function Page() {
                             />
                             <Layouts.Divider show="mobile" />
                             <Layouts.Row show="mobile">
-                                <Controls.Tab iconLeft={"bank"} onClick={() => setTab("vault")}>
+                                <Controls.Tab active={tab === "vault"} iconLeft={"bank"} onClick={() => setTab("vault")}>
                                     Vault
                                 </Controls.Tab>
-                                <Controls.Tab iconLeft={"exchange"} onClick={() => setTab("markets")}>
+                                <Controls.Tab active={tab === "markets"} iconLeft={"exchange"} onClick={() => setTab("markets")}>
                                     Markets
                                 </Controls.Tab>
-                                <Controls.Tab iconLeft={"user"} onClick={() => setTab("users")}>
+                                <Controls.Tab active={tab === "users"} iconLeft={"user"} onClick={() => setTab("users")}>
                                     Users
                                 </Controls.Tab>
                             </Layouts.Row>
