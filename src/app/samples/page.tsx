@@ -128,12 +128,11 @@ export default function Main() {
     return (
         <Layouts.Page>
             <Style>
-                <div style={{ background: "white", position: "absolute", top: 64, left: 128 }}>{scrollPosition}</div>
                 <Layouts.Cover style={{ scrollSnapAlign: "start" }} fullsize>
                     <Controls.Slide timer={5000} align={{ vertical: "center", horizon: "center" }} nav={"bottom"} slides={slides} />
                 </Layouts.Cover>
                 <NoScrollSnap />
-                <Layouts.Page>
+                <Layouts.Page scroll={false}>
                     <Layouts.Box padding={0} style={{ overflow: "hidden" }}>
                         <Layouts.Col gap={0}>
                             <section className="section s1">
