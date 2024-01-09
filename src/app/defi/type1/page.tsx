@@ -1805,13 +1805,25 @@ export default function Page() {
                                                                                 <Elements.Text
                                                                                     opacity={0.6}
                                                                                 >{`${m?.base?.toUpperCase()} → ${m?.quote?.toUpperCase()}`}</Elements.Text>
-                                                                                <Elements.Text align="right">{getLiquidity(m?.base, m?.quote)}</Elements.Text>
+                                                                                <Elements.Text align="right">
+                                                                                    {Format(getLiquidity(m?.base, m?.quote), "currency", {
+                                                                                        display: true,
+                                                                                        limit: 8,
+                                                                                        fix: 3,
+                                                                                    })}
+                                                                                </Elements.Text>
                                                                             </Layouts.Row>
                                                                             <Layouts.Row fill>
                                                                                 <Elements.Text
                                                                                     opacity={0.6}
                                                                                 >{`${m?.quote?.toUpperCase()} → ${m?.base?.toUpperCase()}`}</Elements.Text>
-                                                                                <Elements.Text align="right">{getLiquidity(m?.quote, m?.base)}</Elements.Text>
+                                                                                <Elements.Text align="right">
+                                                                                    {Format(getLiquidity(m?.quote, m?.base), "currency", {
+                                                                                        display: true,
+                                                                                        limit: 8,
+                                                                                        fix: 3,
+                                                                                    })}
+                                                                                </Elements.Text>
                                                                             </Layouts.Row>
                                                                         </Layouts.Col>
                                                                         <Layouts.Row gap={1} fill>
