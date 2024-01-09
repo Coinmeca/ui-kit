@@ -1253,7 +1253,7 @@ export default function Page() {
                                     align={"right"}
                                     // value={burn}
                                     onChange={(e: any, v: any) => setBurn(parseFloat(Format(v, "number")))}
-                                    max={user ? users[user]?.assets?.find((f) => f?.symbol?.toUpperCase() === "MECA")?.amount : 0}
+                                    max={typeof user === "number" ? users[user]?.assets?.find((f) => f?.symbol?.toUpperCase() === "MECA")?.amount : 0}
                                     right={{
                                         children: (
                                             <Elements.Text type="strong" opacity={0.6}>
