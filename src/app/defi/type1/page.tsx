@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Modal } from "containers";
 import { usePortal, useWindowSize } from "hooks";
-import { Capitalize, Format } from "lib/utils";
+import { Capitalize, Format, Sign } from "lib/utils";
 import { Root } from "lib/style";
 
 interface Asset {
@@ -96,7 +96,7 @@ const init = {
 
 export default function Page() {
     const { windowSize } = useWindowSize();
-    const [tab, setTab] = useState<"vault" | "markets" | "users">("vault");
+    const [tab, setTab] = useState<"vault" | "markets" | "users">("users");
 
     const [values, setValues] = useState<Asset[]>(init.values || []);
     const [vault, setVault] = useState<Asset[]>(init.vault || []);
@@ -116,14 +116,18 @@ export default function Page() {
                 data?.length > 0 &&
                 data?.map((asset: Asset) => {
                     const base = [
-                        {
-                            align: "left",
-                            children: <Elements.Text>{asset?.symbol}</Elements.Text>,
-                        },
-                        {
-                            align: "right",
-                            children: <Elements.Text>{Format(asset?.amount, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>,
-                        },
+                        [
+                            [
+                                {
+                                    align: "left",
+                                    children: <Elements.Text>{asset?.symbol}</Elements.Text>,
+                                },
+                                {
+                                    align: "right",
+                                    children: <Elements.Text>{Format(asset?.amount, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>,
+                                },
+                            ],
+                        ],
                     ];
 
                     return props?.vault
@@ -1566,14 +1570,22 @@ export default function Page() {
     }, [users]);
 
     return (
-        <Layouts.Box fit>
+        <Layouts.Box fit padding={windowSize.width <= Root.Device.Mobile ? 2 : undefined}>
             <Layouts.Col fill gap={1}>
                 <Layouts.Contents.InnerContent>
                     <Layouts.Col gap={1} fill>
-                        <Layouts.Row gap={1}>
+                        <Layouts.Row gap={1} responsive="mobile">
                             <Layouts.Row gap={0.5}>
-                                <Elements.Text fix>MECA: ${values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value?.toFixed(3)}</Elements.Text>
+                                <Elements.Text fix>
+                                    MECA: $
+                                    {Format(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value?.toFixed(3), "currency", {
+                                        limit: 8,
+                                        fix: 3,
+                                    })}
+                                </Elements.Text>
+
                                 <Elements.Text
+                                    align={windowSize.width <= Root.Device.Mobile ? "right" : undefined}
                                     color={
                                         values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last > 0
                                             ? "green"
@@ -1590,8 +1602,17 @@ export default function Page() {
                                     {(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last).toFixed(3)}
                                 </Elements.Text>
                             </Layouts.Row>
-                            <Elements.Text>Weight: {vault?.reduce((a: number, b: Asset) => a + (b?.weight || 0), 0)}</Elements.Text>
-                            <Elements.Text>Total Supply: {supply}</Elements.Text>
+                            <Layouts.Row gap={0.5}>
+                                <Elements.Text fix>
+                                    Weight:{" "}
+                                    {Format(
+                                        vault?.reduce((a: number, b: Asset) => a + (b?.weight || 0), 0),
+                                        "currency",
+                                        { limit: 8, fix: 3 }
+                                    )}
+                                </Elements.Text>
+                                <Elements.Text fix>Total Supply: {Format(supply, "currency", { limit: 8, fix: 3 })}</Elements.Text>
+                            </Layouts.Row>
                         </Layouts.Row>
                         <Layouts.Divider />
                         <Layouts.Contents.GridContainer direction="row" style={{ minHeight: 60 }} width={{ min: 16 }} gap={0.5}>
@@ -1647,7 +1668,7 @@ export default function Page() {
                                                                                         <Elements.Text type={"strong"}>{a?.symbol}</Elements.Text>
                                                                                         <Elements.Text type={"desc"} opacity={0.6}>
                                                                                             1 :{" "}
-                                                                                            {Format((a?.amount || least) / (a?.weight || least), "number", {
+                                                                                            {Format((a?.weight || least) / (a?.amount || least), "number", {
                                                                                                 limit: 10,
                                                                                                 fix: 3,
                                                                                             })}{" "}
@@ -1837,11 +1858,25 @@ export default function Page() {
                                                                                             $ {Format(u?.initial, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                                                         </Elements.Text>
                                                                                     </Layouts.Row>
-                                                                                    <Layouts.Row>
+                                                                                    <Layouts.Row
+                                                                                        change={
+                                                                                            parseFloat(
+                                                                                                Format(getUserTVL(i) - (u?.initial || 0), "number", true)
+                                                                                            ) >= 0
+                                                                                                ? "var(--green)"
+                                                                                                : "var(--red)"
+                                                                                        }
+                                                                                    >
                                                                                         <Elements.Text>PNL:</Elements.Text>
-                                                                                        <Elements.Text align={"right"} fix>
-                                                                                            $ {getUserTVL(i) - (u?.initial || 0)}
-                                                                                            {/* $ {Format(getUserTVL(i) - (u?.initial || 0), "number", true)} */}
+                                                                                        <Elements.Text align={"right"} fix change>
+                                                                                            {Sign(getUserTVL(i) - (u?.initial || 0))}
+                                                                                            {"$ "}
+                                                                                            {Format(getUserTVL(i) - (u?.initial || 0), "currency", {
+                                                                                                display: true,
+                                                                                                limit: 8,
+                                                                                                fix: 3,
+                                                                                                sign: false,
+                                                                                            })}
                                                                                         </Elements.Text>
                                                                                     </Layouts.Row>
                                                                                 </Layouts.Col>
