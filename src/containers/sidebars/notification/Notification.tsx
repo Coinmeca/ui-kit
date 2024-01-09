@@ -2,7 +2,7 @@
 import Notify from "./Notify";
 import Style from "./Notification.styled";
 import { Elements, Layouts } from "components";
-import { type Notify as N } from "contexts/NotificationCenter";
+import { type Notify as N } from "../../../contexts/Notification";
 import { motion } from "framer-motion";
 import { useEffect, useLayoutEffect, useState } from "react";
 

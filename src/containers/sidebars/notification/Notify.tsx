@@ -3,12 +3,13 @@ import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { Controls, Layouts } from "components";
 import { Text } from "components/elements";
-import { Notification, type Notify } from "contexts/NotificationCenter";
+import { useNotification } from "hooks";
 import { Format } from "lib/utils";
 import { Style, Content } from "./Notify.styled";
+import { type Notify } from "contexts/Notification";
 
 export default function Notify(props: Notify & { order?: number }) {
-    const { removeNotify, removeToast } = useContext(Notification);
+    const { removeNotify, removeToast } = useNotification();
     const [active, setActive] = useState<boolean>(false);
     const [close, setClose] = useState<boolean>(false);
 

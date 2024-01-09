@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Controls, Elements, Layouts } from "components";
 import { type SlideContent } from "components/controls/slide/Slide";
 import { createGlobalStyle, styled } from "styled-components";
-import { useWindowSize } from "hooks";
+import { useWindowSize, useScrollPosition } from "hooks";
 import { Root } from "lib/style";
 
 import Part0 from "assets/graphics/part0.png";
@@ -22,6 +22,7 @@ import * as Row from "components/layouts/row/Row.styled";
 
 export default function Main() {
     const { windowSize } = useWindowSize();
+    const { scrollPosition } = useScrollPosition();
 
     const filter = {
         color: "black",
@@ -125,231 +126,234 @@ export default function Main() {
     ];
 
     return (
-        <Style>
-            <Layouts.Cover style={{ scrollSnapAlign: "start" }} fullsize>
-                <Controls.Slide timer={5000} align={{ vertical: "center", horizon: "center" }} nav={"bottom"} slides={slides} />
-            </Layouts.Cover>
-            <NoScrollSnap />
-            <Layouts.Page>
-                <Layouts.Box padding={0} style={{ overflow: "hidden" }}>
-                    <Layouts.Col gap={0}>
-                        <section className="section s1">
-                            <Layouts.Col gap={0} align={"center"}>
-                                <Image className="part p1" src={Part0} alt="" />
-                                <Layouts.Row gap={8}>
-                                    <div />
-                                    <Layouts.Col gap={2} align={"left"}>
-                                        <Elements.Text type={"h2"} style={{ wordBreak: "break-word" }}>
-                                            coinmeca
-                                        </Elements.Text>
-                                        <Elements.Text type={"p"} opacity={0.6} style={{ wordBreak: "break-word" }}>
-                                            {
-                                                "Coinmeca imagines more than just a DEX. We strive to provide integrated and fully decentralized financial services based on DEX as an on-chain hub."
-                                            }
-                                        </Elements.Text>
-                                    </Layouts.Col>
-                                </Layouts.Row>
-                                <div className="video">
-                                    <iframe
-                                        title="Coinmeca"
-                                        src="https://player.vimeo.com/video/311623434?title=0&amp;byline=0&amp;portrait=0"
-                                        frameBorder="0"
-                                        allow="autoplay; fullscreen"
-                                        allowFullScreen={true}
-                                        style={{ width: "100%", height: "100%" }}
-                                    />
-                                </div>
-                            </Layouts.Col>
-                        </section>
-                        <section className="section s2">
-                            <Layouts.Row
-                                gap={windowSize.width > Root.Device.Mobile ? 8 : 4}
-                                align={"center"}
-                                responsive={"mobile"}
-                                reverse={windowSize.width > Root.Device.Mobile ? false : true}
-                            >
-                                <div className="content">
-                                    <div>
-                                        <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
-                                            <Layouts.Col gap={2}>
-                                                <Elements.Text type={"h5"} style={{ wordBreak: "break-word" }}>
-                                                    Automated Liquidity Distributor
-                                                </Elements.Text>
-                                                <Elements.Text type={"p"} opacity={0.6} align={"left"} style={{ wordBreak: "break-word" }}>
-                                                    {
-                                                        "The ALD algorithm is designed to automatically distribute liquidity across the order book. The order book provides a visual representation of the liquidity distribution. Users can make liquidity even more abundant by stacking amounts through orders on top of this base liquidity, giving them the possibility to try different trading strategies while further minimizing slippage."
-                                                    }
-                                                </Elements.Text>
-                                            </Layouts.Col>
-                                            <Controls.Button type={"solid"} color={"black"} fit={windowSize.width > Root.Device.Mobile ? true : false}>
-                                                VIEW MORE
-                                            </Controls.Button>
-                                        </Layouts.Col>
-                                    </div>
-                                </div>
-                                <div className="area a1">
-                                    <div />
-                                    <Image className="part p2" src={Part1} alt="" />
-                                    <Image src={Imac1} alt="" />
-                                </div>
-                            </Layouts.Row>
-                        </section>
-                        <section className="section s3">
-                            <Layouts.Row gap={windowSize.width > Root.Device.Mobile ? 8 : 4} align={"center"} responsive={"mobile"} reverse>
-                                <div className="content">
-                                    <div>
-                                        <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
-                                            <Layouts.Col gap={2}>
-                                                <Elements.Text type={"h5"} style={{ wordBreak: "break-word" }}>
-                                                    Order NFT
-                                                </Elements.Text>
-                                                <Elements.Text type={"p"} opacity={0.6} align={"left"} style={{ wordBreak: "break-word" }}>
-                                                    {
-                                                        "The limit order is transformed into a tokenized form. Tokenized orders can be transferred to others, and can take advantage of good positions based on predictions through an order book that processes orders in the order they are executed. This type of trading is not just limited to spot trading but also enables options trading. Also, if your orders have been filled and can be billed, they could be used as collateral."
-                                                    }
-                                                </Elements.Text>
-                                            </Layouts.Col>
-                                            <Controls.Button type={"solid"} color={"black"} fit={windowSize.width > Root.Device.Mobile ? true : false}>
-                                                VIEW MORE
-                                            </Controls.Button>
-                                        </Layouts.Col>
-                                    </div>
-                                </div>
-                                <div className="area a2">
-                                    <div />
-                                    <Image className="part p3" src={Part2} alt={""} />
-                                    <Image src={Imac2} alt={""} />
-                                </div>
-                            </Layouts.Row>
-                        </section>
-                    </Layouts.Col>
-                </Layouts.Box>
-                <Layouts.Cover
-                    height={48}
-                    background={{
-                        background: "black",
-                        filter: { color: "black", opacity: 0.6 },
-                        img: { src: require("../../assets/banners/inbox/1.png"), style: { objectFit: "none" } },
-                    }}
-                    style={{ scrollSnapAlign: "initial" }}
-                >
-                    <Layouts.Row align={"center"} style={{ position: "relative", zIndex: 2 }} fill>
-                        <Layouts.Col align={"center"} fit>
-                            <Elements.Text type={"h2"} style={{ wordBreak: "break-word" }}>
-                                coinmeca
-                            </Elements.Text>
-                            <Elements.Text type={"p"} opacity={0.6} style={{ wordBreak: "break-word" }}>
-                                Get new experience of crypto finance life on coinmeca.
-                            </Elements.Text>
-                        </Layouts.Col>
-                    </Layouts.Row>
+        <Layouts.Page>
+            <Style>
+                <div style={{ background: "white", position: "absolute", top: 64, left: 128 }}>{scrollPosition}</div>
+                <Layouts.Cover style={{ scrollSnapAlign: "start" }} fullsize>
+                    <Controls.Slide timer={5000} align={{ vertical: "center", horizon: "center" }} nav={"bottom"} slides={slides} />
                 </Layouts.Cover>
-                <Layouts.Box padding={0}>
-                    <section className="section s4">
-                        <Layouts.Col align={"center"} gap={windowSize.width > Root.Device.Tablet ? 8 : 4}>
-                            <Layouts.Col align={"center"}>
-                                <Elements.Text type={"h3"} style={{ wordBreak: "break-word" }}>
-                                    Faster and Easier
-                                </Elements.Text>
-                                <Elements.Text type={"p"} style={{ wordBreak: "break-word" }}>
-                                    {"Optimizaed experience for you. Get more information or connect with people by joining the community."}
-                                </Elements.Text>
-                            </Layouts.Col>
-                            <Layouts.Col
-                                gap={4}
-                                align={"center"}
-                                style={{ width: windowSize.width > Root.Device.Tablet ? "80%" : "100%", transition: ".3s ease" }}
-                            >
-                                <Layouts.Row gap={2} responsive={"mobile"}>
-                                    <a style={{ background: `url(${Btn1?.src}) 0% 0% / cover` }} href={"https://docs.coinmeca.net"} target={"_blank"}>
-                                        <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
-                                            <Elements.Text size={2} weight={"bold"}>
-                                                Cryptocurrency
-                                                <br />
-                                                Trading Guide
+                <NoScrollSnap />
+                <Layouts.Page>
+                    <Layouts.Box padding={0} style={{ overflow: "hidden" }}>
+                        <Layouts.Col gap={0}>
+                            <section className="section s1">
+                                <Layouts.Col gap={0} align={"center"}>
+                                    <Image className="part p1" src={Part0} alt="" />
+                                    <Layouts.Row gap={8}>
+                                        <div />
+                                        <Layouts.Col gap={2} align={"left"}>
+                                            <Elements.Text type={"h2"} style={{ wordBreak: "break-word" }}>
+                                                coinmeca
                                             </Elements.Text>
-                                            <Layouts.Row align={"right"}>
-                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
-                                            </Layouts.Row>
-                                        </Layouts.Col>
-                                    </a>
-                                    <a style={{ background: `url(${Btn2?.src}) 0% 0% / cover` }} href={"https://docs.coinmeca.net"} target={"_blank"}>
-                                        <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
-                                            <Elements.Text size={2} weight={"bold"}>
-                                                Cryptocurrency
-                                                <br />
-                                                Deposit / Withdraw
-                                                <br />
-                                                Guide
+                                            <Elements.Text type={"p"} opacity={0.6} style={{ wordBreak: "break-word" }}>
+                                                {
+                                                    "Coinmeca imagines more than just a DEX. We strive to provide integrated and fully decentralized financial services based on DEX as an on-chain hub."
+                                                }
                                             </Elements.Text>
-                                            <Layouts.Row align={"right"}>
-                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
-                                            </Layouts.Row>
                                         </Layouts.Col>
-                                    </a>
+                                    </Layouts.Row>
+                                    <div className="video">
+                                        <iframe
+                                            title="Coinmeca"
+                                            src="https://player.vimeo.com/video/311623434?title=0&amp;byline=0&amp;portrait=0"
+                                            frameBorder="0"
+                                            allow="autoplay; fullscreen"
+                                            allowFullScreen={true}
+                                            style={{ width: "100%", height: "100%" }}
+                                        />
+                                    </div>
+                                </Layouts.Col>
+                            </section>
+                            <section className="section s2">
+                                <Layouts.Row
+                                    gap={windowSize.width > Root.Device.Mobile ? 8 : 4}
+                                    align={"center"}
+                                    responsive={"mobile"}
+                                    reverse={windowSize.width > Root.Device.Mobile ? false : true}
+                                >
+                                    <div className="content">
+                                        <div>
+                                            <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
+                                                <Layouts.Col gap={2}>
+                                                    <Elements.Text type={"h5"} style={{ wordBreak: "break-word" }}>
+                                                        Automated Liquidity Distributor
+                                                    </Elements.Text>
+                                                    <Elements.Text type={"p"} opacity={0.6} align={"left"} style={{ wordBreak: "break-word" }}>
+                                                        {
+                                                            "The ALD algorithm is designed to automatically distribute liquidity across the order book. The order book provides a visual representation of the liquidity distribution. Users can make liquidity even more abundant by stacking amounts through orders on top of this base liquidity, giving them the possibility to try different trading strategies while further minimizing slippage."
+                                                        }
+                                                    </Elements.Text>
+                                                </Layouts.Col>
+                                                <Controls.Button type={"solid"} color={"black"} fit={windowSize.width > Root.Device.Mobile ? true : false}>
+                                                    VIEW MORE
+                                                </Controls.Button>
+                                            </Layouts.Col>
+                                        </div>
+                                    </div>
+                                    <div className="area a1">
+                                        <div />
+                                        <Image className="part p2" src={Part1} alt="" />
+                                        <Image src={Imac1} alt="" />
+                                    </div>
                                 </Layouts.Row>
-                                <Layouts.Row gap={2} responsive={"mobile"}>
-                                    <a style={{ background: `url(${Btn3?.src}) 0% 0% / cover` }} href={"https://twitter.com/coinmeca"} target={"_blank"}>
-                                        <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
-                                            <Elements.Text size={2} weight={"bold"}>
-                                                Check Recent
-                                                <br />
-                                                Announcements
-                                            </Elements.Text>
-                                            <Layouts.Row align={"right"}>
-                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
-                                            </Layouts.Row>
-                                        </Layouts.Col>
-                                    </a>
-                                    <a style={{ background: `url(${Btn4?.src}) 0% 0% / cover` }} href={"https://discord.gg/m5Duwc9J"} target={"_blank"}>
-                                        <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
-                                            <Elements.Text size={2} weight={"bold"}>
-                                                Join
-                                                <br />
-                                                Our Community
-                                            </Elements.Text>
-                                            <Layouts.Row align={"right"}>
-                                                <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
-                                            </Layouts.Row>
-                                        </Layouts.Col>
-                                    </a>
+                            </section>
+                            <section className="section s3">
+                                <Layouts.Row gap={windowSize.width > Root.Device.Mobile ? 8 : 4} align={"center"} responsive={"mobile"} reverse>
+                                    <div className="content">
+                                        <div>
+                                            <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
+                                                <Layouts.Col gap={2}>
+                                                    <Elements.Text type={"h5"} style={{ wordBreak: "break-word" }}>
+                                                        Order NFT
+                                                    </Elements.Text>
+                                                    <Elements.Text type={"p"} opacity={0.6} align={"left"} style={{ wordBreak: "break-word" }}>
+                                                        {
+                                                            "The limit order is transformed into a tokenized form. Tokenized orders can be transferred to others, and can take advantage of good positions based on predictions through an order book that processes orders in the order they are executed. This type of trading is not just limited to spot trading but also enables options trading. Also, if your orders have been filled and can be billed, they could be used as collateral."
+                                                        }
+                                                    </Elements.Text>
+                                                </Layouts.Col>
+                                                <Controls.Button type={"solid"} color={"black"} fit={windowSize.width > Root.Device.Mobile ? true : false}>
+                                                    VIEW MORE
+                                                </Controls.Button>
+                                            </Layouts.Col>
+                                        </div>
+                                    </div>
+                                    <div className="area a2">
+                                        <div />
+                                        <Image className="part p3" src={Part2} alt={""} />
+                                        <Image src={Imac2} alt={""} />
+                                    </div>
                                 </Layouts.Row>
-                            </Layouts.Col>
+                            </section>
                         </Layouts.Col>
-                    </section>
+                    </Layouts.Box>
                     <Layouts.Cover
+                        height={48}
                         background={{
-                            background: "rgba(var(--white),0.045)",
-                            img: { src: require("../../assets/main/mobile_screens.png") },
+                            background: "black",
+                            filter: { color: "black", opacity: 0.6 },
+                            img: { src: require("../../assets/banners/inbox/1.png"), style: { objectFit: "none" } },
                         }}
-                        style={{ height: `calc(100vh - 6em)`, scrollSnapAlign: "end" }}
-                        fullsize
+                        style={{ scrollSnapAlign: "initial" }}
                     >
-                        <Layouts.Contents.InnerContent padding={8}>
-                            <Layouts.Col style={{ maxWidth: "70em" }}>
-                                <Layouts.Col gap={4}>
+                        <Layouts.Row align={"center"} style={{ position: "relative", zIndex: 2 }} fill>
+                            <Layouts.Col align={"center"} fit>
+                                <Elements.Text type={"h2"} style={{ wordBreak: "break-word" }}>
+                                    coinmeca
+                                </Elements.Text>
+                                <Elements.Text type={"p"} opacity={0.6} style={{ wordBreak: "break-word" }}>
+                                    Get new experience of crypto finance life on coinmeca.
+                                </Elements.Text>
+                            </Layouts.Col>
+                        </Layouts.Row>
+                    </Layouts.Cover>
+                    <Layouts.Box padding={0}>
+                        <section className="section s4">
+                            <Layouts.Col align={"center"} gap={windowSize.width > Root.Device.Tablet ? 8 : 4}>
+                                <Layouts.Col align={"center"}>
                                     <Elements.Text type={"h3"} style={{ wordBreak: "break-word" }}>
-                                        Anytime, Anywhere
+                                        Faster and Easier
                                     </Elements.Text>
                                     <Elements.Text type={"p"} style={{ wordBreak: "break-word" }}>
-                                        You can access it anywhere and whenever you want. Coinmeca will unfold out an amazing decentralized trading system out
-                                        to your hand, also an optimized user interface for the user with responsive design.
+                                        {"Optimizaed experience for you. Get more information or connect with people by joining the community."}
                                     </Elements.Text>
                                 </Layouts.Col>
-                                <Layouts.Row align={"left"}>
-                                    <Controls.Button iconLeft={"exchange"} fit>
-                                        {"Get started to trade"}
-                                    </Controls.Button>
-                                    {/* <Controls.Button iconLeft={"bank"} fit>
+                                <Layouts.Col
+                                    gap={4}
+                                    align={"center"}
+                                    style={{ width: windowSize.width > Root.Device.Tablet ? "80%" : "100%", transition: ".3s ease" }}
+                                >
+                                    <Layouts.Row gap={2} responsive={"mobile"}>
+                                        <a style={{ background: `url(${Btn1?.src}) 0% 0% / cover` }} href={"https://docs.coinmeca.net"} target={"_blank"}>
+                                            <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
+                                                <Elements.Text size={2} weight={"bold"}>
+                                                    Cryptocurrency
+                                                    <br />
+                                                    Trading Guide
+                                                </Elements.Text>
+                                                <Layouts.Row align={"right"}>
+                                                    <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                                </Layouts.Row>
+                                            </Layouts.Col>
+                                        </a>
+                                        <a style={{ background: `url(${Btn2?.src}) 0% 0% / cover` }} href={"https://docs.coinmeca.net"} target={"_blank"}>
+                                            <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
+                                                <Elements.Text size={2} weight={"bold"}>
+                                                    Cryptocurrency
+                                                    <br />
+                                                    Deposit / Withdraw
+                                                    <br />
+                                                    Guide
+                                                </Elements.Text>
+                                                <Layouts.Row align={"right"}>
+                                                    <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                                </Layouts.Row>
+                                            </Layouts.Col>
+                                        </a>
+                                    </Layouts.Row>
+                                    <Layouts.Row gap={2} responsive={"mobile"}>
+                                        <a style={{ background: `url(${Btn3?.src}) 0% 0% / cover` }} href={"https://twitter.com/coinmeca"} target={"_blank"}>
+                                            <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
+                                                <Elements.Text size={2} weight={"bold"}>
+                                                    Check Recent
+                                                    <br />
+                                                    Announcements
+                                                </Elements.Text>
+                                                <Layouts.Row align={"right"}>
+                                                    <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                                </Layouts.Row>
+                                            </Layouts.Col>
+                                        </a>
+                                        <a style={{ background: `url(${Btn4?.src}) 0% 0% / cover` }} href={"https://discord.gg/m5Duwc9J"} target={"_blank"}>
+                                            <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
+                                                <Elements.Text size={2} weight={"bold"}>
+                                                    Join
+                                                    <br />
+                                                    Our Community
+                                                </Elements.Text>
+                                                <Layouts.Row align={"right"}>
+                                                    <Elements.Icon icon={"chevron-right-bold"} scale={1.25} />
+                                                </Layouts.Row>
+                                            </Layouts.Col>
+                                        </a>
+                                    </Layouts.Row>
+                                </Layouts.Col>
+                            </Layouts.Col>
+                        </section>
+                        <Layouts.Cover
+                            background={{
+                                background: "rgba(var(--white),0.045)",
+                                img: { src: require("../../assets/main/mobile_screens.png") },
+                            }}
+                            style={{ height: `calc(100vh - 6em)`, scrollSnapAlign: "end" }}
+                            fullsize
+                        >
+                            <Layouts.Contents.InnerContent padding={8}>
+                                <Layouts.Col style={{ maxWidth: "70em" }}>
+                                    <Layouts.Col gap={4}>
+                                        <Elements.Text type={"h3"} style={{ wordBreak: "break-word" }}>
+                                            Anytime, Anywhere
+                                        </Elements.Text>
+                                        <Elements.Text type={"p"} style={{ wordBreak: "break-word" }}>
+                                            You can access it anywhere and whenever you want. Coinmeca will unfold out an amazing decentralized trading system
+                                            out to your hand, also an optimized user interface for the user with responsive design.
+                                        </Elements.Text>
+                                    </Layouts.Col>
+                                    <Layouts.Row align={"left"}>
+                                        <Controls.Button iconLeft={"exchange"} fit>
+                                            {"Get started to trade"}
+                                        </Controls.Button>
+                                        {/* <Controls.Button iconLeft={"bank"} fit>
                                         Apple Store
                                     </Controls.Button> */}
-                                </Layouts.Row>
-                            </Layouts.Col>
-                        </Layouts.Contents.InnerContent>
-                    </Layouts.Cover>
-                </Layouts.Box>
-            </Layouts.Page>
-        </Style>
+                                    </Layouts.Row>
+                                </Layouts.Col>
+                            </Layouts.Contents.InnerContent>
+                        </Layouts.Cover>
+                    </Layouts.Box>
+                </Layouts.Page>
+            </Style>
+        </Layouts.Page>
     );
 }
 

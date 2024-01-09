@@ -1,3 +1,4 @@
-import NotificationCenter from "./NotificationCenter";
+import Notification from "./Notification";
+import ScrollPosition from "./ScrollPosition";
 
-export { NotificationCenter }
+export { Notification, ScrollPosition }

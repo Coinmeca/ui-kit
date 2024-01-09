@@ -231,8 +231,8 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			}
 
 			if (display) {
-				copy[0] = parseInt(copy[0]).toString();
-				if (!num && copy[0] === 0) { point = false; copy = [0]; };
+				copy[0] = parseInt(copy[0]);
+				if (!num && (copy[0] === 0)) { point = false; copy = [0]; };
 				if (type === 'currency') copy[0] = copy[0].toLocaleString();
 			} else if (type === 'currency') {
 				let number: string = '';
