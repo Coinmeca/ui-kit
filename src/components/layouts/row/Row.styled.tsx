@@ -1,6 +1,6 @@
 "use client";
-import { Root } from "lib/style";
 import { styled, css } from "styled-components";
+import { Root } from "lib/style";
 
 const gap = css`
     gap: var(--gap);
@@ -75,26 +75,26 @@ const Style = styled.div<{
         }
     }
 
-    ${({ $responsive, $reverse }) => {
+    ${({ $responsive, $reverse, $fix }) => {
         switch ($responsive) {
             case "laptop":
                 return css`
                     @media all and (max-width: ${Root.Device.Laptop}px) {
-                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        flex-flow: ${$reverse ? ($fix ? "column-reverse" : "column-reverse wrap") : $fix ? "column" : "column wrap"};
                         ${gap}
                     }
                 `;
             case "tablet":
                 return css`
                     @media all and (max-width: ${Root.Device.Tablet}px) {
-                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        flex-flow: ${$reverse ? ($fix ? "column-reverse" : "column-reverse wrap") : $fix ? "column" : "column wrap"};
                         ${gap}
                     }
                 `;
             case "mobile":
                 return css`
                     @media all and (max-width: ${Root.Device.Mobile}px) {
-                        flex-direction: ${$reverse ? "column-reverse" : "column"};
+                        flex-flow: ${$reverse ? ($fix ? "column-reverse" : "column-reverse wrap") : $fix ? "column" : "column wrap"};
                         ${gap}
                     }
                 `;

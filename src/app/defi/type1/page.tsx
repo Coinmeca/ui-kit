@@ -678,16 +678,29 @@ export default function Page() {
         }, [asset, filter]);
 
         const condition =
-            values?.filter((f: Asset) => f?.symbol?.toUpperCase() !== "MECA")?.length > 0 ||
-            vault?.filter((f: Asset) => f?.type === token.high)?.length > 0 ||
-            user;
+            user &&
+            vault?.filter(
+                (f: Asset) => f?.symbol?.toUpperCase() !== "MECA" && users[user]?.assets?.find((a) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase())
+            )?.length > 0;
 
+        console.log("asset", asset, asset?.symbol !== "");
         return (
-            <Modal width={condition ? 96 : 64} title={`Listing`} onClose={() => closeListingModal()} close>
+            <Modal
+                width={condition && asset?.symbol && asset?.symbol !== "" && filter?.length > 0 ? 96 : 64}
+                title={`Listing`}
+                buttonArea={
+                    condition &&
+                    asset?.symbol &&
+                    asset?.symbol !== "" &&
+                    filter?.length > 0 && <Controls.Button onClick={() => handleListing()}>Add</Controls.Button>
+                }
+                onClose={() => closeListingModal()}
+                close
+            >
                 {condition ? (
                     typeof user === "number" ? (
                         <Layouts.Col gap={2} fill>
-                            <Layouts.Row gap={2} fill>
+                            <Layouts.Row gap={2} fill fix responsive="mobile">
                                 <Layouts.Col gap={2} fill>
                                     <Layouts.Col gap={0.5}>
                                         <Elements.Text align={"left"}>
@@ -765,66 +778,70 @@ export default function Page() {
                                         />
                                     )}
                                 </Layouts.Col>
-                                <Layouts.Divider vertical />
-                                <Layouts.Box padding={2}>
-                                    {asset || (filter && filter?.length > 0) ? (
-                                        <>
-                                            <Layouts.Col gap={4}>
-                                                {filter?.map((f: Asset, i: number) => (
-                                                    <Layouts.Col key={i} gap={1}>
-                                                        {asset && (
-                                                            <Layouts.Col gap={0.5}>
-                                                                <Layouts.Row>
-                                                                    <Elements.Text align={"left"}>{asset?.symbol?.toUpperCase()}</Elements.Text>
-                                                                    <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
-                                                                        {(asset?.amount || filter.length) / filter.length} {asset?.symbol?.toUpperCase()}
-                                                                    </Elements.Text>
-                                                                </Layouts.Row>
-                                                                <div
-                                                                    style={{
-                                                                        height: "1em",
-                                                                        backgroundImage: `linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.3))`,
-                                                                        backgroundSize: `${((asset?.amount || 1) * 100) / filter?.length / max}% 100%`,
-                                                                        backgroundPosition: "left center",
-                                                                        backgroundRepeat: "no-repeat",
-                                                                    }}
-                                                                />
+                                {asset?.symbol && asset?.symbol !== "" && filter?.length > 0 && (
+                                    <>
+                                        <Layouts.Divider vertical={windowSize.width > Root.Device.Mobile} />
+                                        <Layouts.Box padding={2}>
+                                            {asset || (filter && filter?.length > 0) ? (
+                                                <>
+                                                    <Layouts.Col gap={4}>
+                                                        {filter?.map((f: Asset, i: number) => (
+                                                            <Layouts.Col key={i} gap={1}>
+                                                                {asset && (
+                                                                    <Layouts.Col gap={0.5}>
+                                                                        <Layouts.Row>
+                                                                            <Elements.Text align={"left"}>{asset?.symbol?.toUpperCase()}</Elements.Text>
+                                                                            <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
+                                                                                {(asset?.amount || filter.length) / filter.length}{" "}
+                                                                                {asset?.symbol?.toUpperCase()}
+                                                                            </Elements.Text>
+                                                                        </Layouts.Row>
+                                                                        <div
+                                                                            style={{
+                                                                                height: "1em",
+                                                                                backgroundImage: `linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.3))`,
+                                                                                backgroundSize: `${((asset?.amount || 1) * 100) / filter?.length / max}% 100%`,
+                                                                                backgroundPosition: "left center",
+                                                                                backgroundRepeat: "no-repeat",
+                                                                            }}
+                                                                        />
+                                                                    </Layouts.Col>
+                                                                )}
+                                                                <Layouts.Col key={i} gap={0.5}>
+                                                                    <Layouts.Row>
+                                                                        <Elements.Text align={"left"}>{f?.symbol?.toUpperCase()}</Elements.Text>
+                                                                        <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
+                                                                            {f?.amount || 0} {f?.symbol?.toUpperCase()}
+                                                                        </Elements.Text>
+                                                                    </Layouts.Row>
+                                                                    <div
+                                                                        style={{
+                                                                            height: "1em",
+                                                                            backgroundImage: `linear-gradient(#${colors[i] || "fff"}, #${colors[i] || "fff"})`,
+                                                                            backgroundSize: `${((f?.amount || 1) * 100) / max}% 100%`,
+                                                                            backgroundPosition: "left center",
+                                                                            backgroundRepeat: "no-repeat",
+                                                                        }}
+                                                                    />
+                                                                </Layouts.Col>
                                                             </Layouts.Col>
-                                                        )}
-                                                        <Layouts.Col key={i} gap={0.5}>
-                                                            <Layouts.Row>
-                                                                <Elements.Text align={"left"}>{f?.symbol?.toUpperCase()}</Elements.Text>
-                                                                <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
-                                                                    {f?.amount || 0} {f?.symbol?.toUpperCase()}
-                                                                </Elements.Text>
-                                                            </Layouts.Row>
-                                                            <div
-                                                                style={{
-                                                                    height: "1em",
-                                                                    backgroundImage: `linear-gradient(#${colors[i] || "fff"}, #${colors[i] || "fff"})`,
-                                                                    backgroundSize: `${((f?.amount || 1) * 100) / max}% 100%`,
-                                                                    backgroundPosition: "left center",
-                                                                    backgroundRepeat: "no-repeat",
-                                                                }}
-                                                            />
-                                                        </Layouts.Col>
+                                                        ))}
                                                     </Layouts.Col>
-                                                ))}
-                                            </Layouts.Col>
-                                        </>
-                                    ) : (
-                                        <Layouts.Contents.InnerContent
-                                            style={{
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                            }}
-                                        >
-                                            <Elements.Text>There is no selected pair(s) yet.</Elements.Text>
-                                        </Layouts.Contents.InnerContent>
-                                    )}
-                                </Layouts.Box>
+                                                </>
+                                            ) : (
+                                                <Layouts.Contents.InnerContent
+                                                    style={{
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                    }}
+                                                >
+                                                    <Elements.Text>There is no selected pair(s) yet.</Elements.Text>
+                                                </Layouts.Contents.InnerContent>
+                                            )}
+                                        </Layouts.Box>
+                                    </>
+                                )}
                             </Layouts.Row>
-                            <Controls.Button onClick={() => handleListing()}>Add</Controls.Button>
                         </Layouts.Col>
                     ) : (
                         <Elements.Text>User not selected.</Elements.Text>
@@ -1707,12 +1724,6 @@ export default function Page() {
                                                             >
                                                                 Add Asset
                                                             </Controls.Button>
-                                                            <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleListingModal()}>
-                                                                Listing
-                                                            </Controls.Button>
-                                                            <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleDepositModal()}>
-                                                                Deposit
-                                                            </Controls.Button>
                                                             <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleWithdrawModal()}>
                                                                 Withdraw
                                                             </Controls.Button>
@@ -1857,6 +1868,14 @@ export default function Page() {
                                                                 </div>
                                                             ))}
                                                     </Layouts.Contents.InnerContent>
+                                                    <Layouts.Row gap={1}>
+                                                        <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleListingModal()}>
+                                                            Listing
+                                                        </Controls.Button>
+                                                        <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleDepositModal()}>
+                                                            Deposit
+                                                        </Controls.Button>
+                                                    </Layouts.Row>
                                                     <Controls.Button type={"solid"} onClick={handleAddNewUser}>
                                                         Add New User
                                                     </Controls.Button>
