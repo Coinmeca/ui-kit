@@ -169,7 +169,7 @@ export default function Page() {
     const handleAddAsset = (type: "vault" | "user", asset: Asset, index?: number) => {
         switch (type) {
             case "vault":
-                if (asset?.amount && asset?.amount > 0) {
+                if (asset?.amount && asset?.amount !== 0) {
                     setVault((state: Asset[]) => {
                         const exist = state?.find((a: Asset) => a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
                         return exist
@@ -183,10 +183,16 @@ export default function Page() {
                                       return a;
                                   }
                               })
-                            : [...state, asset];
+                            : [
+                                  ...state,
+                                  {
+                                      ...asset,
+                                      amount: asset?.amount,
+                                  },
+                              ];
                     });
                 }
-                if (asset?.value && asset?.value > 0) {
+                if (asset?.value && asset?.value !== 0) {
                     setValues((state: Asset[]) => {
                         const exist = state?.find((a: Asset) => a?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase());
                         return exist
@@ -391,8 +397,8 @@ export default function Page() {
                     <Controls.Input
                         placeholder={0}
                         align={"right"}
-                        // value={amount}
-                        onChange={(e: any, v: any) => setAmount(parseFloat(v))}
+                        type={"currency"}
+                        onChange={(e: any, v: any) => setAmount(parseFloat(Format(v, "number", true)))}
                         left={{
                             children: <Elements.Text>Amount</Elements.Text>,
                         }}
@@ -401,8 +407,8 @@ export default function Page() {
                         <Controls.Input
                             placeholder={0}
                             align={"right"}
-                            // value={value}
-                            onChange={(e: any, v: any) => setValue(parseFloat(v))}
+                            type={"currency"}
+                            onChange={(e: any, v: any) => setValue(parseFloat(Format(v, "number", true)))}
                             left={{
                                 children: <Elements.Text>Value</Elements.Text>,
                             }}
@@ -716,6 +722,7 @@ export default function Page() {
                                         </Elements.Text>
                                         <Controls.Input
                                             // value={asset?.amount}
+                                            type={"currency"}
                                             onChange={(e: any, v: any) => handleChangeListingAmount(v)}
                                             max={users[user]?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase())?.amount}
                                             right={{
@@ -1245,7 +1252,7 @@ export default function Page() {
                                     align={"right"}
                                     // value={burn}
                                     onChange={(e: any, v: any) => setBurn(parseFloat(Format(v, "number")))}
-                                    max={400}
+                                    max={user ? users[user]?.assets?.find((f) => f?.symbol?.toUpperCase() === "MECA")?.amount : 0}
                                     right={{
                                         children: (
                                             <Elements.Text type="strong" opacity={0.6}>
@@ -1679,6 +1686,7 @@ export default function Page() {
                                                                                         <Elements.Text type={"desc"} opacity={0.6}>
                                                                                             1 :{" "}
                                                                                             {Format((a?.weight || least) / (a?.amount || least), "number", {
+                                                                                                display: true,
                                                                                                 limit: 10,
                                                                                                 fix: 3,
                                                                                             })}{" "}
@@ -1691,14 +1699,18 @@ export default function Page() {
                                                                                                             a?.symbol?.toUpperCase()
                                                                                                     )?.value || least),
                                                                                                 "number",
-                                                                                                { limit: 10, fix: 3 }
+                                                                                                { display: true, limit: 10, fix: 3 }
                                                                                             )}
                                                                                             )
                                                                                         </Elements.Text>
                                                                                     </Layouts.Col>
                                                                                     <Layouts.Col gap={0}>
                                                                                         <Elements.Text type={"strong"} align={"right"}>
-                                                                                            {a?.amount}
+                                                                                            {Format(a?.amount, "currency", {
+                                                                                                display: true,
+                                                                                                limit: 10,
+                                                                                                fix: 3,
+                                                                                            })}
                                                                                         </Elements.Text>
                                                                                         <Elements.Text type={"desc"} align={"right"} opacity={0.45}>
                                                                                             = $
@@ -1723,7 +1735,11 @@ export default function Page() {
                                                                                         </Elements.Text>
                                                                                         <Elements.Text type={"strong"} align={"right"}>
                                                                                             {/* {a?.need || 0} */}
-                                                                                            {Format(a?.need || 0, "number", true, 8)}
+                                                                                            {Format(a?.need || 0, "number", {
+                                                                                                display: true,
+                                                                                                limit: 10,
+                                                                                                fix: 3,
+                                                                                            })}
                                                                                         </Elements.Text>
                                                                                     </Layouts.Col>
                                                                                     <Layouts.Col gap={0}>
@@ -1736,8 +1752,7 @@ export default function Page() {
                                                                                                 parseFloat((a?.weight || 0).toString()) *
                                                                                                     (supply / totalWeight),
                                                                                                 "number",
-                                                                                                true,
-                                                                                                8
+                                                                                                { display: true, limit: 10, fix: 3 }
                                                                                             )}
                                                                                         </Elements.Text>
                                                                                     </Layouts.Col>
