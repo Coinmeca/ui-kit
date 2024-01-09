@@ -29,10 +29,10 @@ export default function Frame(props: Frame) {
                 {props?.header && <Headers.Header {...props?.header} side={{ ...props?.header?.side, width: width }} />}
                 <section>
                     {align === "left" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
-                    <main>
+                    <slot>
                         {props?.children}
                         {/* <Footers.Footer /> */}
-                    </main>
+                    </slot>
                     {align === "right" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
                     {props?.toast && props?.toast?.list && props?.toast?.list?.length > 0 && <Toast {...props?.toast} width={width} align={align} />}
                 </section>
