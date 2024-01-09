@@ -1548,12 +1548,16 @@ export default function Page() {
         setTVL(tvl);
     }, [vault, values]);
 
+    const [count, setCount] = useState(0);
     useEffect(() => {
+        setCount(count + 1);
         setValues((state: Asset[]) =>
             values?.map((a: Asset) => {
                 if (a?.symbol?.toUpperCase() === "MECA") {
                     const v = { ...a, value: tvl && supply ? tvl / supply : a?.value };
-                    setLast(state?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value!);
+                    if (count % 2 === 0) {
+                        setLast(state?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value!);
+                    }
                     return v;
                 }
                 return a;
@@ -1583,7 +1587,6 @@ export default function Page() {
                                         fix: 3,
                                     })}
                                 </Elements.Text>
-
                                 <Elements.Text
                                     align={windowSize.width <= Root.Device.Mobile ? "right" : undefined}
                                     color={
@@ -1594,12 +1597,19 @@ export default function Page() {
                                             : undefined
                                     }
                                 >
+                                    {Sign(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last)}
+                                    {"$ "}
+                                    {Format(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last, "currency", {
+                                        display: true,
+                                        limit: 8,
+                                        fix: 3,
+                                        sign: false,
+                                    })}{" "}
                                     {values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last > 0
                                         ? "▲"
                                         : values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last < 0
                                         ? "▼"
                                         : undefined}
-                                    {(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last).toFixed(3)}
                                 </Elements.Text>
                             </Layouts.Row>
                             <Layouts.Row gap={0.5}>
@@ -1862,9 +1872,13 @@ export default function Page() {
                                                                                         change={
                                                                                             parseFloat(
                                                                                                 Format(getUserTVL(i) - (u?.initial || 0), "number", true)
-                                                                                            ) >= 0
+                                                                                            ) > 0
                                                                                                 ? "var(--green)"
-                                                                                                : "var(--red)"
+                                                                                                : parseFloat(
+                                                                                                      Format(getUserTVL(i) - (u?.initial || 0), "number", true)
+                                                                                                  ) < 0
+                                                                                                ? "var(--red)"
+                                                                                                : undefined
                                                                                         }
                                                                                     >
                                                                                         <Elements.Text>PNL:</Elements.Text>
