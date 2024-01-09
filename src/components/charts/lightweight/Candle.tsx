@@ -110,7 +110,6 @@ export default function Candle(props: Candle) {
     }, [props?.volume, up, down, color]);
 
     useEffect(() => {
-        console.log(price);
         // const chart = createChart(document.getElementById('container'), );
         if (chartRef?.current) {
             const handleResize = () => {
