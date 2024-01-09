@@ -866,7 +866,7 @@ export default function Page() {
     const [handleListingModal, closeListingModal] = usePortal(<ListingModal />);
 
     const DepositModal = () => {
-        const assets = users[user!]?.assets?.filter((f: Asset) => f?.symbol?.toUpperCase() !== "MECA");
+        const assets = users[user!]?.assets?.filter((f) => (f?.amount || 0) > 0 && vault?.find((v) => f?.symbol?.toUpperCase() === v?.symbol?.toUpperCase()));
         const [asset, setAsset] = useState<number>(0);
         const [amount, setAmount] = useState<number>(0);
         const [repeat, setRepeat] = useState<number>(1);
@@ -892,6 +892,7 @@ export default function Page() {
             // if (type !== token.high) {
             amt = parseFloat((amount * repeat > (balance?.amount || 0) ? ((balance?.amount || least) - least || least) / repeat : amount).toString());
             // }
+            if (!exist) return;
             console.log(ast?.symbol, type);
             [...Array(repeat)].map(() => {
                 const base = ast?.symbol?.toUpperCase();
@@ -900,7 +901,7 @@ export default function Page() {
                     const b = (base === "MECA" ? values : v)?.find((f: Asset) => f?.symbol?.toUpperCase() === base?.toUpperCase());
                     const q = (quote === "MECA" ? values : v)?.find((f: Asset) => f?.symbol?.toUpperCase() === quote.toUpperCase());
 
-                    if (!b || !q) return undefined;
+                    if (!b || !q) return;
                     // switch (type) {
                     //     case token.high: {
                     //         rate =
