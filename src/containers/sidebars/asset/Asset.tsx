@@ -34,7 +34,6 @@ export default function Asset(props: Asset) {
             typeof data !== "string" &&
             data?.length > 0 &&
             data?.map((data: AssetData, i: number) => ({
-                key: i,
                 children: [
                     [
                         {
@@ -130,16 +129,12 @@ export default function Asset(props: Asset) {
                         style: { height: "6.5em" },
                         onClick: () => {},
                         children: [
-                            <>
-                                <Elements.Text type={"strong"}>Total of all your assets</Elements.Text>
-                            </>,
+                            {
+                                children: <Elements.Text type={"strong"}>Total of all your assets</Elements.Text>,
+                            },
                             {
                                 align: "right",
-                                children: (
-                                    <>
-                                        <Elements.Text align={"right"}>$ {Format(123456789, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
-                                    </>
-                                ),
+                                children: <Elements.Text align={"right"}>$ {Format(123456789, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>,
                             },
                         ],
                     },
