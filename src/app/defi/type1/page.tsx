@@ -1270,8 +1270,14 @@ export default function Page() {
             // need 변경 필요함
             const quote = {
                 goal: direction ? base.goal * price : base.goal / price,
-                hold: getLiquidity(direction ? q : b, direction ? b : q),
+                hold:
+                    getLiquidity(direction ? b : q, direction ? q : b) +
+                    amount / (state?.find((f) => f?.symbol?.toUpperCase() === (direction ? q : b)?.toUpperCase())?.markets?.length || 1),
             };
+            const b_need = base.goal - base.hold;
+            const q_need = quote.goal - quote.hold;
+
+            console.log(direction ? b : q, base.goal - base.hold, direction ? q : b, quote.goal - quote.hold);
 
             return state?.map((a: Asset) => {
                 if (a?.symbol?.toUpperCase() === (direction ? b : q)?.toUpperCase()) {
@@ -1282,7 +1288,14 @@ export default function Page() {
                         need: base.goal - base.hold,
                     };
                 } else {
-                    return a?.symbol?.toUpperCase() === (direction ? q : b)?.toUpperCase() ? { ...a, amount: (a?.amount || 0) + amount } : a;
+                    const need = a?.need || 0;
+                    return a?.symbol?.toUpperCase() === (direction ? q : b)?.toUpperCase()
+                        ? {
+                              ...a,
+                              amount: (a?.amount || 0) + amount,
+                              need: quote.goal - quote.hold,
+                          }
+                        : a;
                 }
             });
         });
