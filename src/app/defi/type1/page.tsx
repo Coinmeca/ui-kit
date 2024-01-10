@@ -841,11 +841,10 @@ export default function Page() {
     const [handleListingModal, closeListingModal] = usePortal(<ListingModal />);
 
     const DepositModal = () => {
-        // const assets =
-        // typeof user === "number"
-        // ? users[user]?.assets?.filter((f) => (f?.amount || 0) > 0 && vault?.find((v) => f?.symbol?.toUpperCase() === v?.symbol?.toUpperCase()))
-        // : [];
-        const assets: any[] = [];
+        const assets =
+            typeof user === "number"
+                ? users[user]?.assets?.filter((f) => (f?.amount || 0) > 0 && vault?.find((v) => f?.symbol?.toUpperCase() === v?.symbol?.toUpperCase()))
+                : [];
         const [asset, setAsset] = useState<number>(0);
         const [amount, setAmount] = useState<number>(0);
         const [repeat, setRepeat] = useState<number>(1);
