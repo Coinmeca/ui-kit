@@ -956,7 +956,7 @@ export default function Page() {
             <Modal width={64} title={`Deposit`} onClose={closeDepositModal} close>
                 <Layouts.Col gap={2} fill>
                     {vault?.length > 0 ? (
-                        typeof user !== "undefined" ? (
+                        typeof user === "number" ? (
                             assets[asset] && assets?.length > 0 ? (
                                 <>
                                     <Layouts.Col gap={1} fill>
