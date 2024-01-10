@@ -841,11 +841,11 @@ export default function Page() {
     const [handleListingModal, closeListingModal] = usePortal(<ListingModal />);
 
     const DepositModal = () => {
-        console.log(user);
-        const assets =
-            typeof user === "number"
-                ? users[user]?.assets?.filter((f) => (f?.amount || 0) > 0 && vault?.find((v) => f?.symbol?.toUpperCase() === v?.symbol?.toUpperCase()))
-                : [];
+        // const assets =
+        // typeof user === "number"
+        // ? users[user]?.assets?.filter((f) => (f?.amount || 0) > 0 && vault?.find((v) => f?.symbol?.toUpperCase() === v?.symbol?.toUpperCase()))
+        // : [];
+        const assets: any[] = [];
         const [asset, setAsset] = useState<number>(0);
         const [amount, setAmount] = useState<number>(0);
         const [repeat, setRepeat] = useState<number>(1);
@@ -1862,10 +1862,10 @@ export default function Page() {
                                                                 ))}
                                                         </Layouts.Contents.InnerContent>
                                                         <Layouts.Row gap={1}>
-                                                            <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={handleAddNewUser}>
+                                                            <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleAddNewUser()}>
                                                                 Add New User
                                                             </Controls.Button>
-                                                            <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={handleListingModal}>
+                                                            <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleListingModal()}>
                                                                 Listing
                                                             </Controls.Button>
                                                         </Layouts.Row>
