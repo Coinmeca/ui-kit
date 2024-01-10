@@ -1473,7 +1473,7 @@ export default function Page() {
 
     useEffect(() => {
         setTotalWeight(vault?.reduce((a: number, b: Asset) => a + parseFloat((b?.weight || least).toString()), 0));
-    }, [vault]);
+    }, [vault, users]);
 
     useEffect(() => {
         setSupply(users?.reduce((a: number, b: User) => a + (b?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.amount || 0), 0));
