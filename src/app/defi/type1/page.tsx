@@ -842,7 +842,10 @@ export default function Page() {
 
     const DepositModal = () => {
         console.log(user);
-        const assets = users[user!]?.assets?.filter((f) => (f?.amount || 0) > 0 && vault?.find((v) => f?.symbol?.toUpperCase() === v?.symbol?.toUpperCase()));
+        const assets =
+            typeof user === "number"
+                ? users[user]?.assets?.filter((f) => (f?.amount || 0) > 0 && vault?.find((v) => f?.symbol?.toUpperCase() === v?.symbol?.toUpperCase()))
+                : [];
         const [asset, setAsset] = useState<number>(0);
         const [amount, setAmount] = useState<number>(0);
         const [repeat, setRepeat] = useState<number>(1);
