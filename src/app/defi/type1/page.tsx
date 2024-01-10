@@ -377,6 +377,7 @@ export default function Page() {
                     />
                     <Controls.Input
                         placeholder={0}
+                        value={0}
                         align={"right"}
                         type={"currency"}
                         onChange={(e: any, v: any) => setAmount(parseFloat(Format(v, "number", true)))}
@@ -387,6 +388,7 @@ export default function Page() {
                     {tab === "key" && (
                         <Controls.Input
                             placeholder={0}
+                            value={0}
                             align={"right"}
                             type={"currency"}
                             onChange={(e: any, v: any) => setValue(parseFloat(Format(v, "number", true)))}
@@ -694,6 +696,7 @@ export default function Page() {
                                         </Elements.Text>
                                         <Controls.Input
                                             type={"currency"}
+                                            value={0}
                                             onChange={(e: any, v: any) => handleChangeListingAmount(v)}
                                             max={users[user]?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase())?.amount}
                                             right={{
@@ -984,6 +987,7 @@ export default function Page() {
                                             <Controls.Input
                                                 placeholder={"repeat"}
                                                 type="number"
+                                                value={0}
                                                 onChange={(e: any, v: any) => setRepeat(parseFloat(v))}
                                                 align={"right"}
                                                 right={{
@@ -1127,6 +1131,7 @@ export default function Page() {
                                 <Controls.Input
                                     placeholder={"amount"}
                                     type={"currency"}
+                                    value={0}
                                     left={{
                                         children: (
                                             <Controls.Dropdown
@@ -1151,6 +1156,7 @@ export default function Page() {
                             <Controls.Input
                                 placeholder={"repeat"}
                                 type="number"
+                                value={0}
                                 onChange={(e: any, v: any) => setRepeat(parseFloat(v))}
                                 align={"right"}
                                 right={{
