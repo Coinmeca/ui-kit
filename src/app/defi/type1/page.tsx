@@ -953,7 +953,7 @@ export default function Page() {
         // }, [asset, amount]);
 
         return (
-            <Modal width={64} title={`Deposit`} onClose={closeDepositModal} close>
+            <Modal width={64} title={`Deposit`} onClose={closeDepositModal}>
                 <Layouts.Col gap={2} fill>
                     {vault?.length > 0 ? (
                         typeof user !== "undefined" ? (
