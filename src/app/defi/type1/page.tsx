@@ -1277,7 +1277,7 @@ export default function Page() {
             const b_need = base.goal - base.hold;
             const q_need = quote.goal - quote.hold;
 
-            console.log(direction ? b : q, base.goal - base.hold, direction ? q : b, quote.goal - quote.hold);
+            // console.log(direction ? b : q, base.goal - base.hold, direction ? q : b, quote.goal - quote.hold);
 
             return state?.map((a: Asset) => {
                 if (a?.symbol?.toUpperCase() === (direction ? b : q)?.toUpperCase()) {
@@ -1288,7 +1288,6 @@ export default function Page() {
                         need: base.goal - base.hold,
                     };
                 } else {
-                    const need = a?.need || 0;
                     return a?.symbol?.toUpperCase() === (direction ? q : b)?.toUpperCase()
                         ? {
                               ...a,
