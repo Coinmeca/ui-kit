@@ -1262,7 +1262,6 @@ export default function Page() {
         setVault((state: Asset[]) => {
             const b = market?.split("/")[0]; // ETH
             const q = market?.split("/")[1]; // USDT
-            console.log(direction);
             const base = {
                 goal: direction
                     ? (getLiquidity(direction ? b : q, direction ? q : b) + amount) / price
