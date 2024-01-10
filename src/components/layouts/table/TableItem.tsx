@@ -33,7 +33,7 @@ export default function TableItem(props: ListItem) {
     const TableCell = (data: any) => {
         return (
             data &&
-            ((typeof data !== "string" || typeof data !== "number") && data?.length > 0 ? (
+            (typeof data !== "string" && data?.length > 0 ? (
                 data?.map((info: any, i: number) => (
                     <Cell key={i} $change={info?.change} style={data?.style} data-col={info?.align}>
                         {TableRow(info?.children || info)}
