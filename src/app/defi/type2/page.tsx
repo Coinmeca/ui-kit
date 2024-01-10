@@ -1167,7 +1167,7 @@ export default function Page() {
                                                     />
                                                 ),
                                             }}
-                                        ></Controls.Input>
+                                        />
                                     </Layouts.Col>
                                     {assets[asset] && (
                                         <>
