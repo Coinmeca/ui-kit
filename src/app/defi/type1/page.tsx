@@ -1663,7 +1663,7 @@ export default function Page() {
                                                             </Layouts.Contents.InnerContent>
                                                             <Layouts.Row gap={1}>
                                                                 <Controls.Button
-                                                                    style={{ flex: "45%" }}
+                                                                    style={{ flex: "30%" }}
                                                                     type={"solid"}
                                                                     onClick={() =>
                                                                         handleAddAssetModal(null, {
@@ -1673,7 +1673,10 @@ export default function Page() {
                                                                 >
                                                                     Add Asset
                                                                 </Controls.Button>
-                                                                <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleWithdrawModal()}>
+                                                                <Controls.Button style={{ flex: "30%" }} type={"solid"} onClick={() => handleDepositModal()}>
+                                                                    Deposit
+                                                                </Controls.Button>
+                                                                <Controls.Button style={{ flex: "30%" }} type={"solid"} onClick={() => handleWithdrawModal()}>
                                                                     Withdraw
                                                                 </Controls.Button>
                                                             </Layouts.Row>
@@ -1855,16 +1858,13 @@ export default function Page() {
                                                                 ))}
                                                         </Layouts.Contents.InnerContent>
                                                         <Layouts.Row gap={1}>
+                                                            <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={handleAddNewUser}>
+                                                                Add New User
+                                                            </Controls.Button>
                                                             <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleListingModal()}>
                                                                 Listing
                                                             </Controls.Button>
-                                                            <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleDepositModal()}>
-                                                                Deposit
-                                                            </Controls.Button>
                                                         </Layouts.Row>
-                                                        <Controls.Button type={"solid"} onClick={handleAddNewUser}>
-                                                            Add New User
-                                                        </Controls.Button>
                                                     </Layouts.Col>
                                                 </Layouts.Contents.InnerContent>
                                             ),
