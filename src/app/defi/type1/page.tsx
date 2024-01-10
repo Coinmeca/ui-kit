@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Modal } from "containers";
 import { usePortal, useWindowSize } from "hooks";
@@ -1022,7 +1022,7 @@ export default function Page() {
             </Modal>
         );
     };
-    const [handleDepositModal, closeDepositModal] = usePortal(<DepositModal />);
+    const [handleDepositModal, closeDepositModal] = usePortal(memo(DepositModal));
 
     const WithdrawModal = () => {
         const [burn, setBurn] = useState<number>(0);
