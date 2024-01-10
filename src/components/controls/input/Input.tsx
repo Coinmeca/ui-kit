@@ -223,7 +223,7 @@ export default function Input(props: Input) {
                             ref={input}
                             style={{ textAlign: align }}
                             placeholder={placeholder}
-                            type={type === "currency" ? "currency" : type}
+                            type={type === "currency" ? "number" : type}
                             inputMode={props?.inputMode}
                             min={min}
                             max={props?.max}
