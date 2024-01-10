@@ -962,7 +962,7 @@ export default function Page() {
                                         </Elements.Text>
                                         <Controls.Input
                                             placeholder={"amount"}
-                                            type="currency"
+                                            type="number"
                                             onChange={(e: any, v: any) => setAmount(parseFloat(Format(v, "number")))}
                                             max={assets[asset]?.amount}
                                             align={"right"}
@@ -976,7 +976,7 @@ export default function Page() {
                                                     />
                                                 ),
                                             }}
-                                        ></Controls.Input>
+                                        />
                                     </Layouts.Col>
                                     {assets[asset] && (
                                         <>
