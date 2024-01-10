@@ -1,14 +1,13 @@
 import SlideContent from "./SlideContent";
 import type { SlideContent as Content } from "./SlideContent";
 import Style from "./SlideContainer.styled";
-import { memo } from "react";
 
 export interface SlideContainer {
     contents?: Content[];
     style?: object;
 }
 
-function SlideContainer(props: SlideContainer) {
+export default function SlideContainer(props: SlideContainer) {
     return (
         <Style style={props?.style}>
             {props?.contents &&
@@ -24,5 +23,3 @@ function SlideContainer(props: SlideContainer) {
         </Style>
     );
 }
-
-export default memo(SlideContainer);
