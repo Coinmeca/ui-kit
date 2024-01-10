@@ -666,7 +666,6 @@ export default function Page() {
                 (f: Asset) => f?.symbol?.toUpperCase() !== "MECA" && users[user]?.assets?.find((a) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase())
             )?.length > 0;
 
-        console.log("asset", asset, asset?.symbol !== "");
         return (
             <Modal
                 width={condition && asset?.symbol && asset?.symbol !== "" && filter?.length > 0 ? 96 : 64}
@@ -756,7 +755,11 @@ export default function Page() {
                                         <Controls.Dropdown
                                             placeholder={asset ? "Select Pair" : "Select your asset first"}
                                             keyName={"symbol"}
-                                            options={tokens}
+                                            options={
+                                                filter?.length === 0
+                                                    ? tokens
+                                                    : tokens?.filter((t) => filter?.find((f) => f?.symbol?.toUpperCase() !== t?.symbol?.toUpperCase()))
+                                            }
                                             onClickItem={(e: any, v: Asset) => handleAddFilter(v)}
                                         />
                                     )}
