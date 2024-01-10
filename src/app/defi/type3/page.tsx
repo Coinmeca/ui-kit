@@ -1,10 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Modal } from "containers";
-import { usePortal } from "hooks";
-import { Capitalize, Format } from "lib/utils";
-import { useEffect, useState } from "react";
+import { usePortal, useWindowSize } from "hooks";
+import { Capitalize, Format, Sign } from "lib/utils";
+import { Root } from "lib/style";
 
 interface Asset {
     type?: number;
@@ -92,6 +93,9 @@ const init = {
 };
 
 export default function Page() {
+    const { windowSize } = useWindowSize();
+    const [tab, setTab] = useState<"vault" | "markets" | "users">("users");
+
     const [values, setValues] = useState<Asset[]>(init.values || []);
     // let vault = (init.vault || []);
     const [vault, setVault] = useState<Asset[]>(init.vault || []);
@@ -101,6 +105,7 @@ export default function Page() {
     const [supply, setSupply] = useState<number>(init.supply || 0);
     const [tvl, setTVL] = useState(0);
     const [last, setLast] = useState<number>(0);
+    const [totalWeight, setTotalWeight] = useState<number>(0);
     const least: number = 0.000000000000000001;
 
     const Formatter = (props: { data?: Asset[]; vault?: boolean }) => {
@@ -1462,9 +1467,11 @@ export default function Page() {
         if (amount >= convert(liquidity, price, !direction)) amount = convert(liquidity, price, !direction) - least;
         let amt = amount;
         let quantity = 0;
+        const l = liquidity;
 
         if (convert(liquidity, price, !direction) <= 0) return;
         while (true) {
+            if (liquidity < perTick) break;
             liquidity -= perTick;
             price =
                 tick?.toString()?.split(".").length > 1 && tick?.toString()?.split(".")[1]
@@ -1482,7 +1489,10 @@ export default function Page() {
                     quantity += perTick;
                     amt -= tl;
                 } else {
-                    quantity += convert(amt, price, !direction);
+                    const qty = quantity + convert(amt, price, !direction);
+
+                    if (liquidity > qty) break;
+                    quantity = qty;
                     amt = 0;
                     break;
                 }
@@ -1496,32 +1506,51 @@ export default function Page() {
         console.log("i", i);
         amount = amount - amt;
 
+        let gap = 0;
         setMarket((state: Market[]) => state?.map((m: Market) => (m?.name?.toUpperCase() === market?.toUpperCase() ? { ...m, price: price } : m)));
         setVault((state: Asset[]) => {
-            const b = market?.split("/")[1];
-            const q = market?.split("/")[0];
+            const b = market?.split("/")[0]; // ETH
+            const q = market?.split("/")[1]; // USDT
             const base = {
-                goal: direction ? getLiquidity(direction ? q : b, direction ? b : q) / price : getLiquidity(direction ? q : b, direction ? b : q) * price,
-                hold: getLiquidity(direction ? b : q, direction ? q : b),
+                goal: direction
+                    ? (getLiquidity(direction ? b : q, direction ? q : b) + amount) / price
+                    : (getLiquidity(direction ? b : q, direction ? q : b) + amount) * price,
+                hold: l - quantity / (state?.find((f) => f?.symbol?.toUpperCase() === (direction ? b : q)?.toUpperCase())?.markets?.length || 1),
             };
+            // 매도토큰 선행, 매수토큰 후행
+            // need 변경 필요함
             const quote = {
-                goal: direction ? getLiquidity(direction ? b : q, direction ? q : b) * price : getLiquidity(direction ? b : q, direction ? q : b) / price,
-                hold: getLiquidity(direction ? q : b, direction ? b : q),
+                goal: direction ? base.goal * price : base.goal / price,
+                hold:
+                    getLiquidity(direction ? b : q, direction ? q : b) +
+                    amount / (state?.find((f) => f?.symbol?.toUpperCase() === (direction ? q : b)?.toUpperCase())?.markets?.length || 1),
             };
+            const b_need = base.goal - base.hold;
+            const q_need = quote.goal - quote.hold;
 
-            return state?.map((a: Asset) =>
-                a?.symbol?.toUpperCase() === (direction ? q : b)?.toUpperCase()
-                    ? {
-                          ...a,
-                          amount: (a?.amount || 0) - quantity,
-                          need: base.goal - base.hold,
-                      }
-                    : a?.symbol?.toUpperCase() === (direction ? b : q)?.toUpperCase()
-                    ? { ...a, amount: (a?.amount || 0) + amount, need: quote.goal - quote.hold }
-                    : a
-            );
+            // console.log(direction ? b : q, base.goal - base.hold, direction ? q : b, quote.goal - quote.hold);
+
+            return state?.map((a: Asset) => {
+                if (a?.symbol?.toUpperCase() === (direction ? b : q)?.toUpperCase()) {
+                    gap = (a?.amount || 0) - quantity;
+                    return {
+                        ...a,
+                        amount: gap < 0 ? least : gap,
+                        need: base.goal - base.hold,
+                    };
+                } else {
+                    return a?.symbol?.toUpperCase() === (direction ? q : b)?.toUpperCase()
+                        ? {
+                              ...a,
+                              amount: (a?.amount || 0) + amount,
+                              need: quote.goal - quote.hold,
+                          }
+                        : a;
+                }
+            });
         });
-        quantity = quantity * 0.99;
+
+        quantity = (gap < 0 ? quantity - Math.abs(gap) : quantity) * 0.99;
         setUsers((state: User[]) =>
             state?.map((u: User, i) => {
                 if (i === user) {
@@ -1690,269 +1719,434 @@ export default function Page() {
     }, [tvl, supply]);
 
     useEffect(() => {
+        setTotalWeight(vault?.reduce((a: number, b: Asset) => a + parseFloat((b?.weight || least).toString()), 0));
+    }, [vault]);
+
+    useEffect(() => {
         setSupply(users?.reduce((a: number, b: User) => a + (b?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.amount || 0), 0));
     }, [users]);
 
     return (
-        <Layouts.Box fit>
-            <Layouts.Contents.InnerContent>
-                <Layouts.Col gap={2} fill>
-                    <Layouts.Row gap={1}>
-                        <Layouts.Row gap={0.5}>
-                            <Elements.Text fix>MECA: ${values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value?.toFixed(3)}</Elements.Text>
-                            <Elements.Text
-                                color={
-                                    values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last > 0
-                                        ? "green"
+        <Layouts.Box fit padding={windowSize.width <= Root.Device.Mobile ? 2 : undefined}>
+            <Layouts.Col fill gap={1}>
+                <Layouts.Contents.InnerContent>
+                    <Layouts.Col gap={1} fill>
+                        <Layouts.Row gap={1} responsive="mobile">
+                            <Layouts.Row gap={0.5}>
+                                <Elements.Text fix>
+                                    MECA: $
+                                    {Format(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value?.toFixed(3), "currency", {
+                                        limit: 8,
+                                        fix: 3,
+                                    })}
+                                </Elements.Text>
+                                <Elements.Text
+                                    align={windowSize.width <= Root.Device.Mobile ? "right" : undefined}
+                                    color={
+                                        values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last > 0
+                                            ? "green"
+                                            : values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last < 0
+                                            ? "red"
+                                            : undefined
+                                    }
+                                >
+                                    {Sign(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last)}
+                                    {"$ "}
+                                    {Format(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last, "currency", {
+                                        display: true,
+                                        limit: 8,
+                                        fix: 3,
+                                        sign: false,
+                                    })}{" "}
+                                    {values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last > 0
+                                        ? "▲"
                                         : values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last < 0
-                                        ? "red"
-                                        : undefined
-                                }
-                            >
-                                {values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last > 0
-                                    ? "▲"
-                                    : values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last < 0
-                                    ? "▼"
-                                    : undefined}
-                                {(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last).toFixed(3)}
-                            </Elements.Text>
+                                        ? "▼"
+                                        : undefined}
+                                </Elements.Text>
+                            </Layouts.Row>
+                            <Layouts.Row gap={0.5}>
+                                <Elements.Text fix>
+                                    Weight:{" "}
+                                    {Format(
+                                        vault?.reduce((a: number, b: Asset) => a + (b?.weight || 0), 0),
+                                        "currency",
+                                        { limit: 8, fix: 3 }
+                                    )}
+                                </Elements.Text>
+                                <Elements.Text fix>Total Supply: {Format(supply, "currency", { limit: 8, fix: 3 })}</Elements.Text>
+                            </Layouts.Row>
                         </Layouts.Row>
-                        <Elements.Text>Value:</Elements.Text>
-                        <Elements.Text>Weight: {vault?.reduce((a: number, b: Asset) => a + (b?.weight || 0), 0)}</Elements.Text>
-                        <Elements.Text>Total Supply: {supply}</Elements.Text>
-                    </Layouts.Row>
-                    <Layouts.Divider />
-                    <Layouts.Contents.GridContainer direction="row" width={{ min: 16 }} height={5} gap={0.5}>
-                        {values
-                            ?.filter((f: Asset) => f?.symbol?.toUpperCase() !== "MECA")
-                            ?.map((a: Asset, i: number) => (
-                                <div key={i}>
-                                    <Layouts.Box
-                                        padding={0.5}
-                                        style={{
-                                            ...(a?.type === 0
-                                                ? { border: "1px solid white" }
-                                                : a?.type === 0
-                                                ? { border: "1px solid rgba(255,255,255,0.6)" }
-                                                : {}),
-                                            width: "auto",
-                                            minHeight: "initial",
-                                        }}
-                                    >
-                                        <Layouts.Row gap={0.5}>
-                                            <Elements.Text>{a?.symbol}</Elements.Text>
-                                            <Elements.Text align={"right"}>$ {a?.value}</Elements.Text>
-                                        </Layouts.Row>
-                                    </Layouts.Box>
-                                </div>
-                            ))}
-                    </Layouts.Contents.GridContainer>
-                    <Layouts.Divider />
-                    <Layouts.Contents.InnerContent>
-                        <Layouts.Row gap={1} fill>
-                            <Layouts.Contents.InnerContent>
-                                <Layouts.Col gap={1} fill>
-                                    <Layouts.Row gap={1}>
-                                        <Controls.Button
-                                            type={"solid"}
-                                            onClick={() =>
-                                                handleAddAssetModal(null, {
-                                                    type: "vault",
-                                                })
-                                            }
+                        <Layouts.Divider />
+                        <Layouts.Contents.GridContainer direction="row" style={{ minHeight: 60 }} width={{ min: 16 }} gap={0.5}>
+                            {values
+                                ?.filter((f: Asset) => f?.symbol?.toUpperCase() !== "MECA")
+                                ?.map((a: Asset, i: number) => (
+                                    <div key={i}>
+                                        <Layouts.Box
+                                            padding={0.5}
+                                            style={{
+                                                ...(a?.type === 0
+                                                    ? { border: "1px solid white" }
+                                                    : a?.type === 0
+                                                    ? { border: "1px solid rgba(255,255,255,0.6)" }
+                                                    : {}),
+                                                width: "auto",
+                                                minHeight: "initial",
+                                            }}
                                         >
-                                            Add Asset
-                                        </Controls.Button>
-                                        <Controls.Button type={"solid"} onClick={() => handleListingModal()}>
-                                            Listing
-                                        </Controls.Button>
-                                        <Controls.Button type={"solid"} onClick={() => handleDepositModal()}>
-                                            Deposit
-                                        </Controls.Button>
-                                        <Controls.Button type={"solid"} onClick={() => handleWithdrawModal()}>
-                                            Withdraw
-                                        </Controls.Button>
-                                    </Layouts.Row>
-                                    <Layouts.Contents.InnerContent>
-                                        <Layouts.Col gap={1}>
-                                            {vault?.map((a: Asset, i: number) => (
-                                                <Layouts.Box key={i} padding={2} fit>
-                                                    <Layouts.Col gap={1}>
-                                                        <Layouts.Row>
-                                                            <Layouts.Col gap={0}>
-                                                                <Elements.Text type={"strong"}>{a?.symbol}</Elements.Text>
-                                                                <Elements.Text type={"desc"} opacity={0.6}>
-                                                                    1 : {(a?.amount || least) / (a?.weight || least)} ($
-                                                                    {((a?.amount || least) / (a?.weight || least)) *
-                                                                        (values.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase())
-                                                                            ?.value || least)}
-                                                                    )
-                                                                </Elements.Text>
-                                                            </Layouts.Col>
-                                                            <Layouts.Col gap={0}>
-                                                                <Elements.Text type={"strong"} align={"right"}>
-                                                                    {a?.amount}
-                                                                </Elements.Text>
-                                                                <Elements.Text type={"desc"} align={"right"} opacity={0.45}>
-                                                                    = $
-                                                                    {a?.amount! *
-                                                                        (values.find((f: Asset) => f?.symbol?.toUpperCase() === a?.symbol?.toUpperCase())
-                                                                            ?.value || 1)}
-                                                                </Elements.Text>
-                                                            </Layouts.Col>
-                                                        </Layouts.Row>
-                                                        <Layouts.Row>
-                                                            <Layouts.Col gap={0}>
-                                                                <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
-                                                                    Need
-                                                                </Elements.Text>
-                                                                <Elements.Text type={"strong"} align={"right"}>
-                                                                    {a?.need || 0}
-                                                                    {/* {Format(a?.need || 0, "number", true, 8)} */}
-                                                                </Elements.Text>
-                                                            </Layouts.Col>
-                                                            <Layouts.Col gap={0}>
-                                                                <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
-                                                                    Weight
-                                                                </Elements.Text>
-                                                                <Elements.Text type={"strong"} align={"right"}>
-                                                                    {a?.weight || 0}(
-                                                                    {((a?.weight || least) * parseFloat((a?.amount || 0).toString())) /
-                                                                        (a?.markets?.length || 1)}
-                                                                    ){/* {Format(a?.weight || 0, "number", true, 8)} */}
-                                                                </Elements.Text>
-                                                            </Layouts.Col>
-                                                        </Layouts.Row>
-                                                    </Layouts.Col>
-                                                </Layouts.Box>
-                                            ))}
-                                        </Layouts.Col>
-                                    </Layouts.Contents.InnerContent>
-                                    <Layouts.Divider />
-                                    <Layouts.Row gap={0.5}>
-                                        <Elements.Text>TVL:</Elements.Text>
-                                        <Elements.Text align={"right"}>$ {Format(tvl, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
-                                    </Layouts.Row>
-                                </Layouts.Col>
-                            </Layouts.Contents.InnerContent>
-                            <Layouts.Divider vertical />
-                            <Layouts.Contents.InnerContent>
-                                <Layouts.Col gap={1}>
-                                    {market?.map((m: Market, i: number) => (
-                                        <Layouts.Box key={i} padding={2} fit>
-                                            <Layouts.Col gap={0.5}>
-                                                <Layouts.Row fill>
-                                                    <Elements.Text>{m?.name}</Elements.Text>
-                                                    <Elements.Text align="right">
-                                                        {m?.price} {m?.quote?.toUpperCase()}
-                                                    </Elements.Text>
-                                                </Layouts.Row>
-                                                <Layouts.Col gap={0}>
-                                                    <Layouts.Row fill>
-                                                        <Elements.Text opacity={0.6}>{`${m?.base?.toUpperCase()} → ${m?.quote?.toUpperCase()}`}</Elements.Text>
-                                                        <Elements.Text align="right">{getLiquidity(m?.base, m?.quote)}</Elements.Text>
-                                                    </Layouts.Row>
-                                                    <Layouts.Row fill>
-                                                        <Elements.Text opacity={0.6}>{`${m?.quote?.toUpperCase()} → ${m?.base?.toUpperCase()}`}</Elements.Text>
-                                                        <Elements.Text align="right">{getLiquidity(m?.quote, m?.base)}</Elements.Text>
-                                                    </Layouts.Row>
-                                                </Layouts.Col>
-                                                <Layouts.Row gap={1} fill>
-                                                    <Controls.Button type={"solid"} color={"green"} onClick={() => handleBuyModal(null, { market: m })}>
-                                                        Buy
-                                                    </Controls.Button>
-                                                    <Controls.Button type={"solid"} color={"red"} onClick={() => handleSellModal(null, { market: m })}>
-                                                        Sell
-                                                    </Controls.Button>
-                                                </Layouts.Row>
-                                            </Layouts.Col>
+                                            <Layouts.Row gap={0.5}>
+                                                <Elements.Text>{a?.symbol}</Elements.Text>
+                                                <Elements.Text align={"right"}>$ {a?.value}</Elements.Text>
+                                            </Layouts.Row>
                                         </Layouts.Box>
-                                    ))}
-                                </Layouts.Col>
-                            </Layouts.Contents.InnerContent>
-                            <Layouts.Divider vertical />
-                            <Layouts.Contents.InnerContent>
-                                <Layouts.Col gap={1} fill>
-                                    <Controls.Button type={"solid"} onClick={handleAddNewUser}>
-                                        Add New User
-                                    </Controls.Button>
-                                    <Layouts.Contents.InnerContent style={{ gap: "1em" }} scroll>
-                                        {users &&
-                                            users?.length > 0 &&
-                                            users?.map((u: User, i: number) => (
-                                                <div
-                                                    key={i}
-                                                    onClick={() => {
-                                                        if (user !== i) {
-                                                            setUser(i);
-                                                        } else {
-                                                            setUser(undefined);
-                                                        }
-                                                    }}
-                                                    style={{
-                                                        border: user === i ? "1px solid white" : "1px solid transparent",
-                                                    }}
-                                                >
-                                                    <Layouts.Box padding={2}>
-                                                        <Layouts.Col gap={1}>
-                                                            <Layouts.Col gap={1}>
-                                                                <Layouts.Row gap={2} align="center">
-                                                                    <Elements.Text align="left">{u.name}</Elements.Text>
-                                                                    <Layouts.Row align="right" fit>
-                                                                        <Controls.Button
-                                                                            icon={"x"}
-                                                                            onClick={() =>
-                                                                                setUsers((state: User[]) => state.filter((f: User, k: number) => k !== i))
-                                                                            }
-                                                                        />
-                                                                    </Layouts.Row>
-                                                                </Layouts.Row>
-                                                                <Layouts.Row>
-                                                                    <Elements.Text>Start:</Elements.Text>
-                                                                    <Elements.Text align={"right"}>
-                                                                        $ {Format(u?.initial, "currency", { unit: 9, limit: 12, fix: 3 })}
-                                                                    </Elements.Text>
-                                                                </Layouts.Row>
-                                                                <Layouts.Row>
-                                                                    <Elements.Text>PNL:</Elements.Text>
-                                                                    <Elements.Text align={"right"} fix>
-                                                                        $ {Format(getUserTVL(i) - (u?.initial || 0), "number", true)}
-                                                                    </Elements.Text>
-                                                                </Layouts.Row>
-                                                            </Layouts.Col>
-                                                            {u?.assets?.length > 0 && (
-                                                                <>
-                                                                    <Layouts.Divider />
-                                                                    <Layouts.Contents.InnerContent>
-                                                                        <Formatter data={u?.assets} />
-                                                                    </Layouts.Contents.InnerContent>
-                                                                </>
-                                                            )}
+                                    </div>
+                                ))}
+                        </Layouts.Contents.GridContainer>
+                        <Layouts.Divider />
+                        <Layouts.Contents.InnerContent>
+                            <Layouts.Col gap={1} fill>
+                                <Layouts.Contents.SlideContainer
+                                    contents={[
+                                        {
+                                            active: windowSize.width > Root.Device.Mobile || tab === "vault",
+                                            children: (
+                                                <Layouts.Row gap={1} fill>
+                                                    <Layouts.Contents.InnerContent>
+                                                        <Layouts.Col gap={1} fill>
+                                                            <Layouts.Row gap={0.5}>
+                                                                <Elements.Text>TVL:</Elements.Text>
+                                                                <Elements.Text align={"right"}>
+                                                                    $ {Format(tvl, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                                </Elements.Text>
+                                                            </Layouts.Row>
                                                             <Layouts.Divider />
+                                                            <Layouts.Contents.InnerContent>
+                                                                <Layouts.Col gap={1}>
+                                                                    {vault?.map((a: Asset, i: number) => (
+                                                                        <Layouts.Box key={i} padding={2} fit>
+                                                                            <Layouts.Col gap={1}>
+                                                                                <Layouts.Row>
+                                                                                    <Layouts.Col gap={0}>
+                                                                                        <Elements.Text type={"strong"}>{a?.symbol}</Elements.Text>
+                                                                                        <Elements.Text type={"desc"} opacity={0.6}>
+                                                                                            1 :{" "}
+                                                                                            {Format((a?.weight || least) / (a?.amount || least), "number", {
+                                                                                                display: true,
+                                                                                                limit: 10,
+                                                                                                fix: 3,
+                                                                                            })}{" "}
+                                                                                            ($
+                                                                                            {Format(
+                                                                                                ((a?.amount || least) / (a?.weight || least)) *
+                                                                                                    (values.find(
+                                                                                                        (f: Asset) =>
+                                                                                                            f?.symbol?.toUpperCase() ===
+                                                                                                            a?.symbol?.toUpperCase()
+                                                                                                    )?.value || least),
+                                                                                                "number",
+                                                                                                { display: true, limit: 10, fix: 3 }
+                                                                                            )}
+                                                                                            )
+                                                                                        </Elements.Text>
+                                                                                    </Layouts.Col>
+                                                                                    <Layouts.Col gap={0}>
+                                                                                        <Elements.Text type={"strong"} align={"right"}>
+                                                                                            {Format(a?.amount, "currency", {
+                                                                                                display: true,
+                                                                                                limit: 10,
+                                                                                                fix: 3,
+                                                                                            })}
+                                                                                        </Elements.Text>
+                                                                                        <Elements.Text type={"desc"} align={"right"} opacity={0.45}>
+                                                                                            = $
+                                                                                            {Format(
+                                                                                                a?.amount! *
+                                                                                                    (values.find(
+                                                                                                        (f: Asset) =>
+                                                                                                            f?.symbol?.toUpperCase() ===
+                                                                                                            a?.symbol?.toUpperCase()
+                                                                                                    )?.value || 1),
+                                                                                                "number",
+                                                                                                true,
+                                                                                                8
+                                                                                            )}
+                                                                                        </Elements.Text>
+                                                                                    </Layouts.Col>
+                                                                                </Layouts.Row>
+                                                                                <Layouts.Row>
+                                                                                    <Layouts.Col gap={0}>
+                                                                                        <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
+                                                                                            Need
+                                                                                        </Elements.Text>
+                                                                                        <Elements.Text type={"strong"} align={"right"}>
+                                                                                            {/* {a?.need || 0} */}
+                                                                                            {Format(a?.need || 0, "number", {
+                                                                                                display: true,
+                                                                                                limit: 10,
+                                                                                                fix: 3,
+                                                                                            })}
+                                                                                        </Elements.Text>
+                                                                                    </Layouts.Col>
+                                                                                    <Layouts.Col gap={0}>
+                                                                                        <Elements.Text type={"desc"} align={"right"} opacity={0.6}>
+                                                                                            Weight
+                                                                                        </Elements.Text>
+                                                                                        <Elements.Text type={"strong"} align={"right"}>
+                                                                                            {/* {a?.weight || 0} */}
+                                                                                            {Format(a?.weight || least, "number", {
+                                                                                                display: true,
+                                                                                                limit: 10,
+                                                                                                fix: 3,
+                                                                                            })}{" "}
+                                                                                            (
+                                                                                            {Format(
+                                                                                                parseFloat(
+                                                                                                    (
+                                                                                                        ((a?.weight || least) *
+                                                                                                            parseFloat((a?.amount || 0).toString())) /
+                                                                                                        (a?.markets?.length || 1)
+                                                                                                    ).toString()
+                                                                                                ),
+                                                                                                "number",
+                                                                                                { display: true, limit: 10, fix: 3 }
+                                                                                            )}
+                                                                                            )
+                                                                                        </Elements.Text>
+                                                                                    </Layouts.Col>
+                                                                                </Layouts.Row>
+                                                                            </Layouts.Col>
+                                                                        </Layouts.Box>
+                                                                    ))}
+                                                                </Layouts.Col>
+                                                            </Layouts.Contents.InnerContent>
                                                             <Layouts.Row gap={1}>
                                                                 <Controls.Button
+                                                                    style={{ flex: "45%" }}
+                                                                    type={"solid"}
                                                                     onClick={() =>
                                                                         handleAddAssetModal(null, {
-                                                                            type: "user",
-                                                                            index: i,
+                                                                            type: "vault",
                                                                         })
                                                                     }
                                                                 >
                                                                     Add Asset
                                                                 </Controls.Button>
-                                                                <Controls.Button onClick={() => handleSetUserAsset(i)}>Set</Controls.Button>
+                                                                <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleWithdrawModal()}>
+                                                                    Withdraw
+                                                                </Controls.Button>
                                                             </Layouts.Row>
                                                         </Layouts.Col>
-                                                    </Layouts.Box>
-                                                </div>
-                                            ))}
-                                    </Layouts.Contents.InnerContent>
-                                </Layouts.Col>
-                            </Layouts.Contents.InnerContent>
-                        </Layouts.Row>
-                    </Layouts.Contents.InnerContent>
-                </Layouts.Col>
-            </Layouts.Contents.InnerContent>
+                                                    </Layouts.Contents.InnerContent>
+                                                    <Layouts.Divider
+                                                        vertical
+                                                        style={{ ...(windowSize.width > Root.Device.Mobile && { marginRight: "1em" }) }}
+                                                        hide="mobile"
+                                                    />
+                                                </Layouts.Row>
+                                            ),
+                                        },
+                                        {
+                                            active: windowSize.width > Root.Device.Mobile || tab === "markets",
+                                            children: (
+                                                <Layouts.Row gap={1} fill>
+                                                    <Layouts.Contents.InnerContent>
+                                                        <Layouts.Col gap={1}>
+                                                            {market?.map((m: Market, i: number) => (
+                                                                <Layouts.Box key={i} padding={2} fit>
+                                                                    <Layouts.Col gap={0.5}>
+                                                                        <Layouts.Row fill>
+                                                                            <Elements.Text>{m?.name}</Elements.Text>
+                                                                            <Elements.Text align="right">
+                                                                                {m?.price} {m?.quote?.toUpperCase()}
+                                                                            </Elements.Text>
+                                                                        </Layouts.Row>
+                                                                        <Layouts.Col gap={0}>
+                                                                            <Layouts.Row fill>
+                                                                                <Elements.Text
+                                                                                    opacity={0.6}
+                                                                                >{`${m?.base?.toUpperCase()} → ${m?.quote?.toUpperCase()}`}</Elements.Text>
+                                                                                <Elements.Text align="right">
+                                                                                    {Format(getLiquidity(m?.base, m?.quote), "currency", {
+                                                                                        display: true,
+                                                                                        limit: 8,
+                                                                                        fix: 3,
+                                                                                    })}
+                                                                                </Elements.Text>
+                                                                            </Layouts.Row>
+                                                                            <Layouts.Row fill>
+                                                                                <Elements.Text
+                                                                                    opacity={0.6}
+                                                                                >{`${m?.quote?.toUpperCase()} → ${m?.base?.toUpperCase()}`}</Elements.Text>
+                                                                                <Elements.Text align="right">
+                                                                                    {Format(getLiquidity(m?.quote, m?.base), "currency", {
+                                                                                        display: true,
+                                                                                        limit: 8,
+                                                                                        fix: 3,
+                                                                                    })}
+                                                                                </Elements.Text>
+                                                                            </Layouts.Row>
+                                                                        </Layouts.Col>
+                                                                        <Layouts.Row gap={1} fill>
+                                                                            <Controls.Button
+                                                                                type={"solid"}
+                                                                                color={"green"}
+                                                                                onClick={() => handleBuyModal(null, { market: m })}
+                                                                            >
+                                                                                Buy
+                                                                            </Controls.Button>
+                                                                            <Controls.Button
+                                                                                type={"solid"}
+                                                                                color={"red"}
+                                                                                onClick={() => handleSellModal(null, { market: m })}
+                                                                            >
+                                                                                Sell
+                                                                            </Controls.Button>
+                                                                        </Layouts.Row>
+                                                                    </Layouts.Col>
+                                                                </Layouts.Box>
+                                                            ))}
+                                                        </Layouts.Col>
+                                                    </Layouts.Contents.InnerContent>
+                                                    <Layouts.Divider
+                                                        vertical
+                                                        style={{ ...(windowSize.width > Root.Device.Mobile && { marginRight: "1em" }) }}
+                                                        hide="mobile"
+                                                    />
+                                                </Layouts.Row>
+                                            ),
+                                        },
+                                        {
+                                            active: windowSize.width > Root.Device.Mobile || tab === "users",
+                                            children: (
+                                                <Layouts.Contents.InnerContent>
+                                                    <Layouts.Col gap={1} fill>
+                                                        <Layouts.Contents.InnerContent style={{ gap: "1em" }} scroll>
+                                                            {users &&
+                                                                users?.length > 0 &&
+                                                                users?.map((u: User, i: number) => (
+                                                                    <div
+                                                                        key={i}
+                                                                        onClick={() => {
+                                                                            if (user !== i) {
+                                                                                setUser(i);
+                                                                            } else {
+                                                                                setUser(undefined);
+                                                                            }
+                                                                        }}
+                                                                        style={{
+                                                                            border: user === i ? "1px solid white" : "1px solid transparent",
+                                                                        }}
+                                                                    >
+                                                                        <Layouts.Box padding={2}>
+                                                                            <Layouts.Col gap={1}>
+                                                                                <Layouts.Col gap={1}>
+                                                                                    <Layouts.Row gap={2} align="center">
+                                                                                        <Elements.Text align="left">{u.name}</Elements.Text>
+                                                                                        <Layouts.Row align="right" fit>
+                                                                                            <Controls.Button
+                                                                                                icon={"x"}
+                                                                                                onClick={() =>
+                                                                                                    setUsers((state: User[]) =>
+                                                                                                        state.filter((f: User, k: number) => k !== i)
+                                                                                                    )
+                                                                                                }
+                                                                                            />
+                                                                                        </Layouts.Row>
+                                                                                    </Layouts.Row>
+                                                                                    <Layouts.Row>
+                                                                                        <Elements.Text>Start:</Elements.Text>
+                                                                                        <Elements.Text align={"right"}>
+                                                                                            $ {Format(u?.initial, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                                                        </Elements.Text>
+                                                                                    </Layouts.Row>
+                                                                                    <Layouts.Row
+                                                                                        change={
+                                                                                            parseFloat(
+                                                                                                Format(getUserTVL(i) - (u?.initial || 0), "number", true)
+                                                                                            ) > 0
+                                                                                                ? "var(--green)"
+                                                                                                : parseFloat(
+                                                                                                      Format(getUserTVL(i) - (u?.initial || 0), "number", true)
+                                                                                                  ) < 0
+                                                                                                ? "var(--red)"
+                                                                                                : undefined
+                                                                                        }
+                                                                                    >
+                                                                                        <Elements.Text>PNL:</Elements.Text>
+                                                                                        <Elements.Text align={"right"} fix change>
+                                                                                            {Sign(getUserTVL(i) - (u?.initial || 0))}
+                                                                                            {"$ "}
+                                                                                            {Format(getUserTVL(i) - (u?.initial || 0), "currency", {
+                                                                                                display: true,
+                                                                                                limit: 8,
+                                                                                                fix: 3,
+                                                                                                sign: false,
+                                                                                            })}
+                                                                                        </Elements.Text>
+                                                                                    </Layouts.Row>
+                                                                                </Layouts.Col>
+                                                                                {u?.assets?.length > 0 && (
+                                                                                    <>
+                                                                                        <Layouts.Divider />
+                                                                                        <Layouts.Contents.InnerContent>
+                                                                                            <Formatter data={u?.assets} />
+                                                                                        </Layouts.Contents.InnerContent>
+                                                                                    </>
+                                                                                )}
+                                                                                <Layouts.Divider />
+                                                                                <Layouts.Row gap={1}>
+                                                                                    <Controls.Button
+                                                                                        onClick={() =>
+                                                                                            handleAddAssetModal(null, {
+                                                                                                type: "user",
+                                                                                                index: i,
+                                                                                            })
+                                                                                        }
+                                                                                    >
+                                                                                        Add Asset
+                                                                                    </Controls.Button>
+                                                                                    <Controls.Button onClick={() => handleSetUserAsset(i)}>Set</Controls.Button>
+                                                                                </Layouts.Row>
+                                                                            </Layouts.Col>
+                                                                        </Layouts.Box>
+                                                                    </div>
+                                                                ))}
+                                                        </Layouts.Contents.InnerContent>
+                                                        <Layouts.Row gap={1}>
+                                                            <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleListingModal()}>
+                                                                Listing
+                                                            </Controls.Button>
+                                                            <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleDepositModal()}>
+                                                                Deposit
+                                                            </Controls.Button>
+                                                        </Layouts.Row>
+                                                        <Controls.Button type={"solid"} onClick={handleAddNewUser}>
+                                                            Add New User
+                                                        </Controls.Button>
+                                                    </Layouts.Col>
+                                                </Layouts.Contents.InnerContent>
+                                            ),
+                                        },
+                                    ]}
+                                />
+                            </Layouts.Col>
+                        </Layouts.Contents.InnerContent>
+                    </Layouts.Col>
+                </Layouts.Contents.InnerContent>
+                <Layouts.Divider show="mobile" />
+                <Layouts.Row gap={1} show="mobile">
+                    <Controls.Tab active={tab === "vault"} iconLeft={"bank"} onClick={() => setTab("vault")}>
+                        Vault
+                    </Controls.Tab>
+                    <Controls.Tab active={tab === "markets"} iconLeft={"exchange"} onClick={() => setTab("markets")}>
+                        Markets
+                    </Controls.Tab>
+                    <Controls.Tab active={tab === "users"} iconLeft={"user"} onClick={() => setTab("users")}>
+                        Users
+                    </Controls.Tab>
+                </Layouts.Row>
+            </Layouts.Col>
         </Layouts.Box>
     );
 }
