@@ -40,18 +40,26 @@ const token: TokenType = {
     low: 2,
 };
 
-const init = {};
+const init: any = {
+    supply: 20,
+    values: [
+        { type: token.high, symbol: "MECA", value: 1 },
+        { type: token.high, symbol: "DAI", value: 1 },
+        { type: token.high, symbol: "USDT", value: 1 },
+        { type: token.high, symbol: "USDC", value: 1 },
+    ],
+};
 
 export default function Page() {
     const { windowSize } = useWindowSize();
     const [tab, setTab] = useState<"vault" | "markets" | "users">("users");
 
-    const [values, setValues] = useState<Asset[]>([]);
-    const [vault, setVault] = useState<Asset[]>([]);
-    const [market, setMarket] = useState<Market[]>([]);
-    const [users, setUsers] = useState<User[]>([]);
+    const [values, setValues] = useState<Asset[]>(init?.values || []);
+    const [vault, setVault] = useState<Asset[]>(init?.vault || []);
+    const [market, setMarket] = useState<Market[]>(init?.markets || []);
+    const [users, setUsers] = useState<User[]>(init?.users || []);
     const [user, setUser] = useState<number | undefined>(0);
-    const [supply, setSupply] = useState<number>(0);
+    const [supply, setSupply] = useState<number>(init?.supply || 0);
     const [tvl, setTVL] = useState(0);
     const [last, setLast] = useState<number>(0);
     const [totalWeight, setTotalWeight] = useState<number>(0);
@@ -1429,7 +1437,7 @@ export default function Page() {
                 if (a?.symbol?.toUpperCase() === "MECA") {
                     const v = { ...a, value: tvl && supply ? tvl / supply : a?.value };
                     if (count % 2 === 0) {
-                        setLast(state?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value!);
+                        setLast(state?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value || 0);
                     }
                     return v;
                 }
@@ -1463,24 +1471,24 @@ export default function Page() {
                                 <Elements.Text
                                     align={windowSize.width <= Root.Device.Mobile ? "right" : undefined}
                                     color={
-                                        values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last > 0
+                                        (values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value || 0) - last > 0
                                             ? "green"
-                                            : values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last < 0
+                                            : (values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value || 0) - last < 0
                                             ? "red"
                                             : undefined
                                     }
                                 >
-                                    {Sign(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last)}
+                                    {Sign((values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value || 0) - last)}
                                     {"$ "}
-                                    {Format(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last, "currency", {
+                                    {Format((values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value || 0) - last, "currency", {
                                         display: true,
                                         limit: 8,
                                         fix: 3,
                                         sign: false,
                                     })}{" "}
-                                    {values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last > 0
+                                    {(values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value || 0) - last > 0
                                         ? "▲"
-                                        : values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value! - last < 0
+                                        : (values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value || 0) - last < 0
                                         ? "▼"
                                         : undefined}
                                 </Elements.Text>
