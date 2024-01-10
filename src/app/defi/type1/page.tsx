@@ -946,14 +946,14 @@ export default function Page() {
             setUsers(u);
         };
 
-        // useEffect(() => {
-        //     if (asset && typeof assets[asset]?.amount! === "number" && typeof amount === "number") {
-        //         assets[asset]?.amount! < amount ? setAmount(assets[asset]?.amount!) : setAmount(amount);
-        //     }
-        // }, [asset, amount]);
+        useEffect(() => {
+            if (asset && typeof assets[asset]?.amount! === "number" && typeof amount === "number") {
+                assets[asset]?.amount! < amount ? setAmount(assets[asset]?.amount!) : setAmount(amount);
+            }
+        }, [asset, amount]);
 
         return (
-            <Modal width={64} title={`Deposit`} onClose={closeDepositModal}>
+            <Modal width={64} title={`Deposit`} onClose={closeDepositModal} close>
                 <Layouts.Col gap={2} fill>
                     {vault?.length > 0 ? (
                         typeof user !== "undefined" ? (
