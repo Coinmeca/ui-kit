@@ -937,7 +937,7 @@ export default function Page() {
                                         </Elements.Text>
                                         <Controls.Input
                                             placeholder={"amount"}
-                                            type={"number"}
+                                            type="currency"
                                             onChange={(e: any, v: any) => setAmount(parseFloat(Format(v, "number")))}
                                             max={assets[asset]?.amount}
                                             align={"right"}
