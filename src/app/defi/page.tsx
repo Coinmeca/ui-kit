@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Modal } from "containers";
 import { usePortal, useWindowSize } from "hooks";
@@ -44,6 +44,7 @@ const init: any = {
     supply: 20,
     values: [
         { type: token.high, symbol: "MECA", value: 1 },
+        { type: token.high, symbol: "ETH", value: 2 },
         { type: token.high, symbol: "DAI", value: 1 },
         { type: token.high, symbol: "USDT", value: 1 },
         { type: token.high, symbol: "USDC", value: 1 },
@@ -54,7 +55,6 @@ export default function Page() {
     const [windowWidth, setWindowWidth] = useState(0);
     // 팝업선택시 브라우저 height가 바뀜 -> windowSize 변경 -> 리렌더
     // const { windowWidth } = useWindowSize();
-
     useEffect(() => {
         setWindowWidth(window.innerWidth);
     }, []);
@@ -351,7 +351,7 @@ export default function Page() {
                     <Controls.Input
                         placeholder={" "}
                         align={"right"}
-                        value={symbol}
+                        // value={symbol}
                         onChange={(e: any, v: any) => setSymbol(v)}
                         left={{
                             children: <Elements.Text>Symbol</Elements.Text>,
@@ -361,7 +361,7 @@ export default function Page() {
                         placeholder={0}
                         align={"right"}
                         type={"currency"}
-                        onChange={(e: any, v: any) => setAmount(parseFloat(Format(v, "number", true)))}
+                        onChange={(e: any, v: any) => {}}
                         left={{
                             children: <Elements.Text>Amount</Elements.Text>,
                         }}
@@ -371,7 +371,7 @@ export default function Page() {
                             placeholder={0}
                             align={"right"}
                             type={"currency"}
-                            onChange={(e: any, v: any) => setValue(parseFloat(Format(v, "number", true)))}
+                            onChange={(e: any, v: any) => setValue(parseFloat(v))}
                             left={{
                                 children: <Elements.Text>Value</Elements.Text>,
                             }}
@@ -748,7 +748,7 @@ export default function Page() {
                                 </Layouts.Col>
                                 {asset?.symbol && asset?.symbol !== "" && filter?.length > 0 && (
                                     <>
-                                        <Layouts.Divider vertical={windowSize.width > Root.Device.Mobile} />
+                                        <Layouts.Divider vertical={windowWidth > Root.Device.Mobile} />
                                         <Layouts.Box padding={2}>
                                             {asset || (filter && filter?.length > 0) ? (
                                                 <>
@@ -958,7 +958,7 @@ export default function Page() {
                                                     />
                                                 ),
                                             }}
-                                        />
+                                        ></Controls.Input>
                                     </Layouts.Col>
                                     {assets[asset] && (
                                         <>
@@ -1462,7 +1462,7 @@ export default function Page() {
     }, [users]);
 
     return (
-        <Layouts.Box fit padding={windowSize.width <= Root.Device.Mobile ? 2 : undefined}>
+        <Layouts.Box fit padding={windowWidth <= Root.Device.Mobile ? 2 : undefined}>
             <Layouts.Col fill gap={1}>
                 <Layouts.Contents.InnerContent>
                     <Layouts.Col gap={1} fill>
@@ -1476,7 +1476,7 @@ export default function Page() {
                                     })}
                                 </Elements.Text>
                                 <Elements.Text
-                                    align={windowSize.width <= Root.Device.Mobile ? "right" : undefined}
+                                    align={windowWidth <= Root.Device.Mobile ? "right" : undefined}
                                     color={
                                         (values?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA")?.value || 0) - last > 0
                                             ? "green"
@@ -1544,7 +1544,7 @@ export default function Page() {
                                 <Layouts.Contents.SlideContainer
                                     contents={[
                                         {
-                                            active: windowSize.width > Root.Device.Mobile || tab === "vault",
+                                            active: windowWidth > Root.Device.Mobile || tab === "vault",
                                             children: (
                                                 <Layouts.Row gap={1} fill>
                                                     <Layouts.Contents.InnerContent>
@@ -1645,7 +1645,7 @@ export default function Page() {
                                                             </Layouts.Contents.InnerContent>
                                                             <Layouts.Row gap={1}>
                                                                 <Controls.Button
-                                                                    style={{ flex: "30%" }}
+                                                                    style={{ flex: "45%" }}
                                                                     type={"solid"}
                                                                     onClick={() =>
                                                                         handleAddAssetModal(null, {
@@ -1655,10 +1655,7 @@ export default function Page() {
                                                                 >
                                                                     Add Asset
                                                                 </Controls.Button>
-                                                                <Controls.Button style={{ flex: "30%" }} type={"solid"} onClick={() => handleDepositModal()}>
-                                                                    Deposit
-                                                                </Controls.Button>
-                                                                <Controls.Button style={{ flex: "30%" }} type={"solid"} onClick={() => handleWithdrawModal()}>
+                                                                <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleWithdrawModal()}>
                                                                     Withdraw
                                                                 </Controls.Button>
                                                             </Layouts.Row>
@@ -1666,14 +1663,14 @@ export default function Page() {
                                                     </Layouts.Contents.InnerContent>
                                                     <Layouts.Divider
                                                         vertical
-                                                        style={{ ...(windowSize.width > Root.Device.Mobile && { marginRight: "1em" }) }}
+                                                        style={{ ...(windowWidth > Root.Device.Mobile && { marginRight: "1em" }) }}
                                                         hide="mobile"
                                                     />
                                                 </Layouts.Row>
                                             ),
                                         },
                                         {
-                                            active: windowSize.width > Root.Device.Mobile || tab === "markets",
+                                            active: windowWidth > Root.Device.Mobile || tab === "markets",
                                             children: (
                                                 <Layouts.Row gap={1} fill>
                                                     <Layouts.Contents.InnerContent>
@@ -1736,14 +1733,14 @@ export default function Page() {
                                                     </Layouts.Contents.InnerContent>
                                                     <Layouts.Divider
                                                         vertical
-                                                        style={{ ...(windowSize.width > Root.Device.Mobile && { marginRight: "1em" }) }}
+                                                        style={{ ...(windowWidth > Root.Device.Mobile && { marginRight: "1em" }) }}
                                                         hide="mobile"
                                                     />
                                                 </Layouts.Row>
                                             ),
                                         },
                                         {
-                                            active: windowSize.width > Root.Device.Mobile || tab === "users",
+                                            active: windowWidth > Root.Device.Mobile || tab === "users",
                                             children: (
                                                 <Layouts.Contents.InnerContent>
                                                     <Layouts.Col gap={1} fill>
@@ -1840,13 +1837,16 @@ export default function Page() {
                                                                 ))}
                                                         </Layouts.Contents.InnerContent>
                                                         <Layouts.Row gap={1}>
-                                                            <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={handleAddNewUser}>
-                                                                Add New User
-                                                            </Controls.Button>
                                                             <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleListingModal()}>
                                                                 Listing
                                                             </Controls.Button>
+                                                            <Controls.Button style={{ flex: "45%" }} type={"solid"} onClick={() => handleDepositModal()}>
+                                                                Deposit
+                                                            </Controls.Button>
                                                         </Layouts.Row>
+                                                        <Controls.Button type={"solid"} onClick={handleAddNewUser}>
+                                                            Add New User
+                                                        </Controls.Button>
                                                     </Layouts.Col>
                                                 </Layouts.Contents.InnerContent>
                                             ),
