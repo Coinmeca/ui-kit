@@ -26,13 +26,11 @@ export interface Input {
     fix?: number;
 
     left?: {
-        $$typeof?: any;
         style?: object;
         width?: number;
         children?: any;
     };
     right?: {
-        $$typeof?: any;
         style?: object;
         width?: number;
         children?: any;
@@ -209,7 +207,7 @@ export default function Input(props: Input) {
                 <div style={props?.style}>
                     {props?.left && (
                         <Side $width={props?.left?.width} style={props?.left?.style}>
-                            {props?.left?.$$typeof ? props?.left : props?.left?.children}
+                            {props?.left?.children}
                         </Side>
                     )}
                     <div>
@@ -225,8 +223,8 @@ export default function Input(props: Input) {
                             ref={input}
                             style={{ textAlign: align }}
                             placeholder={placeholder}
-                            type={type === "currency" ? "number" : type}
-                            inputMode={props?.inputMode}
+                            type={type === "currency" ? "currency" : type}
+                            inputMode={props?.inputMode ? props?.inputMode : type === "currency" ? "numeric" : undefined}
                             min={min}
                             max={props?.max}
                             step={props?.step}
@@ -251,7 +249,7 @@ export default function Input(props: Input) {
                     </div>
                     {(props?.unit || props?.right) && (
                         <Side $width={props?.right?.width} style={props?.right?.style}>
-                            {props?.left?.$$typeof ? props?.right : props?.right?.children}
+                            {props?.right?.children}
                             {props?.unit && <span>{props?.unit}</span>}
                         </Side>
                     )}
