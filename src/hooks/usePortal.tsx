@@ -16,21 +16,8 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
     });
 
     useEffect(() => {
-        const Children = initial || children;
-        root?.render(
-            active
-                ? createPortal(
-                      typeof Children === "object" && (Children as any)?.$$typeof ? (
-                          <Children {...props} />
-                      ) : typeof Children === "function" ? (
-                          Children(props)
-                      ) : (
-                          Children
-                      ),
-                      document?.body
-                  )
-                : null
-        );
+        const element = children || initial;
+        root?.render(active ? createPortal(typeof element === "function" ? element(props) : element, document?.body) : null);
     }, [active, initial, children, props]);
 
     useEffect(() => {
