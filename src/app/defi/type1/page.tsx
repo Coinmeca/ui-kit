@@ -363,7 +363,6 @@ export default function Page() {
                             children: <Elements.Text>Symbol</Elements.Text>,
                         }}
                     />
-                    <Controls.Input
                     {/* {props?.type === "vault" && (
                         <Layouts.Row>
                             <Controls.Tab active={tab === "token"} onClick={() => setTab("token")}>
