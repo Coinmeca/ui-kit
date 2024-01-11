@@ -224,7 +224,7 @@ export default function Input(props: Input) {
                             style={{ textAlign: align }}
                             placeholder={placeholder}
                             type={type === "currency" ? "currency" : type}
-                            inputMode={props?.inputMode ? props?.inputMode : type === "currency" ? "numeric" : undefined}
+                            inputMode={props?.inputMode ? props?.inputMode : type === "number" || type === "currency" ? "numeric" : undefined}
                             min={min}
                             max={props?.max}
                             step={props?.step}
