@@ -347,23 +347,16 @@ export default function Page() {
     };
 
     const AddAssetModal = (props: { type: "vault" | "user"; index?: number }) => {
-        // const [symbol, setSymbol] = useState<string | undefined>();
-        // const [amount, setAmount] = useState<number | undefined>();
-        // const [value, setValue] = useState<number | undefined>();
-        // const [tab, setTab] = useState<string>("");
-        // const [type, setType] = useState<string>(Object.keys(token)[0]);
+        const [symbol, setSymbol] = useState<string | undefined>();
+        const [amount, setAmount] = useState<number | undefined>();
+        const [value, setValue] = useState<number | undefined>();
+        const [tab, setTab] = useState<string>("");
+        const [type, setType] = useState<string>(Object.keys(token)[0]);
 
         return (
             <Modal title={`Add Asset for ${Capitalize(props?.type)}${props?.index ? ` ${props?.index}` : ""}`} onClose={() => closeAddAssetModal()} close>
                 <Layouts.Col gap={2}>
-                    <Controls.Input
-                        placeholder={" "}
-                        align={"right"}
-                        left={{
-                            children: <Elements.Text>Symbol</Elements.Text>,
-                        }}
-                    />
-                    {/* {props?.type === "vault" && (
+                    {props?.type === "vault" && (
                         <Layouts.Row>
                             <Controls.Tab active={tab === "token"} onClick={() => setTab("token")}>
                                 Token
@@ -423,7 +416,7 @@ export default function Page() {
                         }}
                     >
                         Add
-                    </Controls.Button> */}
+                    </Controls.Button>
                 </Layouts.Col>
             </Modal>
         );
@@ -1896,6 +1889,12 @@ export default function Page() {
                     <Controls.Tab active={tab === "users"} iconLeft={"user"} onClick={() => setTab("users")}>
                         Users
                     </Controls.Tab>
+                    <Controls.Button style={{ flex: "30%" }} type={"solid"} onClick={() => handleDepositModal()}>
+                        Deposit
+                    </Controls.Button>
+                    <Controls.Button style={{ flex: "30%" }} type={"solid"} onClick={() => handleWithdrawModal()}>
+                        Withdraw
+                    </Controls.Button>
                 </Layouts.Row>
             </Layouts.Col>
         </Layouts.Box>
