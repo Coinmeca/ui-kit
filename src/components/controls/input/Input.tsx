@@ -26,11 +26,13 @@ export interface Input {
     fix?: number;
 
     left?: {
+        $$typeof?: any;
         style?: object;
         width?: number;
         children?: any;
     };
     right?: {
+        $$typeof?: any;
         style?: object;
         width?: number;
         children?: any;
@@ -207,7 +209,7 @@ export default function Input(props: Input) {
                 <div style={props?.style}>
                     {props?.left && (
                         <Side $width={props?.left?.width} style={props?.left?.style}>
-                            {props?.left?.children}
+                            {props?.left?.$$typeof ? props?.left : props?.left?.children}
                         </Side>
                     )}
                     <div>
@@ -249,7 +251,7 @@ export default function Input(props: Input) {
                     </div>
                     {(props?.unit || props?.right) && (
                         <Side $width={props?.right?.width} style={props?.right?.style}>
-                            {props?.right?.children}
+                            {props?.left?.$$typeof ? props?.right : props?.right?.children}
                             {props?.unit && <span>{props?.unit}</span>}
                         </Side>
                     )}

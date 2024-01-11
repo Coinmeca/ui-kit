@@ -1889,12 +1889,6 @@ export default function Page() {
                     <Controls.Tab active={tab === "users"} iconLeft={"user"} onClick={() => setTab("users")}>
                         Users
                     </Controls.Tab>
-                    <Controls.Button style={{ flex: "30%" }} type={"solid"} onClick={() => handleDepositModal()}>
-                        Deposit
-                    </Controls.Button>
-                    <Controls.Button style={{ flex: "30%" }} type={"solid"} onClick={() => handleWithdrawModal()}>
-                        Withdraw
-                    </Controls.Button>
                 </Layouts.Row>
             </Layouts.Col>
         </Layouts.Box>
