@@ -838,7 +838,7 @@ export default function Page() {
             </Modal>
         );
     };
-    const [handleListingModal, closeListingModal] = usePortal(<ListingModal />);
+    const [handleListingModal, closeListingModal] = usePortal(ListingModal);
 
     const DepositModal = () => {
         const assets =
@@ -1025,7 +1025,7 @@ export default function Page() {
             </Modal>
         );
     };
-    const [handleDepositModal, closeDepositModal] = usePortal(<DepositModal />);
+    const [handleDepositModal, closeDepositModal] = usePortal(DepositModal);
 
     const WithdrawModal = () => {
         const [burn, setBurn] = useState<number>(0);
@@ -1175,7 +1175,7 @@ export default function Page() {
             </Modal>
         );
     };
-    const [handleWithdrawModal, closeWithdrawModal] = usePortal(<WithdrawModal />);
+    const [handleWithdrawModal, closeWithdrawModal] = usePortal(WithdrawModal);
 
     const getTick = (price: number) => {
         let zero = false;
