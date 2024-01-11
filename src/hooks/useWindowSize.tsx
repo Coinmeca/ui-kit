@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 export interface WindowSize {
     width: number;
@@ -7,13 +7,17 @@ export interface WindowSize {
 }
 
 export default function useWindowSize() {
+    const [windowWidth, setWindowWidth] = useState<number>(1920);
+    const [windowHeight, setWindowHeight] = useState<number>(1080);
     const [windowSize, setWindowSize] = useState<WindowSize>({
-        width: 1920,
-        height: 1080,
+        width: windowWidth,
+        height: windowHeight,
     });
 
     useEffect(() => {
         function windowResize() {
+            if (windowWidth !== window.innerWidth) setWindowWidth(window.innerWidth);
+            if (windowHeight !== window.innerHeight) setWindowHeight(window.innerHeight);
             setWindowSize({
                 width: window.innerWidth,
                 height: window.innerHeight,
@@ -26,5 +30,5 @@ export default function useWindowSize() {
         return () => window.removeEventListener("resize", windowResize);
     }, []);
 
-    return { windowSize };
+    return { windowSize, windowWidth, windowHeight };
 }

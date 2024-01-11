@@ -51,7 +51,14 @@ const init: any = {
 };
 
 export default function Page() {
-    const { windowSize } = useWindowSize();
+    const [windowWidth, setWindowWidth] = useState(0);
+    // 팝업선택시 브라우저 height가 바뀜 -> windowSize 변경 -> 리렌더
+    // const { windowWidth } = useWindowSize();
+
+    useEffect(() => {
+        setWindowWidth(window.innerWidth);
+    }, []);
+
     const [tab, setTab] = useState<"vault" | "markets" | "users">("users");
 
     const [values, setValues] = useState<Asset[]>(init?.values || []);

@@ -35,6 +35,8 @@ export interface Dropdown {
     hide?: "desktop" | "laptop" | "tablet" | "mobile";
 }
 
+type Visible = "popup" | "sheet" | "hidden";
+
 export default function Dropdown(props: Dropdown) {
     const { windowSize } = useWindowSize();
     const dropdown: any = useRef();
@@ -83,11 +85,11 @@ export default function Dropdown(props: Dropdown) {
         if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
 
-    const Select = (visible = true) => (
+    const Select = (visible: Visible = "popup") => (
         <Options
             ref={dropbox}
             style={
-                visible
+                visible === "popup"
                     ? {
                           position: "absolute",
                           fontSize: `${scale}em`,
@@ -100,7 +102,9 @@ export default function Dropdown(props: Dropdown) {
                           zIndex: 200,
                           ...(open ? { maxHeight: "100em", overflowY: "hidden" } : { maxHeight: 0, overflowY: "scroll" }),
                       }
-                    : { visibility: "hidden", height: 0 }
+                    : visible === "hidden"
+                    ? { visibility: "hidden", height: 0 }
+                    : {}
             }
         >
             {options &&
@@ -158,12 +162,12 @@ export default function Dropdown(props: Dropdown) {
         </Options>
     );
 
-    const [openSelect, closeSelect] = usePortal((v: boolean) => Select(v));
+    const [openSelect, closeSelect] = usePortal((v: boolean) => Select("popup"));
 
     const [openSelectOnSheet, closeSelectOnSheet] = usePortal(
         <BottomSheet height={{ max: "60vh" }}>
             <Layouts.Col style={{ padding: "2em" }} gap={2}>
-                <Layouts.Contents.InnerContent>{Select()}</Layouts.Contents.InnerContent>
+                <Layouts.Contents.InnerContent>{Select("sheet")}</Layouts.Contents.InnerContent>
                 <Controls.Button onClick={() => closeSelectOnSheet()}>Close</Controls.Button>
             </Layouts.Col>
         </BottomSheet>
@@ -269,7 +273,7 @@ export default function Dropdown(props: Dropdown) {
                     )}
                 </Item>
             </Option>
-            {!props?.responsive && Select(false)}
+            {!props?.responsive && Select("hidden")}
         </Style>
     );
 }
