@@ -347,16 +347,24 @@ export default function Page() {
     };
 
     const AddAssetModal = (props: { type: "vault" | "user"; index?: number }) => {
-        const [symbol, setSymbol] = useState<string | undefined>();
-        const [amount, setAmount] = useState<number | undefined>();
-        const [value, setValue] = useState<number | undefined>();
-        const [tab, setTab] = useState<string>("");
-        const [type, setType] = useState<string>(Object.keys(token)[0]);
+        // const [symbol, setSymbol] = useState<string | undefined>();
+        // const [amount, setAmount] = useState<number | undefined>();
+        // const [value, setValue] = useState<number | undefined>();
+        // const [tab, setTab] = useState<string>("");
+        // const [type, setType] = useState<string>(Object.keys(token)[0]);
 
         return (
             <Modal title={`Add Asset for ${Capitalize(props?.type)}${props?.index ? ` ${props?.index}` : ""}`} onClose={() => closeAddAssetModal()} close>
                 <Layouts.Col gap={2}>
-                    {props?.type === "vault" && (
+                    <Controls.Input
+                        placeholder={" "}
+                        align={"right"}
+                        left={{
+                            children: <Elements.Text>Symbol</Elements.Text>,
+                        }}
+                    />
+                    <Controls.Input
+                    {/* {props?.type === "vault" && (
                         <Layouts.Row>
                             <Controls.Tab active={tab === "token"} onClick={() => setTab("token")}>
                                 Token
@@ -416,7 +424,7 @@ export default function Page() {
                         }}
                     >
                         Add
-                    </Controls.Button>
+                    </Controls.Button> */}
                 </Layouts.Col>
             </Modal>
         );
@@ -838,7 +846,7 @@ export default function Page() {
             </Modal>
         );
     };
-    const [handleListingModal, closeListingModal] = usePortal(ListingModal);
+    const [handleListingModal, closeListingModal] = usePortal(<ListingModal />);
 
     const DepositModal = () => {
         const assets =
@@ -1025,7 +1033,7 @@ export default function Page() {
             </Modal>
         );
     };
-    const [handleDepositModal, closeDepositModal] = usePortal(DepositModal);
+    const [handleDepositModal, closeDepositModal] = usePortal(<DepositModal />);
 
     const WithdrawModal = () => {
         const [burn, setBurn] = useState<number>(0);
@@ -1175,7 +1183,7 @@ export default function Page() {
             </Modal>
         );
     };
-    const [handleWithdrawModal, closeWithdrawModal] = usePortal(WithdrawModal);
+    const [handleWithdrawModal, closeWithdrawModal] = usePortal(<WithdrawModal />);
 
     const getTick = (price: number) => {
         let zero = false;
