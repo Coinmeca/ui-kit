@@ -385,7 +385,7 @@ export default function Page() {
                         placeholder={0}
                         align={"right"}
                         type={"currency"}
-                        onChange={(e: any, v: any) => {}}
+                        onChange={(e: any, v: any) => setAmount(parseFloat(v))}
                         left={{
                             children: <Elements.Text>Amount</Elements.Text>,
                         }}
