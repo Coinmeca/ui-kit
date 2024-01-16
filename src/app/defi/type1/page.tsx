@@ -8,7 +8,7 @@ import { Capitalize, Format, Sign } from "lib/utils";
 import { Root } from "lib/style";
 
 interface Asset {
-    type?: number;
+    key?: boolean;
     symbol?: string;
     amount?: number;
     value?: number;
@@ -30,24 +30,14 @@ interface User {
     assets: Asset[];
 }
 
-interface TokenType {
-    [x: number | string | symbol]: number;
-}
-
-const token: TokenType = {
-    high: 0,
-    medium: 1,
-    low: 2,
-};
-
 const init: any = {
     supply: 20,
     values: [
-        { type: token.high, symbol: "MECA", value: 1 },
-        { type: token.high, symbol: "ETH", value: 2 },
-        { type: token.high, symbol: "DAI", value: 1 },
-        { type: token.high, symbol: "USDT", value: 1 },
-        { type: token.high, symbol: "USDC", value: 1 },
+        { key: true, symbol: "MECA", value: 1 },
+        { key: true, symbol: "ETH", value: 2 },
+        { key: true, symbol: "DAI", value: 1 },
+        { key: true, symbol: "USDT", value: 1 },
+        { key: true, symbol: "USDC", value: 1 },
     ],
     vault: [
         { symbol: "ETH", amount: 100, weight: 200, markets: ["ETH/DAI", "ETH/USDT"] },
@@ -357,7 +347,7 @@ export default function Page() {
         const [amount, setAmount] = useState<number | undefined>();
         const [value, setValue] = useState<number | undefined>();
         const [tab, setTab] = useState<string>("");
-        const [type, setType] = useState<string>(Object.keys(token)[0]);
+        const [type, setType] = useState<boolean | undefined>();
 
         return (
             <Modal title={`Add Asset for ${Capitalize(props?.type)}${props?.index ? ` ${props?.index}` : ""}`} onClose={() => closeAddAssetModal()} close>
@@ -399,11 +389,6 @@ export default function Page() {
                             left={{
                                 children: <Elements.Text>Value</Elements.Text>,
                             }}
-                            right={{
-                                children: (
-                                    <Controls.Dropdown option={type} options={Object.keys(token)} onClickItem={(e: any, v: string, k: number) => setType(v)} />
-                                ),
-                            }}
                         />
                     )}
                     <Controls.Button
@@ -411,7 +396,7 @@ export default function Page() {
                             handleAddAsset(
                                 props?.type,
                                 {
-                                    type: token[`${type}`],
+                                    key: tab === "key",
                                     symbol: symbol?.toUpperCase(),
                                     amount: amount,
                                     value: value,
@@ -866,7 +851,7 @@ export default function Page() {
             let total = 0;
 
             const ast = { ...assets[asset], amount: parseFloat(amount.toString()) };
-            const type = values?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase())?.type;
+            const type = values?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase())?.key;
             const exist = v?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase());
             const balance = u?.find((u: User, i) => user === i)?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === ast?.symbol?.toUpperCase());
             let amt = amount;
@@ -1034,12 +1019,12 @@ export default function Page() {
         const [burn, setBurn] = useState<number>(0);
         const [asset, setAsset] = useState<Asset>();
         const exist = users[user!]?.assets?.find((f: Asset) => f?.symbol?.toUpperCase() === "MECA");
-        const [type, setType] = useState(0);
+        const [type, setType] = useState<boolean | undefined>();
         const [repeat, setRepeat] = useState<number>(1);
 
         const run = (lp = true) => {
             console.log(burn);
-            const type = values?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase())?.type;
+            const type = values?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase())?.key;
             if (!asset) return;
             if (!asset?.amount || asset?.amount === 0 || !asset?.weight || asset?.weight === 0) return;
 
@@ -1117,7 +1102,7 @@ export default function Page() {
         };
 
         useEffect(() => {
-            setType(values?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase())?.type || token.low);
+            setType(values?.find((f: Asset) => f?.symbol?.toUpperCase() === asset?.symbol?.toUpperCase())?.key);
         }, [asset]);
 
         return (
@@ -1545,22 +1530,22 @@ export default function Page() {
                                         <Layouts.Box
                                             padding={0.5}
                                             style={{
-                                                ...(a?.type === 0
+                                                ...(a?.key
                                                     ? { border: "1px solid white" }
-                                                    : a?.type === 0
+                                                    : a?.key
                                                     ? { border: "1px solid rgba(255,255,255,0.6)" }
                                                     : {}),
-                                                width: "auto",
-                                                minHeight: "initial",
-                                            }}
-                                        >
+                                                    width: "auto",
+                                                    minHeight: "initial",
+                                                }}
+                                                >
                                             <Layouts.Row gap={0.5}>
                                                 <Elements.Text>{a?.symbol}</Elements.Text>
                                                 <Elements.Text align={"right"}>$ {a?.value}</Elements.Text>
                                             </Layouts.Row>
                                         </Layouts.Box>
                                     </div>
-                                ))}
+                            ))}
                         </Layouts.Contents.GridContainer>
                         <Layouts.Divider />
                         <Layouts.Contents.InnerContent>
@@ -1580,7 +1565,7 @@ export default function Page() {
                                                                 </Elements.Text>
                                                             </Layouts.Row>
                                                             <Layouts.Divider />
-                                                            <Layouts.Contents.InnerContent>
+                                                            <Layouts.Contents.InnerContent scroll>
                                                                 <Layouts.Col gap={1}>
                                                                     {vault?.map((a: Asset, i: number) => (
                                                                         <Layouts.Box key={i} padding={2} fit>
