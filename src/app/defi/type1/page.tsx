@@ -1531,12 +1531,11 @@ export default function Page() {
                                             padding={0.5}
                                             style={{
                                                 ...(a?.key
-                                                    ? { border: "1px solid white" }
-                                                    : a?.key
-                                                    ? { border: "1px solid rgba(255,255,255,0.6)" }
-                                                    : {}),
+                                                    && { border: "1px solid rgb(var(--white))" }),
+                                                ...({
                                                     width: "auto",
                                                     minHeight: "initial",
+                                                })
                                                 }}
                                                 >
                                             <Layouts.Row gap={0.5}>
