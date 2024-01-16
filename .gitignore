@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/.yarn
 /.pnp
 .pnp.js
 /**/trading-view
@@ -35,7 +36,3 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-
-.vercel
-
-.vercel
