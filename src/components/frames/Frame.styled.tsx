@@ -20,7 +20,7 @@ const Style = styled.section`
         height: 100%;
         overflow: hidden;
 
-        & > slot {
+        & > main {
             position: relative;
             width: 100%;
             height: 100%;
