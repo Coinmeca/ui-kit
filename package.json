@@ -1,6 +1,6 @@
 {
     "name": "@coinmeca/ui",
-    "version": "0.0.6",
+    "version": "0.0.93",
     "keywords": [
         "coinmeca",
         "interface",
@@ -13,7 +13,7 @@
     "author": "Coinmeca Team <dev@coinmeca.net>",
     "license": "MIT",
     "sideEffects": false,
-    "type": "commonjs",
+    "type": "module",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "module": "dist/index.esm.js",
@@ -43,30 +43,30 @@
         "prebuild": "yarn clean"
     },
     "devDependencies": {
-        "@svgr/webpack": "^8.0.1",
         "@types/node": "20.11.0",
         "@types/react": "18.2.47",
         "@types/react-dom": "18.2.18",
         "@vercel/analytics": "^1.1.1",
-        "chart.js": "^4.4.1",
         "eslint": "8.56.0",
         "eslint-config-next": "14.0.4",
         "framer-motion": "^10.18.0",
+        "path-browserify": "^1.0.1",
+        "tsc-alias": "^1.8.7",
+        "tsup": "^8.0.1",
+        "typescript": "5.3.3",
+        "typescript-cp": "^0.1.9",
+        "vercel": "^33.1.0"
+    },
+    "dependencies": {
+        "@svgr/webpack": "^8.0.1",
+        "chart.js": "^4.4.1",
         "lightweight-charts": "^4.1.1",
         "next": "14.0.4",
-        "path-browserify": "^1.0.1",
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "sass": "^1.69.7",
         "sharp": "^0.33.2",
-        "styled-components": "^6.1.8",
-        "tsc-alias": "^1.8.7",
-        "tsup": "^8.0.1",
-        "typescript": "5.3.3",
-        "typescript-cp": "^0.1.9"
-    },
-    "dependencies": {
-        "vercel": "^33.1.0"
+        "styled-components": "^6.1.8"
     },
     "packageManager": "yarn@4.0.2"
 }
