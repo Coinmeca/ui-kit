@@ -371,15 +371,6 @@ export default function Page() {
                             children: <Elements.Text>Symbol</Elements.Text>,
                         }}
                     />
-                    <Controls.Input
-                        placeholder={0}
-                        align={"right"}
-                        type={"currency"}
-                        onChange={(e: any, v: any) => setAmount(parseFloat(v))}
-                        left={{
-                            children: <Elements.Text>Amount</Elements.Text>,
-                        }}
-                    />
                     {tab === "key" && (
                         <Controls.Input
                             placeholder={0}
@@ -391,6 +382,15 @@ export default function Page() {
                             }}
                         />
                     )}
+                    <Controls.Input
+                        placeholder={0}
+                        align={"right"}
+                        type={"currency"}
+                        onChange={(e: any, v: any) => setAmount(parseFloat(v))}
+                        left={{
+                            children: <Elements.Text>Amount</Elements.Text>,
+                        }}
+                    />
                     <Controls.Button
                         onClick={() => {
                             handleAddAsset(
