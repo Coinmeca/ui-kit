@@ -1,6 +1,6 @@
 {
     "name": "@coinmeca/ui",
-    "version": "0.0.9",
+    "version": "0.0.92",
     "keywords": [
         "coinmeca",
         "interface",
@@ -8,7 +8,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/Coinmeca/ethers"
+        "url": "https://github.com/coinmeca/ethers"
     },
     "author": "Coinmeca Team <dev@coinmeca.net>",
     "license": "MIT",
