@@ -13,7 +13,7 @@
     "author": "Coinmeca Team <dev@coinmeca.net>",
     "license": "MIT",
     "sideEffects": false,
-    "type": "module",
+    "type": "commonjs",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "module": "dist/index.esm.js",
@@ -49,15 +49,8 @@
         "@vercel/analytics": "^1.1.1",
         "eslint": "8.56.0",
         "eslint-config-next": "14.0.4",
-<<<<<<< HEAD
-        "next": "14.0.4",
-        "path-browserify": "^1.0.1",
-        "react": "18.2.0",
-        "react-dom": "18.2.0",
-=======
         "framer-motion": "^10.18.0",
         "path-browserify": "^1.0.1",
->>>>>>> 28731b6fde7f3d059ae1c5b227ede807c0dbe655
         "tsc-alias": "^1.8.7",
         "tsup": "^8.0.1",
         "typescript": "5.3.3",
@@ -67,15 +60,10 @@
     "dependencies": {
         "@svgr/webpack": "^8.0.1",
         "chart.js": "^4.4.1",
-<<<<<<< HEAD
-        "framer-motion": "^10.18.0",
-        "lightweight-charts": "^4.1.1",
-=======
         "lightweight-charts": "^4.1.1",
         "next": "14.0.4",
         "react": "18.2.0",
         "react-dom": "18.2.0",
->>>>>>> 28731b6fde7f3d059ae1c5b227ede807c0dbe655
         "sass": "^1.69.7",
         "sharp": "^0.33.2",
         "styled-components": "^6.1.8"
