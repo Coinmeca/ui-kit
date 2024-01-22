@@ -16,11 +16,6 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
     });
 
     useEffect(() => {
-        const element = children || initial;
-        root?.render(active ? createPortal(typeof element === "function" ? element(props) : element, document?.body) : null);
-    }, [active, initial, children, props]);
-
-    useEffect(() => {
         !root && setRoot(createRoot(document?.createElement("section")));
         return () => {
             // root?.render(null);
@@ -30,6 +25,11 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
             root?.unmount();
         };
     }, []);
+
+    useEffect(() => {
+        const element = children || initial;
+        root?.render(active ? createPortal(typeof element === "function" ? element(props) : element, document?.body) : null);
+    }, [active, initial, children, props]);
 
     return [
         (...args) => {
