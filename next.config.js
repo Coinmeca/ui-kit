@@ -13,9 +13,6 @@ const nextConfig = {
         styledComponents: true,
     },
     swcMinify: true,
-    experimental: {
-        webpackBuildWorker: true,
-    },
 };
 
 module.exports = nextConfig;
