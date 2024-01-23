@@ -6,7 +6,7 @@ import { useWindowSize, usePortal } from "hooks";
 import { Format, Sort } from "lib/utils";
 import { Root } from "lib/style";
 import Tooltip from "./Tooltip";
-import Style, { Asks, Bids, Tick as Ticks } from "./Orderbook.styled";
+import Style, { NoData, Asks, Bids, Tick as Ticks } from "./Orderbook.styled";
 
 export interface Orderbook {
     asks?: Tick[];
@@ -105,8 +105,8 @@ export default function Ordrebook(props: Orderbook) {
 
     return (
         <Style $responsive={props?.responsive} $guidance={guidance}>
-            <Asks $show={view === 0 || view === 1} onMouseLeave={() => closeTooltip()}>
-                {asks && asks?.length > 0 ? (
+            {asks && asks?.length > 0 ? (
+                <Asks $show={view === 0 || view === 1} onMouseLeave={() => closeTooltip()}>
                     <AnimatePresence mode="popLayout" presenceAffectsLayout>
                         {asks?.map((ask: Tick, k: number) => (
                             <Ticks
@@ -146,23 +146,23 @@ export default function Ordrebook(props: Orderbook) {
                             </Ticks>
                         ))}
                     </AnimatePresence>
-                ) : (
-                    <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.9, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        style={{ direction: "ltr" }}
-                    >
-                        <Elements.Text type={"desc"} opacity={0.6}>
-                            There is no asks.
-                        </Elements.Text>
-                    </motion.div>
-                )}
-            </Asks>
+                </Asks>
+            ) : (
+                <NoData
+                    as={motion.div}
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <Elements.Text type={"desc"} opacity={0.6}>
+                        There is no asks.
+                    </Elements.Text>
+                </NoData>
+            )}
             <Layouts.Divider responsive={props?.responsive?.device} style={{ ...(view !== 0 && { display: "none" }) }} />
-            <Bids $show={view === 0 || view === 2} onMouseEnter={(e) => e?.stopPropagation()} onMouseLeave={() => closeTooltip()}>
-                {bids && bids?.length > 0 ? (
+            {bids && bids?.length > 0 ? (
+                <Bids $show={view === 0 || view === 2} onMouseEnter={(e) => e?.stopPropagation()} onMouseLeave={() => closeTooltip()}>
                     <AnimatePresence mode="popLayout">
                         {bids?.map((bid: Tick, k: number) => (
                             <Ticks
@@ -202,19 +202,20 @@ export default function Ordrebook(props: Orderbook) {
                             </Ticks>
                         ))}
                     </AnimatePresence>
-                ) : (
-                    <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.9, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <Elements.Text type={"desc"} opacity={0.6}>
-                            There is no bids.
-                        </Elements.Text>
-                    </motion.div>
-                )}
-            </Bids>
+                </Bids>
+            ) : (
+                <NoData
+                    as={motion.div}
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <Elements.Text type={"desc"} opacity={0.6}>
+                        There is no bids.
+                    </Elements.Text>
+                </NoData>
+            )}
         </Style>
     );
 }

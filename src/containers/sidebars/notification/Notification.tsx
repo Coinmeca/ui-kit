@@ -1,10 +1,9 @@
 "use client";
+import { motion } from "framer-motion";
+import { Layouts } from "components";
 import Notify from "./Notify";
 import Style from "./Notification.styled";
-import { Elements, Layouts } from "components";
-import { type Notify as N } from "../../../contexts/Notification";
-import { motion } from "framer-motion";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { type Notify as N } from "contexts/Notification";
 
 type Content = N & { type?: "toast" | "notify" | "divider" };
 
