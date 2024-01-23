@@ -192,6 +192,13 @@ export const Bids = styled.div<{ $show: boolean }>`
     ${({ $show }) => Ticks("green", $show)}
 `;
 
+export const NoData = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: -webkit-fill-available;
+`;
+
 const Responsive = (vertical?: boolean) => css`
     flex-direction: row-reverse;
 
