@@ -1,6 +1,6 @@
 {
     "name": "@coinmeca/ui",
-    "version": "0.0.935",
+    "version": "0.0.942",
     "keywords": [
         "coinmeca",
         "interface",
@@ -13,7 +13,7 @@
     "author": "Coinmeca Team <dev@coinmeca.net>",
     "license": "MIT",
     "sideEffects": false,
-    "type": "module",
+    "type": "commonjs",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "module": "dist/index.esm.js",

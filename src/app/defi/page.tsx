@@ -56,7 +56,7 @@ export default function Page() {
     // 팝업선택시 브라우저 height가 바뀜 -> windowSize 변경 -> 리렌더
     // const { windowWidth } = useWindowSize();
     useEffect(() => {
-        setWindowWidth(window.innerWidth);
+        setWindowWidth(global.innerWidth);
     }, []);
 
     const [tab, setTab] = useState<"vault" | "markets" | "users">("users");

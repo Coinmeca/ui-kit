@@ -4,7 +4,8 @@ import { Controls, Elements, Layouts } from "components";
 import { Modals } from "containers";
 import type { Process } from "containers/modals/process/Process";
 
-export interface Connect extends Process {
+export type Connect = Omit<Process, "process"> & {
+    process?: boolean | null;
     chains?: any;
     wallets?: any;
     onClose: Function;
@@ -13,7 +14,7 @@ export interface Connect extends Process {
     onConnect?: Function;
     onBack?: Function;
     onError?: Function;
-}
+};
 
 export default function Connect(props: Connect) {
     const [chain, setChain] = useState<any>();

@@ -70,7 +70,7 @@ export default function Page() {
     // 팝업선택시 브라우저 height가 바뀜 -> windowSize 변경 -> 리렌더
     // const { windowWidth } = useWindowSize();
     useEffect(() => {
-        setWindowWidth(window.innerWidth);
+        setWindowWidth(global.innerWidth);
     }, []);
 
     const [tab, setTab] = useState<"vault" | "markets" | "users">("users");
@@ -1530,21 +1530,20 @@ export default function Page() {
                                         <Layouts.Box
                                             padding={0.5}
                                             style={{
-                                                ...(a?.key
-                                                    && { border: "1px solid rgb(var(--white))" }),
-                                                ...({
+                                                ...(a?.key && { border: "1px solid rgb(var(--white))" }),
+                                                ...{
                                                     width: "auto",
                                                     minHeight: "initial",
-                                                })
-                                                }}
-                                                >
+                                                },
+                                            }}
+                                        >
                                             <Layouts.Row gap={0.5}>
                                                 <Elements.Text>{a?.symbol}</Elements.Text>
                                                 <Elements.Text align={"right"}>$ {a?.value}</Elements.Text>
                                             </Layouts.Row>
                                         </Layouts.Box>
                                     </div>
-                            ))}
+                                ))}
                         </Layouts.Contents.GridContainer>
                         <Layouts.Divider />
                         <Layouts.Contents.InnerContent>
