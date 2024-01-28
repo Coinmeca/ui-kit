@@ -18,7 +18,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: any }) {
     return (
-        <html lang="en">
+        <html>
             <body suppressHydrationWarning={true}>
                 <StrictMode>
                     <Style.Initialize>

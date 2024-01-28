@@ -76,7 +76,8 @@ const Style = styled.button<{
                 const line: string = $color === "white" ? "var(--white)" : "var(--black)";
                 return css`
                     background: transparent;
-                    border: 1px solid rgb(var(--theme));
+                    border: 1px solid;
+                    border-color: rgb(var(--theme));
                     color: rgb(var(--theme));
                     & ${Icon.default} svg {
                         fill: rgb(var(--theme));
@@ -90,7 +91,7 @@ const Style = styled.button<{
                     }
                     &:active {
                         background: rgba(var(--theme), var(--o06));
-                        border: 1px solid rgba(var(--theme), var(--o06));
+                        border-color: rgba(var(--theme), var(--o06));
                     }
                     .box &:active {
                         color: rgb(var(--dim));

@@ -15,7 +15,7 @@ export function Configure({ children }: { children: any }) {
         return <>{styles}</>;
     });
 
-    if (typeof global !== "undefined") return <>{children}</>;
+    if (typeof window !== "undefined") return <>{children}</>;
 
     return <StyleSheetManager sheet={styleSheet.instance}>{children}</StyleSheetManager>;
 }

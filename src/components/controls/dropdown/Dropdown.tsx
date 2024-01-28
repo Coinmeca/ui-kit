@@ -114,7 +114,6 @@ export default function Dropdown(props: Dropdown) {
                           visibility: "hidden",
                           pointerEvents: "none",
                           opacity: 0,
-                          width: 0,
                           height: 0,
                       }
                     : {}),
