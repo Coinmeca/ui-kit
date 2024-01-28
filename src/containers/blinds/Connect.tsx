@@ -16,11 +16,11 @@ export default function Connect(props: any) {
 
     return (
         <Layouts.Blind background={props?.background}>
-            <Layouts.Col gap={2} align={"center"} style={{ width: props?.width }} fit>
-                <Elements.Text type="strong" align={"center"} fit>
+            <Layouts.Col gap={2} align={"center"} style={{ width: props?.width }} fit={!props?.width}>
+                <Elements.Text type="strong" align={"center"} fit={!props?.width}>
                     {message}
                 </Elements.Text>
-                <Controls.Button type={"solid"} color={"black"} onClick={handleConnect} style={props?.width && { width: "-webkit-fill-available" }} fit>
+                <Controls.Button type={"solid"} color={"black"} onClick={handleConnect} fit={!props?.width}>
                     Connect
                 </Controls.Button>
             </Layouts.Col>

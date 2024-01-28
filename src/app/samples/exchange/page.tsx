@@ -322,6 +322,7 @@ export default function Page() {
                                                     contents={[
                                                         {
                                                             active: tab !== "history",
+                                                            fix: true,
                                                             children: (
                                                                 <Exchange.Containers.Order
                                                                     base={props?.market?.base}
