@@ -3,6 +3,7 @@ import { type BG } from "components/layouts/bg/BG";
 
 export interface Connect {
     background: BG;
+    width?: number | string;
     message?: string;
     onConnect?: Function;
 }
@@ -15,11 +16,11 @@ export default function Connect(props: any) {
 
     return (
         <Layouts.Blind background={props?.background}>
-            <Layouts.Col gap={2} align={"center"} fit>
+            <Layouts.Col gap={2} align={"center"} style={{ width: props?.width }} fit>
                 <Elements.Text type="strong" align={"center"} fit>
                     {message}
                 </Elements.Text>
-                <Controls.Button type={"solid"} color={"black"} onClick={handleConnect} fit>
+                <Controls.Button type={"solid"} color={"black"} onClick={handleConnect} style={props?.width && { width: "-webkit-fill-available" }} fit>
                     Connect
                 </Controls.Button>
             </Layouts.Col>

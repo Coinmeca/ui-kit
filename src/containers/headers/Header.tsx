@@ -13,17 +13,20 @@ export interface Header {
     logo?: Logo;
     menu?: {
         active?: boolean;
+        style?: object;
         children?: Menu[];
         onClick?: Function;
     };
     option?: {
         active?: boolean;
+        style?: object;
         children?: any;
     };
     side?: Side;
     scale?: number;
     height?: number;
     color?: string;
+    style?: object;
 }
 
 export interface Logo {
@@ -44,6 +47,7 @@ export interface Menu {
 export interface Side {
     width?: number;
     active?: boolean;
+    style?: object;
     children?: any;
 }
 
@@ -79,7 +83,7 @@ export default function Header(props: Header) {
     }, [mobileMenu, windowSize.width]);
 
     return (
-        <Style $scale={scale} $color={color} $height={height} $side={side}>
+        <Style $scale={scale} $color={color} $height={height} $side={side} style={props?.style}>
             <Layouts.Row gap={0}>
                 <Layouts.Row>
                     <Layouts.Row>
@@ -122,13 +126,13 @@ export default function Header(props: Header) {
                         )}
                     </Layouts.Row>
                     {props?.option?.children && (
-                        <Layouts.Row gap={0} fit data-active={props?.option?.active}>
+                        <Layouts.Row gap={0} data-active={props?.option?.active} style={props?.option?.style} fit>
                             {props?.option?.children}
                         </Layouts.Row>
                     )}
                 </Layouts.Row>
                 {props?.side?.children && (
-                    <Side $scale={scale} $width={side} data-active={props?.side?.active}>
+                    <Side $scale={scale} $width={side} data-active={props?.side?.active} style={props?.side?.style}>
                         <Layouts.Row>{props?.side?.children}</Layouts.Row>
                     </Side>
                 )}

@@ -196,6 +196,7 @@ export const NoData = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    width: -webkit-fill-available;
     height: -webkit-fill-available;
 `;
 

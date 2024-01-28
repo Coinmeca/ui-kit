@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ScrollPosition } from "contexts";
+import { Layouts } from "components";
 import Style from "./Page.styled";
 
 export interface Content {
@@ -8,6 +9,7 @@ export interface Content {
     scroll?: boolean;
     style?: object;
     active?: boolean;
+    fallback?: any;
 }
 
 export default function Page(props: Content) {
@@ -19,8 +21,11 @@ export default function Page(props: Content) {
     };
 
     return (
-        <Style $scroll={scroll} $active={props?.active} style={props?.style} onScroll={handleScroll}>
-            {scroll ? <ScrollPosition target={scrollPosition}>{props?.children}</ScrollPosition> : props?.children}
-        </Style>
+        <>
+            {props?.fallback && <Layouts.Panel fix>{props?.fallback}</Layouts.Panel>}
+            <Style $scroll={scroll} $active={props?.active} style={props?.style} onScroll={handleScroll}>
+                {scroll ? <ScrollPosition target={scrollPosition}>{props?.children}</ScrollPosition> : props?.children}
+            </Style>
+        </>
     );
 }

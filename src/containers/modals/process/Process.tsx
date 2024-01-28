@@ -4,9 +4,7 @@ import type { Modal as Default } from "containers/modals/Modal";
 import { Contents } from "components";
 import type { Process as Part } from "components/contents/process/Process";
 
-export interface Process extends Part, Default {
-    process: boolean | null;
-}
+export interface Process extends Part, Default {}
 
 export default function Process(props: Process) {
     const handleClose = (e: any) => {

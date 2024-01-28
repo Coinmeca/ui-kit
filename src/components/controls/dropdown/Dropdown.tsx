@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
 import { useWindowSize, usePortal } from "hooks";
@@ -85,80 +85,103 @@ export default function Dropdown(props: Dropdown) {
         if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
 
-    const Select = (visible: Visible = "popup") => (
+    const position = () => {
+        if (dropdown?.current && dropbox?.current) {
+            const size = dropdown?.current?.getBoundingClientRect();
+            const position = dropbox?.current?.getBoundingClientRect();
+            const over = windowSize.height < size?.bottom + position?.height;
+            return { ...(over ? { bottom: windowSize.height - size?.top } : { top: size?.bottom }), left: size?.x };
+        }
+    };
+
+    const Select = (visible: Visible) => (
         <Options
-            ref={dropbox}
-            style={
-                visible === "popup"
+            style={{
+                ...(visible === "popup"
                     ? {
-                          position: "absolute",
+                          position: "fixed",
                           fontSize: `${scale}em`,
                           width: width && `${width / (8 * scale)}em`,
                           background: "rgba(var(--white), var(--o0075))",
                           backdropFilter: "blur(4em)",
                           transition: "max-height .3s ease",
-                          top: dropdown?.current?.getBoundingClientRect()?.top + dropdown?.current?.offsetHeight,
-                          left: dropdown?.current?.getBoundingClientRect()?.left,
                           zIndex: 200,
+                          ...position(),
                           ...(open ? { maxHeight: "100em", overflowY: "hidden" } : { maxHeight: 0, overflowY: "scroll" }),
                       }
                     : visible === "hidden"
-                    ? { visibility: "hidden", height: 0 }
-                    : {}
-            }
+                    ? {
+                          visibility: "hidden",
+                          pointerEvents: "none",
+                          opacity: 0,
+                          width: 0,
+                          height: 0,
+                      }
+                    : {}),
+            }}
         >
-            {options &&
-                options.length > 0 &&
-                options.map(
-                    (v: any, k: number) =>
-                        v && (
-                            <Item
-                                key={k}
-                                onClick={(e: any) => {
-                                    handleSelect(e, v, k);
-                                }}
-                                data-disabled={typeof option !== "undefined" && (v[keyIndex] === option || v[keyName] === option || v === option)}
-                            >
-                                <>
-                                    {typeof v[imgName] !== "undefined" && v[imgName] !== "" ? (
-                                        <>
-                                            <Image src={v[imgName]} width={0} height={0} alt={""} />
-                                            <span title={typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}>
-                                                {typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}
-                                            </span>
-                                        </>
-                                    ) : v.icon !== "" && typeof v.icon !== "undefined" ? (
-                                        <>
-                                            <Elements.Icon icon={option?.icon} />
-                                            <span title={typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}>
-                                                {typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}
-                                            </span>
-                                        </>
-                                    ) : (
-                                        <span
-                                            title={
-                                                typeof v === "object"
+            <div ref={dropbox}>
+                {options &&
+                    options.length > 0 &&
+                    options.map(
+                        (v: any, k: number) =>
+                            v && (
+                                <Item
+                                    key={k}
+                                    onClick={(e: any) => {
+                                        handleSelect(e, v, k);
+                                    }}
+                                    data-disabled={typeof option !== "undefined" && (v[keyIndex] === option || v[keyName] === option || v === option)}
+                                >
+                                    <>
+                                        {typeof v[imgName] !== "undefined" && v[imgName] !== "" ? (
+                                            <>
+                                                <Image src={v[imgName]} width={0} height={0} alt={""} />
+                                                <span
+                                                    title={
+                                                        typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v
+                                                    }
+                                                >
+                                                    {typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}
+                                                </span>
+                                            </>
+                                        ) : v.icon !== "" && typeof v.icon !== "undefined" ? (
+                                            <>
+                                                <Elements.Icon icon={option?.icon} />
+                                                <span
+                                                    title={
+                                                        typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v
+                                                    }
+                                                >
+                                                    {typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <span
+                                                title={
+                                                    typeof v === "object"
+                                                        ? typeof v[keyIndex] !== "undefined"
+                                                            ? v[keyIndex]
+                                                            : typeof v[keyName] !== "undefined"
+                                                            ? v[keyName]
+                                                            : v
+                                                        : v
+                                                }
+                                            >
+                                                {typeof v === "object"
                                                     ? typeof v[keyIndex] !== "undefined"
                                                         ? v[keyIndex]
                                                         : typeof v[keyName] !== "undefined"
                                                         ? v[keyName]
                                                         : v
-                                                    : v
-                                            }
-                                        >
-                                            {typeof v === "object"
-                                                ? typeof v[keyIndex] !== "undefined"
-                                                    ? v[keyIndex]
-                                                    : typeof v[keyName] !== "undefined"
-                                                    ? v[keyName]
-                                                    : v
-                                                : v}
-                                        </span>
-                                    )}
-                                </>
-                            </Item>
-                        )
-                )}
+                                                    : v}
+                                            </span>
+                                        )}
+                                    </>
+                                </Item>
+                            )
+                    )}
+            </div>
         </Options>
     );
 
@@ -227,7 +250,7 @@ export default function Dropdown(props: Dropdown) {
                 // maxWidth: width && `${width / 8}em`,
                 ...props?.style,
             }}
-            onClick={() => (!props?.responsive ? handleOpen() : openSelectOnSheet(Select))}
+            onClick={() => (!props?.responsive ? handleOpen() : openSelectOnSheet())}
             onBlur={handleClose}
             title={props?.title}
             data-active={open}
@@ -273,7 +296,7 @@ export default function Dropdown(props: Dropdown) {
                     )}
                 </Item>
             </Option>
-            {!props?.responsive && Select("hidden")}
+            {!props?.responsive && <>{Select("hidden")}</>}
         </Style>
     );
 }
