@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Elements, Layouts, Controls } from "components";
 import { Modals, Sidebars } from "containers";
-import { useNotification, usePortal } from "hooks";
+import { useMobile, useNotification, usePortal } from "hooks";
 import { Filter } from "lib/utils";
 
 export default function Data() {
@@ -14,6 +14,7 @@ export default function Data() {
     // const [mobileMenu, setMobileMenu] = useState("market");
     const [sidebarTab, setSidebarTab] = useState("exchange");
 
+    const { isMobile } = useMobile();
     const { notis, toasts, count, addToast, addNotify, setNotis, resetCount } = useNotification();
 
     const notilist = [
@@ -443,8 +444,8 @@ export default function Data() {
             children: (
                 <>
                     <Layouts.Row fit>
-                        <Controls.Dropdown option={languages[0]} options={languages} fit />
-                        <Controls.Dropdown option={chains[0]} options={chains} fit />
+                        <Controls.Dropdown option={languages[0]} options={languages} responsive={isMobile} fit />
+                        <Controls.Dropdown option={chains[0]} options={chains} responsive={isMobile} fit />
                     </Layouts.Row>
                     {/* <Controls.Button fit>Connect</Controls.Button> */}
                     <Controls.Dropdown
@@ -463,6 +464,7 @@ export default function Data() {
                         }}
                         options={["Disconnect"]}
                         onClickItem={(e: any, v: any, k: number) => handleUserOption(k)}
+                        responsive={isMobile}
                         fix
                     />
                 </>

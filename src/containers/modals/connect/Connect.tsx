@@ -100,7 +100,7 @@ export default function Connect(props: Connect) {
                             children: (
                                 <Layouts.Col gap={2} fill>
                                     <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
-                                        Please select wallet will you connect.
+                                        Please select wallet will you connect. 123
                                     </Elements.Text>
                                     <Layouts.Contents.InnerContent style={{ justifyContent: "center" }} scroll>
                                         <Layouts.List list={walletListFormatter(props?.wallets)} />

@@ -20,10 +20,12 @@ export interface Asset extends Token {
 export interface Farm {
 	name: string;
 	type: number;
-	stake: Token;
-	reward: Token;
-	rewards: number;
-	rewards_rate: number;
-	tl: number;
-	tl_change: number;
+	id?: number | string;
+	address?: string;
+	stake?: Token;
+	reward?: Token;
+	rewards?: number;
+	rewards_rate?: number;
+	tl?: number;
+	tl_change?: number;
 }

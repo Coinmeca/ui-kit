@@ -405,7 +405,7 @@ export default function Detail(props: Detail) {
                                                 active: tab === "staking",
                                                 children: (
                                                     <Farms.Containers.Stake
-                                                        asset={props?.farm?.stake}
+                                                        asset={props?.farm?.stake!}
                                                         price={props?.info?.token_per}
                                                         fee={0.1}
                                                         responsive={
