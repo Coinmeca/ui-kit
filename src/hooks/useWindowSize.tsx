@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 
 export interface WindowSize {
     width: number;
@@ -7,25 +7,27 @@ export interface WindowSize {
 }
 
 export default function useWindowSize() {
-    const [windowWidth, setWindowWidth] = useState<number>(global?.innerWidth || 1920);
-    const [windowHeight, setWindowHeight] = useState<number>(global?.innerHeight || 1080);
-    const [windowSize, setWindowSize] = useState<WindowSize>({ width: windowWidth, height: windowHeight });
+    const [windowWidth, setWindowWidth] = useState<number>(1920);
+    const [windowHeight, setWindowHeight] = useState<number>(1080);
+    const [windowSize, setWindowSize] = useState<WindowSize>({
+        width: windowWidth,
+        height: windowHeight,
+    });
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         function windowResize() {
-            setWindowWidth(global?.innerWidth);
-            setWindowHeight(global?.innerHeight);
+            if (windowWidth !== window.innerWidth) setWindowWidth(window.innerWidth);
+            if (windowHeight !== window.innerHeight) setWindowHeight(window.innerHeight);
             setWindowSize({
-                width: global?.innerWidth,
-                height: global?.innerHeight,
+                width: window.innerWidth,
+                height: window.innerHeight,
             });
         }
 
-        if (global) {
-            windowResize();
-            global.addEventListener("resize", windowResize);
-        }
-        return () => global.removeEventListener("resize", windowResize);
+        window.addEventListener("resize", windowResize);
+        windowResize();
+
+        return () => window.removeEventListener("resize", windowResize);
     }, []);
 
     return { windowSize, windowWidth, windowHeight };

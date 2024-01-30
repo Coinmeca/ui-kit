@@ -14,7 +14,7 @@ export default function TabContainer(props: TabContainer) {
             {props?.contents &&
                 (props?.contents?.length > 0 ? (
                     props?.contents.map((content, i) => (
-                        <TabContent key={i} active={content?.active} style={content?.style}>
+                        <TabContent key={i} {...content}>
                             {content.children}
                         </TabContent>
                     ))

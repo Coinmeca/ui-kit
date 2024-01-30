@@ -68,7 +68,7 @@ export default function Input(props: Input) {
     const input: any = useRef();
 
     const type = props?.type === "password" ? "password" : props?.type || "text";
-    const placeholder = props?.placeholder?.toString() || "Type";
+    const placeholder = props?.placeholder?.toString() || "";
     const step = props?.step || 1;
     const scale = props?.scale || 1;
     const min = props?.min || 0;

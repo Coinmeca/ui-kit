@@ -41,7 +41,7 @@ export default function Connect(props: Connect) {
 
     const walletListFormatter = (data: any): any[] | undefined =>
         (typeof data === "object" ? Object.values(data) : data?.length > 0 && data)?.map((w: any) => ({
-            children: <Elements.Avatar img={w?.logo} name={w?.name} />,
+            children: <Elements.Avatar img={w?.logo} name={w?.name} style={{ flex: 1 }} />,
             onClick: async (e: any) => await handleConnect(e, w?.name),
         }));
 
