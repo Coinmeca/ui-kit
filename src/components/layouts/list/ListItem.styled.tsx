@@ -26,7 +26,7 @@ const Style = styled.div<{
     $event: boolean;
 }>`
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     font-size: 0.6666em;
     padding: 1em;
     gap: 1em;

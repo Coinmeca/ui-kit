@@ -110,7 +110,7 @@ export default function Ordrebook(props: Orderbook) {
                     <AnimatePresence mode="popLayout" presenceAffectsLayout>
                         {asks?.map((ask: Tick, k: number) => (
                             <Ticks
-                                key={k}
+                                key={ask?.price || k}
                                 onClick={(e: any) => handleAsk(ask, k, e)}
                                 onMouseEnter={(e: any) => handleAskHover(ask, k, e)}
                                 as={motion.div}
@@ -166,7 +166,7 @@ export default function Ordrebook(props: Orderbook) {
                     <AnimatePresence mode="popLayout">
                         {bids?.map((bid: Tick, k: number) => (
                             <Ticks
-                                key={k}
+                                key={bid?.price || k}
                                 onClick={(e: any) => handleBid(bid, e)}
                                 onMouseEnter={(e: any) => handleBidHover(bid, k, e)}
                                 as={motion.div}

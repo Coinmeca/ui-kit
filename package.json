@@ -1,6 +1,6 @@
 {
     "name": "@coinmeca/ui",
-    "version": "0.0.9492",
+    "version": "0.0.94996",
     "keywords": [
         "coinmeca",
         "interface",
@@ -13,7 +13,7 @@
     "author": "Coinmeca Team <dev@coinmeca.net>",
     "license": "MIT",
     "sideEffects": false,
-    "type": "module",
+    "type": "commonjs",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "module": "dist/index.esm.js",
@@ -37,6 +37,7 @@
         "build": "npm pkg set type=module && tsc --build && tsc-alias && tscp",
         "build:tsup": "npm pkg set type=module && tsup",
         "build:next": "npm pkg set type=commonjs && next build",
+        "deploy": "npm publish",
         "clean": "rimraf ./dist ./build ./.next ./.vercel ./.turbo ./tsconfig.tsbuildinfo ./node_modules/.cache",
         "start": "next start",
         "lint": "next lint",
