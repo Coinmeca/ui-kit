@@ -13,7 +13,7 @@
     "author": "Coinmeca Team <dev@coinmeca.net>",
     "license": "MIT",
     "sideEffects": false,
-    "type": "commonjs",
+    "type": "module",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "module": "dist/index.esm.js",
@@ -69,5 +69,5 @@
         "sharp": "^0.33.2",
         "styled-components": "^6.1.8"
     },
-    "packageManager": "yarn@4.0.2"
+    "packageManager": "yarn@4.1.0"
 }
