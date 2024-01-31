@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { Suspense, memo, useEffect, useRef, useState } from "react";
 import { createChart } from "lightweight-charts";
 import { Sort } from "lib/utils";
 import Style from "./Chart.styled";
@@ -24,7 +24,7 @@ export interface Data {
     type?: string;
 }
 
-export default function Histogram(props: Histogram) {
+export const Histogram = (props: Histogram) => {
     const up = props?.up || "up";
     const down = props?.down || "down";
 
@@ -173,3 +173,5 @@ export default function Histogram(props: Histogram) {
         </Suspense>
     );
 }
+
+export default memo(Histogram);

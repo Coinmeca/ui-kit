@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { Suspense, memo, useEffect, useRef, useState } from "react";
 import { createChart, HistogramData } from "lightweight-charts";
 import type { LineData } from "lightweight-charts";
 import type { Volume } from "./Candle";
@@ -21,7 +21,7 @@ export interface Line {
     fit?: boolean;
 }
 
-export default function Line(props: Line) {
+export const Line = (props: Line)=> {
     const up = props?.up || "up";
     const down = props?.down || "down";
 
@@ -218,3 +218,5 @@ export default function Line(props: Line) {
         </Suspense>
     );
 }
+
+export default memo(Line);
