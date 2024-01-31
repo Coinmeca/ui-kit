@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, Suspense } from "react";
+import { useState, useEffect, useRef, Suspense, memo } from "react";
 import { Chart } from "chart.js/auto";
 
 export interface ChartJS {
@@ -18,7 +18,7 @@ export interface Data {
     time?: string;
 }
 
-export default function ChartJS(props: ChartJS) {
+export const ChartJS = (props: ChartJS) => {
     const chartRef: any = useRef();
 
     const [data, setData] = useState<any>();
@@ -133,3 +133,5 @@ export default function ChartJS(props: ChartJS) {
         </Suspense>
     );
 }
+
+export default memo(ChartJS);

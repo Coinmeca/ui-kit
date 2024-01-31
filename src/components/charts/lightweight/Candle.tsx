@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { Suspense, memo, useEffect, useRef, useState } from "react";
 import { createChart } from "lightweight-charts";
 import type { CandlestickData, HistogramData } from "lightweight-charts";
 import { Sort } from "lib/utils";
@@ -33,7 +33,7 @@ export interface Volume {
     type?: string;
 }
 
-export default function Candle(props: Candle) {
+export const Candle = (props: Candle) => {
     const up = props?.up || "up";
     const down = props?.down || "down";
 
@@ -217,3 +217,5 @@ export default function Candle(props: Candle) {
         </Suspense>
     );
 }
+
+export default memo(Candle);

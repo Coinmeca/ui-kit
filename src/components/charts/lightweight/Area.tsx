@@ -1,11 +1,11 @@
 "use client";
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { Suspense, memo, useEffect, useRef, useState } from "react";
 import { createChart } from "lightweight-charts";
 import type { AreaData } from "lightweight-charts";
 import { Sort } from "lib/utils";
 import Style from "./Chart.styled";
 
-export interface Line {
+export interface Area {
     color?: {
         default?: string;
         theme?: string;
@@ -17,7 +17,7 @@ export interface Line {
     fit?: boolean;
 }
 
-export default function Line(props: Line) {
+export const Area = (props: Area) => {
     const up = props?.up || "up";
     const down = props?.down || "down";
 
@@ -164,3 +164,5 @@ export default function Line(props: Line) {
         </Suspense>
     );
 }
+
+export default memo(Area);
