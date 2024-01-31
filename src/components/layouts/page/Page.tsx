@@ -22,7 +22,7 @@ export default function Page(props: Content) {
 
     return (
         <>
-            {props?.fallback && <Layouts.Panel fix>{props?.fallback}</Layouts.Panel>}
+            {props?.fallback && <Layouts.Panel style={{ position: "absolute" }}>{props?.fallback}</Layouts.Panel>}
             <Style $scroll={scroll} $active={props?.active} style={props?.style} onScroll={handleScroll}>
                 {scroll ? <ScrollPosition target={scrollPosition}>{props?.children}</ScrollPosition> : props?.children}
             </Style>
