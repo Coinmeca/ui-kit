@@ -274,7 +274,7 @@ export default function Page() {
                                     area: "order",
                                     children: (
                                         <>
-                                            <Blinds.Connect background={{ filter: { color: "dim", opacity: 0.75 } }} />
+                                            {/* <Blinds.Connect background={{ filter: { color: "dim", opacity: 0.75 } }} /> */}
                                             <Layouts.Contents.InnerContent>
                                                 <Layouts.Menu
                                                     menu={[
