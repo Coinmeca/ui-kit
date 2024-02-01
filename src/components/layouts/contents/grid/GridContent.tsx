@@ -1,9 +1,9 @@
-import { Fragment, memo } from "react";
+import { Fragment, memo, type CSSProperties } from "react";
 
 export interface GridContent {
     format?: any;
     area: string;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     children?: any;
     props?: any;
     responsive?: {

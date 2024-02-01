@@ -2,18 +2,19 @@
 import Image from "next/image";
 import Style from "./State.styled";
 import { Elements, Layouts } from "components";
+import { type CSSProperties } from "react";
 
 export interface State {
     img?: {
         width?: number;
         height?: number;
         src?: any;
-        style?: CSSPropertyRule;
+        style?: CSSProperties;
         alt?: string;
     };
     message?: any;
     children?: any;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
 }
 
 export default function State(props: State) {

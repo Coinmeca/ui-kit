@@ -1,9 +1,10 @@
 "use client";
+import { type CSSProperties } from "react";
 import Style, { Row, Cell } from "./TableItem.styled";
 
 export interface ListItem {
     children?: any;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     align?: "left" | "center" | "right";
     change?: string;
     active?: boolean;

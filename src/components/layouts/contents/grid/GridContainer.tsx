@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, type CSSProperties } from "react";
 import Style, { Grid } from "./GridContainer.styled";
 import GridContent from "./GridContent";
 import { GridArea as Area } from "./GridContent.styled";
@@ -23,7 +23,7 @@ export interface GridContainer {
         width?: number | string | { min?: number; max?: number };
         height?: number | string | { min?: number; max?: number };
     }[];
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     fullsize?: boolean;
 }
 

@@ -1,10 +1,11 @@
+import { type CSSProperties } from "react";
 import SlideContent from "./SlideContent";
-import type { SlideContent as Content } from "./SlideContent";
+import { type SlideContent as Content } from "./SlideContent";
 import Style from "./SlideContainer.styled";
 
 export interface SlideContainer {
     contents?: Content[];
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
 }
 
 export default function SlideContainer(props: SlideContainer) {

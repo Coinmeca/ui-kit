@@ -1,11 +1,12 @@
 "use client";
+import { type CSSProperties } from "react";
 import { motion } from "framer-motion";
 import Style from "./InnerContent.styled";
 
 export interface InnerContent {
     children?: any;
     padding?: number | any[];
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     scroll?: boolean;
 }
 

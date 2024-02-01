@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { animate, stagger } from "framer-motion";
 import { Layouts } from "components";
 import { useWindowSize } from "hooks";
@@ -13,20 +13,20 @@ export interface Header {
     logo?: Logo;
     menu?: {
         active?: boolean;
-        style?: CSSPropertyRule;
+        style?: CSSProperties;
         children?: Menu[];
         onClick?: Function;
     };
     option?: {
         active?: boolean;
-        style?: CSSPropertyRule;
+        style?: CSSProperties;
         children?: any;
     };
     side?: Side;
     scale?: number;
     height?: number;
     color?: string;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
 }
 
 export interface Logo {
@@ -47,7 +47,7 @@ export interface Menu {
 export interface Side {
     width?: number;
     active?: boolean;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     children?: any;
 }
 

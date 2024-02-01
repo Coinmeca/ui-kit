@@ -1,14 +1,14 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import BG from "components/layouts/bg/BG";
-import type { BG as Background } from "components/layouts/bg/BG";
-import { Style } from "./Slide.styled";
+import { useState, useEffect, type CSSProperties } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import BG from "components/layouts/bg/BG";
+import { type BG as Background } from "components/layouts/bg/BG";
+import { Style } from "./Slide.styled";
 
 export interface SlideContent {
     active?: boolean;
     children?: any;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     onClick?: Function;
     background?: Background;
 }
@@ -24,7 +24,7 @@ export interface Slide {
     padding?: number;
     timer?: number;
     scale?: number;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     event?: Function;
 }
 

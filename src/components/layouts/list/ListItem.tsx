@@ -1,10 +1,11 @@
 "use client";
+import { type CSSProperties } from "react";
 import Style, { Row, Col } from "./ListItem.styled";
 
 export interface ListItem {
     children?: any;
     gap?: number;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     align?: "left" | "center" | "right";
     change?: string;
     onClick?: Function;

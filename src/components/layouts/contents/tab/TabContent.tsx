@@ -1,11 +1,11 @@
-import { memo } from "react";
+import { memo, type CSSProperties } from "react";
 import Style from "./TabContent.styled";
 
 export interface TabContent {
     name?: string;
     active?: boolean;
     children?: any;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     fix?: boolean;
 }
 

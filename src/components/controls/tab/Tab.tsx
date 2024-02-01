@@ -1,10 +1,11 @@
 "use client";
+import { type CSSProperties } from "react";
 import { Elements } from "components";
 import type { Icon } from "components/elements/icon/Icon";
 import Style from "./Tab.styled";
 
 export interface Tab {
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     title?: string;
 
     active?: boolean;

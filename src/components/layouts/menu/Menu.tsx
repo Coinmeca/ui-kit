@@ -1,10 +1,10 @@
+import { Fragment, type CSSProperties } from "react";
 import { Layouts } from "components";
 import Style, { Row } from "./Menu.styled";
-import { Fragment } from "react";
 
 export interface Menu {
     menu?: any;
-    style?: CSSPropertyRule;
+    style?: object;
     scale?: number;
     show?: "desktop" | "laptop" | "tablet" | "mobile";
     hide?: "desktop" | "laptop" | "tablet" | "mobile";
