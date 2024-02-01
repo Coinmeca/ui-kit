@@ -130,75 +130,73 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			if (value === '' || value?.length <= 0) return display ? '0' : '';
 			let sig = (sign && (Sign(value) === "+" ? '' : Sign(value))) || '';
 
-			let copy: any = value.split(' ');
+			let copy: any = [value];
 			let point = false;
 			let num = false;
 			let zero = 0;
 			let multiplier = 0;
+			let u = '';
 
-			if (copy[1] && copy[1]?.length > 0) {
-				if (copy[1]?.includes('T')) {
-					multiplier = 12;
-				} else if (copy[1]?.includes('M')) {
-					multiplier = 9;
-				} else if (copy[1]?.includes('B')) {
-					multiplier = 6;
-				} else if (copy[1]?.includes('K')) {
-					multiplier = 3;
-				}
+			if (value?.includes('T')) {
+				copy = value.split('T');
+				multiplier = 12;
+			} else if (value?.includes('B')) {
+				copy = value.split('B');
+				multiplier = 9;
+			} else if (value?.includes('M')) {
+				copy = value.split('M');
+				multiplier = 6;
+			} else if (value?.includes('K')) {
+				copy = value.split('K');
+				multiplier = 3;
 			}
-			value = copy[0] as string;
+			value = copy[0].replaceAll(' ', '') as string;
 
-			let e = value?.split('e');
+			// if (value?.includes('e')) {
+			const e = value?.split('e');
 			copy = e[0]?.split('.');
-			if (copy?.length > 1) point = true;
-			if (copy[0].length > 12) {
-				multiplier += 12;
-			} else if (copy[0].length > 9) {
-				multiplier += 9;
-			} else if (copy[0].length > 6) {
-				multiplier += 6;
-			} else if (copy[0].length > 3) {
-				multiplier += 3;
-			}
-			copy[0] = point ? copy[0] + '.' + (copy[1] || '') : copy.join('');
-			point = false;
+			if (e?.length > 0 && !isNaN(parseFloat(e[1]))) multiplier += parseFloat(e[1]);
+			// }
 
-			value = copy[0] as string;
-			if (e?.length > 0 && !isNaN(parseFloat(e[1]))) {
-				multiplier += parseFloat(e[1]) - (copy[1]?.length || 0);
+			const m = Math.abs(multiplier);
+			const n = copy[0]?.length;
+			const d = copy[1]?.length || 0;
 
-				if (multiplier < 0) {
-					copy[0] = copy.join('');
-					if (copy[0].length + multiplier < 0) {
-						value = '0.' + '0'.repeat(Math.abs(copy[0].length + (copy[1]?.length || 0) + multiplier)) + e[0]?.replaceAll('.', '');
+			if (multiplier < 0) {
+				if (copy.legnth > 1) {
+					if (m > d) {
+						value = copy[0] + copy[1] + '0'.repeat(m - d);
 					} else {
-						if (copy[0].length + multiplier >= copy[0].length) {
-							value = copy[0] + '0'.repeat(multiplier - copy[0].length);
-						} else if (copy[0].length + multiplier < copy[0].length) {
-							value = (copy[0].substring(0, copy[0].length + multiplier) || '0') + '.' + copy[0].substring(copy[0].length + multiplier);
-						}
+						value = copy[0] + copy[1]?.substring(0, m - d) + '.' + copy[1]?.substring(m - d, copy[1].legnth);
 					}
-				} else if (multiplier > 0) {
-					if (copy[1]) {
-						let m = multiplier - copy[1].length;
-						if (m > 0) {
-							value = copy.join('') + '0'.repeat(copy[1].legnth - multiplier);
-						} else if (m < 0) {
-							value = copy[0] + copy[1].substring(0, copy[1].length - multiplier - 1) + '.' + copy[1].substring(copy[1].length - multiplier - 1, copy[1].length);
-						}
-					} else {
-						value = copy.join('') + '0'.repeat(multiplier);
-					}
-				}
-			} else if (unit && copy[0].length > upper) {
-				if (copy[0].length > multiplier) {
-					value = copy[0].substring(0, copy[0].length - multiplier) + '.' + copy[0].substring(copy[0].length - multiplier, copy[0].length);
 				} else {
-					value = copy[0] + '0'.repeat(multiplier);
+					if (m > n) {
+						value = '0.' + '0'.repeat(m - n) + copy[0] + (copy[1] || '');
+					} else {
+						value = copy[0]?.substring(0, n - m) + '.' + copy[0]?.substring(n - m, copy[0].length) + (copy[1] || '');
+					}
+				}
+			} else {
+				if (copy.legnth > 1) {
+					if (m > d) {
+						value = copy[0] + copy[1] + '0'.repeat(m - d);
+					} else {
+						value = copy[0] + copy[1]?.substring(0, d - m) + '.' + copy[1]?.substring(d - m, copy[1].legnth);
+					}
+				} else {
+					value = copy[0] + '0'.repeat(m);
 				}
 			}
+			console.log(value);
 
+			copy = (value as string)?.split('.');
+			if (unit && copy[0].length > upper) {
+				u = copy[0].length > 12 ? 'T' : copy[0].length > 9 ? 'B' : copy[0].length > 6 ? 'M' : copy[0].length > 3 ? 'K' : '';
+				value = copy[0].substring(0, copy[0].length - upper) + '.' + copy[0].substring(copy[0].length - upper, copy[0].length) + (copy[1] || '');
+			}
+			console.log(value);
+
+			point = false;
 			copy = '';
 			for (let i = 0; i < value?.length; i++) {
 				if ((!display && !point && value[i] === '0') || (!point && value[i] === '.') || !isNaN(parseInt(value[i]))) {
@@ -209,27 +207,13 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 					copy += value[i];
 				}
 			}
-			copy = copy?.split('.');
 
 			if (max) {
-				let result: string = '';
-				max = parseFloat(max.toString().replaceAll(',', ''));
-				if (parseFloat(copy) >= parseFloat(max.toString())) type === 'currency' ? copy.toLocaleString() : max;
+				const m = parseFloat(max?.toString()?.replaceAll(',', ''));
+				copy = parseFloat(copy) >= m ? max : copy;
 			}
 
-			let u = '';
-			if (unit && multiplier >= upper) {
-				if (multiplier > 11) {
-					u = 'T';
-				} else if (multiplier > 8) {
-					u = 'B';
-				} else if (multiplier > 5) {
-					u = 'M';
-				} else if (multiplier > 2) {
-					u = 'K';
-				}
-			}
-
+			copy = copy?.split('.');
 			if (display) {
 				copy[0] = parseInt(copy[0]);
 				if (!num && (copy[0] === 0)) { point = false; copy = [0]; };

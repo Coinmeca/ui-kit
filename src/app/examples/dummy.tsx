@@ -161,14 +161,16 @@ export default function Dummy() {
             name: "icon",
             active: tab === "icon",
             children: (
-                <Layouts.Row>
-                    <Elements.Icon scale={0.5} icon={"swap"} title={"swap"} />
-                    <Elements.Icon scale={1} icon={"account"} />
-                    <Elements.Icon color={"#6080FF"} scale={2} icon={"bank"} />
-                    <Elements.Icon color={"yellow"} scale={3} icon={"chevron-left"} />
-                    <Elements.Icon color={"red"} scale={4} icon={"chart-area"} />
-                    <Elements.Icon icon={""} />
-                </Layouts.Row>
+                <>
+                    <Layouts.Row>
+                        <Elements.Icon scale={0.5} icon={"swap"} title={"swap"} />
+                        <Elements.Icon scale={1} icon={"account"} />
+                        <Elements.Icon color={"#6080FF"} scale={2} icon={"bank"} />
+                        <Elements.Icon color={"yellow"} scale={3} icon={"chevron-left"} />
+                        <Elements.Icon color={"red"} scale={4} icon={"chart-area"} />
+                        <Elements.Icon icon={""} />
+                    </Layouts.Row>
+                </>
             ),
         },
         {

@@ -174,7 +174,7 @@ export default function Order(props: OrderControl) {
                 </Elements.Text>
                 <Layouts.Row gap={gap.row} fix>
                     <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                        {Format(assets[0]?.balance as number, "currency", { unit: 9, limit: 12, fix: 3 })}
+                        {Format(assets[0]?.balance, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                         {assets[0]?.symbol?.toUpperCase()}
@@ -240,7 +240,7 @@ export default function Order(props: OrderControl) {
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
                         <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                            - {Format(order?.fees as number, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            - {Format(order?.fees, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                             {assets[1]?.symbol?.toUpperCase()}
@@ -253,7 +253,7 @@ export default function Order(props: OrderControl) {
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
                         <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                            {Format(order?.total as number, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            {Format(order?.total, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                             {assets[1]?.symbol?.toUpperCase()}
