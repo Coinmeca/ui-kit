@@ -14,10 +14,10 @@ export interface BG {
     fix?: boolean;
     img?: {
         src: number | string;
-        style?: object;
+        style?: CSSPropertyRule;
     };
     video?: DetailedHTMLProps<VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>;
-    style?: object;
+    style?: CSSPropertyRule;
     children?: any;
 }
 

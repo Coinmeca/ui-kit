@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 export interface SlideContent {
     active?: boolean;
     children?: any;
-    style?: object;
+    style?: CSSPropertyRule;
     onClick?: Function;
     background?: Background;
 }
@@ -24,7 +24,7 @@ export interface Slide {
     padding?: number;
     timer?: number;
     scale?: number;
-    style?: object;
+    style?: CSSPropertyRule;
     event?: Function;
 }
 

@@ -7,7 +7,7 @@ export interface Process {
     failure?: State;
     success?: State;
     loading?: State & { active?: boolean };
-    style?: object;
+    style?: CSSProperties;
 }
 
 export default function Process(props: Process) {

@@ -2,7 +2,7 @@ import * as Texts from "./Text.styled";
 
 export interface Text {
     children?: any;
-    style?: object;
+    style?: CSSPropertyRule;
     type?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "strong" | "p" | "desc" | "link";
     align?: "left" | "center" | "right";
     case?: "upper" | "lower" | "capital";
@@ -21,7 +21,7 @@ export interface Text {
 }
 
 export interface Responsive {
-    style?: object;
+    style?: CSSPropertyRule;
     size?: number;
     weight?: number | string;
     align?: "left" | "center" | "right";

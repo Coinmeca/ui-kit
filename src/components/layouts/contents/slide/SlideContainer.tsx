@@ -4,7 +4,7 @@ import Style from "./SlideContainer.styled";
 
 export interface SlideContainer {
     contents?: Content[];
-    style?: object;
+    style?: CSSPropertyRule;
 }
 
 export default function SlideContainer(props: SlideContainer) {

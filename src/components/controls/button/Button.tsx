@@ -4,7 +4,7 @@ import type { Icon } from "components/elements/icon/Icon";
 import Style from "./Button.styled";
 
 export interface Button {
-    style?: object;
+    style?: CSSPropertyRule;
     title?: string;
     type?: "glass" | "line" | "solid";
     color?: string;

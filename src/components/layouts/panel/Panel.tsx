@@ -7,7 +7,7 @@ export interface Panel {
     active?: boolean;
     children?: any;
     onClick?: Function;
-    style?: object;
+    style?: CSSPropertyRule;
     color?: string;
     fix?: boolean;
 }
