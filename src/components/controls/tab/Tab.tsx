@@ -4,7 +4,7 @@ import type { Icon } from "components/elements/icon/Icon";
 import Style from "./Tab.styled";
 
 export interface Tab {
-    style?: object;
+    style?: CSSPropertyRule;
     title?: string;
 
     active?: boolean;

@@ -13,20 +13,20 @@ export interface Header {
     logo?: Logo;
     menu?: {
         active?: boolean;
-        style?: object;
+        style?: CSSPropertyRule;
         children?: Menu[];
         onClick?: Function;
     };
     option?: {
         active?: boolean;
-        style?: object;
+        style?: CSSPropertyRule;
         children?: any;
     };
     side?: Side;
     scale?: number;
     height?: number;
     color?: string;
-    style?: object;
+    style?: CSSPropertyRule;
 }
 
 export interface Logo {
@@ -47,7 +47,7 @@ export interface Menu {
 export interface Side {
     width?: number;
     active?: boolean;
-    style?: object;
+    style?: CSSPropertyRule;
     children?: any;
 }
 

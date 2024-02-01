@@ -7,7 +7,7 @@ import Style from "./Page.styled";
 export interface Content {
     children?: any;
     scroll?: boolean;
-    style?: object;
+    style?: CSSPropertyRule;
     active?: boolean;
     fallback?: any;
 }

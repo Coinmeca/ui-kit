@@ -3,7 +3,7 @@ import Style, { Row, Cell } from "./TableItem.styled";
 
 export interface ListItem {
     children?: any;
-    style?: object;
+    style?: CSSPropertyRule;
     align?: "left" | "center" | "right";
     change?: string;
     active?: boolean;

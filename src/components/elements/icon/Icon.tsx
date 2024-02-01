@@ -6,7 +6,7 @@ export interface Icon {
     icon: string;
     color?: string;
     change?: boolean;
-    style?: object;
+    style?: CSSPropertyRule;
     scale?: number;
     count?: number;
     title?: string;

@@ -10,7 +10,7 @@ export interface Avatar {
     color?: string;
     display?: number;
     length?: number;
-    style?: object;
+    style?: CSSPropertyRule;
 }
 
 export default function Avatar(props: Avatar) {

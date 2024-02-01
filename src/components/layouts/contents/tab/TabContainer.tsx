@@ -4,7 +4,7 @@ import Style from "./TabContainer.styled";
 
 export interface TabContainer {
     contents?: Content[];
-    style?: object;
+    style?: CSSPropertyRule;
     scroll?: boolean;
 }
 

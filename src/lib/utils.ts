@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 export interface Sorting {
 	key: string;
 	type: string;
@@ -114,8 +116,8 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			if (typeof value !== 'string') value = value.toString();
 			if (value.indexOf('@') === 1) {
 				let copy: string[] = value.split('@');
-				if (0 < copy.length && copy.length < 2) {
-					const domain = copy[1].split('.');
+				if (0 < copy?.length && copy?.length < 2) {
+					const domain = copy[1]?.split('.');
 					console.log(domain);
 				} else {
 					console.log('error');
@@ -124,9 +126,11 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			return value;
 		}
 		case 'number':
+		case 'numberic':
 		case 'currency': {
-			if (typeof value === 'undefined') return '0';
+			if (value === undefined) return '0';
 			value = value?.toString()?.replaceAll(',', '');
+			if (!display && (value === '.' || value === '0.')) return '0.';
 			if (value === '' || value?.length <= 0) return display ? '0' : '';
 			let sig = (sign && (Sign(value) === "+" ? '' : Sign(value))) || '';
 
@@ -152,22 +156,20 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			}
 			value = copy[0].replaceAll(' ', '') as string;
 
-			// if (value?.includes('e')) {
 			const e = value?.split('e');
 			copy = e[0]?.split('.');
 			if (e?.length > 0 && !isNaN(parseFloat(e[1]))) multiplier += parseFloat(e[1]);
-			// }
 
 			const m = Math.abs(multiplier);
 			const n = copy[0]?.length;
 			const d = copy[1]?.length || 0;
 
 			if (multiplier < 0) {
-				if (copy.legnth > 1) {
+				if (copy?.legnth > 1) {
 					if (m > d) {
 						value = copy[0] + copy[1] + '0'.repeat(m - d);
 					} else {
-						value = copy[0] + copy[1]?.substring(0, m - d) + '.' + copy[1]?.substring(m - d, copy[1].legnth);
+						value = copy[0] + copy[1]?.substring(0, m - d) + '.' + copy[1]?.substring(m - d, copy[1]?.legnth);
 					}
 				} else {
 					if (m > n) {
@@ -176,25 +178,23 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 						value = copy[0]?.substring(0, n - m) + '.' + copy[0]?.substring(n - m, copy[0].length) + (copy[1] || '');
 					}
 				}
-			} else {
-				if (copy.legnth > 1) {
+			} else if (multiplier > 0) {
+				if (copy?.legnth > 1) {
 					if (m > d) {
 						value = copy[0] + copy[1] + '0'.repeat(m - d);
 					} else {
-						value = copy[0] + copy[1]?.substring(0, d - m) + '.' + copy[1]?.substring(d - m, copy[1].legnth);
+						value = copy[0] + copy[1]?.substring(0, d - m) + '.' + copy[1]?.substring(d - m, copy[1]?.legnth);
 					}
 				} else {
 					value = copy[0] + '0'.repeat(m);
 				}
 			}
-			console.log(value);
 
 			copy = (value as string)?.split('.');
 			if (unit && copy[0].length > upper) {
 				u = copy[0].length > 12 ? 'T' : copy[0].length > 9 ? 'B' : copy[0].length > 6 ? 'M' : copy[0].length > 3 ? 'K' : '';
 				value = copy[0].substring(0, copy[0].length - upper) + '.' + copy[0].substring(copy[0].length - upper, copy[0].length) + (copy[1] || '');
 			}
-			console.log(value);
 
 			point = false;
 			copy = '';
@@ -210,7 +210,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 
 			if (max) {
 				const m = parseFloat(max?.toString()?.replaceAll(',', ''));
-				copy = parseFloat(copy) >= m ? max : copy;
+				copy = (parseFloat(copy) >= m ? max : copy).toString();
 			}
 
 			copy = copy?.split('.');
@@ -230,19 +230,19 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			let decimals: string | number = '';
 			num = false;
 			point = false;
-			if (copy.length > 1) {
+			if (copy?.length > 1) {
 				point = true;
-				if (copy.length > 2) {
-					for (let i = 2; i < copy.length; i++) {
+				if (copy?.length > 2) {
+					for (let i = 2; i < copy?.length; i++) {
 						copy[1] += copy[i].toString();
 					}
-					copy[1] = copy[1].toString();
+					copy[1] = copy[1]?.toString();
 				}
 
 				if (limit) {
 					let l = limit - copy[0].length;
-					l = l > (copy[1].length || 0) ? copy[1].length : l;
-					if (l > 0) copy[1] = copy[1].substring(0, l);
+					l = l > (copy[1]?.length || 0) ? copy[1]?.length : l;
+					if (l > 0) copy[1] = copy[1]?.substring(0, l);
 				}
 
 				for (let i = 0; i < copy[1]?.length; i++) {
@@ -255,7 +255,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 					}
 				}
 
-				if (display && (copy[1].length === 0 || !num)) {
+				if (display && (copy[1]?.length === 0 || !num)) {
 					decimals = '';
 					point = false;
 				}
@@ -286,7 +286,12 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			return value.toString();
 		}
 	}
+};
+
+export function parseNumber(value?: number | string, max?: number): number {
+	return parseFloat(Format(value, "number", true, max));
 }
+
 
 export function Sign(value?: number | string): string {
 	if (typeof value === 'undefined') return '';

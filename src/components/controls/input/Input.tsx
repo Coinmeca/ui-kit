@@ -5,7 +5,7 @@ import { Format } from "lib/utils";
 import Style, { Side } from "./Input.styled";
 
 export interface Input {
-    style?: object;
+    style?: CSSPropertyRule;
 
     form?: string;
     fold?: boolean;
@@ -26,12 +26,12 @@ export interface Input {
     fix?: number;
 
     left?: {
-        style?: object;
+        style?: CSSPropertyRule;
         width?: number;
         children?: any;
     };
     right?: {
-        style?: object;
+        style?: CSSPropertyRule;
         width?: number;
         children?: any;
     };

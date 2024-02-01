@@ -4,7 +4,7 @@ import { Fragment } from "react";
 
 export interface Menu {
     menu?: any;
-    style?: object;
+    style?: CSSPropertyRule;
     scale?: number;
     show?: "desktop" | "laptop" | "tablet" | "mobile";
     hide?: "desktop" | "laptop" | "tablet" | "mobile";
