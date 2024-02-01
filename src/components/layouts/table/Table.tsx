@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode } from "react";
+import { ReactNode, type CSSProperties } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Elements } from "components";
 import Style, { NoData } from "./Table.styled";
@@ -9,7 +9,7 @@ export interface Table {
     list?: any;
     formatter?: Function;
     fallback?: string | ReactNode | JSX.Element | Function;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
 }
 
 export default function Table(props: Table) {

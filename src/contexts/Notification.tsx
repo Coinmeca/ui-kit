@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction, createContext, useState } from "react";
+import { createContext, useState, type Dispatch, type SetStateAction, type CSSProperties } from "react";
 
 export interface Notify {
     type?: "toast" | "notify";
@@ -7,7 +7,7 @@ export interface Notify {
     title?: string;
     date?: number | string | Date;
     img?: string;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     message?: any | JSX.Element;
     timer?: number;
     importance?: boolean;

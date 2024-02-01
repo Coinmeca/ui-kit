@@ -1,4 +1,5 @@
 "use client";
+import { type CSSProperties } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Style from "./Panel.styled";
 
@@ -7,7 +8,7 @@ export interface Panel {
     active?: boolean;
     children?: any;
     onClick?: Function;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     color?: string;
     fix?: boolean;
 }

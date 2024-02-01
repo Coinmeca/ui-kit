@@ -1,3 +1,4 @@
+import { type CSSProperties } from "react";
 import Image from "next/image";
 import Style from "./Avatar.styled";
 
@@ -10,7 +11,7 @@ export interface Avatar {
     color?: string;
     display?: number;
     length?: number;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
 }
 
 export default function Avatar(props: Avatar) {

@@ -1,10 +1,11 @@
+import { type CSSProperties } from "react";
 import Style from "./Col.styled";
 
 export interface Col {
     children?: any;
     gap?: number;
     align?: "left" | "center" | "right" | "stretch";
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     fit?: boolean;
     fill?: boolean;
     show?: "desktop" | "laptop" | "tablet" | "mobile";

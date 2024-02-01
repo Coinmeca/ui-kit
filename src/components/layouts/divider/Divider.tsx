@@ -1,9 +1,10 @@
+import { type CSSProperties } from "react";
 import Style from "./Divider.styled";
 
 export interface Divider {
     vertical?: boolean;
     margin?: number;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     children?: any;
     align?: "left" | "right";
     gap?: number;

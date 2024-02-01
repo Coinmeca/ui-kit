@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import React, { DetailedHTMLProps, VideoHTMLAttributes } from "react";
 import Style, { Filter } from "./BG.styled";
+import type { DetailedHTMLProps, VideoHTMLAttributes, CSSProperties } from "react";
 
 export interface BG {
     background?: string;
@@ -14,10 +14,10 @@ export interface BG {
     fix?: boolean;
     img?: {
         src: number | string;
-        style?: CSSPropertyRule;
+        style?: CSSProperties;
     };
     video?: DetailedHTMLProps<VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     children?: any;
 }
 

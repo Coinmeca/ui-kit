@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode } from "react";
+import type { ReactNode, CSSProperties } from "react";
 import { Elements } from "components";
 import { AnimatePresence, motion } from "framer-motion";
 import Style, { NoData } from "./List.styled";
@@ -10,7 +10,7 @@ export interface List {
     formatter?: Function;
     fallback?: string | ReactNode | JSX.Element | Function;
     fill?: boolean;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
 }
 
 export default function List(props: List) {

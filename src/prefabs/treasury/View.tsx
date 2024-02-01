@@ -107,7 +107,7 @@ export default function View(props: View) {
                         />
                         <Layouts.Menu
                             style={{
-                                maxWidth: !props?.responsive && "max-content",
+                                maxWidth: !props?.responsive ?? "max-content",
                             }}
                             menu={[
                                 {

@@ -1,5 +1,6 @@
 import { Contents, Layouts } from "components";
-import type { State } from "components/contents/states/State";
+import { type CSSProperties } from "react";
+import { type State } from "components/contents/states/State";
 
 export interface Process {
     process: boolean | null;

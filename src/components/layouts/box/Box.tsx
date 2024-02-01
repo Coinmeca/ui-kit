@@ -1,7 +1,8 @@
+import { type CSSProperties } from "react";
 import Style from "./Box.styled";
 
 export interface Box {
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     children?: any;
     padding?: number | any[];
     change?: string | false;

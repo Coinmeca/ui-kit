@@ -1,11 +1,11 @@
 "use client";
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, type CSSProperties } from "react";
 import { Controls } from "components";
 import { Format } from "lib/utils";
 import Style, { Side } from "./Input.styled";
 
 export interface Input {
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
 
     form?: string;
     fold?: boolean;
@@ -26,12 +26,12 @@ export interface Input {
     fix?: number;
 
     left?: {
-        style?: CSSPropertyRule;
+        style?: CSSProperties;
         width?: number;
         children?: any;
     };
     right?: {
-        style?: CSSPropertyRule;
+        style?: CSSProperties;
         width?: number;
         children?: any;
     };

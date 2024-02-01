@@ -1,11 +1,12 @@
-import type { BG as Background } from "components/layouts/bg/BG";
+import { type CSSProperties } from "react";
 import { BG } from "components/layouts";
+import { type BG as Background } from "components/layouts/bg/BG";
 import Style from "./Cover.styled";
 
 export interface Cover {
     children?: any;
     height?: number;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     fullsize?: boolean;
     background?: Background;
     ref?: any;

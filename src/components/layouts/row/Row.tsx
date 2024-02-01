@@ -1,8 +1,9 @@
+import { type CSSProperties } from "react";
 import Style from "./Row.styled";
 
 export interface Row {
     children?: any;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     gap?: number;
     change?: string | false;
     align?: "left" | "center" | "right" | "stretch";

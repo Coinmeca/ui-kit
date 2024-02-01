@@ -1,10 +1,11 @@
+import { type CSSProperties } from "react";
 import TabContent from "./TabContent";
-import type { TabContent as Content } from "./TabContent";
+import { type TabContent as Content } from "./TabContent";
 import Style from "./TabContainer.styled";
 
 export interface TabContainer {
     contents?: Content[];
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     scroll?: boolean;
 }
 

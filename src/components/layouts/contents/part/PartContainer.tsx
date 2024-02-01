@@ -1,6 +1,5 @@
 "use client";
-import { Layouts } from "components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Style, { Part } from "./PartContainer.styled";
 
 export interface PartContainer {
@@ -8,7 +7,7 @@ export interface PartContainer {
     content?: any;
     left?: { children?: any; onClick?: Function };
     right?: { children?: any; onClick?: Function };
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     onBack?: Function;
 }
 

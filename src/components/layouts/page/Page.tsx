@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import { ScrollPosition } from "contexts";
 import { Layouts } from "components";
 import Style from "./Page.styled";
@@ -7,7 +7,7 @@ import Style from "./Page.styled";
 export interface Content {
     children?: any;
     scroll?: boolean;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
     active?: boolean;
     fallback?: any;
 }

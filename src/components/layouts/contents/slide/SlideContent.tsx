@@ -1,11 +1,11 @@
-import { memo } from "react";
+import { memo, type CSSProperties } from "react";
 import Style from "./SlideContent.styled";
 
 export interface SlideContent {
     name?: string;
     active?: boolean;
     children?: any;
-    style?: CSSPropertyRule;
+    style?: CSSProperties;
 }
 
 function SlideContent(props: SlideContent) {
