@@ -30,7 +30,6 @@ export interface Order {
 
 export default function Trade(props: TradeControl) {
     const { isMobile } = useMobile();
-    const { t } = useTranslate();
 
     const mode = typeof props?.mode === "undefined" ? true : props?.mode;
     const assets = props?.assets || [];
@@ -142,7 +141,7 @@ export default function Trade(props: TradeControl) {
         <Layouts.Col gap={gap.col.big} style={{ paddingTop: `${gap.col.small}em` }}>
             <Layouts.Row gap={gap.row} style={gap.space.big} fix>
                 <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
-                    {t("treasury.vault.trade.available")}
+                    Available
                 </Elements.Text>
                 <Layouts.Row gap={gap.row} fix>
                     <Elements.Text height={text.height} align={"right"} style={text.setting}>
@@ -162,7 +161,7 @@ export default function Trade(props: TradeControl) {
                 type={"currency"}
                 align={"right"}
                 value={Format(order.price, "currency")}
-                left={{ children: <span>{t("treasury.vault.trade.rate")}</span> }}
+                left={{ children: <span>Rate</span> }}
                 right={{
                     width: gap.width,
                     children: <span style={{ justifyContent: "flex-start" }}>{assets[1]?.symbol?.toUpperCase()}</span>,

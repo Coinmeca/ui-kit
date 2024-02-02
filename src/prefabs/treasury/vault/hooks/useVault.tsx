@@ -1,6 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
-import type { Order } from "@coinmeca/ui/types";
+import { useState } from "react";
+import type { Order } from "types";
 
 export default function useVault(initial: Order, mode: boolean, fee: number, available?: number) {
     const [order, setOrder] = useState<Order>({
