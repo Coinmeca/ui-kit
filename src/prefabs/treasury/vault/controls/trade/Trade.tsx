@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Exchange } from "prefabs";
-import { useOrder, usePortal, useMobile } from "hooks";
-import { Format } from "lib/utils";
+import { useVault } from "prefabs/treasury/vault/hooks";
+import { usePortal, useMobile } from "hooks";
+import { Format, parseNumber } from "lib/utils";
 import type { Token } from "types/web3";
 
 export interface TradeControl {
@@ -29,22 +30,19 @@ export interface Order {
 
 export default function Trade(props: TradeControl) {
     const { isMobile } = useMobile();
+    const { t } = useTranslate();
 
     const mode = typeof props?.mode === "undefined" ? true : props?.mode;
     const assets = props?.assets || [];
-    const available = parseFloat(Format(assets[0]?.balance || 0, "number", true));
+    const available = parseNumber(assets[0]?.balance || 0);
 
-    const option = props?.option || "market";
     const [currency, setCurrency] = useState(0);
-    const currencies = mode
-        ? [assets[1]?.symbol.toUpperCase(), assets[0]?.symbol.toUpperCase()]
-        : [assets[0]?.symbol.toUpperCase(), assets[1]?.symbol.toUpperCase()];
 
-    const { order, price, amount, quantity } = useOrder(
+    const { order, price, amount, quantity } = useVault(
         {
             base: assets[0]?.address,
             quote: assets[1]?.address,
-            price: parseFloat(Format(props?.price || 1, "number", true)),
+            price: parseNumber(props?.price || 0),
             amount: 0,
             quantity: 0,
             fees: 0,
@@ -91,7 +89,6 @@ export default function Trade(props: TradeControl) {
 
     useEffect(() => {
         return () => {
-            closePricePad();
             closeAmountPad();
         };
     }, []);
@@ -100,39 +97,22 @@ export default function Trade(props: TradeControl) {
         if (typeof props?.onChange === "function") props?.onChange(order);
     }, [order]);
 
-    const handleChangePrice = (p: number | string) => {
-        price(parseFloat(Format(p, "number", true)));
-    };
+    useEffect(() => {
+        price(parseNumber(props?.price || 0));
+    }, [props?.price]);
 
-    const handleChangeAmount = (a: number | string) => {
-        currency === 0 ? quantity(parseFloat(Format(a, "number", true))) : amount(parseFloat(Format(a, "number", true)));
+    const handleChangeQuantity = (a: number | string) => {
+        mode ? quantity(parseNumber(a)) : amount(parseNumber(a));
     };
 
     const handleChangeRange = (v: number) => {
         if (available > 0)
             currency === 0
-                ? quantity(((parseFloat(Format(available, "number", true)) / order.price) * parseFloat(Format(v, "number", true))) / 100)
-                : amount((parseFloat(Format(available, "number", true)) * parseFloat(Format(v, "number", true))) / 100);
+                ? quantity(((parseNumber(available) / order.price) * parseNumber(v)) / 100)
+                : amount((parseNumber(available) * parseNumber(v)) / 100);
     };
 
     const pricePosition = order.price === 0 ? 0 : (1 - parseFloat(props?.price?.toString()) / order.price) * 100;
-    const [handlePricePad, closePricePad] = usePortal(
-        <Exchange.BottomSheets.OrderPad
-            label={"Price"}
-            placeholder={order.price}
-            value={order.price}
-            unit={[...assets][mode ? 0 : 1]?.symbol?.toUpperCase()}
-            sub={{
-                color: `${
-                    mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
-                }`,
-                value: `${(pricePosition > 0 && "+ ") || (pricePosition < 0 && "- ") || ""}${Math.abs(pricePosition)}`,
-                unit: "%",
-            }}
-            button={{ children: "OK", onClick: () => closePricePad() }}
-            onChange={(e: any, v: any) => handleChangePrice(v)}
-        />
-    );
 
     const [handleAmountPad, closeAmountPad] = usePortal(
         <Exchange.BottomSheets.OrderPad
@@ -141,7 +121,11 @@ export default function Trade(props: TradeControl) {
             value={currency === 0 ? order.quantity : order.amount}
             unit={[...assets].reverse()[currency]?.symbol?.toUpperCase()}
             sub={{
-                value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", { unit: 9, limit: 12, fix: 3 })}`,
+                value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", {
+                    unit: 9,
+                    limit: 12,
+                    fix: 3,
+                })}`,
                 unit: assets[currency]?.symbol?.toUpperCase(),
             }}
             button={{
@@ -149,7 +133,7 @@ export default function Trade(props: TradeControl) {
                 children: mode ? "BUY" : "SELL",
                 onClick: () => closeAmountPad(),
             }}
-            onChange={(e: any, v: any) => handleChangeAmount(v)}
+            onChange={(e: any, v: any) => handleChangeQuantity(v)}
             onClose={() => closeAmountPad()}
         />
     );
@@ -158,11 +142,15 @@ export default function Trade(props: TradeControl) {
         <Layouts.Col gap={gap.col.big} style={{ paddingTop: `${gap.col.small}em` }}>
             <Layouts.Row gap={gap.row} style={gap.space.big} fix>
                 <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
-                    Available
+                    {t("treasury.vault.trade.available")}
                 </Elements.Text>
                 <Layouts.Row gap={gap.row} fix>
                     <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                        {Format(assets[0]?.balance as number, "currency", { unit: 9, limit: 12, fix: 3 })}
+                        {Format(assets[0]?.balance as number, "currency", {
+                            unit: 9,
+                            limit: 12,
+                            fix: 3,
+                        })}
                     </Elements.Text>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                         {assets[0]?.symbol?.toUpperCase()}
@@ -173,25 +161,23 @@ export default function Trade(props: TradeControl) {
                 placeholder={"Price"}
                 type={"currency"}
                 align={"right"}
-                value={order.price}
-                onChange={(e: any, v: any) => handleChangePrice(v)}
-                onClick={() => isMobile && handlePricePad()}
-                inputMode={isMobile ? "none" : undefined}
-                left={{ children: <span>Price</span> }}
+                value={Format(order.price, "currency")}
+                left={{ children: <span>{t("treasury.vault.trade.rate")}</span> }}
                 right={{
                     width: gap.width,
-                    children: <span style={{ justifyContent: "flex-start" }}>{assets[mode ? 0 : 1]?.symbol?.toUpperCase()}</span>,
+                    children: <span style={{ justifyContent: "flex-start" }}>{assets[1]?.symbol?.toUpperCase()}</span>,
                 }}
                 style={text.setting}
-                lock={option === "market"}
+                lock
             />
             <Controls.Input
                 placeholder={"0"}
                 type={"currency"}
                 align={"right"}
-                value={currency === 0 ? order?.quantity : order?.amount}
-                max={currency === 0 ? (order?.quantity || 1) / order.price : order.amount}
-                onChange={(e: any, v: any) => handleChangeAmount(v)}
+                value={""}
+                min={0}
+                max={available}
+                onChange={(e: any, v: any) => handleChangeQuantity(v)}
                 onClick={() => isMobile && handleAmountPad()}
                 inputMode={isMobile ? "none" : undefined}
                 left={{
@@ -200,13 +186,14 @@ export default function Trade(props: TradeControl) {
                 right={{
                     width: gap.width,
                     children: (
-                        <Controls.Dropdown
-                            option={currencies[currency]}
-                            options={currencies}
-                            onClickItem={(e: any, v: any, k: number) => {
-                                setCurrency(k);
-                            }}
-                        />
+                        // <Controls.Dropdown
+                        //     option={currencies[currency]}
+                        //     options={currencies}
+                        //     onClickItem={(e: any, v: any, k: number) => {
+                        //         setCurrency(k);
+                        //     }}
+                        // />
+                        <Elements.Text style={{ justifyContent: "flex-start" }}>{assets[0]?.symbol}</Elements.Text>
                     ),
                 }}
                 style={text.setting}
@@ -227,7 +214,12 @@ export default function Trade(props: TradeControl) {
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
                         <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                            - {Format(order.fees as number, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            -{" "}
+                            {Format(order.fees as number, "currency", {
+                                unit: 9,
+                                limit: 12,
+                                fix: 3,
+                            })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                             {assets[1]?.symbol?.toUpperCase()}
@@ -240,7 +232,11 @@ export default function Trade(props: TradeControl) {
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
                         <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                            {Format(order.total as number, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            {Format(order.total as number, "currency", {
+                                unit: 9,
+                                limit: 12,
+                                fix: 3,
+                            })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                             {assets[1]?.symbol?.toUpperCase()}
