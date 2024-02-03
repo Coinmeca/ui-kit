@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Elements, Layouts, Controls } from "components";
 import { Modals, Sidebars } from "containers";
-import { useMobile, useNotification, usePortal } from "hooks";
+import { useMobile, useNotification, usePortal, useTheme } from "hooks";
 import { Filter } from "lib/utils";
 
 export default function Data() {
@@ -16,6 +16,9 @@ export default function Data() {
 
     const { isMobile } = useMobile();
     const { notis, toasts, count, addToast, addNotify, setNotis, resetCount } = useNotification();
+
+    const { theme } = useTheme();
+    console.log(theme);
 
     const notilist = [
         {
