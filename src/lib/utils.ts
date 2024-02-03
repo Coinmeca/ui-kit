@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 export interface Sorting {
 	key: string;
 	type: string;
