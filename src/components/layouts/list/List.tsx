@@ -10,7 +10,7 @@ export interface List {
     formatter?: Function;
     fallback?: string | ReactNode | JSX.Element | Function;
     fill?: boolean;
-    style?: CSSProperties;
+    style?: object;
 }
 
 export default function List(props: List) {

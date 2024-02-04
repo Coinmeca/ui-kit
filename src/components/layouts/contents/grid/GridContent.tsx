@@ -3,7 +3,7 @@ import { Fragment, memo, type CSSProperties } from "react";
 export interface GridContent {
     format?: any;
     area: string;
-    style?: CSSProperties;
+    style?: object;
     children?: any;
     props?: any;
     responsive?: {

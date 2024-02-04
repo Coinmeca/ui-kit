@@ -11,7 +11,7 @@ export interface Avatar {
     color?: string;
     display?: number;
     length?: number;
-    style?: CSSProperties;
+    style?: object;
 }
 
 export default function Avatar(props: Avatar) {

@@ -5,7 +5,7 @@ import Style, { Row, Col } from "./ListItem.styled";
 export interface ListItem {
     children?: any;
     gap?: number;
-    style?: CSSProperties;
+    style?: object;
     align?: "left" | "center" | "right";
     change?: string;
     onClick?: Function;

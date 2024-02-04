@@ -23,7 +23,7 @@ export interface GridContainer {
         width?: number | string | { min?: number; max?: number };
         height?: number | string | { min?: number; max?: number };
     }[];
-    style?: CSSProperties;
+    style?: object;
     fullsize?: boolean;
 }
 

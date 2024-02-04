@@ -14,7 +14,7 @@ export interface Tooltip {
     width?: number;
     padding?: number;
     margin?: number | [number, number];
-    style?: CSSProperties;
+    style?: object;
     fill?: boolean;
     fit?: boolean;
 }

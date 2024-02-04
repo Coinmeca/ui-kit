@@ -8,7 +8,7 @@ import { Style } from "./Slide.styled";
 export interface SlideContent {
     active?: boolean;
     children?: any;
-    style?: CSSProperties;
+    style?: object;
     onClick?: Function;
     background?: Background;
 }
@@ -24,7 +24,7 @@ export interface Slide {
     padding?: number;
     timer?: number;
     scale?: number;
-    style?: CSSProperties;
+    style?: object;
     event?: Function;
 }
 

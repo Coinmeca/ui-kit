@@ -4,7 +4,7 @@ import Style from "./Divider.styled";
 export interface Divider {
     vertical?: boolean;
     margin?: number;
-    style?: CSSProperties;
+    style?: object;
     children?: any;
     align?: "left" | "right";
     gap?: number;

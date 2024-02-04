@@ -9,7 +9,7 @@ export interface Table {
     list?: any;
     formatter?: Function;
     fallback?: string | ReactNode | JSX.Element | Function;
-    style?: CSSProperties;
+    style?: object;
 }
 
 export default function Table(props: Table) {

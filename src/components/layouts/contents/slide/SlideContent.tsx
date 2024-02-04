@@ -5,7 +5,7 @@ export interface SlideContent {
     name?: string;
     active?: boolean;
     children?: any;
-    style?: CSSProperties;
+    style?: object;
 }
 
 function SlideContent(props: SlideContent) {

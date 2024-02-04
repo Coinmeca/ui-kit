@@ -7,7 +7,7 @@ import { useWindowSize, usePortal } from "hooks";
 import Style, { Item, Option, Options } from "./Dropdown.styled";
 
 export interface Dropdown {
-    style?: CSSProperties;
+    style?: object;
 
     form?: string;
     title?: string;

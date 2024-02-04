@@ -7,7 +7,7 @@ export interface Notify {
     title?: string;
     date?: number | string | Date;
     img?: string;
-    style?: CSSProperties;
+    style?: object;
     message?: any | JSX.Element;
     timer?: number;
     importance?: boolean;

@@ -164,8 +164,8 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			const n = copy[0]?.length;
 			const d = copy[1]?.length || 0;
 
+			if (decimals && decimals > 0) multiplier -= decimals;
 			if (multiplier < 0) {
-				if (decimals && decimals > 0) multiplier -= decimals;
 				if (copy?.legnth > 1) {
 					if (m > d) {
 						value = copy[0] + copy[1] + '0'.repeat(m - d);

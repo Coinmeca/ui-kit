@@ -9,12 +9,12 @@ export interface State {
         width?: number;
         height?: number;
         src?: any;
-        style?: CSSProperties;
+        style?: object;
         alt?: string;
     };
     message?: any;
     children?: any;
-    style?: CSSProperties;
+    style?: object;
 }
 
 export default function State(props: State) {
