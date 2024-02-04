@@ -7,7 +7,7 @@ export interface PartContainer {
     content?: any;
     left?: { children?: any; onClick?: Function };
     right?: { children?: any; onClick?: Function };
-    style?: CSSProperties;
+    style?: object;
     onBack?: Function;
 }
 

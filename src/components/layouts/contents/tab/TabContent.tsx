@@ -5,7 +5,7 @@ export interface TabContent {
     name?: string;
     active?: boolean;
     children?: any;
-    style?: CSSProperties;
+    style?: object;
     fix?: boolean;
 }
 

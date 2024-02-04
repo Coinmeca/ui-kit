@@ -4,7 +4,7 @@ import Style, { Row, Cell } from "./TableItem.styled";
 
 export interface ListItem {
     children?: any;
-    style?: CSSProperties;
+    style?: object;
     align?: "left" | "center" | "right";
     change?: string;
     active?: boolean;

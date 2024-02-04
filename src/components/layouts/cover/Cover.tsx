@@ -6,7 +6,7 @@ import Style from "./Cover.styled";
 export interface Cover {
     children?: any;
     height?: number;
-    style?: CSSProperties;
+    style?: object;
     fullsize?: boolean;
     background?: Background;
     ref?: any;

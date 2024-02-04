@@ -5,7 +5,7 @@ import { type CSSProperties } from "react";
 import Style from "./Button.styled";
 
 export interface Button {
-    style?: CSSProperties;
+    style?: object;
     title?: string;
     type?: "glass" | "line" | "solid";
     color?: string;

@@ -3,7 +3,7 @@ import Style from "./Row.styled";
 
 export interface Row {
     children?: any;
-    style?: CSSProperties;
+    style?: object;
     gap?: number;
     change?: string | false;
     align?: "left" | "center" | "right" | "stretch";

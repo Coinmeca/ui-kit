@@ -5,7 +5,7 @@ export interface Col {
     children?: any;
     gap?: number;
     align?: "left" | "center" | "right" | "stretch";
-    style?: CSSProperties;
+    style?: object;
     fit?: boolean;
     fill?: boolean;
     show?: "desktop" | "laptop" | "tablet" | "mobile";

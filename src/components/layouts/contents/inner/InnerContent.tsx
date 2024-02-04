@@ -6,7 +6,7 @@ import Style from "./InnerContent.styled";
 export interface InnerContent {
     children?: any;
     padding?: number | any[];
-    style?: CSSProperties;
+    style?: object;
     scroll?: boolean;
 }
 
