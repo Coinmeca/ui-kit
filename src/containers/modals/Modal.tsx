@@ -37,7 +37,6 @@ export default function Modal(props: Modal) {
 
     return (
         <Layouts.Panel
-            key={"panel"}
             active={true}
             color={"black"}
             style={{ zIndex: 200 }}

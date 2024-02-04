@@ -56,6 +56,7 @@ interface format {
 	fix?: number | 'auto';
 	max?: number;
 	sign?: boolean;
+	decimals?: number;
 }
 
 export function Unit(value: number | string, upper?: number) {
@@ -99,12 +100,13 @@ export function Unit(value: number | string, upper?: number) {
 	return unit;
 }
 
-export function Format(value?: number | string, type?: input, option?: boolean | format | number, fix?: number | 'auto', max?: number): string {
+export function Format(value?: number | string, type?: input, option?: boolean | number | format, fix?: number | 'auto', max?: number, decimals?: number): string {
 	let display = (typeof option === 'object' && typeof option?.display !== 'undefined') || typeof option !== 'undefined';
-	let limit = typeof option === 'object' && (typeof option?.limit === 'number' ? option?.limit : typeof option === 'number' ? option : undefined);
+	let limit = (typeof option === 'object' && typeof option?.limit === 'number') ? option?.limit : typeof option === 'number' ? option : undefined;
 	let unit = typeof option === 'object' && (typeof option?.unit === 'boolean' ? option?.unit : (typeof option?.unit === 'number' ? true : false));
 	let upper = (typeof option === 'object' && typeof option?.unit === 'number') ? option?.unit : 0;
-	let sign = typeof option === 'object' && typeof option?.sign === 'boolean' ? option?.sign : true;
+	let sign = (typeof option === 'object' && typeof option?.sign === 'boolean') ? option?.sign : true;
+	decimals = (typeof option === 'object' && typeof option?.decimals === 'number') ? option?.decimals : decimals;
 	fix = typeof option === 'object' ? option?.fix : fix === 'auto' ? 3 : fix;
 	max = typeof option === 'object' ? option?.max : max;
 
@@ -163,6 +165,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			const d = copy[1]?.length || 0;
 
 			if (multiplier < 0) {
+				if (decimals && decimals > 0) multiplier -= decimals;
 				if (copy?.legnth > 1) {
 					if (m > d) {
 						value = copy[0] + copy[1] + '0'.repeat(m - d);
@@ -225,7 +228,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 				copy[0] = number;
 			}
 
-			let decimals: string | number = '';
+			let dec: string | number = '';
 			num = false;
 			point = false;
 			if (copy?.length > 1) {
@@ -248,18 +251,18 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 					if (!isNaN(parseInt(copy[1][i]))) {
 						if (display && copy[1][i] === '0' && num) break;
 						if (copy[1][i] !== '0') num = true;
-						decimals += copy[1][i].toString();
+						dec += copy[1][i].toString();
 						if (display && typeof fix === 'number' && !isNaN(fix) && !isNaN(copy[1][i]) && copy[1][i] !== '0' && fix <= zero) break;
 					}
 				}
 
 				if (display && (copy[1]?.length === 0 || !num)) {
-					decimals = '';
+					dec = '';
 					point = false;
 				}
 			}
 
-			const result = copy[0] + (point ? '.' : '') + decimals;
+			const result = copy[0] + (point ? '.' : '') + dec;
 			return sig + (unit ? result + ' ' + u : result);
 			// return u !== '' ? result + ' ' + u : display && type === 'number' ? parseFloat(result) : result;
 		}
