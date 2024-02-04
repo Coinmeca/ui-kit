@@ -20,10 +20,11 @@ export default function Theme({ children }: { children?: any }) {
     }
 
     useEffect(() => {
-        const theme = window?.matchMedia("(prefers-color-scheme: light)");
         function changeTheme(mode: boolean) {
             if (!localStorage?.getItem("theme")) updateTheme(mode ? "light" : "dark");
         }
+
+        const theme = window.matchMedia("(prefers-color-scheme: light)");
         theme.addEventListener("theme", (event: any) => changeTheme(event.matches));
         changeTheme(theme.matches);
 

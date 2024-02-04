@@ -7,6 +7,7 @@ import { Filter, Format, Sign } from "lib/utils";
 export interface Market {
     list: MarketData[];
     filter?: string;
+    onClick?: Function;
 }
 
 export interface MarketData {
@@ -14,6 +15,7 @@ export interface MarketData {
     symbol?: string;
     name?: string;
     market?: string;
+    address?: string;
     price?: number | string;
     change?: number | string;
     volume?: number | string;
@@ -85,7 +87,9 @@ export default function Market(props: Market) {
                         },
                     ],
                 ],
-                onClick: (props: any) => alert(props.children),
+                onClick: () => {
+                    if (typeof props?.onClick === "function") props?.onClick(data);
+                },
             }))
         );
     };
