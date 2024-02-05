@@ -1,12 +1,14 @@
-import { Notification, Theme } from "contexts";
+import { Notification, Theme, WindowSize } from "contexts";
 import { Style } from "lib";
 
 export default function Template({ children }: { children: any }) {
     return (
         <Style.Initialize>
-            <Theme>
-                <Notification>{children}</Notification>
-            </Theme>
+            <WindowSize>
+                <Theme>
+                    <Notification>{children}</Notification>
+                </Theme>
+            </WindowSize>
         </Style.Initialize>
     );
 }
