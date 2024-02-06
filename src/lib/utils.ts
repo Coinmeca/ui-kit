@@ -159,12 +159,12 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			const e = value?.split('e');
 			copy = e[0]?.split('.');
 			if (e?.length > 0 && !isNaN(parseFloat(e[1]))) multiplier += parseFloat(e[1]);
+			if (decimals && decimals > 0) multiplier -= decimals;
 
 			const m = Math.abs(multiplier);
 			const n = copy[0]?.length;
 			const d = copy[1]?.length || 0;
 
-			if (decimals && decimals > 0) multiplier -= decimals;
 			if (multiplier < 0) {
 				if (copy?.legnth > 1) {
 					if (m > d) {
@@ -193,8 +193,22 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 
 			copy = (value as string)?.split('.');
 			if (unit && copy[0].length > upper) {
-				u = copy[0].length > 12 ? 'T' : copy[0].length > 9 ? 'B' : copy[0].length > 6 ? 'M' : copy[0].length > 3 ? 'K' : '';
-				value = copy[0].substring(0, copy[0].length - upper) + '.' + copy[0].substring(copy[0].length - upper, copy[0].length) + (copy[1] || '');
+				let cut = copy.length;
+				if (copy[0].length > 12) {
+					u = 'T'
+					cut = 12;
+				} else if (copy[0].length > 9) {
+					u = 'B'
+					cut = 9;
+				} else if (copy[0].length > 6) {
+					u = 'M'
+					cut = 6;
+				} else if (copy[0].length > 3) {
+					u = 'K'
+					cut = 3;
+				}
+				cut = copy[0].length - cut;
+				value = copy[0].substring(0, cut) + '.' + copy[0].substring(cut, copy[0].length) + (copy[1] || '');
 			}
 
 			point = false;
@@ -289,8 +303,8 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 	}
 };
 
-export function parseNumber(value?: number | string, max?: number): number {
-	return parseFloat(Format(value, "number", true, max));
+export function parseNumber(value?: number | string, decimals?: number | string, max?: number): number {
+	return parseFloat(Format(value, "number", true, undefined, max, typeof decimals === 'number' ? decimals : typeof decimals === 'string' ? parseFloat(decimals) : undefined));
 }
 
 

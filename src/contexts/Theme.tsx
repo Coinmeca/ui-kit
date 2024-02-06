@@ -24,7 +24,7 @@ export default function Theme({ children }: { children?: any }) {
             if (!localStorage?.getItem("theme")) updateTheme(mode ? "light" : "dark");
         }
 
-        const theme = window.matchMedia("(prefers-color-scheme: light)");
+        const theme = window.matchMedia("(prefers-color-scheme: light)") || CSS.supports("color-scheme", "light");
         theme.addEventListener("theme", (event: any) => changeTheme(event.matches));
         changeTheme(theme.matches);
 
