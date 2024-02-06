@@ -8,7 +8,7 @@ export interface ScrollPositionContext {
 
 export const ScrollPositionContext = createContext<ScrollPositionContext>({} as ScrollPositionContext);
 
-export const ScrollPosition = ({ target, children }: { target?: any; children?: any }) => {
+export default function ScrollPosition({ target, children }: { target?: any; children?: any }) {
     const [scrollPosition, setScrollPosition] = useState(0);
 
     useEffect(() => {
@@ -25,6 +25,4 @@ export const ScrollPosition = ({ target, children }: { target?: any; children?: 
     }, [target]);
 
     return <ScrollPositionContext.Provider value={{ scrollPosition, setScrollPosition }}>{children}</ScrollPositionContext.Provider>;
-};
-
-export default ScrollPosition;
+}

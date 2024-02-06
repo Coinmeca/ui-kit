@@ -7,9 +7,9 @@ export interface WindowSize {
 }
 
 export interface WindowSizeContext {
-    windowSize?: WindowSize;
-    windowWidth?: number;
-    windowHeight?: number;
+    windowSize: WindowSize;
+    windowWidth: number;
+    windowHeight: number;
 }
 
 export const WindowSizeContext = createContext<WindowSizeContext>({} as WindowSizeContext);
