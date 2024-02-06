@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export type Mode = "light" | "dark";
 
 export interface Theme {
-    theme: Mode;
+    theme?: Mode;
     setTheme: (mode?: Mode) => void;
 }
 
