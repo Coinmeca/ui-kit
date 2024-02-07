@@ -18,6 +18,7 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
         const max = available && p !== 0 && (mode ? available : available * p);
         return max && max < amount ? max : amount;
     };
+
     const getQuantity = (quantity: number, price?: number): number => {
         const p = price || order?.price;
         const max = maxQuantity(p);

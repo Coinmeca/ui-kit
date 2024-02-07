@@ -2,7 +2,14 @@
 import { useCallback, useState } from "react";
 import { Sort, type Sorting } from "lib/utils";
 
-export default function useSort() {
+interface SortHook {
+    sort?: Sorting;
+    sorting: (list?: any[]) => any[];
+    setSort: (sort: Sorting) => void;
+    sortArrow: (key: Sorting | string) => "sort" | "sort-up" | "sort-down";
+}
+
+export default function useSort(): SortHook {
     const [sort, update] = useState<Sorting>();
 
     const sortArrow = useCallback(

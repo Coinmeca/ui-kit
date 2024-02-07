@@ -1,4 +1,4 @@
-export * as Component from './components';
+export * as Components from './components';
 export * as Containers from './containers';
 export * as Parts from './parts';
 export * as Prefabs from './prefabs';
