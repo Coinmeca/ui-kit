@@ -1,12 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export interface Size {
+interface Size {
     width: number;
     height: number;
 }
 
-export interface WindowSize {
+interface WindowSize {
     windowWidth: number;
     windowHeight: number;
     windowSize: Size;

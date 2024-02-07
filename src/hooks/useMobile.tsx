@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export default function useMobile() {
+export default function useMobile(): { isMobile?: boolean } {
     const [isMobile, setIsMobile] = useState<boolean>();
 
     useEffect(() => {
