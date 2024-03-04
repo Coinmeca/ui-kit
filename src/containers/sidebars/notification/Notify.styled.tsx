@@ -27,6 +27,8 @@ export const Style = styled.div<{ $active: boolean; $close: boolean; $order?: nu
     }
 
     ${Box.default} {
+        --white: var(--white-abs);
+        --black: var(--white-abs);
         background: rgba(var(--black-abs), var(--o09));
         background-image: linear-gradient(rgba(var(--white-abs), var(--o015)), rgba(var(--white-abs), var(--o015)));
         /* backdrop-filter: blur(calc(var(--unit) / 8)); */
