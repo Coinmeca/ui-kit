@@ -62,6 +62,10 @@ export default function Dropdown(props: Dropdown) {
     const width = dropdown?.current?.offsetWidth;
     // const width = dropdown?.current?.offsetWidth > dropbox?.current?.offsetWidth ? dropdown?.current?.offsetWidth : dropbox?.current?.offsetWidth;
 
+    useEffect(() => {
+        return () => closeSelectOnSheet();
+    });
+
     const handleSelect = (e: React.FormEvent, v: any, k: string | number) => {
         if (disabled) return;
         // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
@@ -69,7 +73,6 @@ export default function Dropdown(props: Dropdown) {
         if (typeof v?.event === "function") v.event(e);
         if (typeof props?.onClickItem === "function") props?.onClickItem(e, v, k);
         setOpen(false);
-        closeSelectOnSheet();
     };
 
     const handleOpen = (e?: any) => {
@@ -129,6 +132,7 @@ export default function Dropdown(props: Dropdown) {
                                     key={k}
                                     onClick={(e: any) => {
                                         handleSelect(e, v, k);
+                                        closeSelectOnSheet();
                                     }}
                                     data-disabled={typeof option !== "undefined" && (v[keyIndex] === option || v[keyName] === option || v === option)}
                                 >
