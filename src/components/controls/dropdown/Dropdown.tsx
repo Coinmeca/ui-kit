@@ -62,10 +62,6 @@ export default function Dropdown(props: Dropdown) {
     const width = dropdown?.current?.offsetWidth;
     // const width = dropdown?.current?.offsetWidth > dropbox?.current?.offsetWidth ? dropdown?.current?.offsetWidth : dropbox?.current?.offsetWidth;
 
-    useEffect(() => {
-        return () => closeSelectOnSheet();
-    });
-
     const handleSelect = (e: React.FormEvent, v: any, k: string | number) => {
         if (disabled) return;
         // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
@@ -73,6 +69,7 @@ export default function Dropdown(props: Dropdown) {
         if (typeof v?.event === "function") v.event(e);
         if (typeof props?.onClickItem === "function") props?.onClickItem(e, v, k);
         setOpen(false);
+        closeSelectOnSheet();
     };
 
     const handleOpen = (e?: any) => {
@@ -105,7 +102,7 @@ export default function Dropdown(props: Dropdown) {
                           position: "fixed",
                           fontSize: `${scale}em`,
                           width: width && `${width / (8 * scale)}em`,
-                          background: "rgba(var(--white), var(--o0075))",
+                          background: "rgba(var(--black-abs), var(--o0075))",
                           backdropFilter: "blur(4em)",
                           transition: "max-height .3s ease",
                           zIndex: 200,
@@ -130,10 +127,7 @@ export default function Dropdown(props: Dropdown) {
                             v && (
                                 <Item
                                     key={k}
-                                    onClick={(e: any) => {
-                                        handleSelect(e, v, k);
-                                        closeSelectOnSheet();
-                                    }}
+                                    onClick={(e: any) => handleSelect(e, v, k)}
                                     data-disabled={typeof option !== "undefined" && (v[keyIndex] === option || v[keyName] === option || v === option)}
                                 >
                                     <>
@@ -191,7 +185,7 @@ export default function Dropdown(props: Dropdown) {
     const [openSelect, closeSelect] = usePortal((v: boolean) => Select("popup"));
 
     const [openSelectOnSheet, closeSelectOnSheet] = usePortal(
-        <BottomSheet height={{ max: "60vh" }}>
+        <BottomSheet height={{ max: "60vh" }} onClose={() => closeSelectOnSheet()}>
             <Layouts.Col style={{ padding: "2em" }} gap={2}>
                 <Layouts.Contents.InnerContent>{Select("sheet")}</Layouts.Contents.InnerContent>
                 <Controls.Button onClick={() => closeSelectOnSheet()}>Close</Controls.Button>
