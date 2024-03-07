@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, useId } from "react";
 import { createPortal } from "react-dom";
 import { Root, createRoot } from "react-dom/client";
 
@@ -8,6 +8,7 @@ type Args = [Child] | [object] | [Child, object] | undefined[];
 type Portal = [(...args: Args) => void, Function];
 
 export default function usePortal(initial?: any, initialProps?: any): Portal {
+    const is = useId();
     const [root, setRoot] = useState<Root | undefined>();
     const [active, setActive] = useState(false);
     const [children, setChildren] = useState<Function | ReactNode | object>();
@@ -16,7 +17,7 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
     });
 
     useEffect(() => {
-        !root && setRoot(createRoot(document?.createElement("section")));
+        !root && setRoot(createRoot(document?.createElement("section", { is })));
         return () => {
             // root?.render(null);
             setActive(false);
