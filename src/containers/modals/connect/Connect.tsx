@@ -4,24 +4,24 @@ import { Controls, Elements, Layouts } from "components";
 import { Modals } from "containers";
 import type { Process } from "containers/modals/process/Process";
 
-export type Connect = Omit<Process, "process"> & {
+export interface Connect extends Omit<Process, "process"> {
     process?: boolean | null;
     chains?: any;
     wallets?: any;
+    config?: object;
     onClose: Function;
     onChain?: Function;
     onWallet?: Function;
     onConnect?: Function;
-    onBack?: Function;
     onError?: Function;
-};
+    onBack?: Function;
+}
 
 export default function Connect(props: Connect) {
     const [chain, setChain] = useState<any>();
     const [wallet, setWallet] = useState<any>();
 
     const [process, setProcess] = useState<boolean | null>(props?.process || null);
-    const [walletError, setWalletError] = useState<string>();
 
     useEffect(() => {
         return () => {
@@ -41,13 +41,12 @@ export default function Connect(props: Connect) {
 
     const walletListFormatter = (data: any): any[] | undefined =>
         (typeof data === "object" ? Object.values(data) : data?.length > 0 && data)?.map((w: any) => ({
-            children: <Elements.Avatar img={w?.logo} name={w?.name} style={{ flex: 1 }} />,
-            onClick: async (e: any) => await handleConnect(e, w?.name),
+            children: <Elements.Avatar img={w?.logo} name={w?.name} style={{ width: "-webkit-fill-available" }} />,
+            onClick: async (e: any) => await handleConnect(e, w),
         }));
 
     const handleBack = (e: any) => {
         setProcess(null);
-        setWalletError(undefined);
         if (typeof props?.onBack === "function") props?.onBack(e);
     };
 
@@ -59,20 +58,20 @@ export default function Connect(props: Connect) {
     const handleError = (e: any, error?: any) => {
         setProcess(false);
         setWallet(null);
-        setWalletError(error?.message || "");
         if (typeof props?.onError === "function") props?.onError(e, error);
     };
 
-    const handleConnect = async (e: any, w: string) => {
+    const handleConnect = async (e: any, w: any) => {
         try {
             setWallet(w);
-            if (typeof props?.onWallet === "function") await props?.onWallet(w, chain, e);
-            if (typeof props?.onConnect === "function") await props?.onConnect(w, chain, e);
+            if (typeof props?.onWallet === "function") await props?.onWallet(chain, w, e);
+            if (typeof props?.onConnect === "function") await props?.onConnect(chain, w, e);
             setProcess(true);
         } catch (error: any) {
             handleError(e, error);
         }
     };
+
     return (
         <Modals.Process
             {...props}
@@ -100,7 +99,7 @@ export default function Connect(props: Connect) {
                             children: (
                                 <Layouts.Col gap={2} fill>
                                     <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
-                                        Please select wallet will you connect. 123
+                                        Please select wallet will you connect.
                                     </Elements.Text>
                                     <Layouts.Contents.InnerContent style={{ justifyContent: "center" }} scroll>
                                         <Layouts.List list={walletListFormatter(props?.wallets)} />
@@ -120,8 +119,7 @@ export default function Connect(props: Connect) {
                 />
             }
             failure={{
-                // active: props?.process || process,
-                message: walletError || props?.failure?.message || "Processing has been failed.",
+                message: props?.failure?.message || "Processing has been failed.",
                 children: <Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>,
             }}
             loading={{
@@ -129,18 +127,8 @@ export default function Connect(props: Connect) {
                 message: props?.loading?.message || "Please wait until the processing is complete.",
             }}
             success={{
-                message: props?.loading?.message || "Processing has been succeed.",
-                children: (
-                    <Controls.Button
-                        onClick={(e: any) => {
-                            handleClose(e);
-                            setProcess(null);
-                            setWallet(null);
-                        }}
-                    >
-                        OK
-                    </Controls.Button>
-                ),
+                message: props?.success?.message || "Processing has been succeed.",
+                children: <Controls.Button onClick={(e: any) => handleClose(e)}>OK</Controls.Button>,
             }}
             onClose={(e: any) => handleClose(e)}
             close={!wallet}

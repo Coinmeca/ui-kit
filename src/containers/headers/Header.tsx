@@ -36,6 +36,7 @@ export interface Logo {
     height?: number;
     title?: string;
     alt?: string;
+    href?: string;
 }
 
 export interface Menu {
@@ -101,7 +102,7 @@ export default function Header(props: Header) {
                             </div>
                         </MenuButton>
                         {props?.logo && props?.logo?.src && (
-                            <Logo href="/">
+                            <Logo href={props?.logo?.href || "/"}>
                                 <Coinmeca height={40} />
                                 {/* <Image src={props?.logo?.src} width={props?.logo?.width} height={props?.logo?.height} title={props?.logo?.title} alt={props?.logo?.alt || ""} /> */}
                             </Logo>
