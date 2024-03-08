@@ -94,8 +94,10 @@ export default function Dropdown(props: Dropdown) {
         }
     };
 
+    const [openSelect, closeSelect] = usePortal((v: boolean) => Select("popup"));
     const Select = (visible: Visible) => (
         <Options
+            onBlur={() => closeSelect()}
             style={{
                 ...(visible === "popup"
                     ? {
@@ -116,7 +118,9 @@ export default function Dropdown(props: Dropdown) {
                           opacity: 0,
                           height: 0,
                       }
-                    : {}),
+                    : {
+                          fontSize: `${scale}em`,
+                      }),
             }}
         >
             <div ref={dropbox}>
@@ -182,13 +186,13 @@ export default function Dropdown(props: Dropdown) {
         </Options>
     );
 
-    const [openSelect, closeSelect] = usePortal((v: boolean) => Select("popup"));
-
     const [openSelectOnSheet, closeSelectOnSheet] = usePortal(
-        <BottomSheet height={{ max: "60vh" }} onClose={() => closeSelectOnSheet()}>
+        <BottomSheet height={{ max: "60vh" }} onBlur={() => closeSelectOnSheet()} onClose={() => closeSelectOnSheet()}>
             <Layouts.Col style={{ padding: "2em" }} gap={2}>
                 <Layouts.Contents.InnerContent>{Select("sheet")}</Layouts.Contents.InnerContent>
-                <Controls.Button onClick={() => closeSelectOnSheet()}>Close</Controls.Button>
+                <Controls.Button scale={scale} onClick={() => closeSelectOnSheet()}>
+                    Close
+                </Controls.Button>
             </Layouts.Col>
         </BottomSheet>
     );

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, Suspense, memo } from "react";
+import { useState, useEffect, useRef, Suspense, memo, useMemo } from "react";
 import { Chart } from "chart.js/auto";
 
 export interface ChartJS {
@@ -21,7 +21,6 @@ export interface Data {
 export const ChartJS = (props: ChartJS) => {
     const chartRef: any = useRef();
 
-    const [data, setData] = useState<any>();
     const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
     const [color, setColor] = useState({
         default: props?.color?.default ? `rgb(${props?.color?.default})` : `rgb(${theme})`,
@@ -96,42 +95,36 @@ export const ChartJS = (props: ChartJS) => {
     };
 
     useEffect(() => {
-        if (props?.data && props?.data?.length > 0) {
-            setData({
-                labels: props?.data?.map((data: Data) => data?.time),
-                datasets: [
-                    {
-                        data: props?.data?.map((data: Data) => data?.value),
-                        borderColor: color.theme.medium,
-                        pointBorderColor: "transparent",
-                        pointBackgroundColor: color.theme.strong,
-                        pointHoverBackgroundColor: `rgb(${theme})`,
-                        pointRadius: 2,
-                        pointHoverRadius: 4,
-                    },
-                ],
-            });
-        }
-    }, [props?.data]);
-
-    useEffect(() => {
         if (chartRef?.current) {
             const chart = new Chart(chartRef?.current?.getContext("2d"), {
-                type: props?.type,
-                data: data,
+                type: props?.type || "line",
+                data: {
+                    labels: props?.data?.map((data: Data) => data?.time),
+                    datasets: [
+                        {
+                            data: props?.data?.map((data: Data) => data?.value),
+                            borderColor: color.theme.medium,
+                            pointBorderColor: "transparent",
+                            pointBackgroundColor: color.theme.strong,
+                            pointHoverBackgroundColor: `rgb(${theme})`,
+                            pointRadius: 2,
+                            pointHoverRadius: 4,
+                        },
+                    ],
+                },
                 options: options,
             });
             return () => {
                 chart.destroy();
             };
         }
-    }, [props?.type, chartRef, data]);
+    }, [chartRef, props?.data, props?.type, color, theme]);
 
     return (
         <Suspense fallback={props?.fallback || <div>Loading...</div>}>
             <canvas ref={chartRef} onMouseLeave={handleMouseLeave} />
         </Suspense>
     );
-}
+};
 
 export default memo(ChartJS);
