@@ -7,6 +7,7 @@ import { useWindowSize, usePortal } from "hooks";
 import Style, { Item, Option, Options } from "./Dropdown.styled";
 
 export interface Dropdown {
+    theme?: "light" | "dark";
     style?: object;
 
     form?: string;
@@ -97,14 +98,19 @@ export default function Dropdown(props: Dropdown) {
     const [openSelect, closeSelect] = usePortal((v: boolean) => Select("popup"));
     const Select = (visible: Visible) => (
         <Options
-            onBlur={() => closeSelect()}
+            onBlur={() => visible === "sheet" && closeSelect()}
             style={{
                 ...(visible === "popup"
                     ? {
+                          ...(props?.theme && {
+                              "--white": props?.theme === "light" ? "255,255,255" : "0,0,0",
+                              "--black": props?.theme === "light" ? "0,0,0" : "255,255,255",
+                          }),
                           position: "fixed",
                           fontSize: `${scale}em`,
+                          background: (props?.style as any)?.options?.background || `rgba(var(--white), var(--o0075))`,
+                          color: `rgb(var(--white))`,
                           width: width && `${width / (8 * scale)}em`,
-                          background: "rgba(var(--black-abs), var(--o0075))",
                           backdropFilter: "blur(4em)",
                           transition: "max-height .3s ease",
                           zIndex: 200,
