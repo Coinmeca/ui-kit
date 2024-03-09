@@ -8,7 +8,6 @@ type Args = [Child] | [object] | [Child, object] | undefined[];
 type Portal = [(...args: Args) => void, Function];
 
 export default function usePortal(initial?: any, initialProps?: any): Portal {
-    const is = useId();
     const [root, setRoot] = useState<Root | undefined>();
     const [active, setActive] = useState(false);
     const [children, setChildren] = useState<Function | ReactNode | object>();
@@ -17,7 +16,7 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
     });
 
     useEffect(() => {
-        !root && setRoot(createRoot(document?.createElement("section", { is })));
+        !root && setRoot(createRoot(document?.createElement("section")));
         return () => {
             // root?.render(null);
             setActive(false);
@@ -43,7 +42,7 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
                         : undefined;
                 props &&
                     setProps((state: any) => {
-                        return { ...state, ...props };
+                        return { ...state, ...props, actvie: true };
                     });
 
                 const children =
@@ -58,6 +57,11 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
                 setActive(true);
             }
         },
-        () => setActive(false),
+        () => {
+            setProps((state: any) => {
+                return { ...state, active: false };
+            });
+            setActive(false);
+        },
     ];
 }

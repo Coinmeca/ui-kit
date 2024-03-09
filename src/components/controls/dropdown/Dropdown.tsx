@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
 import { useWindowSize, usePortal } from "hooks";

@@ -14,23 +14,27 @@ export interface BottomSheet {
 }
 
 export default function BottomSheet(props: BottomSheet) {
-    const [active, setActive] = useState<boolean>(props?.active || false);
+    const [active, setActive] = useState<boolean>(props?.active || true);
     const scale = props?.scale || 1;
 
     useEffect(() => {
-        setActive(true);
+        // setActive(true);
         return () => {
-            if (typeof props?.onClose === "function") props?.onClose();
+            handleClose();
             setActive(false);
         };
     }, []);
+
+    const handleClose = (e?: any) => {
+        if (typeof props?.onClose === "function") props?.onClose();
+    };
 
     const handleBlur = (e?: any) => {
         if (typeof props?.onBlur === "function") props?.onBlur(e);
     };
 
     return (
-        <Layouts.Panel active={true} style={{ zIndex: 100, pointerEvents: "none" }} onClick={(e: any) => handleBlur(e)} fix>
+        <Layouts.Panel active={active} style={{ zIndex: 100, pointerEvents: "none" }} onClick={(e: any) => handleBlur(e)} fix>
             <AnimatePresence>
                 {active && (
                     <Style
