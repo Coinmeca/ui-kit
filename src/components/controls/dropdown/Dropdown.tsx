@@ -65,12 +65,12 @@ export default function Dropdown(props: Dropdown) {
 
     const handleSelect = (e: React.FormEvent, v: any, k: string | number) => {
         if (disabled) return;
+        setOpen(false);
+        closeSelectOnSheet();
         // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
         if (!props?.fix) setOption(v);
         if (typeof v?.event === "function") v.event(e);
         if (typeof props?.onClickItem === "function") props?.onClickItem(e, v, k);
-        setOpen(false);
-        closeSelectOnSheet();
     };
 
     const handleOpen = (e?: any) => {
