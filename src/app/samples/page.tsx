@@ -22,7 +22,6 @@ import * as Row from "components/layouts/row/Row.styled";
 
 export default function Main() {
     const { windowSize } = useWindowSize();
-    const { scrollPosition } = useScrollPosition();
 
     const filter = {
         color: "black",
