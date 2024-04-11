@@ -1,12 +1,15 @@
-import { type CSSProperties } from "react";
 import * as Texts from "./Text.styled";
+
+export type TextType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "strong" | "p" | "desc" | "link" | "button";
+export type TextAlign = "left" | "center" | "right";
+export type TextCase = "upper" | "lower" | "capital";
 
 export interface Text {
     children?: any;
     style?: object;
-    type?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "strong" | "p" | "desc" | "link";
-    align?: "left" | "center" | "right";
-    case?: "upper" | "lower" | "capital";
+    type?: TextType;
+    align?: TextAlign;
+    case?: TextCase;
     size?: number;
     color?: string | false;
     change?: boolean;
@@ -24,15 +27,17 @@ export interface Text {
 export interface Responsive {
     style?: object;
     size?: number;
+    color?: string | false;
+    change?: boolean;
     weight?: number | string;
-    align?: "left" | "center" | "right";
     height?: number;
+    align?: TextAlign;
     opacity?: number;
     device: "desktop" | "laptop" | "tablet" | "mobile";
 }
 
 export default function Text(props: Text) {
-    const type = props?.href || props?.onClick ? "link" : props?.type;
+    const type = props?.type === "button" || props?.type === "link" ? props?.type : props?.href ? "link" : props?.onClick ? "button" : props?.type;
     const size = props?.size || 1.5;
     const weight = props?.weight || "bold";
     const height = props?.height || 1.5;
@@ -45,10 +50,10 @@ export default function Text(props: Text) {
                 <Texts.H1
                     style={props?.style}
                     $color={color}
-                    $change={props?.change}
                     $opacity={opacity}
                     $weight={weight}
                     $height={height}
+                    $change={props?.change}
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
@@ -62,10 +67,10 @@ export default function Text(props: Text) {
                 <Texts.H2
                     style={props?.style}
                     $color={color}
-                    $change={props?.change}
                     $opacity={opacity}
                     $weight={weight}
                     $height={height}
+                    $change={props?.change}
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
@@ -79,10 +84,10 @@ export default function Text(props: Text) {
                 <Texts.H3
                     style={props?.style}
                     $color={color}
-                    $change={props?.change}
                     $opacity={opacity}
                     $weight={weight}
                     $height={height}
+                    $change={props?.change}
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
@@ -96,10 +101,10 @@ export default function Text(props: Text) {
                 <Texts.H4
                     style={props?.style}
                     $color={color}
-                    $change={props?.change}
                     $opacity={opacity}
                     $weight={weight}
                     $height={height}
+                    $change={props?.change}
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
@@ -113,10 +118,10 @@ export default function Text(props: Text) {
                 <Texts.H5
                     style={props?.style}
                     $color={color}
-                    $change={props?.change}
                     $opacity={opacity}
                     $weight={weight}
                     $height={height}
+                    $change={props?.change}
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
@@ -130,10 +135,10 @@ export default function Text(props: Text) {
                 <Texts.H6
                     style={props?.style}
                     $color={color}
-                    $change={props?.change}
                     $opacity={opacity}
                     $weight={weight}
                     $height={height}
+                    $change={props?.change}
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
@@ -147,10 +152,10 @@ export default function Text(props: Text) {
                 <Texts.Strong
                     style={props?.style}
                     $color={color}
-                    $change={props?.change}
                     $opacity={opacity}
                     $weight={weight}
                     $height={height}
+                    $change={props?.change}
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
@@ -164,10 +169,10 @@ export default function Text(props: Text) {
                 <Texts.P
                     style={props?.style}
                     $color={color}
-                    $change={props?.change}
                     $opacity={opacity}
-                    $weight={props?.weight || "normal"}
                     $height={height}
+                    $change={props?.change}
+                    $weight={props?.weight || "normal"}
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
@@ -181,10 +186,10 @@ export default function Text(props: Text) {
                 <Texts.Desc
                     style={props?.style}
                     $color={color}
-                    $change={props?.change}
                     $opacity={opacity}
-                    $weight={props?.weight || "normal"}
                     $height={height}
+                    $change={props?.change}
+                    $weight={props?.weight || "normal"}
                     $align={props?.align}
                     $case={props?.case}
                     $fit={props?.fit}
@@ -202,10 +207,10 @@ export default function Text(props: Text) {
                     onClick={(e: any) => typeof props?.onClick === "function" && props?.onClick(e)}
                     $size={size}
                     $color={color}
-                    $change={props?.change}
                     $opacity={opacity}
                     $weight={weight}
                     $height={height}
+                    $change={props?.change}
                     $align={props?.align}
                     $case={props?.case}
                     $responsive={props?.responsive}
@@ -215,16 +220,37 @@ export default function Text(props: Text) {
                     {props?.children}
                 </Texts.Link>
             );
+        case "button":
+            return (
+                <Texts.Button
+                    style={props?.style}
+                    href={props?.href}
+                    target={!props?.target && !props?.target?.startsWith("/") ? "_blank" : props?.target}
+                    onClick={(e: any) => typeof props?.onClick === "function" && props?.onClick(e)}
+                    $size={size}
+                    $color={color}
+                    $weight={weight}
+                    $height={height}
+                    $change={props?.change}
+                    $align={props?.align}
+                    $case={props?.case}
+                    $responsive={props?.responsive}
+                    $fit={props?.fit}
+                    $fix={props?.fix}
+                >
+                    {props?.children}
+                </Texts.Button>
+            );
         default:
             return (
                 <Texts.Text
                     style={props?.style}
                     $size={size}
                     $color={color}
-                    $change={props?.change}
                     $opacity={opacity}
                     $weight={weight}
                     $height={height}
+                    $change={props?.change}
                     $align={props?.align}
                     $case={props?.case}
                     $responsive={props?.responsive}

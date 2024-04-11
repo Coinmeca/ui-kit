@@ -1,12 +1,12 @@
 "use client";
-import { Controls, Elements, Layouts } from "components";
 import { AnimatePresence, motion } from "framer-motion";
+import { Controls, Elements, Layouts } from "components";
 import Style, { Close, ButtonArea } from "./Modal.styled";
 import { useEffect, useState } from "react";
 
 export interface Modal {
     active?: boolean;
-    title?: string;
+    title?: any;
     message?: any;
     children?: any;
     content?: any;

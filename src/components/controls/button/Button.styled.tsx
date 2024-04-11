@@ -73,7 +73,7 @@ const Style = styled.button<{
                     }
                 `;
             case "line":
-                const line: string = $color === "white" ? "var(--white)" : "var(--black)";
+                const line: string = $color === "black" ? "var(--white)" : "var(--black)";
                 return css`
                     background: transparent;
                     border: 1px solid;
@@ -84,7 +84,7 @@ const Style = styled.button<{
                     }
                     &:hover {
                         background: rgba(var(--theme), var(--o1));
-                        color: ${$color === "black" ? "rgb(var(--white))" : "rgb(var(--black))"};
+                        color: ${$color === "black" ? "rgb(var(--black))" : "rgb(var(--white))"};
                         & ${Icon.default} svg {
                             fill: ${$color === "black" ? "rgb(var(--white))" : "rgb(var(--black))"};
                         }

@@ -42,19 +42,19 @@ export default function Connect(props: Connect) {
         }));
 
     const handleBack = (e: any) => {
-        if (typeof props?.onBack === "function") props?.onBack(e);
         setProcess(null);
+        setWallet(null);
+        if (typeof props?.onBack === "function") props?.onBack(e);
     };
 
     const handleClose = (e: any) => {
-        if (typeof props?.onClose === "function") props?.onClose(e);
         setProcess(null);
+        setChain(null);
+        if (typeof props?.onClose === "function") props?.onClose(e);
     };
 
     const handleError = async (e: any, error?: any) => {
         if (typeof props?.onError === "function") await props?.onError(e, error);
-        setProcess(false);
-        setWallet(null);
     };
 
     const handleConnect = async (e: any, w: any) => {
@@ -80,6 +80,7 @@ export default function Connect(props: Connect) {
         return () => {
             setProcess(null);
             setWallet(null);
+            setChain(null);
         };
     }, []);
 
@@ -95,13 +96,19 @@ export default function Connect(props: Connect) {
     return (
         <Modals.Process
             {...props}
-            title={"Connect Wallet"}
+            title={
+                !chain ? (
+                    "Connect Wallet"
+                ) : (
+                    <Elements.Avatar scale={0.625} size={2.25} style={{ justifyContent: "center" }} img={chain.logo} name={chain.name} />
+                )
+            }
             process={typeof props?.process === "boolean" || props?.process === null ? props?.process : process}
             content={
                 <Layouts.Contents.SlideContainer
                     contents={[
                         {
-                            active: typeof chain === "undefined",
+                            active: props?.chains ? !chain : false,
                             children: (
                                 <Layouts.Col gap={2} fill>
                                     <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
@@ -115,7 +122,7 @@ export default function Connect(props: Connect) {
                             ),
                         },
                         {
-                            active: chain,
+                            active: props?.chains ? chain : true,
                             children: (
                                 <Layouts.Col gap={2} fill>
                                     <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>

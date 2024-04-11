@@ -1,6 +1,5 @@
-import Notification from "./Notification";
-import ScrollPosition from "./ScrollPosition";
 import Theme from "./Theme";
+import Notification from "./Notification";
 import WindowSize from "./WindowSize";
 
-export { Notification, ScrollPosition, Theme, WindowSize }
+export { Theme, Notification, WindowSize }

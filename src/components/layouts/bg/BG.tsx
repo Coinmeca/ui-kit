@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Style, { Filter } from "./BG.styled";
-import type { DetailedHTMLProps, VideoHTMLAttributes, CSSProperties } from "react";
+import type { DetailedHTMLProps, VideoHTMLAttributes, MutableRefObject } from "react";
 
 export interface BG {
     background?: string;
@@ -19,6 +19,7 @@ export interface BG {
     video?: DetailedHTMLProps<VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>;
     style?: object;
     children?: any;
+    reference?: MutableRefObject<any>;
 }
 
 export default function BG(props: BG) {
@@ -31,8 +32,8 @@ export default function BG(props: BG) {
     const opacity = (typeof props?.filter === "object" && typeof props?.filter?.opacity === "number" && props?.filter?.opacity) || 0.45;
 
     return (
-        <Style $fix={fix} style={{ ...props?.style, background: props?.background }}>
-            {props?.img?.src && <Image src={src} style={props?.img?.style} fill alt={""} />}
+        <Style ref={props?.reference} $fix={fix} style={{ ...props?.style, background: props?.background }}>
+            {props?.img?.src && <Image src={src} style={{ minWidth: "100%", minHeight: "100%", ...props?.img?.style }} alt={""} />}
             {props?.video?.src && <video {...props?.video} />}
             {props?.filter && <Filter $filter={filter} $opacity={opacity} />}
             {props?.children && <div>{props?.children}</div>}
