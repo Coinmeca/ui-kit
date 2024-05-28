@@ -16,7 +16,7 @@ export const Style = styled.section`
     color: white;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
     padding: 4em;
-    padding-bottom: 16em;
+    padding-bottom: 8em;
     overflow: hidden;
 
     &:after {

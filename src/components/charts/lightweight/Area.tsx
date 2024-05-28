@@ -10,7 +10,11 @@ export interface Area {
         default?: string;
         theme?: string;
     };
-    data?: AreaData[];
+    field?: {
+        time?: string;
+        value?: string;
+    };
+    data?: AreaData[] | any[];
     up?: string;
     down?: string;
     fallback?: any;
@@ -33,7 +37,12 @@ export const Area = (props: Area) => {
         },
     });
 
-    const [data, setData] = useState<any>([]);
+    const key = {
+        time: props?.field?.time || "time",
+        value: props?.field?.value || "value",
+    };
+
+    const [data, setData] = useState<AreaData[]>([]);
     const chartRef: any = useRef();
 
     useEffect(() => {
@@ -58,14 +67,16 @@ export const Area = (props: Area) => {
         if (props?.data && props?.data?.length > 0) {
             setData(
                 Sort(
-                    props?.data?.map((v: AreaData) => {
-                        return {
-                            ...v,
-                        };
-                    }),
-                    "time",
-                    typeof props?.data[0]?.time === "number" ? "number" : "string",
-                    false
+                    props?.data?.map(
+                        (v: any) =>
+                            ({
+                                time: v[key?.time],
+                                value: parseFloat(v[key?.value].toString()),
+                            } as AreaData)
+                    ),
+                    key?.time,
+                    props?.data && props?.data?.length > 0 && typeof props?.data[0][key?.time] === "number" ? "number" : "string",
+                    true
                 )
             );
         }
@@ -100,6 +111,8 @@ export const Area = (props: Area) => {
                     borderColor: color.theme.regular,
                 },
                 timeScale: {
+                    timeVisible: true,
+                    secondsVisible: true,
                     borderColor: color.theme.regular,
                 },
                 trackingMode: {},
@@ -163,6 +176,6 @@ export const Area = (props: Area) => {
             <Style ref={chartRef} />
         </Suspense>
     );
-}
+};
 
 export default memo(Area);

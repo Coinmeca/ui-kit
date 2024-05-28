@@ -1,31 +1,39 @@
 export interface Token {
-	symbol: string;
-	name: string;
-	decimals?: number;
-	address?: string;
+	address: string;
+	decimals: number;
+	logo?: string;
+	symbol?: string;
+	name?: string;
 	balance?: number | string;
 	using?: number | string;
 }
 
 export interface Asset extends Token {
-	key: boolean;
-	exchange_rate: number | string;
-	exchange_rate_change: number | string;
-	tl: number | string;
-	tl_change: number | string;
-	tvl: number | string;
-	tvl_change: number | string;
+	key?: boolean;
+	exchange?: number | string;
+	exchangeChange?: number | string;
+	exchangeChangeRate?: number | string;
+	locked?: number | string;
+	lockedChange?: number | string;
+	valueLocked?: number | string;
+	valueLockedChange?: number | string;
+	logo?: string;
 }
 
 export interface Farm {
 	name: string;
 	type: number;
-	stake: Token;
 	id?: number | string;
+	stake: Token;
+	earn?: Token;
 	address?: string;
-	reward?: Token;
-	rewards?: number;
-	rewards_rate?: number;
-	tl?: number;
-	tl_change?: number;
+	interest?: number | string;
+	interestChange?: number | string;
+	staked?: number | string;
+	stakedChange?: number | string;
+	apr?: number | string
+	charts?: {
+		apr: any;
+		staked: any;
+	}
 }

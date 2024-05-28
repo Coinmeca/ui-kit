@@ -211,8 +211,8 @@ export default function Page() {
                                                                     view={view}
                                                                     asks={props?.orderbook?.asks}
                                                                     bids={props?.orderbook?.bids}
-                                                                    base={props?.market?.base?.symbol}
-                                                                    quote={props?.market?.quote?.symbol}
+                                                                    base={props?.market?.base}
+                                                                    quote={props?.market?.quote}
                                                                     responsive={{
                                                                         device: "mobile",
                                                                         vertical: windowSize.width < Root.Device.Mobile,

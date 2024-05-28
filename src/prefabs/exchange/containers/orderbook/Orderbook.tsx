@@ -3,8 +3,9 @@ import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Elements, Layouts } from "components";
 import { useWindowSize, usePortal } from "hooks";
-import { Format, Sort } from "lib/utils";
+import { Format, Sort, parseNumber } from "lib/utils";
 import { Root } from "lib/style";
+import { Token } from "types";
 import Tooltip from "./Tooltip";
 import Style, { NoData, Asks, Bids, Tick as Ticks } from "./Orderbook.styled";
 
@@ -12,8 +13,8 @@ export interface Orderbook {
     asks?: Tick[];
     bids?: Tick[];
     view?: number;
-    base?: string;
-    quote?: string;
+    base?: Token;
+    quote?: Token;
     onClickAsk?: Function;
     onClickBid?: Function;
     bookOrder?: boolean;
@@ -31,16 +32,31 @@ export interface Tick {
 
 export default function Ordrebook(props: Orderbook) {
     const { windowSize } = useWindowSize();
+
     const [handleTooltip, closeTooltip] = usePortal(Tooltip, {
         horizon: "center",
         fit: true,
     });
 
-    const asks = props?.asks ? Sort(props?.asks, "price", "number", true) : [];
-    const bids = props?.bids ? Sort(props?.bids, "price", "number", false) : [];
+    const asks = props?.asks
+        ? Sort(
+              props?.asks?.map((t: Tick) => ({ price: parseNumber(t?.price), balance: parseNumber(t?.balance) })),
+              "price",
+              "number",
+              true
+          )
+        : [];
+    const bids = props?.bids
+        ? Sort(
+              props?.bids?.map((t: Tick) => ({ price: parseNumber(t?.price), balance: parseNumber(t?.balance) })),
+              "price",
+              "number",
+              false
+          )
+        : [];
 
-    const ask_max: number = (asks && asks?.length > 0 && Math.max(...asks?.map((o: Tick) => parseFloat(Format(o?.balance, "number"))))) || 0;
-    const bid_max: number = (bids && bids?.length > 0 && Math.max(...bids?.map((o: Tick) => parseFloat(Format(o?.balance, "number"))))) || 0;
+    const ask_max: number = (asks && asks?.length > 0 && Math.max(...asks?.map((o: Tick) => parseNumber(o?.balance)))) || 0;
+    const bid_max: number = (bids && bids?.length > 0 && Math.max(...bids?.map((o: Tick) => parseNumber(o?.balance)))) || 0;
 
     const view = props?.view || 0;
     const guidance = props?.guidance || false;
@@ -63,19 +79,16 @@ export default function Ordrebook(props: Orderbook) {
         if (!guidance) return;
         const k = [...asks]
             .splice(0, i + 1)
-            .reduce(
-                (a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.price || 0).toString()) * parseFloat((b?.balance || 0).toString()),
-                0
-            );
-        const sum = [...asks].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
+            .reduce((a: number, b: Tick) => a + parseNumber((b?.balance || 0).toString()) * parseNumber((b?.price || 0).toString()), 0);
+        const sum = [...asks].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseNumber((a || 0).toString()) + parseNumber((b?.balance || 0).toString()), 0);
         handleTooltip(null, {
             vertical: "top",
             color: "red",
             e: e,
-            base: props?.base,
-            quote: props?.quote,
+            base: props?.base?.symbol,
+            quote: props?.quote?.symbol,
             price: k / sum,
-            amount: k * sum,
+            amount: k,
             balance: sum,
             fit: true,
         });
@@ -85,20 +98,17 @@ export default function Ordrebook(props: Orderbook) {
         if (!guidance) return;
         const k = [...bids]
             .splice(0, i + 1)
-            .reduce(
-                (a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.price || 0).toString()) * parseFloat((b?.balance || 0).toString()),
-                0
-            );
-        const sum = [...bids].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
+            .reduce((a: number, b: Tick) => a + parseNumber((b?.balance || 0).toString()) / parseNumber((b?.price || 0).toString()), 0);
+        const sum = [...bids].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseNumber((a || 0).toString()) + parseNumber((b?.balance || 0).toString()), 0);
         handleTooltip(null, {
             vertical: windowSize.width > Root.Device.Mobile ? "bottom" : "top",
             color: "green",
             e: e,
-            base: props?.base,
-            quote: props?.quote,
-            price: k / sum,
-            amount: k * sum,
-            balance: sum,
+            base: props?.base?.symbol,
+            quote: props?.quote?.symbol,
+            price: sum / k,
+            amount: sum,
+            balance: k,
             fit: true,
         });
     };
@@ -110,7 +120,7 @@ export default function Ordrebook(props: Orderbook) {
                     <AnimatePresence mode="popLayout" presenceAffectsLayout>
                         {asks?.map((ask: Tick, k: number) => (
                             <Ticks
-                                key={ask?.price || k}
+                                key={k}
                                 onClick={(e: any) => handleAsk(ask, k, e)}
                                 onMouseEnter={(e: any) => handleAskHover(ask, k, e)}
                                 as={motion.div}
@@ -128,11 +138,11 @@ export default function Ordrebook(props: Orderbook) {
                                         <div
                                             style={{
                                                 backgroundSize: `${
-                                                    (parseFloat(ask?.balance.toString()) / ask_max) * 100 > 100
+                                                    (parseNumber(ask?.balance.toString()) / ask_max) * 100 > 100
                                                         ? "100"
-                                                        : (parseFloat(ask?.balance.toString()) / ask_max) * 100 < 0
+                                                        : (parseNumber(ask?.balance.toString()) / ask_max) * 100 < 0
                                                         ? "0"
-                                                        : (parseFloat(ask?.balance.toString()) / ask_max) * 100
+                                                        : (parseNumber(ask?.balance.toString()) / ask_max) * 100
                                                 }% 100%`,
                                             }}
                                         >
@@ -166,7 +176,7 @@ export default function Ordrebook(props: Orderbook) {
                     <AnimatePresence mode="popLayout">
                         {bids?.map((bid: Tick, k: number) => (
                             <Ticks
-                                key={bid?.price || k}
+                                key={k}
                                 onClick={(e: any) => handleBid(bid, e)}
                                 onMouseEnter={(e: any) => handleBidHover(bid, k, e)}
                                 as={motion.div}
@@ -184,11 +194,11 @@ export default function Ordrebook(props: Orderbook) {
                                         <div
                                             style={{
                                                 backgroundSize: `${
-                                                    (parseFloat(Format(bid?.balance, "number")) / bid_max) * 100 > 100
+                                                    (parseNumber(bid?.balance) / bid_max) * 100 > 100
                                                         ? "100"
-                                                        : (parseFloat(Format(bid?.balance, "number")) / bid_max) * 100 < 0
+                                                        : (parseNumber(bid?.balance) / bid_max) * 100 < 0
                                                         ? "0"
-                                                        : (parseFloat(Format(bid?.balance, "number")) / bid_max) * 100
+                                                        : (parseNumber(bid?.balance) / bid_max) * 100
                                                 }% 100%`,
                                             }}
                                         >

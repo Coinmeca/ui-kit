@@ -39,8 +39,7 @@ export default function Trade(props: TradeControl) {
 
     const { order, price, amount, quantity } = useVault(
         {
-            base: assets[0]?.address,
-            quote: assets[1]?.address,
+            pay: assets[0],
             price: parseNumber(props?.price || 0),
             amount: 0,
             quantity: 0,

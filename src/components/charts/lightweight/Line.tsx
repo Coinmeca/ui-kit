@@ -13,6 +13,10 @@ export interface Line {
         down?: string;
         theme?: string;
     };
+    field?: {
+        time?: string;
+        value?: string;
+    };
     data?: LineData[];
     volume?: Volume[];
     up?: string;
@@ -21,7 +25,7 @@ export interface Line {
     fit?: boolean;
 }
 
-export const Line = (props: Line)=> {
+export const Line = (props: Line) => {
     const up = props?.up || "up";
     const down = props?.down || "down";
 
@@ -38,6 +42,11 @@ export const Line = (props: Line)=> {
             light: `rgba(${theme}, 0.05)`,
         },
     });
+
+    const key = {
+        time: props?.field?.time || "time",
+        value: props?.field?.value || "value",
+    };
 
     const [data, setData] = useState<any>([]);
     const [volume, setVolume] = useState<Volume[]>([]);
@@ -70,8 +79,8 @@ export const Line = (props: Line)=> {
                             ...v,
                         };
                     }),
-                    typeof props?.data[0]?.time === "number" ? "number" : "string",
                     "number",
+                    props?.data && props?.data?.length > 0 && typeof (props?.data[0] as any)[key?.time] === "number" ? "number" : "string",
                     false
                 )
             );
@@ -217,6 +226,6 @@ export const Line = (props: Line)=> {
             <Style ref={chartRef} />
         </Suspense>
     );
-}
+};
 
 export default memo(Line);
