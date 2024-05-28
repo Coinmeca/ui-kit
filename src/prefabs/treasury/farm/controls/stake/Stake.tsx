@@ -37,13 +37,12 @@ export default function Stake(props: StakeControl) {
     const option = props?.option || "market";
     const [currency, setCurrency] = useState(0);
     const currencies = mode
-        ? [assets[1]?.symbol.toUpperCase(), assets[0]?.symbol.toUpperCase()]
-        : [assets[0]?.symbol.toUpperCase(), assets[1]?.symbol.toUpperCase()];
+        ? [assets[1]?.symbol?.toUpperCase() || "", assets[0]?.symbol?.toUpperCase() || ""]
+        : [assets[0]?.symbol?.toUpperCase() || "", assets[1]?.symbol?.toUpperCase() || ""];
 
     const { order, price, amount, quantity } = useOrder(
         {
-            base: assets[0]?.address,
-            quote: assets[1]?.address,
+            pay: assets[0],
             price: parseFloat(Format(props?.price || 1, "number", true)),
             amount: 0,
             quantity: 0,

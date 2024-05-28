@@ -24,7 +24,7 @@ export default function View(props: View) {
     };
 
     const [keyword, setKeyword] = useState<string>();
-    const [tvl, setTvl] = useState<any>();
+    const [valueLocked, setTvl] = useState<any>();
 
     return (
         <>
@@ -43,9 +43,9 @@ export default function View(props: View) {
                             children: (
                                 <Layouts.Col gap={0}>
                                     <Elements.Text type={"strong"}>Total Value Locked</Elements.Text>
-                                    <Elements.Text type={"h4"}>$ {tvl?.formattedValue || "-"}</Elements.Text>
+                                    <Elements.Text type={"h4"}>$ {valueLocked?.formattedValue || "-"}</Elements.Text>
                                     <div>
-                                        <Elements.Text opacity={0.6}>{tvl?.label?.split(" ")[0]}</Elements.Text>
+                                        <Elements.Text opacity={0.6}>{valueLocked?.label?.split(" ")[0]}</Elements.Text>
                                     </div>
                                 </Layouts.Col>
                             ),

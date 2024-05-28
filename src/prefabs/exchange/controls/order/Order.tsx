@@ -32,14 +32,17 @@ export default function Order(props: OrderControl) {
     const option = props?.option || "market";
     const [currency, setCurrency] = useState(0);
     const currencies = mode
-        ? [assets[1]?.symbol.toUpperCase(), assets[0]?.symbol.toUpperCase()]
-        : [assets[0]?.symbol.toUpperCase(), assets[1]?.symbol.toUpperCase()];
+        ? [assets[1]?.symbol?.toUpperCase() || "", assets[0]?.symbol?.toUpperCase() || ""]
+        : [assets[0]?.symbol?.toUpperCase() || "", assets[1]?.symbol?.toUpperCase() || ""];
 
     const { order, price, amount, quantity, maxQuantity } = useOrder(
         {
-            base: assets[1]?.address,
-            quote: assets[0]?.address,
+            pay: assets[0],
             price: parseFloat(Format(props?.price, "number", true)),
+            amount: 0,
+            quantity: 0,
+            fees: 0,
+            total: 0,
         },
         mode,
         0.01,

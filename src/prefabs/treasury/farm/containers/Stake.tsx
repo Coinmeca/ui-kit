@@ -22,8 +22,8 @@ export default function Stake(props: StakeControl) {
     const option = props?.option || "market";
     const responsive = props?.responsive || false;
 
-    const [deposit, setDeposit] = useState<O | undefined>();
-    const [withdraw, setWithdraw] = useState<O | undefined>();
+    const [deposit, setStake] = useState<O | undefined>();
+    const [withdraw, setUnstake] = useState<O | undefined>();
 
     const color = {
         deposit: "orange",
@@ -84,7 +84,7 @@ export default function Stake(props: StakeControl) {
                                     assets={[props?.asset, props?.asset]}
                                     price={props?.price}
                                     fee={props?.fee}
-                                    onChange={(v: O) => setDeposit(v)}
+                                    onChange={(v: O) => setStake(v)}
                                 />
                             ),
                         },
@@ -101,7 +101,7 @@ export default function Stake(props: StakeControl) {
                                     assets={[props?.asset, props?.asset]}
                                     price={props?.price}
                                     fee={props?.fee}
-                                    onChange={(v: O) => setWithdraw(v)}
+                                    onChange={(v: O) => setUnstake(v)}
                                 />
                             ),
                         },

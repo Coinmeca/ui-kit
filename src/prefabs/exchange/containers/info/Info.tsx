@@ -12,15 +12,21 @@ export interface Info {
     responsive?: boolean;
 }
 
+interface Pair {
+    base?: number | string;
+    quote?: number | string;
+}
 export interface ExchangeInfo {
     volume_base?: number | string;
     volume_quote?: number | string;
     high?: number | string;
     low?: number | string;
     change?: number | string;
-    change_rate?: number | string;
+    changeRate?: number | string;
     balance?: number | string;
     using?: number | string;
+    volume?: Pair;
+    liquidity?: Pair;
 }
 
 export default function Info(props: Info) {
@@ -47,10 +53,10 @@ export default function Info(props: Info) {
                     }}
                 >
                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                        Volume ({props?.base?.symbol?.toUpperCase()})
+                        Liquidity ({props?.base?.symbol?.toUpperCase()})
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                        {Format(props?.info?.volume_base, "currency", { unit: 9, limit: 12, fix: 3 })}
+                        {Format(props?.info?.liquidity?.base, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                 </Layouts.Row>
                 <Layouts.Row
@@ -63,10 +69,10 @@ export default function Info(props: Info) {
                     }}
                 >
                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                        Volume ({props?.quote?.symbol?.toUpperCase()})
+                        Liquidity ({props?.quote?.symbol?.toUpperCase()})
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                        {Format(props?.info?.volume_quote, "currency", { unit: 9, limit: 12, fix: 3 })}
+                        {Format(props?.info?.liquidity?.quote, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Col>
@@ -134,7 +140,7 @@ export default function Info(props: Info) {
                         Change Rate
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
-                        {Sign(props?.info?.change_rate)} {Format(props?.info?.change_rate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })} %
+                        {Sign(props?.info?.changeRate)} {Format(props?.info?.changeRate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })} %
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Col>
@@ -149,10 +155,10 @@ export default function Info(props: Info) {
                     }}
                 >
                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                        Balance
+                        Volume ({props?.base?.symbol?.toUpperCase()})
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                        {Format(props?.info?.volume_base, "currency")}
+                        {Format(props?.info?.volume?.base, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                 </Layouts.Row>
                 <Layouts.Row
@@ -165,10 +171,10 @@ export default function Info(props: Info) {
                     }}
                 >
                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                        Using
+                        Volume ({props?.quote?.symbol?.toUpperCase()})
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                        {Format(props?.info?.volume_base, "currency")}
+                        {Format(props?.info?.volume?.quote, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Col>

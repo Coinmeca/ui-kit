@@ -67,8 +67,8 @@ export default function Dropdown(props: Dropdown) {
         if (disabled) return;
         setOpen(false);
         closeSelectOnSheet();
-        // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
         if (!props?.fix) setOption(v);
+        // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
         if (typeof v?.event === "function") v.event(e);
         if (typeof props?.onClickItem === "function") props?.onClickItem(e, v, k);
     };
@@ -95,7 +95,6 @@ export default function Dropdown(props: Dropdown) {
         }
     };
 
-    const [openSelect, closeSelect] = usePortal((v: boolean) => Select("popup"));
     const Select = (visible: Visible) => (
         <Options
             onBlur={() => visible === "sheet" && closeSelect()}
@@ -191,6 +190,7 @@ export default function Dropdown(props: Dropdown) {
             </div>
         </Options>
     );
+    const [openSelect, closeSelect] = usePortal(() => Select("popup"));
 
     const [openSelectOnSheet, closeSelectOnSheet] = usePortal(
         <BottomSheet height={{ max: "60vh" }} onBlur={() => closeSelectOnSheet()} onClose={() => closeSelectOnSheet()}>
