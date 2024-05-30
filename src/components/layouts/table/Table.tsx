@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode, type CSSProperties } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Elements } from "ui/components";
+import { Elements } from "components";
 import Style, { NoData } from "./Table.styled";
 import TableItem from "./TableItem";
 
