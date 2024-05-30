@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode, type CSSProperties } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Elements } from "components";
+import { Elements } from "ui/components";
 import Style, { NoData } from "./Table.styled";
 import TableItem from "./TableItem";
 
@@ -22,7 +22,7 @@ export default function Table(props: Table) {
                     <Style style={props?.style}>
                         {(typeof props?.formatter === "function" ? props?.formatter(props?.list) : props?.list)?.map((data: any, i: number) => (
                             <TableItem
-                                key={i}
+                                key={data?.index || i}
                                 {...(data?.children && data)}
                                 as={motion.div}
                                 initial={{ opacity: 0 }}
