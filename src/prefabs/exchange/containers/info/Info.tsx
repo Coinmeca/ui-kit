@@ -53,7 +53,7 @@ export default function Info(props: Info) {
                     }}
                 >
                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                        Liquidity ({props?.base?.symbol?.toUpperCase()})
+                        Liquidity ({props?.base?.symbol})
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
                         {Format(props?.info?.liquidity?.base, "currency", { unit: 9, limit: 12, fix: 3 })}
@@ -69,7 +69,7 @@ export default function Info(props: Info) {
                     }}
                 >
                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                        Liquidity ({props?.quote?.symbol?.toUpperCase()})
+                        Liquidity ({props?.quote?.symbol})
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
                         {Format(props?.info?.liquidity?.quote, "currency", { unit: 9, limit: 12, fix: 3 })}
@@ -155,7 +155,7 @@ export default function Info(props: Info) {
                     }}
                 >
                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                        Volume ({props?.base?.symbol?.toUpperCase()})
+                        Volume ({props?.base?.symbol})
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
                         {Format(props?.info?.volume?.base, "currency", { unit: 9, limit: 12, fix: 3 })}
@@ -171,7 +171,7 @@ export default function Info(props: Info) {
                     }}
                 >
                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                        Volume ({props?.quote?.symbol?.toUpperCase()})
+                        Volume ({props?.quote?.symbol})
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
                         {Format(props?.info?.volume?.quote, "currency", { unit: 9, limit: 12, fix: 3 })}

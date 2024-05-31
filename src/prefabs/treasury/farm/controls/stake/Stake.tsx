@@ -120,7 +120,7 @@ export default function Stake(props: StakeControl) {
             label={"Price"}
             placeholder={order.price}
             value={order.price}
-            unit={[...assets][mode ? 0 : 1]?.symbol?.toUpperCase()}
+            unit={[...assets][mode ? 0 : 1]?.symbol}
             sub={{
                 color: `${
                     mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
@@ -138,10 +138,10 @@ export default function Stake(props: StakeControl) {
             label={currency === 0 ? "Quantity" : "Amount"}
             placeholder={"0"}
             value={currency === 0 ? order.quantity : order.amount}
-            unit={[...assets].reverse()[currency]?.symbol?.toUpperCase()}
+            unit={[...assets].reverse()[currency]?.symbol}
             sub={{
                 value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", { unit: 9, limit: 12, fix: 3 })}`,
-                unit: assets[currency]?.symbol?.toUpperCase(),
+                unit: assets[currency]?.symbol,
             }}
             button={{
                 color: mode ? color.buy : color.sell,
@@ -164,7 +164,7 @@ export default function Stake(props: StakeControl) {
                         {Format(assets[0]?.balance as number, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                        {assets[0]?.symbol?.toUpperCase()}
+                        {assets[0]?.symbol}
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Row>
@@ -179,7 +179,7 @@ export default function Stake(props: StakeControl) {
                 left={{ children: <span>Price</span> }}
                 right={{
                     width: gap.width,
-                    children: <span style={{ justifyContent: "flex-start" }}>{assets[mode ? 0 : 1]?.symbol?.toUpperCase()}</span>,
+                    children: <span style={{ justifyContent: "flex-start" }}>{assets[mode ? 0 : 1]?.symbol}</span>,
                 }}
                 style={text.setting}
                 lock={option === "market"}
@@ -229,7 +229,7 @@ export default function Stake(props: StakeControl) {
                             - {Format(order.fees as number, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                            {assets[1]?.symbol?.toUpperCase()}
+                            {assets[1]?.symbol}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>
@@ -242,7 +242,7 @@ export default function Stake(props: StakeControl) {
                             {Format(order.total as number, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                            {assets[1]?.symbol?.toUpperCase()}
+                            {assets[1]?.symbol}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>

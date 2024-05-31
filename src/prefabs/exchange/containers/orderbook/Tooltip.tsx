@@ -33,7 +33,7 @@ export default function Tooltip(props: any) {
 				{props?.amount && (
 					<Layouts.Row gap={0} fix>
 						<Elements.Text opacity={0.6} fit>
-							Sum {props?.quote?.toUpperCase()}:
+}							Sum {props?.quote}:
 						</Elements.Text>
 						<Elements.Text align={'right'}>{Format(props?.amount, 'currency', true, 4)}</Elements.Text>
 					</Layouts.Row>
@@ -41,7 +41,7 @@ export default function Tooltip(props: any) {
 				{props?.balance && (
 					<Layouts.Row gap={0} fix>
 						<Elements.Text opacity={0.6} fit>
-							Sum {props?.base?.toUpperCase()}:
+							Sum {props?.base}:
 						</Elements.Text>
 						<Elements.Text align={'right'}>{Format(props?.balance, 'currency', true, 4)}</Elements.Text>
 					</Layouts.Row>
