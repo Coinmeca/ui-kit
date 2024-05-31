@@ -67,7 +67,7 @@ export default function Assets(props: Assets) {
                                                                 {Format(data?.interest, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                                {data?.earn?.symbol?.toUpperCase()}
+                                                                {data?.earn?.symbol}
                                                             </Elements.Text>
                                                         </>
                                                     ),
@@ -104,7 +104,7 @@ export default function Assets(props: Assets) {
                                                                 {Format(data?.staked, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                                {data?.stake?.symbol?.toUpperCase()}
+                                                                {data?.stake?.symbol}
                                                             </Elements.Text>
                                                         </>
                                                     ),
@@ -119,7 +119,7 @@ export default function Assets(props: Assets) {
                                                                 {Format(data?.stakedChange, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                                {data?.stake?.symbol?.toUpperCase()}
+                                                                {data?.stake?.symbol}
                                                             </Elements.Text>
                                                         </>
                                                     ),

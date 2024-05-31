@@ -94,9 +94,6 @@ export const Histogram = (props: Histogram) => {
         }
     }, [props?.data]);
 
-    console.log("props?.data:", props?.data);
-    console.log("data:", data);
-
     useEffect(() => {
         // const chart = createChart(document.getElementById('container'), );
 

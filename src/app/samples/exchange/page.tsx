@@ -53,7 +53,7 @@ export default function Page() {
                                             size: 1.5,
                                         }}
                                     >
-                                        {props?.market?.base?.symbol?.toUpperCase()}
+                                        {props?.market?.base?.symbol}
                                     </Elements.Text>
                                     <Elements.Text
                                         size={2.5}
