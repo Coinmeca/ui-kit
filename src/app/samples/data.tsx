@@ -386,17 +386,17 @@ export default function Data() {
             children: [
                 {
                     name: "Asset",
-                    path: "/samples/asset",
+                    href: "/samples/asset",
                     onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "Exchange",
-                    path: "/samples/exchange",
+                    href: "/samples/exchange",
                     onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "Treasury",
-                    path: "/samples/treasury",
+                    href: "/samples/treasury",
                     onClick: () => setMobileMenu(""),
                 },
             ],

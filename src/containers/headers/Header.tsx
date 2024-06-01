@@ -41,7 +41,7 @@ export interface Logo {
 
 export interface Menu {
     name?: string;
-    path?: string;
+    href?: string;
     onClick?: Function;
 }
 
@@ -114,13 +114,13 @@ export default function Header(props: Header) {
                                         key={k}
                                         $scale={scale}
                                         $color={color}
-                                        data-active={path.startsWith(v?.path || "")}
+                                        data-active={path.startsWith(v?.href || "")}
                                         onClick={(e: any) => {
                                             if (typeof v?.onClick === "function") v?.onClick(e);
                                             setMobileMenu(false);
                                         }}
                                     >
-                                        <Link href={v?.path || ""}>{v?.name}</Link>
+                                        <Link href={v?.href || ""}>{v?.name}</Link>
                                     </Nav>
                                 ))}
                             </Menu>

@@ -18,15 +18,13 @@ export default function Notify(props: Notify & { order?: number }) {
     useEffect(() => {
         setActive(true);
         if (props?.type === "toast")
-            return () => {
-                setTimeout(
-                    () => {
-                        setClose(true);
-                        removeToast(props?.id);
-                    },
-                    props?.importance ? timer * 2 : timer
-                );
-            };
+            setTimeout(
+                () => {
+                    setClose(true);
+                    removeToast(props?.id);
+                },
+                props?.importance ? timer * 2 : timer
+            );
     }, []);
 
     const handleRemove = () => {

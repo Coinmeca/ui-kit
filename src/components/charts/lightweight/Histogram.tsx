@@ -11,7 +11,11 @@ export interface Histogram {
         down?: string;
         theme?: string;
     };
-    data?: Data[];
+    field?: {
+        time?: string;
+        value?: string;
+    };
+    data?: Data[] | any[];
     up?: string;
     down?: string;
     fallback?: any;
@@ -30,7 +34,7 @@ export const Histogram = (props: Histogram) => {
 
     const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
     const [color, setColor] = useState({
-        default: props?.color?.default || `rgb(${theme})`,
+        default: props?.color?.default?.includes(",") ? `rgb(${props?.color?.default})` : props?.color?.default || `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
         down: props?.color?.down || "255,0,64",
         theme: {
@@ -41,6 +45,11 @@ export const Histogram = (props: Histogram) => {
             light: `rgba(${theme}, 0.05)`,
         },
     });
+
+    const key = {
+        time: props?.field?.time || "time",
+        value: props?.field?.value || "value",
+    };
 
     const [data, setData] = useState<any>([]);
     const chartRef: any = useRef();
@@ -67,17 +76,19 @@ export const Histogram = (props: Histogram) => {
         if (props?.data && props?.data?.length > 0) {
             setData(
                 Sort(
-                    props?.data?.map((v: Data) => {
-                        return {
-                            ...v,
-                            ...(v?.type && {
-                                color: `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`,
-                            }),
-                        };
-                    }),
-                    "time",
-                    typeof props?.data[0]?.time === "number" ? "number" : "string",
-                    false
+                    props?.data?.map(
+                        (v: any) =>
+                            ({
+                                ...(v?.type && {
+                                    color: `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`,
+                                }),
+                                time: v[key?.time],
+                                value: parseFloat(v[key?.value].toString()),
+                            } as Data)
+                    ),
+                    key?.time,
+                    props?.data && props?.data?.length > 0 && typeof props?.data[0][key?.time] === "number" ? "number" : "string",
+                    true
                 )
             );
         }
@@ -112,6 +123,8 @@ export const Histogram = (props: Histogram) => {
                     borderColor: color.theme.regular,
                 },
                 timeScale: {
+                    timeVisible: true,
+                    secondsVisible: true,
                     borderColor: color.theme.regular,
                 },
                 trackingMode: {},
@@ -172,6 +185,6 @@ export const Histogram = (props: Histogram) => {
             <Style ref={chartRef} />
         </Suspense>
     );
-}
+};
 
 export default memo(Histogram);

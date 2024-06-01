@@ -444,8 +444,10 @@ export default function Detail(props: Detail) {
                                                     <Vault.Containers.Trade
                                                         base={props?.asset}
                                                         quote={{
+                                                            address: "0x123456",
                                                             symbol: "MECA",
                                                             name: "Coinmeca",
+                                                            decimals: 18,
                                                         }}
                                                         price={props?.info?.token_per}
                                                         fee={0.1}

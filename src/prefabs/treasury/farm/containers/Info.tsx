@@ -14,8 +14,8 @@ export interface Info {
 export interface FarmInfo {
     total_staking: number;
     total_staking_change: number;
-    tvl: number;
-    tvl_change: number;
+    valueLocked: number;
+    valueLockedChange: number;
     total_interest: number;
     total_interest_change: number;
     apr: number;
@@ -107,7 +107,7 @@ export default function Info(props: Info) {
                             Total Value Locked
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            $ {Format(props?.info?.tvl, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            $ {Format(props?.info?.valueLocked, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -126,9 +126,10 @@ export default function Info(props: Info) {
                             height={1}
                             align="right"
                             style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.tvl_change) === "+" ? "green" : Sign(props?.info?.tvl_change) === "-" && "red"}
+                            color={Sign(props?.info?.valueLockedChange) === "+" ? "green" : Sign(props?.info?.valueLockedChange) === "-" && "red"}
                         >
-                            {Sign(props?.info?.tvl_change)}$ {Format(props?.info?.tvl_change, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                            {Sign(props?.info?.valueLockedChange)}${" "}
+                            {Format(props?.info?.valueLockedChange, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>

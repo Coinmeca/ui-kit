@@ -64,21 +64,21 @@ export default function Assets(props: Assets) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"}>
-                                                                {Format(data?.rewards, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                                {Format(data?.interest, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                                {data?.reward?.symbol?.toUpperCase()}
+                                                                {data?.earn?.symbol}
                                                             </Elements.Text>
                                                         </>
                                                     ),
                                                 },
                                                 {
                                                     align: "right",
-                                                    change: Sign(data?.rewards_rate) === "+" ? "green" : Sign(data?.rewards_rate) === "-" && "red",
+                                                    change: Sign(data?.interestChange) === "+" ? "green" : Sign(data?.interestChange) === "-" && "red",
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"} change>
-                                                                {data?.rewards_rate}
+                                                                {data?.interestChange}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }} change>
                                                                 %
@@ -101,10 +101,10 @@ export default function Assets(props: Assets) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"}>
-                                                                {Format(data?.tl, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                                {Format(data?.staked, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                                {data?.stake?.symbol?.toUpperCase()}
+                                                                {data?.stake?.symbol}
                                                             </Elements.Text>
                                                         </>
                                                     ),
@@ -115,11 +115,11 @@ export default function Assets(props: Assets) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"}>
-                                                                {Sign(data?.tl_change)}{" "}
-                                                                {Format(data?.tl_change, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                                                                {Sign(data?.stakedChange)}{" "}
+                                                                {Format(data?.stakedChange, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
-                                                                {data?.stake?.symbol?.toUpperCase()}
+                                                                {data?.stake?.symbol}
                                                             </Elements.Text>
                                                         </>
                                                     ),
@@ -136,13 +136,13 @@ export default function Assets(props: Assets) {
                                         //     children: [
                                         //         <>
                                         //             <Layouts.Row gap={1}>
-                                        //                 <Elements.Text align={"right"}>$ {Format(data?.tvl, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
+                                        //                 <Elements.Text align={"right"}>$ {Format(data?.valueLocked, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                                         //             </Layouts.Row>
                                         //         </>,
                                         //         <>
                                         //             <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
                                         //                 <Elements.Text align={"right"} fix>
-                                        //                     {Sign(data?.tvl_change)}$ {Math.abs(Format(data?.tvl_change, "currency", { unit: 9, limit: 12, fix: 3 }) as number)}
+                                        //                     {Sign(data?.valuestakedChange)}$ {Math.abs(Format(data?.valuestakedChange, "currency", { unit: 9, limit: 12, fix: 3 }) as number)}
                                         //                 </Elements.Text>
                                         //             </Layouts.Row>
                                         //         </>,
@@ -161,10 +161,10 @@ export default function Assets(props: Assets) {
     const sorts = {
         symbol: { key: "symbol", type: "string" },
         name: { key: "name", type: "string" },
-        rewards: { key: "rewards", type: "number" },
-        rewards_rate: { key: "rewards_rate", type: "number" },
-        tl: { key: "tl", type: "number" },
-        tl_change: { key: "tl_change", type: "number" },
+        interest: { key: "interest", type: "number" },
+        interestChange: { key: "interestChange", type: "number" },
+        staked: { key: "staked", type: "number" },
+        stakedChange: { key: "stakedChange", type: "number" },
     };
 
     return (
@@ -179,27 +179,27 @@ export default function Assets(props: Assets) {
                     </Controls.Tab>
                 </Layouts.Row>
                 <Layouts.Row gap={0} fix>
-                    <Controls.Tab iconLeft={sortArrow(sorts.rewards)} onClick={() => setSort(sorts.rewards)}>
+                    <Controls.Tab iconLeft={sortArrow(sorts.interest)} onClick={() => setSort(sorts.interest)}>
                         Interest
                     </Controls.Tab>
-                    <Controls.Tab iconLeft={sortArrow(sorts.rewards_rate)} onClick={() => setSort(sorts.rewards_rate)}>
+                    <Controls.Tab iconLeft={sortArrow(sorts.interestChange)} onClick={() => setSort(sorts.interestChange)}>
                         Interest Rate
                     </Controls.Tab>
                 </Layouts.Row>
                 {/* <Layouts.Row gap={0} fix>
-                    <Controls.Tab iconLeft={sortArrow(sorts.tl)} onClick={() => setSort(sorts.tl)}>
-                        Rewards Change
+                    <Controls.Tab iconLeft={sortArrow(sorts.staked)} onClick={() => setSort(sorts.staked)}>
+                        interest Change
                     </Controls.Tab>
-                    <Controls.Tab iconLeft={sortArrow(sorts.tl_change)} onClick={() => setSort(sorts.tl_change)}>
-                        Rewards Change Rate
+                    <Controls.Tab iconLeft={sortArrow(sorts.stakedChange)} onClick={() => setSort(sorts.stakedChange)}>
+                        interest Change Rate
                     </Controls.Tab>
                 </Layouts.Row> */}
                 <Layouts.Row gap={0} fix>
-                    <Controls.Tab iconLeft={sortArrow(sorts.tl)} onClick={() => setSort(sorts.tl)}>
-                        Total Locked
+                    <Controls.Tab iconLeft={sortArrow(sorts.staked)} onClick={() => setSort(sorts.staked)}>
+                        Total staked
                     </Controls.Tab>
-                    <Controls.Tab iconLeft={sortArrow(sorts.tl_change)} onClick={() => setSort(sorts.tl_change)}>
-                        Total Locked Change
+                    <Controls.Tab iconLeft={sortArrow(sorts.stakedChange)} onClick={() => setSort(sorts.stakedChange)}>
+                        Total staked Change
                     </Controls.Tab>
                 </Layouts.Row>
             </Layouts.Row>

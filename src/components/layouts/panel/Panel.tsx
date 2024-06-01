@@ -1,5 +1,5 @@
 "use client";
-import { type CSSProperties } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Style from "./Panel.styled";
 
@@ -8,17 +8,31 @@ export interface Panel {
     active?: boolean;
     children?: any;
     onClick?: Function;
+    onBlur?: Function;
     style?: object;
     color?: string;
     fix?: boolean;
 }
 
 export default function Panel(props: Panel) {
-    const active = typeof props?.active === "boolean" ? props?.active : true;
+    const [active, setActive] = useState(true);
 
     const handleClick = (e: any) => {
         if (typeof props?.onClick === "function") props?.onClick(e);
     };
+
+    const handleBlur = (e?: any) => {
+        if (typeof props?.onBlur === "function") props?.onBlur(e);
+    };
+
+    useEffect(() => {
+        return () => {
+            handleBlur();
+            setActive(false);
+        };
+    }, [props?.active]);
+
+    useEffect(() => {}, [active]);
 
     return (
         <AnimatePresence>

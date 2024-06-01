@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
 import { useWindowSize, usePortal } from "hooks";
 import Style, { Item, Option, Options } from "./Dropdown.styled";
 
 export interface Dropdown {
+    theme?: "light" | "dark";
     style?: object;
 
     form?: string;
@@ -64,12 +65,12 @@ export default function Dropdown(props: Dropdown) {
 
     const handleSelect = (e: React.FormEvent, v: any, k: string | number) => {
         if (disabled) return;
-        // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
-        if (!props?.fix) setOption(v);
-        if (typeof v?.event === "function") v.event(e);
-        if (typeof props?.onClickItem === "function") props?.onClickItem(e, v, k);
         setOpen(false);
         closeSelectOnSheet();
+        if (!props?.fix) setOption(v);
+        // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
+        if (typeof v?.event === "function") v.event(e);
+        if (typeof props?.onClickItem === "function") props?.onClickItem(e, v, k);
     };
 
     const handleOpen = (e?: any) => {
@@ -96,13 +97,19 @@ export default function Dropdown(props: Dropdown) {
 
     const Select = (visible: Visible) => (
         <Options
+            onBlur={() => visible === "sheet" && closeSelect()}
             style={{
                 ...(visible === "popup"
                     ? {
+                          ...(props?.theme && {
+                              "--white": props?.theme === "light" ? "255,255,255" : "0,0,0",
+                              "--black": props?.theme === "light" ? "0,0,0" : "255,255,255",
+                          }),
                           position: "fixed",
                           fontSize: `${scale}em`,
+                          background: (props?.style as any)?.options?.background || `rgba(var(--white), var(--o0075))`,
+                          color: `rgb(var(--white))`,
                           width: width && `${width / (8 * scale)}em`,
-                          background: "rgba(var(--black-abs), var(--o0075))",
                           backdropFilter: "blur(4em)",
                           transition: "max-height .3s ease",
                           zIndex: 200,
@@ -116,7 +123,9 @@ export default function Dropdown(props: Dropdown) {
                           opacity: 0,
                           height: 0,
                       }
-                    : {}),
+                    : {
+                          fontSize: `${scale}em`,
+                      }),
             }}
         >
             <div ref={dropbox}>
@@ -181,14 +190,15 @@ export default function Dropdown(props: Dropdown) {
             </div>
         </Options>
     );
-
-    const [openSelect, closeSelect] = usePortal((v: boolean) => Select("popup"));
+    const [openSelect, closeSelect] = usePortal(() => Select("popup"));
 
     const [openSelectOnSheet, closeSelectOnSheet] = usePortal(
-        <BottomSheet height={{ max: "60vh" }} onClose={() => closeSelectOnSheet()}>
+        <BottomSheet height={{ max: "60vh" }} onBlur={() => closeSelectOnSheet()} onClose={() => closeSelectOnSheet()}>
             <Layouts.Col style={{ padding: "2em" }} gap={2}>
                 <Layouts.Contents.InnerContent>{Select("sheet")}</Layouts.Contents.InnerContent>
-                <Controls.Button onClick={() => closeSelectOnSheet()}>Close</Controls.Button>
+                <Controls.Button scale={scale} onClick={() => closeSelectOnSheet()}>
+                    Close
+                </Controls.Button>
             </Layouts.Col>
         </BottomSheet>
     );
