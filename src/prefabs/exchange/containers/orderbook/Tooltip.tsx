@@ -1,6 +1,6 @@
-import {Elements, Layouts} from 'components';
-import {Root} from 'lib/style';
-import {Format} from 'lib/utils';
+import { Elements, Layouts } from 'components';
+import { Root } from 'lib/style';
+import { Format } from 'lib/utils';
 
 export interface OrderbookTooltip {
 	base: string;
@@ -18,9 +18,8 @@ export default function Tooltip(props: any) {
 			vertical={props?.vertical}
 			horizon={props?.horizon}
 			padding={1}
-			style={{border: `1px solid rgb(${Root.Color(props?.color)})`}}
-			fill
-		>
+			style={{ border: `1px solid rgb(${Root.Color(props?.color)})` }}
+			fill>
 			<Layouts.Col gap={0.25}>
 				{props?.price && (
 					<Layouts.Row gap={0} fix>
@@ -33,7 +32,7 @@ export default function Tooltip(props: any) {
 				{props?.amount && (
 					<Layouts.Row gap={0} fix>
 						<Elements.Text opacity={0.6} fit>
-							Sum {props?.quote?.toUpperCase()}:
+							Sum {props?.quote}:
 						</Elements.Text>
 						<Elements.Text align={'right'}>{Format(props?.amount, 'currency', true, 4)}</Elements.Text>
 					</Layouts.Row>
@@ -41,7 +40,7 @@ export default function Tooltip(props: any) {
 				{props?.balance && (
 					<Layouts.Row gap={0} fix>
 						<Elements.Text opacity={0.6} fit>
-							Sum {props?.base?.toUpperCase()}:
+							Sum {props?.base}:
 						</Elements.Text>
 						<Elements.Text align={'right'}>{Format(props?.balance, 'currency', true, 4)}</Elements.Text>
 					</Layouts.Row>
