@@ -4,8 +4,7 @@ import type { Order } from "types";
 
 export default function useOrder(initial: Order, mode: boolean, fee: number, available?: number) {
     const [order, setOrder] = useState<Order>({
-        base: initial?.base || "",
-        quote: initial?.quote || "",
+        pay: initial?.pay || { address: "", name: "", symbol: "", decimals: 0 },
         price: initial?.price || 0,
         amount: initial?.amount || 0,
         quantity: initial?.quantity || 0,
@@ -15,35 +14,25 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
 
     const getAmount = (amount: number, price?: number): number => {
         const p = price || order?.price;
-        const max = available && p !== 0 && (mode ? available : available * p);
+        const max = available ? p > 0 && (mode ? available : available * p) : p > 0 && (mode ? amount : amount * p);
         return max && max < amount ? max : amount;
     };
 
     const getQuantity = (quantity: number, price?: number): number => {
         const p = price || order?.price;
+        console.log("getQuantity", "p", p);
         const max = maxQuantity(p);
+        console.log("max", max);
         return max && max < quantity ? max : quantity;
     };
 
     const maxAmount = (): number | undefined => {
-        return available;
+        return available || order.amount;
     };
 
     const maxQuantity = (price?: number): number | undefined => {
         const p = price || order?.price;
-        return (available && p !== 0 && (mode ? available / p : available * p)) || undefined;
-    };
-
-    const base = (base: string) => {
-        setOrder((state: Order) => {
-            return { ...state, base: base };
-        });
-    };
-
-    const quote = (quote: string) => {
-        setOrder((state: Order) => {
-            return { ...state, base: quote };
-        });
+        return available && available > 0 && p > 0 ? (mode ? available / p : available * p) : undefined;
     };
 
     const price = (price: number) => {
@@ -100,6 +89,8 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
         setOrder((state: Order) => {
             const p = price || state?.price;
 
+            console.log("quantity", quantity);
+            console.log("p", p);
             if (quantity === 0 || p === 0) {
                 return {
                     ...state,
@@ -112,7 +103,9 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
             }
 
             const q = getQuantity(quantity, p);
+            console.log("q", q);
             const a = mode ? q * p : q / p;
+            console.log("a", a);
             const f = fees(q);
 
             o = {
@@ -132,8 +125,6 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
 
     return {
         order,
-        base,
-        quote,
         price,
         amount,
         quantity,

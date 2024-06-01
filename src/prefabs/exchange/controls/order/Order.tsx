@@ -32,14 +32,17 @@ export default function Order(props: OrderControl) {
     const option = props?.option || "market";
     const [currency, setCurrency] = useState(0);
     const currencies = mode
-        ? [assets[1]?.symbol.toUpperCase(), assets[0]?.symbol.toUpperCase()]
-        : [assets[0]?.symbol.toUpperCase(), assets[1]?.symbol.toUpperCase()];
+        ? [assets[1]?.symbol?.toUpperCase() || "", assets[0]?.symbol?.toUpperCase() || ""]
+        : [assets[0]?.symbol?.toUpperCase() || "", assets[1]?.symbol?.toUpperCase() || ""];
 
     const { order, price, amount, quantity, maxQuantity } = useOrder(
         {
-            base: assets[1]?.address,
-            quote: assets[0]?.address,
+            pay: assets[0],
             price: parseFloat(Format(props?.price, "number", true)),
+            amount: 0,
+            quantity: 0,
+            fees: 0,
+            total: 0,
         },
         mode,
         0.01,
@@ -133,7 +136,7 @@ export default function Order(props: OrderControl) {
             label={"Price"}
             placeholder={order?.price}
             value={order?.price}
-            unit={[...assets][mode ? 0 : 1]?.symbol?.toUpperCase()}
+            unit={[...assets][mode ? 0 : 1]?.symbol}
             sub={{
                 color: `${
                     mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
@@ -151,10 +154,10 @@ export default function Order(props: OrderControl) {
             label={currency === 0 ? "Quantity" : "Amount"}
             placeholder={"0"}
             value={currency === 0 ? order?.quantity : order?.amount}
-            unit={[...assets].reverse()[currency]?.symbol?.toUpperCase()}
+            unit={[...assets].reverse()[currency]?.symbol}
             sub={{
                 value: `= ${Format(currency === 0 ? order?.amount : order?.quantity || 0, "currency", { unit: 9, limit: 12, fix: 3 })}`,
-                unit: assets[currency]?.symbol?.toUpperCase(),
+                unit: assets[currency]?.symbol,
             }}
             button={{
                 color: mode ? color.buy : color.sell,
@@ -177,7 +180,7 @@ export default function Order(props: OrderControl) {
                         {Format(assets[0]?.balance, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                        {assets[0]?.symbol?.toUpperCase()}
+                        {assets[0]?.symbol
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Row>
@@ -192,7 +195,7 @@ export default function Order(props: OrderControl) {
                 left={{ children: <span>Price</span> }}
                 right={{
                     width: gap.width,
-                    children: <span style={{ justifyContent: "flex-start" }}>{assets[mode ? 0 : 1]?.symbol?.toUpperCase()}</span>,
+                    children: <span style={{ justifyContent: "flex-start" }}>{assets[mode ? 0 : 1]?.symbol</span>,
                 }}
                 style={text.setting}
                 lock={option === "market"}
@@ -243,7 +246,7 @@ export default function Order(props: OrderControl) {
                             - {Format(order?.fees, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                            {assets[1]?.symbol?.toUpperCase()}
+                            {assets[1]?.symbol}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>
@@ -256,7 +259,7 @@ export default function Order(props: OrderControl) {
                             {Format(order?.total, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                            {assets[1]?.symbol?.toUpperCase()}
+                            {assets[1]?.symbol}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>

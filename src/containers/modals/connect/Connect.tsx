@@ -6,6 +6,7 @@ import type { Process } from "containers/modals/process/Process";
 
 export interface Connect extends Omit<Process, "process"> {
     process?: boolean | null;
+    timer?: number;
     chains?: any;
     wallets?: any;
     config?: object;
@@ -18,17 +19,12 @@ export interface Connect extends Omit<Process, "process"> {
 }
 
 export default function Connect(props: Connect) {
+    const timer = props?.timer || 5000;
+
     const [chain, setChain] = useState<any>();
     const [wallet, setWallet] = useState<any>();
 
-    const [process, setProcess] = useState<boolean | null>(props?.process || null);
-
-    useEffect(() => {
-        return () => {
-            setProcess(null);
-            setWallet(null);
-        };
-    }, []);
+    const [process, setProcess] = useState<boolean | null>(typeof props?.process === "boolean" || props?.process === null ? props?.process : null);
 
     const chainFormatter = (data: any): any[] | undefined =>
         (typeof data === "object" ? Object.values(data) : data?.length > 0 && data)?.map((c: any) => ({
@@ -47,41 +43,72 @@ export default function Connect(props: Connect) {
 
     const handleBack = (e: any) => {
         setProcess(null);
+        setWallet(null);
         if (typeof props?.onBack === "function") props?.onBack(e);
     };
 
     const handleClose = (e: any) => {
-        if (typeof props?.onClose === "function") props?.onClose(e);
         setProcess(null);
+        setChain(null);
+        if (typeof props?.onClose === "function") props?.onClose(e);
     };
 
-    const handleError = (e: any, error?: any) => {
-        setProcess(false);
-        setWallet(null);
-        if (typeof props?.onError === "function") props?.onError(e, error);
+    const handleError = async (e: any, error?: any) => {
+        if (typeof props?.onError === "function") await props?.onError(e, error);
     };
 
     const handleConnect = async (e: any, w: any) => {
-        try {
-            setWallet(w);
-            if (typeof props?.onWallet === "function") await props?.onWallet(chain, w, e);
-            if (typeof props?.onConnect === "function") await props?.onConnect(chain, w, e);
-            setProcess(true);
-        } catch (error: any) {
-            handleError(e, error);
-        }
+        setWallet(w);
+        if (typeof props?.onWallet === "function")
+            await props
+                ?.onWallet(chain, w, e)
+                ?.then()
+                ?.catch((error: any) => handleError(e, error));
+        if (typeof props?.onConnect === "function")
+            await props
+                ?.onConnect(chain, w, e)
+                ?.then(() => {
+                    setProcess(true);
+                })
+                ?.catch((error: any) => {
+                    setProcess(false);
+                    handleError(e, error);
+                });
     };
+
+    useEffect(() => {
+        return () => {
+            setProcess(null);
+            setWallet(null);
+            setChain(null);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (typeof props.onClose === "function" && (typeof props?.process === "boolean" || props?.process === null ? props?.process : process)) {
+            const close = setInterval(() => {
+                props?.onClose();
+            }, timer);
+            return () => clearInterval(close);
+        }
+    }, [props?.process, process]);
 
     return (
         <Modals.Process
             {...props}
-            title={"Connect Wallet"}
-            process={process}
+            title={
+                !chain ? (
+                    "Connect Wallet"
+                ) : (
+                    <Elements.Avatar scale={0.625} size={2.25} style={{ justifyContent: "center" }} img={chain.logo} name={chain.name} />
+                )
+            }
+            process={typeof props?.process === "boolean" || props?.process === null ? props?.process : process}
             content={
                 <Layouts.Contents.SlideContainer
                     contents={[
                         {
-                            active: typeof chain === "undefined",
+                            active: props?.chains ? !chain : false,
                             children: (
                                 <Layouts.Col gap={2} fill>
                                     <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
@@ -95,7 +122,7 @@ export default function Connect(props: Connect) {
                             ),
                         },
                         {
-                            active: chain,
+                            active: props?.chains ? chain : true,
                             children: (
                                 <Layouts.Col gap={2} fill>
                                     <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>

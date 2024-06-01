@@ -1,12 +1,12 @@
 "use client";
-import { Controls, Elements, Layouts } from "components";
 import { AnimatePresence, motion } from "framer-motion";
+import { Controls, Elements, Layouts } from "components";
 import Style, { Close, ButtonArea } from "./Modal.styled";
 import { useEffect, useState } from "react";
 
 export interface Modal {
     active?: boolean;
-    title?: string;
+    title?: any;
     message?: any;
     children?: any;
     content?: any;
@@ -18,7 +18,7 @@ export interface Modal {
 }
 
 export default function Modal(props: Modal) {
-    const [active, setActive] = useState<boolean>(false);
+    const [active, setActive] = useState<boolean>(props?.active || true);
 
     const min = 56;
     const max = 64;
@@ -31,13 +31,13 @@ export default function Modal(props: Modal) {
         if (typeof props?.onClose === "function") props?.onClose(e);
     };
     useEffect(() => {
-        setActive(true);
+        // setActive(true);
         return () => setActive(false);
     }, []);
 
     return (
         <Layouts.Panel
-            active={true}
+            active={active}
             color={"black"}
             style={{ zIndex: 200 }}
             onClick={(e: any) => {

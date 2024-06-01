@@ -1,7 +1,42 @@
 "use client";
-import { Root } from "lib/style";
 import { css, styled } from "styled-components";
+import { Root } from "lib/style";
 import * as Icon from "components/elements/icon/Icon.styled";
+import { Responsive } from "./Text";
+
+const responsive = (responsive: Responsive) => {
+    if (responsive?.device) {
+        const style = `
+                ${responsive?.size && `font-size: calc(var(--unit) * ${responsive?.size});`}
+                ${responsive?.weight && `font-weight: ${responsive?.weight}`};
+                ${responsive?.align && `text-align: ${responsive?.align}`};
+                ${responsive?.height && `line-height: ${responsive?.height}em;`}
+                ${responsive?.color ? `color: rgb(${Root.Color(responsive?.color)});` : responsive?.change && `color: rgb(var(--change));`}
+                ${responsive?.opacity && `opacity: ${responsive.opacity};`}
+            `;
+
+        switch (responsive?.device) {
+            case "laptop":
+                return css`
+                    @media all and (max-width: ${Root.Device.Laptop}px) {
+                        ${style}
+                    }
+                `;
+            case "tablet":
+                return css`
+                    @media all and (max-width: ${Root.Device.Tablet}px) {
+                        ${style}
+                    }
+                `;
+            case "mobile":
+                return css`
+                    @media all and (max-width: ${Root.Device.Mobile}px) {
+                        ${style}
+                    }
+                `;
+        }
+    }
+};
 
 export const H1 = styled.h1<{
     $color: string;
@@ -558,39 +593,7 @@ export const Text = styled.span<{
         font-size: 1.5em;
     }
 
-    ${({ $responsive }) => {
-        if ($responsive?.device) {
-            const style = `
-                ${$responsive?.size && `font-size: calc(var(--unit) * ${$responsive?.size});`}
-                ${$responsive?.weight && `font-weight: ${$responsive?.weight}`};
-                ${$responsive?.align && `text-align: ${$responsive?.align}`};
-                ${$responsive?.line && `line-height: ${$responsive?.line}em;`}
-                ${$responsive?.color ? `color: rgb(${Root.Color($responsive?.$color)});` : $responsive?.change && `color: rgb(var(--change));`}
-                ${$responsive?.$opacity && `opacity: ${$responsive.opacity};`}
-            `;
-
-            switch ($responsive?.device) {
-                case "laptop":
-                    return css`
-                        @media all and (max-width: ${Root.Device.Laptop}px) {
-                            ${style}
-                        }
-                    `;
-                case "tablet":
-                    return css`
-                        @media all and (max-width: ${Root.Device.Tablet}px) {
-                            ${style}
-                        }
-                    `;
-                case "mobile":
-                    return css`
-                        @media all and (max-width: ${Root.Device.Mobile}px) {
-                            ${style}
-                        }
-                    `;
-            }
-        }
-    }}
+    ${({ $responsive }) => responsive($responsive)}
 `;
 
 export const Link = styled.a<{
@@ -675,37 +678,89 @@ export const Link = styled.a<{
         text-align: inherit;
     }
 
-    ${({ $responsive }) => {
-        if ($responsive?.device) {
-            const style = `
-                ${$responsive?.size && `font-size: calc(var(--unit) * ${$responsive?.size});`}
-                ${$responsive?.weight && `font-weight: ${$responsive?.weight}`};
-                ${$responsive?.align && `text-align: ${$responsive?.align}`};
-                ${$responsive?.line && `line-height: ${$responsive?.line}em;`}
-                ${$responsive?.color ? `color: rgb(${Root.Color($responsive?.$color)});` : $responsive?.change && `color: rgb(var(--change));`}
-                ${$responsive?.$opacity && `opacity: ${$responsive.opacity};`}
-            `;
+    ${({ $responsive }) => responsive($responsive)}
+`;
 
-            switch ($responsive?.device) {
-                case "laptop":
-                    return css`
-                        @media all and (max-width: ${Root.Device.Laptop}px) {
-                            ${style}
-                        }
-                    `;
-                case "tablet":
-                    return css`
-                        @media all and (max-width: ${Root.Device.Tablet}px) {
-                            ${style}
-                        }
-                    `;
-                case "mobile":
-                    return css`
-                        @media all and (max-width: ${Root.Device.Mobile}px) {
-                            ${style}
-                        }
-                    `;
+export const Button = styled.a<{
+    $size: number;
+    $color: string;
+    $change?: boolean;
+    $weight: number | string;
+    $height: number;
+    $align?: "left" | "center" | "right";
+    $case?: "upper" | "lower" | "capital";
+    $responsive?: any;
+    $fit?: boolean;
+    $fix?: boolean;
+}>`
+    display: inline;
+    vertical-align: middle;
+    text-decoration: none;
+    text-underline-offset: 0.25em;
+    padding: 0 0.3em 0.15em 0.3em;
+    opacity: 0.45;
+    transition: 0.3s ease;
+    cursor: pointer;
+    font-size: ${({ $size }) => ($size ? `${$size}em` : "inherit")};
+    font-weight: ${({ $weight }) => ($weight ? $weight : "inherit")};
+    line-height: ${({ $height }) => ($height ? `${$height}em` : "inherit")};
+    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    ${({ $align }) => ($align ? `text-align: ${$align}` : "inherit")};
+    ${({ $case }) =>
+        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+    ${({ $fix }) =>
+        $fix &&
+        css`
+            min-height: 1.5em;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        `}
+    ${({ $fit }) =>
+        $fit &&
+        css`
+            min-width: max-content;
+            max-width: max-content;
+        `}
+    ${({ $change }) =>
+        $change &&
+        css`
+            &::selection {
+                color: rgb(var(--black));
+                background: rgb(var(--change));
             }
-        }
-    }}
+        `}
+
+    & >* {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    & > ${Icon.default} {
+        font-size: 1.5em;
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &:active {
+        background: ${({ $color, $change }) =>
+            $change
+                ? "rgba(var(--change),0.15)"
+                : $color
+                ? $color === Root.Color($color)
+                    ? $color
+                    : `rgba(${Root.Color($color)},0.15)`
+                : "rgba(var(--white),0.15)"};
+    }
+
+    :is(${H1}, ${H2}, ${H3}, ${H4}, ${H5}, ${H6}, ${Strong}, ${P}, ${Desc}, ${Text}) > & {
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        text-align: inherit;
+    }
+
+    ${({ $responsive }) => responsive($responsive)}
 `;

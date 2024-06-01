@@ -8,6 +8,7 @@ export interface Market {
     list: MarketData[];
     filter?: string;
     onClick?: Function;
+    fallback?: string | any;
 }
 
 export interface MarketData {
@@ -121,7 +122,7 @@ export default function Market(props: Market) {
             </Layouts.Row>
             <Layouts.Divider strong />
             <Layouts.Contents.InnerContent scroll>
-                <Layouts.Table list={Filter(sorting(props?.list), props?.filter)} formatter={formatter} fallback="There is no data." />
+                <Layouts.Table list={Filter(sorting(props?.list), props?.filter)} formatter={formatter} fallback={props?.fallback || "There is no data."} />
             </Layouts.Contents.InnerContent>
         </>
     );

@@ -2,15 +2,17 @@ export default function Data() {
     const market = {
         logo: require("../../../assets/coins/eth.png"),
         base: {
+            address: "0x123456",
             symbol: "eth",
             name: "ethereum",
-            decimal: 18,
+            decimals: 18,
             balance: 15000.987654321,
         },
         quote: {
+            address: "0x234567",
             symbol: "dai",
             name: "dai",
-            decimal: 18,
+            decimals: 18,
             balance: 15000.87654321,
         },
         market: "ETH/DAI",

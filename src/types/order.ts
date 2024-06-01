@@ -1,8 +1,10 @@
+import { Token } from "./web3";
+
 export interface Order {
-	base?: string;
-	quote?: string;
+	pay: Token;
+	item?: Token;
 	price: number;
-	amount?: number;
+	amount: number;
 	quantity?: number;
 	fees?: number;
 	total?: number;

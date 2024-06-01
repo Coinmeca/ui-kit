@@ -25,7 +25,7 @@ export default function List(props: List) {
                         <>
                             {(typeof props?.formatter === "function" ? props?.formatter(props?.list) : props?.list)?.map((data: any, i: number) => (
                                 <ListItem
-                                    key={i}
+                                    key={data?.index || i}
                                     {...(data?.children && data)}
                                     as={motion.div}
                                     initial={{ scale: 0.9, opacity: 0 }}

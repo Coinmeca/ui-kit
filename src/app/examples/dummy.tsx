@@ -3,8 +3,9 @@ import { useContext, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Elements, Layouts, Controls } from "components";
 import { Sidebars } from "containers";
-import { Format } from "lib/utils";
 import { NotificationContext } from "contexts/Notification";
+
+import Coinmeca from "assets/coinmeca.svg";
 
 export default function Dummy() {
     const [value, setValue] = useState<number>(0);
@@ -668,22 +669,22 @@ export default function Dummy() {
             children: [
                 {
                     name: "Tab",
-                    path: "/examples/tab",
+                    href: "/examples/tab",
                     onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "Slide",
-                    path: "/examples/slide",
+                    href: "/examples/slide",
                     onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "List & Table",
-                    path: "/examples/list-and-table",
+                    href: "/examples/list-and-table",
                     onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "Grid",
-                    path: "/examples/grid",
+                    href: "/examples/grid",
                     onClick: () => setMobileMenu(""),
                 },
             ],
@@ -844,6 +845,110 @@ export default function Dummy() {
         },
     };
 
+    const footer = {
+        logo: { href: "", src: <Coinmeca height={40} /> },
+        menus: [
+            {
+                title: "Services",
+                gap: 2,
+                children: {
+                    gap: 4,
+                    children: [
+                        {
+                            href: "/",
+                            type: "button",
+                            name: "Asset",
+                        },
+                        {
+                            href: "/",
+                            type: "button",
+                            name: "Exchange",
+                        },
+                        {
+                            href: "/",
+                            type: "button",
+                            name: "Treasury",
+                        },
+                    ],
+                },
+            },
+            {
+                title: {
+                    name: "Services",
+                    opacity: 1,
+                    weight: "bold",
+                },
+                children: [
+                    {
+                        href: "/",
+                        type: "button",
+                        name: "Asset",
+                    },
+                    {
+                        href: "/",
+                        type: "button",
+                        name: "Exchange",
+                    },
+                    {
+                        href: "/",
+                        type: "button",
+                        name: "Treasury",
+                    },
+                ],
+            },
+            [
+                {
+                    href: "/",
+                    type: "button",
+                    name: "Asset",
+                },
+                {
+                    href: "/",
+                    type: "button",
+                    name: "Exchange",
+                },
+                {
+                    href: "/",
+                    type: "button",
+                    name: "Treasury",
+                },
+            ],
+        ],
+        side: {
+            gap: 1,
+            fit: true,
+            children: [
+                {
+                    gap: 0,
+                    children: [
+                        <>
+                            <Controls.Button icon={"discord"} title={"Discord"} fit />
+                        </>,
+                        <>
+                            <Controls.Button icon={"twitter"} title={"X"} fit />
+                        </>,
+                        <>
+                            <Controls.Button icon={"telegram"} title={"Telegram"} fit />
+                        </>,
+                        <>
+                            <Controls.Button icon={"book"} title={"Documents"} fit />
+                        </>,
+                        <>
+                            <Controls.Button icon={"medium"} title={"Medium"} fit />
+                        </>,
+                    ],
+                },
+                [
+                    <>
+                        <Elements.Text type={"button"} fit>
+                            Contact us
+                        </Elements.Text>
+                    </>,
+                ],
+            ],
+        },
+    };
+
     const toast = {
         active: toasts.length > 0 && mobileMenu !== "notify",
         list: toasts,
@@ -868,5 +973,6 @@ export default function Dummy() {
         header,
         sidebars,
         toast,
+        footer,
     };
 }

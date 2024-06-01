@@ -5,16 +5,43 @@ export interface Sorting {
 }
 
 export function Sort(array: Array<any>, key: string, type: string, direction: boolean | undefined = false) {
+	const depth = (a: any, b: any) => {
+		let x: any = a;
+		let y: any = b;
+		if (typeof a === 'object' && typeof b === 'object') {
+			const keys = key?.split('.');
+			if (keys?.length > 1) {
+				keys?.map((k) => { x = x[k]; y = y[k] })
+			} else {
+				x = x[key];
+				x = y[key];
+			}
+		}
+		return { x, y };
+	}
+
 	switch (type) {
 		case 'string': {
-			return direction ? [...array].sort((a, b) => (a[key] > b[key] ? -1 : 1)) : [...array].sort((a, b) => (a[key] > b[key] ? 1 : -1));
+			return direction ? [...array].sort((a, b) => {
+				const { x, y } = depth(a, b);
+				return (x > y ? -1 : 1);
+			}) : [...array].sort((a, b) => {
+				const { x, y } = depth(a, b);
+				return (x > y ? 1 : -1);
+			});
 		}
 		case 'number': {
 			return typeof direction === 'undefined'
 				? [...array]
 				: direction
-					? [...array].sort((a, b) => parseFloat(a[key]) - parseFloat(b[key]))
-					: [...array].sort((a, b) => parseFloat(b[key]) - parseFloat(a[key]));
+					? [...array].sort((a, b) => {
+						const { x, y } = depth(a, b);
+						return parseFloat(x) - parseFloat(y);
+					})
+					: [...array].sort((a, b) => {
+						const { x, y } = depth(a, b);
+						return parseFloat(x) - parseFloat(y);
+					});
 		}
 		default: {
 			return [...array];

@@ -4,8 +4,7 @@ import type { Order } from "types";
 
 export default function useVault(initial: Order, mode: boolean, fee: number, available?: number) {
     const [order, setOrder] = useState<Order>({
-        base: initial?.base || "",
-        quote: initial?.quote || "",
+        pay: initial?.pay || { address: "", name: "", symbol: "", decimals: 0 },
         price: initial?.price || 0,
         amount: initial?.amount || 0,
         quantity: initial?.quantity || 0,
