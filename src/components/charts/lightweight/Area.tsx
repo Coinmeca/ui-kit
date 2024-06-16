@@ -1,8 +1,8 @@
 'use client';
+import { Sort } from 'lib/utils';
 import type { AreaData, HistogramData } from 'lightweight-charts';
 import { createChart } from 'lightweight-charts';
 import { Suspense, memo, useEffect, useRef, useState } from 'react';
-import { Sort } from 'ui/lib/utils';
 import { Volume } from './Candle';
 import Style from './Chart.styled';
 
