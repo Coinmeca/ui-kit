@@ -16,6 +16,7 @@ export interface Line {
     field?: {
         time?: string;
         value?: string;
+        volume?: string;
     };
     data?: LineData[];
     volume?: Volume[];
@@ -46,6 +47,7 @@ export const Line = (props: Line) => {
     const key = {
         time: props?.field?.time || "time",
         value: props?.field?.value || "value",
+        volume: props?.field?.volume || "volume",
     };
 
     const [data, setData] = useState<any>([]);
@@ -72,39 +74,39 @@ export const Line = (props: Line) => {
 
     useEffect(() => {
         if (props?.data && props?.data?.length > 0) {
-            setData(
-                Sort(
-                    props?.data?.map((v: LineData) => {
-                        return {
-                            ...v,
-                        };
-                    }),
-                    "number",
-                    props?.data && props?.data?.length > 0 && typeof (props?.data[0] as any)[key?.time] === "number" ? "number" : "string",
-                    false
-                )
+            const test = Sort(
+                props?.data?.map((v: any) => {
+                    return {
+                        ...v,
+                        value: parseFloat(v[key?.value]),
+                    } as LineData;
+                }),
+                key?.time,
+                props?.data && props?.data?.length > 0 && typeof (props?.data[0] as any)[key?.time] === "number" ? "number" : "string",
+                true
             );
+            console.log(test);
+            setData(test);
         }
     }, [props?.data]);
 
     useEffect(() => {
         if (props?.volume && props?.volume?.length > 0) {
-            setVolume(
-                Sort(
-                    props?.volume?.map((v: Volume) => {
-                        return {
-                            time: v?.time,
-                            value: v?.value,
-                            color:
-                                v?.type === up && color.up ? `rgba(${color.up}, 0.3)` : color.down ? `rgba(${color.down}, 0.3)` : `rgba(${color.default}, 0.3)`,
-                            // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
-                        };
-                    }),
-                    typeof props?.volume[0]?.time === "number" ? "number" : "string",
-                    "number",
-                    false
-                )
+            const test = Sort(
+                props?.volume?.map((v: any) => {
+                    return {
+                        time: v?.time,
+                        value: parseFloat(v[key?.volume]),
+                        color: v?.type === up && color.up ? `rgba(${color.up}, 0.3)` : color.down ? `rgba(${color.down}, 0.3)` : `rgba(${color.default}, 0.3)`,
+                        // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
+                    } as Volume;
+                }),
+                key?.time,
+                props?.volume && props?.volume?.length > 0 && typeof (props?.volume[0] as any)[key?.time] === "number" ? "number" : "string",
+                true
             );
+            console.log(test);
+            setVolume(test);
         }
     }, [props?.volume, up, down, color]);
 
@@ -196,12 +198,12 @@ export const Line = (props: Line) => {
                     // set the positioning of the volume series
                 });
 
-                volumeSeries.priceScale().applyOptions({
-                    scaleMargins: {
-                        top: 0.8, // highest point of the series will be 70% away from the top
-                        bottom: 0,
-                    },
-                });
+                // volumeSeries.priceScale().applyOptions({
+                //     scaleMargins: {
+                //         top: 0.8, // highest point of the series will be 70% away from the top
+                //         bottom: 0,
+                //     },
+                // });
 
                 volumeSeries.setData(volume as HistogramData[]);
             }

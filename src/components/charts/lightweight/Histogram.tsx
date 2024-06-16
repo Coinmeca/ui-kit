@@ -87,7 +87,7 @@ export const Histogram = (props: Histogram) => {
                             } as Data)
                     ),
                     key?.time,
-                    props?.data && props?.data?.length > 0 && typeof props?.data[0][key?.time] === "number" ? "number" : "string",
+                    typeof props?.data[0][key?.time] === "number" ? "number" : "string",
                     true
                 )
             );
@@ -95,8 +95,6 @@ export const Histogram = (props: Histogram) => {
     }, [props?.data]);
 
     useEffect(() => {
-        // const chart = createChart(document.getElementById('container'), );
-
         if (chartRef?.current) {
             const handleResize = () => {
                 chart.applyOptions({
