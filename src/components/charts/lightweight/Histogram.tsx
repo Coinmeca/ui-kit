@@ -1,8 +1,8 @@
-"use client";
-import React, { Suspense, memo, useEffect, useRef, useState } from "react";
-import { createChart } from "lightweight-charts";
-import { Sort } from "lib/utils";
-import Style from "./Chart.styled";
+'use client';
+import { createChart } from 'lightweight-charts';
+import { Suspense, memo, useEffect, useRef, useState } from 'react';
+import { Sort } from 'ui/lib/utils';
+import Style from './Chart.styled';
 
 export interface Histogram {
     color?: {
@@ -29,14 +29,14 @@ export interface Data {
 }
 
 export const Histogram = (props: Histogram) => {
-    const up = props?.up || "up";
-    const down = props?.down || "down";
+    const up = props?.up || 'up';
+    const down = props?.down || 'down';
 
-    const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
+    const theme = props?.color?.theme && props?.color?.theme === 'light' ? '0,0,0' : '255,255,255';
     const [color, setColor] = useState({
-        default: props?.color?.default?.includes(",") ? `rgb(${props?.color?.default})` : props?.color?.default || `rgb(${theme})`,
-        up: props?.color?.up || "0,192,96",
-        down: props?.color?.down || "255,0,64",
+        default: props?.color?.default?.includes(',') ? `rgb(${props?.color?.default})` : props?.color?.default || `rgb(${theme})`,
+        up: props?.color?.up || '0,192,96',
+        down: props?.color?.down || '255,0,64',
         theme: {
             strong: `rgba(${theme}, 0.6)`,
             semi: `rgba(${theme}, 0.45)`,
@@ -47,16 +47,16 @@ export const Histogram = (props: Histogram) => {
     });
 
     const key = {
-        time: props?.field?.time || "time",
-        value: props?.field?.value || "value",
+        time: props?.field?.time || 'time',
+        value: props?.field?.value || 'value',
     };
 
     const [data, setData] = useState<any>([]);
     const chartRef: any = useRef();
 
     useEffect(() => {
-        globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
-            const scheme = !theme && matches ? "0,0,0" : "255,255,255";
+        globalThis.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({ matches }) => {
+            const scheme = !theme && matches ? '0,0,0' : '255,255,255';
             setColor((color) => {
                 return {
                     ...color,
@@ -78,25 +78,23 @@ export const Histogram = (props: Histogram) => {
                 Sort(
                     props?.data?.map(
                         (v: any) =>
-                            ({
-                                ...(v?.type && {
-                                    color: `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`,
-                                }),
-                                time: v[key?.time],
-                                value: parseFloat(v[key?.value].toString()),
-                            } as Data)
+                        ({
+                            ...(v?.type && {
+                                color: `rgb(${color[(v?.type === up ? 'up' : v?.type === down ? 'down' : 'theme') as 'up' | 'down' | 'theme']})`,
+                            }),
+                            time: v[key?.time],
+                            value: parseFloat(v[key?.value]?.toString() || '0'),
+                        } as Data),
                     ),
                     key?.time,
-                    props?.data && props?.data?.length > 0 && typeof props?.data[0][key?.time] === "number" ? "number" : "string",
-                    true
-                )
+                    typeof props?.data[0][key?.time] === 'number' ? 'number' : 'string',
+                    true,
+                ),
             );
         }
     }, [props?.data]);
 
     useEffect(() => {
-        // const chart = createChart(document.getElementById('container'), );
-
         if (chartRef?.current) {
             const handleResize = () => {
                 chart.applyOptions({
@@ -108,7 +106,7 @@ export const Histogram = (props: Histogram) => {
             const chart = createChart(chartRef?.current, {
                 layout: {
                     background: {
-                        color: "transparent",
+                        color: 'transparent',
                     },
                     fontSize: 10,
                     fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif",
@@ -156,9 +154,9 @@ export const Histogram = (props: Histogram) => {
                 const series = chart.addHistogramSeries({
                     color: color.default,
                     priceFormat: {
-                        type: "volume",
+                        type: 'volume',
                     },
-                    priceScaleId: "", // set as an overlay by setting a blank priceScaleId
+                    priceScaleId: '', // set as an overlay by setting a blank priceScaleId
                     // set the positioning of the volume series
                 });
 
@@ -168,13 +166,13 @@ export const Histogram = (props: Histogram) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                      barSpacing: 10,
-                  });
+                    barSpacing: 10,
+                });
 
-            globalThis.addEventListener("resize", handleResize);
+            globalThis.addEventListener('resize', handleResize);
 
             return () => {
-                globalThis.removeEventListener("resize", handleResize);
+                globalThis.removeEventListener('resize', handleResize);
                 chart.remove();
             };
         }
