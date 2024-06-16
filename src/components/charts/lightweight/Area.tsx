@@ -1,10 +1,10 @@
 "use client";
-import React, { Suspense, memo, useEffect, useRef, useState } from "react";
-import { createChart } from "lightweight-charts";
-import type { AreaData, HistogramData } from "lightweight-charts";
 import { Sort } from "lib/utils";
-import Style from "./Chart.styled";
+import type { AreaData, HistogramData } from "lightweight-charts";
+import { createChart } from "lightweight-charts";
+import { Suspense, memo, useEffect, useRef, useState } from "react";
 import { Volume } from "./Candle";
+import Style from "./Chart.styled";
 
 export interface Area {
     color?: {
@@ -80,7 +80,7 @@ export const Area = (props: Area) => {
                         (v: any) =>
                             ({
                                 time: v[key?.time],
-                                value: parseFloat(v[key?.value].toString()),
+                                value: parseFloat(v[key?.value]?.toString() || "0"),
                             } as AreaData)
                     ),
                     key?.time,
@@ -98,7 +98,7 @@ export const Area = (props: Area) => {
                     props?.volume?.map((v: any) => {
                         return {
                             time: v?.time,
-                            value: v[key?.volume],
+                            value: parseFloat(v[key?.volume]?.toString() || "0"),
                             color:
                                 v?.type === up && color.up ? `rgba(${color.up}, 0.3)` : color.down ? `rgba(${color.down}, 0.3)` : `rgba(${color.default}, 0.3)`,
                             // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,

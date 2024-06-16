@@ -1,9 +1,9 @@
 "use client";
-import React, { Suspense, memo, useEffect, useRef, useState } from "react";
-import { createChart, HistogramData } from "lightweight-charts";
-import type { LineData } from "lightweight-charts";
-import type { Volume } from "./Candle";
 import { Sort } from "lib/utils";
+import type { LineData } from "lightweight-charts";
+import { HistogramData, createChart } from "lightweight-charts";
+import { Suspense, memo, useEffect, useRef, useState } from "react";
+import type { Volume } from "./Candle";
 import Style from "./Chart.styled";
 
 export interface Line {
@@ -77,8 +77,8 @@ export const Line = (props: Line) => {
             const test = Sort(
                 props?.data?.map((v: any) => {
                     return {
-                        ...v,
-                        value: parseFloat(v[key?.value]),
+                        time: v?.time,
+                        value: parseFloat(v[key?.value]?.toString() || "0"),
                     } as LineData;
                 }),
                 key?.time,
@@ -96,7 +96,7 @@ export const Line = (props: Line) => {
                 props?.volume?.map((v: any) => {
                     return {
                         time: v?.time,
-                        value: parseFloat(v[key?.volume]),
+                        value: parseFloat(v[key?.volume]?.toString() || "0"),
                         color: v?.type === up && color.up ? `rgba(${color.up}, 0.3)` : color.down ? `rgba(${color.down}, 0.3)` : `rgba(${color.default}, 0.3)`,
                         // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
                     } as Volume;

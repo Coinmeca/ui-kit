@@ -1,7 +1,7 @@
 "use client";
-import React, { Suspense, memo, useEffect, useRef, useState } from "react";
-import { createChart } from "lightweight-charts";
 import { Sort } from "lib/utils";
+import { createChart } from "lightweight-charts";
+import { Suspense, memo, useEffect, useRef, useState } from "react";
 import Style from "./Chart.styled";
 
 export interface Histogram {
@@ -83,7 +83,7 @@ export const Histogram = (props: Histogram) => {
                                     color: `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`,
                                 }),
                                 time: v[key?.time],
-                                value: parseFloat(v[key?.value].toString()),
+                                value: parseFloat(v[key?.value]?.toString() || "0"),
                             } as Data)
                     ),
                     key?.time,
