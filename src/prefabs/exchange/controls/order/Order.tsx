@@ -180,7 +180,7 @@ export default function Order(props: OrderControl) {
                         {Format(assets[0]?.balance, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                        {assets[0]?.symbol
+                        {assets[0]?.symbol}
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Row>
@@ -195,7 +195,7 @@ export default function Order(props: OrderControl) {
                 left={{ children: <span>Price</span> }}
                 right={{
                     width: gap.width,
-                    children: <span style={{ justifyContent: "flex-start" }}>{assets[mode ? 0 : 1]?.symbol</span>,
+                    children: <span style={{ justifyContent: "flex-start" }}>{assets[mode ? 0 : 1]?.symbol}</span>,
                 }}
                 style={text.setting}
                 lock={option === "market"}

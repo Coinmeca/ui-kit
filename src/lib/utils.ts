@@ -4,17 +4,17 @@ export interface Sorting {
 	direction?: boolean | undefined;
 }
 
-export function Sort(array: Array<any>, key: string, type: string, direction: boolean | undefined = false) {
+export function Sort(array: any[] = [], key: string, type: string, direction: boolean | undefined = false) {
 	const depth = (a: any, b: any) => {
 		let x: any = a;
 		let y: any = b;
 		if (typeof a === 'object' && typeof b === 'object') {
 			const keys = key?.split('.');
 			if (keys?.length > 1) {
-				keys?.map((k) => { x = x[k]; y = y[k] })
+				keys.forEach((k) => { x = x[k]; y = y[k]; });
 			} else {
 				x = x[key];
-				x = y[key];
+				y = y[key];
 			}
 		}
 		return { x, y };
@@ -22,13 +22,17 @@ export function Sort(array: Array<any>, key: string, type: string, direction: bo
 
 	switch (type) {
 		case 'string': {
-			return direction ? [...array].sort((a, b) => {
-				const { x, y } = depth(a, b);
-				return (x > y ? -1 : 1);
-			}) : [...array].sort((a, b) => {
-				const { x, y } = depth(a, b);
-				return (x > y ? 1 : -1);
-			});
+			return typeof direction === 'undefined'
+				? [...array]
+				: direction
+					? [...array].sort((a, b) => {
+						const { x, y } = depth(a, b);
+						return x.localeCompare(y);
+					})
+					: [...array].sort((a, b) => {
+						const { x, y } = depth(a, b);
+						return y.localeCompare(x);
+					});
 		}
 		case 'number': {
 			return typeof direction === 'undefined'
@@ -40,7 +44,7 @@ export function Sort(array: Array<any>, key: string, type: string, direction: bo
 					})
 					: [...array].sort((a, b) => {
 						const { x, y } = depth(a, b);
-						return parseFloat(x) - parseFloat(y);
+						return parseFloat(y) - parseFloat(x);
 					});
 		}
 		default: {
@@ -49,7 +53,7 @@ export function Sort(array: Array<any>, key: string, type: string, direction: bo
 	}
 }
 
-export function Filter(array: Array<any>, keyword?: string) {
+export function Filter(array: any[] = [], keyword?: string) {
 	return array && array?.length > 0
 		? !keyword || keyword === '' || keyword.length === 0
 			? [...array]
@@ -128,7 +132,7 @@ export function Unit(value: number | string, upper?: number) {
 }
 
 export function Format(value?: number | string, type?: input, option?: boolean | number | format, fix?: number | 'auto', max?: number, decimals?: number): string {
-	let display = (typeof option === 'object' && typeof option?.display !== 'undefined') || typeof option !== 'undefined';
+	let display = (typeof option === 'object' && typeof option?.display !== 'undefined') || !!option;
 	let limit = (typeof option === 'object' && typeof option?.limit === 'number') ? option?.limit : typeof option === 'number' ? option : undefined;
 	let unit = typeof option === 'object' && (typeof option?.unit === 'boolean' ? option?.unit : (typeof option?.unit === 'number' ? true : false));
 	let upper = (typeof option === 'object' && typeof option?.unit === 'number') ? option?.unit : 0;
@@ -257,6 +261,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 
 			copy = copy?.split('.');
 			if (display) {
+				if (copy[0] === '') copy[0] = 0;
 				copy[0] = parseInt(copy[0]);
 				if (!num && (copy[0] === 0)) { point = false; copy = [0]; };
 				if (type === 'currency') copy[0] = copy[0].toLocaleString();

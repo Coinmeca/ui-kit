@@ -115,10 +115,10 @@ export default function Trade(props: TradeControl) {
 
     const [handleAmountPad, closeAmountPad] = usePortal(
         <Exchange.BottomSheets.OrderPad
-            label={mode ? 'Quantity' : 'Amount'}
-            placeholder={'0'}
-            value={order.amount}
-            unit={assets[currency]?.symbol}
+            label={currency === 0 ? "Quantity" : "Amount"}
+            placeholder={"0"}
+            value={currency === 0 ? order.quantity : order.amount}
+            unit={[...assets].reverse()[currency]?.symbol}
             sub={{
                 value: `= ${Format(order.quantity || 0, 'currency', {
                     unit: 9,

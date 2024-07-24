@@ -11,6 +11,10 @@ export interface Candle {
         down?: string;
         theme?: string;
     };
+    field?: {
+        time?: string;
+        value?: string;
+    };
     price?: Price[];
     volume?: Volume[];
     up?: string;
@@ -50,6 +54,11 @@ export const Candle = (props: Candle) => {
         },
     });
 
+    const key = {
+        time: props?.field?.time || "time",
+        value: props?.field?.value || "value",
+    };
+
     const [price, setPrice] = useState<Price[]>([]);
     const [volume, setVolume] = useState<Volume[]>([]);
     const chartRef: any = useRef();
@@ -81,9 +90,9 @@ export const Candle = (props: Candle) => {
                             ...v,
                         };
                     }),
-                    "time",
+                    key?.time,
                     typeof props?.price[0]?.time === "number" ? "number" : "string",
-                    false
+                    true
                 )
             );
         }
@@ -93,17 +102,17 @@ export const Candle = (props: Candle) => {
         if (props?.volume && props?.volume?.length > 0) {
             setVolume(
                 Sort(
-                    props?.volume?.map((v: Volume) => {
+                    props?.volume?.map((v: any) => {
                         return {
-                            time: v?.time,
-                            value: v?.value,
+                            time: v[key?.time],
+                            value: parseFloat(v[key?.value].toString()),
                             color: v?.type === up ? `rgba(${color.up}, 0.3)` : `rgba(${color.down}, 0.3)`,
                             // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
-                        };
+                        } as Volume;
                     }),
+                    key?.time,
                     typeof props?.volume[0]?.time === "number" ? "number" : "string",
-                    "number",
-                    false
+                    true
                 )
             );
         }
@@ -216,6 +225,6 @@ export const Candle = (props: Candle) => {
             <Style ref={chartRef} />
         </Suspense>
     );
-}
+};
 
 export default memo(Candle);

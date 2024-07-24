@@ -1,10 +1,10 @@
-'use client';
-import { Sort } from 'lib/utils';
-import type { AreaData, HistogramData } from 'lightweight-charts';
-import { createChart } from 'lightweight-charts';
-import { Suspense, memo, useEffect, useRef, useState } from 'react';
-import { Volume } from './Candle';
-import Style from './Chart.styled';
+"use client";
+import { Sort } from "lib/utils";
+import type { AreaData, HistogramData } from "lightweight-charts";
+import { createChart } from "lightweight-charts";
+import { Suspense, memo, useEffect, useRef, useState } from "react";
+import { Volume } from "./Candle";
+import Style from "./Chart.styled";
 
 export interface Area {
     color?: {
@@ -27,14 +27,14 @@ export interface Area {
 }
 
 export const Area = (props: Area) => {
-    const up = props?.up || 'up';
-    const down = props?.down || 'down';
+    const up = props?.up || "up";
+    const down = props?.down || "down";
 
-    const theme = props?.color?.theme && props?.color?.theme === 'light' ? '0,0,0' : '255,255,255';
+    const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
     const [color, setColor] = useState({
         default: props?.color?.default || `rgb(${theme})`,
-        up: props?.color?.up || '0,192,96',
-        down: props?.color?.down || '255,0,64',
+        up: props?.color?.up || "0,192,96",
+        down: props?.color?.down || "255,0,64",
         theme: {
             strong: `rgba(${theme}, 0.6)`,
             semi: `rgba(${theme}, 0.45)`,
@@ -45,9 +45,9 @@ export const Area = (props: Area) => {
     });
 
     const key = {
-        time: props?.field?.time || 'time',
-        value: props?.field?.value || 'value',
-        volume: props?.field?.volume || 'volume',
+        time: props?.field?.time || "time",
+        value: props?.field?.value || "value",
+        volume: props?.field?.volume || "volume",
     };
 
     const [data, setData] = useState<AreaData[]>([]);
@@ -55,8 +55,8 @@ export const Area = (props: Area) => {
     const chartRef: any = useRef();
 
     useEffect(() => {
-        globalThis.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({ matches }) => {
-            const scheme = !theme && matches ? '0,0,0' : '255,255,255';
+        globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+            const scheme = !theme && matches ? "0,0,0" : "255,255,255";
             setColor((color) => {
                 return {
                     ...color,
@@ -78,15 +78,15 @@ export const Area = (props: Area) => {
                 Sort(
                     props?.data?.map(
                         (v: any) =>
-                        ({
-                            time: v[key?.time],
-                            value: parseFloat(v[key?.value]?.toString() || '0'),
-                        } as AreaData),
+                            ({
+                                time: v[key?.time],
+                                value: parseFloat(v[key?.value]?.toString() || "0"),
+                            } as AreaData)
                     ),
                     key?.time,
-                    props?.data && props?.data?.length > 0 && typeof props?.data[0][key?.time] === 'number' ? 'number' : 'string',
-                    true,
-                ),
+                    props?.data && props?.data?.length > 0 && typeof props?.data[0][key?.time] === "number" ? "number" : "string",
+                    true
+                )
             );
         }
     }, [props?.data]);
@@ -98,16 +98,16 @@ export const Area = (props: Area) => {
                     props?.volume?.map((v: any) => {
                         return {
                             time: v?.time,
-                            value: parseFloat(v[key?.volume]?.toString() || '0'),
+                            value: parseFloat(v[key?.volume]?.toString() || "0"),
                             color:
                                 v?.type === up && color.up ? `rgba(${color.up}, 0.3)` : color.down ? `rgba(${color.down}, 0.3)` : `rgba(${color.default}, 0.3)`,
                             // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
                         } as Volume;
                     }),
                     key?.time,
-                    props?.volume && props?.volume?.length > 0 && typeof (props?.volume[0] as any)[key?.time] === 'number' ? 'number' : 'string',
-                    true,
-                ),
+                    props?.volume && props?.volume?.length > 0 && typeof (props?.volume[0] as any)[key?.time] === "number" ? "number" : "string",
+                    true
+                )
             );
         }
     }, [props?.volume, up, down, color]);
@@ -126,7 +126,7 @@ export const Area = (props: Area) => {
             const chart = createChart(chartRef?.current, {
                 layout: {
                     background: {
-                        color: 'transparent',
+                        color: "transparent",
                     },
                     fontSize: 10,
                     fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif",
@@ -172,14 +172,14 @@ export const Area = (props: Area) => {
 
             if (data) {
                 const series = chart.addAreaSeries({
-                    lineColor: color ? `rgba(${color.default}, 1)` : '',
-                    topColor: color ? `rgba(${color.default}, 0.45)` : '',
-                    bottomColor: color ? `rgba(${color.default}, 0)` : '',
+                    lineColor: color ? `rgba(${color.default}, 1)` : "",
+                    topColor: color ? `rgba(${color.default}, 0.45)` : "",
+                    bottomColor: color ? `rgba(${color.default}, 0)` : "",
                     priceFormat: {
-                        type: 'volume',
+                        type: "volume",
                     },
                     // set as an overlay by setting a blank priceScaleId
-                    priceScaleId: '',
+                    priceScaleId: "",
                     // set the positioning of the volume series
                 });
 
@@ -188,11 +188,11 @@ export const Area = (props: Area) => {
 
             if (volume) {
                 const volumeSeries = chart.addHistogramSeries({
-                    color: 'yellow',
+                    color: "yellow",
                     priceFormat: {
-                        type: 'volume',
+                        type: "volume",
                     },
-                    priceScaleId: '', // set as an overlay by setting a blank priceScaleId
+                    priceScaleId: "", // set as an overlay by setting a blank priceScaleId
                     // set the positioning of the volume series
                 });
 
@@ -209,13 +209,13 @@ export const Area = (props: Area) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                    barSpacing: 10,
-                });
+                      barSpacing: 10,
+                  });
 
-            globalThis.addEventListener('resize', handleResize);
+            globalThis.addEventListener("resize", handleResize);
 
             return () => {
-                globalThis.removeEventListener('resize', handleResize);
+                globalThis.removeEventListener("resize", handleResize);
                 chart.remove();
             };
         }

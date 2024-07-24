@@ -2,7 +2,7 @@
 import { Elements, Layouts } from "components";
 import { Farm } from "types/web3";
 import { Format, Sign } from "lib/utils";
-import useWindowSize from "hooks/useWindowSize";
+import useWindowSize from "../../../../hooks/useWindowSize";
 import { Root } from "lib/style";
 
 export interface Info {
