@@ -3,8 +3,8 @@
         "rootDir": "src",
         "baseUrl": "src",
         "outDir": "dist",
-        "target": "ESNext",
-        "module": "ESNext",
+        "target": "ES5",
+        "module": "CommonJS",
         "lib": ["dom", "dom.iterable", "esnext"],
         "skipLibCheck": true,
         "strict": true,
@@ -13,7 +13,7 @@
         "forceConsistentCasingInFileNames": true,
         "noEmit": false,
         "noImplicitAny": true,
-        "moduleResolution": "Bundler",
+        "moduleResolution": "node",
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
@@ -38,6 +38,6 @@
         },
         "typeRoots": ["src/types", "node_modules/@types"]
     },
-    "include": ["src", "next-env.d.ts", ".next/types/**/*.ts", "*.ts", "*.tsx"],
-    "exclude": ["node_modules", "**/.*/", "next.config.json", "tsup.config.json", "tsup.config.ts", "dist", "build"]
+    "include": ["src", "next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+    "exclude": ["node_modules", "**/.*/", "next.config.json", "tsup.config.json", "tsup.config.ts", "dist", "build", "**/trading-view"]
 }

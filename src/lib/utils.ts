@@ -132,7 +132,7 @@ export function Unit(value: number | string, upper?: number) {
 }
 
 export function Format(value?: number | string, type?: input, option?: boolean | number | format, fix?: number | 'auto', max?: number, decimals?: number): string {
-	let display = (typeof option === 'object' && typeof option?.display !== 'undefined') || typeof option !== 'undefined';
+	let display = (typeof option === 'object' && typeof option?.display !== 'undefined') || !!option;
 	let limit = (typeof option === 'object' && typeof option?.limit === 'number') ? option?.limit : typeof option === 'number' ? option : undefined;
 	let unit = typeof option === 'object' && (typeof option?.unit === 'boolean' ? option?.unit : (typeof option?.unit === 'number' ? true : false));
 	let upper = (typeof option === 'object' && typeof option?.unit === 'number') ? option?.unit : 0;
@@ -261,6 +261,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 
 			copy = copy?.split('.');
 			if (display) {
+				if (copy[0] === '') copy[0] = 0;
 				copy[0] = parseInt(copy[0]);
 				if (!num && (copy[0] === 0)) { point = false; copy = [0]; };
 				if (type === 'currency') copy[0] = copy[0].toLocaleString();

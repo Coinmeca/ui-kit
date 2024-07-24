@@ -117,7 +117,7 @@ export default function Trade(props: TradeControl) {
             label={currency === 0 ? "Quantity" : "Amount"}
             placeholder={"0"}
             value={currency === 0 ? order.quantity : order.amount}
-            unit={[...assets].reverse()[currency]?.symbol
+            unit={[...assets].reverse()[currency]?.symbol}
             sub={{
                 value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", {
                     unit: 9,
@@ -151,7 +151,7 @@ export default function Trade(props: TradeControl) {
                         })}
                     </Elements.Text>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                        {assets[0]?.symbol
+                        {assets[0]?.symbol}
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Row>
@@ -163,7 +163,7 @@ export default function Trade(props: TradeControl) {
                 left={{ children: <span>Rate</span> }}
                 right={{
                     width: gap.width,
-                    children: <span style={{ justifyContent: "flex-start" }}>{assets[1]?.symbol</span>,
+                    children: <span style={{ justifyContent: "flex-start" }}>{assets[1]?.symbol}</span>,
                 }}
                 style={text.setting}
                 lock
@@ -220,7 +220,7 @@ export default function Trade(props: TradeControl) {
                             })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                            {assets[1]?.symbol
+                            {assets[1]?.symbol}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>
@@ -237,7 +237,7 @@ export default function Trade(props: TradeControl) {
                             })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                            {assets[1]?.symbol
+                            {assets[1]?.symbol}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>

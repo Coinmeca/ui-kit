@@ -1,7 +1,7 @@
 "use client";
-import { Sort } from "lib/utils";
 import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
+import { Sort } from "lib/utils";
 import Style from "./Chart.styled";
 
 export interface Histogram {

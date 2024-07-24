@@ -4,7 +4,7 @@ import { Controls, Layouts } from "components";
 import { Exchange } from "prefabs";
 import { Token } from "types/web3";
 import { Farms } from "prefabs/treasury";
-import usePortal from "hooks/usePortal";
+import usePortal from "../../../../hooks/usePortal";
 import type { Order as O } from "types/order";
 
 export interface StakeControl {
