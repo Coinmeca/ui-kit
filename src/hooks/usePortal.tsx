@@ -1,66 +1,79 @@
-"use client";
-import { ReactNode, useEffect, useState, useId } from "react";
-import { createPortal } from "react-dom";
-import { Root, createRoot } from "react-dom/client";
+'use client';
+import { ReactNode, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { Root, createRoot } from 'react-dom/client';
 
 type Child = Function | ReactNode | null;
 type Args = [Child] | [object] | [Child, object] | undefined[];
 type Portal = [(...args: Args) => void, Function];
 
 export default function usePortal(initial?: any, initialProps?: any): Portal {
-    const [root, setRoot] = useState<Root | undefined>();
+    const [root, setRoot] = useState<Root | undefined>(undefined);
     const [active, setActive] = useState(false);
-    const [children, setChildren] = useState<Function | ReactNode | object>();
-    const [props, setProps] = useState<any>((state: any) => {
-        return { ...(state && state), ...(initial && initial?.props && initial?.props), ...(initialProps && initialProps) };
+    const [children, setChildren] = useState<Function | ReactNode | object>(null);
+    const [props, setProps] = useState<any>(() => {
+        return { ...(initial?.props || {}), ...(initialProps || {}) };
     });
 
     useEffect(() => {
-        !root && setRoot(createRoot(document?.createElement("section")));
+        const rootElement = document.createElement('section');
+        const newRoot = createRoot(rootElement);
+        setRoot(newRoot);
+
         return () => {
-            // root?.render(null);
+            if (newRoot) {
+                newRoot.unmount();
+                rootElement.remove();
+            }
             setActive(false);
             setChildren(null);
             setRoot(undefined);
-            root?.unmount();
         };
     }, []);
 
     useEffect(() => {
         const element = children || initial;
-        root?.render(active ? createPortal(typeof element === "function" ? element(props) : element, document?.body) : null);
-    }, [active, initial, children, props]);
+        if (root) {
+            if (active) {
+                root.render(createPortal(
+                    typeof element === 'function' ? element(props) : element,
+                    document.body
+                ));
+            } else {
+                root.render(null);
+            }
+        }
+    }, [active, initial, children, props, root]);
 
     return [
         (...args) => {
             if (args) {
-                const props =
-                    args?.length === 2 && typeof args[1] === "object" && !(args[1] as any)?.$$typeof
+                const newProps =
+                    args.length === 2 && typeof args[1] === 'object' && !(args[1] as any)?.$$typeof
                         ? args[1]
-                        : args?.length === 1 && typeof args[0] === "object" && !(args[0] as any)?.$$typeof
-                        ? args[0]
-                        : undefined;
-                props &&
-                    setProps((state: any) => {
-                        return { ...state, ...props, actvie: true };
-                    });
+                        : args.length === 1 && typeof args[0] === 'object' && !(args[0] as any)?.$$typeof
+                            ? args[0]
+                            : undefined;
+                if (newProps) {
+                    setProps((state: any) => ({ ...state, ...newProps, active: true }));
+                }
 
-                const children =
-                    (args?.length === 2 && typeof args[1] === "function") ||
-                    (typeof args[1] === "object" && (args[1] as any)?.$$typeof
+                const newChildren =
+                    (args.length === 2 && typeof args[1] === 'function') ||
+                        (typeof args[1] === 'object' && (args[1] as any)?.$$typeof)
                         ? args[1]
-                        : typeof args[0] === "function" || (typeof args[0] === "object" && (args[0] as any)?.$$typeof)
-                        ? args[0]
-                        : undefined);
-                children && setChildren(children);
+                        : typeof args[0] === 'function' || (typeof args[0] === 'object' && (args[0] as any)?.$$typeof)
+                            ? args[0]
+                            : undefined;
+                if (newChildren) {
+                    setChildren(newChildren);
+                }
 
                 setActive(true);
             }
         },
         () => {
-            setProps((state: any) => {
-                return { ...state, active: false };
-            });
+            setProps((state: any) => ({ ...state, active: false }));
             setActive(false);
         },
     ];

@@ -77,6 +77,5 @@
         "typescript": "^5.4.2",
         "typescript-cp": "^0.1.9",
         "vercel": "^33.5.5"
-    },
-    "packageManager": "yarn@4.2.2"
+    }
 }

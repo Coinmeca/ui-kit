@@ -1,10 +1,10 @@
-"use client";
-import { useState } from "react";
-import type { Order } from "types";
+'use client';
+import { useState } from 'react';
+import type { Order } from 'types';
 
 export default function useVault(initial: Order, mode: boolean, fee: number, available?: number) {
     const [order, setOrder] = useState<Order>({
-        pay: initial?.pay || { address: "", name: "", symbol: "", decimals: 0 },
+        pay: initial?.pay || { address: '', name: '', symbol: '', decimals: 0 },
         price: initial?.price || 0,
         amount: initial?.amount || 0,
         quantity: initial?.quantity || 0,
@@ -58,7 +58,8 @@ export default function useVault(initial: Order, mode: boolean, fee: number, ava
                 };
             });
         }
-        mode ? amount(order?.amount || 0, price) : quantity(order?.quantity || 0, price);
+        quantity(order?.quantity || 0, price)
+        // mode ? amount(order?.amount || 0, price) : quantity(order?.quantity || 0, price);
     };
 
     const amount = (amount: number, price?: number) => {
@@ -70,7 +71,7 @@ export default function useVault(initial: Order, mode: boolean, fee: number, ava
                 return {
                     ...state,
                     price: p,
-                    amount: state?.amount,
+                    amount: 0,
                     quantity: 0,
                     fees: 0,
                     total: 0,
@@ -78,7 +79,8 @@ export default function useVault(initial: Order, mode: boolean, fee: number, ava
             }
 
             const a = getAmount(amount, p);
-            const q = mode ? a / p : a * p;
+            // const q = mode ? a / p : a * p;
+            const q = a * p;
             const f = fees(q);
 
             o = {
@@ -99,12 +101,11 @@ export default function useVault(initial: Order, mode: boolean, fee: number, ava
         setOrder((state: Order) => {
             const p = price || state?.price;
 
-            console.log("price", p);
             if (quantity === 0 || p === 0) {
                 return {
                     ...state,
                     price: p,
-                    amount: state?.amount,
+                    amount: 0,
                     quantity: 0,
                     fees: 0,
                     total: 0,
@@ -112,10 +113,10 @@ export default function useVault(initial: Order, mode: boolean, fee: number, ava
             }
 
             const q = getQuantity(quantity, p);
-            const a = mode ? q * p : q / p;
+            // const a = mode ? q * p : q / p;
+            const a = q * p;
             const f = fees(a);
 
-            console.log("a", a);
             o = {
                 ...state,
                 price: p,

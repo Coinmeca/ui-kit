@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
+import { useMobile, usePortal } from "hooks";
+import { Format, parseNumber } from "lib/utils";
 import { Exchange } from "prefabs";
 import { useVault } from "prefabs/treasury/vault/hooks";
-import { usePortal, useMobile } from "hooks";
-import { Format, parseNumber } from "lib/utils";
+import { useEffect, useState } from "react";
 import type { Token } from "types/web3";
 
 export interface TradeControl {
@@ -99,43 +99,43 @@ export default function Trade(props: TradeControl) {
         price(parseNumber(props?.price || 0));
     }, [props?.price]);
 
-    const handleChangeQuantity = (a: number | string) => {
-        mode ? quantity(parseNumber(a)) : amount(parseNumber(a));
+    const handleChangeAmount = (a: number | string) => {
+        amount(parseNumber(a));
+        // mode ? quantity(parseNumber(a)) : amount(parseNumber(a));
     };
 
     const handleChangeRange = (v: number) => {
-        if (available > 0)
-            currency === 0
-                ? quantity(((parseNumber(available) / order.price) * parseNumber(v)) / 100)
-                : amount((parseNumber(available) * parseNumber(v)) / 100);
+        if (available > 0) amount(v === 0 ? 0 : (parseNumber(available) * parseNumber(v)) / 100)
+        // mode
+        // ? amount((parseNumber(available) * parseNumber(v)) / 100)
+        // : amount((parseNumber(available) * parseNumber(v)) / 100)
     };
 
     const pricePosition = order.price === 0 ? 0 : (1 - parseFloat(props?.price?.toString()) / order.price) * 100;
 
     const [handleAmountPad, closeAmountPad] = usePortal(
         <Exchange.BottomSheets.OrderPad
-            label={currency === 0 ? "Quantity" : "Amount"}
-            placeholder={"0"}
-            value={currency === 0 ? order.quantity : order.amount}
-            unit={[...assets].reverse()[currency]?.symbol
+            label={mode ? 'Quantity' : 'Amount'}
+            placeholder={'0'}
+            value={order.amount}
+            unit={assets[currency]?.symbol}
             sub={{
-                value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", {
+                value: `= ${Format(order.quantity || 0, 'currency', {
                     unit: 9,
                     limit: 12,
                     fix: 3,
                 })}`,
-                unit: assets[currency]?.symbol,
+                unit: ([...assets].reverse())[currency]?.symbol,
             }}
             button={{
                 color: mode ? color.buy : color.sell,
-                children: mode ? "BUY" : "SELL",
+                children: mode ? 'DEP' : 'WIT',
                 onClick: () => closeAmountPad(),
             }}
-            onChange={(e: any, v: any) => handleChangeQuantity(v)}
+            onChange={(e: any, v: any) => handleChangeAmount(v)}
             onClose={() => closeAmountPad()}
-        />
+        />,
     );
-
     return (
         <Layouts.Col gap={gap.col.big} style={{ paddingTop: `${gap.col.small}em` }}>
             <Layouts.Row gap={gap.row} style={gap.space.big} fix>
@@ -151,7 +151,7 @@ export default function Trade(props: TradeControl) {
                         })}
                     </Elements.Text>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                        {assets[0]?.symbol
+                        {assets[0]?.symbol}
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Row>
@@ -163,7 +163,7 @@ export default function Trade(props: TradeControl) {
                 left={{ children: <span>Rate</span> }}
                 right={{
                     width: gap.width,
-                    children: <span style={{ justifyContent: "flex-start" }}>{assets[1]?.symbol</span>,
+                    children: <span style={{ justifyContent: "flex-start" }}>{assets[1]?.symbol}</span>,
                 }}
                 style={text.setting}
                 lock
@@ -172,12 +172,13 @@ export default function Trade(props: TradeControl) {
                 placeholder={"0"}
                 type={"currency"}
                 align={"right"}
-                value={""}
+                value={order.amount}
                 min={0}
-                max={available}
-                onChange={(e: any, v: any) => handleChangeQuantity(v)}
-                onClick={() => isMobile && handleAmountPad()}
-                inputMode={isMobile ? "none" : undefined}
+                max={available && available > 0 ? available : undefined}
+                // onChange={(e: any, v: any) => handleChangeAmount(v)}
+                onClick={() => handleAmountPad()}
+                // onClick={() => isMobile && handleAmountPad()}
+                inputMode={isMobile ? 'none' : undefined}
                 left={{
                     children: <span>{currency === 0 ? "Qunatity" : "Amount"}</span>,
                 }}
@@ -220,7 +221,7 @@ export default function Trade(props: TradeControl) {
                             })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                            {assets[1]?.symbol
+                            {assets[1]?.symbol}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>
@@ -237,7 +238,7 @@ export default function Trade(props: TradeControl) {
                             })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
-                            {assets[1]?.symbol
+                            {assets[1]?.symbol}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>

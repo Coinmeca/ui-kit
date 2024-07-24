@@ -52,72 +52,68 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
     };
 
     const amount = (amount: number, price?: number) => {
-        let o: any;
-        setOrder((state: Order) => {
-            const p = price || state?.price;
+        let o: Order;
+        const p = price || order?.price;
 
-            if (amount === 0 || p === 0) {
-                return {
-                    ...state,
-                    price: p,
-                    amount: state?.amount,
-                    quantity: 0,
-                    fees: 0,
-                    total: 0,
-                };
-            }
-
-            const a = getAmount(amount, p);
-            const q = mode ? a / p : a * p;
-            const f = fees(q);
-
+        if (amount === 0 || p === 0) {
             o = {
-                ...state,
+                ...order,
                 price: p,
-                amount: a,
-                quantity: q,
-                fees: f,
-                total: q - f,
-            };
+                amount: 0,
+                quantity: 0,
+                fees: 0,
+                total: 0,
+            }
+            setOrder(o);
             return o;
-        });
+        }
+
+        const a = getAmount(amount, p);
+        const q = mode ? a / p : a * p;
+        const f = fees(q);
+
+        o = {
+            ...order,
+            price: p,
+            amount: a,
+            quantity: q,
+            fees: f,
+            total: q - f,
+        };
+        setOrder(o);
         return o;
     };
 
     const quantity = (quantity: number, price?: number) => {
-        let o: any;
-        setOrder((state: Order) => {
-            const p = price || state?.price;
+        let o: Order;
+        const p = price || order?.price;
 
-            console.log("quantity", quantity);
-            console.log("p", p);
-            if (quantity === 0 || p === 0) {
-                return {
-                    ...state,
-                    price: p,
-                    amount: 0,
-                    quantity: 0,
-                    fees: 0,
-                    total: 0,
-                };
-            }
-
-            const q = getQuantity(quantity, p);
-            console.log("q", q);
-            const a = mode ? q * p : q / p;
-            console.log("a", a);
-            const f = fees(q);
-
+        if (quantity === 0 || p === 0) {
             o = {
-                ...state,
+                ...order,
                 price: p,
-                amount: a,
-                quantity: q,
-                fees: f,
-                total: q - f,
+                amount: 0,
+                quantity: 0,
+                fees: 0,
+                total: 0,
             };
+            setOrder(o);
             return o;
-        });
+        }
+
+        const q = getQuantity(quantity, p);
+        const a = mode ? q * p : q / p;
+        const f = fees(q);
+
+        o = {
+            ...order,
+            price: p,
+            amount: a,
+            quantity: q,
+            fees: f,
+            total: q - f,
+        };
+        setOrder(o);
         return o;
     };
 
