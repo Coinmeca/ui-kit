@@ -1,3 +1,5 @@
+"use client";
+
 import { memo, useMemo, type CSSProperties } from "react";
 import dynamic from "next/dynamic";
 import Style, { Count } from "./Icon.styled";

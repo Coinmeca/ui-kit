@@ -1,3 +1,5 @@
+"use client";
+
 import { BG } from "components/layouts";
 import { type BG as Background } from "components/layouts/bg/BG";
 import Style from "./Cover.styled";

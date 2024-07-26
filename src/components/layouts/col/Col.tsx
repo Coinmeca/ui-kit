@@ -1,3 +1,5 @@
+"use client";
+
 import { type CSSProperties } from "react";
 import Style from "./Col.styled";
 
@@ -30,8 +32,7 @@ export default function Col(props: Col) {
             $reverse={reverse}
             data-col={props?.align}
             data-show={props?.show}
-            data-hide={props?.hide}
-        >
+            data-hide={props?.hide}>
             {props.children}
         </Style>
     );

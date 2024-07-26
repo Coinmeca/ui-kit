@@ -1,3 +1,5 @@
+"use client";
+
 import { type CSSProperties } from "react";
 import TabContent from "./TabContent";
 import { type TabContent as Content } from "./TabContent";

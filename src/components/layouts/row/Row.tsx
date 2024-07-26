@@ -1,3 +1,5 @@
+"use client";
+
 import { SwipeProps } from "hooks/useSwipe";
 import Style from "./Row.styled";
 
@@ -37,8 +39,7 @@ export default function Row(props: Row) {
             $reverse={reverse}
             data-row={props?.align}
             data-show={props?.show}
-            data-hide={props?.hide}
-        >
+            data-hide={props?.hide}>
             {props?.children}
         </Style>
     );

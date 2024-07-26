@@ -1,3 +1,5 @@
+"use client";
+
 import { css, styled } from "styled-components";
 import * as Button from "components/controls/button/Button.styled";
 import * as Box from "components/layouts/box/Box.styled";

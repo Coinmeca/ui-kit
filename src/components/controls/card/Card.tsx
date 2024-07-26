@@ -1,4 +1,5 @@
-import Style from './Card.styled';
+"use client";
+import Style from "./Card.styled";
 
 export interface Card {
     children?: any;
@@ -16,11 +17,11 @@ export default function Card(props: Card) {
     const gap = props?.gap || 1;
 
     const handleMouseOver = (e?: any) => {
-        if (typeof props?.onHover === 'function') props?.onHover(e);
+        if (typeof props?.onHover === "function") props?.onHover(e);
     };
 
     const handleClick = (e?: any) => {
-        if (typeof props?.onClick === 'function') props?.onClick(e);
+        if (typeof props?.onClick === "function") props?.onClick(e);
     };
 
     return (
@@ -28,8 +29,8 @@ export default function Card(props: Card) {
             $scale={scale}
             $padding={padding}
             $gap={gap}
-            $hover={typeof props?.onHover === 'function' ? true : false}
-            $event={typeof props?.onClick === 'function' ? true : false}
+            $hover={typeof props?.onHover === "function" ? true : false}
+            $event={typeof props?.onClick === "function" ? true : false}
             style={props?.style}
             onMouseOver={handleMouseOver}
             onClick={handleClick}>

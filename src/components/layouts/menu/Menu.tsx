@@ -1,3 +1,5 @@
+"use client";
+
 import { Fragment, type CSSProperties } from "react";
 import { Layouts } from "components";
 import Style, { Row } from "./Menu.styled";

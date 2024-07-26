@@ -1,3 +1,5 @@
+"use client";
+
 import { styled, css } from "styled-components";
 import { Root } from "lib/style";
 import * as Icon from "components/elements/icon/Icon.styled";

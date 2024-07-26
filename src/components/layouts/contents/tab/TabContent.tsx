@@ -1,3 +1,5 @@
+"use client";
+
 import { memo, type CSSProperties } from "react";
 import Style from "./TabContent.styled";
 

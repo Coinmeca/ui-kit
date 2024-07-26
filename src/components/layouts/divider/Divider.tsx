@@ -1,3 +1,5 @@
+"use client";
+
 import { type CSSProperties } from "react";
 import Style from "./Divider.styled";
 
@@ -32,8 +34,7 @@ export default function Divider(props: Divider) {
             $strong={strong}
             style={props?.style}
             data-show={props?.show}
-            data-hide={props?.hide}
-        >
+            data-hide={props?.hide}>
             {props?.children ? (
                 <>
                     {props?.align !== "right" && <div />}

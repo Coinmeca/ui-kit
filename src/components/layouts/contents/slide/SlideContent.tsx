@@ -1,3 +1,5 @@
+"use client";
+
 import { memo } from "react";
 import Style from "./SlideContent.styled";
 import { SwipeProps } from "hooks/useSwipe";

@@ -1,6 +1,7 @@
-import { type CSSProperties } from 'react';
-import Image from 'next/image';
-import Style from './Avatar.styled';
+"use client";
+import { type CSSProperties } from "react";
+import Image from "next/image";
+import Style from "./Avatar.styled";
 
 export interface Avatar {
     scale?: number;
@@ -20,7 +21,7 @@ export default function Avatar(props: Avatar) {
     const name = props?.name;
     const scale = props?.scale || 1;
     const size = props?.size || 3;
-    const color = props?.color || 'white';
+    const color = props?.color || "white";
     const character = props?.character || 1;
     const display = props?.display || 6;
     const length = props?.length || props?.name?.length;
@@ -28,20 +29,20 @@ export default function Avatar(props: Avatar) {
 
     return (
         <>
-            {((props?.img && props?.img !== '') || (props?.name && props?.name !== '')) && (
+            {((props?.img && props?.img !== "") || (props?.name && props?.name !== "")) && (
                 <Style $color={color} $scale={scale} $size={size} style={props?.style}>
-                    {(name || (props?.img && props?.img !== '')) && (
+                    {(name || (props?.img && props?.img !== "")) && (
                         <div>
-                            {props?.img && props?.img !== '' ? (
-                                <Image src={props?.img} fill sizes="100%" alt={''} title={props?.title} />
+                            {props?.img && props?.img !== "" ? (
+                                <Image src={props?.img} fill sizes="100%" alt={""} title={props?.title} />
                             ) : (
                                 name &&
-                                name !== '' && (
+                                name !== "" && (
                                     <span>
                                         <span>
-                                            {typeof character === 'string'
+                                            {typeof character === "string"
                                                 ? character
-                                                : name?.startsWith('0x')
+                                                : name?.startsWith("0x")
                                                 ? name?.substring(2, 2 + character)
                                                 : name?.substring(0, character)}
                                         </span>
@@ -50,8 +51,8 @@ export default function Avatar(props: Avatar) {
                             )}
                         </div>
                     )}
-                    {!hideName && name && name !== '' && (
-                        <span>{name?.length > length! ? `${name?.substring(0, display) + '...' + name?.substring(name?.length - display)}` : name}</span>
+                    {!hideName && name && name !== "" && (
+                        <span>{name?.length > length! ? `${name?.substring(0, display) + "..." + name?.substring(name?.length - display)}` : name}</span>
                     )}
                 </Style>
             )}
