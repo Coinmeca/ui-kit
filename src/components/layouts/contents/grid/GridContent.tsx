@@ -1,3 +1,4 @@
+"use client";
 import { Fragment, memo } from "react";
 
 export interface GridContent {
@@ -20,16 +21,14 @@ const GridContent = (props: GridContent) => {
         <Child
             {...{
                 ...(props?.children?.props || props?.children?.children?.props),
-            }}
-        >
+            }}>
             {props?.children?.props?.children || props?.children?.children}
         </Child>
     ) : (
         <div
             {...{
                 ...(props?.children?.props || props?.children?.children?.props),
-            }}
-        >
+            }}>
             {props?.children?.children || props?.children}
         </div>
     );

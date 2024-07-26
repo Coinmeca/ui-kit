@@ -46,37 +46,36 @@ export default function GridContainer(props: GridContainer) {
                     $width={props?.width}
                     $height={props?.height}
                     $responsive={props?.responsive}
-                    style={props?.style}
-                >
+                    style={props?.style}>
                     {props?.contents && props?.contents?.length > 0
                         ? props?.contents?.map((v: any, k: number) => (
-                            <Fragment key={k}>
-                                <GridContent format={props?.format} {...v} />
-                                <GridArea
-                                    {...{
-                                        $parent: grid,
-                                        $id: k,
-                                        $area: v?.area,
-                                        $responsive: v?.responsive,
-                                    }}
-                                />
-                            </Fragment>
-                        ))
+                              <Fragment key={k}>
+                                  <GridContent format={props?.format} {...v} />
+                                  <GridArea
+                                      {...{
+                                          $parent: grid,
+                                          $id: k,
+                                          $area: v?.area,
+                                          $responsive: v?.responsive,
+                                      }}
+                                  />
+                              </Fragment>
+                          ))
                         : props?.children && props.children?.length > 0
-                            ? props?.children?.map((v: any, k: number) => (
-                                <Fragment key={k}>
-                                    <Fragment>{v}</Fragment>
-                                    <GridArea
-                                        {...{
-                                            $parent: grid,
-                                            $id: k,
-                                            $area: v?.area,
-                                            $responsive: v?.responsive,
-                                        }}
-                                    />
-                                </Fragment>
-                            ))
-                            : props?.children}
+                        ? props?.children?.map((v: any, k: number) => (
+                              <Fragment key={k}>
+                                  <Fragment>{v}</Fragment>
+                                  <GridArea
+                                      {...{
+                                          $parent: grid,
+                                          $id: k,
+                                          $area: v?.area,
+                                          $responsive: v?.responsive,
+                                      }}
+                                  />
+                              </Fragment>
+                          ))
+                        : props?.children}
                 </Grid>
             )}
         </Style>
