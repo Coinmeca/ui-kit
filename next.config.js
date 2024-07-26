@@ -12,6 +12,13 @@ const nextConfig = {
         // Support for absolute imports
         config.resolve.modules.push(path.resolve("./src"));
 
+        if (!isServer) {
+            config.resolve.fallback = {
+                fs: false,
+                path: false,
+            };
+        }
+        
         return config;
     },
     webpack5: true, // Ensure Webpack 5 is used
