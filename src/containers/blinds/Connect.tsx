@@ -1,3 +1,5 @@
+"use client";
+
 import { Controls, Elements, Layouts } from "components";
 import { type BG } from "components/layouts/bg/BG";
 

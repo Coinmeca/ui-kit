@@ -1,3 +1,5 @@
+"use client";
+
 import type { Modal as Default } from "containers/modals/Modal";
 import Modal from "containers/modals/Modal";
 import { Controls } from "components";

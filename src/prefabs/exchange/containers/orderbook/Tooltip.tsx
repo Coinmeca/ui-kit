@@ -1,3 +1,4 @@
+"use client";
 import { Elements, Layouts } from "components";
 import { Root } from "lib/style";
 import { format } from "lib/utils";
@@ -19,8 +20,7 @@ export default function Tooltip(props: any) {
             horizon={props?.horizon}
             padding={1}
             style={{ border: `1px solid rgb(${Root.Color(props?.color)})` }}
-            fill
-        >
+            fill>
             <Layouts.Col gap={0.25}>
                 {props?.price && (
                     <Layouts.Row gap={0} fix>

@@ -1,3 +1,5 @@
+"use client";
+
 import { Layouts } from "components";
 import type { List } from "components/layouts/list/List";
 
