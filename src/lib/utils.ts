@@ -155,7 +155,7 @@ export function format(value?: number | string, type?: input, option?: boolean |
 				let copy: string[] = value.split('@');
 				if (0 < copy?.length && copy?.length < 2) {
 					const domain = copy[1]?.split('.');
-					console.log(domain);
+					console.log('domain', domain);
 				} else {
 					console.log('error');
 				}

@@ -1,3 +1,4 @@
+"use client";
 import { Contents, Layouts } from "components";
 import { type State } from "components/contents/states/State";
 

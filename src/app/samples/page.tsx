@@ -167,8 +167,7 @@ export default function Main() {
                                     gap={windowSize.width > Root.Device.Mobile ? 8 : 4}
                                     align={"center"}
                                     responsive={"mobile"}
-                                    reverse={windowSize.width > Root.Device.Mobile ? false : true}
-                                >
+                                    reverse={windowSize.width > Root.Device.Mobile ? false : true}>
                                     <div className="content">
                                         <div>
                                             <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
@@ -232,8 +231,7 @@ export default function Main() {
                             filter: { color: "black", opacity: 0.6 },
                             img: { src: require("../../assets/banners/inbox/1.png"), style: { objectFit: "none" } },
                         }}
-                        style={{ scrollSnapAlign: "initial" }}
-                    >
+                        style={{ scrollSnapAlign: "initial" }}>
                         <Layouts.Row align={"center"} style={{ position: "relative", zIndex: 2 }} fill>
                             <Layouts.Col align={"center"} fit>
                                 <Elements.Text type={"h2"} style={{ wordBreak: "break-word" }}>
@@ -259,8 +257,7 @@ export default function Main() {
                                 <Layouts.Col
                                     gap={4}
                                     align={"center"}
-                                    style={{ width: windowSize.width > Root.Device.Tablet ? "80%" : "100%", transition: ".3s ease" }}
-                                >
+                                    style={{ width: windowSize.width > Root.Device.Tablet ? "80%" : "100%", transition: ".3s ease" }}>
                                     <Layouts.Row gap={2} responsive={"mobile"}>
                                         <a style={{ background: `url(${Btn1?.src}) 0% 0% / cover` }} href={"https://docs.coinmeca.net"} target={"_blank"}>
                                             <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
@@ -324,8 +321,7 @@ export default function Main() {
                                 img: { src: require("../../assets/main/mobile_screens.png") },
                             }}
                             style={{ height: `calc(100vh - 6em)`, scrollSnapAlign: "end" }}
-                            fullsize
-                        >
+                            fullsize>
                             <Layouts.Contents.InnerContent padding={8}>
                                 <Layouts.Col style={{ maxWidth: "70em" }}>
                                     <Layouts.Col gap={4}>

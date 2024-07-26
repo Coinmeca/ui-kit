@@ -18,7 +18,7 @@ export default function Data() {
     const { notis, toasts, count, addToast, addNotify, setNotis, resetCount } = useNotification();
 
     const { theme } = useTheme();
-    console.log(theme);
+    console.log("theme", theme);
 
     const notilist = [
         {
@@ -364,7 +364,7 @@ export default function Data() {
     };
 
     const fetchWalletList = (chain?: any): any[] => {
-        console.log(chain);
+        console.log("chain", chain);
         // return walletList.filter((w: any) => w?.chain);
         return Object.values(walletList);
     };

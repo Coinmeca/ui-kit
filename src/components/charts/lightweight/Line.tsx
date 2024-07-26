@@ -83,9 +83,8 @@ export const Line = (props: Line) => {
                 }),
                 key?.time,
                 props?.data && props?.data?.length > 0 && typeof (props?.data[0] as any)[key?.time] === "number" ? "number" : "string",
-                true
+                true,
             );
-            console.log(test);
             setData(test);
         }
     }, [props?.data]);
@@ -103,9 +102,8 @@ export const Line = (props: Line) => {
                 }),
                 key?.time,
                 props?.volume && props?.volume?.length > 0 && typeof (props?.volume[0] as any)[key?.time] === "number" ? "number" : "string",
-                true
+                true,
             );
-            console.log(test);
             setVolume(test);
         }
     }, [props?.volume, up, down, color]);
