@@ -3,7 +3,7 @@
         "rootDir": "src",
         "baseUrl": "src",
         "outDir": "dist",
-        "target": "ES6",
+        "target": "ESNext",
         "module": "ESNext",
         "lib": ["dom", "dom.iterable", "esnext"],
         "skipLibCheck": true,

@@ -3,7 +3,7 @@ const path = require("path");
 
 const nextConfig = {
     reactStrictMode: true,
-    webpack: (config, { isServer }) => {
+    webpack: (config) => {
         config.module.rules.push({
             test: /\.svg$/,
             use: ["@svgr/webpack"],
@@ -12,13 +12,6 @@ const nextConfig = {
         // Support for absolute imports
         config.resolve.modules.push(path.resolve("./src"));
 
-        if (!isServer) {
-            config.resolve.fallback = {
-                fs: false,
-                path: false,
-            };
-        }
-        
         return config;
     },
     webpack5: true, // Ensure Webpack 5 is used
