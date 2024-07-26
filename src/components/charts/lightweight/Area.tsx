@@ -1,8 +1,8 @@
 "use client";
-import { Sort } from "lib/utils";
 import type { AreaData, HistogramData } from "lightweight-charts";
 import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
+import { sort } from "lib/utils";
 import { Volume } from "./Candle";
 import Style from "./Chart.styled";
 
@@ -75,7 +75,7 @@ export const Area = (props: Area) => {
     useEffect(() => {
         if (props?.data && props?.data?.length > 0) {
             setData(
-                Sort(
+                sort(
                     props?.data?.map(
                         (v: any) =>
                             ({
@@ -94,7 +94,7 @@ export const Area = (props: Area) => {
     useEffect(() => {
         if (props?.volume && props?.volume?.length > 0) {
             setVolume(
-                Sort(
+                sort(
                     props?.volume?.map((v: any) => {
                         return {
                             time: v?.time,

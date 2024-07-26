@@ -2,13 +2,13 @@
 import { useState } from "react";
 import { Charts, Controls, Elements, Layouts } from "components";
 import { Modal } from "containers";
+import { usePortal, useWindowSize } from "hooks";
+import { Root } from "lib/style";
+import { capitalize, format } from "lib/utils";
 import { Asset } from "prefabs";
 import { Farms } from "prefabs/treasury";
-import { usePortal, useWindowSize } from "hooks";
-import { Capitalize, Format } from "lib/utils";
-import { Root } from "lib/style";
-import type { Farm } from "types/web3";
 import type { Stake as Data } from "types/history";
+import type { Farm } from "types/web3";
 
 export interface Detail {
     farm: Farm;
@@ -41,7 +41,7 @@ export default function Detail(props: Detail) {
     };
 
     const handleDetailModal = (data: any) => {
-        const date = (Format(data?.time || 0, "date") as string).split(" ");
+        const date = (format(data?.time || 0, "date") as string).split(" ");
         return (
             <Modal title={"Transaction Detail"} onClose={closeDetail} close>
                 <Layouts.Col gap={2} style={{ height: "100%" }}>
@@ -113,7 +113,7 @@ export default function Detail(props: Detail) {
                         handleDetail(null, {
                             type: data?.type,
                             time: data?.time,
-                            volume: data?.volume,
+                            amount: data?.amount,
                             share: data?.share,
                         });
                     },
@@ -127,7 +127,7 @@ export default function Detail(props: Detail) {
                                     children: [
                                         <>
                                             <Elements.Text color={colorset[`${data?.type as "STAKING" | "UNSTAKING"}`]} case={"capital"} fit>
-                                                {Capitalize(data?.type)}
+                                                {capitalize(data?.type)}
                                             </Elements.Text>
                                         </>,
                                         <>
@@ -139,7 +139,7 @@ export default function Detail(props: Detail) {
                                                     }}
                                                     fit
                                                 >
-                                                    {Format(data?.share || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                    {format(data?.share || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                 </Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} fit>
                                                     %
@@ -162,7 +162,7 @@ export default function Detail(props: Detail) {
                                                             fontFeatureSettings: "initial",
                                                         }}
                                                     >
-                                                        {Format(data?.volume || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                        {format(data?.amount || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                     </Elements.Text>
                                                     <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ maxWidth: "4em" }} fit>
                                                         {props?.farm?.stake?.symbol}
@@ -182,7 +182,7 @@ export default function Detail(props: Detail) {
                                                             fontFeatureSettings: "initial",
                                                         }}
                                                     >
-                                                        0{/* {Format(data?.meca || 0, "currency", { unit: 9, limit: 12, fix: 3 })} */}
+                                                        0{/* {format(data?.meca || 0, "currency", { unit: 9, limit: 12, fix: 3 })} */}
                                                     </Elements.Text>
                                                     <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ maxWidth: "4em" }} fit>
                                                         MECA
@@ -224,7 +224,7 @@ export default function Detail(props: Detail) {
                         <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
                             <Elements.Icon scale={1.5} icon={"caret-up"} change />
                             <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 1.75 }} change>
-                                {Format(props?.info?.apr, "currency", { unit: 9, limit: 12, fix: 3 })} %
+                                {format(props?.info?.apr, "currency", { unit: 9, limit: 12, fix: 3 })} %
                             </Elements.Text>
                         </Layouts.Row>
                     </Layouts.Row>

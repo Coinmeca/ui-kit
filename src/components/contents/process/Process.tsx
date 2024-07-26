@@ -1,5 +1,4 @@
 import { Contents, Layouts } from "components";
-import { type CSSProperties } from "react";
 import { type State } from "components/contents/states/State";
 
 export interface Process {

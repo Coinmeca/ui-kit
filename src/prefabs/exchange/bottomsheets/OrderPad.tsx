@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
-import { Numberpads } from "parts";
 import type { BottomSheet as Sheet } from "containers/bottomsheets/BottomSheet";
+import { parseNumber } from "lib/utils";
+import { Numberpads } from "parts";
 import type { CurrencyPad } from "parts/numberpads/currency/Currency";
 
 export interface OrderPad extends CurrencyPad, Sheet {
@@ -13,27 +14,29 @@ export interface OrderPad extends CurrencyPad, Sheet {
     unit?: string;
     padding?: number;
     onChange?: Function;
+    max?: string | number;
 }
 
 export default function OrderPad(props: OrderPad) {
     const width = 64;
-    const min = (typeof props?.height === "object" && props?.height?.min) || 36;
-    const max = (typeof props?.height === "object" && props?.height?.max) || "60vh";
     const height = {
-        min: (typeof props?.height === "object" ? props?.height?.min : props?.height) || min,
-        max: (typeof props?.height === "object" ? props?.height?.min : props?.height) || max,
+        min: (typeof props?.height === "object" ? props?.height?.min : props?.height) || 36,
+        max: (typeof props?.height === "object" ? props?.height?.min : props?.height) || "60vh",
     };
     const padding = props?.padding || 2;
     const [value, setValue] = useState(props?.value || "");
+    const max = parseNumber(props?.max);
 
     const handleChange = (e: any, v: string) => {
-        if (typeof props?.onChange === "function") props?.onChange(e, v);
-        setValue(v);
+        let value = parseNumber(v);
+        if (!isNaN(max) && max > 0 && !isNaN(value) && value > 0 && value > max) value = max;
+        if (typeof props?.onChange === "function") props?.onChange(e, value);
+        setValue(value);
     };
 
     useEffect(() => {
-        if (props?.value && props?.value !== value) setValue(props?.value?.toString() || "");
-    }, [props?.value, value]);
+        handleChange(null, props?.value?.toString() || "");
+    }, [props?.value]);
 
     return (
         <BottomSheet {...props} height={height}>
@@ -63,6 +66,7 @@ export default function OrderPad(props: OrderPad) {
                     placeholder={props?.placeholder}
                     value={value}
                     unit={props?.unit}
+                    max={!isNaN(max) && max > 0 ? max : undefined}
                     onChange={(e: any, v: string) => handleChange(e, v)}
                     left={{
                         children: props?.label && (

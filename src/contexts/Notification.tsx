@@ -1,5 +1,6 @@
 "use client";
-import { createContext, useState, type Dispatch, type SetStateAction, type CSSProperties } from "react";
+import { createContext, useState, type Dispatch, type SetStateAction } from "react";
+import { Swipe } from "hooks/useSwipe";
 
 export interface Notify {
     type?: "toast" | "notify";
@@ -12,6 +13,7 @@ export interface Notify {
     timer?: number;
     importance?: boolean;
     remain?: boolean;
+    swipe?: Swipe;
 }
 
 export interface NotificationContext {
@@ -27,6 +29,8 @@ export interface NotificationContext {
     setNotis: (notis: Notify[]) => void;
     setToasts: Dispatch<SetStateAction<Notify[]>>;
     setRead: Dispatch<SetStateAction<boolean>>;
+    saveNotis: (key?: string) => void;
+    loadNotis: (key?: string) => Notify[];
 }
 
 export const NotificationContext = createContext<NotificationContext>({} as NotificationContext);
@@ -92,9 +96,43 @@ export default function Notification({ children }: { children?: any }) {
         setCount(0);
     }
 
+    function saveNotis(key?: string) {
+        if (key && key !== "") {
+            const list = JSON.stringify(notis);
+            localStorage.setItem(`${key}.noti.list`, list);
+            localStorage.setItem(`${key}.noti.count`, count?.toString());
+        }
+    }
+
+    function loadNotis(key?: string) {
+        let list: Notify[] = [];
+        if (key && key !== "") {
+            list = JSON.parse(localStorage.getItem(`${key}.noti.list`) || "[]");
+            const count = parseInt(localStorage.getItem(`${key}.noti.count`) || "0");
+            if (list?.length > 0) setNotis(list);
+            if (count > 0 && !isNaN(count)) setCount(count);
+        }
+        return list;
+    }
+
     return (
         <NotificationContext.Provider
-            value={{ notis, toasts, count, read, addNotify, addToast, removeNotify, removeToast, resetCount, setNotis, setToasts, setRead }}
+            value={{
+                notis,
+                toasts,
+                count,
+                read,
+                addNotify,
+                addToast,
+                removeNotify,
+                removeToast,
+                resetCount,
+                setNotis,
+                setToasts,
+                setRead,
+                saveNotis,
+                loadNotis,
+            }}
         >
             {children}
         </NotificationContext.Provider>

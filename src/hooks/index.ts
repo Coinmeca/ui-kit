@@ -4,7 +4,8 @@ import useOrder from './useOrder';
 import usePortal from './usePortal';
 import useScrollPosition from './useScrollPosition';
 import useSort from './useSort';
+import useSwipe from './useSwipe';
 import useTheme from './useTheme';
 import useWindowSize from './useWindowSize';
 
-export { useMobile, useNotification, useOrder, usePortal, useScrollPosition, useSort, useTheme, useWindowSize };
+export { useMobile, useNotification, useOrder, usePortal, useScrollPosition, useSort, useSwipe, useTheme, useWindowSize };

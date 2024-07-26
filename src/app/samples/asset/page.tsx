@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Layouts } from "components";
+import { useWindowSize } from "hooks";
+import { Root } from "lib/style";
 import { Asset } from "prefabs";
 import { Token } from "types/web3";
-import { Root } from "lib/style";
-import { useWindowSize } from "hooks";
 import Data from "./data";
 
 export default function Page() {

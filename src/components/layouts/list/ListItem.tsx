@@ -1,6 +1,5 @@
 "use client";
-import { type CSSProperties } from "react";
-import Style, { Row, Col } from "./ListItem.styled";
+import Style, { Col, Row } from "./ListItem.styled";
 
 export interface ListItem {
     children?: any;
@@ -51,7 +50,7 @@ export default function ListItem(props: ListItem) {
     };
 
     return (
-        <Style $change={props?.change} style={props?.style} onClick={(e: any) => handleClick(e)} $event={typeof props?.onClick === "function" ? true : false}>
+        <Style $gap={props?.gap} $change={props?.change} style={props?.style} onClick={(e: any) => handleClick(e)} $event={typeof props?.onClick === "function" ? true : false}>
             {ListCol(props?.children)}
         </Style>
     );

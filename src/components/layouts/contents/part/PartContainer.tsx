@@ -42,14 +42,12 @@ export default function PartContainer(props: PartContainer) {
         <Style $state={state} style={props?.style}>
             <div
                 style={{
-                    transform: `translateX(${typeof state === "undefined" || state === null ? "-100%" : state ? "-200%" : "0"}`,
+                    transform: `translateX(${typeof state === "undefined" || state === null ? "-33.333%" : state ? "-66.666%" : "0"}`,
                 }}
             >
-                <Part $state={state} style={{}}>
-                    {props?.left?.children}
-                </Part>
-                <Part $state={state}>{props?.content}</Part>
-                <Part $state={state}>{props?.right?.children}</Part>
+                <Part $state={state === false} style={{}}>{props?.left?.children}</Part>
+                <Part $state={state === null}>{props?.content}</Part>
+                <Part $state={state === true}>{props?.right?.children}</Part>
             </div>
         </Style>
     );

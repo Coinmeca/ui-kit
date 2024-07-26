@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
-import { Root } from "lib/style";
 import { Layouts } from "components";
+import { useWindowSize } from "hooks";
+import { Root } from "lib/style";
 import { Treasury } from "prefabs";
 import { Farm, Token } from "types/web3";
-import { useWindowSize } from "hooks";
 import Data from "./data";
 
 export default function Page() {
@@ -33,7 +33,7 @@ export default function Page() {
                     {
                         active: !asset && !farm,
                         children: (
-                            <Treasury.View
+                            <Treasury.List
                                 assets={props?.assets}
                                 farms={props?.farms}
                                 page={page}

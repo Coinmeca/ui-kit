@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
-import { Asset } from "prefabs";
 import { useSort } from "hooks";
-import { Filter, Format } from "lib/utils";
+import { filter, format } from "lib/utils";
+import { Asset } from "prefabs";
 import { Token } from "types/web3";
 
 export interface View {
@@ -155,7 +155,7 @@ export default function View(props: any) {
                 <Layouts.Row fix align="right">
                     <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
                         <Elements.Text size={2.5} height={1} responsive={{ device: "tablet", size: 2 }} change>
-                            $ {Format("1,567,851,378.516", "currency", { unit: 9, limit: 12, fix: 3 })}
+                            $ {format("1,567,851,378.516", "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Row>
@@ -267,7 +267,7 @@ export default function View(props: any) {
                                     </Layouts.Row>
                                     <Layouts.Divider />
                                     <Layouts.List
-                                        list={Filter(sorting(props?.assets), keyword)}
+                                        list={filter(sorting(props?.assets), keyword)}
                                         formatter={assetListFormatter}
                                         fallback={"There is no assets yet."}
                                     />

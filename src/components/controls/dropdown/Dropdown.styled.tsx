@@ -145,6 +145,7 @@ const Style = styled.div<{
     -ms-user-select: none;
     user-select: none;
     transition: 0.3s ease;
+    -webkit-backdrop-filter: var(--blur);
     backdrop-filter: var(--blur);
 
     ${Option}, ${Options} {

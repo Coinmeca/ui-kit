@@ -1,8 +1,8 @@
 "use client";
-import React, { Suspense, memo, useEffect, useRef, useState } from "react";
-import { createChart } from "lightweight-charts";
 import type { CandlestickData, HistogramData } from "lightweight-charts";
-import { Sort } from "lib/utils";
+import { createChart } from "lightweight-charts";
+import { Suspense, memo, useEffect, useRef, useState } from "react";
+import { sort } from "lib/utils";
 import Style from "./Chart.styled";
 
 export interface Candle {
@@ -84,7 +84,7 @@ export const Candle = (props: Candle) => {
     useEffect(() => {
         if (props?.price && props?.price?.length > 0) {
             setPrice(
-                Sort(
+                sort(
                     props?.price?.map((v: Price) => {
                         return {
                             ...v,
@@ -101,7 +101,7 @@ export const Candle = (props: Candle) => {
     useEffect(() => {
         if (props?.volume && props?.volume?.length > 0) {
             setVolume(
-                Sort(
+                sort(
                     props?.volume?.map((v: any) => {
                         return {
                             time: v[key?.time],

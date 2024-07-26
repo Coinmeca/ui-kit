@@ -1,19 +1,19 @@
 "use client";
-import { memo, useEffect, useState } from "react";
 import { Layouts } from "components";
-import Style from "./Toast.styled";
+import { type Notify as Content } from "contexts/Notification";
+import { Swipe } from "hooks/useSwipe";
 import Notify from "../notification/Notify";
-import { type Notify as Content } from "../../../contexts/Notification";
-import { AnimatePresence, motion } from "framer-motion";
+import Style from "./Toast.styled";
 
 export interface Toast {
     list?: Content[];
     active?: boolean;
     width?: number;
     align?: "left" | "right";
+    swipe?: Swipe;
 }
 
-export default function Toast({ list, active, width, align }: Toast) {
+export default function Toast({ list, active, width, align, swipe }: Toast) {
     width = width || 60;
     align = align === "left" || align === "right" ? align : "left";
 
@@ -35,7 +35,7 @@ export default function Toast({ list, active, width, align }: Toast) {
                                 // exit={{ x: "15%", opacity: 0 }}
                                 // transition={{ ease: "easeInOut", duration: 0.3 }}
                                 // layout
-                                {...{ ...v, type: "toast" }}
+                                {...{ ...v, swipe, type: "toast" }}
                             />
                         ))}
                     {/* </AnimatePresence> */}

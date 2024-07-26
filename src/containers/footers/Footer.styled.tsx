@@ -2,12 +2,16 @@
 import { styled } from "styled-components";
 import { Root } from "lib/style";
 import * as Row from "components/layouts/row/Row.styled";
+import * as Col from "components/layouts/col/Col.styled";
 
 export const Logo = styled.a`
     max-width: max-content;
 `;
 
 export const Style = styled.section`
+    --white: 255, 255, 255;
+    --black: 0, 0, 0;
+
     scroll-snap-align: end;
     position: relative;
     flex-direction: row;
@@ -18,6 +22,11 @@ export const Style = styled.section`
     padding: 4em;
     padding-bottom: 8em;
     overflow: hidden;
+
+    a:hover,
+    a:active {
+        background: none;
+    }
 
     &:after {
         content: "";
@@ -33,10 +42,19 @@ export const Style = styled.section`
 
     @media all and (max-width: ${Root.Device.Tablet}px) {
         & {
+            padding: 3em;
             padding-bottom: 8em;
 
             ${Row.default} {
                 ${Row.default} {
+                    width: initial !important;
+                    max-width: initial !important;
+
+                    ${Col.default} {
+                        flex: 1;
+                        width: 100%;
+                    }
+
                     ${Row.default} {
                         width: initial !important;
                         max-width: initial !important;

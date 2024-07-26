@@ -1,10 +1,10 @@
-"use client";
-import { useState } from "react";
-import type { Order } from "types";
+'use client';
+import { useState } from 'react';
+import type { Order } from 'types';
 
 export default function useOrder(initial: Order, mode: boolean, fee: number, available?: number) {
     const [order, setOrder] = useState<Order>({
-        pay: initial?.pay || { address: "", name: "", symbol: "", decimals: 0 },
+        pay: initial?.pay || { address: '', name: '', symbol: '', decimals: 0 },
         price: initial?.price || 0,
         amount: initial?.amount || 0,
         quantity: initial?.quantity || 0,
@@ -20,9 +20,7 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
 
     const getQuantity = (quantity: number, price?: number): number => {
         const p = price || order?.price;
-        console.log("getQuantity", "p", p);
         const max = maxQuantity(p);
-        console.log("max", max);
         return max && max < quantity ? max : quantity;
     };
 
@@ -52,68 +50,68 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
     };
 
     const amount = (amount: number, price?: number) => {
-        let o: Order;
-        const p = price || order?.price;
+        let o: any;
+        setOrder((state: Order) => {
+            const p = price || state?.price;
 
-        if (amount === 0 || p === 0) {
-            o = {
-                ...order,
-                price: p,
-                amount: 0,
-                quantity: 0,
-                fees: 0,
-                total: 0,
+            if (amount === 0 || p === 0) {
+                return {
+                    ...state,
+                    price: p,
+                    amount: state?.amount,
+                    quantity: 0,
+                    fees: 0,
+                    total: 0,
+                };
             }
-            setOrder(o);
+
+            const a = getAmount(amount, p);
+            const q = mode ? a / p : a * p;
+            const f = fees(q);
+
+            o = {
+                ...state,
+                price: p,
+                amount: a,
+                quantity: q,
+                fees: f,
+                total: q - f,
+            };
             return o;
-        }
-
-        const a = getAmount(amount, p);
-        const q = mode ? a / p : a * p;
-        const f = fees(q);
-
-        o = {
-            ...order,
-            price: p,
-            amount: a,
-            quantity: q,
-            fees: f,
-            total: q - f,
-        };
-        setOrder(o);
+        });
         return o;
     };
 
     const quantity = (quantity: number, price?: number) => {
-        let o: Order;
-        const p = price || order?.price;
+        let o: any;
+        setOrder((state: Order) => {
+            const p = price || state?.price;
 
-        if (quantity === 0 || p === 0) {
+            if (quantity === 0 || p === 0) {
+                return {
+                    ...state,
+                    price: p,
+                    amount: 0,
+                    quantity: 0,
+                    fees: 0,
+                    total: 0,
+                };
+            }
+
+            const q = getQuantity(quantity, p);
+            const a = mode ? q * p : q / p;
+            const f = fees(q);
+
             o = {
-                ...order,
+                ...state,
                 price: p,
-                amount: 0,
-                quantity: 0,
-                fees: 0,
-                total: 0,
+                amount: a,
+                quantity: q,
+                fees: f,
+                total: q - f,
             };
-            setOrder(o);
             return o;
-        }
-
-        const q = getQuantity(quantity, p);
-        const a = mode ? q * p : q / p;
-        const f = fees(q);
-
-        o = {
-            ...order,
-            price: p,
-            amount: a,
-            quantity: q,
-            fees: f,
-            total: q - f,
-        };
-        setOrder(o);
+        });
         return o;
     };
 

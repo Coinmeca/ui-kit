@@ -1,12 +1,13 @@
 "use client";
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
-import { Modals } from "containers";
-import { Format } from "lib/utils";
-import { Token } from "types/web3";
-import { usePortal } from "hooks";
 import type { List } from "components/layouts/list/List";
+import { Modals } from "containers";
+import { usePortal } from "hooks";
+import { format } from "lib/utils";
 import type { History as H } from "types/history";
+import { Token } from "types/web3";
+import { colorMap } from "./History";
 
 export interface History extends List {
     assets?: Token[];
@@ -39,11 +40,11 @@ export default function HistoryShort(props: History) {
                             <Layouts.Col gap={1}>
                                 <Layouts.Row gap={1} fix>
                                     <Layouts.Col gap={0}>
-                                        <Elements.Text height={1.5} color={colorset[data?.category]}>
-                                            {category[data?.category]}
+                                        <Elements.Text height={1.5} color={colorMap[data?.category]}>
+                                            {data?.category}
                                         </Elements.Text>
                                         <Elements.Text height={1.5} opacity={data?.state === 1 ? 0.3 : 1}>
-                                            {state[data?.state]}
+                                            {data?.state}
                                         </Elements.Text>
                                     </Layouts.Col>
                                     <Layouts.Col gap={0}>
@@ -60,7 +61,7 @@ export default function HistoryShort(props: History) {
                                     <Elements.Text opacity={0.3} fit>
                                         Price
                                     </Elements.Text>
-                                    <Elements.Text align={"right"}>{Format(data?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
+                                    <Elements.Text align={"right"}>{format(data?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                                     <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
                                         {data?.quote}
                                     </Elements.Text>
@@ -70,7 +71,7 @@ export default function HistoryShort(props: History) {
                                     <Elements.Text opacity={0.3} fit>
                                         Amount
                                     </Elements.Text>
-                                    <Elements.Text align={"right"}>{Format(data?.amount, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
+                                    <Elements.Text align={"right"}>{format(data?.amount, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                                     <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
                                         {data?.quote}
                                     </Elements.Text>
@@ -79,7 +80,7 @@ export default function HistoryShort(props: History) {
                                     <Elements.Text opacity={0.3} fit>
                                         Quantity
                                     </Elements.Text>
-                                    <Elements.Text align={"right"}>{Format(data?.quantity, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
+                                    <Elements.Text align={"right"}>{format(data?.quantity, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                                     <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
                                         {data?.base}
                                     </Elements.Text>
@@ -90,7 +91,7 @@ export default function HistoryShort(props: History) {
                                         Fees
                                     </Elements.Text>
                                     <Elements.Text opacity={0.6} align={"right"}>
-                                        - {Format(data?.fees, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                        - {format(data?.fees, "currency", { unit: 9, limit: 12, fix: 3 })}
                                     </Elements.Text>
                                     <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
                                         {data?.base}
@@ -101,7 +102,7 @@ export default function HistoryShort(props: History) {
                                         Total
                                     </Elements.Text>
                                     <Elements.Text align={"right"}>
-                                        {Format(data?.quantity - data?.fees, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                        {format(data?.quantity - data?.fees, "currency", { unit: 9, limit: 12, fix: 3 })}
                                     </Elements.Text>
                                     <Elements.Text opacity={0.3} style={{ maxWidth: "6em" }}>
                                         {data?.base}
@@ -131,7 +132,7 @@ export default function HistoryShort(props: History) {
                 const pay: any = props?.assets?.find((a: Token) => a?.address === data?.pay)?.symbol;
                 const item: any = props?.assets?.find((a: Token) => a?.address === data?.item)?.symbol;
 
-                const date = (Format(data?.time, "date") as string).split(" ");
+                const date = (format(data?.time, "date") as string).split(" ");
                 return {
                     onClick: () => {
                         handleDetail(handleDetailModal, {
@@ -157,10 +158,12 @@ export default function HistoryShort(props: History) {
                                             gap: 0,
                                             children: [
                                                 <>
-                                                    <Elements.Text color={colorset[data?.category]}>{category[data?.category]}</Elements.Text>
+                                                    <Elements.Text color={colorMap[data?.category]}>{data?.category}</Elements.Text>
                                                 </>,
                                                 <>
-                                                    <Elements.Text opacity={data?.state === 1 ? 0.3 : 1}>{state[data?.state]}</Elements.Text>
+                                                    <Elements.Text opacity={data?.state === "Pending" || data?.state === "Open" ? 1 : 0.3}>
+                                                        {data?.state}
+                                                    </Elements.Text>
                                                 </>,
                                             ],
                                         },
@@ -205,7 +208,7 @@ export default function HistoryShort(props: History) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"} fix>
-                                                                {Format(data?.amount || 0, "currency", { unit: 6, limit: 8, fix: 2 })}
+                                                                {format(data?.amount || 0, "currency", { unit: 6, limit: 8, fix: 2 })}
                                                             </Elements.Text>
                                                             <Elements.Text
                                                                 align={"left"}
@@ -225,7 +228,7 @@ export default function HistoryShort(props: History) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"} fix>
-                                                                {Format(data?.price || 0, "currency", { unit: 6, limit: 8, fix: 2 })}
+                                                                {format(data?.price || 0, "currency", { unit: 6, limit: 8, fix: 2 })}
                                                             </Elements.Text>
                                                             <Elements.Text
                                                                 align={"left"}
@@ -251,7 +254,7 @@ export default function HistoryShort(props: History) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"} fix>
-                                                                {Format(data?.quantity || 0, "currency", { unit: 6, limit: 8, fix: 2 })}
+                                                                {format(data?.quantity || 0, "currency", { unit: 6, limit: 8, fix: 2 })}
                                                             </Elements.Text>
                                                             <Elements.Text
                                                                 align={"left"}
@@ -271,7 +274,7 @@ export default function HistoryShort(props: History) {
                                                     style: { opacity: 0.3 },
                                                     children: (
                                                         <>
-                                                            <Elements.Text align={"right"} fix>{`- ${Format(data?.fees || 0, "currency", {
+                                                            <Elements.Text align={"right"} fix>{`- ${format(data?.fees || 0, "currency", {
                                                                 unit: 6,
                                                                 limit: 8,
                                                                 fix: 2,

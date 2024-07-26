@@ -5,7 +5,7 @@ import { Root, createRoot } from 'react-dom/client';
 
 type Child = Function | ReactNode | null;
 type Args = [Child] | [object] | [Child, object] | undefined[];
-type Portal = [(...args: Args) => void, Function];
+type Portal = [open: (...args: Args) => void, close: Function, reset: Function];
 
 export default function usePortal(initial?: any, initialProps?: any): Portal {
     const [root, setRoot] = useState<Root | undefined>(undefined);
@@ -27,12 +27,8 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
             setRoot(undefined);
 
             setTimeout(() => {
-                if (r) {
-                    r.unmount();
-                }
-                if (p.parentNode) {
-                    p.parentNode.removeChild(p);
-                }
+                if (r) r.unmount();
+                if (p.parentNode) p.parentNode.removeChild(p);
             }, 0);
         };
     }, []);
@@ -83,5 +79,8 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
             });
             setActive(false);
         },
+        () => {
+            setProps(({ active }: { active: boolean }) => ({ active }));
+        }
     ];
 }

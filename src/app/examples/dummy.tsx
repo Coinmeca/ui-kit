@@ -1,11 +1,9 @@
 "use client";
-import { useContext, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Elements, Layouts, Controls } from "components";
+import { useContext, useState } from "react";
+import { Controls, Elements, Layouts } from "components";
 import { Sidebars } from "containers";
 import { NotificationContext } from "contexts/Notification";
-
-import Coinmeca from "assets/coinmeca.svg";
 
 export default function Dummy() {
     const [value, setValue] = useState<number>(0);
@@ -339,7 +337,7 @@ export default function Dummy() {
                         </Elements.Text>
                     </Layouts.Col>
                     <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
-                        Get Started with Sign up
+                        Get Started with sign up
                     </Controls.Button>
                 </Layouts.Col>
             ),
@@ -368,7 +366,7 @@ export default function Dummy() {
                         </Elements.Text>
                     </Layouts.Col>
                     <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
-                        Get Started with Sign up
+                        Get Started with sign up
                     </Controls.Button>
                 </Layouts.Col>
             ),
@@ -391,7 +389,7 @@ export default function Dummy() {
                         </Elements.Text>
                     </Layouts.Col>
                     <Controls.Button type="glass" style={{ padding: "1em 2em" }} color="white" fit>
-                        Get Started with Sign up
+                        Get Started with sign up
                     </Controls.Button>
                 </Layouts.Col>
             ),
@@ -669,22 +667,22 @@ export default function Dummy() {
             children: [
                 {
                     name: "Tab",
-                    href: "/examples/tab",
+                    path: "/examples/tab",
                     onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "Slide",
-                    href: "/examples/slide",
+                    path: "/examples/slide",
                     onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "List & Table",
-                    href: "/examples/list-and-table",
+                    path: "/examples/list-and-table",
                     onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "Grid",
-                    href: "/examples/grid",
+                    path: "/examples/grid",
                     onClick: () => setMobileMenu(""),
                 },
             ],
@@ -845,110 +843,6 @@ export default function Dummy() {
         },
     };
 
-    const footer = {
-        logo: { href: "", src: <Coinmeca height={40} /> },
-        menus: [
-            {
-                title: "Services",
-                gap: 2,
-                children: {
-                    gap: 4,
-                    children: [
-                        {
-                            href: "/",
-                            type: "button",
-                            name: "Asset",
-                        },
-                        {
-                            href: "/",
-                            type: "button",
-                            name: "Exchange",
-                        },
-                        {
-                            href: "/",
-                            type: "button",
-                            name: "Treasury",
-                        },
-                    ],
-                },
-            },
-            {
-                title: {
-                    name: "Services",
-                    opacity: 1,
-                    weight: "bold",
-                },
-                children: [
-                    {
-                        href: "/",
-                        type: "button",
-                        name: "Asset",
-                    },
-                    {
-                        href: "/",
-                        type: "button",
-                        name: "Exchange",
-                    },
-                    {
-                        href: "/",
-                        type: "button",
-                        name: "Treasury",
-                    },
-                ],
-            },
-            [
-                {
-                    href: "/",
-                    type: "button",
-                    name: "Asset",
-                },
-                {
-                    href: "/",
-                    type: "button",
-                    name: "Exchange",
-                },
-                {
-                    href: "/",
-                    type: "button",
-                    name: "Treasury",
-                },
-            ],
-        ],
-        side: {
-            gap: 1,
-            fit: true,
-            children: [
-                {
-                    gap: 0,
-                    children: [
-                        <>
-                            <Controls.Button icon={"discord"} title={"Discord"} fit />
-                        </>,
-                        <>
-                            <Controls.Button icon={"twitter"} title={"X"} fit />
-                        </>,
-                        <>
-                            <Controls.Button icon={"telegram"} title={"Telegram"} fit />
-                        </>,
-                        <>
-                            <Controls.Button icon={"book"} title={"Documents"} fit />
-                        </>,
-                        <>
-                            <Controls.Button icon={"medium"} title={"Medium"} fit />
-                        </>,
-                    ],
-                },
-                [
-                    <>
-                        <Elements.Text type={"button"} fit>
-                            Contact us
-                        </Elements.Text>
-                    </>,
-                ],
-            ],
-        },
-    };
-
     const toast = {
         active: toasts.length > 0 && mobileMenu !== "notify",
         list: toasts,
@@ -973,6 +867,5 @@ export default function Dummy() {
         header,
         sidebars,
         toast,
-        footer,
     };
 }

@@ -2,9 +2,8 @@
 import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Modal, Modals } from "containers";
-import usePortal from "../../../hooks/usePortal";
+import usePortal from "hooks/usePortal";
 import Dummy from "../dummy";
-import { Format } from "../../../lib/utils";
 
 export default function Page() {
     const { slides2, tab, setTab, tabs } = Dummy();

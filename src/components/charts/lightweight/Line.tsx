@@ -1,8 +1,8 @@
 "use client";
-import { Sort } from "lib/utils";
 import type { LineData } from "lightweight-charts";
 import { HistogramData, createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
+import { sort } from "lib/utils";
 import type { Volume } from "./Candle";
 import Style from "./Chart.styled";
 
@@ -74,7 +74,7 @@ export const Line = (props: Line) => {
 
     useEffect(() => {
         if (props?.data && props?.data?.length > 0) {
-            const test = Sort(
+            const test = sort(
                 props?.data?.map((v: any) => {
                     return {
                         time: v?.time,
@@ -92,7 +92,7 @@ export const Line = (props: Line) => {
 
     useEffect(() => {
         if (props?.volume && props?.volume?.length > 0) {
-            const test = Sort(
+            const test = sort(
                 props?.volume?.map((v: any) => {
                     return {
                         time: v?.time,

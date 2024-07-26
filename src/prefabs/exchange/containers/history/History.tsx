@@ -1,8 +1,8 @@
 "use client";
 
-import { Elements, Layouts } from "components";
 import { AnimatePresence, motion } from "framer-motion";
-import { Format } from "lib/utils";
+import { Elements, Layouts } from "components";
+import { format } from "lib/utils";
 import { Tick } from "../orderbook/Orderbook.styled";
 
 export interface History {
@@ -20,7 +20,7 @@ export interface MarketHistory {
 export default function History(props: History) {
     const view = props?.view || 0;
     const data = props?.data?.filter((f: MarketHistory) => (view === 1 ? f?.type === "sell" : view === 2 ? f?.type === "buy" : f)) || [];
-    const max: number = (data && data?.length > 0 && Math.max(...data?.map((d: MarketHistory) => parseFloat(Format(d?.quantity, "number", true))))) || 0;
+    const max: number = (data && data?.length > 0 && Math.max(...data?.map((d: MarketHistory) => parseFloat(format(d?.quantity, "number", true))))) || 0;
 
     return (
         <Layouts.Contents.InnerContent scroll>
@@ -41,7 +41,7 @@ export default function History(props: History) {
                             <div onMouseEnter={(e) => e?.stopPropagation()}>
                                 <div>
                                     <div>
-                                        <span style={{ left: 0, minWidth: "max-content" }}>{(Format(d?.time, "date", true) as string)?.split(" ")[1]}</span>
+                                        <span style={{ left: 0, minWidth: "max-content" }}>{(format(d?.time, "date", true) as string)?.split(" ")[1]}</span>
                                     </div>
                                     <div
                                         style={{
@@ -50,20 +50,20 @@ export default function History(props: History) {
                                                 d?.type === "buy" ? "green" : "red"
                                             }),0.15))`,
                                             backgroundSize: `${
-                                                (parseFloat(Format(d?.quantity, "number", true)) / max) * 100 > 100
+                                                (parseFloat(format(d?.quantity, "number", true)) / max) * 100 > 100
                                                     ? "100"
-                                                    : (parseFloat(Format(d?.quantity, "number", true)) / max) * 100 < 0
+                                                    : (parseFloat(format(d?.quantity, "number", true)) / max) * 100 < 0
                                                     ? "0"
-                                                    : (parseFloat(Format(d?.quantity, "number", true)) / max) * 100
+                                                    : (parseFloat(format(d?.quantity, "number", true)) / max) * 100
                                             }% 100%`,
                                         }}
                                     >
                                         <span style={{ color: `${d?.type === "buy" ? "green" : "red"}` }}>
-                                            {Format(d?.quantity, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                            {format(d?.quantity, "currency", { unit: 9, limit: 12, fix: 3 })}
                                         </span>
                                     </div>
                                     <span style={{ display: "table-cell", padding: "0.5em 1em" }}>
-                                        <span>{Format(d?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
+                                        <span>{format(d?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
                                     </span>
                                 </div>
                             </div>

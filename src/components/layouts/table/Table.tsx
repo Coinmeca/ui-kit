@@ -10,6 +10,7 @@ export interface Table {
     formatter?: Function;
     fallback?: string | ReactNode | JSX.Element | Function;
     style?: object;
+    fix?: boolean;
 }
 
 export default function Table(props: Table) {
@@ -19,7 +20,7 @@ export default function Table(props: Table) {
         <>
             {props?.list && typeof props?.list !== "string" && props?.list?.length > 0 ? (
                 <AnimatePresence>
-                    <Style style={props?.style}>
+                    <Style $fix={props?.fix || false} style={props?.style}>
                         {(typeof props?.formatter === "function" ? props?.formatter(props?.list) : props?.list)?.map((data: any, i: number) => (
                             <TableItem
                                 key={data?.index || i}

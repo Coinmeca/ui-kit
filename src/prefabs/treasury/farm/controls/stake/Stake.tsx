@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
+import { useMobile, useOrder, usePortal } from "hooks";
+import { format } from "lib/utils";
 import { Exchange } from "prefabs";
-import { useOrder, usePortal, useMobile } from "hooks";
-import { Format } from "lib/utils";
 import type { Token } from "types/web3";
 
 export interface StakeControl {
@@ -32,7 +32,7 @@ export default function Stake(props: StakeControl) {
 
     const mode = typeof props?.mode === "undefined" ? true : props?.mode;
     const assets = props?.assets || [];
-    const available = parseFloat(Format(assets[0]?.balance || 0, "number", true));
+    const available = parseFloat(format(assets[0]?.balance || 0, "number", true));
 
     const option = props?.option || "market";
     const [currency, setCurrency] = useState(0);
@@ -43,7 +43,7 @@ export default function Stake(props: StakeControl) {
     const { order, price, amount, quantity } = useOrder(
         {
             pay: assets[0],
-            price: parseFloat(Format(props?.price || 1, "number", true)),
+            price: parseFloat(format(props?.price || 1, "number", true)),
             amount: 0,
             quantity: 0,
             fees: 0,
@@ -100,18 +100,18 @@ export default function Stake(props: StakeControl) {
     }, [order]);
 
     const handleChangePrice = (p: number | string) => {
-        price(parseFloat(Format(p, "number", true)));
+        price(parseFloat(format(p, "number", true)));
     };
 
     const handleChangeAmount = (a: number | string) => {
-        currency === 0 ? quantity(parseFloat(Format(a, "number", true))) : amount(parseFloat(Format(a, "number", true)));
+        currency === 0 ? quantity(parseFloat(format(a, "number", true))) : amount(parseFloat(format(a, "number", true)));
     };
 
     const handleChangeRange = (v: number) => {
         if (available > 0)
             currency === 0
-                ? quantity(((parseFloat(Format(available, "number", true)) / order.price) * parseFloat(Format(v, "number", true))) / 100)
-                : amount((parseFloat(Format(available, "number", true)) * parseFloat(Format(v, "number", true))) / 100);
+                ? quantity(((parseFloat(format(available, "number", true)) / order.price) * parseFloat(format(v, "number", true))) / 100)
+                : amount((parseFloat(format(available, "number", true)) * parseFloat(format(v, "number", true))) / 100);
     };
 
     const pricePosition = order.price === 0 ? 0 : (1 - parseFloat(props?.price?.toString()) / order.price) * 100;
@@ -140,7 +140,7 @@ export default function Stake(props: StakeControl) {
             value={currency === 0 ? order.quantity : order.amount}
             unit={[...assets].reverse()[currency]?.symbol}
             sub={{
-                value: `= ${Format(currency === 0 ? order.amount : order.quantity || 0, "currency", { unit: 9, limit: 12, fix: 3 })}`,
+                value: `= ${format(currency === 0 ? order.amount : order.quantity || 0, "currency", { unit: 9, limit: 12, fix: 3 })}`,
                 unit: assets[currency]?.symbol,
             }}
             button={{
@@ -155,13 +155,13 @@ export default function Stake(props: StakeControl) {
 
     return (
         <Layouts.Col gap={gap.col.big} style={{ paddingTop: `${gap.col.small}em` }}>
-            <Layouts.Row gap={gap.row} style={gap.space.big} fix>
+            <Layouts.Row gap={gap.row} style={{ ...gap.space.big, overflow: "hidden" }} fix>
                 <Elements.Text height={text.height} opacity={text.opacity} style={text.label} fit>
                     Available
                 </Elements.Text>
                 <Layouts.Row gap={gap.row} fix>
                     <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                        {Format(assets[0]?.balance as number, "currency", { unit: 9, limit: 12, fix: 3 })}
+                        {format(assets[0]?.balance as number, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                     <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                         {assets[0]?.symbol}
@@ -226,7 +226,7 @@ export default function Stake(props: StakeControl) {
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
                         <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                            - {Format(order.fees as number, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            - {format(order.fees as number, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                             {assets[1]?.symbol}
@@ -239,7 +239,7 @@ export default function Stake(props: StakeControl) {
                     </Elements.Text>
                     <Layouts.Row gap={gap.row} fix>
                         <Elements.Text height={text.height} align={"right"} style={text.setting}>
-                            {Format(order.total as number, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            {format(order.total as number, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                         <Elements.Text height={text.height} opacity={text.opacity} style={text.width}>
                             {assets[1]?.symbol}

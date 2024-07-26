@@ -1,8 +1,8 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import { Controls, Elements, Layouts } from "components";
-import Style, { Close, ButtonArea } from "./Modal.styled";
 import { useEffect, useState } from "react";
+import { Controls, Elements, Layouts } from "components";
+import Style, { ButtonArea, Close } from "./Modal.styled";
 
 export interface Modal {
     active?: boolean;
@@ -53,7 +53,7 @@ export default function Modal(props: Modal) {
                         $width={width}
                         as={motion.div}
                         initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
+                        animate={{ scale: active ? 1 : 0.9, opacity: active ? 1 : 0 }}
                         exit={{ scale: 0.9, opacity: 0 }}
                         transition={{ ease: "easeInOut", duration: 0.15 }}
                     >
@@ -77,7 +77,11 @@ export default function Modal(props: Modal) {
                                     {props?.children}
                                 </Layouts.Contents.InnerContent>
                             )}
-                            {props?.buttonArea && <ButtonArea>{props?.buttonArea}</ButtonArea>}
+                            {props?.buttonArea && (typeof props?.buttonArea?.active === "boolean" ? props?.buttonArea?.active : true) && (
+                                <ButtonArea $gap={props?.buttonArea?.gap} style={props?.buttonArea?.style}>
+                                    {props?.buttonArea?.children || props?.buttonArea}
+                                </ButtonArea>
+                            )}
                             {props?.close && (
                                 <Close>
                                     <Controls.Button icon={"x"} onClick={(e: any) => handleClose(e)} />

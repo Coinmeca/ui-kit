@@ -1,13 +1,12 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState, type CSSProperties } from "react";
+import Coinmeca from "assets/coinmeca.svg";
 import { animate, stagger } from "framer-motion";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Layouts } from "components";
 import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
-import { Style, Logo, Nav, MenuButton, Menu, Side } from "./Header.styled";
-import Coinmeca from "assets/coinmeca.svg";
+import { Logo, Menu, MenuButton, Nav, Side, Style } from "./Header.styled";
 
 export interface Header {
     logo?: Logo;
@@ -40,6 +39,7 @@ export interface Logo {
 }
 
 export interface Menu {
+    active?: boolean;
     name?: string;
     href?: string;
     onClick?: Function;
@@ -54,7 +54,6 @@ export interface Side {
 
 export default function Header(props: Header) {
     const { windowSize } = useWindowSize();
-    const path = usePathname();
     const scale = props?.scale || 1;
     const height = props?.height || 8;
     const color = props?.color || "white";
@@ -82,6 +81,10 @@ export default function Header(props: Header) {
             );
         }
     }, [mobileMenu, windowSize.width]);
+
+    useEffect(() => {
+        if (typeof props?.menu?.active === "boolean") setMobileMenu(props?.menu?.active);
+    }, [props?.menu?.active]);
 
     return (
         <Style $scale={scale} $color={color} $height={height} $side={side} style={props?.style}>
@@ -114,7 +117,7 @@ export default function Header(props: Header) {
                                         key={k}
                                         $scale={scale}
                                         $color={color}
-                                        data-active={path.startsWith(v?.href || "")}
+                                        data-active={v?.active}
                                         onClick={(e: any) => {
                                             if (typeof v?.onClick === "function") v?.onClick(e);
                                             setMobileMenu(false);

@@ -2,7 +2,8 @@
 
 import { Controls, Elements, Layouts } from "components";
 import { useSort } from "hooks";
-import { Filter, Format, Sign } from "lib/utils";
+import { filter, format, sign } from "lib/utils";
+import { Token } from "types";
 
 export interface Market {
     list: MarketData[];
@@ -12,11 +13,10 @@ export interface Market {
 }
 
 export interface MarketData {
-    logo?: string;
-    symbol?: string;
-    name?: string;
-    market?: string;
     address?: string;
+    ticker?: string;
+    base?: Token;
+    quote?: Token;
     price?: number | string;
     change?: number | string;
     volume?: number | string;
@@ -26,9 +26,8 @@ export default function Market(props: Market) {
     const { sorting, setSort, sortArrow } = useSort();
 
     const sorts = {
-        symbol: { key: "symbol", type: "string" },
-        name: { key: "name", type: "string" },
-        market: { key: "market", type: "string" },
+        symbol: { key: "base.symbol", type: "string" },
+        ticker: { key: "ticker", type: "string" },
         price: { key: "price", type: "number" },
         change: { key: "change", type: "number" },
         volume: { key: "volume", type: "number" },
@@ -39,6 +38,7 @@ export default function Market(props: Market) {
             typeof data !== "string" &&
             data?.length > 0 &&
             data?.map((data: MarketData) => ({
+                index: data?.address,
                 children: [
                     [
                         {
@@ -48,19 +48,20 @@ export default function Market(props: Market) {
                                     <Elements.Avatar
                                         // length={8}
                                         size={3}
-                                        img={data?.logo}
+                                        img={data?.base?.logo}
+                                        title={data?.base?.name}
                                         // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
                                     />
                                 </>,
                                 [
                                     <>
                                         <Elements.Text type="strong" case={"upper"} height={1}>
-                                            {data?.symbol}
+                                            {data?.base?.symbol}
                                         </Elements.Text>
                                     </>,
                                     <>
                                         <Elements.Text type="p" case={"upper"} height={1} opacity={0.45}>
-                                            {data?.market}
+                                            {data?.ticker}
                                         </Elements.Text>
                                     </>,
                                 ],
@@ -69,14 +70,14 @@ export default function Market(props: Market) {
                     ],
                     {
                         align: "right",
-                        change: data?.change ? (Sign(data?.change) === "+" ? "var(--green)" : Sign(data?.change) === "-" && "var(--red)") : "",
+                        change: data?.change ? (sign(data?.change) === "+" ? "var(--green)" : sign(data?.change) === "-" && "var(--red)") : "",
                         children: [
                             <>
-                                <Elements.Text type="strong">$ {Format(data?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
+                                <Elements.Text type="strong">$ {format(data?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                             </>,
                             <>
                                 <Elements.Text type="strong" change>
-                                    {Sign(data?.change)} {Format(data?.change, "currency", { sign: false })} %
+                                    {sign(data?.change)} {format(data?.change, "currency", { sign: false })} %
                                 </Elements.Text>
                             </>,
                         ],
@@ -84,7 +85,7 @@ export default function Market(props: Market) {
                     [
                         {
                             align: "right",
-                            children: <Elements.Text>{Format(data?.volume, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>,
+                            children: <Elements.Text>{format(data?.volume, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>,
                         },
                     ],
                 ],
@@ -102,8 +103,8 @@ export default function Market(props: Market) {
                     <Controls.Tab iconLeft={sortArrow(sorts.symbol)} onClick={() => setSort(sorts.symbol)}>
                         Symbol
                     </Controls.Tab>
-                    <Controls.Tab iconLeft={sortArrow(sorts.name)} onClick={() => setSort(sorts.name)}>
-                        Name
+                    <Controls.Tab iconLeft={sortArrow(sorts.ticker)} onClick={() => setSort(sorts.ticker)}>
+                        Ticker
                     </Controls.Tab>
                 </Layouts.Row>
                 <Layouts.Row gap={0} fix>
@@ -122,7 +123,7 @@ export default function Market(props: Market) {
             </Layouts.Row>
             <Layouts.Divider strong />
             <Layouts.Contents.InnerContent scroll>
-                <Layouts.Table list={Filter(sorting(props?.list), props?.filter)} formatter={formatter} fallback={props?.fallback || "There is no data."} />
+                <Layouts.Table list={filter(sorting(props?.list), props?.filter)} formatter={formatter} fallback={props?.fallback || "There is no data."} />
             </Layouts.Contents.InnerContent>
         </>
     );

@@ -1,7 +1,7 @@
 "use client";
 import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
-import { Sort } from "lib/utils";
+import { sort } from "lib/utils";
 import Style from "./Chart.styled";
 
 export interface Histogram {
@@ -75,7 +75,7 @@ export const Histogram = (props: Histogram) => {
     useEffect(() => {
         if (props?.data && props?.data?.length > 0) {
             setData(
-                Sort(
+                sort(
                     props?.data?.map(
                         (v: any) =>
                             ({

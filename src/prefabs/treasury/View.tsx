@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Charts, Controls, Elements, Layouts } from "components";
-import { Format } from "lib/utils";
+import { format } from "lib/utils";
 import { Asset, Farm } from "types/web3";
 import { Vault, Farms } from ".";
 
@@ -59,7 +59,7 @@ export default function View(props: View) {
                             children: (
                                 <Layouts.Col gap={0}>
                                     <Elements.Text type={"strong"}>Total Volume</Elements.Text>
-                                    <Elements.Text type={"h4"}>$ {Format(156785461234, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
+                                    <Elements.Text type={"h4"}>$ {format(156785461234, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                                 </Layouts.Col>
                             ),
                         },
@@ -107,7 +107,7 @@ export default function View(props: View) {
                         />
                         <Layouts.Menu
                             style={{
-                                maxWidth: !props?.responsive ?? "max-content",
+                                maxWidth: !props?.responsive && "max-content",
                             }}
                             menu={[
                                 {

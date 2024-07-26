@@ -1,4 +1,4 @@
-import { type CSSProperties } from "react";
+import { SwipeProps } from "hooks/useSwipe";
 import Style from "./Row.styled";
 
 export interface Row {
@@ -6,7 +6,7 @@ export interface Row {
     style?: object;
     gap?: number;
     change?: string | false;
-    align?: "left" | "center" | "right" | "stretch";
+    align?: "left" | "center" | "middle" | "right" | "stretch";
     show?: "desktop" | "laptop" | "tablet" | "mobile";
     hide?: "desktop" | "laptop" | "tablet" | "mobile";
     responsive?: "desktop" | "laptop" | "tablet" | "mobile";
@@ -14,6 +14,7 @@ export interface Row {
     fill?: boolean;
     fit?: boolean;
     fix?: boolean;
+    swipe?: SwipeProps;
 }
 
 export default function Row(props: Row) {
@@ -25,6 +26,7 @@ export default function Row(props: Row) {
 
     return (
         <Style
+            {...props?.swipe}
             style={props?.style}
             $gap={gap}
             $change={props?.change || undefined}
@@ -37,7 +39,7 @@ export default function Row(props: Row) {
             data-show={props?.show}
             data-hide={props?.hide}
         >
-            {props.children}
+            {props?.children}
         </Style>
     );
 }

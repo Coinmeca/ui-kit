@@ -22,6 +22,7 @@ export const Col = styled.div<{ $gap: number; $change?: string }>`
 
 const Style = styled.div<{
     $active?: boolean;
+    $gap?: number;
     $change?: string;
     $event: boolean;
 }>`
@@ -29,7 +30,6 @@ const Style = styled.div<{
     /* align-items: center; */
     font-size: 0.6666em;
     padding: 1em;
-    gap: 1em;
     border-spacing: 1em;
     font-feature-settings: "tnum" on, "lnum" on;
     cursor: ${({ $event }) => ($event ? "pointer" : "default")};
@@ -39,6 +39,7 @@ const Style = styled.div<{
 
     ${({ $change }) => $change && `--change: ${$change};`}
     ${({ $active }) => $active && `background: rgba(var(--white),var(--o01));`}
+    ${({ $gap }) => `gap: ${$gap || 1}em;`}
 
     & > * {
         font-size: 1.5em;

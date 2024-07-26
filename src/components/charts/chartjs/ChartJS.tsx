@@ -1,14 +1,14 @@
-"use client";
-import { Chart } from "chart.js/auto";
-import { Suspense, memo, useEffect, useRef, useState } from "react";
+'use client';
+import { Chart } from 'chart.js/auto';
+import { Suspense, useEffect, useRef, useState } from 'react';
 
 export interface ChartJS {
-    type: "bar" | "line" | "scatter" | "bubble" | "pie" | "doughnut" | "polarArea" | "radar";
+    type: 'bar' | 'line' | 'scatter' | 'bubble' | 'pie' | 'doughnut' | 'polarArea' | 'radar';
     color?: {
         default?: string;
         theme?: string;
     };
-    padding?: number[] | ""[];
+    padding?: number[] | ''[];
     data?: Data[];
     onHover?: Function;
     onLeave?: Function;
@@ -20,11 +20,11 @@ export interface Data {
     time?: string;
 }
 
-export const ChartJS = (props: ChartJS) => {
+export default function ChartJS(props: ChartJS) {
     const chartRef: any = useRef();
 
     const [data, setData] = useState<any>();
-    const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
+    const theme = props?.color?.theme && props?.color?.theme === 'light' ? '0,0,0' : '255,255,255';
     const [color, setColor] = useState({
         default: props?.color?.default ? `rgb(${props?.color?.default})` : `rgb(${theme})`,
         theme: {
@@ -38,36 +38,36 @@ export const ChartJS = (props: ChartJS) => {
 
     const initial = 8;
     const padding = {
-        top: props?.padding && (typeof props?.padding[0] === "number" ? props?.padding[0] : initial),
+        top: props?.padding && (typeof props?.padding[0] === 'number' ? props?.padding[0] : initial),
         right:
             props?.padding &&
             (props?.padding?.length === 1
-                ? typeof props?.padding[0] === "number"
+                ? typeof props?.padding[0] === 'number'
                     ? props?.padding[0]
                     : initial
-                : props?.padding?.length > 1 && typeof props?.padding[1] === "number"
-                ? props?.padding[1]
-                : initial),
+                : props?.padding?.length > 1 && typeof props?.padding[1] === 'number'
+                    ? props?.padding[1]
+                    : initial),
         bottom:
             props?.padding &&
             (props?.padding?.length === 1
-                ? typeof props?.padding[0] === "number"
+                ? typeof props?.padding[0] === 'number'
                     ? props?.padding[0]
                     : initial
-                : props?.padding?.length > 2 && typeof props?.padding[2] === "number"
-                ? props?.padding[2]
-                : initial),
+                : props?.padding?.length > 2 && typeof props?.padding[2] === 'number'
+                    ? props?.padding[2]
+                    : initial),
         left:
             props?.padding &&
             (props?.padding?.length === 1
-                ? typeof props?.padding[0] === "number"
+                ? typeof props?.padding[0] === 'number'
                     ? props?.padding[0]
                     : initial
-                : props?.padding?.length > 3 && typeof props?.padding[3] === "number"
-                ? props?.padding[3]
-                : props?.padding?.length > 1 && typeof props?.padding[1] === "number"
-                ? props?.padding[1]
-                : initial),
+                : props?.padding?.length > 3 && typeof props?.padding[3] === 'number'
+                    ? props?.padding[3]
+                    : props?.padding?.length > 1 && typeof props?.padding[1] === 'number'
+                        ? props?.padding[1]
+                        : initial),
     };
 
     const options = {
@@ -101,8 +101,8 @@ export const ChartJS = (props: ChartJS) => {
             tooltip: {
                 enabled: true,
                 padding: 0,
-                borderColor: "transparent",
-                backgroundColor: "transparent",
+                borderColor: 'transparent',
+                backgroundColor: 'transparent',
                 callbacks: {
                     // labelPointStyle: (context) => {
                     //     return {
@@ -111,11 +111,11 @@ export const ChartJS = (props: ChartJS) => {
                     //     };
                     // },
                     label: (value: any) => {
-                        if (typeof props?.onHover === "function") props?.onHover(value);
-                        return "";
+                        if (typeof props?.onHover === 'function') props?.onHover(value);
+                        return '';
                     },
                     title: function () {
-                        return "";
+                        return '';
                     },
                 },
             },
@@ -130,11 +130,13 @@ export const ChartJS = (props: ChartJS) => {
                     {
                         data: props?.data?.map((data: Data) => data?.value),
                         borderColor: color.theme.medium,
-                        pointBorderColor: "transparent",
+                        pointBorderColor: 'transparent',
                         pointBackgroundColor: color.theme.strong,
                         pointHoverBackgroundColor: `rgb(${theme})`,
                         pointRadius: 2,
                         pointHoverRadius: 4,
+                        ...(props?.type !== 'line' && { backgroundColor: color.theme.regular }),
+                        ...(props?.type === 'bar' && { hoverBackgroundColor: color.theme.strong }),
                     },
                 ],
             });
@@ -143,13 +145,13 @@ export const ChartJS = (props: ChartJS) => {
 
     useEffect(() => {
         if (chartRef?.current) {
-            const chart = new Chart(chartRef?.current?.getContext("2d"), {
+            const chart = new Chart(chartRef?.current?.getContext('2d'), {
                 type: props?.type,
                 data,
                 options,
             });
             chart.resize();
-            chart.canvas?.addEventListener("mouseout", (e: any) => {
+            chart.canvas?.addEventListener('mouseout', (e: any) => {
                 const meta = chart.getDatasetMeta(0); // Assuming you're working with the first dataset
                 const last = meta.data.length - 1; // Index of the last data point
 
@@ -164,7 +166,7 @@ export const ChartJS = (props: ChartJS) => {
                     chart.update();
                 }
 
-                if (typeof props?.onLeave === "function") props?.onLeave(e, meta);
+                if (typeof props?.onLeave === 'function') props?.onLeave(e, meta);
             });
             return () => {
                 chart.destroy();
@@ -178,5 +180,3 @@ export const ChartJS = (props: ChartJS) => {
         </Suspense>
     );
 };
-
-export default memo(ChartJS);

@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect, useCallback, useRef, type CSSProperties } from "react";
-import { Controls } from "components";
-import { Format } from "lib/utils";
-import Style, { Side } from "./Input.styled";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Controls, Elements } from "components";
+import { format } from "lib/utils";
+import Style, { Inner, Side } from "./Input.styled";
 
 export interface Input {
-    style?: object;
+    style?: any;
 
     form?: string;
     fold?: boolean;
@@ -43,7 +43,9 @@ export interface Input {
     onClick?: Function;
     onChange?: Function;
     onFocus?: Function;
+    onFocusOut?: Function;
     onBlur?: Function;
+    onClear?: Function;
     onKeyDown?: Function;
 
     error?: boolean;
@@ -82,7 +84,7 @@ export default function Input(props: Input) {
             if (value?.toString() === "NaN") value = "";
             if (type === "number" || type === "currency") {
                 if (!props.readOnly && !value.toString().endsWith(".")) {
-                    let copy = parseFloat(Format(value, "number", props?.lock, props?.fix, props?.max));
+                    let copy = parseFloat(format(value, "number", props?.lock, props?.fix, props?.max));
                     value =
                         typeof props?.min === "number" && props?.min >= copy
                             ? props?.min
@@ -91,7 +93,7 @@ export default function Input(props: Input) {
                             : value;
                 }
             }
-            return Format(value, type, props?.lock, props?.fix, props?.max);
+            return format(value, type, props?.lock, props?.fix, props?.max);
         },
         [type, props.min, props.max, props.lock, props.fix, props?.readOnly]
     );
@@ -120,9 +122,10 @@ export default function Input(props: Input) {
     const handleChange = (e: any) => {
         if (props?.lock || props?.disabled) return;
         const v = formatter(typeof e === "object" ? e?.target?.value : e);
-        setError(false);
-        setValue(v);
-        if (typeof props?.onChange === "function") props?.onChange(e?.target || input?.current, v);
+        if (v !== value) {
+            setValue(v);
+            if (typeof props?.onChange === "function") props?.onChange(e?.target || input?.current, v);
+        }
     };
 
     const handleFocus = (e: any) => {
@@ -130,10 +133,22 @@ export default function Input(props: Input) {
         if (typeof props?.onFocus === "function") props?.onFocus(e);
     };
 
+    const handleClear = () => {
+        input.current.focus();
+        handleChange("");
+        if (typeof props?.onClear === "function") props?.onClear();
+        setError(false);
+    };
+
+    const handleFocusOut = () => {
+        if (typeof props?.onFocusOut === "function") props?.onFocusOut();
+        setFocus(false);
+    };
+
     const handleBlur = () => {
         if (typeof props?.onBlur === "function") props?.onBlur();
         setExtend(false);
-        handleChange("");
+        setFocus(false);
     };
 
     const handleKeyDown = (e: any) => {
@@ -185,10 +200,14 @@ export default function Input(props: Input) {
         if (typeof props?.onChange === "function") props?.onChange(input?.current, v);
     }, [props?.value, type, props?.fix, props?.min, props?.max, props?.readOnly, props?.lock, props?.disabled, formatter]);
 
+    useEffect(() => {
+        if (typeof props?.error === "boolean") setError(props?.error);
+    }, [props?.error]);
+
     const Input = (
         <Style
             tabIndex={5}
-            style={props?.style}
+            style={props?.style?.wrapper}
             $clearable={props?.clearable}
             $scale={scale}
             $type={type}
@@ -197,26 +216,27 @@ export default function Input(props: Input) {
             $error={error}
             $lock={props?.lock}
             $disabled={props?.disabled}
-            onClick={() => setFocus(true)}
-            onBlur={() => setFocus(false)}
+            onClick={() => !(props?.lock || props?.disabled) && setFocus(true)}
+            onBlur={() => handleBlur()}
             data-active={focus}
             data-show={props?.show}
             data-hide={props?.hide}
         >
             <div>
-                <div style={props?.style}>
+                <div style={props?.style?.input || props?.style}>
                     {props?.left && (
                         <Side $width={props?.left?.width} style={props?.left?.style}>
                             {props?.left?.children}
                         </Side>
                     )}
-                    <div>
+                    <Inner>
                         {props?.clearable && clearPosition === "left" && (
                             <Controls.Button
                                 icon={"x"}
-                                fit
+                                style={{ marginRight: ".5rem" }}
                                 hide={value.toString().length === 0}
-                                onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")}
+                                onClick={() => handleClear()}
+                                fit
                             />
                         )}
                         <input
@@ -233,6 +253,7 @@ export default function Input(props: Input) {
                             onInput={handleChange}
                             onChange={handleChange}
                             onFocus={handleFocus}
+                            onBlur={handleFocusOut}
                             onKeyDown={handleKeyDown}
                             autoFocus={extend || focus || props?.autoFocus}
                             disabled={props?.disabled}
@@ -241,12 +262,13 @@ export default function Input(props: Input) {
                         {props?.clearable && clearPosition === "right" && (
                             <Controls.Button
                                 icon={"x"}
-                                fit
+                                style={{ marginLeft: ".5rem" }}
                                 hide={value.toString().length === 0}
-                                onClick={() => setValue(props?.type === ("number" || "currency") ? 0 : "")}
+                                onClick={() => handleClear()}
+                                fit
                             />
                         )}
-                    </div>
+                    </Inner>
                     {(props?.unit || props?.right) && (
                         <Side $width={props?.right?.width} style={props?.right?.style}>
                             {props?.right?.children}
@@ -254,8 +276,32 @@ export default function Input(props: Input) {
                         </Side>
                     )}
                 </div>
-                {props?.error && props?.message && <p className="message">{props?.message}</p>}
             </div>
+            {typeof props?.message === "string" || typeof props?.message === "number" ? (
+                <Elements.Text type={"desc"}>{props?.message}</Elements.Text>
+            ) : props?.message?.$$typeof ? (
+                props?.message
+            ) : typeof props?.message === "object" && props?.message?.children ? (
+                (typeof props?.message?.children === "string" || typeof props?.message?.children === "number") && (
+                    <Elements.Text
+                        {...props?.message}
+                        align={props?.message?.align || "left"}
+                        type={props?.message?.type || "desc"}
+                        style={{ ...props?.message?.style, marginTop: `${props?.message?.gap || 0.5}em` }}
+                    >
+                        {props?.message?.children}
+                    </Elements.Text>
+                )
+            ) : (
+                props?.message?.children?.$$typeof && {
+                    ...props?.message?.children,
+                    style: {
+                        ...props?.message?.children?.style,
+                        ...props?.message?.style,
+                        marginTop: `${props?.message?.gap || 1}em`,
+                    },
+                }
+            )}
         </Style>
     );
 

@@ -4,6 +4,7 @@ import * as Row from "components/layouts/row/Row.styled";
 import * as Divider from "components/layouts/divider/Divider.styled";
 import * as Button from "components/controls/button/Button.styled";
 import * as Avatar from "components/elements/avatar/Avatar.styled";
+import * as Dropdown from "components/controls/dropdown/Dropdown.styled";
 
 export const Logo = styled.a`
     max-width: max-content;
@@ -285,6 +286,18 @@ export const Side = styled.div<{ $scale: number; $width: number }>`
             & ${Avatar.default} {
                 font-size: 0.75em;
             }
+
+            /* & ${Dropdown.default} {
+                ${Dropdown.Item} {
+                    width: calc(100% - 6em);
+                    padding: 1.5em;
+                    padding-right: 4.5em;
+
+                    & > i {
+                        right: 0.5em;
+                    }
+                }
+            } */
         }
 
         &[data-active="true"] {

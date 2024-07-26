@@ -2,7 +2,17 @@
 import { useState } from 'react';
 import type { Order } from 'types';
 
-export default function useVault(initial: Order, mode: boolean, fee: number, available?: number) {
+export interface Condition {
+    mode?: boolean;
+    ratio?: number;
+    require?: number;
+    locked?: number;
+    weight?: number;
+    need?: number;
+    fee?: number;
+}
+
+export default function useVault(initial: Order, condition: Condition, available?: number) {
     const [order, setOrder] = useState<Order>({
         pay: initial?.pay || { address: '', name: '', symbol: '', decimals: 0 },
         price: initial?.price || 0,
@@ -11,6 +21,14 @@ export default function useVault(initial: Order, mode: boolean, fee: number, ava
         fees: initial?.fees || 0,
         total: initial?.total || 0,
     });
+
+    const mode = condition?.mode || true;
+    const ratio = condition?.ratio || 0;
+    const require = condition?.require || 0;
+    const locked = condition?.locked || 0;
+    const weight = condition?.weight || 0;
+    const need = condition?.need || 0;
+    const fee = condition?.fee || 0.01;
 
     const getAmount = (amount: number, price?: number): number => {
         const p = price || order?.price;
@@ -58,8 +76,7 @@ export default function useVault(initial: Order, mode: boolean, fee: number, ava
                 };
             });
         }
-        quantity(order?.quantity || 0, price)
-        // mode ? amount(order?.amount || 0, price) : quantity(order?.quantity || 0, price);
+        amount(order?.amount || 0, price);
     };
 
     const amount = (amount: number, price?: number) => {
@@ -79,51 +96,26 @@ export default function useVault(initial: Order, mode: boolean, fee: number, ava
             }
 
             const a = getAmount(amount, p);
-            // const q = mode ? a / p : a * p;
-            const q = a * p;
-            const f = fees(q);
+            const g = locked + need;
+            const q =
+                require >= locked || weight == 0
+                    ? mode
+                        ? amount * p
+                        : amount * ratio
+                    : g > 0
+                        ? mode
+                            ? (weight * amount * g) / (locked + amount) ** 2
+                            : ((locked - (locked * amount) / (weight + amount)) * ((locked * amount) / (weight + amount))) / (locked + need)
+                        : 0;
+            const f = q > 0 ? fees(q) : 0;
 
             o = {
                 ...state,
                 price: p,
                 amount: a,
-                quantity: q,
+                quantity: mode ? q : locked > q ? locked : q,
                 fees: f,
                 total: q - f,
-            };
-            return o;
-        });
-        return o;
-    };
-
-    const quantity = (quantity: number, price?: number) => {
-        let o: any;
-        setOrder((state: Order) => {
-            const p = price || state?.price;
-
-            if (quantity === 0 || p === 0) {
-                return {
-                    ...state,
-                    price: p,
-                    amount: 0,
-                    quantity: 0,
-                    fees: 0,
-                    total: 0,
-                };
-            }
-
-            const q = getQuantity(quantity, p);
-            // const a = mode ? q * p : q / p;
-            const a = q * p;
-            const f = fees(a);
-
-            o = {
-                ...state,
-                price: p,
-                amount: a,
-                quantity: q,
-                fees: f,
-                total: (mode ? a : q) - f,
             };
             return o;
         });
@@ -138,7 +130,6 @@ export default function useVault(initial: Order, mode: boolean, fee: number, ava
         quote,
         price,
         amount,
-        quantity,
         maxAmount,
         maxQuantity,
     };

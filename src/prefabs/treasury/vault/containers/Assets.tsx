@@ -1,7 +1,7 @@
 "use client";
 import { Controls, Elements, Layouts } from "components";
 import { useSort } from "hooks";
-import { Filter, Format, Sign } from "lib/utils";
+import { filter, format, sign } from "lib/utils";
 import { Asset } from "types/web3";
 
 export interface Assets {
@@ -64,7 +64,7 @@ export default function Assets(props: Assets) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"}>
-                                                                {Format(data?.exchange, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                                {format(data?.rateChangeRate, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
                                                                 MECA
@@ -74,11 +74,11 @@ export default function Assets(props: Assets) {
                                                 },
                                                 {
                                                     align: "right",
-                                                    change: Sign(data?.exchange) === "+" ? "green" : Sign(data?.exchange) === "-" && "red",
+                                                    change: sign(data?.rateChangeRate) === "+" ? "green" : sign(data?.rateChangeRate) === "-" && "red",
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"} change>
-                                                                {Format(data?.exchangeChange, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                                                                {format(data?.rateChange, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }} change>
                                                                 %
@@ -101,7 +101,7 @@ export default function Assets(props: Assets) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"}>
-                                                                {Format(data?.locked, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                                {format(data?.locked, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
                                                                 {data?.symbol}
@@ -115,8 +115,8 @@ export default function Assets(props: Assets) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"}>
-                                                                {Sign(data?.lockedChange)}{" "}
-                                                                {Format(data?.lockedChange, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                                                                {sign(data?.lockedChange)}{" "}
+                                                                {format(data?.lockedChange, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ minWidth: "6em" }}>
                                                                 {data?.symbol}
@@ -138,7 +138,7 @@ export default function Assets(props: Assets) {
                                                     align: "right",
                                                     children: (
                                                         <Elements.Text align={"right"}>
-                                                            $ {Format(data?.valueLocked, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                            $ {format(data?.valueLocked, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                         </Elements.Text>
                                                     ),
                                                 },
@@ -148,8 +148,8 @@ export default function Assets(props: Assets) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"} fix>
-                                                                {Sign(data?.valueLockedChange)}${" "}
-                                                                {Format(data?.valueLockedChange, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                                                                {sign(data?.valueLockedChange)}${" "}
+                                                                {format(data?.valueLockedChange, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                                                             </Elements.Text>
                                                         </>
                                                     ),
@@ -169,8 +169,8 @@ export default function Assets(props: Assets) {
     const sorts = {
         symbol: { key: "symbol", type: "string" },
         name: { key: "name", type: "string" },
-        exchange: { key: "exchange", type: "number" },
-        exchangeChange: { key: "exchangeChange", type: "number" },
+        rateChangeRate: { key: "rateChangeRate", type: "number" },
+        rateChange: { key: "rateChange", type: "number" },
         locked: { key: "locked", type: "number" },
         lockedChange: { key: "lockedChange", type: "number" },
         valueLocked: { key: "valueLocked", type: "number" },
@@ -189,10 +189,10 @@ export default function Assets(props: Assets) {
                     </Controls.Tab>
                 </Layouts.Row>
                 <Layouts.Row gap={0} fix>
-                    <Controls.Tab iconLeft={sortArrow(sorts.exchange)} onClick={() => setSort(sorts.exchange)}>
+                    <Controls.Tab iconLeft={sortArrow(sorts.rateChangeRate)} onClick={() => setSort(sorts.rateChangeRate)}>
                         Exchange Rate
                     </Controls.Tab>
-                    <Controls.Tab iconLeft={sortArrow(sorts.exchangeChange)} onClick={() => setSort(sorts.exchangeChange)}>
+                    <Controls.Tab iconLeft={sortArrow(sorts.rateChange)} onClick={() => setSort(sorts.rateChange)}>
                         Change
                     </Controls.Tab>
                 </Layouts.Row>
@@ -206,15 +206,15 @@ export default function Assets(props: Assets) {
                 </Layouts.Row>
                 <Layouts.Row gap={0} fix>
                     <Controls.Tab iconLeft={sortArrow(sorts.valueLocked)} onClick={() => setSort(sorts.valueLocked)}>
-                        TVL
+                        valueLocked
                     </Controls.Tab>
                     <Controls.Tab iconLeft={sortArrow(sorts.valueLockedChange)} onClick={() => setSort(sorts.valueLockedChange)}>
-                        TVL Change
+                        valueLocked Change
                     </Controls.Tab>
                 </Layouts.Row>
             </Layouts.Row>
             <Layouts.Divider />
-            <Layouts.List list={Filter(sorting(props?.assets), props?.filter)} formatter={formatter} />
+            <Layouts.List list={filter(sorting(props?.assets), props?.filter)} formatter={formatter} />
         </Layouts.Contents.InnerContent>
     );
 }

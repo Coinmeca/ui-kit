@@ -4,8 +4,8 @@
     "compilerOptions": {
         "target": "esnext",
         "module": "esnext",
-        "jsx": "preserve",
-        "moduleResolution": "bundler",
+        "jsx": "react-jsx",
+        "moduleResolution": "node",
         "incremental": true // dts with tsup requires rootDir if incremental (which does not work well aliases)
     }
 }

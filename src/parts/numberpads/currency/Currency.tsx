@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Controls } from "components";
+import type { Button } from "components/controls/button/Button";
+import { format } from "lib/utils";
 import { Numberpad } from "parts";
 import type { Numberpad as Pad } from "parts/numberpads/Numberpad";
-import type { Button } from "components/controls/button/Button";
-import { Format } from "lib/utils";
 
 export interface CurrencyPad extends Pad {
     step?: number;
@@ -13,23 +13,19 @@ export interface CurrencyPad extends Pad {
 
 export default function Currency(props: CurrencyPad) {
     const step = props?.step || 1;
-    const [value, setValue] = useState(props?.value || "");
-
-    useEffect(() => {
-        if (props?.value) setValue(props?.value?.toString() || "");
-    }, [props?.value]);
 
     const handleClick = (e: any) => {
-        if (typeof props?.button?.onClick === "function") props?.button?.onClick(e, value);
+        if (typeof props?.button?.onClick === "function") props?.button?.onClick(e, props?.value);
     };
 
     const handleChange = (e: any, v: string) => {
+        const value = props?.value;
         let input: number | string = "";
         if (v === "plus") {
-            const number: number = value === "" ? 0 : parseFloat(Format(value, "number").toString());
+            const number: number = value === "" ? 0 : parseFloat(format(value, "number").toString());
             input = number + step;
         } else if (v === "minus") {
-            const number: number = value === "" ? 0 : parseFloat(Format(value, "number").toString());
+            const number: number = value === "" ? 0 : parseFloat(format(value, "number").toString());
             input = number - step;
             if (input <= 0) input = "0";
         } else input = v;
@@ -37,13 +33,16 @@ export default function Currency(props: CurrencyPad) {
             input = value === "" ? "0." : value + ".";
         }
         if (typeof props?.onChange === "function") props?.onChange(e, input);
-        setValue(input);
     };
+
+    useEffect(() => {
+        handleChange(null, props?.value?.toString() || "");
+    }, [props?.value]);
 
     return (
         <Numberpad
             {...props}
-            value={value}
+            value={props?.value}
             onChange={(e: any, v: string) => handleChange(e, v)}
             right={{
                 children: (

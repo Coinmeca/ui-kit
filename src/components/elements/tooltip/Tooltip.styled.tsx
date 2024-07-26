@@ -9,6 +9,7 @@ const Style = styled.div<{ $color: string; $padding: number }>`
     flex-direction: column;
     padding: ${({ $padding }) => $padding}em;
     background: rgba(${({ $color }) => Root.Color($color)}, var(--o015));
+    -webkit-backdrop-filter: var(--blur);
     backdrop-filter: var(--blur);
     transition: 0.15s ease;
 

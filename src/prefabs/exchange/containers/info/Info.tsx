@@ -1,8 +1,8 @@
 "use client";
 import { Elements, Layouts } from "components";
-import { Format, Sign } from "lib/utils";
-import { Root } from "lib/style";
 import { useWindowSize } from "hooks";
+import { Root } from "lib/style";
+import { format, sign } from "lib/utils";
 import { Token } from "types/web3";
 
 export interface Info {
@@ -12,21 +12,15 @@ export interface Info {
     responsive?: boolean;
 }
 
-interface Pair {
-    base?: number | string;
-    quote?: number | string;
-}
 export interface ExchangeInfo {
     volume_base?: number | string;
     volume_quote?: number | string;
     high?: number | string;
     low?: number | string;
     change?: number | string;
-    changeRate?: number | string;
+    change_rate?: number | string;
     balance?: number | string;
     using?: number | string;
-    volume?: Pair;
-    liquidity?: Pair;
 }
 
 export default function Info(props: Info) {
@@ -53,10 +47,10 @@ export default function Info(props: Info) {
                     }}
                 >
                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                        Liquidity ({props?.base?.symbol})
+                        Volume ({props?.base?.symbol})
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                        {Format(props?.info?.liquidity?.base, "currency", { unit: 9, limit: 12, fix: 3 })}
+                        {format(props?.info?.volume_base, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                 </Layouts.Row>
                 <Layouts.Row
@@ -69,10 +63,10 @@ export default function Info(props: Info) {
                     }}
                 >
                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                        Liquidity ({props?.quote?.symbol})
+                        Volume ({props?.quote?.symbol})
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                        {Format(props?.info?.liquidity?.quote, "currency", { unit: 9, limit: 12, fix: 3 })}
+                        {format(props?.info?.volume_quote, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Col>
@@ -90,7 +84,7 @@ export default function Info(props: Info) {
                         Highest
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"green"}>
-                        {Format(props?.info?.high, "currency", { unit: 9, limit: 12, fix: 3 })}
+                        {format(props?.info?.high, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                 </Layouts.Row>
                 <Layouts.Row
@@ -106,7 +100,7 @@ export default function Info(props: Info) {
                         Lowest
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} color={"red"}>
-                        {Format(props?.info?.low, "currency", { unit: 9, limit: 12, fix: 3 })}
+                        {format(props?.info?.low, "currency", { unit: 9, limit: 12, fix: 3 })}
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Col>
@@ -124,7 +118,7 @@ export default function Info(props: Info) {
                         Change
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
-                        {Sign(props?.info?.change)} {Format(props?.info?.change, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                        {sign(props?.info?.change)} {format(props?.info?.change, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                     </Elements.Text>
                 </Layouts.Row>
                 <Layouts.Row
@@ -140,7 +134,7 @@ export default function Info(props: Info) {
                         Change Rate
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }} change>
-                        {Sign(props?.info?.changeRate)} {Format(props?.info?.changeRate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })} %
+                        {sign(props?.info?.change_rate)} {format(props?.info?.change_rate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })} %
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Col>
@@ -155,10 +149,10 @@ export default function Info(props: Info) {
                     }}
                 >
                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                        Volume ({props?.base?.symbol})
+                        Balance
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                        {Format(props?.info?.volume?.base, "currency", { unit: 9, limit: 12, fix: 3 })}
+                        {format(props?.info?.volume_base, "currency")}
                     </Elements.Text>
                 </Layouts.Row>
                 <Layouts.Row
@@ -171,10 +165,10 @@ export default function Info(props: Info) {
                     }}
                 >
                     <Elements.Text height={1} opacity={0.6} style={{ minWidth: "max-content" }}>
-                        Volume ({props?.quote?.symbol})
+                        Using
                     </Elements.Text>
                     <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                        {Format(props?.info?.volume?.quote, "currency", { unit: 9, limit: 12, fix: 3 })}
+                        {format(props?.info?.volume_base, "currency")}
                     </Elements.Text>
                 </Layouts.Row>
             </Layouts.Col>

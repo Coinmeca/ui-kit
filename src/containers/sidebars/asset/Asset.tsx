@@ -2,8 +2,7 @@
 
 import { Controls, Elements, Layouts } from "components";
 import { useSort } from "hooks";
-import { Filter, Format } from "lib/utils";
-import TableItem from "../../../components/layouts/table/TableItem";
+import { filter, format } from "lib/utils";
 
 export interface Asset {
     list: AssetData[];
@@ -71,7 +70,7 @@ export default function Asset(props: Asset) {
                             <>
                                 <Elements.Text type="p" opacity={0.45}>
                                     ${" "}
-                                    {Format(parseFloat(Format(data?.balance, "number")) * parseFloat(Format(data?.value, "number")), "currency", {
+                                    {format(parseFloat(format(data?.balance, "number")) * parseFloat(format(data?.value, "number")), "currency", {
                                         unit: 9,
                                         limit: 12,
                                         fix: 3,
@@ -86,7 +85,7 @@ export default function Asset(props: Asset) {
                     //         align: "right",
                     //         children: (
                     //             <Elements.Text>
-                    //                 $ {Format((Format(data?.balance, "number") as number) * (Format(data?.value, "number") as number), "currency", { unit: 9, limit: 12, fix: 3 })}
+                    //                 $ {format((format(data?.balance, "number") as number) * (format(data?.value, "number") as number), "currency", { unit: 9, limit: 12, fix: 3 })}
                     //             </Elements.Text>
                     //         ),
                     //     },
@@ -134,7 +133,7 @@ export default function Asset(props: Asset) {
                             },
                             {
                                 align: "right",
-                                children: <Elements.Text align={"right"}>$ {Format(123456789, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>,
+                                children: <Elements.Text align={"right"}>$ {format(123456789, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>,
                             },
                         ],
                     },
@@ -143,7 +142,7 @@ export default function Asset(props: Asset) {
             />
             <Layouts.Divider strong />
             <Layouts.Contents.InnerContent scroll>
-                <Layouts.Table list={Filter(sorting(props?.list), props?.filter)} formatter={formatter} fallback="There is no data." />
+                <Layouts.Table list={filter(sorting(props?.list), props?.filter)} formatter={formatter} fallback="There is no data." />
             </Layouts.Contents.InnerContent>
         </>
     );

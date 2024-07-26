@@ -1,9 +1,16 @@
 "use client";
-import { useState, useEffect, type CSSProperties } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import BG from "components/layouts/bg/BG";
-import { type BG as Background } from "components/layouts/bg/BG";
+import { memo, useEffect, useState } from "react";
+import BG, { type BG as Background } from "components/layouts/bg/BG";
+import { useSwipe } from "hooks";
+import { Swipe } from "hooks/useSwipe";
 import { Style } from "./Slide.styled";
+
+export interface PositionEvent {
+    x?: number;
+    opacity?: number;
+    zIndex?: number;
+}
 
 export interface SlideContent {
     active?: boolean;
@@ -26,10 +33,20 @@ export interface Slide {
     scale?: number;
     style?: object;
     event?: Function;
+    swipe?: Swipe;
 }
 
-export default function Slide(props: Slide) {
-    const [slideNo, setSlideNo] = useState(props?.slideNo || 0);
+const Slide = (props: Slide) => {
+    const [slideNo, setSlideNo] = useState<number>(props?.slideNo || 0);
+    const swipe = useSwipe(
+        props?.swipe && {
+            ...(typeof props?.swipe === "object" && props?.swipe),
+            index: slideNo,
+            length: props?.slides?.length,
+            onSwipe: (e: any, i: number) => setSlideNo(i),
+        }
+    );
+
     const timer = typeof props?.timer !== "number" ? 0 : props?.timer;
     const padding = props?.padding || 4;
     const scale = props?.scale || 1;
@@ -37,7 +54,7 @@ export default function Slide(props: Slide) {
     const horizon = props?.align?.horizon || "center";
 
     useEffect(() => {
-        if (typeof props?.slideNo === "number") setSlideNo(props?.slideNo);
+        if (typeof props?.slideNo === "number" && props?.slideNo !== slideNo) setSlideNo(props?.slideNo);
     }, [props?.slideNo]);
 
     useEffect(() => {
@@ -64,22 +81,15 @@ export default function Slide(props: Slide) {
             $horizon={horizon}
             data-align={props?.align?.horizon}
         >
-            <AnimatePresence>
+            <AnimatePresence initial={false} custom={swipe?.direction}>
                 {props?.slides && props?.slides?.length > 0 && (
                     <>
                         <div>
                             {props?.slides?.map((slide: any, i: number) => (
                                 <div key={i} data-active={slide?.active || slideNo === i} onClick={(e: any) => slide?.onClick && slide?.onClick(e)}>
                                     {slide?.background && <BG {...slide?.background} />}
-                                    <motion.div
-                                        data-row={props?.align?.horizon}
-                                        style={slide?.style}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ ease: "easeInOut", duration: 0.3 }}
-                                        layout
-                                    >
+                                    <motion.div {...swipe} data-row={props?.align?.horizon} style={slide?.style} variants={undefined}>
+                                        {/* <motion.div {...swipe} data-row={props?.align?.horizon} style={slide?.style} variants={undefined}> */}
                                         {slide.children}
                                     </motion.div>
                                 </div>
@@ -101,4 +111,6 @@ export default function Slide(props: Slide) {
             </AnimatePresence>
         </Style>
     );
-}
+};
+
+export default memo(Slide);

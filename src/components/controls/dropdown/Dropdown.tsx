@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
-import { useWindowSize, usePortal } from "hooks";
+import { usePortal, useWindowSize } from "hooks";
 import Style, { Item, Option, Options } from "./Dropdown.styled";
 
 export interface Dropdown {
@@ -43,6 +43,7 @@ export default function Dropdown(props: Dropdown) {
     const dropdown: any = useRef();
     const dropbox: any = useRef();
 
+    const theme = props?.theme === "light" || props?.theme === "dark" ? props?.theme : "light";
     const form = props?.form;
     const height = props?.height || 16;
     const fit = props?.fit || false;
@@ -68,7 +69,7 @@ export default function Dropdown(props: Dropdown) {
         setOpen(false);
         closeSelectOnSheet();
         if (!props?.fix) setOption(v);
-        // typeof v[keyIndex] !== "undefined" ? option = v[keyIndex] : typeof v[keyName] !== "undefined" ? option = v[keyName] : option = v;
+        // typeof v?.[keyIndex] !== "undefined" ? option = v?.[keyIndex] : typeof v?.[keyName] !== "undefined" ? option = v?.[keyName] : option = v;
         if (typeof v?.event === "function") v.event(e);
         if (typeof props?.onClickItem === "function") props?.onClickItem(e, v, k);
     };
@@ -76,7 +77,7 @@ export default function Dropdown(props: Dropdown) {
     const handleOpen = (e?: any) => {
         if (disabled) return;
         setOpen(!open);
-        openSelect();
+        openSelect(e);
         if (!option) return;
         if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
@@ -86,7 +87,7 @@ export default function Dropdown(props: Dropdown) {
         if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
 
-    const position = () => {
+    const position = (e?: any) => {
         if (dropdown?.current && dropbox?.current) {
             const size = dropdown?.current?.getBoundingClientRect();
             const position = dropbox?.current?.getBoundingClientRect();
@@ -95,17 +96,17 @@ export default function Dropdown(props: Dropdown) {
         }
     };
 
-    const Select = (visible: Visible) => (
+    const Select = (visible: Visible, e?: any) => (
         <Options
             onBlur={() => visible === "sheet" && closeSelect()}
             style={{
                 ...(visible === "popup"
                     ? {
-                          ...(props?.theme && {
-                              "--white": props?.theme === "light" ? "255,255,255" : "0,0,0",
-                              "--black": props?.theme === "light" ? "0,0,0" : "255,255,255",
+                          ...(theme && {
+                              "--white": theme === "light" ? "255,255,255" : "0,0,0",
+                              "--black": theme === "light" ? "0,0,0" : "255,255,255",
                           }),
-                          position: "fixed",
+                          position: "absolute",
                           fontSize: `${scale}em`,
                           background: (props?.style as any)?.options?.background || `rgba(var(--white), var(--o0075))`,
                           color: `rgb(var(--white))`,
@@ -113,7 +114,7 @@ export default function Dropdown(props: Dropdown) {
                           backdropFilter: "blur(4em)",
                           transition: "max-height .3s ease",
                           zIndex: 200,
-                          ...position(),
+                          ...position(e),
                           ...(open ? { maxHeight: "100em", overflowY: "hidden" } : { maxHeight: 0, overflowY: "scroll" }),
                       }
                     : visible === "hidden"
@@ -137,49 +138,81 @@ export default function Dropdown(props: Dropdown) {
                                 <Item
                                     key={k}
                                     onClick={(e: any) => handleSelect(e, v, k)}
-                                    data-disabled={typeof option !== "undefined" && (v[keyIndex] === option || v[keyName] === option || v === option)}
+                                    data-disabled={typeof option !== "undefined" && (v?.[keyIndex] === option || v?.[keyName] === option || v === option)}
                                 >
                                     <>
-                                        {typeof v[imgName] !== "undefined" && v[imgName] !== "" ? (
+                                        {typeof v?.[imgName] !== "undefined" && v?.[imgName] !== "" ? (
                                             <>
-                                                <Image src={v[imgName]} width={0} height={0} alt={""} />
+                                                <Image src={v?.[imgName]} width={0} height={0} alt={""} />
                                                 <span
                                                     title={
-                                                        typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v
+                                                        typeof v?.[keyIndex] !== "undefined"
+                                                            ? v?.[keyIndex]
+                                                            : typeof v?.[keyName] !== "undefined"
+                                                            ? v?.[keyName]
+                                                            : typeof v === "object"
+                                                            ? v?.toString()
+                                                            : v
                                                     }
                                                 >
-                                                    {typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}
+                                                    {typeof v?.[keyIndex] !== "undefined"
+                                                        ? v?.[keyIndex]
+                                                        : typeof v?.[keyName] !== "undefined"
+                                                        ? v?.[keyName]
+                                                        : typeof v === "object"
+                                                        ? v?.toString()
+                                                        : v}
                                                 </span>
                                             </>
                                         ) : v.icon !== "" && typeof v.icon !== "undefined" ? (
                                             <>
-                                                <Elements.Icon icon={option?.icon} />
+                                                <Elements.Icon icon={v?.icon} />
                                                 <span
                                                     title={
-                                                        typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v
+                                                        typeof v?.[keyIndex] !== "undefined"
+                                                            ? v?.[keyIndex]
+                                                            : typeof v?.[keyName] !== "undefined"
+                                                            ? v?.[keyName]
+                                                            : typeof v === "object"
+                                                            ? v?.toString()
+                                                            : v
                                                     }
                                                 >
-                                                    {typeof v[keyIndex] !== "undefined" ? v[keyIndex] : typeof v[keyName] !== "undefined" ? v[keyName] : v}
+                                                    {typeof v?.[keyIndex] !== "undefined"
+                                                        ? v?.[keyIndex]
+                                                        : typeof v?.[keyName] !== "undefined"
+                                                        ? v?.[keyName]
+                                                        : typeof v === "object"
+                                                        ? v?.toString()
+                                                        : v}
                                                 </span>
                                             </>
                                         ) : (
                                             <span
                                                 title={
                                                     typeof v === "object"
-                                                        ? typeof v[keyIndex] !== "undefined"
-                                                            ? v[keyIndex]
-                                                            : typeof v[keyName] !== "undefined"
-                                                            ? v[keyName]
+                                                        ? typeof v?.[keyIndex] !== "undefined"
+                                                            ? v?.[keyIndex]
+                                                            : typeof v?.[keyName] !== "undefined"
+                                                            ? v?.[keyName]
+                                                            : typeof v === "object"
+                                                            ? v?.toString()
                                                             : v
+                                                        : typeof v === "object"
+                                                        ? v?.toString()
                                                         : v
                                                 }
                                             >
                                                 {typeof v === "object"
-                                                    ? typeof v[keyIndex] !== "undefined"
-                                                        ? v[keyIndex]
-                                                        : typeof v[keyName] !== "undefined"
-                                                        ? v[keyName]
+                                                    ? typeof v?.[keyIndex] !== "undefined"
+                                                        ? v?.[keyIndex]
+                                                        : typeof v?.[keyName] !== "undefined"
+                                                        ? v?.[keyName]
+                                                        : typeof v === "object"
+                                                        ? v?.toString()
                                                         : v
+                                                    : typeof v === "object"
+                                                    ? v?.toString()
                                                     : v}
                                             </span>
                                         )}
@@ -190,10 +223,10 @@ export default function Dropdown(props: Dropdown) {
             </div>
         </Options>
     );
-    const [openSelect, closeSelect] = usePortal(() => Select("popup"));
 
+    const [openSelect, closeSelect] = usePortal((e?: any) => Select("popup", e));
     const [openSelectOnSheet, closeSelectOnSheet] = usePortal(
-        <BottomSheet height={{ max: "60vh" }} onBlur={() => closeSelectOnSheet()} onClose={() => closeSelectOnSheet()}>
+        <BottomSheet height={{ max: "60vh" }} onBlur={() => closeSelectOnSheet()} onClose={() => closeSelectOnSheet()} swipe>
             <Layouts.Col style={{ padding: "2em" }} gap={2}>
                 <Layouts.Contents.InnerContent>{Select("sheet")}</Layouts.Contents.InnerContent>
                 <Controls.Button scale={scale} onClick={() => closeSelectOnSheet()}>
@@ -202,6 +235,10 @@ export default function Dropdown(props: Dropdown) {
             </Layouts.Col>
         </BottomSheet>
     );
+
+    useEffect(() => {
+        return () => closeSelect();
+    }, []);
 
     useEffect(() => {
         setOption(props?.option);
@@ -239,10 +276,6 @@ export default function Dropdown(props: Dropdown) {
         }
     }, [props?.options, option, keyName]);
 
-    useEffect(() => {
-        return () => closeSelect();
-    }, []);
-
     return (
         <Style
             ref={dropdown}
@@ -257,7 +290,7 @@ export default function Dropdown(props: Dropdown) {
                 // maxWidth: width && `${width / 8}em`,
                 ...props?.style,
             }}
-            onClick={() => (!props?.responsive ? handleOpen() : openSelectOnSheet())}
+            onClick={(e: any) => (!props?.responsive ? handleOpen(e) : openSelectOnSheet())}
             onBlur={handleClose}
             title={props?.title}
             data-active={open}
@@ -272,30 +305,43 @@ export default function Dropdown(props: Dropdown) {
                         <Controls.Button icon={option?.icon} />
                     ) : (
                         <>
-                            {option && typeof option[imgName] !== "undefined" && <Image src={option[imgName]} width={0} height={0} alt={""} />}
+                            {option &&
+                                (typeof option?.[imgName] === "string" ? (
+                                    <Image src={option?.[imgName]} width={0} height={0} alt={""} />
+                                ) : (
+                                    typeof option?.icon === "string" && <Elements.Icon icon={option?.icon} />
+                                ))}
                             <span
                                 title={
                                     typeof option === "undefined"
                                         ? undefined
                                         : typeof option === "object"
-                                        ? typeof option[keyIndex] !== "undefined"
-                                            ? option[keyIndex]
-                                            : typeof option[keyName] !== "undefined"
-                                            ? option[keyName]
+                                        ? typeof option?.[keyIndex] !== "undefined"
+                                            ? option?.[keyIndex]
+                                            : typeof option?.[keyName] !== "undefined"
+                                            ? option?.[keyName]
+                                            : typeof option === "object"
+                                            ? option?.toString()
                                             : option
                                         : typeof option?.alt === "undefined"
-                                        ? option
+                                        ? typeof option === "object"
+                                            ? option?.toString()
+                                            : option
                                         : option?.title
                                 }
                             >
                                 {typeof option === "undefined"
                                     ? placeholder
                                     : typeof option === "object"
-                                    ? typeof option[keyIndex] !== "undefined"
-                                        ? option[keyIndex]
-                                        : typeof option[keyName] !== "undefined"
-                                        ? option[keyName]
+                                    ? typeof option?.[keyIndex] !== "undefined"
+                                        ? option?.[keyIndex]
+                                        : typeof option?.[keyName] !== "undefined"
+                                        ? option?.[keyName]
+                                        : typeof option === "object"
+                                        ? option?.toString()
                                         : option
+                                    : typeof option === "object"
+                                    ? option?.toString()
                                     : option}
                             </span>
                             <Elements.Icon icon="chevron-down-small" />

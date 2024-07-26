@@ -17,6 +17,7 @@ export const Device = {
 };
 
 export const Blur = css<{ $scale?: number }>`
+    -webkit-backdrop-filter: blur(${({ $scale }) => $scale || 1}rem);
     backdrop-filter: blur(${({ $scale }) => $scale || 1}rem);
 `;
 

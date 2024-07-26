@@ -1,8 +1,8 @@
 "use client";
 import { Elements, Layouts } from "components";
 import { useWindowSize } from "hooks";
-import { Format, Sign } from "lib/utils";
 import { Root } from "lib/style";
+import { format, sign } from "lib/utils";
 
 export interface Info {
     info?: AssetsInfo;
@@ -64,7 +64,7 @@ export default function Info(props: Info) {
                             Total Buy
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            $ {Format(props?.info?.total_buy, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            $ {format(props?.info?.total_buy, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -80,7 +80,7 @@ export default function Info(props: Info) {
                             Total Sell
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.total_sell, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            {format(props?.info?.total_sell, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -102,9 +102,9 @@ export default function Info(props: Info) {
                             height={1}
                             align="right"
                             style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.total_return) === "+" ? "green" : Sign(props?.info?.total_return) === "-" && "red"}
+                            color={sign(props?.info?.total_return) === "+" ? "green" : sign(props?.info?.total_return) === "-" && "red"}
                         >
-                            {Sign(props?.info?.total_return)}$ {Format(props?.info?.total_return, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                            {sign(props?.info?.total_return)}$ {format(props?.info?.total_return, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -123,10 +123,10 @@ export default function Info(props: Info) {
                             height={1}
                             align="right"
                             style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.total_return_rate) === "+" ? "green" : Sign(props?.info?.total_return_rate) === "-" && "red"}
+                            color={sign(props?.info?.total_return_rate) === "+" ? "green" : sign(props?.info?.total_return_rate) === "-" && "red"}
                         >
-                            {Sign(props?.info?.total_return_rate)}${" "}
-                            {Format(props?.info?.total_return_rate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                            {sign(props?.info?.total_return_rate)}${" "}
+                            {format(props?.info?.total_return_rate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -144,7 +144,7 @@ export default function Info(props: Info) {
                             Avg Buy
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            $ {Format(props?.info?.avg_buy, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            $ {format(props?.info?.avg_buy, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -160,7 +160,7 @@ export default function Info(props: Info) {
                             Avg Sell
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            $ {Format(props?.info?.avg_sell, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            $ {format(props?.info?.avg_sell, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -181,9 +181,9 @@ export default function Info(props: Info) {
                             height={1}
                             align="right"
                             style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.avg_return) === "+" ? "green" : Sign(props?.info?.avg_return) === "-" && "red"}
+                            color={sign(props?.info?.avg_return) === "+" ? "green" : sign(props?.info?.avg_return) === "-" && "red"}
                         >
-                            {Sign(props?.info?.avg_return)}$ {Format(props?.info?.avg_return, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                            {sign(props?.info?.avg_return)}$ {format(props?.info?.avg_return, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -202,9 +202,9 @@ export default function Info(props: Info) {
                             height={1}
                             align="right"
                             style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.avg_return_rate) === "+" ? "green" : Sign(props?.info?.avg_return_rate) === "-" && "red"}
+                            color={sign(props?.info?.avg_return_rate) === "+" ? "green" : sign(props?.info?.avg_return_rate) === "-" && "red"}
                         >
-                            {Sign(props?.info?.avg_return_rate)} {Format(props?.info?.avg_return_rate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}{" "}
+                            {sign(props?.info?.avg_return_rate)} {format(props?.info?.avg_return_rate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}{" "}
                             %
                         </Elements.Text>
                     </Layouts.Row>
@@ -235,7 +235,7 @@ export default function Info(props: Info) {
                             Total Lending Balance
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            $ {Format(props?.info?.total_lending, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            $ {format(props?.info?.total_lending, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -251,7 +251,7 @@ export default function Info(props: Info) {
                             Total Lending Interest
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(props?.info?.total_lending_interest, "currency", { unit: 9, limit: 12, fix: 3 })} %
+                            {format(props?.info?.total_lending_interest, "currency", { unit: 9, limit: 12, fix: 3 })} %
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -269,7 +269,7 @@ export default function Info(props: Info) {
                             -
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(0, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            {format(0, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -285,7 +285,7 @@ export default function Info(props: Info) {
                             -
                         </Elements.Text>
                         <Elements.Text height={1} align="right" style={{ minWidth: "max-content" }}>
-                            {Format(0, "currency", { unit: 9, limit: 12, fix: 3 })}
+                            {format(0, "currency", { unit: 9, limit: 12, fix: 3 })}
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -306,10 +306,10 @@ export default function Info(props: Info) {
                             height={1}
                             align="right"
                             style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.total_open_interest) === "+" ? "green" : Sign(props?.info?.total_open_interest) === "-" && "red"}
+                            color={sign(props?.info?.total_open_interest) === "+" ? "green" : sign(props?.info?.total_open_interest) === "-" && "red"}
                         >
-                            {Sign(props?.info?.total_open_interest)}{" "}
-                            {Format(props?.info?.total_open_interest, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                            {sign(props?.info?.total_open_interest)}{" "}
+                            {format(props?.info?.total_open_interest, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -328,10 +328,10 @@ export default function Info(props: Info) {
                             height={1}
                             align="right"
                             style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.total_open_interest_rate) === "+" ? "green" : Sign(props?.info?.total_open_interest_rate) === "-" && "red"}
+                            color={sign(props?.info?.total_open_interest_rate) === "+" ? "green" : sign(props?.info?.total_open_interest_rate) === "-" && "red"}
                         >
-                            {Sign(props?.info?.total_open_interest_rate)}{" "}
-                            {Format(props?.info?.total_open_interest_rate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })} %
+                            {sign(props?.info?.total_open_interest_rate)}{" "}
+                            {format(props?.info?.total_open_interest_rate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })} %
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>
@@ -352,10 +352,10 @@ export default function Info(props: Info) {
                             height={1}
                             align="right"
                             style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.avg_open_interest) === "+" ? "green" : Sign(props?.info?.avg_open_interest) === "-" && "red"}
+                            color={sign(props?.info?.avg_open_interest) === "+" ? "green" : sign(props?.info?.avg_open_interest) === "-" && "red"}
                         >
-                            {Sign(props?.info?.avg_open_interest)}${" "}
-                            {Format(props?.info?.avg_open_interest, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                            {sign(props?.info?.avg_open_interest)}${" "}
+                            {format(props?.info?.avg_open_interest, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                         </Elements.Text>
                     </Layouts.Row>
                     <Layouts.Row
@@ -374,10 +374,10 @@ export default function Info(props: Info) {
                             height={1}
                             align="right"
                             style={{ minWidth: "max-content" }}
-                            color={Sign(props?.info?.avg_open_interest_rate) === "+" ? "green" : Sign(props?.info?.avg_open_interest_rate) === "-" && "red"}
+                            color={sign(props?.info?.avg_open_interest_rate) === "+" ? "green" : sign(props?.info?.avg_open_interest_rate) === "-" && "red"}
                         >
-                            {Sign(props?.info?.avg_open_interest_rate)}{" "}
-                            {Format(props?.info?.avg_open_interest_rate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })} %
+                            {sign(props?.info?.avg_open_interest_rate)}{" "}
+                            {format(props?.info?.avg_open_interest_rate, "currency", { unit: 9, limit: 12, fix: 3, sign: false })} %
                         </Elements.Text>
                     </Layouts.Row>
                 </Layouts.Col>

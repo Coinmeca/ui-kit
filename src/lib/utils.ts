@@ -4,7 +4,13 @@ export interface Sorting {
 	direction?: boolean | undefined;
 }
 
-export function Sort(array: any[] = [], key: string, type: string, direction: boolean | undefined = false) {
+export interface RGBColor {
+	r: number;
+	g: number;
+	b: number;
+}
+
+export function sort(array: any[] = [], key: string, type: string, direction: boolean | undefined = false) {
 	const depth = (a: any, b: any) => {
 		let x: any = a;
 		let y: any = b;
@@ -53,7 +59,7 @@ export function Sort(array: any[] = [], key: string, type: string, direction: bo
 	}
 }
 
-export function Filter(array: any[] = [], keyword?: string) {
+export function filter(array: any[] = [], keyword?: string) {
 	return array && array?.length > 0
 		? !keyword || keyword === '' || keyword.length === 0
 			? [...array]
@@ -65,14 +71,14 @@ export function Filter(array: any[] = [], keyword?: string) {
 		: [];
 }
 
-export function Capitalize(text: string) {
+export function capitalize(text: string) {
 	if (!text || text === '') return '';
 	const lower: string = text.toLowerCase();
 	const cap: string = text.charAt(0).toUpperCase() + lower.slice(1);
 	return cap;
 }
 
-const format = {
+const pattern = {
 	email: /^[a-zA-Z0-9+]*$/,
 	number: /^[0-9+]*$/,
 	currency: /^[,.0-9]*$/
@@ -90,7 +96,7 @@ interface format {
 	decimals?: number;
 }
 
-export function Unit(value: number | string, upper?: number) {
+export function unit(value: number | string, upper?: number) {
 	value = value?.toString()?.replaceAll(',', '').split('.')[0];
 	upper = upper || 0;
 
@@ -131,12 +137,12 @@ export function Unit(value: number | string, upper?: number) {
 	return unit;
 }
 
-export function Format(value?: number | string, type?: input, option?: boolean | number | format, fix?: number | 'auto', max?: number, decimals?: number): string {
+export function format(value?: number | string, type?: input, option?: boolean | number | format, fix?: number | 'auto', max?: number, decimals?: number): string {
 	let display = (typeof option === 'object' && typeof option?.display !== 'undefined') || !!option;
 	let limit = (typeof option === 'object' && typeof option?.limit === 'number') ? option?.limit : typeof option === 'number' ? option : undefined;
 	let unit = typeof option === 'object' && (typeof option?.unit === 'boolean' ? option?.unit : (typeof option?.unit === 'number' ? true : false));
 	let upper = (typeof option === 'object' && typeof option?.unit === 'number') ? option?.unit : 0;
-	let sign = (typeof option === 'object' && typeof option?.sign === 'boolean') ? option?.sign : true;
+	let signs = (typeof option === 'object' && typeof option?.sign === 'boolean') ? option?.sign : true;
 	decimals = (typeof option === 'object' && typeof option?.decimals === 'number') ? option?.decimals : decimals;
 	fix = typeof option === 'object' ? option?.fix : fix === 'auto' ? 3 : fix;
 	max = typeof option === 'object' ? option?.max : max;
@@ -163,7 +169,7 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			value = value?.toString()?.replaceAll(',', '');
 			if (!display && (value === '.' || value === '0.')) return '0.';
 			if (value === '' || value?.length <= 0) return display ? '0' : '';
-			let sig = (sign && (Sign(value) === "+" ? '' : Sign(value))) || '';
+			let sig = (signs && (sign(value) === "+" ? '' : sign(value))) || '';
 
 			let copy: any = [value];
 			let point = false;
@@ -197,11 +203,11 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 			const d = copy[1]?.length || 0;
 
 			if (multiplier < 0) {
-				if (copy?.legnth > 1) {
+				if (copy?.length > 1) {
 					if (m > d) {
 						value = copy[0] + copy[1] + '0'.repeat(m - d);
 					} else {
-						value = copy[0] + copy[1]?.substring(0, m - d) + '.' + copy[1]?.substring(m - d, copy[1]?.legnth);
+						value = copy[0] + copy[1]?.substring(0, m - d) + '.' + copy[1]?.substring(m - d, copy[1]?.length);
 					}
 				} else {
 					if (m > n) {
@@ -211,11 +217,11 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 					}
 				}
 			} else if (multiplier > 0) {
-				if (copy?.legnth > 1) {
+				if (copy?.length > 1) {
 					if (m > d) {
 						value = copy[0] + copy[1] + '0'.repeat(m - d);
 					} else {
-						value = copy[0] + copy[1]?.substring(0, d - m) + '.' + copy[1]?.substring(d - m, copy[1]?.legnth);
+						value = copy[0] + copy[1]?.substring(0, d - m) + '.' + copy[1]?.substring(d - m, copy[1]?.length);
 					}
 				} else {
 					value = copy[0] + '0'.repeat(m);
@@ -310,7 +316,6 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 
 			const result = copy[0] + (point ? '.' : '') + dec;
 			return sig + (unit ? result + ' ' + u : result);
-			// return u !== '' ? result + ' ' + u : display && type === 'number' ? parseFloat(result) : result;
 		}
 		case 'date':
 			if (typeof value === 'undefined') return '-';
@@ -336,11 +341,11 @@ export function Format(value?: number | string, type?: input, option?: boolean |
 };
 
 export function parseNumber(value?: number | string, decimals?: number | string, max?: number): number {
-	return parseFloat(Format(value, "number", true, undefined, max, typeof decimals === 'number' ? decimals : typeof decimals === 'string' ? parseFloat(decimals) : undefined));
+	return parseFloat(format(value, "number", true, undefined, max, typeof decimals === 'number' ? decimals : typeof decimals === 'string' ? parseFloat(decimals) : undefined));
 }
 
 
-export function Sign(value?: number | string): string {
+export function sign(value?: number | string): string {
 	if (typeof value === 'undefined') return '';
 	else {
 		value = parseFloat(value?.toString());
@@ -350,5 +355,94 @@ export function Sign(value?: number | string): string {
 }
 
 export function getFees(n: number | string, fee: number, divider?: number) {
-	return (parseFloat(Format(n, 'number').toString()) * fee) / (divider || 10000);
+	return (parseFloat(format(n, 'number').toString()) * fee) / (divider || 10000);
+}
+
+export function getAverageRGB(pixels: Uint8ClampedArray): RGBColor {
+	let r = 0, g = 0, b = 0;
+
+	for (let i = 0; i < pixels.length; i += 4) {
+		r += pixels[i];
+		g += pixels[i + 1];
+		b += pixels[i + 2];
+		// Skip alpha channel pixels[i + 3] if not needed
+	}
+
+	const numPixels = pixels.length / 4;
+	r = Math.floor(r / numPixels);
+	g = Math.floor(g / numPixels);
+	b = Math.floor(b / numPixels);
+
+	return { r, g, b };
+}
+
+export function rgbToHex(r: number, g: number, b: number): string {
+	return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
+}
+
+export function componentToHex(c: number): string {
+	const hex = c.toString(16);
+	return hex.length === 1 ? '0' + hex : hex;
+}
+
+
+export async function getDominantColor(src: string) {
+	if (!src || src === '') return '#fff';
+	try {
+		// Create an Image object
+		const img = new Image();
+		img.crossOrigin = "Anonymous";
+		img.src = src;
+
+		// Wait for the image to load
+		await new Promise((resolve, reject) => {
+			img.onload = resolve;
+			img.onerror = reject;
+		});
+
+		// Create a canvas element
+		const canvas = document.createElement('canvas');
+		const ctx = canvas.getContext('2d');
+
+		// Ensure ctx is not null before proceeding
+		if (!ctx) {
+			throw new Error('Failed to get 2D context from canvas');
+		}
+
+		// Set canvas dimensions to match the image
+		canvas.width = img.width;
+		canvas.height = img.height;
+
+		// Draw the image to the canvas
+		ctx.drawImage(img, 0, 0);
+
+		// Get the image data from the canvas
+		const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		const pixels = imageData.data;
+
+		// Calculate the average color
+		const averageColor = getAverageRGB(pixels);
+
+		// Return the dominant color as hex value
+		return rgbToHex(averageColor.r, averageColor.g, averageColor.b);
+
+	} catch (error) {
+		console.error('Error:', error);
+		return '#FFFFFF'; // Default white color in case of error
+	}
+};
+
+export function HexToColor(address: string) {
+	if (address === '' || address?.length === 0) return '';
+	const HEX = '0123456789abcdef';
+	let t = BigInt(address);
+	let o = 136;
+	t >>= BigInt(o);
+
+	let b = new Array(6);
+	for (let i = b.length; i > 0; i--) {
+		b[i - 1] = HEX[Number(t & BigInt(0xf))];
+		t >>= BigInt(4);
+	}
+	return b.join('');
 }

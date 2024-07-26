@@ -1,11 +1,12 @@
 import { css, styled } from "styled-components";
-import * as Box from "components/layouts/box/Box.styled";
 import * as Dropdown from "components/controls/dropdown/Dropdown.styled";
+import * as Box from "components/layouts/box/Box.styled";
 
 export const Side = styled.div<{ $width?: number }>`
     display: flex;
     // min-width: max-content;
     min-width: ${({ $width }) => ($width ? `calc(var(--unit) * ${$width})` : "max-content")};
+    transition: 0.3s ease;
 
     &:not(:has(> :is(h1, h2, h3, h4, h5, h6, strong, b, p, i))) {
         /* &:has(> :is(div, span)) { */
@@ -40,7 +41,20 @@ export const Side = styled.div<{ $width?: number }>`
         &,
         & > ul,
         & > ul > li {
+            -webkit-backdrop-filter: none;
             backdrop-filter: none;
+        }
+    }
+`;
+
+export const Inner = styled.div`
+    & > button {
+        &:first-child {
+            margin-left: -1em;
+        }
+
+        &:last-child {
+            margin-right: -1em;
         }
     }
 `;
@@ -65,138 +79,148 @@ const Style = styled.div<{
     user-select: none;
     transition: 0.3s ease;
 
-    background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o01));
-
-    &:hover {
-        background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o03));
-    }
-
-    &:active {
-        /* background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o03)); */
-    }
-
-    &[data-active="true"] {
-        background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o015));
-
-        /* ${Box.default} {
-            background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o01));
-        } */
-    }
-
     & > * {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        min-height: 4em;
-        padding: 0 1em;
+        transition: 0.3s ease;
 
-        & > * {
+        &:first-child {
+            background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o01));
+
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            width: -webkit-fill-available;
-            height: auto;
-            gap: 1em;
+            min-height: 4em;
+            padding: 0 1em;
 
-            & > ${Side} {
-                & > i > svg {
-                    fill: rgb(var(--${({ $error }) => ($error ? "red" : "white")}));
-                }
-            }
-
-            & > *:not(${Side}) {
+            & > * {
                 display: flex;
                 align-items: center;
-                width: 100%;
+                justify-content: center;
+                width: -webkit-fill-available;
+                height: auto;
+                gap: 1em;
+
+                & > ${Side} {
+                    & > i > svg {
+                        ${({ $error }) => $error && "fill: rgb(var(--red));"}
+                    }
+                }
+
+                & > *:not(${Side}) {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                }
+
+                input {
+                    background: transparent;
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
+                    color: var(--white);
+                    font-size: 1.5em;
+                    font-weight: bold;
+                    outline: none;
+
+                    &::placeholder {
+                        text-align: ${({ $align }) => $align};
+                        font-weight: normal;
+                        color: inherit;
+                        opacity: 0.3;
+                    }
+
+                    &[type="number"],
+                    &[type="date"] {
+                        -moz-appearance: textfield;
+                    }
+
+                    &[type="number"]::-webkit-outer-spin-button,
+                    &[type="number"]::-webkit-inner-spin-button,
+                    &[type="date"]::-webkit-outer-spin-button,
+                    &[type="date"]::-webkit-inner-spin-button {
+                        -webkit-appearance: none;
+                        display: none;
+                        margin: 0;
+                    }
+
+                    &:disabled {
+                        pointer-events: none;
+                    }
+
+                    ${({ $type }) =>
+                        ($type === "number" || $type === "currency") &&
+                        css`
+                            font-feature-settings: "tnum" on, "lnum" on;
+                        `}
+                }
             }
 
-            input {
-                background: transparent;
-                display: flex;
-                width: 100%;
-                height: 100%;
-                color: var(--white);
-                font-size: 1.5em;
-                font-weight: bold;
-                outline: none;
+            &:hover {
+                background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o03));
+            }
 
-                &::placeholder {
-                    text-align: ${({ $align }) => $align};
-                    font-weight: normal;
-                    color: inherit;
-                    opacity: 0.3;
-                }
+            &:active {
+                /* background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o03)); */
+            }
 
-                &[type="number"],
-                &[type="date"] {
-                    -moz-appearance: textfield;
-                }
-
-                &[type="number"]::-webkit-outer-spin-button,
-                &[type="number"]::-webkit-inner-spin-button,
-                &[type="date"]::-webkit-outer-spin-button,
-                &[type="date"]::-webkit-inner-spin-button {
-                    -webkit-appearance: none;
-                    display: none;
-                    margin: 0;
-                }
-
-                &:disabled {
+            ${({ $lock }) =>
+                $lock &&
+                css`
+                    background: rgba(var(--white), var(--o003));
+                    cursor: pointer;
                     pointer-events: none;
-                }
+                    & > * {
+                        pointer-events: none;
+                        & > * {
+                            pointer-events: none;
+                            input {
+                                cursor: pointer;
+                                pointer-events: none;
+                            }
+                        }
+                        & > ${Side} {
+                            cursor: pointer;
+                            pointer-events: none;
+                        }
+                    }
+                `}
 
-                ${({ $type }) =>
-                    ($type === "number" || $type === "currency") &&
-                    css`
-                        font-feature-settings: "tnum" on, "lnum" on;
-                    `}
-            }
+            ${({ $disabled }) =>
+                $disabled &&
+                css`
+                    cursor: pointer;
+                    opacity: var(--o015);
+                    pointer-events: none;
+                    & > * {
+                        pointer-events: none;
+                        & > * {
+                            pointer-events: none;
+                            input {
+                                cursor: pointer;
+                                pointer-events: none;
+                            }
+                        }
+                        & > ${Side} {
+                            cursor: pointer;
+                            pointer-events: none;
+                        }
+                    }
+                `}
+        }
+
+        &:last-child:not(:only-child) {
+            margin-top: 0.5em;
         }
     }
 
-    ${({ $lock }) =>
-        $lock &&
-        css`
-            background: rgba(var(--white), var(--o003));
-            cursor: pointer;
-            pointer-events: none;
-            & > * {
-                pointer-events: none;
-                & > * {
-                    pointer-events: none;
-                    input {
-                        cursor: pointer;
-                        pointer-events: none;
-                    }
-                }
-                & > ${Side} {
-                    cursor: pointer;
-                    pointer-events: none;
-                }
-            }
-        `}
+    &[data-active="true"] {
+        & > *:first-child {
+            background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o015));
 
-    ${({ $disabled }) =>
-        $disabled &&
-        css`
-            cursor: pointer;
-            opacity: var(--o015);
-            pointer-events: none;
-            & > * {
-                pointer-events: none;
-                & > * {
-                    pointer-events: none;
-                    input {
-                        cursor: pointer;
-                        pointer-events: none;
-                    }
-                }
-                & > ${Side} {
-                    cursor: pointer;
-                    pointer-events: none;
-                }
-            }
-        `}
+            /* ${Box.default} {
+            background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o01));
+            } */
+        }
+    }
 `;
 
 export default Style;

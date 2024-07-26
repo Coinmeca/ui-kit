@@ -5,11 +5,11 @@ import * as InnerContent from "components/layouts/contents/inner/InnerContent.st
 import * as Box from "components/layouts/box/Box.styled";
 import { Root } from "lib/style";
 
-export const ButtonArea = styled.div`
+export const ButtonArea = styled.div<{ $gap?: number }>`
     display: flex;
     flex-direction: row;
     width: -webkit-fill-available;
-    gap: 2em;
+    gap: ${({ $gap }) => `${$gap || 2}em`};
     /* margin: 2em -2em -2em; */
     margin-top: -2em;
 
@@ -68,10 +68,26 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
         transition: 0.3s ease;
     }
 
+    --change: var(--white);
+
     @media (prefers-color-scheme: light) {
         --white: 0, 0, 0;
         --black: 255, 255, 255;
         color: black;
+
+        & {
+            ::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            ::-webkit-scrollbar-track {
+                box-shadow: inset 0 0 0 rgba(var(--black), var(--o03));
+            }
+
+            ::-webkit-scrollbar-thumb {
+                box-shadow: inset 0 0 2rem rgba(var(--white), var(--o03));
+            }
+        }
     }
 
     @media (prefers-color-scheme: dark) {

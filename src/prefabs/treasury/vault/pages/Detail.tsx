@@ -1,15 +1,15 @@
 "use client";
 import { useState } from "react";
 import { Charts, Controls, Elements, Layouts } from "components";
+import type { Price, Volume } from "components/charts/lightweight/Candle";
 import { Modal } from "containers";
+import { usePortal, useWindowSize } from "hooks";
+import { Root } from "lib/style";
+import { capitalize, format } from "lib/utils";
 import { Asset } from "prefabs";
 import { Vault } from "prefabs/treasury";
-import { usePortal, useWindowSize } from "hooks";
-import { Capitalize, Format } from "lib/utils";
-import { Root } from "lib/style";
-import type { Token } from "types/web3";
 import type { Trade as Data } from "types/history";
-import type { Price, Volume } from "components/charts/lightweight/Candle";
+import type { Token } from "types/web3";
 
 export interface Detail {
     asset: Token;
@@ -46,7 +46,7 @@ export default function Detail(props: Detail) {
     };
 
     const handleDetailModal = (data: any) => {
-        const date = (Format(data?.time || 0, "date") as string).split(" ");
+        const date = (format(data?.time || 0, "date") as string).split(" ");
         return (
             <Modal title={"Transaction Detail"} onClose={closeDetail} close>
                 <Layouts.Col gap={2} style={{ height: "100%" }}>
@@ -72,7 +72,7 @@ export default function Detail(props: Detail) {
                                 <Elements.Text opacity={0.6} fit>
                                     Volume
                                 </Elements.Text>
-                                <Elements.Text align={"right"}>{data?.volume}</Elements.Text>
+                                <Elements.Text align={"right"}>{data?.amount}</Elements.Text>
                                 <Elements.Text opacity={0.6} style={{ maxWidth: "4em" }}>
                                     {props?.asset?.symbol}
                                 </Elements.Text>
@@ -107,7 +107,7 @@ export default function Detail(props: Detail) {
     };
     const [handleDetail, closeDetail] = usePortal(handleDetailModal);
 
-    const historyFormatter = (data?: Data[]) => {
+    const recentFormatter = (data?: Data[]) => {
         return (
             data &&
             typeof data !== "string" &&
@@ -118,7 +118,7 @@ export default function Detail(props: Detail) {
                         handleDetail(null, {
                             type: data?.type,
                             time: data?.time,
-                            volume: data?.volume,
+                            volume: data?.amount,
                             meca: data?.meca,
                             share: data?.share,
                         });
@@ -133,7 +133,7 @@ export default function Detail(props: Detail) {
                                     children: [
                                         <>
                                             <Elements.Text color={colorset[`${data?.type as "DEPOSIT" | "WITHDRAW"}`]} case={"capital"} fit>
-                                                {Capitalize(data?.type)}
+                                                {capitalize(data?.type)}
                                             </Elements.Text>
                                         </>,
                                         <>
@@ -145,7 +145,7 @@ export default function Detail(props: Detail) {
                                                     }}
                                                     fit
                                                 >
-                                                    {Format(data?.share || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                    {format(data?.share || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                 </Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} fit>
                                                     %
@@ -167,7 +167,7 @@ export default function Detail(props: Detail) {
                                                             fontFeatureSettings: "initial",
                                                         }}
                                                     >
-                                                        {Format(data?.volume || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                        {format(data?.amount || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                     </Elements.Text>
                                                     <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ minWidth: "4em" }} fit>
                                                         {props?.asset?.symbol}
@@ -186,7 +186,7 @@ export default function Detail(props: Detail) {
                                                             fontFeatureSettings: "initial",
                                                         }}
                                                     >
-                                                        {Format(data?.meca || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                        {format(data?.meca || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                     </Elements.Text>
                                                     <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ minWidth: "4em" }} fit>
                                                         MECA
@@ -215,7 +215,7 @@ export default function Detail(props: Detail) {
                             img={require(`../../../../assets/coins/${props?.asset?.symbol?.toLocaleLowerCase()}.png`)}
                             style={{ marginLeft: "-1em" }}
                         />
-                        <Layouts.Row responsive={"mobile"} gap={1} fit>
+                        <Layouts.Row responsive={"tablet"} gap={1} fit>
                             <Elements.Text size={2.5} height={1} case={"upper"} style={{ marginRight: "1em" }} responsive={{ device: "mobile", size: 1.5 }}>
                                 {props?.asset?.symbol}
                             </Elements.Text>
@@ -228,13 +228,13 @@ export default function Detail(props: Detail) {
                         <Layouts.Row fix fit gap={1} style={{ alignItems: "center" }}>
                             <Elements.Icon scale={1.5} icon={"caret-up"} change />
                             <Elements.Text size={2.5} height={1} responsive={{ device: "mobile", size: 1.75 }} change>
-                                {Format(props?.info.per_token, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                {format(props?.info.per_token, "currency", { unit: 9, limit: 12, fix: 3 })}
                             </Elements.Text>
                         </Layouts.Row>
                     </Layouts.Row>
                 </Layouts.Row>
                 <Layouts.Divider style={{ marginTop: "1em" }} />
-                <Layouts.Col show={"mobile"} gap={0}>
+                <Layouts.Col show={"tablet"} gap={0}>
                     <Layouts.Row gap={1} fix>
                         <Controls.Tab active={mobile === "info"} onClick={() => setMobile("info")}>
                             Info
@@ -256,7 +256,7 @@ export default function Detail(props: Detail) {
                     gap={3}
                     responsive={[
                         {
-                            device: "mobile",
+                            device: "tablet",
                             area: `'up' 'down'`,
                             width: "1fr",
                             height: "1fr max-content",
@@ -273,7 +273,7 @@ export default function Detail(props: Detail) {
                             ),
                             responsive: [
                                 {
-                                    device: "mobile",
+                                    device: "tablet",
                                     area: "up",
                                 },
                             ],
@@ -346,20 +346,6 @@ export default function Detail(props: Detail) {
                                                         />
                                                     ),
                                                 },
-                                                // {
-                                                //     active: chart === "value",
-                                                //     children: (
-                                                //         <Charts.LightWeight.Line
-                                                //             data={props?.charts?.value}
-                                                //             // volume={props?.charts?.volume!}
-                                                //             up={"DEPOSIT"}
-                                                //             down={"WITHDRAW"}
-                                                //             color={{
-                                                //                 default: "0,64,255",
-                                                //             }}
-                                                //         />
-                                                //     ),
-                                                // },
                                             ]}
                                         />
                                     </Layouts.Contents.InnerContent>
@@ -367,7 +353,7 @@ export default function Detail(props: Detail) {
                             ),
                             responsive: [
                                 {
-                                    device: "mobile",
+                                    device: "tablet",
                                     area: "up",
                                 },
                             ],
@@ -378,7 +364,7 @@ export default function Detail(props: Detail) {
                                 <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "recent" : true}>
                                     <Layouts.Contents.InnerContent>
                                         <Layouts.Menu
-                                            hide="mobile"
+                                            hide="tablet"
                                             menu={[
                                                 [
                                                     <>
@@ -388,7 +374,8 @@ export default function Detail(props: Detail) {
                                             ]}
                                         />
                                         <Vault.Containers.History
-                                            list={historyFormatter(props?.history)}
+                                            list={props?.history}
+                                            formatter={recentFormatter}
                                             fallback={"There is no history yet."}
                                             style={{ height: "100%" }}
                                         />
@@ -444,10 +431,10 @@ export default function Detail(props: Detail) {
                                                     <Vault.Containers.Trade
                                                         base={props?.asset}
                                                         quote={{
-                                                            address: "0x123456",
                                                             symbol: "MECA",
                                                             name: "Coinmeca",
                                                             decimals: 18,
+                                                            address: "0x123456",
                                                         }}
                                                         price={props?.info?.token_per}
                                                         fee={0.1}
@@ -468,7 +455,7 @@ export default function Detail(props: Detail) {
                             ),
                             responsive: [
                                 {
-                                    device: "mobile",
+                                    device: "tablet",
                                     area: "down",
                                 },
                             ],

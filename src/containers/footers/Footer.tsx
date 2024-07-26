@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import { Elements, Layouts } from "components";
 import { type Row } from "components/layouts/row/Row";
 import { type Col } from "components/layouts/col/Col";
 import { Style, Logo } from "./Footer.styled";
+import { memo } from "react";
 
 export interface Footer {
     logo?: Logo;
@@ -52,7 +55,7 @@ export interface Footer {
     bottom?: any;
 }
 
-export default function Footer(props?: Footer) {
+function Footer(props?: Footer) {
     const Col = (item: any) => {
         item = item?.item ? item?.item : item;
         return Array.isArray(item) ? (
@@ -150,20 +153,24 @@ export default function Footer(props?: Footer) {
 
     const MenuItem = (menu: any) => {
         menu = menu?.menu ? menu?.menu : menu;
-        return Array.isArray(menu) ? (
-            menu?.map((item: any, i: number) =>
-                typeof item === "object" && !item.$$typeof ? (
-                    <Elements.Text key={i} {...item} type={item?.type || "button"}>
-                        {item?.name}
-                    </Elements.Text>
+        return (
+            <>
+                {Array.isArray(menu) ? (
+                    menu?.map((item: any, i: number) =>
+                        typeof item === "object" && !item.$$typeof ? (
+                            <Elements.Text key={i} {...item} type={item?.type || "button"}>
+                                {item?.name}
+                            </Elements.Text>
+                        ) : (
+                            item
+                        )
+                    )
                 ) : (
-                    item
-                )
-            )
-        ) : (
-            <Elements.Text {...menu} type={menu?.type || "button"}>
-                {menu?.name}
-            </Elements.Text>
+                    <Elements.Text {...menu} type={menu?.type || "button"}>
+                        {menu?.name}
+                    </Elements.Text>
+                )}
+            </>
         );
     };
 
@@ -201,7 +208,7 @@ export default function Footer(props?: Footer) {
                     {props?.menus && (
                         <Layouts.Row
                             {...(typeof props?.menus === "object" && (props?.menus as Row))}
-                            style={{ padding: `${(props?.menus as any)?.padding || 2}em` }}
+                            style={{ padding: `${(props?.menus as any)?.padding || 2}em ${((props?.menus as any)?.padding || 2) / 2}em` }}
                             fill
                         >
                             <Category category={props?.menus} />
@@ -225,3 +232,5 @@ export default function Footer(props?: Footer) {
         </Style>
     );
 }
+
+export default memo(Footer);

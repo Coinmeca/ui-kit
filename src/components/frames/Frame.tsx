@@ -1,9 +1,10 @@
 "use client";
 import { Layouts } from "components";
-import { Headers, Sidebar } from "containers";
+import { Headers, Sidebar, Footers } from "containers";
 import { Toast } from "containers/sidebars";
 import type { BG } from "components/layouts/bg/BG";
 import type { Header } from "containers/headers/Header";
+import type { Footer } from "containers/footers/Footer";
 import type { Sidebars } from "containers/sidebars/Sidebar";
 import type { Toast as Toasts } from "containers/sidebars/toast/Toast";
 import Style from "./Frame.styled";
@@ -12,6 +13,7 @@ export interface Frame {
     children?: any;
     header?: Header;
     sidebar?: Sidebars;
+    footer?: Footer;
     toast?: Toasts;
     side?: number;
     background?: BG;
@@ -31,10 +33,13 @@ export default function Frame(props: Frame) {
                     {align === "left" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
                     <main>
                         {props?.children}
-                        {/* <Footers.Footer /> */}
+                        <Footers.Footer {...props?.footer} />
+                        {/* {props?.footer && <Footers.Footer {...props?.footer} />} */}
                     </main>
-                    {align === "right" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
-                    {props?.toast && props?.toast?.list && props?.toast?.list?.length > 0 && <Toast {...props?.toast} width={width} align={align} />}
+                    <>
+                        {align === "right" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
+                        {props?.toast && props?.toast?.list && props?.toast?.list?.length > 0 && <Toast {...props?.toast} width={width} align={align} />}
+                    </>
                 </section>
             </Style>
         </>

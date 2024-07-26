@@ -1,15 +1,14 @@
 "use client";
-import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { useState } from "react";
 import { Charts, Controls, Elements, Layouts } from "components";
-import { Blinds } from "containers";
-import { Asset, Exchange } from "prefabs";
 import { useWindowSize } from "hooks";
-import { Capitalize, Format } from "lib/utils";
 import { Root } from "lib/style";
+import { capitalize, format } from "lib/utils";
+import { Asset, Exchange } from "prefabs";
 
-import ExchangeData from "./data";
 import AssetData from "../asset/data";
+import ExchangeData from "./data";
 
 export default function Page() {
     const { windowSize } = useWindowSize();
@@ -63,7 +62,7 @@ export default function Page() {
                                             size: 1.5,
                                         }}
                                     >
-                                        {Capitalize(props?.market?.base?.name || "")}
+                                        {capitalize(props?.market?.base?.name || "")}
                                     </Elements.Text>
                                 </Layouts.Row>
                             </Layouts.Row>
@@ -79,7 +78,7 @@ export default function Page() {
                                         }}
                                         change
                                     >
-                                        $ {Format(props?.market?.price, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                        $ {format(props?.market?.price, "currency", { unit: 9, limit: 12, fix: 3 })}
                                     </Elements.Text>
                                 </Layouts.Row>
                             </Layouts.Row>
@@ -211,8 +210,8 @@ export default function Page() {
                                                                     view={view}
                                                                     asks={props?.orderbook?.asks}
                                                                     bids={props?.orderbook?.bids}
-                                                                    base={props?.market?.base}
-                                                                    quote={props?.market?.quote}
+                                                                    base={props?.market?.base?.symbol}
+                                                                    quote={props?.market?.quote?.symbol}
                                                                     responsive={{
                                                                         device: "mobile",
                                                                         vertical: windowSize.width < Root.Device.Mobile,

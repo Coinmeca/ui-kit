@@ -1,7 +1,7 @@
 "use client";
-import type { ReactNode, CSSProperties } from "react";
-import { Elements } from "components";
 import { AnimatePresence, motion } from "framer-motion";
+import type { ReactNode } from "react";
+import { Elements } from "components";
 import Style, { NoData } from "./List.styled";
 import ListItem from "./ListItem";
 
@@ -16,6 +16,7 @@ export interface List {
 export default function List(props: List) {
     const fallback = props?.fallback || "There is no data.";
     const fill = props?.fill || false;
+    const list = typeof props?.formatter === "function" ? props?.formatter(props?.list) : props?.list;
 
     return (
         <>
@@ -23,7 +24,7 @@ export default function List(props: List) {
                 <Style $fill={fill} style={props?.style}>
                     <AnimatePresence>
                         <>
-                            {(typeof props?.formatter === "function" ? props?.formatter(props?.list) : props?.list)?.map((data: any, i: number) => (
+                            {list?.map((data: any, i: number) => (
                                 <ListItem
                                     key={data?.index || i}
                                     {...(data?.children && data)}

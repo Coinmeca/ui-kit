@@ -5,7 +5,7 @@ export interface Order {
 	item?: Token;
 	price: number;
 	amount: number;
-	quantity?: number;
+	quantity: number;
 	fees?: number;
 	total?: number;
 }

@@ -25,6 +25,7 @@ const Style = styled.section`
             width: 100%;
             height: 100%;
             z-index: 3;
+            overflow: hidden;
 
             ${Page.default} {
                 position: relative;

@@ -1,8 +1,8 @@
 import { css, styled } from "styled-components";
-import * as Box from "components/layouts/box/Box.styled";
-import * as Row from "components/layouts/row/Row.styled";
-import * as Col from "components/layouts/col/Col.styled";
 import * as Button from "components/controls/button/Button.styled";
+import * as Box from "components/layouts/box/Box.styled";
+import * as Col from "components/layouts/col/Col.styled";
+import * as Row from "components/layouts/row/Row.styled";
 
 export const Content = styled.span`
     &,
@@ -15,7 +15,7 @@ export const Content = styled.span`
     }
 `;
 
-export const Style = styled.div<{ $active: boolean; $close: boolean; $order?: number }>`
+export const Style = styled.div<{ $active: boolean; $direction: "left" | "right"; $close: boolean; $order?: number }>`
     min-height: max-content;
     max-height: 0;
     scroll-snap-align: start;
@@ -31,6 +31,7 @@ export const Style = styled.div<{ $active: boolean; $close: boolean; $order?: nu
         --black: var(--white-abs);
         background: rgba(var(--black-abs), var(--o09));
         background-image: linear-gradient(rgba(var(--white-abs), var(--o015)), rgba(var(--white-abs), var(--o015)));
+        /* -webkit-backdrop-filter: blur(calc(var(--unit) / 8)); */
         /* backdrop-filter: blur(calc(var(--unit) / 8)); */
         width: auto;
         transition: 0.3s ease;
@@ -76,7 +77,7 @@ export const Style = styled.div<{ $active: boolean; $close: boolean; $order?: nu
                       opacity: 0;
                   }
               `}
-    ${({ $close }) =>
+    ${({ $close, $direction }) =>
         $close &&
         css`
             transform: scale(0.96);
@@ -85,7 +86,7 @@ export const Style = styled.div<{ $active: boolean; $close: boolean; $order?: nu
             pointer-events: none;
 
             ${Box.default} {
-                transform: translateX(100%);
+                transform: translateX(${$direction === "right" ? "100" : "-100"}%);
                 opacity: 0;
             }
         `}

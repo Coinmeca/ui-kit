@@ -1,6 +1,6 @@
-import View from './View';
 import Detail from './Detail';
-import * as Vault from './vault';
+import List from './List';
 import * as Farms from './farm';
+import * as Vault from './vault';
 
-export { View, Detail, Vault, Farms };
+export { Detail, Farms, List, Vault };

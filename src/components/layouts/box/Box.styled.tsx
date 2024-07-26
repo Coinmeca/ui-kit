@@ -21,6 +21,7 @@ const Style = styled.div<{
         --black: 0, 0, 0;
         color: white;
     }
+    --change: var(--white);
 
     scroll-snap-align: start;
     transition: 0.3s ease;

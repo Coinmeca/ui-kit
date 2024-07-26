@@ -4,7 +4,7 @@ import { Root } from "lib/style";
 
 const Style = styled.div<{ $scale: number; $color: string; $size: number }>`
     font-size: ${({ $scale }) => $scale}em;
-    display: flex;
+    display: flex !important;
     align-items: center;
     gap: 1em;
 

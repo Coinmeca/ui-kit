@@ -1,7 +1,7 @@
-"use client";
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import Style from "./Panel.styled";
+'use client';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import Style from './Panel.styled';
 
 export interface Panel {
     id?: string;
@@ -18,11 +18,11 @@ export default function Panel(props: Panel) {
     const [active, setActive] = useState(true);
 
     const handleClick = (e: any) => {
-        if (typeof props?.onClick === "function") props?.onClick(e);
+        if (typeof props?.onClick === 'function') props?.onClick(e);
     };
 
     const handleBlur = (e?: any) => {
-        if (typeof props?.onBlur === "function") props?.onBlur(e);
+        if (typeof props?.onBlur === 'function') props?.onBlur(e);
     };
 
     useEffect(() => {
@@ -38,7 +38,7 @@ export default function Panel(props: Panel) {
         <AnimatePresence>
             {active && (
                 <Style
-                    key={"panel"}
+                    key={'panel'}
                     id={props?.id}
                     $active={active}
                     $color={props?.color}
@@ -49,8 +49,7 @@ export default function Panel(props: Panel) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 1 }}
-                    transition={{ ease: "easeInOut", duration: 0 }}
-                >
+                    transition={{ ease: 'easeInOut', duration: 0 }}>
                     {props?.children}
                 </Style>
             )}

@@ -49,6 +49,18 @@ export const Lower = styled.section`
     }
 `;
 
+export const SwipeArea = styled.div<{ $area: number }>`
+    & {
+        position: absolute !important;
+        width: ${({ $area }) => $area * 2}em !important;
+        left: ${({ $area }) => `-${$area}`}em;
+        top: 0;
+        transition: 0.3s ease;
+        pointer-events: initial;
+        z-index: 999;
+    }
+`;
+
 const Style = styled.aside<{
     $scale: number;
     $width: number;
@@ -56,6 +68,7 @@ const Style = styled.aside<{
 }>`
     font-size: ${({ $scale }) => $scale}em;
     width: ${({ $width }) => $width}em;
+    min-width: ${({ $width }) => $width}em;
     position: relative;
     display: flex;
     height: 100%;
@@ -87,7 +100,7 @@ const Style = styled.aside<{
         `}
 
     & {
-        ${Input.default} {
+        ${Input.default} > * {
             padding: 1em 2em;
         }
 

@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { Elements, Layouts, Controls } from "components";
 import { Modals, Sidebars } from "containers";
 import { useMobile, useNotification, usePortal, useTheme } from "hooks";
-import { Filter } from "lib/utils";
+import { filter } from "lib/utils";
 
 export default function Data() {
     const [value, setValue] = useState<number>(0);
@@ -386,17 +386,17 @@ export default function Data() {
             children: [
                 {
                     name: "Asset",
-                    href: "/samples/asset",
+                    path: "/samples/asset",
                     onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "Exchange",
-                    href: "/samples/exchange",
+                    path: "/samples/exchange",
                     onClick: () => setMobileMenu(""),
                 },
                 {
                     name: "Treasury",
-                    href: "/samples/treasury",
+                    path: "/samples/treasury",
                     onClick: () => setMobileMenu(""),
                 },
             ],
@@ -533,7 +533,7 @@ export default function Data() {
                                             style: { overflow: "hidden" },
                                             children: (
                                                 <Sidebars.Market
-                                                    list={Filter(marketlist, selectedMarket === 0 ? undefined : `/${markets[selectedMarket]?.name}`)}
+                                                    list={filter(marketlist, selectedMarket === 0 ? undefined : `/${markets[selectedMarket]?.name}`)}
                                                     filter={keyword}
                                                 />
                                             ),

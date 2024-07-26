@@ -1,10 +1,11 @@
-"use client";
-import { css, styled } from "styled-components";
+'use client';
+import { css, styled } from 'styled-components';
 
 const Style = styled.button<{
     $scale: number;
     $padding: number;
     $gap: number;
+    $hover: boolean;
     $event: boolean;
 }>`
     font-size: ${({ $scale }) => $scale}em;
@@ -22,20 +23,25 @@ const Style = styled.button<{
         ${({ $gap }) => $gap && `gap: ${$gap}em`}
     }
 
+    ${({ $hover, $event }) =>
+        ($hover || $event) &&
+        css`
+            &:hover {
+                background: rgba(var(--white), var(--o0075)) !important;
+            }
+        `}
+
     ${({ $event }) =>
         $event &&
         css`
-            &:hover {
-                background: rgba(var(--white), var(--o0075));
-            }
-
             &:active {
-                background: rgba(var(--white), var(--o015));
+                background: rgba(var(--white), var(--o015)) !important;
                 & > * {
                     transform: scale(0.96, 0.96);
                     transition: 0.15s ease;
                 }
             }
+            cursor: pointer;
         `}
 `;
 

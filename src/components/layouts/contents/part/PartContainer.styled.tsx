@@ -1,14 +1,29 @@
 'use client';
 import {styled} from 'styled-components';
 
-export const Part = styled.div<{$state?: boolean | null}>`
-	position: relative;
+export const Part = styled.div<{ $state?: boolean | null }>`
+	position: ${({ $state }) => $state ? 'relative' : 'absolute'};
 	display: flex;
 	flex-direction: column;
+	top:0;
 	height: 100%;
-	min-width: 100%;
-	max-width: 100%;
 	min-height: 100%;
+	min-width: 33.333%;
+	max-width: 33.333%;
+	opacity: ${({ $state }) => $state ? 1 : 0};
+	pointer-events: ${({ $state }) => $state ? 'initial' : 'none'};
+
+	&:first-child{
+		left:0;
+	}
+
+	&:not(:first-child):not(:last-child){
+		left:33.333%;
+	}
+
+	&:last-child{
+		left:66.666%;
+	}
 `;
 
 export const Style = styled.div<{$state?: boolean | null}>`
@@ -19,12 +34,13 @@ export const Style = styled.div<{$state?: boolean | null}>`
 	height: 100%;
 
 	& > * {
+		position: relative;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
+		min-width: 300%;
+		max-width: 300%;
 		height: 100%;
-		min-width: 100%;
-		max-width: 100%;
 		max-height: inherit;
 		transition: 0.3s ease;
 	}

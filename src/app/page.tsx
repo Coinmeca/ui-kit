@@ -34,7 +34,7 @@ export default function Home() {
                     </Layouts.Col>
                 </Layouts.Panel>
                 <Elements.Text opacity={0.6} style={{ padding: "4em" }}>
-                    Copyright © 2024 Coinmeca. All rights reserved.
+                    ⓒ coinmeca. All rights reserved.
                 </Elements.Text>
             </Layouts.Panel>
         </Layouts.Panel>

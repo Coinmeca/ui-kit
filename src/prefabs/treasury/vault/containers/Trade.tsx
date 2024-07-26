@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import { Controls, Layouts } from "components";
+import usePortal from "hooks/usePortal";
 import { Exchange } from "prefabs";
-import { Token } from "types/web3";
-import usePortal from "../../../../hooks/usePortal";
-import type { Order as O } from "types/order";
 import { Vault } from "prefabs/treasury";
+import type { Order as O } from "types/order";
+import { Token } from "types/web3";
 
 export interface TradeControl {
     base: Token;
@@ -81,7 +81,6 @@ export default function Trade(props: TradeControl) {
                             children: (
                                 <Vault.Controls.Trade
                                     mode={true}
-                                    option={option}
                                     assets={[props?.quote, props?.base]}
                                     price={props?.price}
                                     fee={props?.fee}
@@ -98,7 +97,6 @@ export default function Trade(props: TradeControl) {
                             children: (
                                 <Vault.Controls.Trade
                                     mode={false}
-                                    option={option}
                                     assets={[props?.base, props?.quote]}
                                     price={props?.price}
                                     fee={props?.fee}

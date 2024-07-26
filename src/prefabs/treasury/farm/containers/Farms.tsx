@@ -1,7 +1,7 @@
 "use client";
 import { Controls, Elements, Layouts } from "components";
 import { useSort } from "hooks";
-import { Filter, Format, Sign } from "lib/utils";
+import { filter, format, sign } from "lib/utils";
 import { Farm } from "types/web3";
 
 export interface Assets {
@@ -64,7 +64,7 @@ export default function Assets(props: Assets) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"}>
-                                                                {Format(data?.interest, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                                {format(data?.interest, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
                                                                 {data?.earn?.symbol}
@@ -74,7 +74,7 @@ export default function Assets(props: Assets) {
                                                 },
                                                 {
                                                     align: "right",
-                                                    change: Sign(data?.interestChange) === "+" ? "green" : Sign(data?.interestChange) === "-" && "red",
+                                                    change: sign(data?.interestChange) === "+" ? "green" : sign(data?.interestChange) === "-" && "red",
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"} change>
@@ -101,7 +101,7 @@ export default function Assets(props: Assets) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"}>
-                                                                {Format(data?.staked, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                                                {format(data?.staked, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
                                                                 {data?.stake?.symbol}
@@ -115,8 +115,8 @@ export default function Assets(props: Assets) {
                                                     children: (
                                                         <>
                                                             <Elements.Text align={"right"}>
-                                                                {Sign(data?.stakedChange)}{" "}
-                                                                {Format(data?.stakedChange, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
+                                                                {sign(data?.stakedChange)}{" "}
+                                                                {format(data?.stakedChange, "currency", { unit: 9, limit: 12, fix: 3, sign: false })}
                                                             </Elements.Text>
                                                             <Elements.Text align={"left"} opacity={0.6} style={{ maxWidth: "6em" }}>
                                                                 {data?.stake?.symbol}
@@ -136,13 +136,13 @@ export default function Assets(props: Assets) {
                                         //     children: [
                                         //         <>
                                         //             <Layouts.Row gap={1}>
-                                        //                 <Elements.Text align={"right"}>$ {Format(data?.valueLocked, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
+                                        //                 <Elements.Text align={"right"}>$ {format(data?.tvl, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
                                         //             </Layouts.Row>
                                         //         </>,
                                         //         <>
                                         //             <Layouts.Row gap={1} style={{ opacity: 0.3 }}>
                                         //                 <Elements.Text align={"right"} fix>
-                                        //                     {Sign(data?.valuestakedChange)}$ {Math.abs(Format(data?.valuestakedChange, "currency", { unit: 9, limit: 12, fix: 3 }) as number)}
+                                        //                     {sign(data?.tvl_change)}$ {Math.abs(format(data?.tvl_change, "currency", { unit: 9, limit: 12, fix: 3 }) as number)}
                                         //                 </Elements.Text>
                                         //             </Layouts.Row>
                                         //         </>,
@@ -161,10 +161,10 @@ export default function Assets(props: Assets) {
     const sorts = {
         symbol: { key: "symbol", type: "string" },
         name: { key: "name", type: "string" },
-        interest: { key: "interest", type: "number" },
-        interestChange: { key: "interestChange", type: "number" },
-        staked: { key: "staked", type: "number" },
-        stakedChange: { key: "stakedChange", type: "number" },
+        rewards: { key: "rewards", type: "number" },
+        rewards_rate: { key: "rewards_rate", type: "number" },
+        tl: { key: "tl", type: "number" },
+        tl_change: { key: "tl_change", type: "number" },
     };
 
     return (
@@ -179,32 +179,32 @@ export default function Assets(props: Assets) {
                     </Controls.Tab>
                 </Layouts.Row>
                 <Layouts.Row gap={0} fix>
-                    <Controls.Tab iconLeft={sortArrow(sorts.interest)} onClick={() => setSort(sorts.interest)}>
+                    <Controls.Tab iconLeft={sortArrow(sorts.rewards)} onClick={() => setSort(sorts.rewards)}>
                         Interest
                     </Controls.Tab>
-                    <Controls.Tab iconLeft={sortArrow(sorts.interestChange)} onClick={() => setSort(sorts.interestChange)}>
+                    <Controls.Tab iconLeft={sortArrow(sorts.rewards_rate)} onClick={() => setSort(sorts.rewards_rate)}>
                         Interest Rate
                     </Controls.Tab>
                 </Layouts.Row>
                 {/* <Layouts.Row gap={0} fix>
-                    <Controls.Tab iconLeft={sortArrow(sorts.staked)} onClick={() => setSort(sorts.staked)}>
-                        interest Change
+                    <Controls.Tab iconLeft={sortArrow(sorts.tl)} onClick={() => setSort(sorts.tl)}>
+                        Rewards Change
                     </Controls.Tab>
-                    <Controls.Tab iconLeft={sortArrow(sorts.stakedChange)} onClick={() => setSort(sorts.stakedChange)}>
-                        interest Change Rate
+                    <Controls.Tab iconLeft={sortArrow(sorts.tl_change)} onClick={() => setSort(sorts.tl_change)}>
+                        Rewards Change Rate
                     </Controls.Tab>
                 </Layouts.Row> */}
                 <Layouts.Row gap={0} fix>
-                    <Controls.Tab iconLeft={sortArrow(sorts.staked)} onClick={() => setSort(sorts.staked)}>
-                        Total staked
+                    <Controls.Tab iconLeft={sortArrow(sorts.tl)} onClick={() => setSort(sorts.tl)}>
+                        Total Locked
                     </Controls.Tab>
-                    <Controls.Tab iconLeft={sortArrow(sorts.stakedChange)} onClick={() => setSort(sorts.stakedChange)}>
-                        Total staked Change
+                    <Controls.Tab iconLeft={sortArrow(sorts.tl_change)} onClick={() => setSort(sorts.tl_change)}>
+                        Total Locked Change
                     </Controls.Tab>
                 </Layouts.Row>
             </Layouts.Row>
             <Layouts.Divider />
-            <Layouts.List list={Filter(sorting(props?.farms), props?.filter)} formatter={formatter} />
+            <Layouts.List list={filter(sorting(props?.farms), props?.filter)} formatter={formatter} />
         </Layouts.Contents.InnerContent>
     );
 }

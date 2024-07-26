@@ -1,7 +1,10 @@
+
 export interface History {
+	key?: string;
 	time: number;
-	category: number;
-	state: number;
+	category: string;
+	option: string;
+	state: string;
 	market?: string;
 	pay: string;
 	item: string;
@@ -15,7 +18,7 @@ export interface History {
 export interface Trade {
 	time?: number | string;
 	type: string;
-	volume: number | string;
+	amount: number | string;
 	meca: number | string;
 	share: number | string;
 }
@@ -23,6 +26,6 @@ export interface Trade {
 export interface Stake {
 	time?: number | string;
 	type: string;
-	volume: number | string;
+	amount: number | string;
 	share: number | string;
 }

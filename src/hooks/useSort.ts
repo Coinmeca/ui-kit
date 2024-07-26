@@ -1,29 +1,29 @@
-"use client";
-import { useCallback, useState } from "react";
-import { Sort, type Sorting } from "lib/utils";
+'use client';
+import { useCallback, useState } from 'react';
+import { sort as s, type Sorting } from 'lib/utils';
 
-interface SortHook {
+interface Sort {
     sort?: Sorting;
     sorting: (list?: any[]) => any[];
     setSort: (sort: Sorting) => void;
-    sortArrow: (key: Sorting | string) => "sort" | "sort-up" | "sort-down";
+    sortArrow: (key: Sorting | string) => 'sort' | 'sort-up' | 'sort-down';
 }
 
-export default function useSort(): SortHook {
+export default function useSort(): Sort {
     const [sort, update] = useState<Sorting>();
 
     const sortArrow = useCallback(
-        (key: Sorting | string): "sort" | "sort-up" | "sort-down" => {
+        (key: Sorting | string): 'sort' | 'sort-up' | 'sort-down' => {
             switch (typeof key) {
-                case "string":
-                    return key === sort?.key ? (sort?.direction ? "sort-up" : "sort-down") : "sort";
-                case "object":
-                    return key?.key === sort?.key ? (sort?.direction ? "sort-up" : "sort-down") : "sort";
+                case 'string':
+                    return key === sort?.key ? (sort?.direction ? 'sort-up' : 'sort-down') : 'sort';
+                case 'object':
+                    return key?.key === sort?.key ? (sort?.direction ? 'sort-up' : 'sort-down') : 'sort';
                 default:
-                    return "sort";
+                    return 'sort';
             }
         },
-        [sort]
+        [sort],
     );
 
     const setSort = useCallback((sort: Sorting) => {
@@ -37,9 +37,9 @@ export default function useSort(): SortHook {
 
     const sorting = useCallback(
         (list?: any[]) => {
-            return list ? (sort && sort?.key !== "" && sort?.key?.length > 0 ? Sort(list, sort?.key, sort?.type, sort?.direction) : list) : [];
+            return list ? (sort && sort?.key !== '' && sort?.key?.length > 0 ? s(list, sort?.key, sort?.type, sort?.direction) : list) : [];
         },
-        [sort]
+        [sort],
     );
 
     return { sort, sorting, setSort, sortArrow };

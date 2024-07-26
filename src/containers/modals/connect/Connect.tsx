@@ -7,6 +7,10 @@ import type { Process } from "containers/modals/process/Process";
 export interface Connect extends Omit<Process, "process"> {
     process?: boolean | null;
     timer?: number;
+    texts?: {
+        chain?: Texts;
+        wallet?: Texts;
+    };
     chains?: any;
     wallets?: any;
     config?: object;
@@ -18,8 +22,23 @@ export interface Connect extends Omit<Process, "process"> {
     onBack?: Function;
 }
 
+export interface Texts {
+    title?: string;
+    sub?: string;
+}
+
 export default function Connect(props: Connect) {
     const timer = props?.timer || 5000;
+    const texts = {
+        chain: {
+            title: props?.texts?.chain?.title || "Connect Wallet",
+            description: props?.texts?.chain?.sub || "Please select chain will you use.",
+        },
+        wallet: {
+            title: props?.texts?.wallet?.sub,
+            description: props?.texts?.wallet?.sub || "Please select wallet will you connect.",
+        },
+    };
 
     const [chain, setChain] = useState<any>();
     const [wallet, setWallet] = useState<any>();
@@ -42,15 +61,15 @@ export default function Connect(props: Connect) {
         }));
 
     const handleBack = (e: any) => {
+        if (typeof props?.onBack === "function") props?.onBack(e);
         setProcess(null);
         setWallet(null);
-        if (typeof props?.onBack === "function") props?.onBack(e);
     };
 
     const handleClose = (e: any) => {
+        if (typeof props?.onClose === "function") props?.onClose(e);
         setProcess(null);
         setChain(null);
-        if (typeof props?.onClose === "function") props?.onClose(e);
     };
 
     const handleError = async (e: any, error?: any) => {
@@ -97,11 +116,11 @@ export default function Connect(props: Connect) {
         <Modals.Process
             {...props}
             title={
-                !chain ? (
-                    "Connect Wallet"
-                ) : (
-                    <Elements.Avatar scale={0.625} size={2.25} style={{ justifyContent: "center" }} img={chain.logo} name={chain.name} />
-                )
+                !chain
+                    ? texts.chain.title
+                    : texts.wallet.title || (
+                          <Elements.Avatar scale={0.625} size={2.25} style={{ justifyContent: "center" }} img={chain.logo} name={chain.name} />
+                      )
             }
             process={typeof props?.process === "boolean" || props?.process === null ? props?.process : process}
             content={
@@ -112,7 +131,7 @@ export default function Connect(props: Connect) {
                             children: (
                                 <Layouts.Col gap={2} fill>
                                     <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
-                                        Please select chain will you use.
+                                        {texts.chain.description}
                                     </Elements.Text>
                                     <Layouts.Contents.InnerContent style={{ justifyContent: "center" }} scroll>
                                         <Layouts.List list={chainFormatter(props?.chains)} />
@@ -122,11 +141,11 @@ export default function Connect(props: Connect) {
                             ),
                         },
                         {
-                            active: props?.chains ? chain : true,
+                            active: props?.chains && chain ? true : false,
                             children: (
                                 <Layouts.Col gap={2} fill>
                                     <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
-                                        Please select wallet will you connect.
+                                        {texts.wallet.description}
                                     </Elements.Text>
                                     <Layouts.Contents.InnerContent style={{ justifyContent: "center" }} scroll>
                                         <Layouts.List list={walletListFormatter(props?.wallets)} />

@@ -1,15 +1,28 @@
 "use client";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Controls, Layouts } from "components";
 import { Text } from "components/elements";
-import { useNotification } from "hooks";
-import { Format } from "lib/utils";
-import { Style, Content } from "./Notify.styled";
 import { type Notify } from "contexts/Notification";
+import { useMobile, useNotification, useSwipe } from "hooks";
+import { format } from "lib/utils";
+import { Content, Style } from "./Notify.styled";
 
 export default function Notify(props: Notify & { order?: number }) {
+    const { isMobile } = useMobile();
+    const [direction, setDirection] = useState<"left" | "right">("right");
+    const swipe = useSwipe(
+        isMobile && {
+            onSwipe: (e: any, move: number) => {
+                if (move !== 0) {
+                    setDirection(() => (move > 0 ? "left" : "right"));
+                    handleRemove();
+                }
+            },
+        }
+    );
     const { removeNotify, removeToast } = useNotification();
+
     const [active, setActive] = useState<boolean>(false);
     const [close, setClose] = useState<boolean>(false);
 
@@ -33,7 +46,7 @@ export default function Notify(props: Notify & { order?: number }) {
     };
 
     return (
-        <Style $active={active} $close={close} $order={props?.order}>
+        <Style {...swipe} $active={active} $direction={direction} $close={close} $order={props?.order}>
             <Layouts.Box>
                 <Layouts.Col gap={1}>
                     <Layouts.Row fix>
@@ -42,7 +55,7 @@ export default function Notify(props: Notify & { order?: number }) {
                         </Text>
                         <Layouts.Row fix gap={1} style={{ minWidth: "max-content" }}>
                             <Text type={"desc"} align={"right"} weight={"bold"}>
-                                {Format(props?.date as number, "date")}
+                                {format(props?.date as number, "date")}
                             </Text>
                             <Controls.Button scale={0.75} icon={"x"} fit onClick={() => handleRemove()} />
                         </Layouts.Row>

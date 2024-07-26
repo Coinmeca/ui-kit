@@ -1,20 +1,20 @@
 "use client";
+import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import { Contents, Controls, Elements, Layouts } from "components";
-import { Asset } from "prefabs";
 import { useWindowSize } from "hooks";
-import { Format } from "lib/utils";
 import { Root } from "lib/style";
-import { Token } from "types/web3";
+import { format } from "lib/utils";
+import { Asset } from "prefabs";
 import { History } from "types/history";
+import { Token } from "types/web3";
 
 export interface Detail {
     info?: any;
     assets?: Token[];
     asset?: Token;
-    history?: History[];
+    history?: any[];
     positions?: any;
     onBack?: Function;
     responsive?: boolean;
@@ -80,7 +80,7 @@ export default function DetailNFT(props: Detail) {
                                         }}
                                         change
                                     >
-                                        $ {Format("1,567,851,378.516", "currency", { unit: 9, limit: 12, fix: 3 })}
+                                        $ {format("1,567,851,378.516", "currency", { unit: 9, limit: 12, fix: 3 })}
                                     </Elements.Text>
                                 </Layouts.Row>
                             </Layouts.Row>
