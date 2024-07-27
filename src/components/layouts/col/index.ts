@@ -1,1 +1,0 @@
-export * as Col from './';
