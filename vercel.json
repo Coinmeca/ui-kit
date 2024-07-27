@@ -1,0 +1,5 @@
+{
+    "scope": "coinmeca-ui",
+    "outputDirectory": ".next",
+    "ignoreCommand": "git diff --quiet HEAD^ HEAD ./"
+}
