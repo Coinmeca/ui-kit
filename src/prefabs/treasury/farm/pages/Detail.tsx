@@ -126,8 +126,8 @@ export default function Detail(props: Detail) {
                                     style: { maxWidth: "max-content" },
                                     children: [
                                         <>
-                                            <Elements.Text color={colorset[`${data?.type as "STAKING" | "UNSTAKING"}`]} case={"capital"} fit>
-                                                {capitalize(data?.type)}
+                                            <Elements.Text color={colorset[`${data?.type as "STAKING" | "UNSTAKING"}`]} fit>
+                                                {data?.type}
                                             </Elements.Text>
                                         </>,
                                         <>
@@ -137,8 +137,7 @@ export default function Detail(props: Detail) {
                                                     style={{
                                                         fontFeatureSettings: "initial",
                                                     }}
-                                                    fit
-                                                >
+                                                    fit>
                                                     {format(data?.share || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                 </Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} fit>
@@ -160,8 +159,7 @@ export default function Detail(props: Detail) {
                                                         align={"right"}
                                                         style={{
                                                             fontFeatureSettings: "initial",
-                                                        }}
-                                                    >
+                                                        }}>
                                                         {format(data?.amount || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                     </Elements.Text>
                                                     <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ maxWidth: "4em" }} fit>
@@ -180,8 +178,7 @@ export default function Detail(props: Detail) {
                                                         align={"right"}
                                                         style={{
                                                             fontFeatureSettings: "initial",
-                                                        }}
-                                                    >
+                                                        }}>
                                                         0{/* {format(data?.meca || 0, "currency", { unit: 9, limit: 12, fix: 3 })} */}
                                                     </Elements.Text>
                                                     <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ maxWidth: "4em" }} fit>
@@ -305,6 +302,7 @@ export default function Detail(props: Detail) {
                                                             color={{
                                                                 default: "0,64,255",
                                                             }}
+                                                            fit
                                                         />
                                                     ),
                                                 },
@@ -320,6 +318,7 @@ export default function Detail(props: Detail) {
                                                                 up: "255, 160, 0",
                                                                 down: "0,64,255",
                                                             }}
+                                                            fit
                                                         />
                                                     ),
                                                 },
@@ -378,8 +377,7 @@ export default function Detail(props: Detail) {
                                                             active={tab === "staking"}
                                                             onClick={() => {
                                                                 setTab("staking");
-                                                            }}
-                                                        >
+                                                            }}>
                                                             Staking
                                                         </Controls.Tab>
                                                     </>,
@@ -390,8 +388,7 @@ export default function Detail(props: Detail) {
                                                             active={tab === "history"}
                                                             onClick={() => {
                                                                 setTab("history");
-                                                            }}
-                                                        >
+                                                            }}>
                                                             History
                                                         </Controls.Tab>
                                                     </>,

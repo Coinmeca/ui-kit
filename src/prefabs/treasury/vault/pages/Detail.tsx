@@ -143,8 +143,7 @@ export default function Detail(props: Detail) {
                                                     style={{
                                                         fontFeatureSettings: "initial",
                                                     }}
-                                                    fit
-                                                >
+                                                    fit>
                                                     {format(data?.share || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                 </Elements.Text>
                                                 <Elements.Text align={"left"} opacity={0.6} fit>
@@ -165,8 +164,7 @@ export default function Detail(props: Detail) {
                                                         align={"right"}
                                                         style={{
                                                             fontFeatureSettings: "initial",
-                                                        }}
-                                                    >
+                                                        }}>
                                                         {format(data?.amount || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                     </Elements.Text>
                                                     <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ minWidth: "4em" }} fit>
@@ -184,8 +182,7 @@ export default function Detail(props: Detail) {
                                                         align={"right"}
                                                         style={{
                                                             fontFeatureSettings: "initial",
-                                                        }}
-                                                    >
+                                                        }}>
                                                         {format(data?.meca || 0, "currency", { unit: 9, limit: 12, fix: 3 })}
                                                     </Elements.Text>
                                                     <Elements.Text align={"left"} opacity={0.6} case={"upper"} style={{ minWidth: "4em" }} fit>
@@ -402,8 +399,7 @@ export default function Detail(props: Detail) {
                                                             active={tab === "liquidity"}
                                                             onClick={() => {
                                                                 setTab("liquidity");
-                                                            }}
-                                                        >
+                                                            }}>
                                                             Liquidity
                                                         </Controls.Tab>
                                                     </>,
@@ -414,8 +410,7 @@ export default function Detail(props: Detail) {
                                                             active={tab === "history"}
                                                             onClick={() => {
                                                                 setTab("history");
-                                                            }}
-                                                        >
+                                                            }}>
                                                             History
                                                         </Controls.Tab>
                                                     </>,

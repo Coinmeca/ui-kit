@@ -1,7 +1,7 @@
 // "use client";
 // import { QueryClientProvider } from "@tanstack/react-query";
 // import { getQueryClient } from "api";
-// import { GetMarket } from "api/market";
+// import { GetMarketDetail } from "api/market";
 // import { Exchange } from "components";
 // import { useContracts } from "contracts";
 // import { abi } from "contracts/services/market/abi";
@@ -42,7 +42,7 @@
 //     const { refetch: refetchAssets } = Query.assetsOf(walletClient?.account?.address);
 //     const { refetch: refetchOrders } = Query.ordersOf(walletClient?.account?.address);
 
-//     const { data: market } = GetMarket(walletClient?.chain?.id as number, data?.market);
+//     const { data: market } = GetMarketDetail(walletClient?.chain?.id as number, data?.market);
 //     console.log("data?.market", data?.market, market);
 
 //     const refetch = () => {
