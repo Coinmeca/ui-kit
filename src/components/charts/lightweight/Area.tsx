@@ -81,12 +81,12 @@ export const Area = (props: Area) => {
                             ({
                                 time: v[key?.time],
                                 value: parseFloat(v[key?.value]?.toString() || "0"),
-                            } as AreaData)
+                            } as AreaData),
                     ),
                     key?.time,
                     props?.data && props?.data?.length > 0 && typeof props?.data[0][key?.time] === "number" ? "number" : "string",
-                    true
-                )
+                    true,
+                ),
             );
         }
     }, [props?.data]);
@@ -106,8 +106,8 @@ export const Area = (props: Area) => {
                     }),
                     key?.time,
                     props?.volume && props?.volume?.length > 0 && typeof (props?.volume[0] as any)[key?.time] === "number" ? "number" : "string",
-                    true
-                )
+                    true,
+                ),
             );
         }
     }, [props?.volume, up, down, color]);
