@@ -90,10 +90,10 @@ export const Candle = (props: Candle) => {
                             ...v,
                         };
                     }),
-                    key?.time,
+                    key.time,
                     typeof props?.price[0]?.time === "number" ? "number" : "string",
-                    true
-                )
+                    true,
+                ),
             );
         }
     }, [props?.price]);
@@ -104,16 +104,16 @@ export const Candle = (props: Candle) => {
                 sort(
                     props?.volume?.map((v: any) => {
                         return {
-                            time: v[key?.time],
-                            value: parseFloat(v[key?.value].toString()),
+                            time: v[key.time],
+                            value: parseFloat(v[key.value].toString()),
                             color: v?.type === up ? `rgba(${color.up}, 0.3)` : `rgba(${color.down}, 0.3)`,
                             // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
                         } as Volume;
                     }),
-                    key?.time,
+                    key.time,
                     typeof props?.volume[0]?.time === "number" ? "number" : "string",
-                    true
-                )
+                    true,
+                ),
             );
         }
     }, [props?.volume, up, down, color]);
@@ -210,8 +210,8 @@ export const Candle = (props: Candle) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                    barSpacing: 10,
-                });
+                      barSpacing: 10,
+                  });
             globalThis.addEventListener("resize", handleResize);
             return () => {
                 globalThis.removeEventListener("resize", handleResize);

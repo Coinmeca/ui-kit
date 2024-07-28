@@ -22,6 +22,7 @@ export interface Area {
     volume?: Volume[];
     up?: string;
     down?: string;
+    unit?: string | { line?: string; histogram?: string };
     fallback?: any;
     fit?: boolean;
 }
@@ -78,13 +79,13 @@ export const Area = (props: Area) => {
                 sort(
                     props?.data?.map(
                         (v: any) =>
-                        ({
-                            time: v[key?.time],
-                            value: parseFloat(v[key?.value]?.toString() || "0"),
-                        } as AreaData),
+                            ({
+                                time: v[key.time],
+                                value: parseFloat(v[key.value]?.toString() || "0"),
+                            } as AreaData),
                     ),
-                    key?.time,
-                    props?.data && props?.data?.length > 0 && typeof props?.data[0][key?.time] === "number" ? "number" : "string",
+                    key.time,
+                    props?.data && props?.data?.length > 0 && typeof props?.data[0][key.time] === "number" ? "number" : "string",
                     true,
                 ),
             );
@@ -98,14 +99,14 @@ export const Area = (props: Area) => {
                     props?.volume?.map((v: any) => {
                         return {
                             time: v?.time,
-                            value: parseFloat(v[key?.volume]?.toString() || "0"),
+                            value: parseFloat(v[key.volume]?.toString() || "0"),
                             color:
                                 v?.type === up && color.up ? `rgba(${color.up}, 0.3)` : color.down ? `rgba(${color.down}, 0.3)` : `rgba(${color.default}, 0.3)`,
                             // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
                         } as Volume;
                     }),
-                    key?.time,
-                    props?.volume && props?.volume?.length > 0 && typeof (props?.volume[0] as any)[key?.time] === "number" ? "number" : "string",
+                    key.time,
+                    props?.volume && props?.volume?.length > 0 && typeof (props?.volume[0] as any)[key.time] === "number" ? "number" : "string",
                     true,
                 ),
             );
@@ -184,6 +185,15 @@ export const Area = (props: Area) => {
                 });
 
                 series.setData(data);
+                if ((typeof props?.unit === "string" && props?.unit !== "") || (typeof props?.unit === "object" && props?.unit?.line))
+                    series.applyOptions({
+                        priceFormat: {
+                            type: "custom",
+                            formatter: (price: any) => {
+                                return price + props?.unit;
+                            },
+                        },
+                    });
             }
 
             if (volume) {
@@ -204,13 +214,23 @@ export const Area = (props: Area) => {
                 // });
 
                 volumeSeries.setData(volume as HistogramData[]);
+
+                if (props?.unit && props?.unit !== "")
+                    volumeSeries.applyOptions({
+                        priceFormat: {
+                            type: "custom",
+                            formatter: (price: any) => {
+                                return price + props?.unit;
+                            },
+                        },
+                    });
             }
 
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                    barSpacing: 10,
-                });
+                      barSpacing: 10,
+                  });
 
             globalThis.addEventListener("resize", handleResize);
 

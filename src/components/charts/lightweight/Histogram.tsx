@@ -1,5 +1,5 @@
 "use client";
-import { sort } from "lib/utils";
+import { parseNumber, sort } from "lib/utils";
 import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
 import Style from "./Chart.styled";
@@ -18,6 +18,7 @@ export interface Histogram {
     data?: Data[] | any[];
     up?: string;
     down?: string;
+    unit?: string;
     fallback?: any;
     fit?: boolean;
 }
@@ -53,6 +54,7 @@ export const Histogram = (props: Histogram) => {
 
     const [data, setData] = useState<any>([]);
     const chartRef: any = useRef();
+    const getColor = (current: string | number, previous: string | number) => (parseNumber(current) > parseNumber(previous) ? color?.up : color?.down);
 
     useEffect(() => {
         globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
@@ -74,22 +76,38 @@ export const Histogram = (props: Histogram) => {
 
     useEffect(() => {
         if (props?.data && props?.data?.length > 0) {
-            setData(
-                sort(
-                    props?.data?.map(
-                        (v: any) =>
+            const data = sort(
+                props?.data?.map(
+                    (v: any) =>
                         ({
-                            ...(v?.type && {
-                                color: `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`,
-                            }),
-                            time: v[key?.time],
-                            value: parseFloat(v[key?.value]?.toString() || "0"),
-                        } as Data)
-                    ),
-                    key?.time,
-                    typeof props?.data[0][key?.time] === "number" ? "number" : "string",
-                    true
-                )
+                            ...(props?.up &&
+                                props?.up !== "" &&
+                                props?.down &&
+                                props?.down !== "" &&
+                                v?.type &&
+                                v?.type !== "" &&
+                                `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`),
+                            time: v[key.time],
+                            value: parseFloat(v?.[key.value]?.toString() || "0"),
+                        } as Data),
+                ),
+                key.time,
+                typeof props?.data?.[0]?.[key.time] === "number" ? "number" : "string",
+                true,
+            );
+
+            setData(
+                (!props?.up || props?.up === "") &&
+                    (!props?.down || props?.down === "") &&
+                    props?.color?.up &&
+                    props?.color?.up !== "" &&
+                    props?.color?.down &&
+                    props?.color?.down !== ""
+                    ? data?.map((v: any, i: number) => ({
+                          ...v,
+                          color: `rgb(${i === 0 ? color?.up : getColor(v[key.value], data[i - 1][key.value])})`,
+                      }))
+                    : data,
             );
         }
     }, [props?.data]);
@@ -152,7 +170,7 @@ export const Histogram = (props: Histogram) => {
 
             if (data) {
                 const series = chart.addHistogramSeries({
-                    color: color.default,
+                    color: props?.color?.up && props?.color?.down ? props?.color?.up : color.default,
                     priceFormat: {
                         type: "volume",
                     },
@@ -160,14 +178,22 @@ export const Histogram = (props: Histogram) => {
                     // set the positioning of the volume series
                 });
 
-                series.setData(data);
+                if (props?.unit && props?.unit !== "")
+                    series.applyOptions({
+                        priceFormat: {
+                            type: "custom",
+                            formatter: (price: any) => {
+                                return price + props?.unit;
+                            },
+                        },
+                    });
             }
 
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                    barSpacing: 10,
-                });
+                      barSpacing: 10,
+                  });
 
             globalThis.addEventListener("resize", handleResize);
 
