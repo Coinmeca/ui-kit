@@ -1,7 +1,7 @@
 "use client";
+import { sort } from "lib/utils";
 import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
-import { sort } from "lib/utils";
 import Style from "./Chart.styled";
 
 export interface Histogram {
@@ -78,13 +78,13 @@ export const Histogram = (props: Histogram) => {
                 sort(
                     props?.data?.map(
                         (v: any) =>
-                            ({
-                                ...(v?.type && {
-                                    color: `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`,
-                                }),
-                                time: v[key?.time],
-                                value: parseFloat(v[key?.value]?.toString() || "0"),
-                            } as Data)
+                        ({
+                            ...(v?.type && {
+                                color: `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`,
+                            }),
+                            time: v[key?.time],
+                            value: parseFloat(v[key?.value]?.toString() || "0"),
+                        } as Data)
                     ),
                     key?.time,
                     typeof props?.data[0][key?.time] === "number" ? "number" : "string",
@@ -166,8 +166,8 @@ export const Histogram = (props: Histogram) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                      barSpacing: 10,
-                  });
+                    barSpacing: 10,
+                });
 
             globalThis.addEventListener("resize", handleResize);
 

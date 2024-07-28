@@ -1,8 +1,8 @@
 "use client";
+import { sort } from "lib/utils";
 import type { LineData } from "lightweight-charts";
 import { HistogramData, createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
-import { sort } from "lib/utils";
 import type { Volume } from "./Candle";
 import Style from "./Chart.styled";
 
@@ -209,8 +209,8 @@ export const Line = (props: Line) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                      barSpacing: 10,
-                  });
+                    barSpacing: 10,
+                });
 
             globalThis.addEventListener("resize", handleResize);
 

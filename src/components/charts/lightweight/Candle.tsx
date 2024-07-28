@@ -1,8 +1,8 @@
 "use client";
+import { sort } from "lib/utils";
 import type { CandlestickData, HistogramData } from "lightweight-charts";
 import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
-import { sort } from "lib/utils";
 import Style from "./Chart.styled";
 
 export interface Candle {
@@ -210,8 +210,8 @@ export const Candle = (props: Candle) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                      barSpacing: 10,
-                  });
+                    barSpacing: 10,
+                });
             globalThis.addEventListener("resize", handleResize);
             return () => {
                 globalThis.removeEventListener("resize", handleResize);

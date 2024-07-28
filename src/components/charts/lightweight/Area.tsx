@@ -1,8 +1,8 @@
 "use client";
+import { sort } from "lib/utils";
 import type { AreaData, HistogramData } from "lightweight-charts";
 import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
-import { sort } from "lib/utils";
 import { Volume } from "./Candle";
 import Style from "./Chart.styled";
 
@@ -78,10 +78,10 @@ export const Area = (props: Area) => {
                 sort(
                     props?.data?.map(
                         (v: any) =>
-                            ({
-                                time: v[key?.time],
-                                value: parseFloat(v[key?.value]?.toString() || "0"),
-                            } as AreaData),
+                        ({
+                            time: v[key?.time],
+                            value: parseFloat(v[key?.value]?.toString() || "0"),
+                        } as AreaData),
                     ),
                     key?.time,
                     props?.data && props?.data?.length > 0 && typeof props?.data[0][key?.time] === "number" ? "number" : "string",
@@ -209,8 +209,8 @@ export const Area = (props: Area) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                      barSpacing: 10,
-                  });
+                    barSpacing: 10,
+                });
 
             globalThis.addEventListener("resize", handleResize);
 
