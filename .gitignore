@@ -2,10 +2,10 @@
 
 # dependencies
 /node_modules
-# /.yarn
-/.yarn/unplugged
-# /.pnp
-# .pnp.js
+/.yarn/*
+!/.yarn/releases
+.pnp
+.pnp.js
 /**/trading-view
 
 # testing
