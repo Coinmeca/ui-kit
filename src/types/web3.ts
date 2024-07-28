@@ -1,11 +1,12 @@
 export interface Token {
-    address: string;
-    decimals: number;
     logo?: string;
-    symbol?: string;
+    address: string;
     name?: string;
+    symbol?: string;
+    decimals: number;
     balance?: number | string;
     using?: number | string;
+    value?: number | string;
 }
 
 export interface Asset extends Token {
