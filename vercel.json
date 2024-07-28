@@ -1,17 +1,5 @@
 {
-    "scope": "coinmeca-ui",
+    "scope": "ui-kit",
     "outputDirectory": ".next",
-    "ignoreCommand": "git diff --quiet HEAD^ HEAD ./",
-    "builds": [
-        {
-            "src": "package.json",
-            "use": "@vercel/node"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/"
-        }
-    ]
+    "ignoreCommand": "git diff --quiet HEAD^ HEAD ./"
 }
