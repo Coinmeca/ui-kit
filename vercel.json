@@ -1,6 +1,5 @@
 {
     "scope": "Coinmeca",
-    "outputDirectory": ".next",
     "installCommand": "yarn set version latest && yarn install",
     "ignoreCommand": "git diff --quiet HEAD^ HEAD ./"
 }
