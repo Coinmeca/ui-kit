@@ -1,7 +1,5 @@
 {
     "scope": "Coinmeca",
-    "ignoreCommand": "git diff --quiet HEAD^ HEAD ./",
-    "scripts": {
-        "install": "yarn install"
-    }
+    "installCommand": "yarn install",
+    "ignoreCommand": "git diff --quiet HEAD^ HEAD ./"
 }
