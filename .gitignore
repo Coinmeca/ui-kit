@@ -4,8 +4,7 @@
 /node_modules
 /.yarn/*
 !/.yarn/releases
-.pnp
-.pnp.js
+.pnp*
 /**/trading-view
 
 # testing
