@@ -154,8 +154,7 @@ export default function Connect(props: Connect) {
                                         onClick={() => {
                                             setChain(undefined);
                                             setProcess(null);
-                                        }}
-                                    >
+                                        }}>
                                         Back
                                     </Controls.Button>
                                 </Layouts.Col>

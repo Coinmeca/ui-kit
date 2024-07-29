@@ -5,6 +5,7 @@ import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
 import { Volume } from "./Candle";
 import Style from "./Chart.styled";
+import { useTheme } from "hooks";
 
 export interface Area {
     color?: {
@@ -22,7 +23,8 @@ export interface Area {
     volume?: Volume[];
     up?: string;
     down?: string;
-    unit?: string | { line?: string; histogram?: string };
+    format?: Function | { area?: Function; histogram?: Function };
+    unit?: string | { area?: string; histogram?: string };
     fallback?: any;
     fit?: boolean;
 }
@@ -30,8 +32,15 @@ export interface Area {
 export const Area = (props: Area) => {
     const up = props?.up || "up";
     const down = props?.down || "down";
+    const { theme: detectedTheme } = useTheme();
 
-    const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
+    const theme = props?.color?.theme
+        ? props?.color?.theme === "light"
+            ? "0,0,0"
+            : "255,255,255"
+        : detectedTheme && detectedTheme === "light"
+        ? "0,0,0"
+        : "255,255,255";
     const [color, setColor] = useState({
         default: props?.color?.default || `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
@@ -102,7 +111,6 @@ export const Area = (props: Area) => {
                             value: parseFloat(v[key.volume]?.toString() || "0"),
                             color:
                                 v?.type === up && color.up ? `rgba(${color.up}, 0.3)` : color.down ? `rgba(${color.down}, 0.3)` : `rgba(${color.default}, 0.3)`,
-                            // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
                         } as Volume;
                     }),
                     key.time,
@@ -185,13 +193,17 @@ export const Area = (props: Area) => {
                 });
 
                 series.setData(data);
-                if ((typeof props?.unit === "string" && props?.unit !== "") || (typeof props?.unit === "object" && props?.unit?.line))
+                if ((typeof props?.unit === "string" && props?.unit !== "") || (typeof props?.unit === "object" && props?.unit?.area != ""))
                     series.applyOptions({
                         priceFormat: {
                             type: "custom",
-                            formatter: (price: any) => {
-                                return price + props?.unit;
-                            },
+                            formatter: (price: any) =>
+                                (typeof props?.format === "function"
+                                    ? props?.format(price)
+                                    : typeof props?.format === "object" && typeof props?.format?.area === "function"
+                                    ? props?.format?.area(price)
+                                    : price
+                                ).toString() + props?.unit,
                         },
                     });
             }
@@ -215,13 +227,15 @@ export const Area = (props: Area) => {
 
                 volumeSeries.setData(volume as HistogramData[]);
 
-                if (props?.unit && props?.unit !== "")
+                if (typeof props?.unit === "object" && props?.unit?.histogram !== "")
                     volumeSeries.applyOptions({
                         priceFormat: {
                             type: "custom",
-                            formatter: (price: any) => {
-                                return price + props?.unit;
-                            },
+                            formatter: (price: any) =>
+                                (typeof props?.format === "object" && typeof props?.format?.histogram === "function"
+                                    ? props?.format?.histogram(price)
+                                    : price
+                                ).toString() + props?.unit,
                         },
                     });
             }

@@ -5,6 +5,7 @@ import { HistogramData, createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
 import type { Volume } from "./Candle";
 import Style from "./Chart.styled";
+import { useTheme } from "hooks";
 
 export interface Line {
     color?: {
@@ -22,6 +23,7 @@ export interface Line {
     volume?: Volume[];
     up?: string;
     down?: string;
+    format?: Function | { line?: Function; histogram?: Function };
     unit?: string | { line?: string; histogram?: string };
     fallback?: any;
     fit?: boolean;
@@ -30,8 +32,15 @@ export interface Line {
 export const Line = (props: Line) => {
     const up = props?.up || "up";
     const down = props?.down || "down";
+    const { theme: detectedTheme } = useTheme();
 
-    const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
+    const theme = props?.color?.theme
+        ? props?.color?.theme === "light"
+            ? "0,0,0"
+            : "255,255,255"
+        : detectedTheme && detectedTheme === "light"
+        ? "0,0,0"
+        : "255,255,255";
     const [color, setColor] = useState({
         default: props?.color?.default ? `rgb(${props?.color?.default})` : `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
@@ -189,9 +198,13 @@ export const Line = (props: Line) => {
                     series.applyOptions({
                         priceFormat: {
                             type: "custom",
-                            formatter: (price: any) => {
-                                return price + props?.unit;
-                            },
+                            formatter: (price: any) =>
+                                (typeof props?.format === "function"
+                                    ? props?.format(price)
+                                    : typeof props?.format === "object" && typeof props?.format?.line === "function"
+                                    ? props?.format?.line(price)
+                                    : price
+                                ).toString() + props?.unit,
                         },
                     });
             }
@@ -218,9 +231,11 @@ export const Line = (props: Line) => {
                     volumeSeries.applyOptions({
                         priceFormat: {
                             type: "custom",
-                            formatter: (price: any) => {
-                                return price + props?.unit;
-                            },
+                            formatter: (price: any) =>
+                                (typeof props?.format === "object" && typeof props?.format?.histogram === "function"
+                                    ? props?.format?.histogram(price)
+                                    : price
+                                ).toString() + props?.unit,
                         },
                     });
             }

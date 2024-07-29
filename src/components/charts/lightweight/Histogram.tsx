@@ -3,6 +3,7 @@ import { parseNumber, sort } from "lib/utils";
 import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
 import Style from "./Chart.styled";
+import { useTheme } from "hooks";
 
 export interface Histogram {
     color?: {
@@ -19,6 +20,7 @@ export interface Histogram {
     up?: string;
     down?: string;
     unit?: string;
+    format?: Function;
     fallback?: any;
     fit?: boolean;
 }
@@ -32,8 +34,15 @@ export interface Data {
 export const Histogram = (props: Histogram) => {
     const up = props?.up || "up";
     const down = props?.down || "down";
+    const { theme: detectedTheme } = useTheme();
 
-    const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
+    const theme = props?.color?.theme
+        ? props?.color?.theme === "light"
+            ? "0,0,0"
+            : "255,255,255"
+        : detectedTheme && detectedTheme === "light"
+        ? "0,0,0"
+        : "255,255,255";
     const [color, setColor] = useState({
         default: props?.color?.default?.includes(",") ? `rgb(${props?.color?.default})` : props?.color?.default || `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
@@ -80,12 +89,12 @@ export const Histogram = (props: Histogram) => {
                 props?.data?.map(
                     (v: any) =>
                         ({
-                            ...(props?.up &&
+                            ...(v?.type &&
+                                v?.type !== "" &&
+                                props?.up &&
                                 props?.up !== "" &&
                                 props?.down &&
                                 props?.down !== "" &&
-                                v?.type &&
-                                v?.type !== "" &&
                                 `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`),
                             time: v[key.time],
                             value: parseFloat(v?.[key.value]?.toString() || "0"),
@@ -182,9 +191,7 @@ export const Histogram = (props: Histogram) => {
                     series.applyOptions({
                         priceFormat: {
                             type: "custom",
-                            formatter: (price: any) => {
-                                return price + props?.unit;
-                            },
+                            formatter: (price: any) => (typeof props?.format === "function" ? props?.format(price) : price).toString() + props?.unit,
                         },
                     });
             }

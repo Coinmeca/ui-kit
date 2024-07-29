@@ -6,6 +6,7 @@ export interface Token {
     decimals: number;
     balance?: number | string;
     using?: number | string;
+    staked?: number | string;
     value?: number | string;
 }
 

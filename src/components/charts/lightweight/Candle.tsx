@@ -4,6 +4,7 @@ import type { CandlestickData, HistogramData } from "lightweight-charts";
 import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
 import Style from "./Chart.styled";
+import { useTheme } from "hooks";
 
 export interface Candle {
     color?: {
@@ -40,8 +41,15 @@ export interface Volume {
 export const Candle = (props: Candle) => {
     const up = props?.up || "up";
     const down = props?.down || "down";
+    const { theme: detectedTheme } = useTheme();
 
-    const theme = props?.color?.theme && props?.color?.theme === "light" ? "0,0,0" : "255,255,255";
+    const theme = props?.color?.theme
+        ? props?.color?.theme === "light"
+            ? "0,0,0"
+            : "255,255,255"
+        : detectedTheme && detectedTheme === "light"
+        ? "0,0,0"
+        : "255,255,255";
     const [color, setColor] = useState({
         up: props?.color?.up || "0,192,96",
         down: props?.color?.down || "255,0,64",

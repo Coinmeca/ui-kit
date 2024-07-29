@@ -1,5 +1,3 @@
-"use client";
-
 import { css, styled } from "styled-components";
 import * as BottomSheet from "containers/bottomsheets/BottomSheet.styled";
 
