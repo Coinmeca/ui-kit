@@ -108,7 +108,7 @@ export default function Dropdown(props: Dropdown) {
                           }),
                           position: "absolute",
                           fontSize: `${scale}em`,
-                          background: (props?.style as any)?.options?.background || `rgba(var(--white), var(--o0075))`,
+                          background: `rgba(var(--white), var(--o0075))`,
                           color: `rgb(var(--white))`,
                           width: width && `${width / (8 * scale)}em`,
                           backdropFilter: "blur(4em)",
@@ -116,6 +116,7 @@ export default function Dropdown(props: Dropdown) {
                           zIndex: 200,
                           ...position(e),
                           ...(open ? { maxHeight: "100em", overflowY: "hidden" } : { maxHeight: 0, overflowY: "scroll" }),
+                          ...(props?.style as any)?.options,
                       }
                     : visible === "hidden"
                     ? {
@@ -127,8 +128,7 @@ export default function Dropdown(props: Dropdown) {
                     : {
                           fontSize: `${scale}em`,
                       }),
-            }}
-        >
+            }}>
             <div ref={dropbox}>
                 {options &&
                     options.length > 0 &&
@@ -138,8 +138,7 @@ export default function Dropdown(props: Dropdown) {
                                 <Item
                                     key={k}
                                     onClick={(e: any) => handleSelect(e, v, k)}
-                                    data-disabled={typeof option !== "undefined" && (v?.[keyIndex] === option || v?.[keyName] === option || v === option)}
-                                >
+                                    data-disabled={typeof option !== "undefined" && (v?.[keyIndex] === option || v?.[keyName] === option || v === option)}>
                                     <>
                                         {typeof v?.[imgName] !== "undefined" && v?.[imgName] !== "" ? (
                                             <>
@@ -153,8 +152,7 @@ export default function Dropdown(props: Dropdown) {
                                                             : typeof v === "object"
                                                             ? v?.toString()
                                                             : v
-                                                    }
-                                                >
+                                                    }>
                                                     {typeof v?.[keyIndex] !== "undefined"
                                                         ? v?.[keyIndex]
                                                         : typeof v?.[keyName] !== "undefined"
@@ -176,8 +174,7 @@ export default function Dropdown(props: Dropdown) {
                                                             : typeof v === "object"
                                                             ? v?.toString()
                                                             : v
-                                                    }
-                                                >
+                                                    }>
                                                     {typeof v?.[keyIndex] !== "undefined"
                                                         ? v?.[keyIndex]
                                                         : typeof v?.[keyName] !== "undefined"
@@ -201,8 +198,7 @@ export default function Dropdown(props: Dropdown) {
                                                         : typeof v === "object"
                                                         ? v?.toString()
                                                         : v
-                                                }
-                                            >
+                                                }>
                                                 {typeof v === "object"
                                                     ? typeof v?.[keyIndex] !== "undefined"
                                                         ? v?.[keyIndex]
@@ -218,7 +214,7 @@ export default function Dropdown(props: Dropdown) {
                                         )}
                                     </>
                                 </Item>
-                            )
+                            ),
                     )}
             </div>
         </Options>
@@ -233,7 +229,7 @@ export default function Dropdown(props: Dropdown) {
                     Close
                 </Controls.Button>
             </Layouts.Col>
-        </BottomSheet>
+        </BottomSheet>,
     );
 
     useEffect(() => {
@@ -295,8 +291,7 @@ export default function Dropdown(props: Dropdown) {
             title={props?.title}
             data-active={open}
             data-show={props?.show}
-            data-hide={props?.hide}
-        >
+            data-hide={props?.hide}>
             <Option>
                 <Item>
                     {form?.indexOf("more") === 0 ? (
@@ -328,8 +323,7 @@ export default function Dropdown(props: Dropdown) {
                                             ? option?.toString()
                                             : option
                                         : option?.title
-                                }
-                            >
+                                }>
                                 {typeof option === "undefined"
                                     ? placeholder
                                     : typeof option === "object"

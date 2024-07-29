@@ -41,12 +41,12 @@ export default function Listing(props: Listing) {
 
     const keyTokens = useMemo(
         () => props?.keyTokens?.filter(({ address: k }) => !pair?.find(({ address: p }) => k?.toLowerCase() === p?.toLowerCase())) || [],
-        [props?.keyTokens, pair]
+        [props?.keyTokens, pair],
     );
 
     const tokens = useMemo(
         () => pair?.map((p) => ({ ...props?.tokens?.find(({ address }: any) => address?.toLowerCase() === p?.address?.toLowerCase()), ...p })),
-        [props?.tokens, pair]
+        [props?.tokens, pair],
     );
 
     const max =
@@ -60,7 +60,7 @@ export default function Listing(props: Listing) {
                         ...asset,
                         amount: parseNumber(asset?.amount || 0) / pair?.length,
                     },
-                ]?.map((p) => parseNumber(p?.amount || 0, "number"))
+                ]?.map((p) => parseNumber(p?.amount || 0, "number")),
             )) ||
         0;
 
@@ -132,7 +132,7 @@ export default function Listing(props: Listing) {
             const max = maxValue();
             return max && !isNaN(max) ? max / parseNumber(target?.value) : undefined;
         },
-        [pair, maxValue]
+        [pair, maxValue],
     );
 
     const handleChangeAmount = (address: string, amount: string) => {
@@ -152,7 +152,7 @@ export default function Listing(props: Listing) {
                         : max_amount && a > max_amount
                         ? maxAmount(s?.address)
                         : c / parseNumber(s?.value),
-            }))
+            })),
         );
     };
 
@@ -168,7 +168,9 @@ export default function Listing(props: Listing) {
             if (p?.address?.toLowerCase() === asset?.address?.toLowerCase() || !p?.amount || isNaN(amount) || amount <= 0) {
                 validate = false;
                 pairs = pairs?.map((s: any) =>
-                    s?.address?.toLowerCase() === p?.address?.toLowerCase() ? { ...s, amount: parseNumber(amount), error: true, message: "Invalid amount." } : s
+                    s?.address?.toLowerCase() === p?.address?.toLowerCase()
+                        ? { ...s, amount: parseNumber(amount), error: true, message: "Invalid amount." }
+                        : s,
                 );
             }
         });
@@ -251,8 +253,7 @@ export default function Listing(props: Listing) {
                         <Layouts.Row responsive={"tablet"} fix>
                             <Layouts.Col
                                 gap={2}
-                                style={{ ...(asset?.validate && pair?.length > 0 && windowWidth <= Root.Device.Tablet && { flex: "initial" }) }}
-                            >
+                                style={{ ...(asset?.validate && pair?.length > 0 && windowWidth <= Root.Device.Tablet && { flex: "initial" }) }}>
                                 <Layouts.Col gap={1}>
                                     <Elements.Text type={"desc"} align={"left"}>
                                         Token Contract
@@ -355,7 +356,7 @@ export default function Listing(props: Listing) {
                                                             {
                                                                 unit: 9,
                                                                 limit: 12,
-                                                            }
+                                                            },
                                                         )}
                                                     </Elements.Text>
                                                 </Layouts.Row>
@@ -453,8 +454,7 @@ export default function Listing(props: Listing) {
                                         maxHeight: "max-content",
                                         ...(windowWidth > Root.Device.Tablet && { maxWidth: "calc(50% - 4em)" }),
                                         ...(asset?.validate && pair?.length > 0 && windowWidth <= Root.Device.Tablet && { minHeight: "initial" }),
-                                    }}
-                                >
+                                    }}>
                                     <Layouts.Col gap={1} fill>
                                         <Layouts.Contents.InnerContent>
                                             <Layouts.Col gap={1} fill>
@@ -467,8 +467,7 @@ export default function Listing(props: Listing) {
                                                             <Controls.Card
                                                                 key={p?.address || i}
                                                                 padding={1}
-                                                                style={{ background: "rgba(var(--white),var(--o0045))" }}
-                                                            >
+                                                                style={{ background: "rgba(var(--white),var(--o0045))" }}>
                                                                 <Layouts.Col gap={1}>
                                                                     <Layouts.Col gap={0.5}>
                                                                         <Layouts.Row gap={1}>
@@ -484,7 +483,7 @@ export default function Listing(props: Listing) {
                                                                                 height: "1em",
                                                                                 width: `${Math.max(
                                                                                     1,
-                                                                                    ((parseNumber(asset?.amount || 0) / pair?.length) * 100) / max
+                                                                                    ((parseNumber(asset?.amount || 0) / pair?.length) * 100) / max,
                                                                                 )}%`,
                                                                                 backgroundColor: `#${HexToColor(asset?.address)}`,
                                                                                 transition: ".3s ease",
