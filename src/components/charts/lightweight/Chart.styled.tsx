@@ -4,6 +4,9 @@ const Style = styled.div`
 	width: 100%;
 	height: 100%;
 
+    #tv-attr-logo{
+        display:none!important;
+    }
 	/* & > *,
     & table,
     & canvas {

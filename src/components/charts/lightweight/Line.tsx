@@ -173,9 +173,6 @@ export const Line = (props: Line) => {
                         labelBackgroundColor: color.theme.medium,
                     },
                 },
-                watermark: {
-                    visible: false, // Disable watermark
-                },
                 width: chartRef?.current?.clientWidth,
                 height: chartRef?.current?.clientHeight,
             });

@@ -9,26 +9,26 @@ export interface Theme {
 }
 
 export default function useTheme(): Theme {
-    const [theme, setThemeState] = useState<Mode>("light");
+    const [theme, updateTheme] = useState<Mode>("light");
 
     function setTheme(mode: Mode) {
-        setThemeState(mode);
+        updateTheme(mode);
         localStorage.setItem("theme", mode);
     }
 
     useEffect(() => {
         const storedTheme = localStorage.getItem("theme") as Mode | null;
-        const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-        const applyTheme = (isLight: boolean) => {
-            const newTheme = isLight ? "light" : "dark";
+        const applyTheme = (isDark: boolean) => {
+            const newTheme = isDark ? "dark" : "light";
             if (!storedTheme) {
-                setThemeState(newTheme);
+                updateTheme(newTheme);
             }
         };
 
         if (storedTheme) {
-            setThemeState(storedTheme);
+            updateTheme(storedTheme);
         } else {
             applyTheme(mediaQuery.matches);
         }
