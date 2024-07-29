@@ -43,11 +43,11 @@ export const Histogram = (props: Histogram) => {
 
     const theme = props?.color?.theme
         ? props?.color?.theme === "light"
-            ? "255,255,255"
-            : "0,0,0"
+            ? "0,0,0"
+            : "255,255,255"
         : detectedTheme && detectedTheme === "light"
-            ? "255,255,255"
-            : "0,0,0";
+        ? "0,0,0"
+        : "255,255,255";
     const [color, setColor] = useState({
         default: props?.color?.default?.includes(",") ? `rgb(${props?.color?.default})` : props?.color?.default || `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
@@ -92,17 +92,18 @@ export const Histogram = (props: Histogram) => {
             const data = sort(
                 props?.data?.map(
                     (v: any) =>
-                    ({
-                        color: ((v?.type &&
-                            v?.type !== "") &&
-                            (props?.up &&
-                                props?.up !== "") &&
-                            (props?.down &&
-                                props?.down !== "") &&
-                            `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`),
-                        time: v[key.time],
-                        value: parseFloat(v?.[key.value]?.toString() || "0"),
-                    } as Data),
+                        ({
+                            color:
+                                v?.type &&
+                                v?.type !== "" &&
+                                props?.up &&
+                                props?.up !== "" &&
+                                props?.down &&
+                                props?.down !== "" &&
+                                `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`,
+                            time: v[key.time],
+                            value: parseFloat(v?.[key.value]?.toString() || "0"),
+                        } as Data),
                 ),
                 key.time,
                 typeof props?.data?.[0]?.[key.time] === "number" ? "number" : "string",
@@ -111,37 +112,44 @@ export const Histogram = (props: Histogram) => {
 
             let lastColor = color.up; // Initialize with the default color
 
-            setData(((!props?.up || props?.up !== "") &&
-                (!props?.down || props?.down !== "")) &&
-                (props?.color?.up &&
-                    props?.color?.up !== "") &&
-                (props?.color?.down &&
-                    props?.color?.down !== "")
-                ? data?.map((v: any, i: number) => {
-                    const previous = data[i - 1];
-                    if (i === 0) return {
-                        ...v,
-                        color: `rgb(${color.up})`,
-                    };
+            setData(
+                (!props?.up || props?.up !== "") &&
+                    (!props?.down || props?.down !== "") &&
+                    props?.color?.up &&
+                    props?.color?.up !== "" &&
+                    props?.color?.down &&
+                    props?.color?.down !== ""
+                    ? data?.map((v: any, i: number) => {
+                          const previous = data[i - 1];
+                          if (i === 0)
+                              return {
+                                  ...v,
+                                  color: `rgb(${color.up})`,
+                              };
 
-                    const change = v.value - previous.value;
-                    const threshold = previous.value * (color.threshold / 100);
+                          const change = v.value - previous.value;
+                          const threshold = previous.value * (color.threshold / 100);
 
-                    const newColor = change === 0
-                        ? lastColor
-                        : change > 0
-                            ? (change > threshold ? color.up : lastColor)
-                            : (change < -threshold ? color.down : lastColor);
+                          const newColor =
+                              change === 0
+                                  ? lastColor
+                                  : change > 0
+                                  ? change > threshold
+                                      ? color.up
+                                      : lastColor
+                                  : change < -threshold
+                                  ? color.down
+                                  : lastColor;
 
-                    lastColor = newColor; // Update lastColor for the next iteration
+                          lastColor = newColor; // Update lastColor for the next iteration
 
-                    return {
-                        ...v,
-                        color: `rgb(${newColor})`,
-                    };
-                })
-                : data);
-
+                          return {
+                              ...v,
+                              color: `rgb(${newColor})`,
+                          };
+                      })
+                    : data,
+            );
         }
     }, [props?.data]);
 
@@ -205,10 +213,10 @@ export const Histogram = (props: Histogram) => {
                 const series = chart.addHistogramSeries({
                     // color: (props?.color?.up && props?.color?.down) ? color.up : color.default,
                     priceFormat: {
-                        type: props?.type || 'volume',
+                        type: props?.type || "volume",
                     },
                     // set as an overlay by setting a blank priceScaleId
-                    // priceScaleId: "", 
+                    // priceScaleId: "",
                     // set the positioning of the volume series
                 });
 
@@ -226,8 +234,8 @@ export const Histogram = (props: Histogram) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                    barSpacing: 10,
-                });
+                      barSpacing: 10,
+                  });
 
             globalThis.addEventListener("resize", handleResize);
 

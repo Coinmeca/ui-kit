@@ -39,11 +39,11 @@ export const Line = (props: Line) => {
 
     const theme = props?.color?.theme
         ? props?.color?.theme === "light"
-            ? "255,255,255"
-            : "0,0,0"
+            ? "0,0,0"
+            : "255,255,255"
         : detectedTheme && detectedTheme === "light"
-            ? "255,255,255"
-            : "0,0,0";
+        ? "0,0,0"
+        : "255,255,255";
     const [color, setColor] = useState({
         default: props?.color?.default ? `rgb(${props?.color?.default})` : `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
@@ -181,11 +181,10 @@ export const Line = (props: Line) => {
                 const series = chart.addLineSeries({
                     color: color.default,
                     priceFormat: {
-                        type: (typeof props?.type === 'string'
-                            ? props?.type
-                            : (typeof props?.type === 'object' && typeof props?.type?.line === 'string') && props?.type?.line)
-                            || 'volume'
-                        ,
+                        type:
+                            (typeof props?.type === "string"
+                                ? props?.type
+                                : typeof props?.type === "object" && typeof props?.type?.line === "string" && props?.type?.line) || "volume",
                     },
                     // set as an overlay by setting a blank priceScaleId
                     // priceScaleId: "",
@@ -209,8 +208,8 @@ export const Line = (props: Line) => {
                                 (typeof props?.format === "function"
                                     ? props?.format(price)
                                     : typeof props?.format === "object" && typeof props?.format?.line === "function"
-                                        ? props?.format?.line(price)
-                                        : price
+                                    ? props?.format?.line(price)
+                                    : price
                                 ).toString() + props?.unit,
                         },
                     });
@@ -220,13 +219,13 @@ export const Line = (props: Line) => {
                 const volumeSeries = chart.addHistogramSeries({
                     color: "yellow",
                     priceFormat: {
-                        type: (typeof props?.type === 'string'
-                            ? props?.type
-                            : (typeof props?.type === 'object' && typeof props?.type?.histogram === 'string') && props?.type?.histogram)
-                            || 'volume',
+                        type:
+                            (typeof props?.type === "string"
+                                ? props?.type
+                                : typeof props?.type === "object" && typeof props?.type?.histogram === "string" && props?.type?.histogram) || "volume",
                     },
                     // set as an overlay by setting a blank priceScaleId
-                    // priceScaleId: "", 
+                    // priceScaleId: "",
                     // set the positioning of the volume series
                 });
 
@@ -254,8 +253,8 @@ export const Line = (props: Line) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                    barSpacing: 10,
-                });
+                      barSpacing: 10,
+                  });
 
             globalThis.addEventListener("resize", handleResize);
 
