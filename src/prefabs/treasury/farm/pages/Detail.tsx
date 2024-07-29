@@ -1,12 +1,12 @@
 "use client";
-import { useState } from "react";
 import { Charts, Controls, Elements, Layouts } from "components";
 import { Modal } from "containers";
 import { usePortal, useWindowSize } from "hooks";
 import { Root } from "lib/style";
-import { capitalize, format } from "lib/utils";
+import { format } from "lib/utils";
 import { Asset } from "prefabs";
 import { Farms } from "prefabs/treasury";
+import { useState } from "react";
 import type { Stake as Data } from "types/history";
 import type { Farm } from "types/web3";
 
@@ -311,13 +311,20 @@ export default function Detail(props: Detail) {
                                                     children: (
                                                         <Charts.LightWeight.Histogram
                                                             data={props?.charts?.staking}
-                                                            up={"STAKING"}
-                                                            down={"UNSTAKING"}
+                                                            field={{
+                                                                value: "staked",
+                                                            }}
                                                             color={{
                                                                 default: "0,64,255",
                                                                 up: "255, 160, 0",
-                                                                down: "0,64,255",
+                                                                down: "0,64,255"
                                                             }}
+                                                            format={(price: number | string) =>
+                                                                format(price || 0, "currency", {
+                                                                    limit: 4,
+                                                                    fix: 3,
+                                                                })
+                                                            }
                                                             fit
                                                         />
                                                     ),

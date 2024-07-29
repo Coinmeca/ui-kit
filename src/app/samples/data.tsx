@@ -1,10 +1,10 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import { Elements, Layouts, Controls } from "components";
+import { Controls, Elements, Layouts } from "components";
 import { Modals, Sidebars } from "containers";
 import { useMobile, useNotification, usePortal, useTheme } from "hooks";
 import { filter } from "lib/utils";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Data() {
     const [value, setValue] = useState<number>(0);
@@ -18,7 +18,6 @@ export default function Data() {
     const { notis, toasts, count, addToast, addNotify, setNotis, resetCount } = useNotification();
 
     const { theme } = useTheme();
-    console.log("theme", theme);
 
     const notilist = [
         {
@@ -412,7 +411,7 @@ export default function Data() {
                         hide={"desktop"}
                         toggle
                         fit
-                        // onBlur={() => setMobileMenu("")}
+                    // onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
                         onClick={() => {
@@ -429,7 +428,7 @@ export default function Data() {
                         iconLeft={{ icon: "bell", count: mobileMenu === "notify" ? 0 : count }}
                         toggle
                         fit
-                        // onBlur={() => setMobileMenu("")}
+                    // onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
                         onClick={() => (mobileMenu === "setting" ? setMobileMenu("") : setMobileMenu("setting"))}

@@ -1,9 +1,9 @@
 "use client";
+import { useTheme } from "hooks";
 import { parseNumber, sort } from "lib/utils";
 import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
 import Style from "./Chart.styled";
-import { useTheme } from "hooks";
 
 export interface Histogram {
     color?: {
@@ -41,8 +41,8 @@ export const Histogram = (props: Histogram) => {
             ? "0,0,0"
             : "255,255,255"
         : detectedTheme && detectedTheme === "light"
-        ? "0,0,0"
-        : "255,255,255";
+            ? "0,0,0"
+            : "255,255,255";
     const [color, setColor] = useState({
         default: props?.color?.default?.includes(",") ? `rgb(${props?.color?.default})` : props?.color?.default || `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
@@ -88,36 +88,34 @@ export const Histogram = (props: Histogram) => {
             const data = sort(
                 props?.data?.map(
                     (v: any) =>
-                        ({
-                            ...(v?.type &&
-                                v?.type !== "" &&
-                                props?.up &&
-                                props?.up !== "" &&
-                                props?.down &&
-                                props?.down !== "" &&
-                                `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`),
-                            time: v[key.time],
-                            value: parseFloat(v?.[key.value]?.toString() || "0"),
-                        } as Data),
+                    ({
+                        color: (v?.type &&
+                            v?.type !== "" &&
+                            props?.up &&
+                            props?.up !== "" &&
+                            props?.down &&
+                            props?.down !== "" &&
+                            `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`),
+                        time: v[key.time],
+                        value: parseFloat(v?.[key.value]?.toString() || "0"),
+                    } as Data),
                 ),
                 key.time,
                 typeof props?.data?.[0]?.[key.time] === "number" ? "number" : "string",
                 true,
             );
 
-            setData(
-                (!props?.up || props?.up === "") &&
-                    (!props?.down || props?.down === "") &&
-                    props?.color?.up &&
-                    props?.color?.up !== "" &&
-                    props?.color?.down &&
-                    props?.color?.down !== ""
-                    ? data?.map((v: any, i: number) => ({
-                          ...v,
-                          color: `rgb(${i === 0 ? color?.up : getColor(v[key.value], data[i - 1][key.value])})`,
-                      }))
-                    : data,
-            );
+            setData((!props?.up || props?.up === "") &&
+                (!props?.down || props?.down === "") &&
+                props?.color?.up &&
+                props?.color?.up !== "" &&
+                props?.color?.down &&
+                props?.color?.down !== ""
+                ? data?.map((v: any, i: number) => ({
+                    ...v,
+                    color: `rgb(${i === 0 ? color?.up : getColor(v[key.value], data[i - 1][key.value])})`,
+                }))
+                : data);
         }
     }, [props?.data]);
 
@@ -179,13 +177,16 @@ export const Histogram = (props: Histogram) => {
 
             if (data) {
                 const series = chart.addHistogramSeries({
-                    color: props?.color?.up && props?.color?.down ? props?.color?.up : color.default,
+                    color: (props?.color?.up && props?.color?.down) ? color?.up : color.default,
                     priceFormat: {
                         type: "volume",
                     },
-                    priceScaleId: "", // set as an overlay by setting a blank priceScaleId
+                    // set as an overlay by setting a blank priceScaleId
+                    // priceScaleId: "", 
                     // set the positioning of the volume series
                 });
+
+                series.setData(data);
 
                 if (props?.unit && props?.unit !== "")
                     series.applyOptions({
@@ -199,8 +200,8 @@ export const Histogram = (props: Histogram) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                      barSpacing: 10,
-                  });
+                    barSpacing: 10,
+                });
 
             globalThis.addEventListener("resize", handleResize);
 

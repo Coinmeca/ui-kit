@@ -1,11 +1,11 @@
 "use client";
+import { useTheme } from "hooks";
 import { sort } from "lib/utils";
 import type { LineData } from "lightweight-charts";
 import { HistogramData, createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
 import type { Volume } from "./Candle";
 import Style from "./Chart.styled";
-import { useTheme } from "hooks";
 
 export interface Line {
     color?: {
@@ -39,8 +39,8 @@ export const Line = (props: Line) => {
             ? "0,0,0"
             : "255,255,255"
         : detectedTheme && detectedTheme === "light"
-        ? "0,0,0"
-        : "255,255,255";
+            ? "0,0,0"
+            : "255,255,255";
     const [color, setColor] = useState({
         default: props?.color?.default ? `rgb(${props?.color?.default})` : `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
@@ -181,7 +181,7 @@ export const Line = (props: Line) => {
                         type: "price",
                     },
                     // set as an overlay by setting a blank priceScaleId
-                    priceScaleId: "",
+                    // priceScaleId: "",
                     // set the positioning of the volume series
                 });
 
@@ -202,8 +202,8 @@ export const Line = (props: Line) => {
                                 (typeof props?.format === "function"
                                     ? props?.format(price)
                                     : typeof props?.format === "object" && typeof props?.format?.line === "function"
-                                    ? props?.format?.line(price)
-                                    : price
+                                        ? props?.format?.line(price)
+                                        : price
                                 ).toString() + props?.unit,
                         },
                     });
@@ -215,7 +215,8 @@ export const Line = (props: Line) => {
                     priceFormat: {
                         type: "volume",
                     },
-                    priceScaleId: "", // set as an overlay by setting a blank priceScaleId
+                    // set as an overlay by setting a blank priceScaleId
+                    // priceScaleId: "", 
                     // set the positioning of the volume series
                 });
 
@@ -243,8 +244,8 @@ export const Line = (props: Line) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                      barSpacing: 10,
-                  });
+                    barSpacing: 10,
+                });
 
             globalThis.addEventListener("resize", handleResize);
 
