@@ -9,34 +9,14 @@ export interface Theme {
 }
 
 export default function useTheme(): Theme {
-    const [theme, updateTheme] = useState<Mode>("light");
-
-    function setTheme(mode: Mode) {
-        updateTheme(mode);
-        localStorage.setItem("theme", mode);
-    }
+    const [theme, setTheme] = useState<Mode>("light");
 
     useEffect(() => {
-        const storedTheme = localStorage.getItem("theme") as Mode | null;
         const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-        const applyTheme = (isDark: boolean) => {
-            const newTheme = isDark ? "dark" : "light";
-            if (!storedTheme) {
-                updateTheme(newTheme);
-            }
-        };
-
-        if (storedTheme) {
-            updateTheme(storedTheme);
-        } else {
-            applyTheme(mediaQuery.matches);
-        }
-
         const handleChange = (event: MediaQueryListEvent) => {
-            if (!localStorage.getItem("theme")) {
-                applyTheme(event.matches);
-            }
+            const newTheme = event.matches ? "dark" : "light";
+            setTheme(newTheme);
         };
 
         mediaQuery.addEventListener("change", handleChange);
