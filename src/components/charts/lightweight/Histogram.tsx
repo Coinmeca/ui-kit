@@ -105,8 +105,8 @@ export const Histogram = (props: Histogram) => {
                 true,
             );
 
-            setData((!props?.up || props?.up === "") &&
-                (!props?.down || props?.down === "") &&
+            setData((!props?.up || props?.up !== "") &&
+                (!props?.down || props?.down !== "") &&
                 props?.color?.up &&
                 props?.color?.up !== "" &&
                 props?.color?.down &&
