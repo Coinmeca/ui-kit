@@ -13,6 +13,7 @@ export interface Histogram {
         up?: string;
         down?: string;
         theme?: string;
+        threshold?: number;
     };
     field?: {
         time?: string;
@@ -35,6 +36,7 @@ export interface Data {
 }
 
 export const Histogram = (props: Histogram) => {
+    const chartRef: any = useRef();
     const up = props?.up || "up";
     const down = props?.down || "down";
     const { theme: detectedTheme } = useTheme();
@@ -57,6 +59,7 @@ export const Histogram = (props: Histogram) => {
             regular: `rgba(${theme}, 0.15)`,
             light: `rgba(${theme}, 0.05)`,
         },
+        threshold: props?.color?.threshold || 1,
     });
 
     const key = {
@@ -65,8 +68,6 @@ export const Histogram = (props: Histogram) => {
     };
 
     const [data, setData] = useState<any>([]);
-    const chartRef: any = useRef();
-    const getColor = (current: number, previous: number) => (current > previous ? color?.up : color?.down);
 
     useEffect(() => {
         globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
@@ -108,17 +109,39 @@ export const Histogram = (props: Histogram) => {
                 true,
             );
 
+            let lastColor = color.up; // Initialize with the default color
+
             setData(((!props?.up || props?.up !== "") &&
                 (!props?.down || props?.down !== "")) &&
                 (props?.color?.up &&
                     props?.color?.up !== "") &&
                 (props?.color?.down &&
                     props?.color?.down !== "")
-                ? data?.map((v: any, i: number) => ({
-                    ...v,
-                    color: `rgb(${i === 0 ? color?.up : getColor(v?.value, data?.[i - 1]?.value)})`,
-                }))
+                ? data?.map((v: any, i: number) => {
+                    const previous = data[i - 1];
+                    if (i === 0) return {
+                        ...v,
+                        color: `rgb(${color.up})`,
+                    };
+
+                    const change = v.value - previous.value;
+                    const threshold = previous.value * (color.threshold / 100);
+
+                    const newColor = change === 0
+                        ? lastColor
+                        : change > 0
+                            ? (change > threshold ? color.up : lastColor)
+                            : (change < -threshold ? color.down : lastColor);
+
+                    lastColor = newColor; // Update lastColor for the next iteration
+
+                    return {
+                        ...v,
+                        color: `rgb(${newColor})`,
+                    };
+                })
                 : data);
+
         }
     }, [props?.data]);
 
@@ -180,7 +203,7 @@ export const Histogram = (props: Histogram) => {
 
             if (data) {
                 const series = chart.addHistogramSeries({
-                    // color: (props?.color?.up && props?.color?.down) ? color?.up : color.default,
+                    // color: (props?.color?.up && props?.color?.down) ? color.up : color.default,
                     priceFormat: {
                         type: props?.type || 'volume',
                     },

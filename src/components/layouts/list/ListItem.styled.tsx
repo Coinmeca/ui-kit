@@ -1,5 +1,5 @@
-import { css, styled } from "styled-components";
 import { Root } from "lib/style";
+import { css, styled } from "styled-components";
 
 export const Row = styled.div<{ $gap: number; $change?: string }>`
     display: flex;
@@ -41,7 +41,7 @@ const Style = styled.div<{
     ${({ $active }) => $active && `background: rgba(var(--white),var(--o01));`}
     ${({ $gap }) => `gap: ${$gap || 1}em;`}
 
-    & > * {
+    && > * {
         font-size: 1.5em;
         /* display: flex;
         flex-direction: row;
@@ -55,8 +55,8 @@ const Style = styled.div<{
 
     &:active {
         ${({ $event }) =>
-            $event &&
-            css`
+        $event &&
+        css`
                 background: rgba(var(--white), var(--o015));
             `};
     }
