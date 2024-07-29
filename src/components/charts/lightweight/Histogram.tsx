@@ -41,13 +41,7 @@ export const Histogram = (props: Histogram) => {
     const down = props?.down || "down";
     const { theme: detectedTheme } = useTheme();
 
-    const theme = props?.color?.theme
-        ? props?.color?.theme === "light"
-            ? "0,0,0"
-            : "255,255,255"
-        : detectedTheme && detectedTheme === "light"
-        ? "0,0,0"
-        : "255,255,255";
+    const theme = props?.color?.theme ? (props?.color?.theme === "light" ? "0,0,0" : "255,255,255") : detectedTheme === "light" ? "0,0,0" : "255,255,255";
     const [color, setColor] = useState({
         default: props?.color?.default?.includes(",") ? `rgb(${props?.color?.default})` : props?.color?.default || `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
@@ -68,24 +62,6 @@ export const Histogram = (props: Histogram) => {
     };
 
     const [data, setData] = useState<any>([]);
-
-    useEffect(() => {
-        globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
-            const scheme = !theme && matches ? "0,0,0" : "255,255,255";
-            setColor((color) => {
-                return {
-                    ...color,
-                    theme: {
-                        strong: `rgba(${scheme}, 0.6)`,
-                        semi: `rgba(${scheme}, 0.45)`,
-                        medium: `rgba(${scheme}, 0.3)`,
-                        regular: `rgba(${scheme}, 0.15)`,
-                        light: `rgba(${scheme}, 0.05)`,
-                    },
-                };
-            });
-        });
-    }, [props?.color, theme]);
 
     useEffect(() => {
         if (props?.data && props?.data?.length > 0) {

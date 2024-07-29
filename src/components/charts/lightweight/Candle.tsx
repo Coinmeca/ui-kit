@@ -43,13 +43,7 @@ export const Candle = (props: Candle) => {
     const down = props?.down || "down";
     const { theme: detectedTheme } = useTheme();
 
-    const theme = props?.color?.theme
-        ? props?.color?.theme === "light"
-            ? "0,0,0"
-            : "255,255,255"
-        : detectedTheme && detectedTheme === "light"
-        ? "0,0,0"
-        : "255,255,255";
+    const theme = props?.color?.theme ? (props?.color?.theme === "light" ? "0,0,0" : "255,255,255") : detectedTheme === "light" ? "0,0,0" : "255,255,255";
     const [color, setColor] = useState({
         up: props?.color?.up || "0,192,96",
         down: props?.color?.down || "255,0,64",
@@ -70,24 +64,6 @@ export const Candle = (props: Candle) => {
     const [price, setPrice] = useState<Price[]>([]);
     const [volume, setVolume] = useState<Volume[]>([]);
     const chartRef: any = useRef();
-
-    useEffect(() => {
-        globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
-            const scheme = !theme && matches ? "0,0,0" : "255,255,255";
-            setColor((color) => {
-                return {
-                    ...color,
-                    theme: {
-                        strong: `rgba(${scheme}, 0.6)`,
-                        semi: `rgba(${scheme}, 0.45)`,
-                        medium: `rgba(${scheme}, 0.3)`,
-                        regular: `rgba(${scheme}, 0.15)`,
-                        light: `rgba(${scheme}, 0.05)`,
-                    },
-                };
-            });
-        });
-    }, [props?.color, theme]);
 
     useEffect(() => {
         if (props?.price && props?.price?.length > 0) {
