@@ -1,9 +1,11 @@
 "use client";
 import { useTheme } from "hooks";
-import { parseNumber, sort } from "lib/utils";
+import { sort } from "lib/utils";
 import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
 import Style from "./Chart.styled";
+
+type DataType = "price" | "volume" | "percent";
 
 export interface Histogram {
     color?: {
@@ -20,6 +22,7 @@ export interface Histogram {
     up?: string;
     down?: string;
     unit?: string;
+    type?: DataType;
     format?: Function;
     fallback?: any;
     fit?: boolean;
@@ -63,7 +66,7 @@ export const Histogram = (props: Histogram) => {
 
     const [data, setData] = useState<any>([]);
     const chartRef: any = useRef();
-    const getColor = (current: string | number, previous: string | number) => (parseNumber(current) > parseNumber(previous) ? color?.up : color?.down);
+    const getColor = (current: number, previous: number) => (current > previous ? color?.up : color?.down);
 
     useEffect(() => {
         globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
@@ -89,12 +92,12 @@ export const Histogram = (props: Histogram) => {
                 props?.data?.map(
                     (v: any) =>
                     ({
-                        color: (v?.type &&
-                            v?.type !== "" &&
-                            props?.up &&
-                            props?.up !== "" &&
-                            props?.down &&
-                            props?.down !== "" &&
+                        color: ((v?.type &&
+                            v?.type !== "") &&
+                            (props?.up &&
+                                props?.up !== "") &&
+                            (props?.down &&
+                                props?.down !== "") &&
                             `rgb(${color[(v?.type === up ? "up" : v?.type === down ? "down" : "theme") as "up" | "down" | "theme"]})`),
                         time: v[key.time],
                         value: parseFloat(v?.[key.value]?.toString() || "0"),
@@ -105,15 +108,15 @@ export const Histogram = (props: Histogram) => {
                 true,
             );
 
-            setData((!props?.up || props?.up !== "") &&
-                (!props?.down || props?.down !== "") &&
-                props?.color?.up &&
-                props?.color?.up !== "" &&
-                props?.color?.down &&
-                props?.color?.down !== ""
+            setData(((!props?.up || props?.up !== "") &&
+                (!props?.down || props?.down !== "")) &&
+                (props?.color?.up &&
+                    props?.color?.up !== "") &&
+                (props?.color?.down &&
+                    props?.color?.down !== "")
                 ? data?.map((v: any, i: number) => ({
                     ...v,
-                    color: `rgb(${i === 0 ? color?.up : getColor(v[key.value], data[i - 1][key.value])})`,
+                    color: `rgb(${i === 0 ? color?.up : getColor(v?.value, data?.[i - 1]?.value)})`,
                 }))
                 : data);
         }
@@ -177,9 +180,9 @@ export const Histogram = (props: Histogram) => {
 
             if (data) {
                 const series = chart.addHistogramSeries({
-                    color: (props?.color?.up && props?.color?.down) ? color?.up : color.default,
+                    // color: (props?.color?.up && props?.color?.down) ? color?.up : color.default,
                     priceFormat: {
-                        type: "volume",
+                        type: props?.type || 'volume',
                     },
                     // set as an overlay by setting a blank priceScaleId
                     // priceScaleId: "", 

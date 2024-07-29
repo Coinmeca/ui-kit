@@ -7,6 +7,8 @@ import { Suspense, memo, useEffect, useRef, useState } from "react";
 import { Volume } from "./Candle";
 import Style from "./Chart.styled";
 
+type DataType = "price" | "volume" | "percent";
+
 export interface Area {
     color?: {
         default?: string;
@@ -23,6 +25,7 @@ export interface Area {
     volume?: Volume[];
     up?: string;
     down?: string;
+    type?: DataType | { area?: DataType; histogram?: DataType };
     format?: Function | { area?: Function; histogram?: Function };
     unit?: string | { area?: string; histogram?: string };
     fallback?: any;
@@ -185,7 +188,10 @@ export const Area = (props: Area) => {
                     topColor: color ? `rgba(${color.default}, 0.45)` : "",
                     bottomColor: color ? `rgba(${color.default}, 0)` : "",
                     priceFormat: {
-                        type: "price",
+                        type: (typeof props?.type === 'string'
+                            ? props?.type
+                            : (typeof props?.type === 'object' && typeof props?.type?.area === 'string') && props?.type?.area)
+                            || 'volume',
                     },
                     // // set as an overlay by setting a blank priceScaleId
                     // priceScaleId: "",
@@ -210,9 +216,12 @@ export const Area = (props: Area) => {
 
             if (volume) {
                 const volumeSeries = chart.addHistogramSeries({
-                    color: "yellow",
+                    // color: "yellow",
                     priceFormat: {
-                        type: "volume",
+                        type: (typeof props?.type === 'string'
+                            ? props?.type
+                            : (typeof props?.type === 'object' && typeof props?.type?.histogram === 'string') && props?.type?.histogram)
+                            || 'volume',
                     },
                     // priceScaleId: "", 
                     // set as an overlay by setting a blank priceScaleId

@@ -7,6 +7,8 @@ import { Suspense, memo, useEffect, useRef, useState } from "react";
 import type { Volume } from "./Candle";
 import Style from "./Chart.styled";
 
+type DataType = "price" | "volume" | "percent";
+
 export interface Line {
     color?: {
         default?: string;
@@ -23,6 +25,7 @@ export interface Line {
     volume?: Volume[];
     up?: string;
     down?: string;
+    type?: DataType | { line?: DataType; histogram?: DataType };
     format?: Function | { line?: Function; histogram?: Function };
     unit?: string | { line?: string; histogram?: string };
     fallback?: any;
@@ -178,7 +181,11 @@ export const Line = (props: Line) => {
                 const series = chart.addLineSeries({
                     color: color.default,
                     priceFormat: {
-                        type: "price",
+                        type: (typeof props?.type === 'string'
+                            ? props?.type
+                            : (typeof props?.type === 'object' && typeof props?.type?.line === 'string') && props?.type?.line)
+                            || 'volume'
+                        ,
                     },
                     // set as an overlay by setting a blank priceScaleId
                     // priceScaleId: "",
@@ -213,7 +220,10 @@ export const Line = (props: Line) => {
                 const volumeSeries = chart.addHistogramSeries({
                     color: "yellow",
                     priceFormat: {
-                        type: "volume",
+                        type: (typeof props?.type === 'string'
+                            ? props?.type
+                            : (typeof props?.type === 'object' && typeof props?.type?.histogram === 'string') && props?.type?.histogram)
+                            || 'volume',
                     },
                     // set as an overlay by setting a blank priceScaleId
                     // priceScaleId: "", 
