@@ -1,10 +1,10 @@
 "use client";
+import { useTheme } from "hooks";
 import { sort } from "lib/utils";
 import type { CandlestickData, HistogramData } from "lightweight-charts";
 import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
 import Style from "./Chart.styled";
-import { useTheme } from "hooks";
 
 export interface Candle {
     color?: {
@@ -45,11 +45,11 @@ export const Candle = (props: Candle) => {
 
     const theme = props?.color?.theme
         ? props?.color?.theme === "light"
-            ? "0,0,0"
-            : "255,255,255"
+            ? "255,255,255"
+            : "0,0,0"
         : detectedTheme && detectedTheme === "light"
-        ? "0,0,0"
-        : "255,255,255";
+            ? "255,255,255"
+            : "0,0,0";
     const [color, setColor] = useState({
         up: props?.color?.up || "0,192,96",
         down: props?.color?.down || "255,0,64",
@@ -218,8 +218,8 @@ export const Candle = (props: Candle) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                      barSpacing: 10,
-                  });
+                    barSpacing: 10,
+                });
             globalThis.addEventListener("resize", handleResize);
             return () => {
                 globalThis.removeEventListener("resize", handleResize);

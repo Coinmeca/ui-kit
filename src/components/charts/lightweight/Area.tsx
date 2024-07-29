@@ -36,11 +36,11 @@ export const Area = (props: Area) => {
 
     const theme = props?.color?.theme
         ? props?.color?.theme === "light"
-            ? "0,0,0"
-            : "255,255,255"
+            ? "255,255,255"
+            : "0,0,0"
         : detectedTheme && detectedTheme === "light"
-            ? "0,0,0"
-            : "255,255,255";
+            ? "255,255,255"
+            : "0,0,0";
     const [color, setColor] = useState({
         default: props?.color?.default || `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
