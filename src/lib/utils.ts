@@ -11,6 +11,7 @@ export interface RGBColor {
 }
 
 export function sort(array: any[] = [], key: string, type: string, direction: boolean | undefined = false) {
+	if (!Array.isArray(array)) return [];
 	const depth = (a: any, b: any) => {
 		let x: any = a;
 		let y: any = b;

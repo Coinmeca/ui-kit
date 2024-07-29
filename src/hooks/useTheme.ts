@@ -9,17 +9,15 @@ export interface Theme {
 }
 
 export default function useTheme(): Theme {
-    const [theme, setTheme] = useState<Mode>(() => {
-        const mediaQuery = window?.matchMedia("(prefers-color-scheme: dark)");
-        return mediaQuery.matches ? "dark" : "light";
-    });
+    const w = (typeof window !== 'undefined' && window) || global;
+    const [theme, setTheme] = useState<Mode>((typeof window !== 'undefined' && w?.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light");
 
     const handleChange = (event: MediaQueryListEvent) => {
         setTheme(event?.matches ? "dark" : "light");
     };
 
     useEffect(() => {
-        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        const mediaQuery = w?.matchMedia("(prefers-color-scheme: dark)");
 
         handleChange({ matches: mediaQuery.matches } as MediaQueryListEvent);
 
