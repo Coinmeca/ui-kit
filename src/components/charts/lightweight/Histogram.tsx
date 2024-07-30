@@ -2,7 +2,7 @@
 import { useTheme } from "hooks";
 import { sort } from "lib/utils";
 import { createChart } from "lightweight-charts";
-import { Suspense, memo, useEffect, useRef, useState } from "react";
+import { Suspense, memo, useEffect, useMemo, useRef, useState } from "react";
 import Style from "./Chart.styled";
 
 type DataType = "price" | "volume" | "percent";
@@ -41,20 +41,22 @@ export const Histogram = (props: Histogram) => {
     const down = props?.down || "down";
     const { theme: detectedTheme } = useTheme();
 
-    const theme = props?.color?.theme ? (props?.color?.theme === "light" ? "0,0,0" : "255,255,255") : detectedTheme === "light" ? "0,0,0" : "255,255,255";
-    const [color, setColor] = useState({
-        default: props?.color?.default?.includes(",") ? `rgb(${props?.color?.default})` : props?.color?.default || `rgb(${theme})`,
-        up: props?.color?.up || "0,192,96",
-        down: props?.color?.down || "255,0,64",
-        theme: {
-            strong: `rgba(${theme}, 0.6)`,
-            semi: `rgba(${theme}, 0.45)`,
-            medium: `rgba(${theme}, 0.3)`,
-            regular: `rgba(${theme}, 0.15)`,
-            light: `rgba(${theme}, 0.05)`,
-        },
-        threshold: props?.color?.threshold || 1,
-    });
+    const theme = props?.color?.theme
+        ? (props?.color?.theme === 'light' ? "0,0,0" : "255,255,255")
+        : detectedTheme === "light" ? "0,0,0" : "255,255,255";
+        const color = useMemo(()=>({
+            default: props?.color?.default?.includes(",") ? `rgb(${props?.color?.default})` : props?.color?.default || `rgb(${theme})`,
+            up: props?.color?.up || "0,192,96",
+            down: props?.color?.down || "255,0,64",
+            theme: {
+                strong: `rgba(${theme}, 0.6)`,
+                semi: `rgba(${theme}, 0.45)`,
+                medium: `rgba(${theme}, 0.3)`,
+                regular: `rgba(${theme}, 0.15)`,
+                light: `rgba(${theme}, 0.05)`,
+            },
+            threshold: props?.color?.threshold || 1,
+        }),[props?.color, theme]);
 
     const key = {
         time: props?.field?.time || "time",
@@ -64,6 +66,7 @@ export const Histogram = (props: Histogram) => {
     const [data, setData] = useState<any>([]);
 
     useEffect(() => {
+        console.log('props?.data, color');
         if (props?.data && props?.data?.length > 0) {
             const data = sort(
                 props?.data?.map(
@@ -127,9 +130,10 @@ export const Histogram = (props: Histogram) => {
                     : data,
             );
         }
-    }, [props?.data]);
+    }, [props?.data, color]);
 
     useEffect(() => {
+        console.log('chartRef?.current')
         if (chartRef?.current) {
             const handleResize = () => {
                 chart.applyOptions({
@@ -220,7 +224,7 @@ export const Histogram = (props: Histogram) => {
                 chart.remove();
             };
         }
-    }, [chartRef, data, color, up, down, props?.fit]);
+    }, [chartRef, data, theme, color, up, down, props?.fit]);
 
     return (
         <Suspense fallback={props?.fallback || <div>Loading...</div>}>

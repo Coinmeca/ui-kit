@@ -3,7 +3,7 @@ import { useTheme } from "hooks";
 import { sort } from "lib/utils";
 import type { AreaData, HistogramData } from "lightweight-charts";
 import { createChart } from "lightweight-charts";
-import { Suspense, memo, useEffect, useRef, useState } from "react";
+import { Suspense, memo, useEffect, useMemo, useRef, useState } from "react";
 import { Volume } from "./Candle";
 import Style from "./Chart.styled";
 
@@ -37,8 +37,10 @@ export const Area = (props: Area) => {
     const down = props?.down || "down";
     const { theme: detectedTheme } = useTheme();
 
-    const theme = props?.color?.theme ? (props?.color?.theme === "light" ? "0,0,0" : "255,255,255") : detectedTheme === "light" ? "0,0,0" : "255,255,255";
-    const [color, setColor] = useState({
+    const theme = props?.color?.theme
+        ? (props?.color?.theme === 'light' ? "0,0,0" : "255,255,255")
+        : detectedTheme === "light" ? "0,0,0" : "255,255,255";
+    const color = {
         default: props?.color?.default || `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
         down: props?.color?.down || "255,0,64",
@@ -49,8 +51,7 @@ export const Area = (props: Area) => {
             regular: `rgba(${theme}, 0.15)`,
             light: `rgba(${theme}, 0.05)`,
         },
-    });
-
+    };
     const key = {
         time: props?.field?.time || "time",
         value: props?.field?.value || "value",

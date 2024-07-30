@@ -3,7 +3,7 @@ import { useTheme } from "hooks";
 import { sort } from "lib/utils";
 import type { CandlestickData, HistogramData } from "lightweight-charts";
 import { createChart } from "lightweight-charts";
-import { Suspense, memo, useEffect, useRef, useState } from "react";
+import { Suspense, memo, useEffect, useMemo, useRef, useState } from "react";
 import Style from "./Chart.styled";
 
 export interface Candle {
@@ -43,8 +43,10 @@ export const Candle = (props: Candle) => {
     const down = props?.down || "down";
     const { theme: detectedTheme } = useTheme();
 
-    const theme = props?.color?.theme ? (props?.color?.theme === "light" ? "0,0,0" : "255,255,255") : detectedTheme === "light" ? "0,0,0" : "255,255,255";
-    const [color, setColor] = useState({
+    const theme = props?.color?.theme
+        ? (props?.color?.theme === 'light' ? "0,0,0" : "255,255,255")
+        : detectedTheme === "light" ? "0,0,0" : "255,255,255";
+    const color = {
         up: props?.color?.up || "0,192,96",
         down: props?.color?.down || "255,0,64",
         theme: {
@@ -53,9 +55,8 @@ export const Candle = (props: Candle) => {
             medium: `rgba(${theme}, 0.3)`,
             regular: `rgba(${theme}, 0.15)`,
             light: `rgba(${theme}, 0.05)`,
-        },
-    });
-
+        }
+    };
     const key = {
         time: props?.field?.time || "time",
         value: props?.field?.value || "value",

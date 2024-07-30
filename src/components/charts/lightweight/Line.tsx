@@ -3,7 +3,7 @@ import { useTheme } from "hooks";
 import { sort } from "lib/utils";
 import type { LineData } from "lightweight-charts";
 import { HistogramData, createChart } from "lightweight-charts";
-import { Suspense, memo, useEffect, useRef, useState } from "react";
+import { Suspense, memo, useEffect, useMemo, useRef, useState } from "react";
 import type { Volume } from "./Candle";
 import Style from "./Chart.styled";
 
@@ -37,9 +37,11 @@ export const Line = (props: Line) => {
     const down = props?.down || "down";
     const { theme: detectedTheme } = useTheme();
 
-    const theme = props?.color?.theme ? (props?.color?.theme === "light" ? "0,0,0" : "255,255,255") : detectedTheme === "light" ? "0,0,0" : "255,255,255";
-    const [color, setColor] = useState({
-        default: props?.color?.default ? `rgb(${props?.color?.default})` : `rgb(${theme})`,
+    const theme = props?.color?.theme
+    ? (props?.color?.theme === 'light' ? "0,0,0" : "255,255,255")
+        : detectedTheme === "light" ? "0,0,0" : "255,255,255";
+    const color = {
+        default: props?.color?.default || `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
         down: props?.color?.down || "255,0,64",
         theme: {
@@ -49,8 +51,7 @@ export const Line = (props: Line) => {
             regular: `rgba(${theme}, 0.15)`,
             light: `rgba(${theme}, 0.05)`,
         },
-    });
-
+    };
     const key = {
         time: props?.field?.time || "time",
         value: props?.field?.value || "value",
@@ -62,8 +63,8 @@ export const Line = (props: Line) => {
     const chartRef: any = useRef();
 
     useEffect(() => {
-        if (props?.data && props?.data?.length > 0) {
-            const test = sort(
+        if (props?.data && props?.data?.length > 0) setData(
+            sort(
                 props?.data?.map((v: any) => {
                     return {
                         time: v?.time,
@@ -72,15 +73,13 @@ export const Line = (props: Line) => {
                 }),
                 key.time,
                 props?.data && props?.data?.length > 0 && typeof (props?.data[0] as any)[key.time] === "number" ? "number" : "string",
-                true,
-            );
-            setData(test);
-        }
+                true
+        ))
     }, [props?.data]);
 
     useEffect(() => {
-        if (props?.volume && props?.volume?.length > 0) {
-            const test = sort(
+        if (props?.volume && props?.volume?.length > 0) setVolume(
+            sort(
                 props?.volume?.map((v: any) => {
                     return {
                         time: v?.time,
@@ -91,10 +90,8 @@ export const Line = (props: Line) => {
                 }),
                 key.time,
                 props?.volume && props?.volume?.length > 0 && typeof (props?.volume[0] as any)[key.time] === "number" ? "number" : "string",
-                true,
-            );
-            setVolume(test);
-        }
+                true
+            ))
     }, [props?.volume, up, down, color]);
 
     useEffect(() => {
