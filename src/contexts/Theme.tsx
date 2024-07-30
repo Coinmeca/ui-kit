@@ -11,7 +11,8 @@ export interface ThemeContext {
 export const ThemeContext = createContext<ThemeContext>({} as ThemeContext);
 
 export default function Theme({ children }: { children?: any }) {
-    const [theme, updateTheme] = useState<Mode>("light");
+    const w = (typeof window !== "undefined" && window) || global;
+    const [theme, updateTheme] = useState<Mode>(w?.matchMedia("(prefers-color-scheme: dark)") || CSS.supports("color-scheme", "dark") ? "dark" : "light");
 
     function setTheme(mode: Mode) {
         updateTheme(mode);
@@ -20,7 +21,7 @@ export default function Theme({ children }: { children?: any }) {
 
     useEffect(() => {
         const storedTheme = localStorage.getItem("theme") as Mode | null;
-        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        const theme = w?.matchMedia("(prefers-color-scheme: dark)") || CSS.supports("color-scheme", "dark");
 
         const applyTheme = (isDark: boolean) => {
             const newTheme = isDark ? "dark" : "light";
@@ -32,7 +33,7 @@ export default function Theme({ children }: { children?: any }) {
         if (storedTheme) {
             updateTheme(storedTheme);
         } else {
-            applyTheme(mediaQuery.matches);
+            applyTheme(theme.matches);
         }
 
         const handleChange = (event: MediaQueryListEvent) => {
@@ -41,10 +42,10 @@ export default function Theme({ children }: { children?: any }) {
             }
         };
 
-        mediaQuery.addEventListener("change", handleChange);
+        theme.addEventListener("change", handleChange);
 
         return () => {
-            mediaQuery.removeEventListener("change", handleChange);
+            theme.removeEventListener("change", handleChange);
         };
     }, []);
 

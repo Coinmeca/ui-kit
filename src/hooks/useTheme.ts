@@ -9,20 +9,15 @@ export interface Theme {
 }
 
 export default function useTheme(): Theme {
-    const w = (typeof window !== 'undefined' && window) || global;
-    const [theme, setTheme] = useState<Mode>((typeof window !== 'undefined' && w?.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light");
-
-    const handleChange = (event: MediaQueryListEvent) => {
-        setTheme(event?.matches ? "dark" : "light");
-    };
+    const w = (typeof window !== "undefined" && window) || global;
+    const [theme, setTheme] = useState<Mode>(w?.matchMedia("(prefers-color-scheme: dark)") || CSS.supports("color-scheme", "dark") ? "dark" : "light");
 
     useEffect(() => {
-        const mediaQuery = w?.matchMedia("(prefers-color-scheme: dark)");
+        const theme = w?.matchMedia("(prefers-color-scheme: dark)") || CSS.supports("color-scheme", "dark");
+        theme.addEventListener("theme", (event: any) => setTheme(event.matche ? "dark" : "light"));
+        setTheme(theme.matches ? "dark" : "light");
 
-        handleChange({ matches: mediaQuery.matches } as MediaQueryListEvent);
-
-        mediaQuery.addEventListener("change", handleChange);
-        return () => mediaQuery.removeEventListener("change", handleChange);
+        return () => theme.removeEventListener("theme", (event: any) => setTheme(event.matches));
     }, []);
 
     return { theme, setTheme };
