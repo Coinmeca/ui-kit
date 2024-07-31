@@ -2,7 +2,7 @@
 import Coinmeca from "assets/coinmeca.svg";
 import { animate, stagger } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Layouts } from "components";
 import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
@@ -52,7 +52,7 @@ export interface Side {
     children?: any;
 }
 
-export default function Header(props: Header) {
+export function Header(props: Header) {
     const { windowSize } = useWindowSize();
     const scale = props?.scale || 1;
     const height = props?.height || 8;
@@ -77,7 +77,7 @@ export default function Header(props: Header) {
                     ease: "easeInOut",
                     duration: 0.3,
                     delay: mobileMenu ? stagger(0.05) : 0,
-                }
+                },
             );
         }
     }, [mobileMenu, windowSize.width]);
@@ -96,8 +96,7 @@ export default function Header(props: Header) {
                             onClick={(e: any) => {
                                 if (typeof props?.menu?.onClick === "function") props?.menu?.onClick(e);
                                 setMobileMenu(!mobileMenu);
-                            }}
-                        >
+                            }}>
                             <div>
                                 <div></div>
                                 <div></div>
@@ -121,8 +120,7 @@ export default function Header(props: Header) {
                                         onClick={(e: any) => {
                                             if (typeof v?.onClick === "function") v?.onClick(e);
                                             setMobileMenu(false);
-                                        }}
-                                    >
+                                        }}>
                                         <Link href={v?.href || ""}>{v?.name}</Link>
                                     </Nav>
                                 ))}
@@ -144,3 +142,5 @@ export default function Header(props: Header) {
         </Style>
     );
 }
+
+export default memo(Header);
