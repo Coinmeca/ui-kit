@@ -3,7 +3,7 @@ import { useTheme } from "hooks";
 import { sort } from "lib/utils";
 import type { LineData } from "lightweight-charts";
 import { HistogramData, createChart } from "lightweight-charts";
-import { Suspense, memo, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, memo, useEffect, useRef, useState } from "react";
 import type { Volume } from "./Candle";
 import Style from "./Chart.styled";
 
@@ -29,6 +29,7 @@ export interface Line {
     format?: Function | { line?: Function; histogram?: Function };
     unit?: string | { line?: string; histogram?: string };
     fallback?: any;
+    style?: any;
     fit?: boolean;
 }
 
@@ -38,7 +39,7 @@ export const Line = (props: Line) => {
     const { theme: detectedTheme } = useTheme();
 
     const theme = props?.color?.theme
-    ? (props?.color?.theme === 'light' ? "0,0,0" : "255,255,255")
+        ? (props?.color?.theme === 'light' ? "0,0,0" : "255,255,255")
         : detectedTheme === "light" ? "0,0,0" : "255,255,255";
     const color = {
         default: props?.color?.default || `rgb(${theme})`,
@@ -74,7 +75,7 @@ export const Line = (props: Line) => {
                 key.time,
                 props?.data && props?.data?.length > 0 && typeof (props?.data[0] as any)[key.time] === "number" ? "number" : "string",
                 true
-        ))
+            ))
     }, [props?.data]);
 
     useEffect(() => {
@@ -181,8 +182,8 @@ export const Line = (props: Line) => {
                                 (typeof props?.format === "function"
                                     ? props?.format(price)
                                     : typeof props?.format === "object" && typeof props?.format?.line === "function"
-                                    ? props?.format?.line(price)
-                                    : price
+                                        ? props?.format?.line(price)
+                                        : price
                                 ).toString() + props?.unit,
                         },
                     });
@@ -226,8 +227,8 @@ export const Line = (props: Line) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                      barSpacing: 10,
-                  });
+                    barSpacing: 10,
+                });
 
             globalThis.addEventListener("resize", handleResize);
 
@@ -240,7 +241,7 @@ export const Line = (props: Line) => {
 
     return (
         <Suspense fallback={props?.fallback || <div>Loading...</div>}>
-            <Style ref={chartRef} />
+            <Style ref={chartRef} style={props?.style} />
         </Suspense>
     );
 };

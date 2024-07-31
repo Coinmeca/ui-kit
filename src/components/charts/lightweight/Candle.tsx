@@ -3,7 +3,7 @@ import { useTheme } from "hooks";
 import { sort } from "lib/utils";
 import type { CandlestickData, HistogramData } from "lightweight-charts";
 import { createChart } from "lightweight-charts";
-import { Suspense, memo, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, memo, useEffect, useRef, useState } from "react";
 import Style from "./Chart.styled";
 
 export interface Candle {
@@ -21,6 +21,7 @@ export interface Candle {
     up?: string;
     down?: string;
     fallback?: any;
+    style?: any;
     fit?: boolean;
 }
 
@@ -195,8 +196,8 @@ export const Candle = (props: Candle) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                      barSpacing: 10,
-                  });
+                    barSpacing: 10,
+                });
             globalThis.addEventListener("resize", handleResize);
             return () => {
                 globalThis.removeEventListener("resize", handleResize);
@@ -207,7 +208,7 @@ export const Candle = (props: Candle) => {
 
     return (
         <Suspense fallback={props?.fallback || <div>Loading...</div>}>
-            <Style ref={chartRef} />
+            <Style ref={chartRef} style={props?.style} />
         </Suspense>
     );
 };

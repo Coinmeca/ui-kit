@@ -26,6 +26,7 @@ export interface Histogram {
     type?: DataType;
     format?: Function;
     fallback?: any;
+    style?: any;
     fit?: boolean;
 }
 
@@ -226,7 +227,7 @@ export const Histogram = (props: Histogram) => {
 
     return (
         <Suspense fallback={props?.fallback || <div>Loading...</div>}>
-            <Style ref={chartRef} />
+            <Style ref={chartRef} style={props?.style} />
         </Suspense>
     );
 };
