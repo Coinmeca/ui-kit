@@ -138,7 +138,7 @@ export function unit(value: number | string, upper?: number) {
 	return unit;
 }
 
-export function format(value?: number | string, type?: input, option?: boolean | number | format, fix?: number | 'auto', max?: number, decimals?: number): string {
+export function format(value?: number | string, type?: string, option?: boolean | number | any, fix?: number | 'auto', max?: number, decimals?: number): string {
 	let display = (typeof option === 'object' && typeof option?.display !== 'undefined') || !!option;
 	let limit = (typeof option === 'object' && typeof option?.limit === 'number') ? option?.limit : typeof option === 'number' ? option : undefined;
 	let unit = typeof option === 'object' && (typeof option?.unit === 'boolean' ? option?.unit : (typeof option?.unit === 'number' ? true : false));
@@ -148,11 +148,13 @@ export function format(value?: number | string, type?: input, option?: boolean |
 	fix = typeof option === 'object' ? option?.fix : fix === 'auto' ? 3 : fix;
 	max = typeof option === 'object' ? option?.max : max;
 
+	const sign = (value: number | string) => (parseFloat(value.toString()) < 0 ? '-' : '+');
+
 	switch (type) {
 		case 'email': {
 			if (typeof value === 'undefined') return '';
 			if (typeof value !== 'string') value = value.toString();
-			if (value.indexOf('@') === 1) {
+			if (value.indexOf('@') === -1) {
 				let copy: string[] = value.split('@');
 				if (0 < copy?.length && copy?.length < 2) {
 					const domain = copy[1]?.split('.');
@@ -171,6 +173,9 @@ export function format(value?: number | string, type?: input, option?: boolean |
 			if (!display && (value === '.' || value === '0.')) return '0.';
 			if (value === '' || value?.length <= 0) return display ? '0' : '';
 			let sig = (signs && (sign(value) === "+" ? '' : sign(value))) || '';
+
+			// Handle scientific notation
+			if (value.includes('e') || value.includes('E')) value = parseFloat(value)?.toString()?.replace(/\.?0+$/, "");
 
 			let copy: any = [value];
 			let point = false;
@@ -196,7 +201,7 @@ export function format(value?: number | string, type?: input, option?: boolean |
 
 			const e = value?.split('e');
 			copy = e[0]?.split('.');
-			if (e?.length > 0 && !isNaN(parseFloat(e[1]))) multiplier += parseFloat(e[1]);
+			if (e?.length > 1 && !isNaN(parseFloat(e[1]))) multiplier += parseFloat(e[1]);
 			if (decimals && decimals > 0) multiplier -= decimals;
 
 			const m = Math.abs(multiplier);
@@ -208,13 +213,13 @@ export function format(value?: number | string, type?: input, option?: boolean |
 					if (m > d) {
 						value = copy[0] + copy[1] + '0'.repeat(m - d);
 					} else {
-						value = copy[0] + copy[1]?.substring(0, m - d) + '.' + copy[1]?.substring(m - d, copy[1]?.length);
+						value = copy[0] + copy[1]?.substring(0, m) + '.' + copy[1]?.substring(m);
 					}
 				} else {
 					if (m > n) {
-						value = '0.' + '0'.repeat(m - n) + copy[0] + (copy[1] || '');
+						value = '0.' + '0'.repeat(m - n) + copy[0];
 					} else {
-						value = copy[0]?.substring(0, n - m) + '.' + copy[0]?.substring(n - m, copy[0].length) + (copy[1] || '');
+						value = copy[0]?.substring(0, n - m) + '.' + copy[0]?.substring(n - m);
 					}
 				}
 			} else if (multiplier > 0) {
@@ -222,7 +227,7 @@ export function format(value?: number | string, type?: input, option?: boolean |
 					if (m > d) {
 						value = copy[0] + copy[1] + '0'.repeat(m - d);
 					} else {
-						value = copy[0] + copy[1]?.substring(0, d - m) + '.' + copy[1]?.substring(d - m, copy[1]?.length);
+						value = copy[0] + copy[1]?.substring(0, d - m) + '.' + copy[1]?.substring(d - m);
 					}
 				} else {
 					value = copy[0] + '0'.repeat(m);
@@ -246,7 +251,7 @@ export function format(value?: number | string, type?: input, option?: boolean |
 					cut = 3;
 				}
 				cut = copy[0].length - cut;
-				value = copy[0].substring(0, cut) + '.' + copy[0].substring(cut, copy[0].length) + (copy[1] || '');
+				value = copy[0].substring(0, cut) + '.' + copy[0].substring(cut) + (copy[1] || '');
 			}
 
 			point = false;
