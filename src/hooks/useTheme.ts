@@ -33,7 +33,7 @@ export function detectForcedDarkMode(): boolean {
 
 export default function useTheme(initial?: Mode): Theme {
     const w = (typeof window !== 'undefined' ? window : global);
-    const [theme, setTheme] = useState<Mode>(initial || (w?.matchMedia?.("(prefers-color-scheme: dark)") || CSS?.supports?.("color-scheme", "dark")) ? "dark" : "light");
+    const [theme, setTheme] = useState<Mode>(initial || w?.matchMedia?.("(prefers-color-scheme: dark)") ? "dark" : "light");
     const update = (theme: boolean) => setTheme(theme ? "dark" : "light");
 
     useLayoutEffect(() => {
