@@ -2,7 +2,7 @@
 import { useLayoutEffect, useState } from "react";
 
 export default function useMobile(): { isMobile?: boolean } {
-    const w = (typeof window !== 'undefined' && window) || global;
+    const w = (typeof window !== 'undefined' ? window : global)
 
     function check(name: string) {
         return (
@@ -18,7 +18,7 @@ export default function useMobile(): { isMobile?: boolean } {
     const agent = () => setIsMobile(check(w?.navigator?.userAgent || w?.navigator?.vendor));
 
     useLayoutEffect(() => {
-        w.addEventListener("resize", agent);
+        window.addEventListener("resize", agent);
         agent();
 
         return () => w.removeEventListener("resize", agent);
