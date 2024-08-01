@@ -1,10 +1,10 @@
-'use client';
-import { useState } from 'react';
-import type { Order } from 'types';
+"use client";
+import { useState } from "react";
+import type { Order } from "types";
 
 export default function useOrder(initial: Order, mode: boolean, fee: number, available?: number) {
     const [order, setOrder] = useState<Order>({
-        pay: initial?.pay || { address: '', name: '', symbol: '', decimals: 0 },
+        pay: initial?.pay || { address: "", name: "", symbol: "", decimals: 0 },
         price: initial?.price || 0,
         amount: initial?.amount || 0,
         quantity: initial?.quantity || 0,
@@ -117,11 +117,22 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
 
     const fees = (quantity: number) => (quantity === 0 ? 0 : quantity * fee);
 
+    const reset = (price?: number) =>
+        setOrder((order) => ({
+            ...order,
+            price: price || order?.price,
+            amount: 0,
+            quantity: 0,
+            fees: 0,
+            total: 0,
+        }));
+
     return {
         order,
         price,
         amount,
         quantity,
+        reset,
         maxAmount,
         maxQuantity,
     };
