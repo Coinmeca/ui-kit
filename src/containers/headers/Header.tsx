@@ -2,7 +2,7 @@
 import Coinmeca from "assets/coinmeca.svg";
 import { animate, stagger } from "framer-motion";
 import Link from "next/link";
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Layouts } from "components";
 import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
@@ -52,7 +52,7 @@ export interface Side {
     children?: any;
 }
 
-export function Header(props: Header) {
+export default function Header(props: Header) {
     const { windowSize } = useWindowSize();
     const scale = props?.scale || 1;
     const height = props?.height || 8;
@@ -142,5 +142,3 @@ export function Header(props: Header) {
         </Style>
     );
 }
-
-export default memo(Header);

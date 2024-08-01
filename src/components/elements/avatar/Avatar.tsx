@@ -52,7 +52,9 @@ export default function Avatar(props: Avatar) {
                         </div>
                     )}
                     {!hideName && name && name !== "" && (
-                        <span>{name?.length > length! ? `${name?.substring(0, display) + "..." + name?.substring(name?.length - display)}` : name}</span>
+                        <span>{name?.length > length! ? `${(name?.startsWith("0x")
+                            ? name?.substring(0, 2 + display)
+                            : name?.substring(0, display)) + "..." + name?.substring(name?.length - display)}` : name}</span>
                     )}
                 </Style>
             )}
