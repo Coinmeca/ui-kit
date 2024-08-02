@@ -15,6 +15,7 @@ export interface Modal {
     close?: boolean;
     onClose: Function;
     outsideClose?: boolean;
+    scroll?: boolean;
 }
 
 export default function Modal(props: Modal) {
@@ -26,6 +27,7 @@ export default function Modal(props: Modal) {
         min: (typeof props?.width === "object" ? props?.width?.min : props?.width) || min,
         max: (typeof props?.width === "object" ? props?.width?.min : props?.width) || max,
     };
+    const scroll = typeof props?.scroll === "boolean" ? props?.scroll : true;
 
     const handleClose = (e: any) => {
         if (typeof props?.onClose === "function") props?.onClose(e);
@@ -43,8 +45,7 @@ export default function Modal(props: Modal) {
             onClick={(e: any) => {
                 props?.outsideClose && handleClose(e);
             }}
-            fix
-        >
+            fix>
             <AnimatePresence>
                 {active && (
                     <Style
@@ -55,8 +56,7 @@ export default function Modal(props: Modal) {
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: active ? 1 : 0.9, opacity: active ? 1 : 0 }}
                         exit={{ scale: 0.9, opacity: 0 }}
-                        transition={{ ease: "easeInOut", duration: 0.15 }}
-                    >
+                        transition={{ ease: "easeInOut", duration: 0.15 }}>
                         <div>
                             {props?.title && (
                                 <Elements.Text size={2} align={"center"}>
@@ -64,7 +64,7 @@ export default function Modal(props: Modal) {
                                 </Elements.Text>
                             )}
                             {(props?.message || props?.content || props?.children) && (
-                                <Layouts.Contents.InnerContent scroll>
+                                <Layouts.Contents.InnerContent scroll={scroll}>
                                     {props?.message &&
                                         (typeof props?.message === "string" ? (
                                             <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>

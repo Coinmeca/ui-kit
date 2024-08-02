@@ -1,7 +1,7 @@
-'use client';
-import { styled } from 'styled-components';
+"use client";
+import { css, styled } from "styled-components";
 
-export const Style = styled.div`
+export const Style = styled.div<{ $offset: number; $vertical: boolean; $unit: "%" | "vw" | "vh" | "em" | "rem" }>`
     position: relative;
     /* display: flex; */
     /* flex-direction: column; */
@@ -14,12 +14,24 @@ export const Style = styled.div`
     transition: 0.3s ease;
     opacity: 1;
 
-    &[data-active='false'] {
+    ${({ $vertical, $offset, $unit }) => {
+        const direction = $vertical ? "translateY" : "translateX";
+        return css`
+            &[data-active="false"] {
+                transform: ${direction}(-${$offset}${$unit});
+            }
+            &[data-active="true"] ~ &[data-active="false"] {
+                transform: ${direction}(${$offset}${$unit});
+            }
+        `;
+    }}
+
+    &[data-active="false"] {
+        transform: translate;
         position: absolute;
         top: 0;
         left: 0;
         opacity: 0;
-        transform: translateX(-15%);
         pointer-events: none;
         -webkit-user-drag: none;
         -webkit-touch-callout: none;
@@ -30,11 +42,7 @@ export const Style = styled.div`
         user-select: none;
     }
 
-    &[data-active='true'] ~ &[data-active='false'] {
-        transform: translateX(15%);
-    }
-
-    &[data-active='true'] {
+    &[data-active="true"] {
         transform: translateX(0);
         pointer-events: inherit;
     }
