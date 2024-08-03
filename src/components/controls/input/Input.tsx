@@ -71,7 +71,7 @@ export default function Input(props: Input) {
 
     const type = props?.type === "password" ? "password" : props?.type || "text";
     const placeholder = props?.placeholder?.toString() || "";
-    const step = props?.step || 1;
+    const step = typeof props?.step === "number" ? props?.step : 1;
     const scale = props?.scale || 1;
     const min = props?.min || 0;
     const align = props?.align || "left";
@@ -95,7 +95,7 @@ export default function Input(props: Input) {
             }
             return format(value, type, props?.lock, props?.fix, props?.max);
         },
-        [type, props.min, props.max, props.lock, props.fix, props?.readOnly]
+        [type, props.min, props.max, props.lock, props.fix, props?.readOnly],
     );
 
     const [focus, setFocus] = useState<boolean>(false);
@@ -220,8 +220,7 @@ export default function Input(props: Input) {
             onBlur={() => handleBlur()}
             data-active={focus}
             data-show={props?.show}
-            data-hide={props?.hide}
-        >
+            data-hide={props?.hide}>
             <div>
                 <div style={props?.style?.input || props?.style}>
                     {props?.left && (
@@ -287,8 +286,7 @@ export default function Input(props: Input) {
                         {...props?.message}
                         align={props?.message?.align || "left"}
                         type={props?.message?.type || "desc"}
-                        style={{ ...props?.message?.style, marginTop: `${props?.message?.gap || 0.5}em` }}
-                    >
+                        style={{ ...props?.message?.style, marginTop: `${props?.message?.gap || 0.5}em` }}>
                         {props?.message?.children}
                     </Elements.Text>
                 )

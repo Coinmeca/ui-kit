@@ -5,6 +5,7 @@ import Style from "./Col.styled";
 
 export interface Col {
     children?: any;
+    title?: string;
     gap?: number;
     align?: "left" | "center" | "right" | "stretch";
     style?: object;
@@ -24,6 +25,7 @@ export default function Col(props: Col) {
 
     return (
         <Style
+            title={props?.title}
             style={props?.style}
             $gap={gap}
             $fit={fit}

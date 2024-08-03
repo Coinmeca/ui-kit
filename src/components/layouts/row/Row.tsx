@@ -5,6 +5,7 @@ import Style from "./Row.styled";
 
 export interface Row {
     children?: any;
+    title?: string;
     style?: object;
     gap?: number;
     change?: string | false;
@@ -29,6 +30,7 @@ export default function Row(props: Row) {
     return (
         <Style
             {...props?.swipe}
+            title={props?.title}
             style={props?.style}
             $gap={gap}
             $change={props?.change || undefined}

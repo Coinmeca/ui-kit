@@ -61,7 +61,7 @@ export const H1 = styled.h1<{
     ${({ $fix }) =>
         $fix &&
         css`
-            min-height: 1.5em;
+            min-height: 1em;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -118,7 +118,7 @@ export const H2 = styled.h2<{
     ${({ $fix }) =>
         $fix &&
         css`
-            min-height: 1.5em;
+            min-height: 1em;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -175,7 +175,7 @@ export const H3 = styled.h3<{
     ${({ $fix }) =>
         $fix &&
         css`
-            min-height: 1.5em;
+            min-height: 1em;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -232,7 +232,7 @@ export const H4 = styled.h4<{
     ${({ $fix }) =>
         $fix &&
         css`
-            min-height: 1.5em;
+            min-height: 1em;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -289,7 +289,7 @@ export const H5 = styled.h5<{
     ${({ $fix }) =>
         $fix &&
         css`
-            min-height: 1.5em;
+            min-height: 1em;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -346,7 +346,7 @@ export const H6 = styled.h6<{
     ${({ $fix }) =>
         $fix &&
         css`
-            min-height: 1.5em;
+            min-height: 1em;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -403,7 +403,7 @@ export const Strong = styled.strong<{
     ${({ $fix }) =>
         $fix &&
         css`
-            min-height: 1.5em;
+            min-height: 1em;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -456,7 +456,7 @@ export const P = styled.p<{
     ${({ $fix }) =>
         $fix &&
         css`
-            min-height: 1.5em;
+            min-height: 1em;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -509,7 +509,7 @@ export const Desc = styled.p<{
     ${({ $fix }) =>
         $fix &&
         css`
-            min-height: 1.5em;
+            min-height: 1em;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -564,7 +564,7 @@ export const Text = styled.span<{
     ${({ $fix }) =>
         $fix &&
         css`
-            min-height: 1.5em;
+            min-height: 1em;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -627,7 +627,7 @@ export const Link = styled.a<{
     ${({ $fix }) =>
         $fix &&
         css`
-            min-height: 1.5em;
+            min-height: 1em;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -711,7 +711,7 @@ export const Button = styled.a<{
     ${({ $fix }) =>
         $fix &&
         css`
-            min-height: 1.5em;
+            min-height: 1em;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;

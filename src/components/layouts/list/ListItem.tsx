@@ -16,7 +16,7 @@ export default function ListItem(props: ListItem) {
             data &&
             (typeof data !== "string" && data?.length > 0 ? (
                 data?.map((v: any, k: number) => (
-                    <Row key={k} $gap={typeof v?.gap === "undefined" ? 1 : v?.gap} $change={v?.change} style={v?.style} data-row={v?.align}>
+                    <Row key={k} title={v?.title} $gap={typeof v?.gap === "undefined" ? 1 : v?.gap} $change={v?.change} style={v?.style} data-row={v?.align}>
                         {ListCol(v?.children || v)}
                     </Row>
                 ))
@@ -33,7 +33,7 @@ export default function ListItem(props: ListItem) {
             data &&
             (typeof data !== "string" && data?.length > 0 ? (
                 data?.map((v: any, k: number) => (
-                    <Col key={k} $gap={typeof v?.gap === "undefined" ? 1 : v?.gap} $change={v?.change} style={v?.style} data-col={v?.align}>
+                    <Col key={k} title={v?.title} $gap={typeof v?.gap === "undefined" ? 1 : v?.gap} $change={v?.change} style={v?.style} data-col={v?.align}>
                         {ListRow(v?.children || v)}
                     </Col>
                 ))
@@ -50,7 +50,12 @@ export default function ListItem(props: ListItem) {
     };
 
     return (
-        <Style $gap={props?.gap} $change={props?.change} style={props?.style} onClick={(e: any) => handleClick(e)} $event={typeof props?.onClick === "function" ? true : false}>
+        <Style
+            $gap={props?.gap}
+            $change={props?.change}
+            style={props?.style}
+            onClick={(e: any) => handleClick(e)}
+            $event={typeof props?.onClick === "function" ? true : false}>
             {ListCol(props?.children)}
         </Style>
     );

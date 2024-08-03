@@ -7,6 +7,7 @@ export type TextCase = "upper" | "lower" | "capital";
 
 export interface Text {
     children?: any;
+    title?: string;
     style?: object;
     type?: TextType;
     align?: TextAlign;
@@ -49,6 +50,7 @@ export default function Text(props: Text) {
         case "h1":
             return (
                 <Texts.H1
+                    title={props?.title}
                     style={props?.style}
                     $color={color}
                     $opacity={opacity}
@@ -65,6 +67,7 @@ export default function Text(props: Text) {
         case "h2":
             return (
                 <Texts.H2
+                    title={props?.title}
                     style={props?.style}
                     $color={color}
                     $opacity={opacity}
@@ -81,6 +84,7 @@ export default function Text(props: Text) {
         case "h3":
             return (
                 <Texts.H3
+                    title={props?.title}
                     style={props?.style}
                     $color={color}
                     $opacity={opacity}
@@ -97,6 +101,7 @@ export default function Text(props: Text) {
         case "h4":
             return (
                 <Texts.H4
+                    title={props?.title}
                     style={props?.style}
                     $color={color}
                     $opacity={opacity}
@@ -113,6 +118,7 @@ export default function Text(props: Text) {
         case "h5":
             return (
                 <Texts.H5
+                    title={props?.title}
                     style={props?.style}
                     $color={color}
                     $opacity={opacity}
@@ -129,6 +135,7 @@ export default function Text(props: Text) {
         case "h6":
             return (
                 <Texts.H6
+                    title={props?.title}
                     style={props?.style}
                     $color={color}
                     $opacity={opacity}
@@ -145,6 +152,7 @@ export default function Text(props: Text) {
         case "strong":
             return (
                 <Texts.Strong
+                    title={props?.title}
                     style={props?.style}
                     $color={color}
                     $opacity={opacity}
@@ -161,6 +169,7 @@ export default function Text(props: Text) {
         case "p":
             return (
                 <Texts.P
+                    title={props?.title}
                     style={props?.style}
                     $color={color}
                     $opacity={opacity}
@@ -177,6 +186,7 @@ export default function Text(props: Text) {
         case "desc":
             return (
                 <Texts.Desc
+                    title={props?.title}
                     style={props?.style}
                     $color={color}
                     $opacity={opacity}
@@ -193,6 +203,7 @@ export default function Text(props: Text) {
         case "link":
             return (
                 <Texts.Link
+                    title={props?.title}
                     style={props?.style}
                     href={props?.href}
                     target={!props?.target && !props?.target?.startsWith("/") ? "_blank" : props?.target}
@@ -214,6 +225,7 @@ export default function Text(props: Text) {
         case "button":
             return (
                 <Texts.Button
+                    title={props?.title}
                     style={props?.style}
                     href={props?.href}
                     target={!props?.target && !props?.target?.startsWith("/") ? "_blank" : props?.target}
@@ -234,6 +246,7 @@ export default function Text(props: Text) {
         default:
             return (
                 <Texts.Text
+                    title={props?.title}
                     style={props?.style}
                     $size={size}
                     $color={color}
