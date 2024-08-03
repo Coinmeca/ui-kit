@@ -1,11 +1,11 @@
 "use client";
 // import { useTranslate } from "hooks";
-import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { useMobile, usePortal } from "hooks";
 import { format, parseNumber } from "lib/utils";
 import { Exchange } from "prefabs";
 import { useVault } from "prefabs/treasury/vault/hooks";
+import { useEffect, useState } from "react";
 import type { Token } from "types/web3";
 
 export interface TradeControl {
@@ -36,7 +36,7 @@ export default function Trade(props: TradeControl) {
     const { isMobile } = useMobile();
     // const { t } = useTranslate();
 
-    const mode = typeof props?.mode === "undefined" ? true : props?.mode;
+    const mode = typeof props?.mode === "boolean" ? props?.mode : true;
     const assets = props?.assets || [];
     const available = parseNumber(assets[0]?.balance || 0);
 
