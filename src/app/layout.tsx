@@ -1,8 +1,7 @@
-import "./global.scss";
+import { Style } from "lib";
 import { Metadata, Viewport } from "next";
 import { StrictMode } from "react";
-import { Notification } from "contexts";
-import { Style } from "lib";
+import "./global.scss";
 
 export const metadata: Metadata = {
     title: "Coinmeca",
@@ -21,9 +20,7 @@ export default function RootLayout({ children }: { children: any }) {
         <html>
             <body suppressHydrationWarning={true}>
                 <StrictMode>
-                    <Style.Initialize>
-                        <Notification>{children}</Notification>
-                    </Style.Initialize>
+                    <Style.Initialize>{children}</Style.Initialize>
                 </StrictMode>
             </body>
         </html>

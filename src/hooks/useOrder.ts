@@ -25,7 +25,7 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
     };
 
     const maxAmount = (): number | undefined => {
-        return available || order.amount;
+        return available || order?.amount;
     };
 
     const maxQuantity = (price?: number): number | undefined => {
@@ -35,97 +35,95 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
 
     const price = (price: number) => {
         if (price === 0) {
-            setOrder((state: Order) => {
-                return {
-                    ...state,
-                    price: 0,
-                    amount: 0,
-                    quantity: 0,
-                    fees: 0,
-                    total: 0,
-                };
+            setOrder({
+                ...order,
+                price: 0,
+                amount: 0,
+                quantity: 0,
+                fees: 0,
+                total: 0,
             });
         }
         mode ? amount(order?.amount || 0, price) : quantity(order?.quantity || 0, price);
     };
 
     const amount = (amount: number, price?: number) => {
-        let o: any;
-        setOrder((state: Order) => {
-            const p = price || state?.price;
+        let o: Order;
+        const p = price || order?.price;
 
-            if (amount === 0 || p === 0) {
-                return {
-                    ...state,
-                    price: p,
-                    amount: state?.amount,
-                    quantity: 0,
-                    fees: 0,
-                    total: 0,
-                };
-            }
-
-            const a = getAmount(amount, p);
-            const q = mode ? a / p : a * p;
-            const f = fees(q);
-
+        if (amount === 0 || p === 0) {
             o = {
-                ...state,
+                ...order,
                 price: p,
-                amount: a,
-                quantity: q,
-                fees: f,
-                total: q - f,
+                amount: 0,
+                quantity: 0,
+                fees: 0,
+                total: 0,
             };
+            setOrder(o);
             return o;
-        });
+        }
+
+        const a = getAmount(amount, p);
+        const q = mode ? a / p : a * p;
+        const f = fees(q);
+
+        o = {
+            ...order,
+            price: p,
+            amount: a,
+            quantity: q,
+            fees: f,
+            total: q - f,
+        };
+        setOrder(o);
         return o;
     };
 
     const quantity = (quantity: number, price?: number) => {
-        let o: any;
-        setOrder((state: Order) => {
-            const p = price || state?.price;
+        let o: Order;
+        const p = price || order?.price;
 
-            if (quantity === 0 || p === 0) {
-                return {
-                    ...state,
-                    price: p,
-                    amount: 0,
-                    quantity: 0,
-                    fees: 0,
-                    total: 0,
-                };
-            }
-
-            const q = getQuantity(quantity, p);
-            const a = mode ? q * p : q / p;
-            const f = fees(q);
-
+        if (quantity === 0 || p === 0) {
             o = {
-                ...state,
+                ...order,
                 price: p,
-                amount: a,
-                quantity: q,
-                fees: f,
-                total: q - f,
+                amount: 0,
+                quantity: 0,
+                fees: 0,
+                total: 0,
             };
+            setOrder(o);
             return o;
-        });
+        }
+
+        const q = getQuantity(quantity, p);
+        const a = mode ? q * p : q / p;
+        const f = fees(q);
+
+        o = {
+            ...order,
+            price: p,
+            amount: a,
+            quantity: q,
+            fees: f,
+            total: q - f,
+        };
+        setOrder(o);
         return o;
     };
 
-    const fees = (quantity: number) => (quantity === 0 ? 0 : quantity * fee);
-
     const reset = (price?: number) =>
-        setOrder((order) => ({
+        setOrder({
             ...order,
             price: price || order?.price,
             amount: 0,
             quantity: 0,
             fees: 0,
             total: 0,
-        }));
+        });
+
+    const fees = (quantity: number) => (quantity === 0 ? 0 : quantity * fee);
 
     return {
         order,
@@ -134,6 +132,6 @@ export default function useOrder(initial: Order, mode: boolean, fee: number, ava
         quantity,
         reset,
         maxAmount,
-        maxQuantity,
+        maxQuantity
     };
 }

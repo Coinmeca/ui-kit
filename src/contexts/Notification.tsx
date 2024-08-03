@@ -1,6 +1,6 @@
 "use client";
-import { createContext, useState, type Dispatch, type SetStateAction } from "react";
 import { Swipe } from "hooks/useSwipe";
+import { createContext, useState, type Dispatch, type SetStateAction } from "react";
 
 export interface Notify {
     type?: "toast" | "notify";
