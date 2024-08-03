@@ -2,78 +2,129 @@
 import { Root } from "lib/style";
 import { css, styled } from "styled-components";
 
-const Balance = (color: string) => css`
+const Bar = (color: string) => css`
     &:nth-child(1) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.3), rgba(${Root.Color(color)}, 0.3));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.35), rgba(${Root.Color(color)}, 0.35));
     }
     &:nth-child(2) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.29), rgba(${Root.Color(color)}, 0.29));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.3), rgba(${Root.Color(color)}, 0.3));
     }
     &:nth-child(3) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.28), rgba(${Root.Color(color)}, 0.28));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.3), rgba(${Root.Color(color)}, 0.3));
     }
     &:nth-child(4) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.27), rgba(${Root.Color(color)}, 0.27));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.29), rgba(${Root.Color(color)}, 0.29));
     }
     &:nth-child(5) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.26), rgba(${Root.Color(color)}, 0.26));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.29), rgba(${Root.Color(color)}, 0.29));
     }
     &:nth-child(6) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.25), rgba(${Root.Color(color)}, 0.25));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.28), rgba(${Root.Color(color)}, 0.28));
     }
     &:nth-child(7) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.24), rgba(${Root.Color(color)}, 0.24));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.28), rgba(${Root.Color(color)}, 0.28));
     }
     &:nth-child(8) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.23), rgba(${Root.Color(color)}, 0.23));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.27), rgba(${Root.Color(color)}, 0.27));
     }
     &:nth-child(9) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.21), rgba(${Root.Color(color)}, 0.21));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.27), rgba(${Root.Color(color)}, 0.27));
     }
     &:nth-child(10) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.2), rgba(${Root.Color(color)}, 0.2));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.26), rgba(${Root.Color(color)}, 0.26));
     }
     &:nth-child(11) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.19), rgba(${Root.Color(color)}, 0.19));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.26), rgba(${Root.Color(color)}, 0.26));
     }
     &:nth-child(12) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.18), rgba(${Root.Color(color)}, 0.18));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.25), rgba(${Root.Color(color)}, 0.25));
     }
     &:nth-child(13) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.17), rgba(${Root.Color(color)}, 0.17));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.24), rgba(${Root.Color(color)}, 0.24));
     }
     &:nth-child(14) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.16), rgba(${Root.Color(color)}, 0.16));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.24), rgba(${Root.Color(color)}, 0.24));
     }
     &:nth-child(15) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.15), rgba(${Root.Color(color)}, 0.15));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.23), rgba(${Root.Color(color)}, 0.23));
     }
     &:nth-child(16) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.14), rgba(${Root.Color(color)}, 0.14));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.23), rgba(${Root.Color(color)}, 0.23));
     }
     &:nth-child(17) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.13), rgba(${Root.Color(color)}, 0.13));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.22), rgba(${Root.Color(color)}, 0.22));
     }
     &:nth-child(18) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.12), rgba(${Root.Color(color)}, 0.12));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.21), rgba(${Root.Color(color)}, 0.21));
     }
     &:nth-child(19) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.11), rgba(${Root.Color(color)}, 0.11));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.2), rgba(${Root.Color(color)}, 0.2));
     }
     &:nth-child(20) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.1), rgba(${Root.Color(color)}, 0.1));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.2), rgba(${Root.Color(color)}, 0.2));
     }
     &:nth-child(21) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.09), rgba(${Root.Color(color)}, 0.09));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.19), rgba(${Root.Color(color)}, 0.19));
+    }
+    &:nth-child(22) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.19), rgba(${Root.Color(color)}, 0.19));
     }
     &:nth-child(23) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.08), rgba(${Root.Color(color)}, 0.08));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.18), rgba(${Root.Color(color)}, 0.18));
     }
     &:nth-child(24) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.07), rgba(${Root.Color(color)}, 0.07));
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.18), rgba(${Root.Color(color)}, 0.18));
     }
-    &:nth-child(25 + n) > * > * > *:nth-child(2) {
-        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.06), rgba(${Root.Color(color)}, 0.06));
+    &:nth-child(25) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.17), rgba(${Root.Color(color)}, 0.17));
+    }
+    &:nth-child(26) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.17), rgba(${Root.Color(color)}, 0.17));
+    }
+    &:nth-child(27) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.16), rgba(${Root.Color(color)}, 0.16));
+    }
+    &:nth-child(28) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.16), rgba(${Root.Color(color)}, 0.16));
+    }
+    &:nth-child(29) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.15), rgba(${Root.Color(color)}, 0.15));
+    }
+    &:nth-child(30) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.15), rgba(${Root.Color(color)}, 0.15));
+    }
+    &:nth-child(31) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.14), rgba(${Root.Color(color)}, 0.14));
+    }
+    &:nth-child(32) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.14), rgba(${Root.Color(color)}, 0.14));
+    }
+    &:nth-child(33) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.13), rgba(${Root.Color(color)}, 0.13));
+    }
+    &:nth-child(34) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.13), rgba(${Root.Color(color)}, 0.13));
+    }
+    &:nth-child(35) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.12), rgba(${Root.Color(color)}, 0.12));
+    }
+    &:nth-child(36) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.12), rgba(${Root.Color(color)}, 0.12));
+    }
+    &:nth-child(37) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.11), rgba(${Root.Color(color)}, 0.11));
+    }
+    &:nth-child(38) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.11), rgba(${Root.Color(color)}, 0.11));
+    }
+    &:nth-child(39) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.1), rgba(${Root.Color(color)}, 0.1));
+    }
+    &:nth-child(40) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.1), rgba(${Root.Color(color)}, 0.1));
+    }
+    &:nth-child(n + 40) > * > * > *:nth-child(2) {
+        background-image: linear-gradient(rgba(${Root.Color(color)}, 0.09), rgba(${Root.Color(color)}, 0.09));
     }
 `;
 
@@ -170,7 +221,7 @@ export const Ticks = (color: string, show: boolean) => css`
 
     & > ${Tick} {
         color: rgb(var(--${color}));
-        ${Balance(color)}
+        ${Bar(color)}
 
         & > *:is(:only-child, :not(:last-child)) > * > * {
             &:nth-child(1) {
