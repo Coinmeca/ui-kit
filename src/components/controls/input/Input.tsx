@@ -155,7 +155,8 @@ export default function Input(props: Input) {
         if (props?.lock || props?.disabled) return;
         const key = e.keyCode;
         if (
-            ((type === "currency" || type === "number") && ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key === 110 && key === 190))) ||
+            ((type === "currency" || type === "number") &&
+                ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key === 110 && key === 190))) ||
             key === 38 ||
             key === 107 ||
             key === 187 ||
@@ -166,9 +167,13 @@ export default function Input(props: Input) {
             let copy: any = 0;
             if (key === 38 || key === 107 || key === 187) {
                 if (e.shiftKey && e.ctrlKey) {
-                    copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step * 100);
+                    copy =
+                        value.toString() === ""
+                            ? step
+                            : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step * 100);
                 } else if (e.shiftKey) {
-                    copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step * 10);
+                    copy =
+                        value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step * 10);
                 } else {
                     copy = value.toString() === "" ? step : parseFloat(value.toString().replaceAll(",", "")) + Math.abs(step);
                 }
@@ -178,7 +183,8 @@ export default function Input(props: Input) {
             }
             if (key === 40 || key === 109 || key === 189) {
                 if (e.shiftKey && e.ctrlKey) {
-                    copy = value.toString() === "" ? 0 : parseFloat(value.toString().replaceAll(",", "")) - Math.abs(step * 100);
+                    copy =
+                        value.toString() === "" ? 0 : parseFloat(value.toString().replaceAll(",", "")) - Math.abs(step * 100);
                 } else if (e.shiftKey) {
                     copy = value.toString() === "" ? 0 : parseFloat(value.toString().replaceAll(",", "")) - Math.abs(step * 10);
                 } else {
@@ -243,7 +249,13 @@ export default function Input(props: Input) {
                             style={{ textAlign: align }}
                             placeholder={placeholder}
                             type={type === "currency" ? "currency" : type}
-                            inputMode={props?.inputMode ? props?.inputMode : type === "number" || type === "currency" ? "numeric" : undefined}
+                            inputMode={
+                                props?.inputMode
+                                    ? props?.inputMode
+                                    : type === "number" || type === "currency"
+                                    ? "numeric"
+                                    : undefined
+                            }
                             min={min}
                             max={props?.max}
                             step={props?.step}
