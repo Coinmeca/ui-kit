@@ -21,11 +21,11 @@ export interface Data {
 }
 
 export default function ChartJS(props: ChartJS) {
-    const chartRef: any = useRef();
-
     const [data, setData] = useState<any>();
+
+    const chartRef: any = useRef();
     const theme = props?.color?.theme && props?.color?.theme === 'light' ? '0,0,0' : '255,255,255';
-    const [color, setColor] = useState({
+    const color = {
         default: props?.color?.default ? `rgb(${props?.color?.default})` : `rgb(${theme})`,
         theme: {
             strong: `rgba(${theme}, 0.6)`,
@@ -34,7 +34,7 @@ export default function ChartJS(props: ChartJS) {
             regular: `rgba(${theme}, 0.15)`,
             light: `rgba(${theme}, 0.05)`,
         },
-    });
+    };
 
     const initial = 8;
     const padding = {

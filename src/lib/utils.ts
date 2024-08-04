@@ -143,12 +143,10 @@ export function format(value?: number | string, type?: string, option?: boolean 
 	let limit = (typeof option === 'object' && typeof option?.limit === 'number') ? option?.limit : typeof option === 'number' ? option : undefined;
 	let unit = typeof option === 'object' && (typeof option?.unit === 'boolean' ? option?.unit : (typeof option?.unit === 'number' ? true : false));
 	let upper = (typeof option === 'object' && typeof option?.unit === 'number') ? option?.unit : 0;
-	let signs = (typeof option === 'object' && typeof option?.sign === 'boolean') ? option?.sign : true;
+	let sign = (typeof option === 'object' && typeof option?.sign === 'boolean') ? option?.sign : true;
 	decimals = (typeof option === 'object' && typeof option?.decimals === 'number') ? option?.decimals : decimals;
 	fix = (typeof option === 'object' ? option?.fix : fix === 'auto' ? 3 : fix) as number | undefined;
 	max = typeof option === 'object' ? option?.max : max;
-
-	const sign = (value: number | string) => (parseFloat(value.toString()) < 0 ? '-' : '+');
 
 	switch (type) {
 		case 'email': {
@@ -178,12 +176,12 @@ export function format(value?: number | string, type?: string, option?: boolean 
 
 			if (value === '' || value.length <= 0) return display ? '0' : '';
 
-			// Determine sign
-			let sig = (signs && (sign(value) === "+" ? '' : sign(value))) || '';
-
 			// Handle invalid characters and sign
 			value = value.replace(/[^0-9.,eE+-]/g, '');
 			value = value.replace(/([+-]).*$/, '$1'); // Keep only the first sign
+
+			// Determine sign
+			let sig = sign ? parseFloat(value.toString()) > 0 ? "+" : parseFloat(value.toString()) < 0 ? "-" : "" : "";
 
 			// Handle scientific notation
 			if (value.includes('e') || value.includes('E')) {
@@ -295,9 +293,7 @@ export function format(value?: number | string, type?: string, option?: boolean 
 			let decimal = copy[1] || '';
 
 			// Apply limit if specified
-			if (limit && integer.length > limit) {
-				integer = integer.slice(0, limit);
-			}
+			if (limit && integer.length > limit) integer = integer.slice(0, limit);
 
 			// Apply fix if specified
 			if (!!fix) {
@@ -330,9 +326,7 @@ export function format(value?: number | string, type?: string, option?: boolean 
 			let result = integer + (decimal.length > 0 ? '.' + decimal : '');
 
 			// Add thousand separators if needed
-			if (type === 'currency') {
-				result = result.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-			}
+			if (type === 'currency') result = result.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 
 			// Apply sign handling
 			if (!signs) result = result.replace(/^[-+]/, '');
