@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Sidebars } from "containers";
 import { NotificationContext } from "contexts/Notification";
+import { format } from "../../lib/utils";
 
 export default function Dummy() {
     const [value, setValue] = useState<number>(0);
@@ -191,16 +192,14 @@ export default function Dummy() {
                                                 <Elements.Text
                                                     type={"link"}
                                                     opacity={0.45}
-                                                    href={"https://etherscan.io/tx/0x13306976466266cd92e938e95451e68e6ba5ac9af2c3832d63037efe72836ba1"}
-                                                >
+                                                    href={"https://etherscan.io/tx/0x13306976466266cd92e938e95451e68e6ba5ac9af2c3832d63037efe72836ba1"}>
                                                     View Transaction on the scanner <Elements.Icon icon={"external-link"} />
                                                 </Elements.Text>
                                             </>
                                         ),
                                         remain: true,
                                     })
-                            }
-                        >
+                            }>
                             Add Toast
                         </Controls.Tab>
                         <Controls.Tab iconLeft="sort-up-bold" active={active} onClick={() => setActive(!active)}>

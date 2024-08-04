@@ -71,7 +71,7 @@ export default function Input(props: Input) {
 
     const type = props?.type === "password" ? "password" : props?.type || "text";
     const placeholder = props?.placeholder?.toString() || "";
-    const step = typeof props?.step === "number" ? props?.step : 1;
+    const step = (typeof props?.step === "number" && !isNaN(props?.step) && props?.step) || 1;
     const scale = props?.scale || 1;
     const min = props?.min || 0;
     const align = props?.align || "left";
