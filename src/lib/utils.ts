@@ -173,15 +173,15 @@ export function format(value?: number | string, type?: string, option?: boolean 
 
 			// Check if it's empty or invalid
 			if (!display && (value === '.' || value === '0.')) return '0.';
-
 			if (value === '' || value.length <= 0) return display ? '0' : '';
+
+			// Determine sign
+			let copy: any = parseFloat(value.toString());
+			let sig = (sign && !isNaN(copy) && copy < 0 && "-") || "";
 
 			// Handle invalid characters and sign
 			value = value.replace(/[^0-9.,eE+-]/g, '');
 			value = value.replace(/([+-]).*$/, '$1'); // Keep only the first sign
-
-			// Determine sign
-			let sig = sign ? parseFloat(value.toString()) > 0 ? "+" : parseFloat(value.toString()) < 0 ? "-" : "" : "";
 
 			// Handle scientific notation
 			if (value.includes('e') || value.includes('E')) {
@@ -212,7 +212,7 @@ export function format(value?: number | string, type?: string, option?: boolean 
 			}
 
 			// Handle unit conversion (e.g., T, B, M, K)
-			let copy: any = [value];
+			copy = [value];
 			let multiplier = 0;
 			let u = '';
 
@@ -327,10 +327,6 @@ export function format(value?: number | string, type?: string, option?: boolean 
 
 			// Add thousand separators if needed
 			if (type === 'currency') result = result.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-
-			// Apply sign handling
-			if (!signs) result = result.replace(/^[-+]/, '');
-
 			return sig + (unit ? result + ' ' + u : result);
 		}
 		case 'date': {
