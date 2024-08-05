@@ -169,7 +169,7 @@ export function format(value?: number | string, type?: input, option?: boolean |
 			if (value === undefined || value === null) return display ? '-' : '';
 			value = value?.toString()?.replaceAll(',', '');
 			if (value === '.' || value === '0.') return display ? '0' : '0.';
-			if (value === '' || value?.length <= 0) return display ? '0' : '';
+			if (value === '' || value === 'NaN' || value?.length <= 0) return display ? '0' : '';
 			if (typeof value === 'number' && isNaN(value)) return display ? '-' : '';
 			let sig = (signs && sign(value) === "-" && '-') || '';
 
@@ -343,7 +343,7 @@ export function format(value?: number | string, type?: input, option?: boolean |
 };
 
 export function parseNumber(value?: number | string, decimals?: number | string, max?: number): number {
-	return parseFloat(format(value, "number", true, undefined, max, typeof decimals === 'number' ? decimals : typeof decimals === 'string' ? parseFloat(decimals) : undefined));
+	return parseFloat(format(value, "number", true, undefined, max, typeof decimals === 'number' ? decimals : typeof decimals === 'string' ? parseInt(decimals) : undefined));
 }
 
 
