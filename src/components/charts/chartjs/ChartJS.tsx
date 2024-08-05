@@ -9,6 +9,10 @@ export interface ChartJS {
         theme?: string;
     };
     padding?: number[] | ''[];
+    field?: {
+        time: string;
+        value: string;
+    } | string;
     data?: Data[];
     onHover?: Function;
     onLeave?: Function;
@@ -21,9 +25,14 @@ export interface Data {
 }
 
 export default function ChartJS(props: ChartJS) {
+    const chartRef: any = useRef();
     const [data, setData] = useState<any>();
 
-    const chartRef: any = useRef();
+    const key = {
+        time: typeof props?.field === 'object' ? props?.field.time : 'time',
+        value: typeof props?.field === 'object' ? props?.field.value : typeof props?.field === 'string' ? props?.field : 'value',
+    };
+
     const theme = props?.color?.theme && props?.color?.theme === 'light' ? '0,0,0' : '255,255,255';
     const color = {
         default: props?.color?.default ? `rgb(${props?.color?.default})` : `rgb(${theme})`,
@@ -114,7 +123,7 @@ export default function ChartJS(props: ChartJS) {
                         if (typeof props?.onHover === 'function') props?.onHover(value);
                         return '';
                     },
-                    title: function () {
+                    title: () => {
                         return '';
                     },
                 },
@@ -125,10 +134,10 @@ export default function ChartJS(props: ChartJS) {
     useEffect(() => {
         if (props?.data && props?.data?.length > 0) {
             setData({
-                labels: props?.data?.map((data: Data) => data?.time),
+                labels: props?.data?.map((data: any) => data?.[key?.time]),
                 datasets: [
                     {
-                        data: props?.data?.map((data: Data) => data?.value),
+                        data: props?.data?.map((data: any) => data?.[key?.value]),
                         borderColor: color.theme.medium,
                         pointBorderColor: 'transparent',
                         pointBackgroundColor: color.theme.strong,
