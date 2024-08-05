@@ -167,156 +167,107 @@ export function format(value?: number | string, type?: input, option?: boolean |
 		case 'numberic':
 		case 'currency': {
 			if (value === undefined || value === null) return display ? '-' : '';
-			value = value?.toString()?.replaceAll(',', '');
+			value = value.toString().replace(/,/g, '');
 			if (value === '.' || value === '0.') return display ? '0' : '0.';
-			if (value === '' || value === 'NaN' || value?.length <= 0) return display ? '0' : '';
+			if (value === '' || value === 'NaN' || value.length <= 0) return display ? '0' : '';
 			if (typeof value === 'number' && isNaN(value)) return display ? '-' : '';
-			let sig = (signs && sign(value) === "-" && '-') || '';
 
-			let copy: any = [value];
-			let point = false;
-			let num = false;
-			let zero = 0;
+			let sig = (signs && sign(value) === "-" && '-') || '';
 			let multiplier = 0;
 			let u = '';
 
-			if (value?.includes('T')) {
-				copy = value.split('T');
-				multiplier = 12;
-			} else if (value?.includes('B')) {
-				copy = value.split('B');
-				multiplier = 9;
-			} else if (value?.includes('M')) {
-				copy = value.split('M');
-				multiplier = 6;
-			} else if (value?.includes('K')) {
-				copy = value.split('K');
-				multiplier = 3;
+			const unitMap = { T: 12, B: 9, M: 6, K: 3 };
+			for (let key in unitMap) {
+				if (value.includes(key)) {
+					[value] = value.split(key);
+					multiplier = unitMap[key as 'T' | 'B' | 'M' | 'K'];
+					break;
+				}
 			}
-			value = copy[0].replaceAll(' ', '') as string;
+			value = value.replace(/ /g, '');
 
-			const e = value?.split('e');
-			copy = e[0]?.split('.');
-			if (e?.length > 0 && !isNaN(parseFloat(e[1]))) multiplier += parseFloat(e[1]);
+			const e = value.split('e');
+			let [integer, decimal = ''] = e[0].split('.');
+			if (e.length > 1 && !isNaN(parseFloat(e[1]))) multiplier += parseFloat(e[1]);
 			if (decimals && decimals > 0) multiplier -= decimals;
 
 			const m = Math.abs(multiplier);
-			const n = copy[0]?.length;
-			const d = copy[1]?.length || 0;
+			const n = integer.length, d = decimal.length;
 
 			if (multiplier < 0) {
-				if (copy?.length > 1) {
+				if (decimal.length) {
 					if (m > d) {
-						value = copy[0] + copy[1] + '0'.repeat(m - d);
+						value = integer + decimal + '0'.repeat(m - d);
 					} else {
-						value = copy[0] + copy[1]?.substring(0, m - d) + '.' + copy[1]?.substring(m - d, copy[1]?.length);
+						value = integer + decimal.substring(0, m) + '.' + decimal.substring(m);
 					}
 				} else {
 					if (m > n) {
-						value = '0.' + '0'.repeat(m - n) + copy[0] + (copy[1] || '');
+						value = '0.' + '0'.repeat(m - n) + integer;
 					} else {
-						value = copy[0]?.substring(0, n - m) + '.' + copy[0]?.substring(n - m, copy[0].length) + (copy[1] || '');
+						value = integer.substring(0, n - m) + '.' + integer.substring(n - m);
 					}
 				}
 			} else if (multiplier > 0) {
-				if (copy?.length > 1) {
+				if (decimal.length) {
 					if (m > d) {
-						value = copy[0] + copy[1] + '0'.repeat(m - d);
+						value = integer + decimal + '0'.repeat(m - d);
 					} else {
-						value = copy[0] + copy[1]?.substring(0, d - m) + '.' + copy[1]?.substring(d - m, copy[1]?.length);
+						value = integer + decimal.substring(0, d - m) + '.' + decimal.substring(d - m);
 					}
 				} else {
-					value = copy[0] + '0'.repeat(m);
+					value = integer + '0'.repeat(m);
 				}
 			}
 
-			copy = (value as string)?.split('.');
-			if (unit && copy[0].length > upper) {
-				let cut = copy.length;
-				if (copy[0].length > 12) {
-					u = 'T'
+			[integer, decimal = ''] = value.split('.');
+			if (unit && integer.length > upper) {
+				let cut = 0;
+				if (integer.length > 12) {
+					u = 'T';
 					cut = 12;
-				} else if (copy[0].length > 9) {
-					u = 'B'
+				} else if (integer.length > 9) {
+					u = 'B';
 					cut = 9;
-				} else if (copy[0].length > 6) {
-					u = 'M'
+				} else if (integer.length > 6) {
+					u = 'M';
 					cut = 6;
-				} else if (copy[0].length > 3) {
-					u = 'K'
+				} else if (integer.length > 3) {
+					u = 'K';
 					cut = 3;
 				}
-				cut = copy[0].length - cut;
-				value = copy[0].substring(0, cut) + '.' + copy[0].substring(cut, copy[0].length) + (copy[1] || '');
-			}
-
-			point = false;
-			copy = '';
-			for (let i = 0; i < value?.length; i++) {
-				if ((!display && !point && value[i] === '0') || (!point && value[i] === '.') || !isNaN(parseInt(value[i]))) {
-					if (display && point && num && value[i] === '0') break;
-					if (point && !num && value[i] === '0') zero++;
-					if (point && value[i] !== '0') num = true;
-					if (!point && value[i] === '.') point = true;
-					copy += value[i];
-				}
+				cut = integer.length - cut;
+				value = integer.substring(0, cut) + '.' + integer.substring(cut) + (decimal || '');
+				[integer, decimal = ''] = value.split('.');
 			}
 
 			if (max) {
-				const m = parseFloat(max?.toString()?.replaceAll(',', ''));
-				copy = (parseFloat(copy) >= m ? max : copy).toString();
+				const maxValue = parseFloat(max.toString().replace(/,/g, ''));
+				value = (parseFloat(value) >= maxValue ? max : value).toString();
+				[integer, decimal = ''] = value.split('.');
 			}
 
-			copy = copy?.split('.');
+			if (typeof fix === 'number') {
+				if (fix < decimal.length) {
+					decimal = decimal.slice(0, fix);
+				}
+				if (fix > decimal.length) {
+					decimal = decimal + '0'.repeat(fix - decimal.length);
+				}
+			}
+			decimal = decimal.replace(/0+$/, "");
+			if (limit && integer.length > limit) {
+				integer = integer.slice(0, limit);
+			}
+
 			if (display) {
-				if (copy[0] === '') copy[0] = 0;
-				copy[0] = parseInt(copy[0]);
-				if (!num && (copy[0] === 0)) { point = false; copy = [0]; };
-				if (type === 'currency') copy[0] = copy[0].toLocaleString();
+				integer = parseInt(integer).toLocaleString();
 			} else if (type === 'currency') {
-				let number: string = '';
-				for (let i = 0; i < copy[0].length; i++) {
-					number += copy[0][i];
-					if (i !== copy[0].length - 1 && (copy[0].length - i) % 3 === 1) number += ',';
-				}
-				copy[0] = number;
+				integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 			}
 
-			let dec: string | number = '';
-			num = false;
-			point = false;
-			if (copy?.length > 1) {
-				point = true;
-				if (copy?.length > 2) {
-					for (let i = 2; i < copy?.length; i++) {
-						copy[1] += copy[i].toString();
-					}
-					copy[1] = copy[1]?.toString();
-				}
+			let result = integer + (decimal ? '.' + decimal : '');
 
-				if (limit) {
-					let l = limit - copy[0].length;
-					l = l > (copy[1]?.length || 0) ? copy[1]?.length : l;
-					if (l > 0) copy[1] = copy[1]?.substring(0, l);
-				}
-
-				for (let i = 0; i < copy[1]?.length; i++) {
-					if (typeof fix === 'number' && !isNaN(fix) && i === fix && fix > zero) break;
-					if (!isNaN(parseInt(copy[1][i]))) {
-						if (display && copy[1][i] === '0' && num) break;
-						if (copy[1][i] !== '0') num = true;
-						dec += copy[1][i].toString();
-						if (display && typeof fix === 'number' && !isNaN(fix) && !isNaN(copy[1][i]) && copy[1][i] !== '0' && fix <= zero) break;
-					}
-				}
-
-				if (display && (copy[1]?.length === 0 || !num)) {
-					dec = '';
-					point = false;
-				}
-			}
-
-			const result = copy[0] + (point ? '.' : '') + dec;
 			return sig + (unit ? result + ' ' + u : result);
 		}
 		case 'date':
