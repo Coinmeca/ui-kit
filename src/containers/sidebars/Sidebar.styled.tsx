@@ -1,6 +1,6 @@
 "use client";
-import { css, styled } from "styled-components";
 import { Root } from "lib/style";
+import { css, styled } from "styled-components";
 
 import * as Input from "components/controls/input/Input.styled";
 import * as List from "components/layouts/list/List.styled";
@@ -99,7 +99,7 @@ const Style = styled.aside<{
             min-width: ${$active ? $width : 0}em;
         `}
 
-    & {
+    && {
         ${Input.default} > * {
             padding: 1em 2em;
         }
