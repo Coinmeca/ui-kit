@@ -7,6 +7,7 @@ export interface Token {
     balance?: number | string;
     using?: number | string;
     staked?: number | string;
+    interest?: number | string;
     value?: number | string;
 }
 
