@@ -1,7 +1,7 @@
 "use client";
 import { create } from 'zustand';
 import { Swipe } from './useSwipe';
-import produce from 'immer';
+import { produce } from 'immer';
 
 export interface Notify {
     type?: "toast" | "notify";
@@ -28,10 +28,11 @@ interface NotificationStore {
     setNonce: (nonce: number) => void;
     setRead: (read: boolean) => void;
     setCount: (count: number) => void;
+    setNotis: (notis: Notify[]) => void;
     addNotify: (obj: Notify) => void;
     addToast: (obj: Notify) => void;
-    removeNotify: (id: number | string) => void;
-    removeToast: (id: number | string) => void;
+    removeNotify: (id?: number | string) => void;
+    removeToast: (id?: number | string) => void;
     resetCount: () => void;
     saveNotis: (key: string) => void;
     loadNotis: (key: string) => Notify[];
@@ -49,39 +50,52 @@ const useNotificationStore = create<NotificationStore>((set, get) => ({
     setRead: (read: boolean) => set((state) => ({ read })),
     setCount: (count: number) => set((state) => ({ count })),
 
-    addNotify: (obj: Notify) => set(produce((state: NotificationStore) => {
+    setNotis: (notis: Notify[]) => set(produce((state: NotificationStore) => {
+        state.notis = notis;
+        state.nonce = notis?.length;
+    })),
+
+    addNotify: (obj?: Notify) => set(produce((state: NotificationStore) => {
+        if (!obj) return;
         if (!obj.type) obj.type = "notify";
         if (!obj.id) {
             state.nonce += 1;
             obj.id = `${Date.now()}${state.nonce}`;
         }
         if (!obj.date) obj.date = Date.now();
-        state.notis.push(obj);
+        state.notis = [...state.notis, obj];
         state.count += 1;
     })),
 
-    addToast: (obj: Notify) => set(produce((state: NotificationStore) => {
+    addToast: (obj?: Notify) => set(produce((state: NotificationStore) => {
+        if (!obj) return;
         if (!obj.type) obj.type = obj.remain ? "notify" : "toast";
         if (!obj.id) {
             state.nonce += 1;
             obj.id = `${Date.now()}${state.nonce}`;
         }
         if (!obj.date) obj.date = Date.now();
-        state.toasts.push(obj);
+        state.toasts = [...state.toasts, obj];
         if (obj.remain) {
             state.notis.push(obj);
             state.count += 1;
         }
     })),
 
-    removeNotify: (id: number | string) => setTimeout(() => set(produce((state: NotificationStore) => {
-        state.notis = state.notis.filter(n => n.id !== id);
-        state.count = state.notis.length;
-    })), 300),
+    removeNotify: (id?: number | string) => {
+        if (!id) return;
+        setTimeout(() => set(produce((state: NotificationStore) => {
+            state.notis = state.notis.filter(n => n.id !== id);
+            state.count = state.notis.length;
+        })), 300)
+    },
 
-    removeToast: (id: number | string) => setTimeout(() => set(produce((state: NotificationStore) => {
-        state.toasts = state.toasts.filter(n => n.id !== id);
-    })), 300),
+    removeToast: (id?: number | string) => {
+        if (!id) return;
+        setTimeout(() => set(produce((state: NotificationStore) => {
+            state.toasts = state.toasts.filter(n => n.id !== id);
+        })), 300)
+    },
 
     resetCount: () => set(() => ({ count: 0 })),
 
