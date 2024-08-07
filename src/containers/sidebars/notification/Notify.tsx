@@ -19,7 +19,7 @@ export default function Notify(props: Notify & { order?: number }) {
                     handleRemove();
                 }
             },
-        }
+        },
     );
     const { removeNotify, removeToast } = useNotification();
 
@@ -36,7 +36,7 @@ export default function Notify(props: Notify & { order?: number }) {
                     setClose(true);
                     removeToast(props?.id);
                 },
-                props?.importance ? timer * 2 : timer
+                props?.importance ? timer * 2 : timer,
             );
     }, []);
 
@@ -49,11 +49,11 @@ export default function Notify(props: Notify & { order?: number }) {
         <Style {...swipe} $active={active} $direction={direction} $close={close} $order={props?.order}>
             <Layouts.Box>
                 <Layouts.Col gap={1}>
-                    <Layouts.Row fix>
-                        <Text size={1.25} weight={"bold"}>
+                    <Layouts.Row gap={1} fix>
+                        <Text title={props?.title} size={1.25} weight={"bold"} fix>
                             {props?.title}
                         </Text>
-                        <Layouts.Row fix gap={1} style={{ minWidth: "max-content" }}>
+                        <Layouts.Row gap={1} style={{ minWidth: "max-content" }} fit fix>
                             <Text type={"desc"} align={"right"} weight={"bold"}>
                                 {format(props?.date as number, "date")}
                             </Text>
