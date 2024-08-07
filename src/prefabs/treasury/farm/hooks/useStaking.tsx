@@ -15,8 +15,9 @@ export interface Farm {
 
 export default function useStaking(type: boolean, initial: Staking, available?: number, farm?: Farm) {
     const [staking, setStaking] = useState<Staking>({
-        pay: initial?.pay || { address: "", name: "", symbol: "", decimals: 0 },
         amount: initial?.amount || 0,
+        share: 0,
+        apr: 0,
     });
 
     const now = Math.floor(Date.now() / 1000);

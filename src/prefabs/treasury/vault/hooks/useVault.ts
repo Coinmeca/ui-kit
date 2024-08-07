@@ -14,7 +14,6 @@ export interface Condition {
 
 export default function useVault(initial: Order, condition: Condition, available?: number) {
     const [order, setOrder] = useState<Order>({
-        pay: initial?.pay || { address: '', name: '', symbol: '', decimals: 0 },
         price: initial?.price || 0,
         amount: initial?.amount || 0,
         quantity: initial?.quantity || 0,

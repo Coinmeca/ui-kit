@@ -138,7 +138,7 @@ export function unit(value: number | string, upper?: number) {
 	return unit;
 }
 
-export function format(value?: number | string, type?: input, option?: boolean | number | format, fix?: number | 'auto', max?: number, decimals?: number): string {
+export function format(value?: number | string | bigint, type?: input, option?: boolean | number | format, fix?: number | 'auto', max?: number, decimals?: number): string {
 	let display = ((typeof option === 'object' && typeof option?.display === 'boolean') && option?.display) || !!option;
 	let limit = (typeof option === 'object' && typeof option?.limit === 'number') ? option?.limit : typeof option === 'number' ? option : undefined;
 	let unit = typeof option === 'object' && (typeof option?.unit === 'boolean' ? option?.unit : (typeof option?.unit === 'number' ? true : false));
@@ -342,7 +342,7 @@ export function format(value?: number | string, type?: input, option?: boolean |
 	}
 };
 
-export function parseNumber(value?: number | string, decimals?: number | string, max?: number): number {
+export function parseNumber(value?: number | string | bigint, decimals?: number | string, max?: number): number {
 	return parseFloat(format(value || 0, "number", true, undefined, max, typeof decimals === 'number' ? decimals : typeof decimals === 'string' ? parseInt(decimals) : undefined));
 }
 
