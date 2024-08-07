@@ -16,25 +16,23 @@ export default function useWindowSize(): WindowSize {
     const w = (typeof window !== 'undefined' ? window : global);
     const [windowWidth, setWindowWidth] = useState<number>(w?.innerWidth || 1920);
     const [windowHeight, setWindowHeight] = useState<number>(w?.innerHeight || 1080);
-    const [windowSize, setWindowSize] = useState<Size>({
-        width: windowWidth,
-        height: windowHeight,
-    });
-
-    function windowResize() {
-        if (windowWidth !== window?.innerWidth) setWindowWidth(window?.innerWidth);
-        if (windowHeight !== window?.innerHeight) setWindowHeight(window?.innerHeight);
-        setWindowSize({
-            width: window?.innerWidth,
-            height: window?.innerHeight,
-        });
-    }
+    const [windowSize, setWindowSize] = useState<Size>({ width: windowWidth, height: windowHeight });
 
     useLayoutEffect(() => {
-        window.addEventListener("resize", windowResize);
+        function windowResize() {
+            if (windowWidth !== w?.innerWidth) setWindowWidth(w?.innerWidth);
+            if (windowHeight !== w?.innerHeight) setWindowHeight(w?.innerHeight);
+            if (windowWidth !== w?.innerWidth || windowHeight !== w?.innerHeight) setWindowSize({ width: w?.innerWidth, height: w?.innerHeight });
+        }
+
+        w.addEventListener("change", windowResize);
+        w.addEventListener("resize", windowResize);
         windowResize();
 
-        return () => window.removeEventListener("resize", windowResize);
+        return () => {
+            w.removeEventListener("change", windowResize);
+            w.removeEventListener("resize", windowResize);
+        }
     }, []);
 
     return { windowSize, windowWidth, windowHeight };

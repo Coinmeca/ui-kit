@@ -38,7 +38,7 @@ export default function useTheme(initial?: Mode): Theme {
 
     useLayoutEffect(() => {
         if (!initial) {
-            const theme = window.matchMedia("(prefers-color-scheme: dark)");
+            const theme = w.matchMedia("(prefers-color-scheme: dark)");
             update(theme.matches);
             theme.addEventListener("change", (event: any) => update(event?.matches));
             return () => theme.removeEventListener("change", (event: any) => update(event?.matches));

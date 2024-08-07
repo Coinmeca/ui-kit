@@ -18,7 +18,7 @@ export default function useMobile(): { isMobile?: boolean } {
     const agent = () => setIsMobile(check(w?.navigator?.userAgent || w?.navigator?.vendor));
 
     useLayoutEffect(() => {
-        window.addEventListener("resize", agent);
+        w.addEventListener("resize", agent);
         agent();
 
         return () => w.removeEventListener("resize", agent);

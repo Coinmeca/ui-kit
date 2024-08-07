@@ -1,7 +1,7 @@
 "use client";
 
-import { Fragment, type CSSProperties } from "react";
 import { Layouts } from "components";
+import { Fragment } from "react";
 import Style, { Row } from "./Menu.styled";
 
 export interface Menu {
