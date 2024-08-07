@@ -16,7 +16,7 @@ export interface SwipeConfig {
     index?: number;
     slide?: boolean;
     loop?: boolean;
-    elastic?: DragElastic;
+    elastic?: DragElastic | Function;
     out?: number;
     threshold?: number;
     variants?: Variants | Function;
@@ -79,24 +79,25 @@ export default function useSwipe(config?: Swipe): SwipeOutput | undefined {
     const elastic = c &&
         (typeof config?.elastic === 'object'
             ? config?.elastic
-            : (i && l)
-                ? (vertical
-                    ? i === 0
-                        ? { top: loopElastic, bottom: sensitivity }
-                        : i > 0
-                            ? sensitivity
-                            : i === l
-                                ? { top: sensitivity, bottom: loopElastic }
-                                : 0
-                    : i === 0
-                        ? { left: loopElastic, right: sensitivity }
-                        : i > 0
-                            ? sensitivity
-                            : i === l
-                                ? { left: sensitivity, right: loopElastic }
-                                : 0
-                )
-                : sensitivity);
+            : typeof config?.elastic === 'function' ? config?.elastic()
+                : (i && l)
+                    ? (vertical
+                        ? i === 0
+                            ? { top: loopElastic, bottom: sensitivity }
+                            : i > 0
+                                ? sensitivity
+                                : i === l
+                                    ? { top: sensitivity, bottom: loopElastic }
+                                    : 0
+                        : i === 0
+                            ? { left: loopElastic, right: sensitivity }
+                            : i > 0
+                                ? sensitivity
+                                : i === l
+                                    ? { left: sensitivity, right: loopElastic }
+                                    : 0
+                    )
+                    : sensitivity);
 
     const out = (c && typeof config?.out === 'number') ? config?.out : 15;
     const threshold = (c && typeof config?.threshold === 'number') ? config?.threshold : 32;
@@ -119,7 +120,7 @@ export default function useSwipe(config?: Swipe): SwipeOutput | undefined {
         [config, c, l, index, out, direction],
     );
 
-    const props = {
+    const props = useMemo(() => ({
         as,
         animate: 'swipe',
         index,
@@ -163,7 +164,7 @@ export default function useSwipe(config?: Swipe): SwipeOutput | undefined {
                 else if (position > threshold) handleSwipe(e, -1);
             }
         },
-    };
+    }), [config]);
 
     const swiping = (offset: number, velocity: number) => Math.abs(offset) * velocity;
 
