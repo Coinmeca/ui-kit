@@ -1,6 +1,7 @@
 "use client";
 import { create } from 'zustand';
 import { Swipe } from './useSwipe';
+import produce from 'immer';
 
 export interface Notify {
     type?: "toast" | "notify";
@@ -22,119 +23,93 @@ interface NotificationStore {
     nonce: number;
     read: boolean;
     count: number;
-}
-
-interface NotificationStoreAction {
     setNotiList: (notis: Notify[]) => void;
     setToasts: (toasts: Notify[]) => void;
     setNonce: (nonce: number) => void;
     setRead: (read: boolean) => void;
     setCount: (count: number) => void;
+    addNotify: (obj: Notify) => void;
+    addToast: (obj: Notify) => void;
+    removeNotify: (id: number | string) => void;
+    removeToast: (id: number | string) => void;
+    resetCount: () => void;
+    saveNotis: (key: string) => void;
+    loadNotis: (key: string) => Notify[];
 }
 
-const useNotificationStore = create<NotificationStore & NotificationStoreAction>((set) => ({
+const useNotificationStore = create<NotificationStore>((set, get) => ({
     notis: [],
     toasts: [],
     nonce: 0,
     read: false,
     count: 0,
-    setNotiList: (notis: Notify[]) => set((state) => ({ ...state, notis })),
-    setToasts: (toasts: Notify[]) => set((state) => ({ ...state, toasts })),
-    setNonce: (nonce: number) => set((state) => ({ ...state, nonce })),
-    setRead: (read: boolean) => set((state) => ({ ...state, read })),
-    setCount: (count: number) => set((state) => ({ ...state, count })),
-}));
+    setNotiList: (notis: Notify[]) => set((state) => ({ notis })),
+    setToasts: (toasts: Notify[]) => set((state) => ({ toasts })),
+    setNonce: (nonce: number) => set((state) => ({ nonce })),
+    setRead: (read: boolean) => set((state) => ({ read })),
+    setCount: (count: number) => set((state) => ({ count })),
 
-export default function useNotification() {
-    const { notis, toasts, nonce, read, count, setNotiList, setToasts, setNonce, setRead, setCount } = useNotificationStore();
-
-    function setNotis(notis: Notify[]) {
-        setNotiList(notis);
-        setNonce(notis.length);
-    }
-
-    function addToast(obj: Notify) {
-        if (!obj) return;
-        if (!obj?.type) obj.type = obj?.remain ? "notify" : "toast";
-        if (!obj?.id) {
-            const n = nonce + 1;
-            obj.id = `${Date.now()}` + `${n}`;
-            setNonce(n);
-        }
-        if (!obj?.date) obj.date = Date.now();
-
-        setToasts([...toasts, obj]);
-        if (obj?.remain) {
-            setCount(count + 1);
-            setNotiList([...notis, obj]);
-        }
-    }
-
-    function addNotify(obj: Notify) {
-        if (!obj) return;
-        if (!obj?.type) obj.type = "notify";
+    addNotify: (obj: Notify) => set(produce((state: NotificationStore) => {
+        if (!obj.type) obj.type = "notify";
         if (!obj.id) {
-            const n = nonce + 1;
-            obj.id = `${Date.now()}` + `${n}`;
-            setNonce(n);
+            state.nonce += 1;
+            obj.id = `${Date.now()}${state.nonce}`;
         }
         if (!obj.date) obj.date = Date.now();
-        setCount(count + 1);
-        setNotiList([...notis, obj]);
-    }
+        state.notis.push(obj);
+        state.count += 1;
+    })),
 
-    function removeToast(id?: number | string) {
-        if (!id) return;
-        setTimeout(() => setToasts(toasts?.filter((n: Notify) => n?.id !== id)), 300);
-    }
+    addToast: (obj: Notify) => set(produce((state: NotificationStore) => {
+        if (!obj.type) obj.type = obj.remain ? "notify" : "toast";
+        if (!obj.id) {
+            state.nonce += 1;
+            obj.id = `${Date.now()}${state.nonce}`;
+        }
+        if (!obj.date) obj.date = Date.now();
+        state.toasts.push(obj);
+        if (obj.remain) {
+            state.notis.push(obj);
+            state.count += 1;
+        }
+    })),
 
-    function removeNotify(id?: number | string) {
-        if (!id) return;
-        let c = count;
-        notis.map((n: Notify, i: number) => {
-            if (n?.id === id && i >= notis.length - c) c -= 1;
-        });
-        setCount(c);
-        setTimeout(() => setNotiList(notis?.filter((n: Notify) => n?.id !== id)), 300);
-    }
+    removeNotify: (id: number | string) => setTimeout(() => set(produce((state: NotificationStore) => {
+        state.notis = state.notis.filter(n => n.id !== id);
+        state.count = state.notis.length;
+    })), 300),
 
-    function resetCount() {
-        setCount(0);
-    }
+    removeToast: (id: number | string) => setTimeout(() => set(produce((state: NotificationStore) => {
+        state.toasts = state.toasts.filter(n => n.id !== id);
+    })), 300),
 
-    function saveNotis(key?: string) {
+    resetCount: () => set(() => ({ count: 0 })),
+
+    saveNotis: (key: string) => {
+        const { notis, count } = get(); // Use get to access current state
         if (key && key !== "") {
             const list = JSON.stringify(notis);
             localStorage.setItem(`${key}.noti.list`, list);
-            localStorage.setItem(`${key}.noti.count`, count?.toString());
+            localStorage.setItem(`${key}.noti.count`, count.toString());
         }
-    }
+    },
 
-    function loadNotis(key?: string) {
-        let list: Notify[] = [];
+    loadNotis: (key: string) => {
         if (key && key !== "") {
-            list = JSON.parse(localStorage.getItem(`${key}.noti.list`) || "[]");
+            const list = JSON.parse(localStorage.getItem(`${key}.noti.list`) || "[]");
             const count = parseInt(localStorage.getItem(`${key}.noti.count`) || "0");
-            if (list?.length > 0) setNotis(list);
-            if (count > 0 && !isNaN(count)) setCount(count);
+            set((state) => ({
+                ...state,
+                notis: list,
+                count: count > 0 && !isNaN(count) ? count : state.count
+            }));
+            return list;
         }
-        return list;
+        return [];
     }
 
-    return {
-        notis,
-        toasts,
-        count,
-        read,
-        addNotify,
-        addToast,
-        removeNotify,
-        removeToast,
-        resetCount,
-        setNotis,
-        setToasts,
-        setRead,
-        saveNotis,
-        loadNotis,
-    }
+}));
+
+export default function useNotification() {
+    return useNotificationStore();
 }
