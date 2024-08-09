@@ -85,7 +85,10 @@ export default function Confirmation(props: any) {
                                     {mode ? "Rate" : "Ratio"}
                                 </Elements.Text>
                                 <Layouts.Row gap={gap.row} fix>
-                                    <Elements.Text color={mode ? color.deposit : color.withdraw} height={text.height} align={text.align}>
+                                    <Elements.Text
+                                        color={mode ? color.deposit : color.withdraw}
+                                        height={text.height}
+                                        align={text.align}>
                                         {format(props?.order?.price, "currency", {
                                             unit: 9,
                                             limit: 12,
@@ -120,7 +123,10 @@ export default function Confirmation(props: any) {
                                     Quantity
                                 </Elements.Text>
                                 <Layouts.Row gap={gap.row} fix>
-                                    <Elements.Text color={mode ? color.deposit : color.withdraw} height={text.height} align={text.align}>
+                                    <Elements.Text
+                                        color={mode ? color.deposit : color.withdraw}
+                                        height={text.height}
+                                        align={text.align}>
                                         {format(props?.order?.quantity, "currency", {
                                             unit: 9,
                                             limit: 12,
@@ -156,7 +162,10 @@ export default function Confirmation(props: any) {
                                     Total
                                 </Elements.Text>
                                 <Layouts.Row gap={gap.row} fix>
-                                    <Elements.Text color={mode ? color.deposit : color.withdraw} height={text.height} align={text.align}>
+                                    <Elements.Text
+                                        color={mode ? color.deposit : color.withdraw}
+                                        height={text.height}
+                                        align={text.align}>
                                         {format(props?.order?.total as number, "currency", {
                                             unit: 9,
                                             limit: 12,
@@ -174,12 +183,12 @@ export default function Confirmation(props: any) {
                 </Layouts.Col>
             }
             failure={{
-                message: "Your order has been failed to processing.",
+                message: "Your order failed to process.",
                 children: <Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>,
             }}
             loading={{
                 active: loading,
-                message: "Please wait to done your transaction processing.",
+                message: "Please wait while your transaction is being processed.",
             }}
             success={{
                 message: "Your order has been successfully completed.",

@@ -135,20 +135,19 @@ export default function Confirmation(props: any) {
                 setLoading(false);
             })}
             failure={{
-                message: "Your order has been failed to processing.",
+                message: "Your order failed to process.",
                 children: (
                     <Controls.Button
                         onClick={(e: any) => {
                             setProcess(null);
-                        }}
-                    >
+                        }}>
                         Go Back
                     </Controls.Button>
                 ),
             }}
             loading={{
                 active: loading,
-                message: "Please wait to done your transaction processing.",
+                message: "Please wait while your transaction is being processed.",
             }}
             success={{
                 message: "Your order has been successfully completed.",
@@ -158,8 +157,7 @@ export default function Confirmation(props: any) {
                             handleClose(e);
                             setProcess(null);
                             setLoading(false);
-                        }}
-                    >
+                        }}>
                         OK
                     </Controls.Button>
                 ),

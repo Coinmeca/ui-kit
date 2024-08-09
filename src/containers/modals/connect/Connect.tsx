@@ -35,7 +35,7 @@ export default function Connect(props: Connect) {
             description: props?.texts?.chain?.sub || "Please select chain will you use.",
         },
         wallet: {
-            title: props?.texts?.wallet?.sub,
+            title: props?.texts?.wallet?.title,
             description: props?.texts?.wallet?.sub || "Please select wallet will you connect.",
         },
     };
@@ -43,7 +43,9 @@ export default function Connect(props: Connect) {
     const [chain, setChain] = useState<any>();
     const [wallet, setWallet] = useState<any>();
 
-    const [process, setProcess] = useState<boolean | null>(typeof props?.process === "boolean" || props?.process === null ? props?.process : null);
+    const [process, setProcess] = useState<boolean | null>(
+        typeof props?.process === "boolean" || props?.process === null ? props?.process : null,
+    );
 
     const chainFormatter = (data: any): any[] | undefined =>
         (typeof data === "object" ? Object.values(data) : data?.length > 0 && data)?.map((c: any) => ({
@@ -104,7 +106,10 @@ export default function Connect(props: Connect) {
     }, []);
 
     useEffect(() => {
-        if (typeof props.onClose === "function" && (typeof props?.process === "boolean" || props?.process === null ? props?.process : process)) {
+        if (
+            typeof props.onClose === "function" &&
+            (typeof props?.process === "boolean" || props?.process === null ? props?.process : process)
+        ) {
             const close = setInterval(() => {
                 props?.onClose();
             }, timer);
@@ -119,7 +124,13 @@ export default function Connect(props: Connect) {
                 !chain
                     ? texts.chain.title
                     : texts.wallet.title || (
-                          <Elements.Avatar scale={0.625} size={2.25} style={{ justifyContent: "center" }} img={chain.logo} name={chain.name} />
+                          <Elements.Avatar
+                              scale={0.625}
+                              size={2.25}
+                              style={{ justifyContent: "center" }}
+                              img={chain.logo}
+                              name={chain.name}
+                          />
                       )
             }
             process={typeof props?.process === "boolean" || props?.process === null ? props?.process : process}
@@ -164,7 +175,7 @@ export default function Connect(props: Connect) {
                 />
             }
             failure={{
-                message: props?.failure?.message || "Processing has been failed.",
+                message: props?.failure?.message || "Processing has failed.",
                 children: <Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>,
             }}
             loading={{
@@ -172,7 +183,7 @@ export default function Connect(props: Connect) {
                 message: props?.loading?.message || "Please wait until the processing is complete.",
             }}
             success={{
-                message: props?.success?.message || "Processing has been succeed.",
+                message: props?.success?.message || "Processing succeeded.",
                 children: <Controls.Button onClick={(e: any) => handleClose(e)}>OK</Controls.Button>,
             }}
             onClose={(e: any) => handleClose(e)}

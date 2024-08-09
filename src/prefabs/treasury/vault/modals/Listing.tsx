@@ -40,12 +40,19 @@ export default function Listing(props: Listing) {
     const [fetching, setFetching] = useState(false);
 
     const keyTokens = useMemo(
-        () => props?.keyTokens?.filter(({ address: k }) => !pair?.find(({ address: p }) => k?.toLowerCase() === p?.toLowerCase())) || [],
+        () =>
+            props?.keyTokens?.filter(
+                ({ address: k }) => !pair?.find(({ address: p }) => k?.toLowerCase() === p?.toLowerCase()),
+            ) || [],
         [props?.keyTokens, pair],
     );
 
     const tokens = useMemo(
-        () => pair?.map((p) => ({ ...props?.tokens?.find(({ address }: any) => address?.toLowerCase() === p?.address?.toLowerCase()), ...p })),
+        () =>
+            pair?.map((p) => ({
+                ...props?.tokens?.find(({ address }: any) => address?.toLowerCase() === p?.address?.toLowerCase()),
+                ...p,
+            })),
         [props?.tokens, pair],
     );
 
@@ -84,7 +91,12 @@ export default function Listing(props: Listing) {
                 locked: parseNumber(target?.locked),
             };
             return (
-                a + (quote?.weight > 0 ? (quote?.amount * quote?.weight) / quote?.locked : base?.weight > 0 ? (base?.amount * base?.weight) / base?.locked : 0)
+                a +
+                (quote?.weight > 0
+                    ? (quote?.amount * quote?.weight) / quote?.locked
+                    : base?.weight > 0
+                    ? (base?.amount * base?.weight) / base?.locked
+                    : 0)
             );
         }, 0);
     }, [props?.tokens, tokens, asset, pair]);
@@ -94,8 +106,10 @@ export default function Listing(props: Listing) {
         let check: Validate = { state: false };
         if (!!address && address !== "" && address !== "0" && address !== "0x") {
             const pattern = /^[a-zA-Z0-9]+$/;
-            if (!address?.startsWith("0x")) check = { state: true, message: "The typed address form of a Token Contract is Invalid." };
-            else if (!pattern.test(address)) check = { state: true, message: "The unacceptable charater is used in address form." };
+            if (!address?.startsWith("0x"))
+                check = { state: true, message: "The typed address form of a Token Contract is Invalid." };
+            else if (!pattern.test(address))
+                check = { state: true, message: "The unacceptable charater is used in address form." };
             else if (address?.length < 42) check = { state: true, message: "The address is too short." };
             else if (address?.length > 42) check = { state: true, message: "The address is too long." };
         }
@@ -241,7 +255,13 @@ export default function Listing(props: Listing) {
 
     return (
         <Modals.Process
-            width={process === null && !loading && asset?.validate && pair?.length > 0 ? (windowWidth > Root.Device.Tablet ? 96 : 64) : 64}
+            width={
+                process === null && !loading && asset?.validate && pair?.length > 0
+                    ? windowWidth > Root.Device.Tablet
+                        ? 96
+                        : 64
+                    : 64
+            }
             title={"Listing"}
             process={process}
             content={
@@ -253,7 +273,11 @@ export default function Listing(props: Listing) {
                         <Layouts.Row responsive={"tablet"} fix>
                             <Layouts.Col
                                 gap={2}
-                                style={{ ...(asset?.validate && pair?.length > 0 && windowWidth <= Root.Device.Tablet && { flex: "initial" }) }}>
+                                style={{
+                                    ...(asset?.validate &&
+                                        pair?.length > 0 &&
+                                        windowWidth <= Root.Device.Tablet && { flex: "initial" }),
+                                }}>
                                 <Layouts.Col gap={1}>
                                     <Elements.Text type={"desc"} align={"left"}>
                                         Token Contract
@@ -272,9 +296,18 @@ export default function Listing(props: Listing) {
                                                 ? {
                                                       children: (
                                                           <Elements.Icon
-                                                              icon={asset?.validate ? "check-bold" : validate?.state ? "x" : "loading"}
+                                                              icon={
+                                                                  asset?.validate
+                                                                      ? "check-bold"
+                                                                      : validate?.state
+                                                                      ? "x"
+                                                                      : "loading"
+                                                              }
                                                               color={asset?.validate && "green"}
-                                                              style={{ ...(!asset?.validate && !validate?.state && { opacity: 0.45 }) }}
+                                                              style={{
+                                                                  ...(!asset?.validate &&
+                                                                      !validate?.state && { opacity: 0.45 }),
+                                                              }}
                                                           />
                                                       ),
                                                   }
@@ -321,7 +354,9 @@ export default function Listing(props: Listing) {
                                                 placeholder={"0"}
                                                 value={asset?.amount}
                                                 max={asset?.balance?.amount}
-                                                onChange={(e: any, v: any) => setAsset((state: any) => ({ ...state, amount: v }))}
+                                                onChange={(e: any, v: any) =>
+                                                    setAsset((state: any) => ({ ...state, amount: v }))
+                                                }
                                                 // onFocus={() => isMobile &&
                                                 //     handleAmountPad({
                                                 //         asset,
@@ -335,7 +370,11 @@ export default function Listing(props: Listing) {
                                                 }}
                                                 right={{
                                                     width: 10,
-                                                    children: <Elements.Text style={{ justifyContent: "flex-start" }}>{asset?.symbol || "???"}</Elements.Text>,
+                                                    children: (
+                                                        <Elements.Text style={{ justifyContent: "flex-start" }}>
+                                                            {asset?.symbol || "???"}
+                                                        </Elements.Text>
+                                                    ),
                                                 }}
                                                 autoFocus
                                             />
@@ -387,7 +426,8 @@ export default function Listing(props: Listing) {
                                                             value={p?.amount}
                                                             max={maxAmount(p?.address)}
                                                             onChange={(e: any, v: string) => {
-                                                                address?.toLowerCase() === p?.address?.toLowerCase() && handleChangeAmount(p?.address, v);
+                                                                address?.toLowerCase() === p?.address?.toLowerCase() &&
+                                                                    handleChangeAmount(p?.address, v);
                                                             }}
                                                             onFocus={() => setAddress(p?.address)}
                                                             left={{
@@ -398,10 +438,18 @@ export default function Listing(props: Listing) {
                                                                 width: 10,
                                                                 children: (
                                                                     <Layouts.Row gap={0} align={"center"} fix>
-                                                                        <Elements.Text align={"left"} opacity={0.6} style={{ paddingLeft: ".5em" }} fix>
+                                                                        <Elements.Text
+                                                                            align={"left"}
+                                                                            opacity={0.6}
+                                                                            style={{ paddingLeft: ".5em" }}
+                                                                            fix>
                                                                             {p?.symbol}
                                                                         </Elements.Text>
-                                                                        <Controls.Button icon={"x"} onClick={() => handleRemovePair(p?.address)} fit />
+                                                                        <Controls.Button
+                                                                            icon={"x"}
+                                                                            onClick={() => handleRemovePair(p?.address)}
+                                                                            fit
+                                                                        />
                                                                     </Layouts.Row>
                                                                 ),
                                                             }}
@@ -453,7 +501,9 @@ export default function Listing(props: Listing) {
                                         height: "0",
                                         maxHeight: "max-content",
                                         ...(windowWidth > Root.Device.Tablet && { maxWidth: "calc(50% - 4em)" }),
-                                        ...(asset?.validate && pair?.length > 0 && windowWidth <= Root.Device.Tablet && { minHeight: "initial" }),
+                                        ...(asset?.validate &&
+                                            pair?.length > 0 &&
+                                            windowWidth <= Root.Device.Tablet && { minHeight: "initial" }),
                                     }}>
                                     <Layouts.Col gap={1} fill>
                                         <Layouts.Contents.InnerContent>
@@ -483,9 +533,14 @@ export default function Listing(props: Listing) {
                                                                                 height: "1em",
                                                                                 width: `${Math.max(
                                                                                     1,
-                                                                                    ((parseNumber(asset?.amount || 0) / pair?.length) * 100) / max,
+                                                                                    ((parseNumber(asset?.amount || 0) /
+                                                                                        pair?.length) *
+                                                                                        100) /
+                                                                                        max,
                                                                                 )}%`,
-                                                                                backgroundColor: `#${HexToColor(asset?.address)}`,
+                                                                                backgroundColor: `#${HexToColor(
+                                                                                    asset?.address,
+                                                                                )}`,
                                                                                 transition: ".3s ease",
                                                                             }}
                                                                         />
@@ -502,7 +557,12 @@ export default function Listing(props: Listing) {
                                                                         <div
                                                                             style={{
                                                                                 height: "1em",
-                                                                                width: `${Math.max(1, parseNumber(p?.amount || 0) * 100) / max}%`,
+                                                                                width: `${
+                                                                                    Math.max(
+                                                                                        1,
+                                                                                        parseNumber(p?.amount || 0) * 100,
+                                                                                    ) / max
+                                                                                }%`,
                                                                                 backgroundColor: `#${HexToColor(p?.address)}`,
                                                                                 transition: ".3s ease",
                                                                             }}
@@ -521,7 +581,13 @@ export default function Listing(props: Listing) {
                                                 Estimate earning reward:
                                             </Elements.Text>
                                             <Layouts.Row gap={1} align={"center"} style={{ padding: ".5em" }} fix>
-                                                <Elements.Avatar img={props?.standard?.logo} name="MECA" character={1} hideName size={2.5} />
+                                                <Elements.Avatar
+                                                    img={props?.standard?.logo}
+                                                    name="MECA"
+                                                    character={1}
+                                                    hideName
+                                                    size={2.5}
+                                                />
                                                 <Layouts.Row gap={2} fix>
                                                     <Elements.Text align={"right"} fix>
                                                         {estimate ? format(estimate, "currency") : "Cannot Estimate"}
@@ -539,12 +605,14 @@ export default function Listing(props: Listing) {
                     </Layouts.Contents.InnerContent>
                     <Layouts.Row gap={windowWidth <= Root.Device.Tablet ? 2 : undefined} fix>
                         <Controls.Button onClick={(e: any) => handleClose(e)}>Close</Controls.Button>
-                        {asset?.validate && pair?.length > 0 && <Controls.Button onClick={(e: any) => handleListing(e)}>Listing</Controls.Button>}
+                        {asset?.validate && pair?.length > 0 && (
+                            <Controls.Button onClick={(e: any) => handleListing(e)}>Listing</Controls.Button>
+                        )}
                     </Layouts.Row>
                 </Layouts.Col>
             }
             failure={{
-                message: "Processing has been failed.",
+                message: "Processing has failed.",
                 children: <Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>,
             }}
             loading={{
@@ -552,7 +620,7 @@ export default function Listing(props: Listing) {
                 message: "Please wait until the processing is complete.",
             }}
             success={{
-                message: "Processing has been succeed.",
+                message: "Processing succeeded.",
                 children: <Controls.Button onClick={(e: any) => handleClose(e)}>OK</Controls.Button>,
             }}
             onClose={(e: any) => handleClose(e)}

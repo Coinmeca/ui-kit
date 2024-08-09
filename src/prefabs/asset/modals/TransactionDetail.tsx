@@ -367,7 +367,7 @@
 //                 />
 //             }
 //             failure={{
-//                 message: props?.failure?.message || "Processing has been failed.",
+//                 message: props?.failure?.message || "Processing has failed.",
 //                 children: <Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>,
 //             }}
 //             loading={{
@@ -375,7 +375,7 @@
 //                 message: props?.loading?.message || "Please wait until the processing is complete.",
 //             }}
 //             success={{
-//                 message: props?.success?.message || "Processing has been succeed.",
+//                 message: props?.success?.message || "Processing succeeded.",
 //                 children: <Controls.Button onClick={(e: any) => handleClose(e)}>OK</Controls.Button>,
 //             }}
 //             onClose={handleClose}

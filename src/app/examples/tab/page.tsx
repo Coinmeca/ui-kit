@@ -15,7 +15,12 @@ export default function Page() {
     // };
 
     const [handleModal, closeDialogue] = usePortal(
-        <Modal title={"This is a Modal."} message={"This is a modal content test message."} onClose={() => closeDialogue()} close />
+        <Modal
+            title={"This is a Modal."}
+            message={"This is a modal content test message."}
+            onClose={() => closeDialogue()}
+            close
+        />,
     );
 
     const [process, setProcess] = useState<boolean | null>(null);
@@ -35,16 +40,14 @@ export default function Page() {
                             onClick={() => {
                                 setProcess(false);
                                 console.log("onLeft", process);
-                            }}
-                        >
+                            }}>
                             Go to Left
                         </Controls.Button>
                         <Controls.Button
                             onClick={() => {
                                 setProcess(true);
                                 console.log("onRight", process);
-                            }}
-                        >
+                            }}>
                             Go to Right
                         </Controls.Button>
                     </Layouts.Row>
@@ -57,21 +60,19 @@ export default function Page() {
                         onClick={(e: any) => {
                             console.log("back");
                             setProcess(null);
-                        }}
-                    >
+                        }}>
                         Go Back
                     </Controls.Button>
                 ),
             }}
             success={{
-                message: "Your order has been failed to processing.",
+                message: "Your order failed to process.",
                 children: (
                     <Controls.Button
                         onClick={(e: any) => {
                             console.log("finish");
                             setProcess(null);
-                        }}
-                    >
+                        }}>
                         Go Back
                     </Controls.Button>
                 ),
@@ -80,13 +81,19 @@ export default function Page() {
                 closeProcessModal();
             }}
             close
-        />
+        />,
     );
 
     return (
         <Layouts.Page>
             <Layouts.Cover>
-                <Controls.Slide slides={slides2} padding={0} align={{ vertical: "top", horizon: "left" }} nav={"top"} style={{ zIndex: 4 }} />
+                <Controls.Slide
+                    slides={slides2}
+                    padding={0}
+                    align={{ vertical: "top", horizon: "left" }}
+                    nav={"top"}
+                    style={{ zIndex: 4 }}
+                />
             </Layouts.Cover>
             <Layouts.Box>
                 <Layouts.Contents.InnerContent>
