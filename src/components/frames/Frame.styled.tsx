@@ -12,7 +12,7 @@ const Style = styled.section<{ $direction?: "left" | "right" }>`
     overflow: hidden;
     z-index: 1;
 
-    ${({ $direction }) => $direction === "right" && `direction: rtl`}
+    ${({ $direction }) => $direction === "right" && `direction: rtl;`}
 
     & > section {
         position: relative;
