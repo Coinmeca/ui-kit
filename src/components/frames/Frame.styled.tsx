@@ -3,7 +3,7 @@
 import { styled } from "styled-components";
 import * as Page from "components/layouts/page/Page.styled";
 
-const Style = styled.section`
+const Style = styled.section<{ $direction?: "left" | "right" }>`
     position: relative;
     display: flex;
     flex-direction: column;
@@ -11,6 +11,8 @@ const Style = styled.section`
     height: 100%;
     overflow: hidden;
     z-index: 1;
+
+    ${({ $direction }) => $direction === "right" && `direction: rtl`}
 
     & > section {
         position: relative;

@@ -17,6 +17,7 @@ export interface Frame {
     toast?: Toasts;
     side?: number;
     background?: BG;
+    direction?: "left" | "right";
     align?: "left" | "right";
 }
 
@@ -27,7 +28,7 @@ export default function Frame(props: Frame) {
     return (
         <>
             <Layouts.BG {...props?.background} />
-            <Style>
+            <Style $direction={props?.direction}>
                 {props?.header && <Headers.Header {...props?.header} side={{ ...props?.header?.side, width: width }} />}
                 <section>
                     {align === "left" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
@@ -38,7 +39,9 @@ export default function Frame(props: Frame) {
                     </main>
                     <>
                         {align === "right" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
-                        {props?.toast && props?.toast?.list && props?.toast?.list?.length > 0 && <Toast {...props?.toast} width={width} align={align} />}
+                        {props?.toast && props?.toast?.list && props?.toast?.list?.length > 0 && (
+                            <Toast {...props?.toast} width={width} align={align} />
+                        )}
                     </>
                 </section>
             </Style>
