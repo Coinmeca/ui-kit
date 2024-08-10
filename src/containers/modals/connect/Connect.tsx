@@ -17,6 +17,10 @@ export interface Connect extends Omit<Process, "process"> {
     };
     chains?: any;
     wallets?: any;
+    resolver?: {
+        chain?: Function;
+        wallet?: Function;
+    };
     config?: object;
     onClose: Function;
     onChain?: Function;
@@ -51,20 +55,38 @@ export default function Connect(props: Connect) {
         typeof props?.process === "boolean" || props?.process === null ? props?.process : null,
     );
 
+    const chainResolver = (c?: string) => {
+        if (typeof props?.resolver?.chain === "function") return props?.resolver?.chain(c);
+        return c;
+    };
+
     const chainFormatter = (data: any): any[] | undefined =>
-        (typeof data === "object" ? Object.values(data) : data?.length > 0 && data)?.map((c: any) => ({
-            children: <Elements.Avatar img={c?.logo} name={c?.name} />,
-            onClick: (e: any) => {
-                setChain(c);
-                if (typeof props?.onChain === "function") props?.onChain(c, e);
-            },
-        }));
+        (typeof data === "object" ? Object.values(data) : data?.length > 0 && data)?.map((c: any) => {
+            const chain = chainResolver(c);
+            return {
+                children: <Elements.Avatar img={chain?.logo} name={chain?.name} />,
+                onClick: (e: any) => {
+                    setChain(c);
+                    if (typeof props?.onChain === "function") props?.onChain(c, e);
+                },
+            };
+        });
+
+    const walletResolver = (w?: string) => {
+        if (typeof props?.resolver?.wallet === "function") return props?.resolver?.wallet(w);
+        return w;
+    };
 
     const walletListFormatter = (data: any): any[] | undefined =>
-        (typeof data === "object" ? Object.values(data) : data?.length > 0 && data)?.map((w: any) => ({
-            children: <Elements.Avatar img={w?.logo} name={w?.name} style={{ width: "-webkit-fill-available" }} />,
-            onClick: async (e: any) => await handleConnect(e, w),
-        }));
+        (typeof data === "object" ? Object.values(data) : data?.length > 0 && data)?.map((w: any) => {
+            const wallet = walletResolver(w);
+            return {
+                children: (
+                    <Elements.Avatar img={wallet?.logo} name={wallet?.name} style={{ width: "-webkit-fill-available" }} />
+                ),
+                onClick: async (e: any) => await handleConnect(e, w),
+            };
+        });
 
     const handleBack = (e: any) => {
         if (typeof props?.onBack === "function") props?.onBack(e);
