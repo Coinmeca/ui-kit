@@ -1,7 +1,7 @@
 "use client";
 
-import { styled } from "styled-components";
 import * as Page from "components/layouts/page/Page.styled";
+import { styled } from "styled-components";
 
 const Style = styled.section<{ $direction?: "left" | "right" }>`
     position: relative;
@@ -12,7 +12,7 @@ const Style = styled.section<{ $direction?: "left" | "right" }>`
     overflow: hidden;
     z-index: 1;
 
-    ${({ $direction }) => $direction === "right" && `direction: rtl;`}
+    ${({ $direction }) => $direction === "left" && `direction: rtl;`}
 
     & > section {
         position: relative;
