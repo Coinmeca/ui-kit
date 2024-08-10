@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Modals } from "containers";
 import type { Process } from "containers/modals/process/Process";
@@ -55,10 +55,13 @@ export default function Connect(props: Connect) {
         typeof props?.process === "boolean" || props?.process === null ? props?.process : null,
     );
 
-    const chainResolver = (c?: string) => {
-        if (typeof props?.resolver?.chain === "function") return props?.resolver?.chain(c);
-        return c;
-    };
+    const chainResolver = useCallback(
+        (c?: string) => {
+            if (typeof props?.resolver?.chain === "function") return props?.resolver?.chain(c);
+            return c;
+        },
+        [props?.resolver?.chain],
+    );
 
     const chainFormatter = (data: any): any[] | undefined =>
         (typeof data === "object" ? Object.values(data) : data?.length > 0 && data)?.map((c: any) => {
@@ -72,10 +75,18 @@ export default function Connect(props: Connect) {
             };
         });
 
-    const walletResolver = (w?: string) => {
-        if (typeof props?.resolver?.wallet === "function") return props?.resolver?.wallet(w);
-        return w;
-    };
+    const chainName = useMemo(() => {
+        const c = chainResolver(chain);
+        return <Elements.Avatar scale={0.625} size={2.25} style={{ justifyContent: "center" }} img={c.logo} name={c.name} />;
+    }, [chain, chainResolver]);
+
+    const walletResolver = useCallback(
+        (w?: string) => {
+            if (typeof props?.resolver?.wallet === "function") return props?.resolver?.wallet(w);
+            return w;
+        },
+        [props?.resolver?.wallet],
+    );
 
     const walletListFormatter = (data: any): any[] | undefined =>
         (typeof data === "object" ? Object.values(data) : data?.length > 0 && data)?.map((w: any) => {
@@ -146,19 +157,7 @@ export default function Connect(props: Connect) {
     return (
         <Modals.Process
             {...props}
-            title={
-                !chain
-                    ? texts.chain.title
-                    : texts.wallet.title || (
-                          <Elements.Avatar
-                              scale={0.625}
-                              size={2.25}
-                              style={{ justifyContent: "center" }}
-                              img={chain.logo}
-                              name={chain.name}
-                          />
-                      )
-            }
+            title={(!chain ? texts.chain.title : texts.wallet.title) || chainName}
             process={typeof props?.process === "boolean" || props?.process === null ? props?.process : process}
             content={
                 <Layouts.Contents.SlideContainer
