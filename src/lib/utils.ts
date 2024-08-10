@@ -10,8 +10,68 @@ export interface RGBColor {
 	b: number;
 }
 
-export type ObjectFilter = { key?: string, value?: string | string[] };
+export type ObjectFilter = { key?: string | string[], value?: string | string[] };
 export type Filter = ObjectFilter | string[] | string;
+
+export const filter = (array?: any[], filter?: Filter) => {
+	if (!array || array?.length === 0) return [];
+	if (typeof filter === 'string') {
+		// Filter by single string
+		return array?.filter((item: any) =>
+			Object.values(item).some((value: any) =>
+				value?.toString()?.toLowerCase().includes(filter.toLowerCase())
+			)
+		);
+	} else if (Array.isArray(filter)) {
+		// Filter by array of strings
+		return array?.filter((item: any) =>
+			Object.values(item).some((value: any) =>
+				filter.some(f =>
+					value?.toString()?.toLowerCase().includes(f.toLowerCase())
+				)
+			)
+		);
+	} else if (typeof filter === 'object' && filter !== null) {
+		const { key, value } = filter;
+
+		return array?.filter((item: any) => {
+			if (key) {
+				// If key is provided (single or array)
+				const keys = Array.isArray(key) ? key : [key];
+
+				if (value) {
+					const values = Array.isArray(value) ? value : [value];
+
+					// Check if any of the keys match any of the values
+					return keys.some(k =>
+						values.some(v =>
+							item[k]?.toString()?.toLowerCase().includes(v.toLowerCase())
+						)
+					);
+				} else {
+					// If no value is provided, just check for the existence of any of the keys
+					return keys.some(k => item.hasOwnProperty(k));
+				}
+			} else {
+				// If no key is provided, filter based on values in the item
+				if (value) {
+					const values = Array.isArray(value) ? value : [value];
+					return values.some(v =>
+						Object.values(item).some(val =>
+							val?.toString()?.toLowerCase().includes(v.toLowerCase())
+						)
+					);
+				} else {
+					// If no key and no value are provided, return true (no additional filtering)
+					return true;
+				}
+			}
+		});
+	}
+
+	// If filter type is unknown, return the original data
+	return array;
+};
 
 export function sort(array: any[] = [], key: string, type: string, direction: boolean | undefined = false) {
 	if (!Array.isArray(array)) return [];
@@ -62,71 +122,6 @@ export function sort(array: any[] = [], key: string, type: string, direction: bo
 		}
 	}
 }
-
-export const filter = (array: any[], filter?: Filter) => {
-	if (!array || array?.length === 0) return [];
-	if (typeof filter === 'string') {
-		// Filter by single string
-		return array?.filter((item: any) =>
-			Object.values(item).some((value: any) =>
-				value?.toString()?.toLowerCase().includes(filter.toLowerCase())
-			)
-		);
-	} else if (Array.isArray(filter)) {
-		// Filter by array of strings
-		return array?.filter((item: any) =>
-			Object.values(item).some((value: any) =>
-				filter.some(f =>
-					value?.toString()?.toLowerCase().includes(f.toLowerCase())
-				)
-			)
-		);
-	} else if (typeof filter === 'object' && filter !== null) {
-		// Filter by object with key and/or value
-		const { key, value } = filter;
-
-		return array?.filter((item: any) => {
-			if (key) {
-				// If key is provided, filter based on the key and its value
-				if (value) {
-					if (Array.isArray(value)) {
-						// If value is an array, use "OR" logic
-						return value.some(v =>
-							item[key]?.toString()?.toLowerCase().includes(v.toLowerCase())
-						);
-					} else {
-						// If value is a single string
-						return item[key]?.toString()?.toLowerCase().includes(value.toLowerCase());
-					}
-				} else {
-					// If no value is provided, just check for the existence of the key
-					return item.hasOwnProperty(key);
-				}
-			} else {
-				// If no key is provided, filter based on values in the item
-				if (value) {
-					if (Array.isArray(value)) {
-						return value.some(v =>
-							Object.values(item).some(val =>
-								val?.toString()?.toLowerCase().includes(v.toLowerCase())
-							)
-						);
-					} else {
-						return Object.values(item).some(val =>
-							val?.toString()?.toLowerCase().includes(value.toLowerCase())
-						);
-					}
-				} else {
-					// If no key and no value are provided, return true (no additional filtering)
-					return true;
-				}
-			}
-		});
-	}
-
-	// If filter type is unknown, return the original data
-	return array;
-};
 
 export function capitalize(text: string) {
 	if (!text || text === '') return '';
