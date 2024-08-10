@@ -1,7 +1,7 @@
 "use client";
-import { ReactNode, type CSSProperties } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { Elements } from "components";
+import { AnimatePresence, motion } from "framer-motion";
+import { ReactNode } from "react";
 import Style, { NoData } from "./Table.styled";
 import TableItem from "./TableItem";
 
@@ -44,7 +44,7 @@ export default function Table(props: Table) {
                 <NoData
                     key="fallback"
                     as={motion.div}
-                    style={{ width: "100%", height: "100%" }}
+                    style={{ width: "100%", height: "100%", ...props?.style }}
                     initial={{ scale: 1, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 1, opacity: 0 }}
