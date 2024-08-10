@@ -10,6 +10,10 @@ export interface Connect extends Omit<Process, "process"> {
     texts?: {
         chain?: Texts;
         wallet?: Texts;
+        close?: string;
+        back?: string;
+        goBack?: string;
+        ok?: string;
     };
     chains?: any;
     wallets?: any;
@@ -147,7 +151,9 @@ export default function Connect(props: Connect) {
                                     <Layouts.Contents.InnerContent style={{ justifyContent: "center" }} scroll>
                                         <Layouts.List list={chainFormatter(props?.chains)} />
                                     </Layouts.Contents.InnerContent>
-                                    <Controls.Button onClick={(e: any) => handleClose(e)}>Close</Controls.Button>
+                                    <Controls.Button onClick={(e: any) => handleClose(e)}>
+                                        {props?.texts?.close || "Close"}
+                                    </Controls.Button>
                                 </Layouts.Col>
                             ),
                         },
@@ -166,7 +172,7 @@ export default function Connect(props: Connect) {
                                             setChain(undefined);
                                             setProcess(null);
                                         }}>
-                                        Back
+                                        {props?.texts?.back || "Back"}
                                     </Controls.Button>
                                 </Layouts.Col>
                             ),
@@ -176,7 +182,9 @@ export default function Connect(props: Connect) {
             }
             failure={{
                 message: props?.failure?.message || "Processing has failed.",
-                children: <Controls.Button onClick={(e: any) => handleBack(e)}>Go Back</Controls.Button>,
+                children: (
+                    <Controls.Button onClick={(e: any) => handleBack(e)}>{props?.texts?.goBack || "Go Back"}</Controls.Button>
+                ),
             }}
             loading={{
                 active: props?.loading?.active || wallet,
@@ -184,7 +192,7 @@ export default function Connect(props: Connect) {
             }}
             success={{
                 message: props?.success?.message || "Processing succeeded.",
-                children: <Controls.Button onClick={(e: any) => handleClose(e)}>OK</Controls.Button>,
+                children: <Controls.Button onClick={(e: any) => handleClose(e)}>{props?.texts?.ok || "OK"}</Controls.Button>,
             }}
             onClose={(e: any) => handleClose(e)}
             close={!wallet}
