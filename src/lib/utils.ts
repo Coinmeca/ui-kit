@@ -10,66 +10,59 @@ export interface RGBColor {
 	b: number;
 }
 
-export type ObjectFilter = { key?: string | string[], value?: string | string[] };
-export type Filter = ObjectFilter | string[] | string;
+export type ObjectFilter = { key?: string | string[]; value?: string | string[] } | undefined;
+export type Filter = ObjectFilter | string[] | string | undefined;
 
-export const filter = (array?: any[], filter?: Filter) => {
-	if (!array || array?.length === 0) return [];
+export const filter = <T = any>(array: T[] = [], filter?: Filter): T[] => {
+	if (!array.length) return [];
+
+	const includesValue = (itemValue: any, filterValue: string) =>
+		itemValue?.toString().toLowerCase().includes(filterValue.toLowerCase());
+
 	if (typeof filter === 'string') {
 		// Filter by single string
-		return array?.filter((item: any) =>
-			Object.values(item).some((value: any) =>
-				value?.toString()?.toLowerCase().includes(filter.toLowerCase())
-			)
+		return array.filter(item =>
+			Object.values(item as any).some(value => includesValue(value, filter))
 		);
-	} else if (Array.isArray(filter)) {
+	}
+
+	if (Array.isArray(filter)) {
 		// Filter by array of strings
-		return array?.filter((item: any) =>
-			Object.values(item).some((value: any) =>
-				filter.some(f =>
-					value?.toString()?.toLowerCase().includes(f.toLowerCase())
-				)
+		return array.filter(item =>
+			Object.values(item as any).some(value =>
+				filter.some(f => includesValue(value, f))
 			)
 		);
-	} else if (typeof filter === 'object' && filter !== null) {
+	}
+
+	if (filter && typeof filter === 'object') {
 		const { key, value } = filter;
+		const keys = Array.isArray(key) ? key : key ? [key] : [];
+		const values = Array.isArray(value) ? value : value ? [value] : [];
 
-		return array?.filter((item: any) => {
-			if (key) {
-				// If key is provided (single or array)
-				const keys = Array.isArray(key) ? key : [key];
-
-				if (value) {
-					const values = Array.isArray(value) ? value : [value];
-
-					// Check if any of the keys match any of the values
-					return keys.some(k =>
-						values.some(v =>
-							item[k]?.toString()?.toLowerCase().includes(v.toLowerCase())
-						)
-					);
-				} else {
-					// If no value is provided, just check for the existence of any of the keys
-					return keys.some(k => item.hasOwnProperty(k));
-				}
-			} else {
-				// If no key is provided, filter based on values in the item
-				if (value) {
-					const values = Array.isArray(value) ? value : [value];
-					return values.some(v =>
-						Object.values(item).some(val =>
-							val?.toString()?.toLowerCase().includes(v.toLowerCase())
-						)
-					);
-				} else {
-					// If no key and no value are provided, return true (no additional filtering)
-					return true;
-				}
+		return array.filter(item => {
+			if (keys.length && values.length) {
+				// Check if any of the keys match any of the values
+				return keys.some(k =>
+					values.some(v => includesValue((item as any)[k], v))
+				);
 			}
+			if (keys.length) {
+				// Check for the existence of any of the keys
+				return keys.some(k => k in (item as any));
+			}
+			if (values.length) {
+				// Filter based on values in the item as any
+				return values.some(v =>
+					Object.values(item as any).some(val => includesValue(val, v))
+				);
+			}
+			// No key and no value provided, return true (no additional filtering)
+			return true;
 		});
 	}
 
-	// If filter type is unknown, return the original data
+	// If filter type is unknown, return the original array
 	return array;
 };
 
