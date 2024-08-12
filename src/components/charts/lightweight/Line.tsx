@@ -254,9 +254,9 @@ export const Line = (props: Line) => {
                       barSpacing: 10,
                   });
 
-            chartRef?.current.addEventListener("resize", handleResize);
+            chartRef?.current?.addEventListener("resize", handleResize);
             return () => {
-                chartRef?.current.removeEventListener("resize", handleResize);
+                chartRef?.current?.removeEventListener("resize", handleResize);
                 chart.remove();
             };
         }
