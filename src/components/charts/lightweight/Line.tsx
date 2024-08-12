@@ -39,8 +39,12 @@ export const Line = (props: Line) => {
     const { theme: detectedTheme } = useTheme();
 
     const theme = props?.color?.theme
-        ? (props?.color?.theme === 'light' ? "0,0,0" : "255,255,255")
-        : detectedTheme === "light" ? "0,0,0" : "255,255,255";
+        ? props?.color?.theme === "light"
+            ? "0,0,0"
+            : "255,255,255"
+        : detectedTheme === "light"
+        ? "0,0,0"
+        : "255,255,255";
     const color = {
         default: props?.color?.default || `rgb(${theme})`,
         up: props?.color?.up || "0,192,96",
@@ -64,35 +68,48 @@ export const Line = (props: Line) => {
     const chartRef: any = useRef();
 
     useEffect(() => {
-        if (props?.data && props?.data?.length > 0) setData(
-            sort(
-                props?.data?.map((v: any) => {
-                    return {
-                        time: v?.time,
-                        value: parseFloat(v[key.value]?.toString() || "0"),
-                    } as LineData;
-                }),
-                key.time,
-                props?.data && props?.data?.length > 0 && typeof (props?.data[0] as any)[key.time] === "number" ? "number" : "string",
-                true
-            ))
+        if (props?.data && props?.data?.length > 0)
+            setData(
+                sort(
+                    props?.data?.map((v: any) => {
+                        return {
+                            time: v?.time,
+                            value: parseFloat(v[key.value]?.toString() || "0"),
+                        } as LineData;
+                    }),
+                    key.time,
+                    props?.data && props?.data?.length > 0 && typeof (props?.data[0] as any)[key.time] === "number"
+                        ? "number"
+                        : "string",
+                    true,
+                ),
+            );
     }, [props?.data]);
 
     useEffect(() => {
-        if (props?.volume && props?.volume?.length > 0) setVolume(
-            sort(
-                props?.volume?.map((v: any) => {
-                    return {
-                        time: v?.time,
-                        value: parseFloat(v[key.volume]?.toString() || "0"),
-                        color: v?.type === up && color.up ? `rgba(${color.up}, 0.3)` : color.down ? `rgba(${color.down}, 0.3)` : `rgba(${color.default}, 0.3)`,
-                        // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
-                    } as Volume;
-                }),
-                key.time,
-                props?.volume && props?.volume?.length > 0 && typeof (props?.volume[0] as any)[key.time] === "number" ? "number" : "string",
-                true
-            ))
+        if (props?.volume && props?.volume?.length > 0)
+            setVolume(
+                sort(
+                    props?.volume?.map((v: any) => {
+                        return {
+                            time: v?.time,
+                            value: parseFloat(v[key.volume]?.toString() || "0"),
+                            color:
+                                v?.type === up && color.up
+                                    ? `rgba(${color.up}, 0.3)`
+                                    : color.down
+                                    ? `rgba(${color.down}, 0.3)`
+                                    : `rgba(${color.default}, 0.3)`,
+                            // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
+                        } as Volume;
+                    }),
+                    key.time,
+                    props?.volume && props?.volume?.length > 0 && typeof (props?.volume[0] as any)[key.time] === "number"
+                        ? "number"
+                        : "string",
+                    true,
+                ),
+            );
     }, [props?.volume, up, down, color]);
 
     useEffect(() => {
@@ -158,7 +175,9 @@ export const Line = (props: Line) => {
                         type:
                             (typeof props?.type === "string"
                                 ? props?.type
-                                : typeof props?.type === "object" && typeof props?.type?.line === "string" && props?.type?.line) || "volume",
+                                : typeof props?.type === "object" &&
+                                  typeof props?.type?.line === "string" &&
+                                  props?.type?.line) || "volume",
                     },
                     // set as an overlay by setting a blank priceScaleId
                     // priceScaleId: "",
@@ -174,7 +193,10 @@ export const Line = (props: Line) => {
                 });
 
                 series.setData(data);
-                if ((typeof props?.unit === "string" && props?.unit !== "") || (typeof props?.unit === "object" && props?.unit?.line))
+                if (
+                    (typeof props?.unit === "string" && props?.unit !== "") ||
+                    (typeof props?.unit === "object" && props?.unit?.line)
+                )
                     series.applyOptions({
                         priceFormat: {
                             type: "custom",
@@ -182,8 +204,8 @@ export const Line = (props: Line) => {
                                 (typeof props?.format === "function"
                                     ? props?.format(price)
                                     : typeof props?.format === "object" && typeof props?.format?.line === "function"
-                                        ? props?.format?.line(price)
-                                        : price
+                                    ? props?.format?.line(price)
+                                    : price
                                 ).toString() + props?.unit,
                         },
                     });
@@ -196,7 +218,9 @@ export const Line = (props: Line) => {
                         type:
                             (typeof props?.type === "string"
                                 ? props?.type
-                                : typeof props?.type === "object" && typeof props?.type?.histogram === "string" && props?.type?.histogram) || "volume",
+                                : typeof props?.type === "object" &&
+                                  typeof props?.type?.histogram === "string" &&
+                                  props?.type?.histogram) || "volume",
                     },
                     // set as an overlay by setting a blank priceScaleId
                     // priceScaleId: "",
@@ -227,13 +251,12 @@ export const Line = (props: Line) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                    barSpacing: 10,
-                });
+                      barSpacing: 10,
+                  });
 
-            globalThis.addEventListener("resize", handleResize);
-
+            chartRef?.current.addEventListener("resize", handleResize);
             return () => {
-                globalThis.removeEventListener("resize", handleResize);
+                chartRef?.current.removeEventListener("resize", handleResize);
                 chart.remove();
             };
         }

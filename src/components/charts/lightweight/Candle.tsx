@@ -45,8 +45,12 @@ export const Candle = (props: Candle) => {
     const { theme: detectedTheme } = useTheme();
 
     const theme = props?.color?.theme
-        ? (props?.color?.theme === 'light' ? "0,0,0" : "255,255,255")
-        : detectedTheme === "light" ? "0,0,0" : "255,255,255";
+        ? props?.color?.theme === "light"
+            ? "0,0,0"
+            : "255,255,255"
+        : detectedTheme === "light"
+        ? "0,0,0"
+        : "255,255,255";
     const color = {
         up: props?.color?.up || "0,192,96",
         down: props?.color?.down || "255,0,64",
@@ -56,7 +60,7 @@ export const Candle = (props: Candle) => {
             medium: `rgba(${theme}, 0.3)`,
             regular: `rgba(${theme}, 0.15)`,
             light: `rgba(${theme}, 0.05)`,
-        }
+        },
     };
     const key = {
         time: props?.field?.time || "time",
@@ -196,11 +200,12 @@ export const Candle = (props: Candle) => {
             props?.fit
                 ? chart.timeScale().fitContent()
                 : chart.timeScale().applyOptions({
-                    barSpacing: 10,
-                });
-            globalThis.addEventListener("resize", handleResize);
+                      barSpacing: 10,
+                  });
+
+            chartRef?.current.addEventListener("resize", handleResize);
             return () => {
-                globalThis.removeEventListener("resize", handleResize);
+                chartRef?.current.removeEventListener("resize", handleResize);
                 chart.remove();
             };
         }
