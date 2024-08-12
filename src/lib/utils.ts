@@ -11,59 +11,132 @@ export interface RGBColor {
 }
 
 export type ObjectFilter = { key?: string | string[]; value?: string | string[] } | undefined;
-export type Filter = ObjectFilter | string[] | string | undefined;
+export type Filter = ObjectFilter | string[] | string | ObjectFilter[] | undefined;
 
-export const filter = <T = any>(array: T[] = [], filter?: Filter): T[] => {
+export type ItemType = {
+	[key: string]: any; // Define specific keys and their types as needed
+};
+
+export const filter = <T extends ItemType = ItemType>(array: T[] = [], filter?: Filter): T[] => {
 	if (!array.length) return [];
 
 	const includesValue = (itemValue: any, filterValue: string) =>
 		itemValue?.toString().toLowerCase().includes(filterValue.toLowerCase());
 
+	const applyObjectFilter = (array: T[], objectFilter: ObjectFilter): T[] => {
+		if (!objectFilter) return array;
+
+		const { key, value } = objectFilter;
+		const keys = Array.isArray(key) ? key : key ? [key] : [];
+		const values = Array.isArray(value) ? value : value ? [value] : [];
+
+		return array.filter((item: T) => {
+			if (keys.length && values.length) {
+				return keys.some(k =>
+					values.some(v => includesValue(item[k], v))
+				);
+			}
+			if (keys.length) {
+				return keys.some(k => k in item);
+			}
+			if (values.length) {
+				return values.some(v =>
+					Object.values(item).some(val => includesValue(val, v))
+				);
+			}
+			return true; // No key and no value provided, return all items
+		});
+	};
+
 	if (typeof filter === 'string') {
-		// Filter by single string
 		return array.filter(item =>
-			Object.values(item as any).some(value => includesValue(value, filter))
+			Object.values(item).some(value => includesValue(value, filter))
 		);
 	}
 
 	if (Array.isArray(filter)) {
-		// Filter by array of strings
-		return array.filter(item =>
-			Object.values(item as any).some(value =>
-				filter.some(f => includesValue(value, f))
-			)
-		);
+		if (filter.every(f => typeof f === 'string')) {
+			// If filter is an array of strings
+			return array.filter(item =>
+				Object.values(item).some(value =>
+					filter.some(f => includesValue(value, f as string))
+				)
+			);
+		}
+
+		if (filter.every(f => typeof f === 'object' && f !== null)) {
+			// If filter is an array of object filters
+			return filter.reduce((result, currentFilter) => {
+				return applyObjectFilter(result, currentFilter as ObjectFilter);
+			}, array);
+		}
 	}
 
-	if (filter && typeof filter === 'object') {
-		const { key, value } = filter;
+	if (typeof filter === 'object' && filter !== null) {
+		return applyObjectFilter(array, filter as ObjectFilter);
+	}
+
+	return array; // If filter type is unknown, return the original array
+};
+
+export const find = <T extends ItemType = ItemType>(array: T[] = [], filter?: Filter): T | undefined => {
+	if (!array.length || !filter || (typeof filter === 'string' && filter === '')) return undefined;
+
+	const includesValue = (itemValue: any, filterValue: string) =>
+		itemValue?.toString().toLowerCase().includes(filterValue.toLowerCase());
+
+	const applyObjectFilter = (item: T, objectFilter: ObjectFilter): boolean => {
+		if (!objectFilter) return true;
+
+		const { key, value } = objectFilter;
 		const keys = Array.isArray(key) ? key : key ? [key] : [];
 		const values = Array.isArray(value) ? value : value ? [value] : [];
 
-		return array.filter(item => {
-			if (keys.length && values.length) {
-				// Check if any of the keys match any of the values
-				return keys.some(k =>
-					values.some(v => includesValue((item as any)[k], v))
-				);
-			}
-			if (keys.length) {
-				// Check for the existence of any of the keys
-				return keys.some(k => k in (item as any));
-			}
-			if (values.length) {
-				// Filter based on values in the item as any
-				return values.some(v =>
-					Object.values(item as any).some(val => includesValue(val, v))
-				);
-			}
-			// No key and no value provided, return true (no additional filtering)
-			return true;
-		});
+		if (keys.length && values.length) {
+			return keys.some(k =>
+				values.some(v => includesValue(item[k], v))
+			);
+		}
+		if (keys.length) {
+			return keys.some(k => k in item);
+		}
+		if (values.length) {
+			return values.some(v =>
+				Object.values(item).some(val => includesValue(val, v))
+			);
+		}
+		return true; // No key and no value provided, return the item
+	};
+
+	if (typeof filter === 'string') {
+		return array.find(item =>
+			Object.values(item).some(value => includesValue(value, filter))
+		);
 	}
 
-	// If filter type is unknown, return the original array
-	return array;
+	if (Array.isArray(filter)) {
+		if (filter.every(f => typeof f === 'string')) {
+			// If filter is an array of strings
+			return array.find(item =>
+				Object.values(item).some(value =>
+					filter.some(f => includesValue(value, f as string))
+				)
+			);
+		}
+
+		if (filter.every(f => typeof f === 'object' && f !== null)) {
+			// If filter is an array of object filters, apply them sequentially
+			return array.find(item =>
+				filter.every(currentFilter => applyObjectFilter(item, currentFilter as ObjectFilter))
+			);
+		}
+	}
+
+	if (typeof filter === 'object' && filter !== null) {
+		return array.find(item => applyObjectFilter(item, filter as ObjectFilter));
+	}
+
+	return undefined; // If filter type is unknown, return undefined
 };
 
 export function sort(array: any[] = [], key: string, type: string, direction: boolean | undefined = false) {
