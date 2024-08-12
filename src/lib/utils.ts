@@ -17,126 +17,86 @@ export type ItemType = {
 	[key: string]: any; // Define specific keys and their types as needed
 };
 
-export const filter = <T extends ItemType = ItemType>(array: T[] = [], filter?: Filter): T[] => {
-	if (!array.length) return [];
+// Common logic for filtering or finding
+const f = <T extends ItemType>(
+	array: T[],
+	filter: Filter | undefined,
+	findOne: boolean
+): T[] | T | undefined => {
+	if (!array.length) return findOne ? undefined : [];
 
-	const includesValue = (itemValue: any, filterValue: string) =>
-		itemValue?.toString().toLowerCase().includes(filterValue.toLowerCase());
-
-	const applyObjectFilter = (array: T[], objectFilter: ObjectFilter): T[] => {
-		if (!objectFilter) return array;
-
-		const { key, value } = objectFilter;
-		const keys = Array.isArray(key) ? key : key ? [key] : [];
-		const values = Array.isArray(value) ? value : value ? [value] : [];
-
-		return array.filter((item: T) => {
-			if (keys.length && values.length) {
-				return keys.some(k =>
-					values.some(v => includesValue(item[k], v))
-				);
-			}
-			if (keys.length) {
-				return keys.some(k => k in item);
-			}
-			if (values.length) {
-				return values.some(v =>
-					Object.values(item).some(val => includesValue(val, v))
-				);
-			}
-			return true; // No key and no value provided, return all items
-		});
+	// Utility function to get the value from a nested key
+	const getNestedValue = (obj: any, keyPath: string): any => {
+		return keyPath.split('.').reduce((acc, key) => acc?.[key], obj);
 	};
 
-	if (typeof filter === 'string') {
-		return array.filter(item =>
-			Object.values(item).some(value => includesValue(value, filter))
-		);
-	}
+	const includesValue = (value: any, filter: string) =>
+		value?.toString().toLowerCase().includes(filter.toLowerCase());
 
-	if (Array.isArray(filter)) {
-		if (filter.every(f => typeof f === 'string')) {
-			// If filter is an array of strings
-			return array.filter(item =>
-				Object.values(item).some(value =>
-					filter.some(f => includesValue(value, f as string))
-				)
-			);
-		}
+	const objectFilter = (item: T, filter: ObjectFilter): boolean => {
+		if (!filter) return true;
 
-		if (filter.every(f => typeof f === 'object' && f !== null)) {
-			// If filter is an array of object filters
-			return filter.reduce((result, currentFilter) => {
-				return applyObjectFilter(result, currentFilter as ObjectFilter);
-			}, array);
-		}
-	}
-
-	if (typeof filter === 'object' && filter !== null) {
-		return applyObjectFilter(array, filter as ObjectFilter);
-	}
-
-	return array; // If filter type is unknown, return the original array
-};
-
-export const find = <T extends ItemType = ItemType>(array: T[] = [], filter?: Filter): T | undefined => {
-	if (!array.length || !filter || (typeof filter === 'string' && filter === '')) return undefined;
-
-	const includesValue = (itemValue: any, filterValue: string) =>
-		itemValue?.toString().toLowerCase().includes(filterValue.toLowerCase());
-
-	const applyObjectFilter = (item: T, objectFilter: ObjectFilter): boolean => {
-		if (!objectFilter) return true;
-
-		const { key, value } = objectFilter;
+		const { key, value } = filter;
 		const keys = Array.isArray(key) ? key : key ? [key] : [];
 		const values = Array.isArray(value) ? value : value ? [value] : [];
 
 		if (keys.length && values.length) {
 			return keys.some(k =>
-				values.some(v => includesValue(item[k], v))
+				values.some(v => includesValue(getNestedValue(item, k), v))
 			);
 		}
 		if (keys.length) {
-			return keys.some(k => k in item);
+			return keys.some(k => getNestedValue(item, k) !== undefined);
 		}
 		if (values.length) {
 			return values.some(v =>
-				Object.values(item).some(val => includesValue(val, v))
+				Object.values(item).some(value => includesValue(value, v))
 			);
 		}
 		return true; // No key and no value provided, return the item
 	};
 
-	if (typeof filter === 'string') {
-		return array.find(item =>
-			Object.values(item).some(value => includesValue(value, filter))
-		);
-	}
+	const checkItem = (item: T): boolean => {
+		if (typeof filter === 'string') {
+			return Object.values(item).some(value => includesValue(value, filter));
+		}
 
-	if (Array.isArray(filter)) {
-		if (filter.every(f => typeof f === 'string')) {
-			// If filter is an array of strings
-			return array.find(item =>
-				Object.values(item).some(value =>
+		if (Array.isArray(filter)) {
+			if (filter.every(f => typeof f === 'string')) {
+				// If filter is an array of strings
+				return Object.values(item).some(value =>
 					filter.some(f => includesValue(value, f as string))
-				)
-			);
+				);
+			}
+
+			if (filter.every(f => typeof f === 'object' && f !== null)) {
+				// If filter is an array of object filters, apply them sequentially
+				return filter.every(f => objectFilter(item, f as ObjectFilter));
+			}
 		}
 
-		if (filter.every(f => typeof f === 'object' && f !== null)) {
-			// If filter is an array of object filters, apply them sequentially
-			return array.find(item =>
-				filter.every(currentFilter => applyObjectFilter(item, currentFilter as ObjectFilter))
-			);
+		if (typeof filter === 'object' && filter !== null) {
+			return objectFilter(item, filter as ObjectFilter);
 		}
-	}
 
-	if (typeof filter === 'object' && filter !== null) {
-		return array.find(item => applyObjectFilter(item, filter as ObjectFilter));
-	}
+		return false;
+	};
 
-	return undefined; // If filter type is unknown, return undefined
+	if (findOne) {
+		return array.find(checkItem);
+	} else {
+		return array.filter(checkItem);
+	}
+};
+
+// Filter function
+export const filter = <T extends ItemType = ItemType>(array: T[] = [], filter?: Filter): T[] => {
+	return f(array, filter, false) as T[];
+};
+
+// Find function
+export const find = <T extends ItemType = ItemType>(array: T[] = [], filter?: Filter): T | undefined => {
+	return f(array, filter, true) as T | undefined;
 };
 
 export function sort(array: any[] = [], key: string, type: string, direction: boolean | undefined = false) {
