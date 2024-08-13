@@ -1,9 +1,9 @@
 "use client";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import { Layouts } from "components";
+import { AnimatePresence, motion } from "framer-motion";
 import { useSwipe } from "hooks";
 import { Swipe } from "hooks/useSwipe";
+import { useEffect, useState } from "react";
 import Style, { SwipeArea } from "./BottomSheet.styled";
 
 export interface BottomSheet {
@@ -24,6 +24,7 @@ export default function BottomSheet(props: BottomSheet) {
     const swipe = useSwipe(
         props?.swipe && {
             ...(typeof props?.swipe === "object" && props?.swipe),
+            threshold: 640,
             vertical: true,
             elastic: { top: 0, bottom: 1 },
             variants: (direction: number) => ({
