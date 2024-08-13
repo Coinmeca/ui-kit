@@ -6,3 +6,11 @@ export interface Staking {
     share?: number;
     apr?: number;
 }
+
+export interface Interest {
+    pay?: Token;
+    amount: number;
+    tax?: number;
+    total?: number;
+    ror?: number | string;
+}
