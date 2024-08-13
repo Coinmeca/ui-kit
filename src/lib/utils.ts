@@ -449,9 +449,9 @@ export function format(
 }
 
 export function parseNumber(value?: number | string | bigint, decimals?: number | string, max?: number): number {
-    return parseFloat(
+    const n = Number(
         format(
-            value || 0,
+            Number(value || 0),
             "number",
             true,
             undefined,
@@ -459,6 +459,7 @@ export function parseNumber(value?: number | string | bigint, decimals?: number 
             typeof decimals === "number" ? decimals : typeof decimals === "string" ? parseInt(decimals) : undefined,
         ),
     );
+    return isNaN(n) ? 0 : n ? n : 0;
 }
 
 export function sign(value?: number | string): string {
