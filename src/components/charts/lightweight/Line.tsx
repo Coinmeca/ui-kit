@@ -68,6 +68,17 @@ export const Line = (props: Line) => {
     const chartRef: any = useRef();
 
     useEffect(() => {
+        const handleResize = () => {
+            createChart(chartRef?.current).applyOptions({
+                width: chartRef?.current?.clientWidth,
+                height: chartRef?.current?.clientHeight,
+            });
+        };
+        chartRef?.current?.addEventListener("resize", handleResize);
+        return () => chartRef?.current?.removeEventListener("resize", handleResize);
+    }, []);
+
+    useEffect(() => {
         if (props?.data && props?.data?.length > 0)
             setData(
                 sort(
@@ -254,9 +265,7 @@ export const Line = (props: Line) => {
                       barSpacing: 10,
                   });
 
-            chartRef?.current?.addEventListener("resize", handleResize);
             return () => {
-                chartRef?.current?.removeEventListener("resize", handleResize);
                 chart.remove();
             };
         }

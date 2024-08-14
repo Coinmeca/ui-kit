@@ -76,6 +76,17 @@ export const Histogram = (props: Histogram) => {
     const [data, setData] = useState<any>([]);
 
     useEffect(() => {
+        const handleResize = () => {
+            createChart(chartRef?.current).applyOptions({
+                width: chartRef?.current?.clientWidth,
+                height: chartRef?.current?.clientHeight,
+            });
+        };
+        chartRef?.current?.addEventListener("resize", handleResize);
+        return () => chartRef?.current?.removeEventListener("resize", handleResize);
+    }, []);
+
+    useEffect(() => {
         if (props?.data && props?.data?.length > 0) {
             const data = sort(
                 props?.data?.map(
@@ -230,9 +241,7 @@ export const Histogram = (props: Histogram) => {
                       barSpacing: 10,
                   });
 
-            chartRef?.current?.addEventListener("resize", handleResize);
             return () => {
-                chartRef?.current?.removeEventListener("resize", handleResize);
                 chart.remove();
             };
         }

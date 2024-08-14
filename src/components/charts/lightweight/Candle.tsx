@@ -72,6 +72,17 @@ export const Candle = (props: Candle) => {
     const chartRef: any = useRef();
 
     useEffect(() => {
+        const handleResize = () => {
+            createChart(chartRef?.current).applyOptions({
+                width: chartRef?.current?.clientWidth,
+                height: chartRef?.current?.clientHeight,
+            });
+        };
+        chartRef?.current?.addEventListener("resize", handleResize);
+        return () => chartRef?.current?.removeEventListener("resize", handleResize);
+    }, []);
+
+    useEffect(() => {
         if (props?.price && props?.price?.length > 0) {
             setPrice(
                 sort(
@@ -111,12 +122,6 @@ export const Candle = (props: Candle) => {
     useEffect(() => {
         // const chart = createChart(document.getElementById('container'), );
         if (chartRef?.current) {
-            const handleResize = () => {
-                chart.applyOptions({
-                    width: chartRef?.current?.clientWidth,
-                    height: chartRef?.current?.clientHeight,
-                });
-            };
             const chart = createChart(chartRef?.current, {
                 layout: {
                     background: {
@@ -203,9 +208,7 @@ export const Candle = (props: Candle) => {
                       barSpacing: 10,
                   });
 
-            chartRef?.current?.addEventListener("resize", handleResize);
             return () => {
-                chartRef?.current?.removeEventListener("resize", handleResize);
                 chart.remove();
             };
         }
