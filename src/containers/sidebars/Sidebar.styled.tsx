@@ -30,7 +30,7 @@ export const Upper = styled.section`
     }
 `;
 
-export const Lower = styled.section`
+export const Lower = styled.section<{ $align: "left" | "right" }>`
     background: rgba(var(--black), var(--o06));
     z-index: 11;
 
@@ -38,7 +38,7 @@ export const Lower = styled.section`
         background: rgba(var(--black), var(--o09));
 
         &[data-active="false"] {
-            transform: translateX(100%);
+            transform: translateX(${({ $align }) => $align === 'left' ? '-100' : '100'}%);
             pointer-events: none;
         }
 
@@ -65,6 +65,7 @@ const Style = styled.aside<{
     $scale: number;
     $width: number;
     $active: boolean;
+    $align: "left" | "right";
 }>`
     font-size: ${({ $scale }) => $scale}em;
     width: ${({ $width }) => $width}em;
@@ -123,7 +124,8 @@ const Style = styled.aside<{
     @media all and (max-width: 1919px) {
         position: absolute;
         pointer-events: none;
-        right: 0;
+
+        ${({ $align }) => $align === "left" ? "left: 0;" : "right: 0;"}
 
         & > * {
             /* background: rgba(var(--black), var(--o09)); */

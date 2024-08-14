@@ -114,27 +114,27 @@ export function sort(array: any[] = [], key: string, type: string, direction: bo
             return typeof direction === "undefined"
                 ? [...array]
                 : direction
-                ? [...array].sort((a, b) => {
-                      const { x, y } = depth(a, b);
-                      return x.localeCompare(y);
-                  })
-                : [...array].sort((a, b) => {
-                      const { x, y } = depth(a, b);
-                      return y.localeCompare(x);
-                  });
+                    ? [...array].sort((a, b) => {
+                        const { x, y } = depth(a, b);
+                        return x.localeCompare(y);
+                    })
+                    : [...array].sort((a, b) => {
+                        const { x, y } = depth(a, b);
+                        return y.localeCompare(x);
+                    });
         }
         case "number": {
             return typeof direction === "undefined"
                 ? [...array]
                 : direction
-                ? [...array].sort((a, b) => {
-                      const { x, y } = depth(a, b);
-                      return parseFloat(x) - parseFloat(y);
-                  })
-                : [...array].sort((a, b) => {
-                      const { x, y } = depth(a, b);
-                      return parseFloat(y) - parseFloat(x);
-                  });
+                    ? [...array].sort((a, b) => {
+                        const { x, y } = depth(a, b);
+                        return parseFloat(x) - parseFloat(y);
+                    })
+                    : [...array].sort((a, b) => {
+                        const { x, y } = depth(a, b);
+                        return parseFloat(y) - parseFloat(x);
+                    });
         }
         default: {
             return [...array];
@@ -157,7 +157,7 @@ const pattern = {
 
 type input = "email" | "number" | "currency" | "date" | string;
 
-interface format {
+interface FormatOption {
     display?: boolean | number;
     limit?: number;
     unit?: boolean | number;
@@ -211,7 +211,7 @@ export function unit(value: number | string, upper?: number) {
 export function format(
     value?: number | string | bigint,
     type?: input,
-    option?: boolean | number | format,
+    option?: boolean | number | FormatOption,
     fix?: number | "auto",
     max?: number,
     decimals?: number,
@@ -221,8 +221,8 @@ export function format(
         typeof option === "object" && typeof option?.limit === "number"
             ? option?.limit
             : typeof option === "number"
-            ? option
-            : undefined;
+                ? option
+                : undefined;
     let unit =
         typeof option === "object" &&
         (typeof option?.unit === "boolean" ? option?.unit : typeof option?.unit === "number" ? true : false);
@@ -255,6 +255,7 @@ export function format(
             if (value === "." || value === "0.") return display ? "0" : "0.";
             if (value === "" || value === "NaN" || value?.length <= 0) return display ? "0" : "";
             if (typeof value === "number" && isNaN(value)) return display ? "-" : "";
+
             let sig = (signs && sign(value) === "-" && "-") || "";
 
             let copy: any = [value];
@@ -389,7 +390,7 @@ export function format(
                 }
 
                 for (let i = 0; i < copy[1]?.length; i++) {
-                    if (typeof fix === "number" && !isNaN(fix) && i === fix && fix > zero) break;
+                    if (typeof fix === "number" && !isNaN(fix) && i >= fix && fix > zero) break;
                     if (!isNaN(parseInt(copy[1][i]))) {
                         if (display && copy[1][i] === "0" && num) break;
                         if (copy[1][i] !== "0") num = true;
@@ -448,10 +449,11 @@ export function format(
     }
 }
 
+
 export function parseNumber(value?: number | string | bigint, decimals?: number | string, max?: number): number {
     const n = Number(
         format(
-            Number(value || 0),
+            value,
             "number",
             true,
             undefined,
@@ -459,7 +461,7 @@ export function parseNumber(value?: number | string | bigint, decimals?: number 
             typeof decimals === "number" ? decimals : typeof decimals === "string" ? parseInt(decimals) : undefined,
         ),
     );
-    return isNaN(n) ? 0 : n ? n : 0;
+    return isNaN(n) ? 0 : n || 0;
 }
 
 export function sign(value?: number | string): string {

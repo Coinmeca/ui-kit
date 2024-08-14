@@ -12,6 +12,7 @@ export interface Sidebars {
     active?: boolean;
     width?: number;
     scale?: number;
+    align?: "left" | "right";
     upper?: { active?: boolean; children?: Sidebar[]; onBlur?: Function };
     lower?: {
         active?: boolean;
@@ -33,6 +34,7 @@ export default function Sidebar(props: Sidebars) {
     const active = props?.active || false;
     const scale = props?.scale || 1;
     const width = props?.width || 60;
+    const align = props?.align === "left" || props?.align === "right" ? props?.align : "left";
 
     const swiping = typeof props?.lower?.swipe === "object" ? props?.lower?.swipe : undefined;
     const elastic = swiping?.elastic || 0.045;
@@ -65,9 +67,9 @@ export default function Sidebar(props: Sidebars) {
     };
 
     return (
-        <Style tabIndex={10} $scale={scale} $active={active} $width={width} onBlur={handleBlur}>
+        <Style tabIndex={10} $scale={scale} $active={active} $width={width} $align={align} onBlur={handleBlur}>
             {props?.lower?.children && props?.lower?.children?.length > 0 && (
-                <Lower data-active={props?.lower?.active} onBlur={handleLowerBlur}>
+                <Lower $align={align} data-active={props?.lower?.active} onBlur={handleLowerBlur}>
                     {props?.lower?.swipe && <SwipeArea {...swipe} $area={area} style={typeof props?.lower?.swipe === "object" && props?.lower?.swipe?.style} />}
                     {props?.lower?.children?.map((v: any, k: number) => (
                         <section key={k} data-active={v?.active}>

@@ -1,12 +1,13 @@
 "use client";
 import { Layouts } from "components";
-import { Headers, Sidebar, Footers } from "containers";
-import { Toast } from "containers/sidebars";
 import type { BG } from "components/layouts/bg/BG";
-import type { Header } from "containers/headers/Header";
+import { Footers, Headers, Sidebar } from "containers";
 import type { Footer } from "containers/footers/Footer";
+import type { Header } from "containers/headers/Header";
+import { Toast } from "containers/sidebars";
 import type { Sidebars } from "containers/sidebars/Sidebar";
 import type { Toast as Toasts } from "containers/sidebars/toast/Toast";
+import { useMemo } from "react";
 import Style from "./Frame.styled";
 
 export interface Frame {
@@ -22,8 +23,18 @@ export interface Frame {
 }
 
 export default function Frame(props: Frame) {
-    const align = props?.align || "left";
     const width = props?.side || 60;
+    const align = props?.align || "left";
+    const position = props?.direction === 'left' ? props?.align === 'left' ? 'right' : 'left' : props?.align || "left";
+
+    const side = useMemo(() => (
+        <>
+            {props?.sidebar && <Sidebar {...props?.sidebar} width={width} align={position} />}
+            {props?.toast && props?.toast?.list && props?.toast?.list?.length > 0 && (
+                <Toast {...props?.toast} width={width} align={position} />
+            )}
+        </>
+    ), [props?.sidebar, props?.toast])
 
     return (
         <>
@@ -31,18 +42,13 @@ export default function Frame(props: Frame) {
             <Style $direction={props?.direction}>
                 {props?.header && <Headers.Header {...props?.header} side={{ ...props?.header?.side, width: width }} />}
                 <section>
-                    {align === "left" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
+                    {align === "left" && side}
                     <main>
                         {props?.children}
                         <Footers.Footer {...props?.footer} />
                         {/* {props?.footer && <Footers.Footer {...props?.footer} />} */}
                     </main>
-                    <>
-                        {align === "right" && props?.sidebar && <Sidebar {...props?.sidebar} width={width} />}
-                        {props?.toast && props?.toast?.list && props?.toast?.list?.length > 0 && (
-                            <Toast {...props?.toast} width={width} align={align} />
-                        )}
-                    </>
+                    {align === "right" && side}
                 </section>
             </Style>
         </>

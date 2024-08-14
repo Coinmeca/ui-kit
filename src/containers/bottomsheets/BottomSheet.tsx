@@ -24,7 +24,7 @@ export default function BottomSheet(props: BottomSheet) {
     const swipe = useSwipe(
         props?.swipe && {
             ...(typeof props?.swipe === "object" && props?.swipe),
-            threshold: 640,
+            threshold: 10000,
             vertical: true,
             elastic: { top: 0, bottom: 1 },
             variants: (direction: number) => ({
