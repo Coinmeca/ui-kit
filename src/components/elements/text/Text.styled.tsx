@@ -11,7 +11,11 @@ const responsive = (responsive: Responsive) => {
                 ${responsive?.weight && `font-weight: ${responsive?.weight}`};
                 ${responsive?.align && `text-align: ${responsive?.align}`};
                 ${responsive?.height && `line-height: ${responsive?.height}em;`}
-                ${responsive?.color ? `color: rgb(${Root.Color(responsive?.color)});` : responsive?.change && `color: rgb(var(--change));`}
+                ${
+                    responsive?.color
+                        ? `color: rgb(${Root.Color(responsive?.color)});`
+                        : responsive?.change && `color: rgb(var(--change));`
+                }
                 ${responsive?.opacity && `opacity: ${responsive.opacity};`}
             `;
 
@@ -49,15 +53,22 @@ export const H1 = styled.h1<{
     $fit?: boolean;
     $fix?: boolean;
 }>`
+    word-break: break-word;
     vertical-align: middle;
     font-size: 8em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
-    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    color: ${({ $color, $change }) =>
+        $change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`};
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $case }) =>
-        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+        $case &&
+        ($case === "upper"
+            ? "text-transform: uppercase;"
+            : $case === "lower"
+            ? "text-transform: lowercase;"
+            : "text-transform: capitalize;")}
     ${({ $fix }) =>
         $fix &&
         css`
@@ -106,15 +117,22 @@ export const H2 = styled.h2<{
     $fit?: boolean;
     $fix?: boolean;
 }>`
+    word-break: break-word;
     vertical-align: middle;
     font-size: 6em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
-    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    color: ${({ $color, $change }) =>
+        $change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`};
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $case }) =>
-        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+        $case &&
+        ($case === "upper"
+            ? "text-transform: uppercase;"
+            : $case === "lower"
+            ? "text-transform: lowercase;"
+            : "text-transform: capitalize;")}
     ${({ $fix }) =>
         $fix &&
         css`
@@ -163,15 +181,22 @@ export const H3 = styled.h3<{
     $fit?: boolean;
     $fix?: boolean;
 }>`
+    word-break: break-word;
     vertical-align: middle;
     font-size: 5em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
-    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    color: ${({ $color, $change }) =>
+        $change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`};
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $case }) =>
-        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+        $case &&
+        ($case === "upper"
+            ? "text-transform: uppercase;"
+            : $case === "lower"
+            ? "text-transform: lowercase;"
+            : "text-transform: capitalize;")}
     ${({ $fix }) =>
         $fix &&
         css`
@@ -220,15 +245,22 @@ export const H4 = styled.h4<{
     $fit?: boolean;
     $fix?: boolean;
 }>`
+    word-break: break-word;
     vertical-align: middle;
     font-size: 4em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
-    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    color: ${({ $color, $change }) =>
+        $change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`};
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $case }) =>
-        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+        $case &&
+        ($case === "upper"
+            ? "text-transform: uppercase;"
+            : $case === "lower"
+            ? "text-transform: lowercase;"
+            : "text-transform: capitalize;")}
     ${({ $fix }) =>
         $fix &&
         css`
@@ -277,15 +309,22 @@ export const H5 = styled.h5<{
     $fit?: boolean;
     $fix?: boolean;
 }>`
+    word-break: break-word;
     vertical-align: middle;
     font-size: 3em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
-    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    color: ${({ $color, $change }) =>
+        $change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`};
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $case }) =>
-        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+        $case &&
+        ($case === "upper"
+            ? "text-transform: uppercase;"
+            : $case === "lower"
+            ? "text-transform: lowercase;"
+            : "text-transform: capitalize;")}
     ${({ $fix }) =>
         $fix &&
         css`
@@ -334,15 +373,22 @@ export const H6 = styled.h6<{
     $fit?: boolean;
     $fix?: boolean;
 }>`
+    word-break: break-word;
     vertical-align: middle;
     font-size: 2em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
-    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    color: ${({ $color, $change }) =>
+        $change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`};
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $case }) =>
-        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+        $case &&
+        ($case === "upper"
+            ? "text-transform: uppercase;"
+            : $case === "lower"
+            ? "text-transform: lowercase;"
+            : "text-transform: capitalize;")}
     ${({ $fix }) =>
         $fix &&
         css`
@@ -391,15 +437,22 @@ export const Strong = styled.strong<{
     $fit?: boolean;
     $fix?: boolean;
 }>`
+    word-break: break-word;
     vertical-align: middle;
     font-size: 1.5em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
-    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    color: ${({ $color, $change }) =>
+        $change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`};
     ${({ $align }) => $align && `text-align: ${$align};`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $case }) =>
-        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+        $case &&
+        ($case === "upper"
+            ? "text-transform: uppercase;"
+            : $case === "lower"
+            ? "text-transform: lowercase;"
+            : "text-transform: capitalize;")}
     ${({ $fix }) =>
         $fix &&
         css`
@@ -444,15 +497,22 @@ export const P = styled.p<{
     $fit?: boolean;
     $fix?: boolean;
 }>`
+    word-break: break-word;
     vertical-align: middle;
     font-size: 1.5em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
-    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    color: ${({ $color, $change }) =>
+        $change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`};
     ${({ $align }) => $align && `text-align: ${$align};`};
     opacity: ${({ $opacity }) => ($opacity ? `${$opacity}` : 0.6)};
     ${({ $case }) =>
-        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+        $case &&
+        ($case === "upper"
+            ? "text-transform: uppercase;"
+            : $case === "lower"
+            ? "text-transform: lowercase;"
+            : "text-transform: capitalize;")}
     ${({ $fix }) =>
         $fix &&
         css`
@@ -497,15 +557,22 @@ export const Desc = styled.p<{
     $fit?: boolean;
     $fix?: boolean;
 }>`
+    word-break: break-word;
     vertical-align: middle;
     font-size: 1.25em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
-    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    color: ${({ $color, $change }) =>
+        $change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`};
     ${({ $align }) => $align && `text-align: ${$align};`};
     opacity: ${({ $opacity }) => ($opacity ? `${$opacity}` : 0.45)};
     ${({ $case }) =>
-        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+        $case &&
+        ($case === "upper"
+            ? "text-transform: uppercase;"
+            : $case === "lower"
+            ? "text-transform: lowercase;"
+            : "text-transform: capitalize;")}
     ${({ $fix }) =>
         $fix &&
         css`
@@ -552,15 +619,22 @@ export const Text = styled.span<{
     $fit?: boolean;
     $fix?: boolean;
 }>`
+    word-break: break-word;
     vertical-align: middle;
     font-size: ${({ $size }) => $size}em;
     font-weight: ${({ $weight }) => $weight};
     line-height: ${({ $height }) => $height}em;
     ${({ $align }) => $align && `text-align: ${$align};`};
-    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    color: ${({ $color, $change }) =>
+        $change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $case }) =>
-        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+        $case &&
+        ($case === "upper"
+            ? "text-transform: uppercase;"
+            : $case === "lower"
+            ? "text-transform: lowercase;"
+            : "text-transform: capitalize;")}
     ${({ $fix }) =>
         $fix &&
         css`
@@ -610,6 +684,7 @@ export const Link = styled.a<{
     $fix?: boolean;
 }>`
     display: inline;
+    word-break: break-word;
     vertical-align: middle;
     text-decoration: underline;
     text-underline-offset: 0.25em;
@@ -619,11 +694,17 @@ export const Link = styled.a<{
     font-size: ${({ $size }) => ($size ? `${$size}em` : "inherit")};
     font-weight: ${({ $weight }) => ($weight ? $weight : "inherit")};
     line-height: ${({ $height }) => ($height ? `${$height}em` : "inherit")};
-    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    color: ${({ $color, $change }) =>
+        $change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`};
     ${({ $align }) => ($align ? `text-align: ${$align}` : "inherit")};
     ${({ $opacity }) => $opacity && `opacity: ${$opacity};`}
     ${({ $case }) =>
-        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+        $case &&
+        ($case === "upper"
+            ? "text-transform: uppercase;"
+            : $case === "lower"
+            ? "text-transform: lowercase;"
+            : "text-transform: capitalize;")}
     ${({ $fix }) =>
         $fix &&
         css`
@@ -694,6 +775,7 @@ export const Button = styled.a<{
     $fix?: boolean;
 }>`
     display: inline;
+    word-break: break-word;
     vertical-align: middle;
     text-decoration: none;
     text-underline-offset: 0.25em;
@@ -704,10 +786,16 @@ export const Button = styled.a<{
     font-size: ${({ $size }) => ($size ? `${$size}em` : "inherit")};
     font-weight: ${({ $weight }) => ($weight ? $weight : "inherit")};
     line-height: ${({ $height }) => ($height ? `${$height}em` : "inherit")};
-    color: ${({ $color, $change }) => ($change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+    color: ${({ $color, $change }) =>
+        $change ? "rgb(var(--change))" : $color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`};
     ${({ $align }) => ($align ? `text-align: ${$align}` : "inherit")};
     ${({ $case }) =>
-        $case && ($case === "upper" ? "text-transform: uppercase;" : $case === "lower" ? "text-transform: lowercase;" : "text-transform: capitalize;")}
+        $case &&
+        ($case === "upper"
+            ? "text-transform: uppercase;"
+            : $case === "lower"
+            ? "text-transform: lowercase;"
+            : "text-transform: capitalize;")}
     ${({ $fix }) =>
         $fix &&
         css`
