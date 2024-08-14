@@ -1,6 +1,6 @@
-'use client';
-import { useState } from 'react';
-import type { Order } from 'types';
+"use client";
+import type { Order } from "@coinmeca/ui/types";
+import { useState } from "react";
 
 export interface Condition {
     mode?: boolean;
@@ -21,7 +21,7 @@ export default function useVault(initial: Order, condition: Condition, available
         total: initial?.total || 0,
     });
 
-    const mode = condition?.mode || true;
+    const mode = typeof condition?.mode === 'boolean' ? condition?.mode : true;
     const ratio = condition?.ratio || 0;
     const require = condition?.require || 0;
     const locked = condition?.locked || 0;
@@ -33,12 +33,6 @@ export default function useVault(initial: Order, condition: Condition, available
         const p = price || order?.price;
         const max = available && p !== 0 && (mode ? available : available * p);
         return max && max < amount ? max : amount;
-    };
-    const getQuantity = (quantity: number, price?: number): number => {
-        const p = price || order?.price;
-        const max = maxQuantity(p);
-        // console.log(max && max < quantity ? max : quantity);
-        return max && max < quantity ? max : quantity;
     };
 
     const maxAmount = (): number | undefined => {
@@ -112,10 +106,11 @@ export default function useVault(initial: Order, condition: Condition, available
                 ...state,
                 price: p,
                 amount: a,
-                quantity: mode ? q : locked > q ? locked : q,
+                quantity: mode ? q : locked < q ? locked : q,
                 fees: f,
                 total: q - f,
             };
+            console.log('o', o)
             return o;
         });
         return o;
@@ -123,12 +118,23 @@ export default function useVault(initial: Order, condition: Condition, available
 
     const fees = (quantity: number) => (quantity === 0 ? 0 : quantity * fee);
 
+    const reset = (price?: number) =>
+        setOrder((order) => ({
+            ...order,
+            price: price || order?.price,
+            amount: 0,
+            quantity: 0,
+            fees: 0,
+            total: 0,
+        }));
+
     return {
         order,
         base,
         quote,
         price,
         amount,
+        reset,
         maxAmount,
         maxQuantity,
     };

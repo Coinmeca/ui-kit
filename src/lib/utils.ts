@@ -156,7 +156,6 @@ const pattern = {
 };
 
 type input = "email" | "number" | "currency" | "date" | string;
-
 interface FormatOption {
     display?: boolean | number;
     limit?: number;
@@ -209,7 +208,7 @@ export function unit(value: number | string, upper?: number) {
 }
 
 export function format(
-    value?: number | string | bigint,
+    value?: number | string | bigint | false,
     type?: input,
     option?: boolean | number | FormatOption,
     fix?: number | "auto",
@@ -234,7 +233,7 @@ export function format(
 
     switch (type) {
         case "email": {
-            if (typeof value === "undefined") return "";
+            if (!value) return "";
             if (typeof value !== "string") value = value.toString();
             if (value.indexOf("@") === 1) {
                 let copy: string[] = value.split("@");
@@ -251,6 +250,7 @@ export function format(
         case "numberic":
         case "currency": {
             if (value === undefined || value === null) return display ? "-" : "";
+            if (value === false) return "0";
             value = value?.toString()?.replaceAll(",", "");
             if (value === "." || value === "0.") return display ? "0" : "0.";
             if (value === "" || value === "NaN" || value?.length <= 0) return display ? "0" : "";
@@ -417,7 +417,7 @@ export function format(
             return sig + (unit ? result + " " + u : result);
         }
         case "date":
-            if (typeof value === "undefined") return "-";
+            if (value === undefined || value === null || value === false) return "-";
             if (typeof value !== "string") value = value.toString();
             if (value?.length > 10) value = value.substring(0, 10);
 
@@ -449,6 +449,9 @@ export function format(
     }
 }
 
+export function isNumber(value?: any) {
+    return !!value && typeof value === 'number' && !isNaN(value);
+}
 
 export function parseNumber(value?: number | string | bigint, decimals?: number | string, max?: number): number {
     const n = Number(

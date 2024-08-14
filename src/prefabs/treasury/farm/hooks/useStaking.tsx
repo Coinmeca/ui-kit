@@ -1,65 +1,88 @@
 ﻿"use client";
+import { isNumber, parseNumber } from "@coinmeca/ui/lib/utils";
+import { Staking } from "@coinmeca/ui/types";
 import { useCallback, useMemo, useState } from "react";
-import { Staking } from "types";
 
 export interface Farm {
+    type?: boolean;
+    start?: number;
+    duration?: number;
+    period?: number;
+    end?: number;
     staked: number;
     interest?: number;
     value?: {
         stake?: number;
         earn?: number;
     };
-    start?: number;
-    end?: number;
 }
 
-export default function useStaking(type: boolean, initial: Staking, available?: number, farm?: Farm) {
+export default function useStaking(mode: boolean, available?: number, farm?: Farm) {
     const [staking, setStaking] = useState<Staking>({
-        amount: initial?.amount || 0,
+        amount: 0,
         share: 0,
         apr: 0,
     });
 
+    const type = farm?.type || true;
+
     const now = Math.floor(Date.now() / 1000);
+    const start = parseNumber(farm?.start || 0);
+    const end = parseNumber(farm?.end || 0);
+    const period = parseNumber(farm?.period || 0);
 
-    const remain = useMemo(() => (farm?.end && farm?.end > now) ? (farm?.end - now) : 0, [farm?.end]);
+    // const extra = period > (end - now) ? period - (end - now) : period;
+    const remain = end && now < end ? end - now : period;
+    const duration = useMemo(() => {
+        const d = parseNumber(farm?.duration);
+        return (d && end > now ? d : period) || end - start || 0;
+    }, [start, end, period, farm?.duration]);
+    const days = useMemo(() => duration / 86400, [duration]);
+    const next = useMemo(() => period / 86400, [period]);
 
-    const days = useMemo(() => remain / 86400, [remain])
-
-    const interest = useMemo(
-        () => (
-            farm?.interest && farm?.interest > 0 &&
-            farm?.start && farm?.start > 0 &&
-            farm?.end && farm?.end > 0 &&
-            farm?.start < farm?.end &&
-            (farm?.end - farm?.start) > 0
-        )
-            ? farm?.interest * (farm?.end - now) / (farm?.end - farm?.start) : 0
-        , [farm?.interest])
+    const staked = useMemo(() => parseNumber(farm?.staked) || 0, [farm?.staked]);
+    const yields = useMemo(() => parseNumber(farm?.interest) || 0, [farm?.interest]);
+    const interest = useMemo(() => (yields ? (yields * (remain / duration)) / next : 0), [yields, remain, duration, next]);
+    const value = useMemo(
+        () => ({
+            stake: type ? 1 : parseNumber(farm?.value?.stake) || 1,
+            earn: type ? 1 : parseNumber(farm?.value?.earn) || 1,
+        }),
+        [type, farm?.value],
+    );
 
     const apr = useCallback(
-        (amount: number): number =>
-            (amount && farm?.staked)
-                ? type
-                    ? (interest / (farm?.staked + amount) / days)
-                    : ((farm?.value?.stake && farm?.value?.earn) && ((interest * farm?.value?.earn) / (farm?.staked * farm?.value?.stake + amount * farm?.value.stake) / days)) || 0
-                : 0
-        ,
-        [type, interest, farm?.staked, farm?.value],
+        (amount: number, staking?: number | boolean) =>
+            isNumber(amount)
+                ? (((interest * value.earn) / days) * 100) /
+                  (((isNumber(staking) ? ((staking as number) || 0) + (mode ? amount : -amount || 0) : amount) + staked) *
+                      value.stake)
+                : 0,
+        [mode, staked, interest, value, days],
     );
 
     const share = useCallback(
-        (amount: number) => (!amount || !farm?.staked) ? 0 : (amount * 100) / farm?.staked,
-        [farm?.staked],
+        (amount: number, staking?: number | boolean) =>
+            (!mode && (!staking || staking === 0)) || !isNumber(amount)
+                ? 0
+                : ((isNumber(staking) && (staking as number) > 0
+                      ? (staking as number) + (mode ? amount : -amount || 0)
+                      : amount) *
+                      100) /
+                  (staked ? staked + (staking === true ? 0 : mode ? amount : -amount) : amount),
+        [mode, staked],
     );
 
-    const getAmount = (amount: number): number => {
-        return available && available < amount ? available : amount;
-    };
+    const getAmount = useCallback(
+        (amount: number): number => {
+            return available && available < amount ? available : amount;
+        },
+        [available],
+    );
 
-    const maxAmount = (): number | undefined => {
+    const maxAmount = useMemo((): number | undefined => {
         return available || staking?.amount;
-    };
+    }, [available, staking.amount]);
 
     const amount = (amount: number) => {
         let s: Staking;
@@ -75,11 +98,14 @@ export default function useStaking(type: boolean, initial: Staking, available?: 
             return s;
         }
 
+        amount = getAmount(amount);
+        const avail = !mode && available;
+
         s = {
             ...staking,
-            amount: getAmount(amount),
-            share: share(amount),
-            apr: apr(amount),
+            amount,
+            share: share(amount, avail),
+            apr: apr(amount, avail),
         };
         setStaking(s);
         return s;
@@ -101,6 +127,6 @@ export default function useStaking(type: boolean, initial: Staking, available?: 
         share,
         interest,
         days,
-        apr
+        apr,
     };
 }
