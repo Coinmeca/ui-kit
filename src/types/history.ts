@@ -28,4 +28,5 @@ export interface Stake {
 	type: string;
 	amount: number | string;
 	share: number | string;
+	txHash?: string;
 }

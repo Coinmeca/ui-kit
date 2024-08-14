@@ -251,10 +251,11 @@ export function format(
         case "currency": {
             if (value === undefined || value === null) return display ? "-" : "";
             if (value === false) return "0";
+            if (typeof value === "number" && isNaN(value)) return display ? "-" : "";
+            if (typeof value !== "number" && typeof value !== "string") return display ? "-" : "";
             value = value?.toString()?.replaceAll(",", "");
             if (value === "." || value === "0.") return display ? "0" : "0.";
             if (value === "" || value === "NaN" || value?.length <= 0) return display ? "0" : "";
-            if (typeof value === "number" && isNaN(value)) return display ? "-" : "";
 
             let sig = (signs && sign(value) === "-" && "-") || "";
 

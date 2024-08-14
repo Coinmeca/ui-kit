@@ -1,6 +1,6 @@
 ﻿"use client";
-import { isNumber, parseNumber } from "@coinmeca/ui/lib/utils";
-import { Staking } from "@coinmeca/ui/types";
+import { isNumber, parseNumber } from "lib/utils";
+import { Staking } from "types";
 import { useCallback, useMemo, useState } from "react";
 
 export interface Farm {

@@ -1,5 +1,5 @@
 "use client";
-import type { Order } from "@coinmeca/ui/types";
+import type { Order } from "types";
 import { useState } from "react";
 
 export interface Condition {
