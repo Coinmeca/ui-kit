@@ -16,7 +16,7 @@ type UseDate = TimeFunctions & {
     date: Date;
     now: number;
     end: number;
-    when: number;
+    when: (...args: Duration) => number;
     sec: (...args: Duration) => Date;
     day: (...args: Duration) => Date;
     week: (...args: Duration) => Date;
@@ -38,25 +38,22 @@ export default function useDate(initial?: Date): UseDate {
         week: 604_800,
         month: 2_628_000,
         year: 31_536_000,
-    }), [])
+    }), []);
 
     const resolve = useCallback((time: number, type?: Time) => {
         switch (type) {
-            case 'days': {
-                return time *= times.day;
-            }
-            case 'weeks': {
-                return time *= times.week;
-            }
-            case 'months': {
-                return time *= times.month;
-            }
-            case 'years': {
-                return time *= times.year;
-            }
-            default: return time;
+            case 'days':
+                return time * times.day;
+            case 'weeks':
+                return time * times.week;
+            case 'months':
+                return time * times.month;
+            case 'years':
+                return time * times.year;
+            default:
+                return time;
         }
-    }, [times])
+    }, [times]);
 
     const sec = useCallback((...args: Duration) => {
         const secs = resolve(
@@ -69,19 +66,19 @@ export default function useDate(initial?: Date): UseDate {
             weeks: secs / times.week,
             months: secs / times.month,
             years: secs / times.year,
-        }
-    }, [resolve])
+        };
+    }, [resolve, times.day, times.week, times.month, times.year]);
 
-    const day = useCallback((...args: Duration): Date => ({ ...sec(...args) }), [sec, times.day]);
-    const week = useCallback((...args: Duration): Date => ({ ...sec(...args) }), [sec, times.day]);
-    const month = useCallback((...args: Duration): Date => ({ ...sec(...args) }), [sec, times.day]);
-    const year = useCallback((...args: Duration): Date => ({ ...sec(...args) }), [sec, times.day]);
+    const day = useCallback((...args: Duration): Date => ({ ...sec(...args) }), [sec]);
+    const week = useCallback((...args: Duration): Date => ({ ...sec(...args) }), [sec]);
+    const month = useCallback((...args: Duration): Date => ({ ...sec(...args) }), [sec]);
+    const year = useCallback((...args: Duration): Date => ({ ...sec(...args) }), [sec]);
 
     const set = useCallback((time: number, type?: Time) => {
         const date: Date = sec(time, type);
         setDate(date);
         return date;
-    }, [resolve, day, week, month, year])
+    }, [sec]);
 
     const secs = useCallback((time: number) => set(time), [set]);
     const days = useCallback((time: number) => set(time, 'days'), [set]);
@@ -89,9 +86,9 @@ export default function useDate(initial?: Date): UseDate {
     const months = useCallback((time: number) => set(time, 'months'), [set]);
     const years = useCallback((time: number) => set(time, 'years'), [set]);
 
-    const now = Math.floor(Date.now() / 1000);
+    const now = useMemo(() => Math.floor(Date.now() / 1000), []);
     const end = useMemo(() => now + date.secs, [now, date]);
-    const when = useMemo((...args: Duration) => now + sec(...args).secs, [now, date]);
+    const when = useCallback((...args: Duration) => now + sec(...args).secs, [now, sec]);
 
     return {
         date,
@@ -108,5 +105,5 @@ export default function useDate(initial?: Date): UseDate {
         months,
         year,
         years,
-    }
+    };
 }
