@@ -63,7 +63,7 @@ export const Histogram = (props: Histogram) => {
                 regular: `rgba(${theme}, 0.15)`,
                 light: `rgba(${theme}, 0.05)`,
             },
-            threshold: props?.color?.threshold || 1,
+            threshold: props?.color?.threshold || 0,
         }),
         [props?.color, theme],
     );
