@@ -14,6 +14,8 @@ export interface Avatar {
     character?: number | string;
     display?: number;
     length?: number;
+    stroke?: number;
+    fill?: string | boolean;
     style?: object;
 }
 
@@ -26,11 +28,12 @@ export default function Avatar(props: Avatar) {
     const display = props?.display || 6;
     const length = props?.length || props?.name?.length;
     const hideName = props?.hideName || false;
+    const fill = props?.fill || false;
 
     return (
         <>
             {((props?.img && props?.img !== "") || (props?.name && props?.name !== "")) && (
-                <Style $color={color} $scale={scale} $size={size} style={props?.style}>
+                <Style $color={color} $scale={scale} $size={size} $fill={fill} $stroke={props?.stroke} style={props?.style}>
                     {(name || (props?.img && props?.img !== "")) && (
                         <div>
                             {props?.img && props?.img !== "" ? (
@@ -39,11 +42,11 @@ export default function Avatar(props: Avatar) {
                                 ((typeof character === "string" && character !== "") || (name && name !== "")) && (
                                     <span>
                                         <span>
-                                            {typeof character === "string"
-                                                ? character
-                                                : name?.startsWith("0x")
-                                                ? name?.substring(2, 2 + character)
-                                                : name?.substring(0, character)}
+                                            {typeof character === "number"
+                                                ? name?.startsWith("0x")
+                                                    ? name?.substring(2, 2 + character)
+                                                    : name?.substring(0, character)
+                                                : character}
                                         </span>
                                     </span>
                                 )
