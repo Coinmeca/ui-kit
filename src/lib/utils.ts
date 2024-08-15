@@ -246,6 +246,7 @@ export function format(
             }
             return value;
         }
+        case "int":
         case "number":
         case "numberic":
         case "currency": {
@@ -372,49 +373,51 @@ export function format(
                 copy[0] = number;
             }
 
-            let dec: string | number = "";
-            num = false;
-            point = false;
-            if (copy?.length > 1) {
-                point = true;
-                if (copy?.length > 2) {
-                    for (let i = 2; i < copy?.length; i++) {
-                        copy[1] += copy[i].toString();
+            let result = copy[0];
+            if (type !== 'int') {
+                let dec: string | number = "";
+                num = false;
+                point = false;
+                if (copy?.length > 1) {
+                    point = true;
+                    if (copy?.length > 2) {
+                        for (let i = 2; i < copy?.length; i++) {
+                            copy[1] += copy[i].toString();
+                        }
+                        copy[1] = copy[1]?.toString();
                     }
-                    copy[1] = copy[1]?.toString();
-                }
 
-                if (limit) {
-                    let l = limit - copy[0].length;
-                    l = l > (copy[1]?.length || 0) ? copy[1]?.length : l;
-                    if (l > 0) copy[1] = copy[1]?.substring(0, l);
-                }
+                    if (limit) {
+                        let l = limit - copy[0].length;
+                        l = l > (copy[1]?.length || 0) ? copy[1]?.length : l;
+                        if (l > 0) copy[1] = copy[1]?.substring(0, l);
+                    }
 
-                for (let i = 0; i < copy[1]?.length; i++) {
-                    if (typeof fix === "number" && !isNaN(fix) && i >= fix && fix > zero) break;
-                    if (!isNaN(parseInt(copy[1][i]))) {
-                        if (display && copy[1][i] === "0" && num) break;
-                        if (copy[1][i] !== "0") num = true;
-                        dec += copy[1][i].toString();
-                        if (
-                            display &&
-                            typeof fix === "number" &&
-                            !isNaN(fix) &&
-                            !isNaN(copy[1][i]) &&
-                            copy[1][i] !== "0" &&
-                            fix <= zero
-                        )
-                            break;
+                    for (let i = 0; i < copy[1]?.length; i++) {
+                        if (typeof fix === "number" && !isNaN(fix) && i >= fix && fix > zero) break;
+                        if (!isNaN(parseInt(copy[1][i]))) {
+                            if (display && copy[1][i] === "0" && num) break;
+                            if (copy[1][i] !== "0") num = true;
+                            dec += copy[1][i].toString();
+                            if (
+                                display &&
+                                typeof fix === "number" &&
+                                !isNaN(fix) &&
+                                !isNaN(copy[1][i]) &&
+                                copy[1][i] !== "0" &&
+                                fix <= zero
+                            )
+                                break;
+                        }
+                    }
+
+                    if (display && (copy[1]?.length === 0 || !num)) {
+                        dec = "";
+                        point = false;
                     }
                 }
-
-                if (display && (copy[1]?.length === 0 || !num)) {
-                    dec = "";
-                    point = false;
-                }
+                result = result + (point ? "." : "") + dec;
             }
-
-            const result = copy[0] + (point ? "." : "") + dec;
             return sig + (unit ? result + " " + u : result);
         }
         case "date":

@@ -1,7 +1,7 @@
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
 import { Controls, Elements } from "components";
 import { format } from "lib/utils";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Style, { Inner, Side } from "./Input.styled";
 
 export interface Input {
@@ -89,8 +89,8 @@ export default function Input(props: Input) {
                         typeof props?.min === "number" && props?.min >= copy
                             ? props?.min
                             : typeof props?.max === "number" && props?.max <= copy
-                            ? props?.max
-                            : value;
+                                ? props?.max
+                                : value;
                 }
             }
             return format(value, type, props?.lock, props?.fix, props?.max);
@@ -222,12 +222,7 @@ export default function Input(props: Input) {
             $error={error}
             $lock={props?.lock}
             $disabled={props?.disabled}
-            onClick={() => {
-                if (!props?.lock && !props?.disabled) {
-                    input.current.focus();
-                    setFocus(true);
-                }
-            }}
+            onClick={() => !(props?.lock || props?.disabled) && setFocus(true)}
             onBlur={() => handleBlur()}
             data-active={focus}
             data-show={props?.show}
@@ -258,8 +253,8 @@ export default function Input(props: Input) {
                                 props?.inputMode
                                     ? props?.inputMode
                                     : type === "number" || type === "currency"
-                                    ? "numeric"
-                                    : undefined
+                                        ? "numeric"
+                                        : undefined
                             }
                             min={min}
                             max={props?.max}
