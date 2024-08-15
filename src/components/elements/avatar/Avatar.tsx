@@ -36,8 +36,7 @@ export default function Avatar(props: Avatar) {
                             {props?.img && props?.img !== "" ? (
                                 <Image src={props?.img} fill sizes="100%" alt={""} title={props?.title} />
                             ) : (
-                                name &&
-                                name !== "" && (
+                                ((typeof character === "string" && character !== "") || (name && name !== "")) && (
                                     <span>
                                         <span>
                                             {typeof character === "string"
@@ -52,9 +51,15 @@ export default function Avatar(props: Avatar) {
                         </div>
                     )}
                     {!hideName && name && name !== "" && (
-                        <span>{name?.length > length! ? `${(name?.startsWith("0x")
-                            ? name?.substring(0, 2 + display)
-                            : name?.substring(0, display)) + "..." + name?.substring(name?.length - display)}` : name}</span>
+                        <span>
+                            {name?.length > length!
+                                ? `${
+                                      (name?.startsWith("0x") ? name?.substring(0, 2 + display) : name?.substring(0, display)) +
+                                      "..." +
+                                      name?.substring(name?.length - display)
+                                  }`
+                                : name}
+                        </span>
                     )}
                 </Style>
             )}

@@ -22,8 +22,10 @@ const Style = styled.div<{ $scale: number; $color: string; $size: number }>`
             display: flex;
             align-items: center;
             justify-content: center;
-            height: calc(100% - 0.5em);
-            border: 0.25em solid ${({ $color }) => $color && ($color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
+            width: -webkit-fill-available;
+            height: -webkit-fill-available;
+            border: 0.25em solid
+                ${({ $color }) => $color && ($color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)};
             border-radius: 100%;
 
             & > span {
