@@ -33,10 +33,6 @@ export default function useDate(initial?: Date): UseDate {
         years: initial?.years || 0,
     });
 
-    const now = Math.floor(Date.now() / 1000);
-    const end = useMemo(() => now + date.secs, [now, date]);
-    const when = useMemo((...args: Duration) => now + sec(...args).secs, [now, date]);
-
     const times = useMemo(() => ({
         day: 86_400,
         week: 604_800,
@@ -92,6 +88,10 @@ export default function useDate(initial?: Date): UseDate {
     const weeks = useCallback((time: number) => set(time, 'weeks'), [set]);
     const months = useCallback((time: number) => set(time, 'months'), [set]);
     const years = useCallback((time: number) => set(time, 'years'), [set]);
+
+    const now = Math.floor(Date.now() / 1000);
+    const end = useMemo(() => now + date.secs, [now, date]);
+    const when = useMemo((...args: Duration) => now + sec(...args).secs, [now, date]);
 
     return {
         date,
