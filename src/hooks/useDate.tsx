@@ -15,7 +15,8 @@ type TimeFunctions = {
 type UseDate = TimeFunctions & {
     date: Date;
     now: number;
-    duration: (...args: Duration) => Date;
+    end: number;
+    when: number;
     sec: (...args: Duration) => Date;
     day: (...args: Duration) => Date;
     week: (...args: Duration) => Date;
@@ -33,6 +34,8 @@ export default function useDate(initial?: Date): UseDate {
     });
 
     const now = Math.floor(Date.now() / 1000);
+    const end = useMemo(() => now + date.secs, [now, date]);
+    const when = useMemo((...args: Duration) => now + sec(...args).secs, [now, date]);
 
     const times = useMemo(() => ({
         day: 86_400,
@@ -78,8 +81,6 @@ export default function useDate(initial?: Date): UseDate {
     const month = useCallback((...args: Duration): Date => ({ ...sec(...args) }), [sec, times.day]);
     const year = useCallback((...args: Duration): Date => ({ ...sec(...args) }), [sec, times.day]);
 
-    const duration = useCallback((...args: Duration): Date => sec(...args), [sec, day, week, month, year])
-
     const set = useCallback((time: number, type?: Time) => {
         const date: Date = sec(time, type);
         setDate(date);
@@ -94,7 +95,9 @@ export default function useDate(initial?: Date): UseDate {
 
     return {
         date,
-        duration,
+        now,
+        end,
+        when,
         sec,
         secs,
         day,
@@ -105,6 +108,5 @@ export default function useDate(initial?: Date): UseDate {
         months,
         year,
         years,
-        now,
     }
 }
