@@ -1,16 +1,17 @@
 {
     "name": "@coinmeca/ui",
-    "version": "0.1.39992",
+    "version": "0.1.39993",
     "keywords": [
         "coinmeca",
         "interface",
         "ui"
     ],
+    "author": "Coinmeca Team <dev@coinmeca.net>",
+    "homepage": "https://ui.coinmeca.vercel.app/",
     "repository": {
         "type": "git",
-        "url": "https://github.com/coinmeca/ethers"
+        "url": "https://github.com/coinmeca/ui"
     },
-    "author": "Coinmeca Team <dev@coinmeca.net>",
     "license": "MIT",
     "sideEffects": false,
     "type": "module",

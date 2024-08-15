@@ -104,6 +104,11 @@ const Global = createGlobalStyle`
         text-align: left;
     }
 
+    [data-row="middle"] {
+        justify-content: center!important;
+        text-align: left;
+    }
+
     [data-row="center"] {
         justify-content: center!important;
         text-align: center;
@@ -123,8 +128,14 @@ const Global = createGlobalStyle`
         text-align: left;
     }
 
+    [data-col="middle"] {
+        align-items: center!important;
+        text-align: left;
+    }
+
     [data-col="center"] {
         align-items: center!important;
+        justify-content: center!important;
         text-align: center;
 
         & > *{
