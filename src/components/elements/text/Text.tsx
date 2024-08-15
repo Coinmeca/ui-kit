@@ -20,7 +20,7 @@ export interface Text {
     onClick?: Function;
     weight?: number | string;
     height?: number;
-    opacity?: number;
+    opacity?: number | false;
     responsive?: Responsive;
     fit?: boolean;
     fix?: boolean;
@@ -34,17 +34,24 @@ export interface Responsive {
     weight?: number | string;
     height?: number;
     align?: TextAlign;
-    opacity?: number;
+    opacity?: number | false;
     device: "desktop" | "laptop" | "tablet" | "mobile";
 }
 
 export default function Text(props: Text) {
-    const type = props?.type === "button" || props?.type === "link" ? props?.type : props?.href ? "link" : props?.onClick ? "button" : props?.type;
+    const type =
+        props?.type === "button" || props?.type === "link"
+            ? props?.type
+            : props?.href
+            ? "link"
+            : props?.onClick
+            ? "button"
+            : props?.type;
     const size = props?.size || 1.5;
     const weight = props?.weight || "bold";
     const height = props?.height || 1.5;
     const color = props?.color || "white";
-    const opacity = props?.opacity && props?.opacity > 1 ? 1 : props?.opacity || 1;
+    const opacity = typeof props?.opacity === "number" && props?.opacity > 1 ? 1 : props?.opacity || 1;
 
     switch (type) {
         case "h1":
