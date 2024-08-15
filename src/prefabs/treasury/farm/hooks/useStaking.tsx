@@ -1,6 +1,6 @@
 ﻿"use client";
-import { isNumber, parseNumber } from "lib/utils";
-import { Staking } from "types";
+import { isNumber, parseNumber } from "@coinmeca/ui/lib/utils";
+import { Staking } from "@coinmeca/ui/types";
 import { useCallback, useMemo, useState } from "react";
 
 export interface Farm {
@@ -36,7 +36,7 @@ export default function useStaking(mode: boolean, available?: number, farm?: Far
     const duration = useMemo(() => {
         const d = parseNumber(farm?.duration);
         return (d && end > now ? d : period) || end - start || 0;
-    }, [start, end, period, farm?.duration]);
+    }, [now, start, end, period, farm?.duration]);
     const days = useMemo(() => duration / 86400, [duration]);
     const next = useMemo(() => period / 86400, [period]);
 
@@ -122,11 +122,11 @@ export default function useStaking(mode: boolean, available?: number, farm?: Far
     return {
         staking,
         amount,
-        reset,
         maxAmount,
-        share,
         interest,
-        days,
+        share,
         apr,
+        days,
+        reset,
     };
 }
