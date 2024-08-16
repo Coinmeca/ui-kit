@@ -1,12 +1,12 @@
 "use client";
 
-import { memo, useMemo, type CSSProperties } from "react";
 import dynamic from "next/dynamic";
+import { memo, useMemo } from "react";
 import Style, { Count } from "./Icon.styled";
 
 export interface Icon {
     icon: string;
-    color?: string;
+    color?: string | false;
     change?: boolean;
     style?: object;
     scale?: number;
