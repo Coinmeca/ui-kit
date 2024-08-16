@@ -43,16 +43,19 @@ export default function useDate(initial?: Date): UseDate {
     const resolve = useCallback((time: number, type?: Time) => {
         switch (type) {
             case 'days':
-                return time * times.day;
+                time *= times.day;
+                break;
             case 'weeks':
-                return time * times.week;
+                time *= times.week;
+                break;
             case 'months':
-                return time * times.month;
+                time *= times.month;
+                break;
             case 'years':
-                return time * times.year;
-            default:
-                return time;
+                time *= times.year;
+                break;
         }
+        return parseInt(time?.toString()?.split('.')[0])
     }, [times]);
 
     const sec = useCallback((...args: Duration) => {
