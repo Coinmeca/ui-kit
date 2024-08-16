@@ -55,7 +55,7 @@ export default function useDate(initial?: Date): UseDate {
                 time *= times.year;
                 break;
         }
-        return parseInt(time?.toString()?.split('.')[0])
+        return parseInt(time?.toString())
     }, [times]);
 
     const sec = useCallback((...args: Duration) => {
