@@ -1,4 +1,3 @@
-import useDate from './useDate';
 import useMobile from './useMobile';
 import useNotification from './useNotification';
 import useOrder from './useOrder';
@@ -7,7 +6,8 @@ import useScrollPosition from './useScrollPosition';
 import useSort from './useSort';
 import useSwipe from './useSwipe';
 import useTheme from './useTheme';
+import useTime from './useTime';
 import useWindowSize from './useWindowSize';
 
-export { useDate, useMobile, useNotification, useOrder, usePortal, useScrollPosition, useSort, useSwipe, useTheme, useWindowSize };
+export { useMobile, useNotification, useOrder, usePortal, useScrollPosition, useSort, useSwipe, useTheme, useTime, useWindowSize };
 

@@ -24,7 +24,7 @@ type UseDate = TimeFunctions & {
     year: (...args: Duration) => Date;
 };
 
-export default function useDate(initial?: Date): UseDate {
+export default function useTime(initial?: Date): UseDate {
     const [date, setDate] = useState<Date>({
         secs: initial?.secs || 0,
         days: initial?.days || 0,
