@@ -1,6 +1,6 @@
 "use client";
-import { styled } from "styled-components";
 import { Root } from "lib/style";
+import { styled } from "styled-components";
 
 const Style = styled.div<{ $scale: number; $color: string; $size: number; $stroke?: number; $fill?: string | boolean }>`
     font-size: ${({ $scale }) => $scale}em;
@@ -26,19 +26,17 @@ const Style = styled.div<{ $scale: number; $color: string; $size: number; $strok
             height: -webkit-fill-available;
             border-radius: 100%;
             ${({ $stroke, $fill, $color }) =>
-                $fill
-                    ? `background:${
-                          typeof $fill === "string"
-                              ? $fill === Root.Color($fill)
-                                  ? $fill
-                                  : `rgb(${Root.Color($fill)})`
-                              : $color === Root.Color($color)
-                              ? $color
-                              : `rgb(${Root.Color($color)})`
-                      };`
-                    : `border: ${$stroke || 0.25}em solid ${
-                          $color && ($color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)
-                      }`}
+        $fill
+            ? `background:${typeof $fill === "string"
+                ? $fill === Root.Color($fill)
+                    ? $fill
+                    : `rgb(${Root.Color($fill)})`
+                : $color === Root.Color($color)
+                    ? $color
+                    : `rgb(${Root.Color($color)})`
+            };`
+            : `border: ${$stroke || 0.25}em solid ${$color && ($color === Root.Color($color) ? $color : `rgb(${Root.Color($color)})`)
+            };`}
 
             & > span {
                 font-size: 1.5em;
