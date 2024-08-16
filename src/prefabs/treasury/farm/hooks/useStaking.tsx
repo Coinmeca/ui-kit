@@ -1,7 +1,7 @@
 ﻿"use client";
 import { isNumber, parseNumber } from "lib/utils";
-import { Staking } from "types";
 import { useCallback, useMemo, useState } from "react";
+import { Staking } from "types";
 
 export interface Farm {
     type?: boolean;
@@ -55,8 +55,8 @@ export default function useStaking(mode: boolean, available?: number, farm?: Far
         (amount: number, staking?: number | boolean) =>
             isNumber(amount)
                 ? (((interest * value.earn) / days) * 100) /
-                  (((isNumber(staking) ? ((staking as number) || 0) + (mode ? amount : -amount || 0) : amount) + staked) *
-                      value.stake)
+                (((isNumber(staking) ? ((staking as number) || 0) + (mode ? amount : -amount || 0) : amount) + staked) *
+                    value.stake)
                 : 0,
         [mode, staked, interest, value, days],
     );
@@ -66,10 +66,10 @@ export default function useStaking(mode: boolean, available?: number, farm?: Far
             (!mode && (!staking || staking === 0)) || !isNumber(amount)
                 ? 0
                 : ((isNumber(staking) && (staking as number) > 0
-                      ? (staking as number) + (mode ? amount : -amount || 0)
-                      : amount) *
-                      100) /
-                  (staked ? staked + (staking === true ? 0 : mode ? amount : -amount) : amount),
+                    ? (staking as number) + (mode ? amount : -amount || 0)
+                    : amount) *
+                    100) /
+                (staked ? staked + (staking === true ? 0 : mode ? amount : -amount) : amount),
         [mode, staked],
     );
 

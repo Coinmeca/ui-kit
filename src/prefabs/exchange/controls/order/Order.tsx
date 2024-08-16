@@ -1,15 +1,15 @@
 "use client";
 "currency";
-import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { useMobile, useOrder, usePortal } from "hooks";
 import { format } from "lib/utils";
 import { Exchange } from "prefabs";
-import type { Token } from "types";
+import { useEffect, useState } from "react";
+import type { Asset } from "types";
 
 export interface OrderControl {
     mode: boolean;
-    assets: Token[];
+    assets: Asset[];
     price: number | string;
     limit?: number | string;
     fee: number;
@@ -112,8 +112,8 @@ export default function Order(props: OrderControl) {
                 ? quantity(parseFloat(format(a, "number", true)))
                 : amount(parseFloat(format(a, "number", true)))
             : currency === 0
-            ? amount(parseFloat(format(a, "number", true)))
-            : quantity(parseFloat(format(a, "number", true)));
+                ? amount(parseFloat(format(a, "number", true)))
+                : quantity(parseFloat(format(a, "number", true)));
     };
 
     const handleChangeRange = (v: number) => {
@@ -125,8 +125,8 @@ export default function Order(props: OrderControl) {
                     ? quantity((q * parseFloat(format(v, "number", true))) / 100)
                     : amount((a * parseFloat(format(v, "number", true))) / 100)
                 : currency === 0
-                ? amount((a * parseFloat(format(v, "number", true))) / 100)
-                : quantity((q * parseFloat(format(v, "number", true))) / 100);
+                    ? amount((a * parseFloat(format(v, "number", true))) / 100)
+                    : quantity((q * parseFloat(format(v, "number", true))) / 100);
         }
     };
 
@@ -138,9 +138,8 @@ export default function Order(props: OrderControl) {
             value={order?.price}
             unit={[...assets][mode ? 0 : 1]?.symbol}
             sub={{
-                color: `${
-                    mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
-                }`,
+                color: `${mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
+                    }`,
                 value: `${(pricePosition > 0 && "+ ") || (pricePosition < 0 && "- ") || ""}${Math.abs(pricePosition)}`,
                 unit: "%",
             }}

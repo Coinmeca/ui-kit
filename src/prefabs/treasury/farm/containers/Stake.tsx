@@ -1,14 +1,14 @@
 "use client";
-import { useState } from "react";
 import { Controls, Layouts } from "components";
-import { Exchange } from "prefabs";
-import { Token } from "types/web3";
-import { Farms } from "prefabs/treasury";
 import usePortal from "hooks/usePortal";
+import { Exchange } from "prefabs";
+import { Farms } from "prefabs/treasury";
+import { useState } from "react";
 import type { Order as O } from "types/order";
+import { Token } from "types/web3";
 
 export interface StakeControl {
-    asset: Token;
+    asset?: Token;
     price: number | string;
     fee: number;
     option?: "market" | "limit";
@@ -22,6 +22,7 @@ export default function Stake(props: StakeControl) {
     const option = props?.option || "market";
     const responsive = props?.responsive || false;
 
+    const asset = props?.asset || {};
     const [deposit, setStake] = useState<O | undefined>();
     const [withdraw, setUnstake] = useState<O | undefined>();
 
@@ -81,7 +82,7 @@ export default function Stake(props: StakeControl) {
                                 <Farms.Controls.Stake
                                     mode={true}
                                     option={option}
-                                    assets={[props?.asset, props?.asset]}
+                                    assets={[asset, asset]}
                                     price={props?.price}
                                     fee={props?.fee}
                                     onChange={(v: O) => setStake(v)}
@@ -98,7 +99,7 @@ export default function Stake(props: StakeControl) {
                                 <Farms.Controls.Stake
                                     mode={false}
                                     option={option}
-                                    assets={[props?.asset, props?.asset]}
+                                    assets={[asset, asset]}
                                     price={props?.price}
                                     fee={props?.fee}
                                     onChange={(v: O) => setUnstake(v)}

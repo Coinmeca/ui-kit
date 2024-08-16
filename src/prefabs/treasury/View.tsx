@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
 import { Charts, Controls, Elements, Layouts } from "components";
 import { format } from "lib/utils";
-import { Asset, Farm } from "types/web3";
-import { Vault, Farms } from ".";
+import { useState } from "react";
+import { Asset, Farm } from "types";
+import { Farms, Vault } from ".";
 
 export interface View {
     assets?: Asset[];
@@ -133,8 +133,8 @@ export default function View(props: View) {
                             {
                                 active: props?.page === "vault",
                                 children: (
-                                    <Vault.Containers.Assets
-                                        assets={props?.assets}
+                                    <Vault.Containers.List
+                                        list={props?.assets}
                                         filter={keyword}
                                         onSelect={props?.onSelect}
                                         responsive={props?.responsive}
@@ -144,7 +144,7 @@ export default function View(props: View) {
                             {
                                 active: props?.page === "farm",
                                 children: (
-                                    <Farms.Containers.Farms farms={props?.farms} filter={keyword} onSelect={props?.onSelect} responsive={props?.responsive} />
+                                    <Farms.Containers.List farms={props?.farms} filter={keyword} onSelect={props?.onSelect} responsive={props?.responsive} />
                                 ),
                             },
                         ]}

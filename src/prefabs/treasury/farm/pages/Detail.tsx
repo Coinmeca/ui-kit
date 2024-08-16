@@ -7,8 +7,7 @@ import { format } from "lib/utils";
 import { Asset } from "prefabs";
 import { Farms } from "prefabs/treasury";
 import { useState } from "react";
-import type { Stake as Data } from "types/history";
-import type { Farm } from "types/web3";
+import type { Farm, FarmRecent } from "types";
 
 export interface Detail {
     farm: Farm;
@@ -24,7 +23,7 @@ export interface Detail {
             type?: string;
         }[];
     };
-    history?: Data[];
+    recent?: FarmRecent[];
     responsive?: boolean;
     onBack?: Function;
 }
@@ -102,12 +101,12 @@ export default function Detail(props: Detail) {
     };
     const [handleDetail, closeDetail] = usePortal(handleDetailModal);
 
-    const historyFormatter = (data?: Data[]) => {
+    const historyFormatter = (data?: FarmRecent[]) => {
         return (
             data &&
             typeof data !== "string" &&
             data?.length > 0 &&
-            data?.map((data: Data) => {
+            data?.map((data: FarmRecent) => {
                 return {
                     onClick: () => {
                         handleDetail(null, {
@@ -356,8 +355,9 @@ export default function Detail(props: Detail) {
                                                 ],
                                             ]}
                                         />
-                                        <Farms.Containers.History
-                                            list={historyFormatter(props?.history)}
+                                        <Farms.Containers.Recent
+                                            list={props?.recent}
+                                            formatter={historyFormatter}
                                             fallback={"There is no history yet."}
                                             style={{ height: "100%" }}
                                         />

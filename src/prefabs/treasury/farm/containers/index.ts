@@ -1,6 +1,7 @@
-import Farms from './Farms';
 import Info from './Info';
+import List from './List';
+import Recent from './Recent';
 import Stake from './Stake';
-import History from './History';
 
-export { Farms, Info, Stake, History };
+export { Info, List, Recent, Stake };
+

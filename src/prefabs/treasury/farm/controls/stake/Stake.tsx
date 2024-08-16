@@ -1,30 +1,19 @@
 "use client";
-import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { useMobile, useOrder, usePortal } from "hooks";
 import { format } from "lib/utils";
 import { Exchange } from "prefabs";
-import type { Token } from "types/web3";
+import { useEffect, useState } from "react";
+import type { Asset } from "types";
 
 export interface StakeControl {
     mode: boolean;
-    assets: Token[];
+    assets: Asset[];
     price: number | string;
     fee: number;
     option?: "market" | "limit";
     onChange?: Function;
     responsive?: number;
-}
-
-export interface Order {
-    buy: string;
-    sell: string;
-    category?: number;
-    option?: number;
-    price: number | string;
-    amount?: number | string;
-    quantity?: number | string;
-    fees?: number | string;
 }
 
 export default function Stake(props: StakeControl) {
@@ -122,9 +111,8 @@ export default function Stake(props: StakeControl) {
             value={order.price}
             unit={[...assets][mode ? 0 : 1]?.symbol}
             sub={{
-                color: `${
-                    mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
-                }`,
+                color: `${mode ? (pricePosition > 0 && "red") || (pricePosition < 0 && "green") : (pricePosition > 0 && "green") || (pricePosition < 0 && "red")
+                    }`,
                 value: `${(pricePosition > 0 && "+ ") || (pricePosition < 0 && "- ") || ""}${Math.abs(pricePosition)}`,
                 unit: "%",
             }}

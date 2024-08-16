@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { useSort } from "hooks";
 import { filter, format } from "lib/utils";
 import { Asset } from "prefabs";
-import { Token } from "types/web3";
+import { useState } from "react";
+import { Asset as Token } from "types";
 
 export interface View {
     info?: any;

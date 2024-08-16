@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
 import { Charts, Controls, Elements, Layouts } from "components";
 import { usePortal } from "hooks";
 import { format } from "lib/utils";
-import { type Asset, Farm } from "types/web3";
+import { useState } from "react";
+import { Vault as Asset, Farm } from "types";
 import { Farms, Vault } from ".";
 
 export interface List {
@@ -137,8 +137,8 @@ export default function List(props: List) {
                             {
                                 active: props?.page === "vault",
                                 children: (
-                                    <Vault.Containers.Assets
-                                        assets={props?.assets}
+                                    <Vault.Containers.List
+                                        list={props?.assets}
                                         filter={keyword}
                                         onSelect={props?.onSelect}
                                         responsive={props?.responsive}
@@ -148,7 +148,7 @@ export default function List(props: List) {
                             {
                                 active: props?.page === "farm",
                                 children: (
-                                    <Farms.Containers.Farms farms={props?.farms} filter={keyword} onSelect={props?.onSelect} responsive={props?.responsive} />
+                                    <Farms.Containers.List farms={props?.farms} filter={keyword} onSelect={props?.onSelect} responsive={props?.responsive} />
                                 ),
                             },
                         ]}

@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
 import { Layouts } from "components";
 import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
 import { Treasury } from "prefabs";
-import { Farm, Token } from "types/web3";
+import { useState } from "react";
+import { Farm, Token } from "types";
 import Data from "./data";
 
 export default function Page() {

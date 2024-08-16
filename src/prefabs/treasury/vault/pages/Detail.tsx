@@ -8,8 +8,7 @@ import { capitalize, format } from "lib/utils";
 import { Asset } from "prefabs";
 import { Vault } from "prefabs/treasury";
 import { useState } from "react";
-import type { Trade as Data } from "types/history";
-import type { Token } from "types/web3";
+import type { Token, VaultRecent } from "types";
 
 export interface Detail {
     asset: Token;
@@ -29,7 +28,7 @@ export interface Detail {
             volume?: Volume[];
         };
     };
-    history?: Data[];
+    recent?: VaultRecent[];
     responsive?: boolean;
     onBack?: Function;
 }
@@ -107,12 +106,12 @@ export default function Detail(props: Detail) {
     };
     const [handleDetail, closeDetail] = usePortal(handleDetailModal);
 
-    const recentFormatter = (data?: Data[]) => {
+    const recentFormatter = (data?: VaultRecent[]) => {
         return (
             data &&
             typeof data !== "string" &&
             data?.length > 0 &&
-            data?.map((data: Data) => {
+            data?.map((data: VaultRecent) => {
                 return {
                     onClick: () => {
                         handleDetail(null, {
@@ -377,8 +376,8 @@ export default function Detail(props: Detail) {
                                                 ],
                                             ]}
                                         />
-                                        <Vault.Containers.History
-                                            list={props?.history}
+                                        <Vault.Containers.Recent
+                                            list={props?.recent}
                                             formatter={recentFormatter}
                                             fallback={"There is no history yet."}
                                             style={{ height: "100%" }}

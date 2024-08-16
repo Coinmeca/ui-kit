@@ -1,8 +1,8 @@
 "use client";
 import { Contents, Controls, Layouts } from "components";
-import { Treasury } from "prefabs";
 import { AnimatePresence } from "framer-motion";
-import type { Farm, Token } from "types/web3";
+import { Treasury } from "prefabs";
+import type { Farm, Token } from "types";
 
 import Data from "app/samples/treasury/data";
 
@@ -23,7 +23,7 @@ export default function Detail(props: Detail) {
                     <Treasury.Vault.Pages.Detail
                         asset={props?.asset}
                         info={vault?.info}
-                        history={vault?.history}
+                        recent={vault?.recent}
                         charts={{
                             rate: vault?.charts?.rate,
                             value: vault?.charts?.value,
@@ -36,7 +36,7 @@ export default function Detail(props: Detail) {
                     <Treasury.Farms.Pages.Detail
                         farm={props?.farm}
                         info={farm?.info}
-                        history={farm?.history}
+                        recent={farm?.recent}
                         charts={{
                             apr: farm?.charts?.apr,
                             staking: farm?.charts?.staking,

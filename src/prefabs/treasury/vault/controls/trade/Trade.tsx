@@ -6,11 +6,11 @@ import { format, parseNumber } from "lib/utils";
 import { Exchange } from "prefabs";
 import { useVault } from "prefabs/treasury/vault/hooks";
 import { useEffect, useState } from "react";
-import type { Token } from "types/web3";
+import type { Asset } from "types";
 
 export interface TradeControl {
     mode: boolean;
-    assets: Token[];
+    assets: Asset[];
     price: number | string;
     ratio?: number | string;
     require?: number | string;

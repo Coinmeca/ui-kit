@@ -3,8 +3,8 @@
 import { Layouts } from "components";
 import type { List } from "components/layouts/list/List";
 
-export interface History extends List {}
+export interface Recent extends List { }
 
-export default function History(props: History) {
+export default function Recent(props: Recent) {
     return <Layouts.List {...props} style={{ height: "100%" }} />;
 }

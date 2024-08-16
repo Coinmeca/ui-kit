@@ -3,7 +3,7 @@ import { Elements, Layouts } from "components";
 import useWindowSize from "hooks/useWindowSize";
 import { Root } from "lib/style";
 import { format, sign } from "lib/utils";
-import { Farm } from "types/web3";
+import { Farm } from "types";
 
 export interface Info {
     farm: Farm;
@@ -38,8 +38,8 @@ export default function Info(props: Info) {
             style={{
                 ...(windowSize.width <= Root.Device.Tablet &&
                     windowSize.width > Root.Device.Mobile && {
-                        flexDirection: "row",
-                    }),
+                    flexDirection: "row",
+                }),
             }}
             scroll
         >

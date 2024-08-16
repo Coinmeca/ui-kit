@@ -142,7 +142,7 @@ export function sort(array: any[] = [], key: string, type: string, direction: bo
     }
 }
 
-export function capitalize(text: string) {
+export function capitalize(text?: string) {
     if (!text || text === "") return "";
     const lower: string = text.toLowerCase();
     const cap: string = text.charAt(0).toUpperCase() + lower.slice(1);

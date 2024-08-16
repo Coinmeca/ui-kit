@@ -1,6 +1,7 @@
-import Assets from './Assets';
 import Info from './Info';
-import History from './History';
+import List from './List';
+import Recent from './Recent';
 import Trade from './Trade';
 
-export {Assets, Info, History, Trade};
+export { Info, List, Recent, Trade };
+
