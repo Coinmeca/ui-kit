@@ -24,6 +24,7 @@ export interface Input {
     max?: number;
     step?: number;
     fix?: number;
+    length?: number;
 
     left?: {
         style?: object;
@@ -92,10 +93,10 @@ export default function Input(props: Input) {
                                 ? props?.max
                                 : value;
                 }
-            }
+            } else if (typeof props?.length === 'number' && props?.length > 0 && props?.length > value?.toString()?.length) value = value?.toString()?.substring(0, props?.length)
             return format(value, type, props?.lock, props?.fix, props?.max);
         },
-        [type, props.min, props.max, props.lock, props.fix, props?.readOnly],
+        [type, props.min, props.max, props.lock, props.fix, props?.length, props?.readOnly],
     );
 
     const [focus, setFocus] = useState<boolean>(false);
