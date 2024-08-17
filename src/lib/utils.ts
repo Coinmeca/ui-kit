@@ -14,10 +14,9 @@ export type ObjectFilter = { key?: string | string[]; value?: string | string[] 
 export type Filter = ObjectFilter | string[] | string | ObjectFilter[] | undefined;
 
 export type ItemType = {
-    [key: string]: any; // Define specific keys and their types as needed
+    [key: string]: any;
 };
 
-// Common logic for filtering or finding
 const f = <T extends ItemType>(array: T[], filter: Filter | undefined, findOne: boolean): T[] | T | undefined => {
     if (!array.length) return findOne ? undefined : [];
     if (!filter) return findOne ? undefined : array || [];
@@ -79,68 +78,53 @@ const f = <T extends ItemType>(array: T[], filter: Filter | undefined, findOne: 
     }
 };
 
-// Filter function
 export const filter = <T extends ItemType = ItemType>(array: T[] = [], filter?: Filter): T[] => {
     return f(array, filter, false) as T[];
 };
 
-// Find function
 export const find = <T extends ItemType = ItemType>(array: T[] = [], filter?: Filter): T | undefined => {
     return f(array, filter, true) as T | undefined;
 };
 
 export function sort(array: any[] = [], key: string, type: string, direction: boolean | undefined = false) {
     if (!Array.isArray(array)) return [];
-    const depth = (a: any, b: any) => {
-        let x: any = a;
-        let y: any = b;
-        if (typeof a === "object" && typeof b === "object") {
-            const keys = key?.split(".");
-            if (keys?.length > 1) {
-                keys.forEach((k) => {
-                    x = x[k];
-                    y = y[k];
-                });
-            } else {
-                x = x[key];
-                y = y[key];
-            }
+
+    const depth = (item: any, key: string) => {
+        const keys = key.split(".");
+        let value = item;
+        for (const k of keys) {
+            value = value?.[k];
+            if (value === undefined) return undefined;
         }
-        return { x, y };
+        return value;
     };
+
+    const exist = array.some(item => depth(item, key) !== undefined);
+    if (!exist) return [...array];
 
     switch (type) {
         case "string": {
-            return typeof direction === "undefined"
-                ? [...array]
-                : direction
-                    ? [...array].sort((a, b) => {
-                        const { x, y } = depth(a, b);
-                        return x.localeCompare(y);
-                    })
-                    : [...array].sort((a, b) => {
-                        const { x, y } = depth(a, b);
-                        return y.localeCompare(x);
-                    });
+            return [...array].sort((a, b) => {
+                const x = depth(a, key);
+                const y = depth(b, key);
+                if (x === undefined || y === undefined) return 0;
+                return direction ? x.localeCompare(y) : y.localeCompare(x);
+            });
         }
         case "number": {
-            return typeof direction === "undefined"
-                ? [...array]
-                : direction
-                    ? [...array].sort((a, b) => {
-                        const { x, y } = depth(a, b);
-                        return parseFloat(x) - parseFloat(y);
-                    })
-                    : [...array].sort((a, b) => {
-                        const { x, y } = depth(a, b);
-                        return parseFloat(y) - parseFloat(x);
-                    });
+            return [...array].sort((a, b) => {
+                const x = depth(a, key);
+                const y = depth(b, key);
+                if (x === undefined || y === undefined) return 0;
+                return direction ? parseNumber(x) - parseNumber(y) : parseNumber(y) - parseNumber(x);
+            });
         }
         default: {
             return [...array];
         }
     }
 }
+
 
 export function capitalize(text?: string) {
     if (!text || text === "") return "";

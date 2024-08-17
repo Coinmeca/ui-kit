@@ -12,9 +12,9 @@ export interface Asset extends Token {
     key?: boolean;
     validate?: boolean;
     amount?: number;
-    balance?: number | string;
-    using?: number | string;
-    staked?: number | string;
-    interest?: number | string;
+    balance?: number;
+    using?: number;
+    staked?: number;
+    interest?: number;
     allowance?: number;
 }
