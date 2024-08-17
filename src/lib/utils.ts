@@ -438,7 +438,7 @@ export function format(
 }
 
 export function isNumber(value?: any) {
-    return !!value && typeof value === 'number' && !isNaN(value);
+    return typeof value === 'number' && !isNaN(value);
 }
 
 export function parseNumber(value?: number | string | bigint, decimals?: number | string, max?: number): number {
