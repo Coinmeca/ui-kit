@@ -1,3 +1,4 @@
+
 export type AddressString = `0x${string}`;
 
 export type Category =

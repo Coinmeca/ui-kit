@@ -1,9 +1,9 @@
 "use client";
-import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
 import { Contents, Controls, Elements, Layouts } from "components";
+import { AnimatePresence } from "framer-motion";
 import { format } from "lib/utils";
 import { Asset } from "prefabs";
+import { useState } from "react";
 import type { History, Token } from "types";
 
 export interface Detail {
@@ -15,7 +15,7 @@ export interface Detail {
     responsive?: boolean;
 }
 
-export default function Detail(props: Detail) {
+export default function Default(props: Detail) {
     const [mobile, setMobile] = useState("history");
     const [history, setHistory] = useState<History[]>(props?.history || []);
 
@@ -134,7 +134,7 @@ export default function Detail(props: Detail) {
                                                     ],
                                                 ]}
                                             />
-                                            <Asset.Containers.History
+                                            <Asset.Containers.History.Default
                                                 assets={props?.assets}
                                                 list={history}
                                                 responsive={props?.responsive}

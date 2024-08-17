@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import type { List } from "components/layouts/list/List";
 import { usePortal, useSort } from "hooks";
 import { filter, format } from "lib/utils";
+import { useState } from "react";
 import type { History as H, Token } from "types";
 // import { TransactionDetail } from "../modals";
 
@@ -30,7 +30,7 @@ export interface History extends List {
     fallback?: any;
 }
 
-export default function History(props: History) {
+export default function Default(props: History) {
     const { sorting, setSort, sortArrow } = useSort();
 
     const sorts = {

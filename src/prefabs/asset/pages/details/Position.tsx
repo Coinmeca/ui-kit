@@ -1,26 +1,21 @@
 "use client";
-import { AnimatePresence } from "framer-motion";
-import Image from "next/image";
-import { useState } from "react";
 import { Contents, Controls, Elements, Layouts } from "components";
+import { AnimatePresence } from "framer-motion";
 import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
 import { format } from "lib/utils";
+import Image from "next/image";
 import { Asset } from "prefabs";
+import { useState } from "react";
 import { History } from "types/history";
-import { Token } from "types/web3";
+import type { Detail } from './Default';
 
-export interface Detail {
-    info?: any;
-    assets?: Token[];
-    asset?: Token;
-    history?: any[];
-    positions?: any;
-    onBack?: Function;
-    responsive?: boolean;
+export interface Position extends Detail {
+    positions?: any[];
+    onRefresh?: Function;
 }
 
-export default function DetailNFT(props: Detail) {
+export default function Position(props: Position) {
     const { windowSize } = useWindowSize();
 
     const [mobile, setMobile] = useState("history");
@@ -145,7 +140,7 @@ export default function DetailNFT(props: Detail) {
                                                         ],
                                                     ]}
                                                 />
-                                                <Asset.Containers.HistoryShort
+                                                <Asset.Containers.History.Short
                                                     assets={props?.assets}
                                                     list={history}
                                                     responsive={true}

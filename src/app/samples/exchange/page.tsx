@@ -1,11 +1,11 @@
 "use client";
-import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
 import { Charts, Controls, Elements, Layouts } from "components";
+import { AnimatePresence } from "framer-motion";
 import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
 import { capitalize, format } from "lib/utils";
 import { Asset, Exchange } from "prefabs";
+import { useState } from "react";
 
 import AssetData from "../asset/data";
 import ExchangeData from "./data";
@@ -341,7 +341,7 @@ export default function Page() {
                                                             active: tab === "history",
                                                             children: (
                                                                 <Layouts.Contents.InnerContent scroll>
-                                                                    <Asset.Containers.History
+                                                                    <Asset.Containers.History.Default
                                                                         assets={props?.assets}
                                                                         list={props?.history}
                                                                         responsive={props?.responsive}

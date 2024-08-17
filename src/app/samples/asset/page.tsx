@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
 import { Layouts } from "components";
 import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
 import { Asset } from "prefabs";
-import { Token } from "types/web3";
+import { useEffect, useState } from "react";
+import { History, Token } from "types";
 import Data from "./data";
 
 export default function Page() {
@@ -18,9 +18,9 @@ export default function Page() {
 
     const { windowSize } = useWindowSize();
     const [asset, setAsset] = useState<Token | undefined>();
-    const [history, setHistory] = useState(Dummy?.history);
+    const [history, setHistory] = useState<History[]>(Dummy?.history);
 
-    useEffect(() => {}, [props?.assets, props?.history]);
+    useEffect(() => { }, [props?.assets, props?.history]);
 
     return (
         <Layouts.Page>
@@ -41,7 +41,7 @@ export default function Page() {
                         {
                             active: typeof asset !== "undefined",
                             children: (
-                                <Asset.Pages.DetailNFT
+                                <Asset.Pages.Detail.Position
                                     info={props?.info}
                                     assets={props?.assets}
                                     asset={asset}

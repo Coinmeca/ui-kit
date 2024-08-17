@@ -1,22 +1,14 @@
 "use client";
-import { useState } from "react";
 import { Controls, Elements, Layouts } from "components";
-import type { List } from "components/layouts/list/List";
 import { Modals } from "containers";
 import { usePortal } from "hooks";
 import { format } from "lib/utils";
+import { useState } from "react";
 import type { History as H } from "types/history";
 import { Token } from "types/web3";
-import { colorMap } from "./History";
+import { History, colorMap } from "./Default";
 
-export interface History extends List {
-    assets?: Token[];
-    list?: H[];
-    responsive?: boolean;
-    fallback?: any;
-}
-
-export default function HistoryShort(props: History) {
+export default function Short(props: History) {
     const category = ["Order", "Buy", "Sell", "Deposit", "Withdraw", "Stake", "Unstake", "Claim", "Futures", "Perpetual"];
     const state = ["Pending", "Complete", "Cancel", "Claimable", "Liquidation"];
     const colorset = ["white", "green", "red", "orange", "blue"];

@@ -1,5 +1,5 @@
 import View from './View';
-import Detail from './Detail';
-import DetailNFT from './DetailNFT';
+import * as Detail from './details';
 
-export {View, Detail, DetailNFT};
+export { Detail, View };
+

@@ -1,12 +1,11 @@
 "use client";
 
-import { type CSSProperties } from "react";
 import Style from "./Col.styled";
 
 export interface Col {
     children?: any;
     title?: string;
-    gap?: number;
+    gap?: number | false;
     align?: "left" | "center" | "right" | "stretch";
     style?: object;
     fit?: boolean;

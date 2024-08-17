@@ -421,7 +421,7 @@ export default function Detail(props: Detail) {
                                             },
                                             {
                                                 active: tab === "history",
-                                                children: <Asset.Containers.History list={[]} responsive={props?.responsive} />,
+                                                children: <Asset.Containers.History.Default list={[]} responsive={props?.responsive} />,
                                             },
                                         ]}
                                     />
