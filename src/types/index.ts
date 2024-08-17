@@ -1,3 +1,4 @@
+export * from './account';
 export * from './farm';
 export * from './history';
 export * from './market';
