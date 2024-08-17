@@ -12,12 +12,14 @@ export interface Sector {
     returnRate?: Volume;
 }
 
-export interface AccountAsset extends Omit<Asset, 'balance'> {
+export interface AccountAsset extends Omit<Omit<Omit<Asset, 'balance'>, 'staked'>, 'interest'> {
     value?: number;
     pnl?: number;
     leverage?: number;
     order?: Volume;
     balance?: Volume;
+    staked?: Volume;
+    interest?: Volume;
     total?: Sector;
     average?: Sector;
     count?: {

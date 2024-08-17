@@ -10,6 +10,7 @@ export interface Token {
 
 export interface Asset extends Token {
     key?: boolean;
+    type?: string;
     validate?: boolean;
     amount?: number;
     balance?: number;
