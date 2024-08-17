@@ -37,14 +37,14 @@ export interface FarmRecent {
 
 export interface Staking {
     pay?: Token;
-    amount?: number;
+    amount: number;
     share?: number;
     apr?: number;
 }
 
 export interface Interest {
     pay?: Token;
-    amount?: number;
+    amount: number;
     tax?: number;
     total?: number;
     ror?: number | string;
