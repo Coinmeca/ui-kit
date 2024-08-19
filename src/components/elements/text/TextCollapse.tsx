@@ -1,7 +1,7 @@
-export interface TextCollapse { name: string, condition?: boolean }
+export interface TextCollapse { text: string, condition?: boolean }
 
-export default function TextCollapse({ name, condition }: TextCollapse) {
-    if (!name && name === "") return;
+export default function TextCollapse({ text, condition }: TextCollapse) {
+    if (!text && text === "") return;
     return (
         <span
             style={{
@@ -10,7 +10,7 @@ export default function TextCollapse({ name, condition }: TextCollapse) {
                 alignItems: "center",
                 justifyContent: "center",
             }}>
-            {Object.values(name).map((character: string, i: number) => {
+            {Object.values(text).map((character: string, i: number) => {
                 return (
                     <span
                         key={i}

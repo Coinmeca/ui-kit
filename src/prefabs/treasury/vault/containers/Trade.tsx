@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
-import { Controls, Layouts } from "components";
+import { Controls, Elements, Layouts } from "components";
 import usePortal from "hooks/usePortal";
 import { Exchange } from "prefabs";
 import { Vault } from "prefabs/treasury";
+import { useState } from "react";
 import type { Order as O } from "types/order";
 import { Token } from "types/web3";
 
@@ -120,7 +120,7 @@ export default function Trade(props: TradeControl) {
                                 (mode === true || !responsive) && handleConfirm(null, { order: o });
                             }}
                         >
-                            {ButtonName("DEPOSIT", responsive && mode === false)}
+                            <Elements.TextCollapse text={"DEPOSIT"} condition={responsive && mode === false} />
                         </Controls.Button>
                         <Controls.Button
                             type={"solid"}
@@ -133,7 +133,7 @@ export default function Trade(props: TradeControl) {
                                 (mode === false || !responsive) && handleConfirm(null, { order: o });
                             }}
                         >
-                            {ButtonName("WITHDRAW", responsive && mode === true)}
+                            <Elements.TextCollapse text={"WITHDRAW"} condition={responsive && mode === true} />
                         </Controls.Button>
                     </Layouts.Row>
                 </Layouts.Row>

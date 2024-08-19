@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
-import { Controls, Layouts } from "components";
-import { Exchange } from "prefabs";
+import { Controls, Elements, Layouts } from "components";
 import { usePortal } from "hooks";
-import type { Token } from "types/web3";
+import { Exchange } from "prefabs";
+import { useState } from "react";
 import type { Order as O } from "types/order";
+import type { Token } from "types/web3";
 
 export interface OrderControl {
     base: Token;
@@ -31,40 +31,7 @@ export default function Order(props: OrderControl) {
     };
 
     const [handleConfirm, closeConfirm] = usePortal(<Exchange.Modals.Confirmation mode={mode} color={color} order={buy} onClose={() => closeConfirm()} />);
-    const handleReset = () => {};
-
-    const ButtonName = (name: string, condition: boolean) => {
-        if (!name && name === "") return;
-        return (
-            <span
-                style={{
-                    position: "relative",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                {Object.values(name).map((character: string, i: number) => {
-                    return (
-                        <span
-                            key={i}
-                            style={{
-                                ...(i !== 0 && {
-                                    ...(condition && {
-                                        position: "absolute",
-                                        opacity: 0,
-                                        // transition: ".15s ease",
-                                    }),
-                                }),
-                            }}
-                        >
-                            {character}
-                        </span>
-                    );
-                })}
-            </span>
-        );
-    };
+    const handleReset = () => { };
 
     return (
         <>
@@ -122,7 +89,7 @@ export default function Order(props: OrderControl) {
                                 (mode === true || !responsive) && handleConfirm();
                             }}
                         >
-                            {ButtonName("BUY", responsive && mode === false)}
+                            <Elements.TextCollapse text={"BUY"} condition={responsive && mode === false} />
                         </Controls.Button>
                         <Controls.Button
                             type={"solid"}
@@ -135,7 +102,7 @@ export default function Order(props: OrderControl) {
                                 (mode === false || !responsive) && handleConfirm();
                             }}
                         >
-                            {ButtonName("SELL", responsive && mode === true)}
+                            <Elements.TextCollapse text={"SELL"} condition={responsive && mode === true} />
                         </Controls.Button>
                     </Layouts.Row>
                 </Layouts.Row>

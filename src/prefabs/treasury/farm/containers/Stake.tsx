@@ -1,5 +1,5 @@
 "use client";
-import { Controls, Layouts } from "components";
+import { Controls, Elements, Layouts } from "components";
 import usePortal from "hooks/usePortal";
 import { Exchange } from "prefabs";
 import { Farms } from "prefabs/treasury";
@@ -32,39 +32,6 @@ export default function Stake(props: StakeControl) {
     };
 
     const [handleConfirm, closeConfirm] = usePortal(<Exchange.Modals.Confirmation mode={mode} color={color} onClose={() => closeConfirm()} />);
-
-    const ButtonName = (name: string, condition: boolean) => {
-        if (!name && name === "") return;
-        return (
-            <span
-                style={{
-                    position: "relative",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                {Object.values(name).map((character: string, i: number) => {
-                    return (
-                        <span
-                            key={i}
-                            style={{
-                                ...(i !== 0 && {
-                                    ...(condition && {
-                                        position: "absolute",
-                                        opacity: 0,
-                                        // transition: ".15s ease",
-                                    }),
-                                }),
-                            }}
-                        >
-                            {character}
-                        </span>
-                    );
-                })}
-            </span>
-        );
-    };
 
     return (
         <>
@@ -122,7 +89,7 @@ export default function Stake(props: StakeControl) {
                                 (mode === true || !responsive) && handleConfirm(null, { order: o });
                             }}
                         >
-                            {ButtonName("STAKE", responsive && mode === false)}
+                            <Elements.TextCollapse text={"STAKE"} condition={responsive && mode === false} />
                         </Controls.Button>
                         <Controls.Button
                             type={"solid"}
@@ -135,7 +102,7 @@ export default function Stake(props: StakeControl) {
                                 (mode === false || !responsive) && handleConfirm(null, { order: o });
                             }}
                         >
-                            {ButtonName("UNSTAKE", responsive && mode === true)}
+                            <Elements.TextCollapse text={"UNSTAKE"} condition={responsive && mode === true} />
                         </Controls.Button>
                     </Layouts.Row>
                 </Layouts.Row>
