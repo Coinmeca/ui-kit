@@ -1,3 +1,4 @@
+'use client';
 export interface TextCollapse { text: string, condition?: boolean }
 
 export default function TextCollapse({ text, condition }: TextCollapse) {
