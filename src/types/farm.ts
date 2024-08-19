@@ -39,6 +39,7 @@ export interface Staking {
     pay?: Token;
     amount: number;
     share?: number;
+    ratio?: number;
     apr?: number;
 }
 
