@@ -359,7 +359,7 @@ export function format(
                     if (limit) {
                         let l = limit - copy[0].length;
                         const precision = copy[1].indexOf(copy[1].match(/[1-9]/)) + 1;
-                        l = l > precision ? l : copy[0].length > 1 ? l : precision;
+                        l = l > precision ? l : (copy[0].length > 1 || copy[0] !== "0") ? l : precision;
                         if (l > 0) copy[1] = copy[1]?.substring(0, l);
                     }
 
