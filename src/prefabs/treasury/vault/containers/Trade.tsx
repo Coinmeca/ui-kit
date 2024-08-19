@@ -33,39 +33,6 @@ export default function Trade(props: TradeControl) {
 
     const [handleConfirm, closeConfirm] = usePortal(<Exchange.Modals.Confirmation mode={mode} color={color} onClose={() => closeConfirm()} />);
 
-    const ButtonName = (name: string, condition: boolean) => {
-        if (!name && name === "") return;
-        return (
-            <span
-                style={{
-                    position: "relative",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                {Object.values(name).map((character: string, i: number) => {
-                    return (
-                        <span
-                            key={i}
-                            style={{
-                                ...(i !== 0 && {
-                                    ...(condition && {
-                                        position: "absolute",
-                                        opacity: 0,
-                                        // transition: ".15s ease",
-                                    }),
-                                }),
-                            }}
-                        >
-                            {character}
-                        </span>
-                    );
-                })}
-            </span>
-        );
-    };
-
     return (
         <>
             <Layouts.Col gap={1}>
