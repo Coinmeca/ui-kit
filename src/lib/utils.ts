@@ -251,6 +251,7 @@ export function format(
             let multiplier = 0;
             let u = "";
 
+
             if (value?.includes("T")) {
                 copy = value.split("T");
                 multiplier = 12;
@@ -268,27 +269,19 @@ export function format(
 
             const e = value?.split("e");
             copy = e[0]?.split(".");
-            if (e?.length > 0 && !isNaN(parseFloat(e[1]))) multiplier += parseFloat(e[1]);
-            if (decimals && decimals > 0) multiplier -= decimals;
+            if (e?.length > 1 && !isNaN(parseFloat(e[1]))) multiplier += parseFloat(e[1]);
+            if (decimals) multiplier -= decimals;
 
             const m = Math.abs(multiplier);
             const n = copy[0]?.length;
             const d = copy[1]?.length || 0;
 
             if (multiplier < 0) {
-                if (copy?.length > 1) {
-                    if (m > d) {
-                        value = copy[0] + copy[1] + "0".repeat(m - d);
-                    } else {
-                        value = copy[0] + copy[1]?.substring(0, m - d) + "." + copy[1]?.substring(m - d, copy[1]?.length);
-                    }
+                if (m > n) {
+                    value = "0." + "0".repeat(m - n) + copy[0] + (copy[1] || "");
                 } else {
-                    if (m > n) {
-                        value = "0." + "0".repeat(m - n) + copy[0] + (copy[1] || "");
-                    } else {
-                        value =
-                            copy[0]?.substring(0, n - m) + "." + copy[0]?.substring(n - m, copy[0].length) + (copy[1] || "");
-                    }
+                    value =
+                        copy[0]?.substring(0, n - m) + "." + copy[0]?.substring(n - m, copy[0].length) + (copy[1] || "");
                 }
             } else if (multiplier > 0) {
                 if (copy?.length > 1) {
@@ -336,26 +329,18 @@ export function format(
 
             if (max) {
                 const m = parseFloat(max?.toString()?.replaceAll(",", ""));
-                copy = (parseFloat(copy) >= m ? max : copy).toString();
+                copy = (parseFloat(copy?.toString) >= m ? max : copy).toString();
             }
+
 
             copy = copy?.split(".");
             if (display) {
-                if (copy[0] === "") copy[0] = 0;
-                copy[0] = parseInt(copy[0]);
-                if (!num && copy[0] === 0) {
+                if (!num && (copy[0] === "" || copy[0] === "0")) {
                     point = false;
-                    copy = [0];
-                }
-                if (type === "currency") copy[0] = copy[0].toLocaleString();
-            } else if (type === "currency") {
-                let number: string = "";
-                for (let i = 0; i < copy[0].length; i++) {
-                    number += copy[0][i];
-                    if (i !== copy[0].length - 1 && (copy[0].length - i) % 3 === 1) number += ",";
-                }
-                copy[0] = number;
+                    copy = ["0"];
+                };
             }
+            if (type === "currency") copy[0] = copy[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
             let result = copy[0];
             if (type !== 'int') {
@@ -373,7 +358,8 @@ export function format(
 
                     if (limit) {
                         let l = limit - copy[0].length;
-                        l = l > (copy[1]?.length || 0) ? copy[1]?.length : l;
+                        const precision = copy[1].indexOf(copy[1].match(/[1-9]/)) + 1;
+                        l = (copy[0].length === 1 && l > precision) ? l : precision;
                         if (l > 0) copy[1] = copy[1]?.substring(0, l);
                     }
 

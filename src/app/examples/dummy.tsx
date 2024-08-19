@@ -1,10 +1,9 @@
 "use client";
-import { usePathname } from "next/navigation";
-import { useContext, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { Sidebars } from "containers";
 import { NotificationContext } from "contexts/Notification";
-import { format } from "../../lib/utils";
+import { usePathname } from "next/navigation";
+import { useContext, useState } from "react";
 
 export default function Dummy() {
     const [value, setValue] = useState<number>(0);
@@ -104,7 +103,7 @@ export default function Dummy() {
                                         // length={8}
                                         size={3}
                                         img={data?.logo}
-                                        // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
+                                    // name={'0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e'}
                                     />
                                 </>,
                                 [
