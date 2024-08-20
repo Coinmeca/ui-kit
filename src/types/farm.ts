@@ -7,6 +7,7 @@ export interface Farm extends Token {
     id?: number | string;
     start?: number;
     period?: number;
+    duration?: number;
     goal?: number;
     stake?: Token;
     earn?: Token;
