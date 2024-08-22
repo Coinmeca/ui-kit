@@ -2,11 +2,12 @@
 import Coinmeca from "assets/coinmeca.svg";
 import { animate, stagger } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { cloneElement, isValidElement, useCallback, useEffect, useMemo, useState } from "react";
 import { Layouts } from "components";
 import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
 import { Logo, Menu, MenuButton, Nav, Side, Style } from "./Header.styled";
+import Image from "next/image";
 
 export interface Header {
     logo?: Logo;
@@ -29,13 +30,14 @@ export interface Header {
 }
 
 export interface Logo {
-    src?: string;
+    src?: string | Function | React.ReactElement;
     url?: string;
     width?: number;
     height?: number;
     title?: string;
     alt?: string;
     href?: string;
+    style?: object;
 }
 
 export interface Menu {
@@ -59,6 +61,33 @@ export default function Header(props: Header) {
     const color = props?.color || "white";
 
     const side = props?.side?.width || 60;
+
+    const LogoImage = useCallback(() => {
+        const _props = {
+            width: typeof props?.logo?.width === 'number' ? props?.logo?.width : 0,
+            height: typeof props?.logo?.height === 'number' ? props?.logo?.height : 0,
+            style: {
+                ...(typeof props?.logo?.width === 'string' && { width: `${props?.logo?.width}` }),
+                ...(typeof props?.logo?.height === 'string' && { height: `${props?.logo?.height}` }),
+                ...props?.logo?.style,
+            },
+            title: props?.logo?.title,
+            alt: props?.logo?.alt || "",
+        };
+        return !props?.logo?.src ?
+        <Coinmeca
+            height={'5em'}
+            style={props?.style}
+            title={props?.logo?.title}
+            alt={props?.logo?.alt || ""}
+        />
+        : typeof props?.logo?.src === 'string' ? (
+            <Image src={props?.logo?.src} {..._props} />
+        ) : isValidElement(props?.logo?.src) ? (
+                cloneElement(props?.logo?.src, ..._props as any)
+            ) : typeof props?.logo?.src === 'function' ? (
+                props?.logo?.src(_props)
+            ) : props?.logo?.src}, [props?.logo]);
 
     const [mobileMenu, setMobileMenu] = useState(false);
 
@@ -103,10 +132,9 @@ export default function Header(props: Header) {
                                 <div></div>
                             </div>
                         </MenuButton>
-                        {props?.logo && props?.logo?.src && (
+                        {props?.logo && (
                             <Logo href={props?.logo?.href || "/"}>
-                                <Coinmeca height={40} />
-                                {/* <Image src={props?.logo?.src} width={props?.logo?.width} height={props?.logo?.height} title={props?.logo?.title} alt={props?.logo?.alt || ""} /> */}
+                                <LogoImage />
                             </Logo>
                         )}
                         {props?.menu?.children && props?.menu?.children?.length > 0 && (
