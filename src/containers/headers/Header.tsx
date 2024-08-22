@@ -79,8 +79,8 @@ export default function Header(props: Header) {
             <Coinmeca
                 height={'5em'}
                 style={props?.style}
-                title={typeof props?.logo === 'object' && props?.logo?.title}
-                alt={typeof props?.logo === 'object' && props?.logo?.alt || ""}
+                title={typeof props?.logo === 'object' ? props?.logo?.title : undefined}
+                alt={typeof props?.logo === 'object' ? props?.logo?.alt : ""}
             />
         : typeof props?.logo?.src === 'string' ? (
             <Image src={props?.logo?.src} {..._props!} />
