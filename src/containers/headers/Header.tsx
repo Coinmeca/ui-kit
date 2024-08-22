@@ -10,7 +10,7 @@ import { Logo, Menu, MenuButton, Nav, Side, Style } from "./Header.styled";
 import Image from "next/image";
 
 export interface Header {
-    logo?: Logo;
+    logo?: Logo | boolean;
     menu?: {
         active?: boolean;
         style?: object;
@@ -63,7 +63,7 @@ export default function Header(props: Header) {
     const side = props?.side?.width || 60;
 
     const LogoImage = useCallback(() => {
-        const _props = {
+        const _props = typeof props?.logo === 'object' ? {
             width: typeof props?.logo?.width === 'number' ? props?.logo?.width : 0,
             height: typeof props?.logo?.height === 'number' ? props?.logo?.height : 0,
             style: {
@@ -73,21 +73,24 @@ export default function Header(props: Header) {
             },
             title: props?.logo?.title,
             alt: props?.logo?.alt || "",
-        };
-        return !props?.logo?.src ?
-        <Coinmeca
-            height={'5em'}
-            style={props?.style}
-            title={props?.logo?.title}
-            alt={props?.logo?.alt || ""}
-        />
+        } : undefined;
+        return props?.logo &&
+            (typeof props?.logo ==='boolean' || !props?.logo?.src ?
+            <Coinmeca
+                height={'5em'}
+                style={props?.style}
+                title={typeof props?.logo === 'object' && props?.logo?.title}
+                alt={typeof props?.logo === 'object' && props?.logo?.alt || ""}
+            />
         : typeof props?.logo?.src === 'string' ? (
-            <Image src={props?.logo?.src} {..._props} />
+            <Image src={props?.logo?.src} {..._props!} />
         ) : isValidElement(props?.logo?.src) ? (
                 cloneElement(props?.logo?.src, ..._props as any)
             ) : typeof props?.logo?.src === 'function' ? (
                 props?.logo?.src(_props)
-            ) : props?.logo?.src}, [props?.logo]);
+                ) : props?.logo?.src
+            )
+    }, [props?.logo]);
 
     const [mobileMenu, setMobileMenu] = useState(false);
 
@@ -133,7 +136,7 @@ export default function Header(props: Header) {
                             </div>
                         </MenuButton>
                         {props?.logo && (
-                            <Logo href={props?.logo?.href || "/"}>
+                            <Logo href={typeof props?.logo === 'object' ? props?.logo?.href : "/"}>
                                 <LogoImage />
                             </Logo>
                         )}
