@@ -1,3 +1,4 @@
+export * as Frames from './frames';
 import * as Headers from './headers';
 import * as Footers from './footers';
 

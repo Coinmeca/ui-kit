@@ -1,5 +1,5 @@
 "use client";
-import { Frames } from "components";
+import { Frames } from "containers";
 import Dummy from "./dummy";
 
 export default function ExamplesLayout(props: any) {

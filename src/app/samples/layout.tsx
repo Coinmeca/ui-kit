@@ -1,5 +1,5 @@
 "use client";
-import { Frames } from "components";
+import { Frames } from "containers";
 import Data from "./data";
 
 export default function SamplesLayout(props: any) {
@@ -7,7 +7,13 @@ export default function SamplesLayout(props: any) {
 
     return (
         <>
-            <Frames.Frame header={header} sidebar={sidebars} toast={toast} align={"right"} background={{ img: { src: 2 } }} side={56}>
+            <Frames.Frame
+                header={header}
+                sidebar={sidebars}
+                toast={toast}
+                align={"right"}
+                background={{ img: { src: 2 } }}
+                side={56}>
                 {props?.children}
             </Frames.Frame>
         </>
