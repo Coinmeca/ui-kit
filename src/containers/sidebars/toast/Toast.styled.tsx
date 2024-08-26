@@ -16,7 +16,7 @@ const Style = styled.section<{ $width: number; $align: "left" | "right" }>`
     scroll-snap-type: y mandatory;
     -webkit-overflow-scrolling: touch;
     pointer-events: none;
-    z-index: 10;
+    z-index: 1000;
 
     ${InnerContent.default} {
         max-width: ${({ $width }) => `calc(${$width}em - 6em)`};

@@ -25,16 +25,12 @@ export interface Frame {
 export default function Frame(props: Frame) {
     const width = props?.side || 60;
     const align = props?.align || "left";
-    const position = props?.direction === 'left' ? props?.align === 'left' ? 'right' : 'left' : props?.align || "left";
+    const position = props?.direction === "left" ? (props?.align === "left" ? "right" : "left") : props?.align || "left";
 
-    const side = useMemo(() => (
-        <>
-            {props?.sidebar && <Sidebar {...props?.sidebar} width={width} align={position} />}
-            {props?.toast && props?.toast?.list && props?.toast?.list?.length > 0 && (
-                <Toast {...props?.toast} width={width} align={position} />
-            )}
-        </>
-    ), [props?.sidebar, props?.toast])
+    const side = useMemo(
+        () => props?.sidebar && <Sidebar {...props?.sidebar} width={width} align={position} />,
+        [props?.sidebar, props?.toast],
+    );
 
     return (
         <>
@@ -51,6 +47,9 @@ export default function Frame(props: Frame) {
                     {align === "right" && side}
                 </section>
             </Style>
+            {props?.toast && props?.toast?.list && props?.toast?.list?.length > 0 && (
+                <Toast {...props?.toast} width={width} align={position} />
+            )}
         </>
     );
 }
