@@ -1,16 +1,17 @@
-export * as Frames from './frames';
-import * as Headers from './headers';
 import * as Footers from './footers';
+import * as Frames from './frames';
+import * as Headers from './headers';
 
-import Sidebar from './sidebars/Sidebar';
 import * as Sidebars from './sidebars';
+import Sidebar from './sidebars/Sidebar';
 
-import Modal from './modals/Modal';
 import * as Modals from './modals';
+import Modal from './modals/Modal';
 
-import BottomSheet from './bottomsheets/BottomSheet';
 import * as BottomSheets from './bottomsheets';
+import BottomSheet from './bottomsheets/BottomSheet';
 
 import * as Blinds from './blinds';
 
-export { Headers, Footers, Sidebar, Sidebars, Modal, Modals, BottomSheet, BottomSheets, Blinds };
+export { Blinds, BottomSheet, BottomSheets, Footers, Frames, Headers, Modal, Modals, Sidebar, Sidebars };
+
