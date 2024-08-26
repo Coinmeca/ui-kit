@@ -125,7 +125,6 @@ export function sort(array: any[] = [], key: string, type: string, direction: bo
     }
 }
 
-
 export function capitalize(text?: string) {
     if (!text || text === "") return "";
     const lower: string = text.toLowerCase();
@@ -441,7 +440,7 @@ export function parseNumber(value?: number | string | bigint, decimals?: number 
 }
 
 export function sign(value?: number | string): string {
-    if (typeof value === "undefined") return "";
+    if (typeof value !== "number") return "";
     else {
         value = parseFloat(value?.toString());
         if (isNaN(value)) return "";
