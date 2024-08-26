@@ -388,7 +388,7 @@ export function format(
             }
             return sig + (unit ? result + " " + u : result);
         }
-        case "date":
+        case "date": {
             if (value === undefined || value === null || value === false) return "-";
             if (typeof value !== "string") value = value.toString();
             if (value?.length > 10) value = value.substring(0, 10);
@@ -414,6 +414,36 @@ export function format(
                 ":" +
                 ("0" + d.getSeconds()).slice(-2);
             return date + " " + time;
+        }
+        case "duration": {
+            value = parseNumber(value || 0);
+            const unit: string[] = ["Y", "M", "w", "d", "h", "m", "s"];
+            const date: number[] = [
+                Math.floor(value / 31536000),
+                Math.floor((value % 31536000) / 2592000),
+                Math.floor((value % 2592000) / 604800),
+                Math.floor((value % 604800) / 86400),
+                Math.floor((value % 86400) / 3600),
+                Math.floor((value % 3600) / 60),
+                Math.floor(value % 60),
+            ];
+            let check: boolean = false;
+            let start: number = 0;
+            let time: any[] = date.map((t: number, i: number) => {
+                if (!check && t !== 0) {
+                    check = true;
+                    start = i;
+                }
+                if (check) {
+                    return `${start <= 4 && i > start && t < 10 ? `0${t}` : t} ${unit[i]}`;
+                }
+            });
+            let result: string = time.join(" ");
+            return result
+                .substring(result[0] === " " ? 1 : 0, result.length)
+                .replaceAll("   ", "")
+                .replaceAll("  ", "");
+        }
         default: {
             if (typeof value === "undefined") return "";
             return value.toString();
