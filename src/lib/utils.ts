@@ -99,7 +99,7 @@ export function sort(array: any[] = [], key: string, type: string, direction: bo
         return value;
     };
 
-    const exist = array.some(item => depth(item, key) !== undefined);
+    const exist = array.some((item) => depth(item, key) !== undefined);
     if (!exist) return [...array];
 
     switch (type) {
@@ -203,8 +203,8 @@ export function format(
         typeof option === "object" && typeof option?.limit === "number"
             ? option?.limit
             : typeof option === "number"
-                ? option
-                : undefined;
+            ? option
+            : undefined;
     let unit =
         typeof option === "object" &&
         (typeof option?.unit === "boolean" ? option?.unit : typeof option?.unit === "number" ? true : false);
@@ -250,7 +250,6 @@ export function format(
             let multiplier = 0;
             let u = "";
 
-
             if (value?.includes("T")) {
                 copy = value.split("T");
                 multiplier = 12;
@@ -279,8 +278,7 @@ export function format(
                 if (m > n) {
                     value = "0." + "0".repeat(m - n) + copy[0] + (copy[1] || "");
                 } else {
-                    value =
-                        copy[0]?.substring(0, n - m) + "." + copy[0]?.substring(n - m, copy[0].length) + (copy[1] || "");
+                    value = copy[0]?.substring(0, n - m) + "." + copy[0]?.substring(n - m, copy[0].length) + (copy[1] || "");
                 }
             } else if (multiplier > 0) {
                 if (copy?.length > 1) {
@@ -331,18 +329,17 @@ export function format(
                 copy = (parseFloat(copy?.toString) >= m ? max : copy).toString();
             }
 
-
             copy = copy?.split(".");
             if (display) {
                 if (!num && (copy[0] === "" || copy[0] === "0")) {
                     point = false;
                     copy = ["0"];
-                };
+                }
             }
             if (type === "currency") copy[0] = copy[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
             let result = copy[0];
-            if (type !== 'int') {
+            if (type !== "int") {
                 let dec: string | number = "";
                 num = false;
                 point = false;
@@ -358,7 +355,14 @@ export function format(
                     if (limit) {
                         let l = limit - copy[0].length;
                         const precision = copy[1].indexOf(copy[1].match(/[1-9]/)) + 1;
-                        l = l > precision ? l : (copy[0].length > 1 || copy[0] !== "0") ? l : copy[1]?.length > 18 ? 18 : precision;
+                        l =
+                            l > precision
+                                ? l
+                                : copy[0].length > 1 || copy[0] !== "0"
+                                ? l
+                                : copy[1]?.length > 18
+                                ? 18
+                                : precision;
                         if (l > 0) copy[1] = copy[1]?.substring(0, l);
                     }
 
@@ -375,7 +379,8 @@ export function format(
                                 !isNaN(copy[1][i]) &&
                                 copy[1][i] !== "0" &&
                                 fix <= zero
-                            ) break;
+                            )
+                                break;
                         }
                     }
 
@@ -452,7 +457,7 @@ export function format(
 }
 
 export function isNumber(value?: any) {
-    return typeof value === 'number' && !isNaN(value);
+    return typeof value === "number" && !isNaN(value);
 }
 
 export function parseNumber(value?: number | string | bigint, decimals?: number | string, max?: number): number {
@@ -470,7 +475,7 @@ export function parseNumber(value?: number | string | bigint, decimals?: number 
 }
 
 export function sign(value?: number | string): string {
-    if (typeof value !== "number") return "";
+    if (typeof value !== "number" && typeof value !== "string") return "";
     else {
         value = parseFloat(value?.toString());
         if (isNaN(value)) return "";
