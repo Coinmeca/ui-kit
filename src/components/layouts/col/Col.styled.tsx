@@ -31,24 +31,10 @@ const Style = styled.div<{
     }
 
     gap: calc(var(--gap));
+
     & > & {
-        gap: calc(var(--gap) / 2);
-
-        & > & {
-            gap: calc(var(--gap) / 4);
-
-            & > & {
-                gap: calc(var(--gap) / 8);
-
-                & > & {
-                    gap: calc(var(--gap) / 16);
-
-                    & > & {
-                        gap: calc(var(--gap) / 32);
-                    }
-                }
-            }
-        }
+        --gap: calc(var(--gap) / 2);
+        gap: var(--gap);
     }
 
     ${({ $responsive, $reverse }) => {
