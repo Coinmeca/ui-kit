@@ -8,9 +8,9 @@ import { useMobile, useNotification, useSwipe } from "hooks";
 import { format } from "lib/utils";
 import { Content, Style } from "./Notify.styled";
 
-export default function Notify(props: Notify & { order?: number }) {
+export default function Notify(props: Notify & { order?: number, direction: 'left' | 'right' }) {
     const { isMobile } = useMobile();
-    const [direction, setDirection] = useState<"left" | "right">("right");
+    const [direction, setDirection] = useState<"left" | "right">(props?.direction || "right");
     const swipe = useSwipe(
         isMobile && {
             onSwipe: (e: any, move: number) => {

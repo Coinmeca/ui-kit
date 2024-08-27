@@ -29,6 +29,7 @@ export default function Toast({ list, active, width, align, swipe }: Toast) {
                         list?.map((v: any, k: number) => (
                             <Notify
                                 key={v?.id || k}
+                                direction={align}
                                 // as={motion.div}
                                 // initial={{ y: "15%", opacity: 0 }}
                                 // animate={{ y: "0", opacity: 1 }}
