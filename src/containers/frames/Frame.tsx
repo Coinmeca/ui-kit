@@ -7,7 +7,6 @@ import type { Header } from "containers/headers/Header";
 import { Toast } from "containers/sidebars";
 import type { Sidebars } from "containers/sidebars/Sidebar";
 import type { Toast as Toasts } from "containers/sidebars/toast/Toast";
-import { useMemo } from "react";
 import Style from "./Frame.styled";
 
 export interface Frame {
@@ -44,7 +43,7 @@ export default function Frame(props: Frame) {
                     {align === "right" && side}
                 </section>
             </Style>
-            {props?.toast && props?.toast?.list?.length && (
+            {(props?.toast && props?.toast?.list && props?.toast?.list?.length > 0) && (
                 <Toast {...props?.toast} width={width} align={position} />
             )}
         </>
