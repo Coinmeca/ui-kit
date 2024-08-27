@@ -376,7 +376,7 @@ export default function Data() {
     const header = {
         color: colorMap[path],
         logo: {
-            src: require("../../assets/coinmeca.svg"),
+            src: require("../../assets/coinmeca.svg").default,
             width: 128,
             height: 48,
         },
