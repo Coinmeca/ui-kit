@@ -51,7 +51,7 @@ export default function BottomSheet(props: BottomSheet) {
     };
 
     return (
-        <Layouts.Panel active={active} style={{ zIndex: props?.zIndex || 100, pointerEvents: "none" }} onClick={(e: any) => handleBlur(e)} fix>
+        <Layouts.Panel active={active} style={{ zIndex: props?.zIndex || 200, pointerEvents: "none" }} onClick={(e: any) => handleBlur(e)} fix>
             <AnimatePresence>
                 {active && (
                     <Style
