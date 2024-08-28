@@ -10,10 +10,11 @@ export interface Toast {
     active?: boolean;
     width?: number;
     align?: "left" | "right";
+    style?: object;
     swipe?: Swipe;
 }
 
-export default function Toast({ list, active, width, align, swipe }: Toast) {
+export default function Toast({ list, active, width, align, style, swipe }: Toast) {
     width = width || 60;
     align = align === "left" || align === "right" ? align : "left";
 
@@ -21,7 +22,7 @@ export default function Toast({ list, active, width, align, swipe }: Toast) {
         active &&
         typeof list !== "undefined" &&
         list.length > 0 && (
-            <Style $width={width} $align={align} data-active={typeof list !== "undefined" ? true : false}>
+            <Style $width={width} $align={align} style={style} data-active={typeof list !== "undefined" ? true : false}>
                 <Layouts.Contents.InnerContent style={{ flexDirection: "column-reverse" }}>
                     {/* <AnimatePresence key={"notification"} mode="popLayout"> */}
                     {list &&

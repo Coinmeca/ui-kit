@@ -43,7 +43,7 @@ export default function Frame(props: Frame) {
                     {align === "right" && side}
                 </section>
             </Style>
-            {(props?.toast && props?.toast?.list && props?.toast?.list?.length > 0) && (
+            {props?.toast && props?.toast?.list && props?.toast?.list?.length > 0 && (
                 <Toast {...props?.toast} width={width} align={position} />
             )}
         </>
