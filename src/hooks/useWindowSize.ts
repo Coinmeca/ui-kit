@@ -1,5 +1,5 @@
 "use client";
-import { useLayoutEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Size {
     width: number;
@@ -13,26 +13,32 @@ interface WindowSize {
 }
 
 export default function useWindowSize(): WindowSize {
-    const w = (typeof window !== 'undefined' ? window : global);
+    const w = typeof window !== "undefined" ? window : global;
     const [windowWidth, setWindowWidth] = useState<number>(w?.innerWidth || 1920);
     const [windowHeight, setWindowHeight] = useState<number>(w?.innerHeight || 1080);
-    const [windowSize, setWindowSize] = useState<Size>({ width: windowWidth, height: windowHeight });
+    const [windowSize, setWindowSize] = useState<Size>({
+        width: windowWidth,
+        height: windowHeight,
+    });
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         function windowResize() {
-            if (windowWidth !== w?.innerWidth) setWindowWidth(w?.innerWidth);
-            if (windowHeight !== w?.innerHeight) setWindowHeight(w?.innerHeight);
-            if (windowWidth !== w?.innerWidth || windowHeight !== w?.innerHeight) setWindowSize({ width: w?.innerWidth, height: w?.innerHeight });
+            if (windowWidth !== window.innerWidth) setWindowWidth(window.innerWidth);
+            if (windowHeight !== window.innerHeight) setWindowHeight(window.innerHeight);
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
         }
 
-        w.addEventListener("change", windowResize);
-        w.addEventListener("resize", windowResize);
+        window.addEventListener("change", windowResize);
+        window.addEventListener("resize", windowResize);
         windowResize();
 
         return () => {
-            w.removeEventListener("change", windowResize);
-            w.removeEventListener("resize", windowResize);
-        }
+            window.removeEventListener("change", windowResize);
+            window.removeEventListener("resize", windowResize);
+        };
     }, []);
 
     return { windowSize, windowWidth, windowHeight };
