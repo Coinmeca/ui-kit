@@ -3,9 +3,10 @@ import { useTheme } from "hooks";
 import { sort } from "lib/utils";
 import type { LineData } from "lightweight-charts";
 import { HistogramData, createChart } from "lightweight-charts";
-import { Suspense, memo, useEffect, useRef, useState } from "react";
+import { Suspense, memo, useCallback, useEffect, useRef, useState } from "react";
 import type { Volume } from "./Candle";
 import Style from "./Chart.styled";
+import { Root } from "lib/style";
 
 type DataType = "price" | "volume" | "percent";
 
@@ -45,10 +46,20 @@ export const Line = (props: Line) => {
         : detectedTheme === "light"
         ? "0,0,0"
         : "255,255,255";
+
+    const getColor = (color?: string, fallback?: string) => {
+        if (!color || color === "") return fallback;
+        // if (color?.includes(",")) {
+        // const length = color.split(",")?.length;
+        // return length === 3 ? `rgb(${color})` : `rgba(${color})`;
+        // }
+        return color !== Root.Color(color) ? Root.Color(color) : color;
+    };
+
     const color = {
-        default: props?.color?.default || `rgb(${theme})`,
-        up: props?.color?.up || "0,192,96",
-        down: props?.color?.down || "255,0,64",
+        default: getColor(props?.color?.default, theme),
+        up: getColor(props?.color?.up, "0,192,96"),
+        down: getColor(props?.color?.down, "255,0,64"),
         theme: {
             strong: `rgba(${theme}, 0.6)`,
             semi: `rgba(${theme}, 0.45)`,
@@ -181,7 +192,7 @@ export const Line = (props: Line) => {
 
             if (data) {
                 const series = chart.addLineSeries({
-                    color: color.default,
+                    color: `rgb(${color.default})`,
                     priceFormat: {
                         type:
                             (typeof props?.type === "string"
@@ -224,7 +235,6 @@ export const Line = (props: Line) => {
 
             if (volume) {
                 const volumeSeries = chart.addHistogramSeries({
-                    color: "yellow",
                     priceFormat: {
                         type:
                             (typeof props?.type === "string"

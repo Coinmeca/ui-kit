@@ -6,6 +6,7 @@ import { createChart } from "lightweight-charts";
 import { Suspense, memo, useEffect, useRef, useState } from "react";
 import { Volume } from "./Candle";
 import Style from "./Chart.styled";
+import { Root } from "lib/style";
 
 type DataType = "price" | "volume" | "percent";
 
@@ -45,10 +46,19 @@ export const Area = (props: Area) => {
         : detectedTheme === "light"
         ? "0,0,0"
         : "255,255,255";
+    const getColor = (color?: string, fallback?: string) => {
+        if (!color || color === "") return fallback;
+        // if (color?.includes(",")) {
+        // const length = color.split(",")?.length;
+        // return length === 3 ? `rgb(${color})` : `rgba(${color})`;
+        // }
+        return color !== Root.Color(color) ? Root.Color(color) : color;
+    };
+
     const color = {
-        default: props?.color?.default || `rgb(${theme})`,
-        up: props?.color?.up || "0,192,96",
-        down: props?.color?.down || "255,0,64",
+        default: getColor(props?.color?.default, theme),
+        up: getColor(props?.color?.up, "0,192,96"),
+        down: getColor(props?.color?.down, "255,0,64"),
         theme: {
             strong: `rgba(${theme}, 0.6)`,
             semi: `rgba(${theme}, 0.45)`,
@@ -222,7 +232,6 @@ export const Area = (props: Area) => {
 
             if (volume) {
                 const volumeSeries = chart.addHistogramSeries({
-                    // color: "yellow",
                     priceFormat: {
                         type:
                             (typeof props?.type === "string"

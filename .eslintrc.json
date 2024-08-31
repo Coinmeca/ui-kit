@@ -1,30 +1,4 @@
 {
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:react/recommended",
-        "plugin:react/jsx-runtime",
-        "next/core-web-vitals"
-    ],
-    "plugins": ["babel", "styled-components", "@typescript-eslint"],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 2020,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true
-        }
-    },
-    "rules": {
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/no-explicit-any": "warn",
-        "react/react-in-jsx-scope": "off", // Not needed in Next.js 12+
-        "react/prop-types": "off", // Disable prop-types if using TypeScript
-        "styled-components/no-unused-vars": "warn"
-    },
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
-    }
+    "root": true,
+    "extends": ["next/core-web-vitals"]
 }
