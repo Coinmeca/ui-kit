@@ -24,6 +24,8 @@ export interface Farm extends Token {
     interest24h?: number | string;
     interest24hChange?: number | string;
     apr?: number | string;
+    aprChange?: number | string;
+    claimable?: number | string;
 }
 
 export type FarmTradeType = "STAKING" | "UNSTAKE" | "CLAIM" | "HARVEST"
