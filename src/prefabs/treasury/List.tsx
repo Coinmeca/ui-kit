@@ -27,7 +27,9 @@ export default function List(props: List) {
     const [keyword, setKeyword] = useState<string>();
     const [tvl, setTvl] = useState<any>();
 
-    const [showListing, closeListing] = usePortal(<Vault.Modals.Listing keyTokens={props?.assets} onClose={() => closeListing()} />);
+    const [showListing, closeListing] = usePortal(
+        <Vault.Modals.Listing keyTokens={props?.assets} onClose={() => closeListing()} />,
+    );
 
     return (
         <>
@@ -40,7 +42,9 @@ export default function List(props: List) {
                         {
                             background: {
                                 img: { src: 4 },
-                                children: <Charts.ChartJS type={"line"} data={props?.charts?.value} onHover={(v: any) => setTvl(v)} />,
+                                children: (
+                                    <Charts.ChartJS type={"line"} data={props?.charts?.value} onHover={(v: any) => setTvl(v)} />
+                                ),
                             },
                             style: { pointerEvents: "none" },
                             children: (
@@ -62,7 +66,9 @@ export default function List(props: List) {
                             children: (
                                 <Layouts.Col gap={0}>
                                     <Elements.Text type={"strong"}>Total Volume</Elements.Text>
-                                    <Elements.Text type={"h4"}>$ {format(156785461234, "currency", { unit: 9, limit: 12, fix: 3 })}</Elements.Text>
+                                    <Elements.Text type={"h4"}>
+                                        $ {format(156785461234, "currency", { unit: 9, limit: 12, fix: 3 })}
+                                    </Elements.Text>
                                 </Layouts.Col>
                             ),
                         },
@@ -81,12 +87,16 @@ export default function List(props: List) {
                                     children: [
                                         [
                                             <>
-                                                <Controls.Tab active={props?.page === "vault"} onClick={() => handlePage("vault")}>
+                                                <Controls.Tab
+                                                    active={props?.page === "vault"}
+                                                    onClick={() => handlePage("vault")}>
                                                     Vault
                                                 </Controls.Tab>
                                             </>,
                                             <>
-                                                <Controls.Tab active={props?.page === "farm"} onClick={() => handlePage("farm")}>
+                                                <Controls.Tab
+                                                    active={props?.page === "farm"}
+                                                    onClick={() => handlePage("farm")}>
                                                     Farm
                                                 </Controls.Tab>
                                             </>,
@@ -100,8 +110,7 @@ export default function List(props: List) {
                                                     ...(!props?.responsive && {
                                                         marginRight: "1em",
                                                     }),
-                                                }}
-                                            >
+                                                }}>
                                                 {props?.page === "vault" ? "Listing" : "Create"}
                                             </Controls.Tab>,
                                         ],
@@ -111,7 +120,7 @@ export default function List(props: List) {
                         />
                         <Layouts.Menu
                             style={{
-                                maxWidth: !props?.responsive ?? "max-content",
+                                maxWidth: !props?.responsive || "max-content",
                             }}
                             menu={[
                                 {
@@ -148,7 +157,12 @@ export default function List(props: List) {
                             {
                                 active: props?.page === "farm",
                                 children: (
-                                    <Farms.Containers.List farms={props?.farms} filter={keyword} onSelect={props?.onSelect} responsive={props?.responsive} />
+                                    <Farms.Containers.List
+                                        farms={props?.farms}
+                                        filter={keyword}
+                                        onSelect={props?.onSelect}
+                                        responsive={props?.responsive}
+                                    />
                                 ),
                             },
                         ]}
