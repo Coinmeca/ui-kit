@@ -13,7 +13,7 @@ export interface BottomSheet {
     height?: number | string | { min?: number | string; max?: number | string };
     onBlur?: Function;
     onClose?: Function;
-    style?: any;
+    style?: object;
     zIndex?: number;
     swipe?: Swipe & { area?: number };
 }
