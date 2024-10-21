@@ -29,7 +29,7 @@ const Style = styled.div<{ $scale: number; $gap: number | string, $padding:numbe
     align-items: center;
     justify-content: center;
     gap: ${({ $gap }) => typeof $gap === 'number' ? `${$gap || 2}em` : $gap};
-    padding: ${({$padding}) => `${$padding}em`}
+    padding: ${({$padding}) => `${$padding}em`};
     transition:.3s ease;
 
     @keyframes shake-horizon{
