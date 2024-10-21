@@ -21,7 +21,7 @@ export default function SlideContainer(props: SlideContainer) {
     const swipe = useSwipe(props?.swipe && { ...(typeof props?.swipe === "object" && props?.swipe), length: props?.contents?.length });
 
     return (
-        <Style as={motion.div} style={props?.style}>
+        <Style as={motion.div} $vertical={vertical} style={props?.style}>
             {props?.contents && props?.contents?.length > 0 ? (
                 // <AnimatePresence initial={false} custom={swipe?.direction}>
                 props?.contents.map((content, i) => (
