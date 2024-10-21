@@ -1,4 +1,4 @@
-﻿import { Root } from "@coinmeca/ui/lib/style";
+﻿import { Root } from "lib/style";
 import styled, { css } from "styled-components";
 
 export const Dot = styled.div<{ $active?: boolean; $size: number; $stroke: number | string; }>`
