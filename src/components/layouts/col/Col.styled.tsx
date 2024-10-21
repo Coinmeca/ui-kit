@@ -24,10 +24,11 @@ const Style = styled.div<{
     display: flex;
     flex-direction: ${({ $reverse }) => ($reverse ? "column-reverse" : "column")};
     width: ${({ $fit }) => ($fit ? "max-content" : "-webkit-fill-available")};
-    ${({ $fill }) => $fill && css`
-        height:-webkit-fill-available;
-        min-height: 100%;
-    `}
+    ${({ $fill }) =>
+        $fill &&
+        css`
+            height: -webkit-fill-available;
+        `}
 
     & > *:not(img) {
         width: -webkit-fill-available;
