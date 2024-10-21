@@ -5,13 +5,14 @@ import Style, { Pad } from "./Numberpad.styled";
 export interface Numberpad {
     value?: number | string;
     scale?: number;
-    type?: "number" | "currency";
+    type?: "code" | "number" | "currency";
     padding?: number;
     left?: Option;
     right?: Option;
     reverse?: boolean;
     width?: number;
     onChange?: Function;
+    onReset?: Function;
 }
 
 interface Option {
@@ -27,8 +28,11 @@ export default function Numberpad(props: Numberpad) {
     const handleChange = (e: any, v: string) => {
         const value = props?.value?.toString() || "";
         let input: string = "";
-        if (v === "sub") input = value?.length - 1 > 0 ? value?.substring(0, value?.length - 1) : "0";
-        else if (v === "reset") input = "0";
+        if (v === "sub") input = value?.length - 1 > 0 ? value?.substring(0, value?.length - 1) : input = type === 'code' ? '' : '0';
+        else if (v === "reset") {
+            input = type === 'code' ? '' : '0';
+            if (typeof props?.onReset === 'function') props?.onReset();
+        }
         else input = type === "currency" && value === "0" && v === "0" ? "0" : type === "currency" && value === "0" && v !== "0" ? v : value + v;
         if (typeof props?.onChange === "function") props?.onChange(e, input);
     };

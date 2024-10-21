@@ -1,0 +1,27 @@
+﻿import Style, { Dot } from './Passcode.styled';
+
+interface Passcode{
+    index: number;
+    length: number;
+    scale?: number;
+    size?: number;
+    color?: string;
+    error?: boolean;
+    gap?: number | string;
+    stroke?: number | string;
+    style?: object;
+}
+
+export default function Passcode(props:Passcode) {
+    const scale = props?.scale || 1;
+    const size = props?.scale || 1;
+    const gap = props?.gap || 2;
+    const index = props?.index;
+    const length = props?.length;
+    const color = props?.color || 'black';
+    const stroke = props?.stroke || '1px';
+
+    return <Style $scale={scale} $gap={gap} $color={color} $error={props?.error} style={props?.style}>
+        {length && [...Array(length)].map((_, i: number) => (<Dot key={i} $active={index > i} $size={size} $stroke={stroke}/>))}
+</Style>
+}

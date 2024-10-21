@@ -32,8 +32,6 @@ export default function Panel(props: Panel) {
         };
     }, [props?.active]);
 
-    useEffect(() => {}, [active]);
-
     return (
         <AnimatePresence>
             {active && (
