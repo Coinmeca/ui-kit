@@ -10,6 +10,7 @@ interface Passcode{
     error?: boolean;
     gap?: number | string;
     stroke?: number | string;
+    padding?: number;
     style?: object;
 }
 
@@ -21,8 +22,9 @@ export default function Passcode(props:Passcode) {
     const length = props?.length;
     const color = props?.color || 'black';
     const stroke = props?.stroke || '1px';
+    const padding = props?.padding || 1;
 
-    return <Style $scale={scale} $gap={gap} $color={color} $error={props?.error} style={props?.style}>
+    return <Style $scale={scale} $gap={gap} $padding={padding} $color={color} $error={props?.error} style={props?.style}>
         {length && [...Array(length)].map((_, i: number) => (<Dot key={i} $active={index > i} $size={size} $stroke={stroke}/>))}
 </Style>
 }

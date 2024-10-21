@@ -15,7 +15,7 @@ export const Dot = styled.div<{ $active?: boolean; $size: number; $stroke: numbe
     `}
 `
 
-const Style = styled.div<{ $scale: number; $gap: number | string, $color: string; $error?: boolean }>`
+const Style = styled.div<{ $scale: number; $gap: number | string, $padding:number, $color: string; $error?: boolean }>`
     ${({ $color, $error }) => {
         return css`
             --theme: ${$error ? 'var(--red)' : $color === "white" ? "var(--black)" : $color === "black" ? "var(--white)" : $color === Root.Color($color) ? $color : Root.Color($color)};
@@ -29,6 +29,7 @@ const Style = styled.div<{ $scale: number; $gap: number | string, $color: string
     align-items: center;
     justify-content: center;
     gap: ${({ $gap }) => typeof $gap === 'number' ? `${$gap || 2}em` : $gap};
+    padding: ${({$padding}) => `${$padding}em`}
     transition:.3s ease;
 
     @keyframes shake-horizon{
