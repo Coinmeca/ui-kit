@@ -13,6 +13,7 @@ export interface Numberpad {
     width?: number;
     onChange?: Function;
     onReset?: Function;
+    style?: object;
 }
 
 interface Option {
@@ -38,7 +39,7 @@ export default function Numberpad(props: Numberpad) {
     };
 
     return (
-        <Style $scale={scale} $width={props?.width} $padding={padding} $reverse={props?.reverse}>
+        <Style $scale={scale} $width={props?.width} $padding={padding} $reverse={props?.reverse} style={props?.style}>
             <div>
                 {props?.left?.children && (
                     <Layouts.Col
