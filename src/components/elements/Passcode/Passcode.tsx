@@ -1,4 +1,5 @@
-﻿import Style, { Dot } from './Passcode.styled';
+﻿"use client";
+import Style, { Dot } from './Passcode.styled';
 
 interface Passcode{
     index: number;
