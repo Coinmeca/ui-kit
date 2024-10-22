@@ -1,5 +1,5 @@
 "use client";
-import { type CSSProperties } from "react";
+import { useMemo } from "react";
 import Image from "next/image";
 import Style from "./Avatar.styled";
 
@@ -15,6 +15,7 @@ export interface Avatar {
     display?: number;
     length?: number;
     stroke?: number;
+    align?: "left" | "right";
     fill?: string | boolean;
     style?: object;
 }
@@ -29,30 +30,37 @@ export default function Avatar(props: Avatar) {
     const length = props?.length || props?.name?.length;
     const hideName = props?.hideName || false;
     const fill = props?.fill || false;
+    const align = props?.align || "left";
+
+    const avatar = useMemo(() => {
+        return (
+            (name || (props?.img && props?.img !== "")) && (
+                <div>
+                    {props?.img && props?.img !== "" ? (
+                        <Image src={props?.img} fill sizes="100%" alt={""} title={props?.title} />
+                    ) : (
+                        ((typeof character === "string" && character !== "") || (name && name !== "")) && (
+                            <span>
+                                <span>
+                                    {typeof character === "number"
+                                        ? name?.startsWith("0x")
+                                            ? name?.substring(2, 2 + character)
+                                            : name?.substring(0, character)
+                                        : character}
+                                </span>
+                            </span>
+                        )
+                    )}
+                </div>
+            )
+        );
+    }, [name, props?.img]);
 
     return (
         <>
             {((props?.img && props?.img !== "") || (props?.name && props?.name !== "")) && (
                 <Style $color={color} $scale={scale} $size={size} $fill={fill} $stroke={props?.stroke} style={props?.style}>
-                    {(name || (props?.img && props?.img !== "")) && (
-                        <div>
-                            {props?.img && props?.img !== "" ? (
-                                <Image src={props?.img} fill sizes="100%" alt={""} title={props?.title} />
-                            ) : (
-                                ((typeof character === "string" && character !== "") || (name && name !== "")) && (
-                                    <span>
-                                        <span>
-                                            {typeof character === "number"
-                                                ? name?.startsWith("0x")
-                                                    ? name?.substring(2, 2 + character)
-                                                    : name?.substring(0, character)
-                                                : character}
-                                        </span>
-                                    </span>
-                                )
-                            )}
-                        </div>
-                    )}
+                    {align === "left" && avatar}
                     {!hideName && name && name !== "" && (
                         <span>
                             {name?.length > length!
@@ -64,6 +72,7 @@ export default function Avatar(props: Avatar) {
                                 : name}
                         </span>
                     )}
+                    {align === "right" && avatar}
                 </Style>
             )}
         </>
