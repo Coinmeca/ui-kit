@@ -26,11 +26,11 @@ export default function Avatar(props: Avatar) {
     const size = props?.size || 3;
     const color = props?.color || "white";
     const character = props?.character || 1;
-    const display = props?.display || 6;
+    const display = props?.display;
     const hideName = props?.hideName || false;
     const fill = props?.fill || false;
     const align = props?.align || "left";
-    const ellipsis = props?.ellipsis || '...'
+    const ellipsis = props?.ellipsis || "...";
 
     const avatar = () => {
         return (
@@ -63,13 +63,13 @@ export default function Avatar(props: Avatar) {
                     {align === "left" && avatar()}
                     {!hideName && name && name !== "" && (
                         <span>
-                            {name?.length > display
+                            {display && display < name?.length
                                 ? `${
-                                    (name?.startsWith("0x") ? name?.substring(0, 2 + display) : name?.substring(0, display)) +
-                                    ellipsis +
-                                    name?.substring(name?.length - display)
-                                    }`
-                                    : name}
+                                      (name?.startsWith("0x") ? name?.substring(0, 2 + display) : name?.substring(0, display)) +
+                                      ellipsis +
+                                      name?.substring(name?.length - display)
+                                  }`
+                                : name}
                         </span>
                     )}
                     {align === "right" && avatar()}
