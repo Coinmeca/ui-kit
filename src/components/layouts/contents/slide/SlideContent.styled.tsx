@@ -7,7 +7,7 @@ export const Style = styled.div<{ $offset: number; $vertical: boolean; $unit: "%
     /* flex-direction: column; */
     width: 100%;
     height: -webkit-fill-available;
-    min-height: max-content;
+    /* min-height: max-content; */
     overflow: hidden auto;
     scroll-snap-type: y mandatory;
     -webkit-overflow-scrolling: touch;
