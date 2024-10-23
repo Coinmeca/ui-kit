@@ -13,6 +13,7 @@ export interface Dropdown {
     form?: string;
     title?: string;
     scale?: number;
+    chevron?: boolean;
 
     height?: number;
     fit?: boolean;
@@ -48,6 +49,7 @@ export default function Dropdown(props: Dropdown) {
     const height = props?.height || 16;
     const fit = props?.fit || false;
     const scale = props?.scale || 1;
+    const chevron = typeof props?.chevron === 'boolean' ? props?.chevron : true;
 
     const placeholder = props?.placeholder || "Select";
     const [options, setOptions] = useState<any>(props?.options);
@@ -280,6 +282,7 @@ export default function Dropdown(props: Dropdown) {
             $fit={fit}
             $scale={scale}
             $disabled={disabled}
+            $chevron={chevron}
             tabIndex={5}
             style={{
                 zIndex: open ? 10 : 1,
@@ -337,8 +340,10 @@ export default function Dropdown(props: Dropdown) {
                                     : typeof option === "object"
                                     ? option?.toString()
                                     : option}
-                            </span>
-                            <Elements.Icon icon="chevron-down-small" />
+                                    </span>
+                                {chevron && (
+                                    <Elements.Icon icon="chevron-down-small" />
+                                )}
                         </>
                     )}
                 </Item>

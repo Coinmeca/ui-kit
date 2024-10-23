@@ -772,7 +772,7 @@ export default function Dummy() {
                     </Layouts.Row>
                     {/* <Controls.Button fit>Connect</Controls.Button> */}
                     <Controls.Button iconRight={"chevron-down-bold"} fit>
-                        <Elements.Avatar length={8} size={3} display={4} name={"0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"} />
+                        <Elements.Avatar size={3} display={4} name={"0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"} />
                     </Controls.Button>
                 </>
             ),

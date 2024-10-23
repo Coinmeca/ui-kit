@@ -457,7 +457,6 @@ export default function Data() {
                             children: (
                                 <Elements.Avatar
                                     color={colorMap[`${path}`]}
-                                    length={8}
                                     scale={0.6667}
                                     display={4}
                                     name={"0x16e39d21f7f3ab3dafabd12fc07f4fd4928fb47163e79bb879d0928ac34e817e"}

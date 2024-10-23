@@ -7,11 +7,9 @@ export const Item = styled.li`
     flex-direction: row;
     align-items: center;
     justify-content: start;
-    width: calc(100% - 5em);
     // min-width: max-content;
     gap: 1em;
     padding: 1em;
-    padding-right: 4em;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s ease;
@@ -129,6 +127,7 @@ const Style = styled.div<{
     $fit: boolean;
     $scale: number;
     $disabled: boolean;
+    $chevron: boolean;
 }>`
     font-size: ${({ $scale }) => $scale}em;
     background: transparent;
@@ -148,15 +147,25 @@ const Style = styled.div<{
     -webkit-backdrop-filter: var(--blur);
     backdrop-filter: var(--blur);
 
-    ${Option}, ${Options} {
+    & > ${Option}, 
+    & > ${Options} {
         position: relative;
         display: flex;
         flex-direction: column;
     }
 
-    & ${Options} {
+    & > ${Options} {
         max-height: 0;
         background: rgba(var(--white), var(--o0075));
+    }
+
+    & > ${Option} > ${Item},
+    & > ${Options} > ${Item} {
+        ${({$chevron}) => css`
+            
+        width: calc(100% - ${$chevron ? '5em' : '2em'});
+        padding-right: ${$chevron ? '4em' : '1em'};
+        `}
     }
 
     &[data-active="true"] {
