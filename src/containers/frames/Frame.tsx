@@ -11,7 +11,7 @@ import Style from "./Frame.styled";
 
 export interface Frame {
     children?: any;
-    header?: Header;
+    header?: Header & { type?: "custom" | "wallet"; children?: any };
     sidebar?: Sidebars;
     footer?: Footer;
     toast?: Toasts;
@@ -32,7 +32,12 @@ export default function Frame(props: Frame) {
         <>
             <Layouts.BG {...props?.background} />
             <Style $direction={props?.direction}>
-                {props?.header && <Headers.Header {...props?.header} side={{ ...props?.header?.side, width: width }} />}
+                {props?.header &&
+                    (props?.header?.type === "custom" ? (
+                        props?.header?.children
+                    ) : (
+                        <Headers.Header {...props?.header} side={{ ...props?.header?.side, width: width }} />
+                    ))}
                 <section>
                     {align === "left" && side}
                     <main>

@@ -6,6 +6,15 @@ import { BottomSheet } from "containers";
 import { usePortal, useWindowSize } from "hooks";
 import Style, { Item, Option, Options } from "./Dropdown.styled";
 
+export interface DropdownOption {
+    title?: string;
+    alt?: string;
+    value?: any;
+    icon?: string;
+    img?: string;
+    [key: string]: any;
+}
+
 export interface Dropdown {
     theme?: "light" | "dark";
     style?: object;
@@ -20,8 +29,8 @@ export interface Dropdown {
     disabled?: any;
     placeholder?: string;
 
-    options?: any;
-    option?: any;
+    options?: (string | DropdownOption)[] | { [key: string]: any };
+    option?: string | DropdownOption;
 
     keyName?: any;
     keyIndex?: number;
@@ -49,7 +58,7 @@ export default function Dropdown(props: Dropdown) {
     const height = props?.height || 16;
     const fit = props?.fit || false;
     const scale = props?.scale || 1;
-    const chevron = typeof props?.chevron === 'boolean' ? props?.chevron : true;
+    const chevron = typeof props?.chevron === "boolean" ? props?.chevron : true;
 
     const placeholder = props?.placeholder || "Select";
     const [options, setOptions] = useState<any>(props?.options);
@@ -140,7 +149,10 @@ export default function Dropdown(props: Dropdown) {
                                 <Item
                                     key={k}
                                     onClick={(e: any) => handleSelect(e, v, k)}
-                                    data-disabled={typeof option !== "undefined" && (v?.[keyIndex] === option || v?.[keyName] === option || v === option)}>
+                                    data-disabled={
+                                        typeof option !== "undefined" &&
+                                        (v?.[keyIndex] === option || v?.[keyName] === option || v === option)
+                                    }>
                                     <>
                                         {typeof v?.[imgName] !== "undefined" && v?.[imgName] !== "" ? (
                                             <>
@@ -340,10 +352,8 @@ export default function Dropdown(props: Dropdown) {
                                     : typeof option === "object"
                                     ? option?.toString()
                                     : option}
-                                    </span>
-                                {chevron && (
-                                    <Elements.Icon icon="chevron-down-small" />
-                                )}
+                            </span>
+                            {chevron && <Elements.Icon icon="chevron-down-small" />}
                         </>
                     )}
                 </Item>
