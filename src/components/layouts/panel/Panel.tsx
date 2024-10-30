@@ -17,6 +17,7 @@ export interface Panel {
 export default function Panel(props: Panel) {
     const [active, setActive] = useState(true);
 
+
     const handleClick = (e: any) => {
         if (typeof props?.onClick === 'function') props?.onClick(e);
     };
@@ -26,10 +27,13 @@ export default function Panel(props: Panel) {
     };
 
     useEffect(() => {
-        return () => {
-            handleBlur();
+        if (props?.active) setActive(true);
+        else {
             setActive(false);
-        };
+            return () => {
+                handleBlur();
+            };
+        }
     }, [props?.active]);
 
     return (
