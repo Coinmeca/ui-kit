@@ -88,7 +88,7 @@ const Style = styled.button<{
                         background: rgba(var(--theme), var(--o1));
                         color: ${$color === "black" ? "rgb(var(--black))" : "rgb(var(--white))"};
                         & ${Icon.default} svg {
-                            fill: ${$color === "black" ? "rgb(var(--white))" : "rgb(var(--black))"};
+                            fill: ${$color === "black" ? "rgb(var(--black))" : "rgb(var(--white))"};
                         }
                     }
                     &:active {

@@ -1,22 +1,24 @@
 import { Root } from "lib/style";
 import { css, styled } from "styled-components";
 
-export const Row = styled.div<{ $gap: number; $change?: string }>`
+export const Row = styled.div<{ $gap: number; $change?: string; $fit?: boolean; }>`
     display: flex;
     flex-direction: row;
     width: 100%;
     gap: ${({ $gap }) => $gap}em;
 
+    ${({$fit}) => $fit && 'max-width: max-content;'}
     ${({ $change }) => $change && `--change: ${$change === Root.Color($change) ? $change : Root.Color($change)};`}
 `;
 
-export const Col = styled.div<{ $gap: number; $change?: string }>`
+export const Col = styled.div<{ $gap: number; $change?: string; $fit?:boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
     gap: ${({ $gap }) => $gap}em;
-
+    
+    ${({$fit}) => $fit && 'max-width: max-content;'}
     ${({ $change }) => $change && `--change: ${$change === Root.Color($change) ? $change : Root.Color($change)};`}
 `;
 
