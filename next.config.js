@@ -1,3 +1,5 @@
+const path = require("path");
+
 // next.config.js
 const path = require("path");
 
@@ -9,7 +11,6 @@ const nextConfig = {
         });
         return config;
     },
-    swcMinify: true,
     typescript: {
         ignoreBuildErrors: false, // Set to true to ignore TypeScript errors in builds
     },

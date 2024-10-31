@@ -1,6 +1,6 @@
 "use client";
 import { type CSSProperties } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Style from "./InnerContent.styled";
 
 export interface InnerContent {
@@ -35,7 +35,9 @@ export default function InnerContent(props: InnerContent) {
                   top: (props?.padding && typeof props?.padding[0] !== "string" && props?.padding[0]) || initial,
                   right: (props?.padding && (init(props?.padding[1]) || init(props?.padding[0]))) || initial,
                   bottom: (props?.padding && (init(props?.padding[2]) || init(props?.padding[0]))) || initial,
-                  left: (props?.padding && (init(props?.padding[3]) || init(props?.padding[1]) || init(props?.padding[0]))) || initial,
+                  left:
+                      (props?.padding && (init(props?.padding[3]) || init(props?.padding[1]) || init(props?.padding[0]))) ||
+                      initial,
               };
 
     return (
@@ -47,9 +49,8 @@ export default function InnerContent(props: InnerContent) {
             as={motion.div}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 1 }}
-            transition={{ ease: "easeInOut", duration: 0.15 }}
-        >
+            exit={{ opacity: 0 }}
+            transition={{ ease: "easeInOut", duration: 0.15 }}>
             {props?.children}
         </Style>
     );
