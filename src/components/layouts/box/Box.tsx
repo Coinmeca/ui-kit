@@ -33,9 +33,20 @@ export default function Box(props: Box) {
               }
             : {
                   top: (props?.padding && typeof props?.padding[0] !== "string" && props?.padding[0]) || initial,
-                  right: (props?.padding && (init(props?.padding[1]) || init(props?.padding[0]))) || initial,
-                  bottom: (props?.padding && (init(props?.padding[2]) || init(props?.padding[0]))) || initial,
-                  left: (props?.padding && (init(props?.padding[3]) || init(props?.padding[1]) || init(props?.padding[0]))) || initial,
+                  right:
+                      (props?.padding && (props?.padding?.length > 1 ? init(props?.padding[1]) : init(props?.padding[0]))) ||
+                      initial,
+                  bottom:
+                      (props?.padding && (props?.padding?.length > 2 ? init(props?.padding[2]) : init(props?.padding[0]))) ||
+                      initial,
+                  left:
+                      (props?.padding &&
+                          (props?.padding?.length > 3
+                              ? init(props?.padding[3])
+                              : props?.padding?.length > 1
+                              ? init(props?.padding[1])
+                              : init(props?.padding[0]))) ||
+                      initial,
               };
 
     return (
