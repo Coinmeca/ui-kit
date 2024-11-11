@@ -58,7 +58,9 @@ export const Item = styled.li`
     }
 `;
 
-export const Option = styled.ul`
+export const Option = styled.ul<{
+    $type?: string;
+}>`
     height: 100%;
     max-height: 100%;
 
@@ -72,26 +74,29 @@ export const Option = styled.ul`
         }
 
         & > *:last-child:not(span) {
-            position: absolute;
-            right: 0.25em;
+            ${({ $type }) => !$type && css`
+                position: absolute;
+                right: 0.25em;
+            `}
             transition: 0.3s ease;
         }
     }
-
-    [data-active="true"] > & > ${Item} {
-        &,
-        &:hover,
-        &:active {
-            background: transparent;
-            color: rgba(var(--white), var(--o03));
-            & i svg {
-                fill: rgba(var(--white), var(--o03));
+        [data-active="true"] > & > ${Item} {
+            &,
+            &:hover,
+            &:active {
+                background: transparent;
+                color: rgba(var(--white), var(--o03));
+                & i svg {
+                    fill: rgba(var(--white), var(--o03));
+                }
+            }
+            & > *:last-child:not(span) {
+                ${({ $type }) => !$type && css` 
+                    transform: rotate(180deg);
+                `}
             }
         }
-        & > *:last-child:not(span) {
-            transform: rotate(180deg);
-        }
-    }
 `;
 
 export const Options = styled.ul`
@@ -128,6 +133,7 @@ const Style = styled.div<{
     $scale: number;
     $disabled: boolean;
     $chevron: boolean;
+    $type?: string;
 }>`
     font-size: ${({ $scale }) => $scale}em;
     background: transparent;
@@ -161,12 +167,19 @@ const Style = styled.div<{
 
     & > ${Option} > ${Item},
     & > ${Options} > ${Item} {
-        ${({$chevron}) => css`
-            
-        width: calc(100% - ${$chevron ? '5em' : '2em'});
-        padding-right: ${$chevron ? '4em' : '1em'};
+        ${({$chevron}) => css` 
+            width: calc(100% - ${$chevron ? '5em' : '2em'});
+            padding-right: ${$chevron ? '4em' : '1em'};
         `}
     }
+
+    ${({ $type }) => $type && css`
+        & > ${Option} > ${Item} {
+            width: auto;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    `}
 
     &[data-active="true"] {
         background: rgba(var(--white), var(--o0075));

@@ -19,7 +19,7 @@ export interface Dropdown {
     theme?: "light" | "dark";
     style?: object;
 
-    form?: string;
+    type?: string;
     title?: string;
     scale?: number;
     chevron?: boolean;
@@ -54,7 +54,7 @@ export default function Dropdown(props: Dropdown) {
     const dropbox: any = useRef();
 
     const theme = props?.theme === "light" || props?.theme === "dark" ? props?.theme : "light";
-    const form = props?.form;
+    const type = props?.type;
     const height = props?.height || 16;
     const fit = props?.fit || false;
     const scale = props?.scale || 1;
@@ -102,8 +102,9 @@ export default function Dropdown(props: Dropdown) {
         if (dropdown?.current && dropbox?.current) {
             const size = dropdown?.current?.getBoundingClientRect();
             const position = dropbox?.current?.getBoundingClientRect();
-            const over = windowSize.height < size?.bottom + position?.height;
-            return { ...(over ? { bottom: windowSize.height - size?.top } : { top: size?.bottom }), left: size?.x };
+            const horizon = windowSize.width < size?.width + position?.right;
+            const vertical = windowSize.height < size?.bottom + position?.height;
+            return { ...(vertical ? { bottom: windowSize.height - size?.top } : { top: size?.bottom }), left: horizon ? size?.right - position?.width : size?.x };
         }
     };
 
@@ -121,7 +122,7 @@ export default function Dropdown(props: Dropdown) {
                           fontSize: `${scale}em`,
                           background: `rgba(var(--white), var(--o0075))`,
                           color: `rgb(var(--white))`,
-                          width: width && `${width / (8 * scale)}em`,
+                          width: type !== 'more' && width && `${width / (8 * scale)}em`,
                           backdropFilter: "blur(4em)",
                           transition: "max-height .3s ease",
                           zIndex: 200,
@@ -295,6 +296,7 @@ export default function Dropdown(props: Dropdown) {
             $scale={scale}
             $disabled={disabled}
             $chevron={chevron}
+            $type={type}
             tabIndex={5}
             style={{
                 zIndex: open ? 10 : 1,
@@ -307,11 +309,11 @@ export default function Dropdown(props: Dropdown) {
             data-active={open}
             data-show={props?.show}
             data-hide={props?.hide}>
-            <Option>
+            <Option $type={type}>
                 <Item>
-                    {form?.indexOf("more") === 0 ? (
+                    {type === "more" ? (
                         <Controls.Button icon="more" />
-                    ) : form?.indexOf("icon") === 0 ? (
+                    ) : type === "icon" ? (
                         <Controls.Button icon={option?.icon} />
                     ) : (
                         <>
