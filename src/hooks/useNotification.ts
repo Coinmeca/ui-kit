@@ -103,15 +103,15 @@ const useNotificationStore = create<NotificationStore>((set, get) => ({
         const { notis, count } = get(); // Use get to access current state
         if (key && key !== "") {
             const list = JSON.stringify(notis);
-            localStorage.setItem(`${key}.noti.list`, list);
-            localStorage.setItem(`${key}.noti.count`, count.toString());
+            localStorage?.setItem(`${key}.noti.list`, list);
+            localStorage?.setItem(`${key}.noti.count`, count.toString());
         }
     },
 
     loadNotis: (key: string) => {
         if (key && key !== "") {
-            const list = JSON.parse(localStorage.getItem(`${key}.noti.list`) || "[]");
-            const count = parseInt(localStorage.getItem(`${key}.noti.count`) || "0");
+            const list = JSON.parse(localStorage?.getItem(`${key}.noti.list`) || "[]");
+            const count = parseInt(localStorage?.getItem(`${key}.noti.count`) || "0");
             set((state) => ({
                 ...state,
                 notis: list,
