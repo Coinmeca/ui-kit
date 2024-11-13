@@ -90,8 +90,8 @@ export default function Input(props: Input) {
                         typeof props?.min === "number" && props?.min >= copy
                             ? props?.min
                             : typeof props?.max === "number" && props?.max <= copy
-                                ? props?.max
-                                : value;
+                            ? props?.max
+                            : value;
                 }
             }
             // else if (typeof props?.length === 'number' && props?.length > 0 && props?.length > value?.toString()?.length) value = value?.toString()?.substring(0, props?.length)
@@ -116,9 +116,7 @@ export default function Input(props: Input) {
     };
 
     const handleExtend = () => {
-        if (fold) {
-            setExtend(!extend);
-        }
+        if (fold) setExtend(!extend);
     };
 
     const handleChange = (e: any) => {
@@ -255,8 +253,8 @@ export default function Input(props: Input) {
                                 props?.inputMode
                                     ? props?.inputMode
                                     : type === "number" || type === "currency"
-                                        ? "numeric"
-                                        : undefined
+                                    ? "numeric"
+                                    : undefined
                             }
                             min={min}
                             max={props?.max}
