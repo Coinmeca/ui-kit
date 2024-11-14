@@ -219,20 +219,21 @@ export default function Listing(props: Listing) {
     };
 
     useEffect(() => {
-        (async () => {
-            let error: string | undefined;
-            try {
-                setFetching(true);
-                if (typeof props?.onAsset === "function") await props?.onAsset();
-            } catch (e: any) {
-                setValidate({
-                    state: true,
-                    message: error || "This token cannot used to be listing.",
-                });
-            } finally {
-                setFetching(false);
-            }
-        })();
+        if (!!address && address !== "" && address !== "0" && address !== "0x" && address.length === 42)
+            (async () => {
+                let error: string | undefined;
+                try {
+                    setFetching(true);
+                    if (typeof props?.onAsset === "function") await props?.onAsset();
+                } catch (e: any) {
+                    setValidate({
+                        state: true,
+                        message: error || "This token cannot used to be listing.",
+                    });
+                } finally {
+                    setFetching(false);
+                }
+            })();
     }, [asset?.address]);
 
     const [handleAmountPad, closeAmountPad, resetAmountPad] = usePortal(({ title, asset, onChange }: any) => (
@@ -280,7 +281,7 @@ export default function Listing(props: Listing) {
                                 }}>
                                 <Layouts.Col gap={1}>
                                     <Elements.Text type={"desc"} align={"left"}>
-                                        Token Contract
+                                        Token Address
                                     </Elements.Text>
                                     <Controls.Input
                                         placeholder={"0xA1z2b3Y4C5x6d7E8..."}
