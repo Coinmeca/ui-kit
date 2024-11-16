@@ -2,19 +2,19 @@
 import { Contents, Controls, Layouts } from "components";
 import { AnimatePresence } from "framer-motion";
 import { Treasury } from "prefabs";
-import type { Farm, Token } from "types";
-
-import Data from "app/samples/treasury/data";
+import type { Farm, Token, Vault } from "types";
 
 export interface Detail {
     asset?: Token;
-    farm?: Farm;
+    vault?: Vault & { info?: any; recent?: any; charts?: { rate: any; value: any; volume: any }; [x: string]: any };
+    farm?: Farm & { info?: any; recent?: any; charts?: { apr: any; staking: any }; [x: string]: any };
     onBack?: Function;
     responsive?: boolean;
 }
 
 export default function Detail(props: Detail) {
-    const { vault, farm } = Data();
+    const vault = props?.vault;
+    const farm = props?.farm;
 
     return (
         <Layouts.Box fit>
