@@ -1,6 +1,6 @@
 {
     "name": "@coinmeca/ui",
-    "version": "0.1.485",
+    "version": "0.1.486",
     "keywords": [
         "coinmeca",
         "interface",
@@ -42,8 +42,8 @@
     },
     "scripts": {
         "dev": "npm pkg set type=commonjs && next dev",
-        "build": "npm pkg set type=module && tsc --build && tsc-alias && tscp",
-        "build:tsup": "cross-env NODE_OPTIONS=--max-old-space-size=12800 npm pkg set type=module && tsup",
+        "build": "yarn clean && npm pkg set type=module && tsc --build && tsc-alias && tscp && rm -rf ./dist/app",
+        "build:tsup": "yarn clean && cross-env NODE_OPTIONS=--max-old-space-size=12800 npm pkg set type=module && tsup",
         "build:next": "npm pkg set type=commonjs && next build",
         "clean": "rm -rf ./dist ./build ./.next ./.vercel ./.turbo ./tsconfig.tsbuildinfo ./node_modules/.cache",
         "start": "next start",

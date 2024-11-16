@@ -104,12 +104,17 @@ export default function Dropdown(props: Dropdown) {
             const position = dropbox?.current?.getBoundingClientRect();
             const horizon = windowSize.width < size?.width + position?.right;
             const vertical = windowSize.height < size?.bottom + position?.height;
-            return { ...(vertical ? { bottom: windowSize.height - size?.top } : { top: size?.bottom }), left: horizon ? size?.right - position?.width : size?.x };
+            return {
+                ...(vertical ? { bottom: windowSize.height - size?.top } : { top: size?.bottom }),
+                left: horizon ? size?.right - position?.width : size?.x,
+            };
         }
     };
 
     const Select = (visible: Visible, e?: any) => (
         <Options
+            $chevron={chevron}
+            ref={dropbox}
             onBlur={() => visible === "sheet" && closeSelect()}
             style={{
                 ...(visible === "popup"
@@ -122,7 +127,7 @@ export default function Dropdown(props: Dropdown) {
                           fontSize: `${scale}em`,
                           background: `rgba(var(--white), var(--o0075))`,
                           color: `rgb(var(--white))`,
-                          width: type !== 'more' && width && `${width / (8 * scale)}em`,
+                          width: type !== "more" && width && `${width / (8 * scale)}em`,
                           backdropFilter: "blur(4em)",
                           transition: "max-height .3s ease",
                           zIndex: 200,
@@ -141,80 +146,68 @@ export default function Dropdown(props: Dropdown) {
                           fontSize: `${scale}em`,
                       }),
             }}>
-            <div ref={dropbox}>
-                {options &&
-                    options.length > 0 &&
-                    options.map(
-                        (v: any, k: number) =>
-                            v && (
-                                <Item
-                                    key={k}
-                                    onClick={(e: any) => handleSelect(e, v, k)}
-                                    data-disabled={
-                                        typeof option !== "undefined" &&
-                                        (v?.[keyIndex] === option || v?.[keyName] === option || v === option)
-                                    }>
-                                    <>
-                                        {typeof v?.[imgName] !== "undefined" && v?.[imgName] !== "" ? (
-                                            <>
-                                                <Image src={v?.[imgName]} width={0} height={0} alt={""} />
-                                                <span
-                                                    title={
-                                                        typeof v?.[keyIndex] !== "undefined"
-                                                            ? v?.[keyIndex]
-                                                            : typeof v?.[keyName] !== "undefined"
-                                                            ? v?.[keyName]
-                                                            : typeof v === "object"
-                                                            ? v?.toString()
-                                                            : v
-                                                    }>
-                                                    {typeof v?.[keyIndex] !== "undefined"
-                                                        ? v?.[keyIndex]
-                                                        : typeof v?.[keyName] !== "undefined"
-                                                        ? v?.[keyName]
-                                                        : typeof v === "object"
-                                                        ? v?.toString()
-                                                        : v}
-                                                </span>
-                                            </>
-                                        ) : v.icon !== "" && typeof v.icon !== "undefined" ? (
-                                            <>
-                                                <Elements.Icon icon={v?.icon} />
-                                                <span
-                                                    title={
-                                                        typeof v?.[keyIndex] !== "undefined"
-                                                            ? v?.[keyIndex]
-                                                            : typeof v?.[keyName] !== "undefined"
-                                                            ? v?.[keyName]
-                                                            : typeof v === "object"
-                                                            ? v?.toString()
-                                                            : v
-                                                    }>
-                                                    {typeof v?.[keyIndex] !== "undefined"
-                                                        ? v?.[keyIndex]
-                                                        : typeof v?.[keyName] !== "undefined"
-                                                        ? v?.[keyName]
-                                                        : typeof v === "object"
-                                                        ? v?.toString()
-                                                        : v}
-                                                </span>
-                                            </>
-                                        ) : (
+            {/* <div> */}
+            {options &&
+                options.length > 0 &&
+                options.map(
+                    (v: any, k: number) =>
+                        v && (
+                            <Item
+                                key={k}
+                                onClick={(e: any) => handleSelect(e, v, k)}
+                                data-disabled={
+                                    typeof option !== "undefined" &&
+                                    (v?.[keyIndex] === option || v?.[keyName] === option || v === option)
+                                }>
+                                <>
+                                    {typeof v?.[imgName] !== "undefined" && v?.[imgName] !== "" ? (
+                                        <>
+                                            <Image src={v?.[imgName]} width={0} height={0} alt={""} />
                                             <span
                                                 title={
-                                                    typeof v === "object"
-                                                        ? typeof v?.[keyIndex] !== "undefined"
-                                                            ? v?.[keyIndex]
-                                                            : typeof v?.[keyName] !== "undefined"
-                                                            ? v?.[keyName]
-                                                            : typeof v === "object"
-                                                            ? v?.toString()
-                                                            : v
+                                                    typeof v?.[keyIndex] !== "undefined"
+                                                        ? v?.[keyIndex]
+                                                        : typeof v?.[keyName] !== "undefined"
+                                                        ? v?.[keyName]
                                                         : typeof v === "object"
                                                         ? v?.toString()
                                                         : v
                                                 }>
-                                                {typeof v === "object"
+                                                {typeof v?.[keyIndex] !== "undefined"
+                                                    ? v?.[keyIndex]
+                                                    : typeof v?.[keyName] !== "undefined"
+                                                    ? v?.[keyName]
+                                                    : typeof v === "object"
+                                                    ? v?.toString()
+                                                    : v}
+                                            </span>
+                                        </>
+                                    ) : v.icon !== "" && typeof v.icon !== "undefined" ? (
+                                        <>
+                                            <Elements.Icon icon={v?.icon} />
+                                            <span
+                                                title={
+                                                    typeof v?.[keyIndex] !== "undefined"
+                                                        ? v?.[keyIndex]
+                                                        : typeof v?.[keyName] !== "undefined"
+                                                        ? v?.[keyName]
+                                                        : typeof v === "object"
+                                                        ? v?.toString()
+                                                        : v
+                                                }>
+                                                {typeof v?.[keyIndex] !== "undefined"
+                                                    ? v?.[keyIndex]
+                                                    : typeof v?.[keyName] !== "undefined"
+                                                    ? v?.[keyName]
+                                                    : typeof v === "object"
+                                                    ? v?.toString()
+                                                    : v}
+                                            </span>
+                                        </>
+                                    ) : (
+                                        <span
+                                            title={
+                                                typeof v === "object"
                                                     ? typeof v?.[keyIndex] !== "undefined"
                                                         ? v?.[keyIndex]
                                                         : typeof v?.[keyName] !== "undefined"
@@ -224,14 +217,26 @@ export default function Dropdown(props: Dropdown) {
                                                         : v
                                                     : typeof v === "object"
                                                     ? v?.toString()
-                                                    : v}
-                                            </span>
-                                        )}
-                                    </>
-                                </Item>
-                            ),
-                    )}
-            </div>
+                                                    : v
+                                            }>
+                                            {typeof v === "object"
+                                                ? typeof v?.[keyIndex] !== "undefined"
+                                                    ? v?.[keyIndex]
+                                                    : typeof v?.[keyName] !== "undefined"
+                                                    ? v?.[keyName]
+                                                    : typeof v === "object"
+                                                    ? v?.toString()
+                                                    : v
+                                                : typeof v === "object"
+                                                ? v?.toString()
+                                                : v}
+                                        </span>
+                                    )}
+                                </>
+                            </Item>
+                        ),
+                )}
+            {/* </div> */}
         </Options>
     );
 
@@ -295,7 +300,6 @@ export default function Dropdown(props: Dropdown) {
             $fit={fit}
             $scale={scale}
             $disabled={disabled}
-            $chevron={chevron}
             $type={type}
             tabIndex={5}
             style={{
@@ -309,7 +313,7 @@ export default function Dropdown(props: Dropdown) {
             data-active={open}
             data-show={props?.show}
             data-hide={props?.hide}>
-            <Option $type={type}>
+            <Option $chevron={chevron} $type={type}>
                 <Item>
                     {type === "more" ? (
                         <Controls.Button icon="more" />

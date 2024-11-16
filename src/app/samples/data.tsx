@@ -276,7 +276,7 @@ export default function Data() {
         },
         {
             key: 3,
-            value: "Franch",
+            value: "French",
         },
         {
             key: 4,
@@ -369,7 +369,14 @@ export default function Data() {
     };
 
     const Connect = () => (
-        <Modals.Connect width={48} chains={chainList} wallets={fetchWalletList()} onClose={closeConnect} onChain={(c: any) => handleChain(c)} close />
+        <Modals.Connect
+            width={48}
+            chains={chainList}
+            wallets={fetchWalletList()}
+            onClose={closeConnect}
+            onChain={(c: any) => handleChain(c)}
+            close
+        />
     );
     const [handleConnect, closeConnect] = usePortal(<Connect />);
 
@@ -411,7 +418,7 @@ export default function Data() {
                         hide={"desktop"}
                         toggle
                         fit
-                    // onBlur={() => setMobileMenu("")}
+                        // onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
                         onClick={() => {
@@ -428,7 +435,7 @@ export default function Data() {
                         iconLeft={{ icon: "bell", count: mobileMenu === "notify" ? 0 : count }}
                         toggle
                         fit
-                    // onBlur={() => setMobileMenu("")}
+                        // onBlur={() => setMobileMenu("")}
                     />
                     <Controls.Tab
                         onClick={() => (mobileMenu === "setting" ? setMobileMenu("") : setMobileMenu("setting"))}
@@ -517,7 +524,11 @@ export default function Data() {
                                             onClickItem={(e: any, v: any, k: number) => setSelectedMarket(k)}
                                             style={{
                                                 transition: ".3s ease",
-                                                ...(sidebarTab !== "exchange" && { maxWidth: 0, opacity: 0, pointerEvents: "none" }),
+                                                ...(sidebarTab !== "exchange" && {
+                                                    maxWidth: 0,
+                                                    opacity: 0,
+                                                    pointerEvents: "none",
+                                                }),
                                             }}
                                         />
                                     ),
@@ -531,7 +542,10 @@ export default function Data() {
                                             style: { overflow: "hidden" },
                                             children: (
                                                 <Sidebars.Market
-                                                    list={filter(marketlist, selectedMarket === 0 ? undefined : `/${markets[selectedMarket]?.name}`)}
+                                                    list={filter(
+                                                        marketlist,
+                                                        selectedMarket === 0 ? undefined : `/${markets[selectedMarket]?.name}`,
+                                                    )}
                                                     filter={keyword}
                                                 />
                                             ),

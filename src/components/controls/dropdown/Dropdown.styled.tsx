@@ -7,7 +7,9 @@ export const Item = styled.li`
     flex-direction: row;
     align-items: center;
     justify-content: start;
+
     // min-width: max-content;
+
     gap: 1em;
     padding: 1em;
     font-weight: bold;
@@ -59,12 +61,13 @@ export const Item = styled.li`
 `;
 
 export const Option = styled.ul<{
+    $chevron: boolean;
     $type?: string;
 }>`
     height: 100%;
     max-height: 100%;
 
-    ${Item} {
+    & > ${Item} {
         height: 100%;
         max-height: 100%;
         overflow: hidden;
@@ -74,36 +77,54 @@ export const Option = styled.ul<{
         }
 
         & > *:last-child:not(span) {
-            ${({ $type }) => !$type && css`
-                position: absolute;
-                right: 0.25em;
-            `}
+            ${({ $type }) =>
+                !$type &&
+                css`
+                    position: absolute;
+                    right: 0.25em;
+                `}
             transition: 0.3s ease;
         }
+
+        ${({ $chevron }) => css`
+            width: calc(100% - ${$chevron ? "5em" : "2em"});
+            padding-right: ${$chevron ? "4em" : "1em"};
+        `}
     }
-        [data-active="true"] > & > ${Item} {
-            &,
-            &:hover,
-            &:active {
-                background: transparent;
-                color: rgba(var(--white), var(--o03));
-                & i svg {
-                    fill: rgba(var(--white), var(--o03));
-                }
-            }
-            & > *:last-child:not(span) {
-                ${({ $type }) => !$type && css` 
-                    transform: rotate(180deg);
-                `}
+    [data-active="true"] > & > ${Item} {
+        &,
+        &:hover,
+        &:active {
+            background: transparent;
+            color: rgba(var(--white), var(--o03));
+            & i svg {
+                fill: rgba(var(--white), var(--o03));
             }
         }
+        & > *:last-child:not(span) {
+            ${({ $type }) =>
+                !$type &&
+                css`
+                    transform: rotate(180deg);
+                `}
+        }
+    }
 `;
 
-export const Options = styled.ul`
+export const Options = styled.ul<{
+    $chevron: boolean;
+}>`
     height: auto;
     overflow: hidden scroll;
     transition: 0.3s ease;
     z-index: 10;
+
+    & > ${Item} {
+        ${({ $chevron }) => css`
+            width: calc(100% - ${$chevron ? "5em" : "2em"});
+            padding-right: ${$chevron ? "4em" : "1em"};
+        `}
+    }
 
     & i svg {
         fill: rgba(var(--white), var(--o045));
@@ -132,7 +153,6 @@ const Style = styled.div<{
     $fit: boolean;
     $scale: number;
     $disabled: boolean;
-    $chevron: boolean;
     $type?: string;
 }>`
     font-size: ${({ $scale }) => $scale}em;
@@ -153,8 +173,7 @@ const Style = styled.div<{
     -webkit-backdrop-filter: var(--blur);
     backdrop-filter: var(--blur);
 
-    & > ${Option}, 
-    & > ${Options} {
+    & > ${Option}, & > ${Options} {
         position: relative;
         display: flex;
         flex-direction: column;
@@ -165,21 +184,15 @@ const Style = styled.div<{
         background: rgba(var(--white), var(--o0075));
     }
 
-    & > ${Option} > ${Item},
-    & > ${Options} > ${Item} {
-        ${({$chevron}) => css` 
-            width: calc(100% - ${$chevron ? '5em' : '2em'});
-            padding-right: ${$chevron ? '4em' : '1em'};
+    ${({ $type }) =>
+        $type &&
+        css`
+            & > ${Option} > ${Item} {
+                width: auto;
+                padding-left: 0;
+                padding-right: 0;
+            }
         `}
-    }
-
-    ${({ $type }) => $type && css`
-        & > ${Option} > ${Item} {
-            width: auto;
-            padding-left: 0;
-            padding-right: 0;
-        }
-    `}
 
     &[data-active="true"] {
         background: rgba(var(--white), var(--o0075));

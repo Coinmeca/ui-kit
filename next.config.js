@@ -1,5 +1,3 @@
-const path = require("path");
-
 // next.config.js
 const path = require("path");
 
