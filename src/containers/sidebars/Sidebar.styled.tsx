@@ -34,11 +34,26 @@ export const Lower = styled.section<{ $align: "left" | "right" }>`
     background: rgba(var(--black), var(--o06));
     z-index: 11;
 
+    & > section {
+        position: absolute;
+        transition: 0.3s ease;
+
+        &[data-active="false"] {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        &[data-active="true"] {
+            opacity: 1;
+            pointer-events: initial;
+        }
+    }
+
     @media all and (max-width: 1919px) {
         background: rgba(var(--black), var(--o09));
 
         &[data-active="false"] {
-            transform: translateX(${({ $align }) => $align === 'left' ? '-100' : '100'}%);
+            transform: translateX(${({ $align }) => ($align === "left" ? "-100" : "100")}%);
             pointer-events: none;
         }
 
@@ -94,12 +109,6 @@ const Style = styled.aside<{
         }
     }
 
-    ${({ $width, $active }) =>
-        $active &&
-        css`
-            min-width: ${$active ? $width : 0}em;
-        `}
-
     && {
         ${Input.default} > * {
             padding: 1em 2em;
@@ -125,7 +134,7 @@ const Style = styled.aside<{
         position: absolute;
         pointer-events: none;
 
-        ${({ $align }) => $align === "left" ? "left: 0;" : "right: 0;"}
+        ${({ $align }) => ($align === "left" ? "left: 0;" : "right: 0;")}
 
         & > * {
             /* background: rgba(var(--black), var(--o09)); */

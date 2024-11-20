@@ -27,7 +27,7 @@ export default function List(props: List) {
     const [keyword, setKeyword] = useState<string>();
     const [tvl, setTvl] = useState<any>();
 
-    const [showListing, closeListing] = usePortal(
+    const [openListing, closeListing] = usePortal(
         <Vault.Modals.Listing keyTokens={props?.assets} onClose={() => closeListing()} />,
     );
 
@@ -105,7 +105,7 @@ export default function List(props: List) {
                                             <Controls.Tab
                                                 key="listing"
                                                 iconLeft={"plus"}
-                                                onClick={showListing}
+                                                onClick={openListing}
                                                 style={{
                                                     ...(!props?.responsive && {
                                                         marginRight: "1em",

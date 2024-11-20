@@ -92,8 +92,8 @@ export const H1 = styled.h1<{
             }
         `}
 
-    & >* {
-        display: inline-block;
+    & > * {
+        display: inline;
         vertical-align: middle;
     }
 
@@ -157,7 +157,7 @@ export const H2 = styled.h2<{
         `}
 
     & >* {
-        display: inline-block;
+        display: inline;
         vertical-align: middle;
     }
 
@@ -221,7 +221,7 @@ export const H3 = styled.h3<{
         `}
 
     & >* {
-        display: inline-block;
+        display: inline;
         vertical-align: middle;
     }
 
@@ -285,7 +285,7 @@ export const H4 = styled.h4<{
         `}
 
     & >* {
-        display: inline-block;
+        display: inline;
         vertical-align: middle;
     }
 
@@ -349,7 +349,7 @@ export const H5 = styled.h5<{
         `}
 
     & >* {
-        display: inline-block;
+        display: inline;
         vertical-align: middle;
     }
 
@@ -413,7 +413,7 @@ export const H6 = styled.h6<{
         `}
 
     & >* {
-        display: inline-block;
+        display: inline;
         vertical-align: middle;
     }
 
@@ -477,7 +477,7 @@ export const Strong = styled.strong<{
         `}
 
     & >* {
-        display: inline-block;
+        display: inline;
         vertical-align: middle;
     }
 
@@ -537,7 +537,7 @@ export const P = styled.p<{
         `}
 
     & >* {
-        display: inline-block;
+        display: inline;
         vertical-align: middle;
     }
 
@@ -597,7 +597,7 @@ export const Desc = styled.p<{
         `}
 
     & >* {
-        display: inline-block;
+        display: inline;
         vertical-align: middle;
     }
 
@@ -659,7 +659,7 @@ export const Text = styled.span<{
         `}
 
     & >* {
-        display: inline-block;
+        display: inline;
         vertical-align: middle;
     }
 
@@ -729,7 +729,7 @@ export const Link = styled.a<{
         `}
 
     & >* {
-        display: inline-block;
+        display: inline;
         vertical-align: middle;
     }
 
@@ -820,7 +820,7 @@ export const Button = styled.a<{
         `}
 
     & >* {
-        display: inline-block;
+        display: inline;
         vertical-align: middle;
     }
 
