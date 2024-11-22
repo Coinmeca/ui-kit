@@ -140,8 +140,9 @@ export default function Dropdown(props: Dropdown) {
                           position: "absolute",
                           visibility: "hidden",
                           pointerEvents: "none",
-                          opacity: 0,
+                          width: "100%",
                           height: 0,
+                          opacity: 0,
                       }
                     : {
                           fontSize: `${scale}em`,
