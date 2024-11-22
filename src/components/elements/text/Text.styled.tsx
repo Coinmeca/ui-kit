@@ -659,12 +659,19 @@ export const Text = styled.span<{
         `}
 
     & >* {
-        display: inline;
         vertical-align: middle;
     }
 
     & > ${Icon.default} {
         font-size: 1.5em;
+    }
+
+    :is(${H1}, ${H2}, ${H3}, ${H4}, ${H5}, ${H6}, ${Strong}, ${P}, ${Desc}, &) > & {
+        display: inline;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        text-align: inherit;
     }
 
     ${({ $responsive }) => responsive($responsive)}
@@ -729,7 +736,6 @@ export const Link = styled.a<{
         `}
 
     & >* {
-        display: inline;
         vertical-align: middle;
     }
 
@@ -753,6 +759,7 @@ export const Link = styled.a<{
     }
 
     :is(${H1}, ${H2}, ${H3}, ${H4}, ${H5}, ${H6}, ${Strong}, ${P}, ${Desc}, ${Text}) > & {
+        display: inline;
         font-size: inherit;
         font-weight: inherit;
         line-height: inherit;
@@ -820,7 +827,6 @@ export const Button = styled.a<{
         `}
 
     & >* {
-        display: inline;
         vertical-align: middle;
     }
 
@@ -844,6 +850,7 @@ export const Button = styled.a<{
     }
 
     :is(${H1}, ${H2}, ${H3}, ${H4}, ${H5}, ${H6}, ${Strong}, ${P}, ${Desc}, ${Text}) > & {
+        display: inline;
         font-size: inherit;
         font-weight: inherit;
         line-height: inherit;
