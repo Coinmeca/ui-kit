@@ -8,7 +8,7 @@ import ListItem from "./ListItem";
 export interface List {
     list?: any;
     formatter?: Function;
-    fallback?: string | ReactNode | JSX.Element | Function;
+    fallback?: string | ReactNode | JSX.Element;
     fill?: boolean;
     style?: object;
 }
@@ -36,8 +36,7 @@ export default function List(props: List) {
                                         ease: "easeInOut",
                                         duration: 0.3,
                                     }}
-                                    layout
-                                >
+                                    layout>
                                     {data?.children ? data?.children : data}
                                 </ListItem>
                             ))}
@@ -52,8 +51,7 @@ export default function List(props: List) {
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.9, opacity: 0 }}
                     transition={{ ease: "easeInOut", duration: 0.3 }}
-                    layout
-                >
+                    layout>
                     {typeof fallback === "string" ? (
                         <Elements.Text type={"desc"} opacity={0.6}>
                             {fallback}
