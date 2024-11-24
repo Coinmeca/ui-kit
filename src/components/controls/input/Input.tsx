@@ -2,13 +2,14 @@
 import { Controls, Elements } from "components";
 import { format } from "lib/utils";
 import { useCallback, useEffect, useRef, useState } from "react";
-import Style, { Inner, Side } from "./Input.styled";
+import Style, { Inner, Side, Wrapper } from "./Input.styled";
 
 export interface Input {
     style?: any;
 
     form?: string;
     fold?: boolean;
+    foldPosition?: "left" | "center" | "right";
     type?: string;
     inputMode?: "email" | "text" | "search" | "none" | "tel" | "url" | "numeric" | "decimal";
     value?: number | string;
@@ -68,10 +69,12 @@ interface format {
 }
 
 export default function Input(props: Input) {
+    const wrapper: any = useRef();
     const input: any = useRef();
 
-    const type = props?.type === "password" ? "password" : props?.type || "text";
     const placeholder = props?.placeholder?.toString() || "";
+    const type = props?.type === "password" ? "password" : props?.type || "text";
+    const fold = props?.fold || false;
     const step = (typeof props?.step === "number" && !isNaN(props?.step) && props?.step) || 1;
     const scale = props?.scale || 1;
     const min = props?.min || 0;
@@ -101,8 +104,7 @@ export default function Input(props: Input) {
     );
 
     const [focus, setFocus] = useState<boolean>(false);
-    const [fold, setFold] = useState<boolean>(false);
-    const [extend, setExtend] = useState<boolean>(false);
+    const [expand, setExpand] = useState<boolean>(!fold);
     const [value, setValue] = useState<number | string>(formatter(props?.value));
     const [error, setError] = useState<boolean>(props?.error || false);
 
@@ -112,11 +114,10 @@ export default function Input(props: Input) {
         if (typeof props?.onClick === "function") {
             props?.onClick(e);
         }
-        handleExtend();
     };
 
-    const handleExtend = () => {
-        if (fold) setExtend(!extend);
+    const handleClickOutside = (event: any) => {
+        if (fold && wrapper.current && !wrapper.current.contains(event.target)) setExpand(false);
     };
 
     const handleChange = (e: any) => {
@@ -147,7 +148,6 @@ export default function Input(props: Input) {
 
     const handleBlur = () => {
         if (typeof props?.onBlur === "function") props?.onBlur();
-        setExtend(false);
         setFocus(false);
     };
 
@@ -210,20 +210,34 @@ export default function Input(props: Input) {
         if (typeof props?.error === "boolean") setError(props?.error);
     }, [props?.error]);
 
+    useEffect(() => {
+        if (fold && expand) input?.current?.focus?.();
+    }, [fold, expand]);
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     const Input = (
         <Style
             tabIndex={5}
+            ref={wrapper}
             style={props?.style?.wrapper}
             $clearable={props?.clearable}
             $scale={scale}
             $type={type}
+            $fold={fold}
+            $expand={expand}
             $focus={focus}
             $align={align}
             $error={error}
             $lock={props?.lock}
             $disabled={props?.disabled}
             onClick={() => !(props?.lock || props?.disabled) && setFocus(true)}
-            onBlur={() => handleBlur()}
+            onBlur={() => !fold && handleBlur()}
             data-active={focus}
             data-show={props?.show}
             data-hide={props?.hide}>
@@ -234,13 +248,13 @@ export default function Input(props: Input) {
                             {props?.left?.children}
                         </Side>
                     )}
-                    <Inner>
+                    <Inner $expand={expand}>
                         {props?.clearable && clearPosition === "left" && (
                             <Controls.Button
                                 icon={"x"}
                                 style={{ marginRight: ".5rem" }}
                                 hide={value.toString().length === 0}
-                                onClick={() => handleClear()}
+                                onClick={handleClear}
                                 fit
                             />
                         )}
@@ -268,7 +282,7 @@ export default function Input(props: Input) {
                             onFocus={handleFocus}
                             onBlur={handleFocusOut}
                             onKeyDown={handleKeyDown}
-                            autoFocus={extend || focus || props?.autoFocus}
+                            autoFocus={expand || focus || props?.autoFocus}
                             disabled={props?.disabled}
                             readOnly={props?.lock || props?.disabled}
                         />
@@ -277,7 +291,7 @@ export default function Input(props: Input) {
                                 icon={"x"}
                                 style={{ marginLeft: ".5rem" }}
                                 hide={value.toString().length === 0}
-                                onClick={() => handleClear()}
+                                onClick={handleClear}
                                 fit
                             />
                         )}
@@ -319,9 +333,15 @@ export default function Input(props: Input) {
 
     if (fold) {
         return (
-            <div onClick={() => setExtend(true)} onBlur={handleBlur} data-show={props?.show} data-hide={props?.hide}>
+            <Wrapper
+                $foldPosition={props?.foldPosition}
+                $expand={expand}
+                onClick={() => setExpand(true)}
+                onBlur={handleBlur}
+                data-show={props?.show}
+                data-hide={props?.hide}>
                 <div>{Input}</div>
-            </div>
+            </Wrapper>
         );
     }
 

@@ -115,7 +115,7 @@ export default function Dropdown(props: Dropdown) {
         <Options
             $chevron={chevron}
             ref={dropbox}
-            onBlur={() => visible === "sheet" && closeSelect()}
+            onBlur={() => visible !== "hidden" && closeSelect()}
             style={{
                 ...(visible === "popup"
                     ? {

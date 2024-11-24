@@ -47,7 +47,29 @@ export const Side = styled.div<{ $width?: number }>`
     }
 `;
 
-export const Inner = styled.div`
+export const Inner = styled.div<{ $expand: boolean }>`
+    transition: 0.3s ease;
+
+    ${({ $expand }) =>
+        $expand
+            ? css`
+                  max-width: 100%;
+              `
+            : css`
+                  &:last-child {
+                      margin-left: -1em;
+                  }
+                  &:first-child {
+                      margin-right: -1em;
+                  }
+                  &:not(:first-child):not(:last-child) {
+                      margin-left: -1em;
+                      margin-right: -1em;
+                  }
+                  max-width: 0;
+                  pointer-events: none;
+              `}
+
     & > button {
         &:first-child {
             margin-left: -1em;
@@ -59,10 +81,29 @@ export const Inner = styled.div`
     }
 `;
 
+export const Wrapper = styled.div<{
+    $foldPosition?: "left" | "center" | "right";
+    $expand: boolean;
+}>`
+    display: flex;
+    justify-content: ${({ $foldPosition }) =>
+        $foldPosition === "left" ? "flex-start" : $foldPosition === "center" ? "center" : "flex-end"};
+
+    & > * {
+        position: absolute;
+        max-width: ${({ $expand }) => ($expand ? "100%" : "0")};
+        min-width: max-content;
+        width: 100%;
+        transition: 0.3s ease;
+    }
+`;
+
 const Style = styled.div<{
     $clearable?: boolean;
     $scale: number;
     $type: string;
+    $fold: boolean;
+    $expand: boolean;
     $focus: boolean;
     $align: "left" | "center" | "right";
     $lock?: boolean;
@@ -79,11 +120,17 @@ const Style = styled.div<{
     user-select: none;
     transition: 0.3s ease;
 
+    ${({ $fold, $expand, $lock }) => $fold && !$expand && !$lock && "cursor:pointer;"}
+
     & > * {
         transition: 0.3s ease;
 
         &:first-child {
-            background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o01));
+            ${({ $expand, $error }) =>
+                $expand &&
+                css`
+                    background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
+                `}
 
             display: flex;
             flex-direction: column;
@@ -155,11 +202,14 @@ const Style = styled.div<{
             }
 
             &:hover {
-                background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o03));
+                background: rgba(
+                    var(--${({ $fold, $expand, $error }) => (!$fold || $expand ? ($error ? "red" : "white") : "white")}),
+                    ${({ $fold, $expand }) => (!$fold && $expand ? "var(--o03)" : "var(--o015)")}
+                );
             }
 
             &:active {
-                /* background: rgba(var(--${({ $error }) => (!$error ? "white" : "red")}), var(--o03)); */
+                ${({ $fold, $expand }) => ($fold && !$expand ? "background: rgba(var(--white), var(--o03));" : "")}
             }
 
             ${({ $lock }) =>
