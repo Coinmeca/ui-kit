@@ -2,7 +2,7 @@
 import { Controls, Elements } from "components";
 import { format } from "lib/utils";
 import { useCallback, useEffect, useRef, useState } from "react";
-import Style, { Inner, Side, Wrapper } from "./Input.styled";
+import Style, { Dot, Inner, Side, Wrapper } from "./Input.styled";
 
 export interface Input {
     style?: any;
@@ -303,6 +303,7 @@ export default function Input(props: Input) {
                         </Side>
                     )}
                 </div>
+                {fold && <Dot $active={!!value?.toString()?.length} $expand={expand} />}
             </div>
             {typeof props?.message === "string" || typeof props?.message === "number" ? (
                 <Elements.Text type={"desc"}>{props?.message}</Elements.Text>

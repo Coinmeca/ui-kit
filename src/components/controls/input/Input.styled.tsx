@@ -105,6 +105,21 @@ export const Wrapper = styled.div<{
     }
 `;
 
+export const Dot = styled.div<{
+    $active: boolean;
+    $expand: boolean;
+}>`
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    width: 0.75em;
+    height: 0.75em;
+    background: rgb(var(--white));
+    border-radius: 100%;
+    transition: 0.3s ease;
+    opacity: ${({ $active, $expand }) => ($active && !$expand ? "1" : "0")};
+`;
+
 const Style = styled.div<{
     $clearable?: boolean;
     $scale: number;
@@ -134,17 +149,18 @@ const Style = styled.div<{
         transition: 0.3s ease;
 
         &:first-child {
-            ${({ $expand, $error }) =>
-                $expand &&
-                css`
-                    background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
-                `}
-
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: center;
             min-height: 4em;
             padding: 0 1em;
+
+            ${({ $expand, $error }) =>
+                $expand &&
+                css`
+                    background: rgba(var(--${!$error ? "white" : "red"}), var(--o01));
+                `}
 
             & > * {
                 display: flex;
