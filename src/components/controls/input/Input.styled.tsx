@@ -110,10 +110,10 @@ export const Dot = styled.div<{
     $expand: boolean;
 }>`
     position: absolute;
-    top: 0.5em;
-    right: 0.5em;
-    width: 0.75em;
-    height: 0.75em;
+    top: 0.5em !important;
+    right: 0.5em !important;
+    width: 0.75em !important;
+    height: 0.75em !important;
     background: rgb(var(--white));
     border-radius: 100%;
     transition: 0.3s ease;
