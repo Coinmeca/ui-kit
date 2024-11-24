@@ -49,10 +49,12 @@ export const Side = styled.div<{ $width?: number }>`
 
 export const Inner = styled.div<{ $expand: boolean }>`
     transition: 0.3s ease;
+    overflow: hidden;
 
     ${({ $expand }) =>
         $expand
             ? css`
+                  opacity: 1;
                   max-width: 100%;
               `
             : css`
@@ -66,6 +68,7 @@ export const Inner = styled.div<{ $expand: boolean }>`
                       margin-left: -1em;
                       margin-right: -1em;
                   }
+                  opacity: 0;
                   max-width: 0;
                   pointer-events: none;
               `}
@@ -96,7 +99,7 @@ export const Wrapper = styled.div<{
         width: 100%;
         transition: 0.3s ease;
 
-        & > * {
+        & > * > * {
             pointer-events: ${({ $expand }) => ($expand ? "initial" : "none")};
         }
     }
