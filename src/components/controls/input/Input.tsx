@@ -282,7 +282,7 @@ export default function Input(props: Input) {
                             onFocus={handleFocus}
                             onBlur={handleFocusOut}
                             onKeyDown={handleKeyDown}
-                            autoFocus={expand || focus || props?.autoFocus}
+                            autoFocus={(fold && expand) || focus || props?.autoFocus}
                             disabled={props?.disabled}
                             readOnly={props?.lock || props?.disabled}
                         />
