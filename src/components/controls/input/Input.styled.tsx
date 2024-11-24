@@ -121,6 +121,7 @@ const Style = styled.div<{
     transition: 0.3s ease;
 
     ${({ $fold, $expand, $lock }) => $fold && !$expand && !$lock && "cursor:pointer;"}
+    backdrop-filter: blur(${({ $fold, $expand, $lock }) => ($fold && $expand ? "4em" : "0")});
 
     & > * {
         transition: 0.3s ease;
