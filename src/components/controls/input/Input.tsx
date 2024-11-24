@@ -335,6 +335,7 @@ export default function Input(props: Input) {
     if (fold) {
         return (
             <Wrapper
+                ref={wrapper}
                 $foldPosition={props?.foldPosition}
                 $expand={expand}
                 onClick={() => setExpand(true)}
