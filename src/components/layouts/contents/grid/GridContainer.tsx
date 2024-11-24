@@ -13,15 +13,15 @@ export interface GridContainer {
     area?: string;
     direction?: "row" | "col";
     gap?: number | { row?: number; col?: number };
-    width?: number | string | { min?: number; max?: number };
-    height?: number | string | { min?: number; max?: number };
+    width?: number | string | { min?: number | string; max?: number | string };
+    height?: number | string | { min?: number | string; max?: number | string };
     responsive?: {
         device: "desktop" | "laptop" | "tablet" | "mobile";
         area?: string;
         direction?: "row" | "col";
         gap?: number | { row?: number; col?: number };
-        width?: number | string | { min?: number; max?: number };
-        height?: number | string | { min?: number; max?: number };
+        width?: number | string | { min?: number | string; max?: number | string };
+        height?: number | string | { min?: number | string; max?: number | string };
     }[];
     style?: object;
     fullsize?: boolean;

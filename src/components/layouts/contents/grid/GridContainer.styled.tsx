@@ -5,13 +5,13 @@ const Layout = (
     area?: string,
     direction?: "row" | "col",
     gap?: number | { row?: number; col?: number },
-    width?: number | string | { min?: number; max?: number },
-    height?: number | string | { min?: number; max?: number }
+    width?: number | string | { min?: number | string; max?: number | string },
+    height?: number | string | { min?: number | string; max?: number | string },
 ) => css`
     ${area &&
-    `width:100%; height:100%; grid-template-areas: ${area}; ${typeof width === "string" && `grid-template-columns: ${width};`} ${
-        typeof height === "string" && `grid-template-rows: ${height};`
-    } overflow:hidden;`}
+    `width:100%; height:100%; grid-template-areas: ${area}; ${
+        typeof width === "string" && `grid-template-columns: ${width};`
+    } ${typeof height === "string" && `grid-template-rows: ${height};`} overflow:hidden;`}
 
     ${direction === "row"
         ? `
@@ -19,10 +19,10 @@ const Layout = (
             typeof width === "number"
                 ? `grid-template-columns: ${width}em;`
                 : typeof width === "object" &&
-                  (typeof width?.min === "number" || typeof width?.max === "number") &&
-                  `grid-template-columns: repeat(auto-fill, minmax(${typeof width?.min === "number" ? `${width.min}em` : "1fr"}, ${
-                      typeof width?.max === "number" ? `${width.max}em` : "1fr"
-                  }));`
+                  (width?.min || width?.max) &&
+                  `grid-template-columns: repeat(auto-fill, minmax(${
+                      typeof width?.min === "number" ? `${width.min}em` : width?.min ? `${width?.min}` : "1fr"
+                  }, ${typeof width?.max === "number" ? `${width.max}em` : width.max ? `${width.max}` : "1fr"}));`
         }
         ${typeof height === "number" && `grid-auto-rows: ${height}em;`}
     `
@@ -32,32 +32,34 @@ const Layout = (
             typeof height === "number"
                 ? `grid-template-rows: ${height}em;`
                 : typeof height === "object" &&
-                  (typeof height?.min === "number" || typeof height?.max === "number") &&
-                  `grid-template-rows: repeat(auto-fill, minmax(${typeof height?.min === "number" ? `${height.min}em` : "1fr"}, ${
-                      typeof height?.max === "number" ? `${height.max}em` : "1fr"
-                  }));`
+                  (height?.min || height?.max) &&
+                  `grid-template-rows: repeat(auto-fill, minmax(${
+                      typeof height?.min === "number" ? `${height.min}em` : height.min ? `${height.min}` : "1fr"
+                  }, ${typeof height?.max === "number" ? `${height.max}em` : height.max ? `${height.max}` : "1fr"}));`
         }
         ${typeof width === "number" && `grid-auto-columns: ${width}em;`}
         `};
 
     ${typeof gap === "number"
         ? `gap: ${gap}em;`
-        : `${typeof gap?.row === "number" ? `grid-row-gap: ${gap?.row}em;` : ""}${typeof gap?.col === "number" ? `grid-column-gap: ${gap?.col}em;` : ""}`}
+        : `${typeof gap?.row === "number" ? `grid-row-gap: ${gap?.row}em;` : ""}${
+              typeof gap?.col === "number" ? `grid-column-gap: ${gap?.col}em;` : ""
+          }`}
 `;
 
 export const Grid = styled.div<{
     $area?: string;
     $direction?: "row" | "col";
     $gap: number | { row?: number; col?: number };
-    $width?: number | string | { min?: number; max?: number };
-    $height?: number | string | { min?: number; max?: number };
+    $width?: number | string | { min?: number | string; max?: number | string };
+    $height?: number | string | { min?: number | string; max?: number | string };
     $responsive?: {
         device: "desktop" | "laptop" | "tablet" | "mobile";
         area?: string;
         direction?: "row" | "col";
         gap?: number | { row?: number; col?: number };
-        width?: number | string | { min?: number; max?: number };
-        height?: number | string | { min?: number; max?: number };
+        width?: number | string | { min?: number | string; max?: number | string };
+        height?: number | string | { min?: number | string; max?: number | string };
     }[];
 }>`
     position: relative;
@@ -81,19 +83,37 @@ export const Grid = styled.div<{
                     case "laptop":
                         return css`
                             @media all and (max-width: ${Root.Device.Laptop}px) {
-                                ${Layout($responsive[i]?.area, $responsive[i]?.direction, $responsive[i]?.gap, $responsive[i]?.width, $responsive[i]?.height)}
+                                ${Layout(
+                                    $responsive[i]?.area,
+                                    $responsive[i]?.direction,
+                                    $responsive[i]?.gap,
+                                    $responsive[i]?.width,
+                                    $responsive[i]?.height,
+                                )}
                             }
                         `;
                     case "tablet":
                         return css`
                             @media all and (max-width: ${Root.Device.Tablet}px) {
-                                ${Layout($responsive[i]?.area, $responsive[i]?.direction, $responsive[i]?.gap, $responsive[i]?.width, $responsive[i]?.height)}
+                                ${Layout(
+                                    $responsive[i]?.area,
+                                    $responsive[i]?.direction,
+                                    $responsive[i]?.gap,
+                                    $responsive[i]?.width,
+                                    $responsive[i]?.height,
+                                )}
                             }
                         `;
                     case "mobile":
                         return css`
                             @media all and (max-width: ${Root.Device.Mobile}px) {
-                                ${Layout($responsive[i]?.area, $responsive[i]?.direction, $responsive[i]?.gap, $responsive[i]?.width, $responsive[i]?.height)}
+                                ${Layout(
+                                    $responsive[i]?.area,
+                                    $responsive[i]?.direction,
+                                    $responsive[i]?.gap,
+                                    $responsive[i]?.width,
+                                    $responsive[i]?.height,
+                                )}
                             }
                         `;
                 }
