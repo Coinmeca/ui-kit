@@ -95,6 +95,10 @@ export const Wrapper = styled.div<{
         min-width: max-content;
         width: 100%;
         transition: 0.3s ease;
+
+        & > * {
+            pointer-events: ${({ $expand }) => ($expand ? "initial" : "none")};
+        }
     }
 `;
 
