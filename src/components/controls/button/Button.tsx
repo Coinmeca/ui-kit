@@ -9,6 +9,8 @@ export interface Button {
     title?: string;
     type?: "glass" | "line" | "solid";
     color?: string;
+    align?: "left" | "center" | "right";
+    gap?: number;
     fit?: boolean;
     icon?: string | Icon;
     iconLeft?: string | Icon;
@@ -30,6 +32,7 @@ export default function Button(props: Button) {
     const scale = props?.scale || 1;
     const hide = props?.hide || false;
     const disabled = props?.disabled || false;
+    const align = props?.align;
 
     const Icons = (icon?: string | Icon) => {
         return typeof icon === "string" ? (
@@ -61,6 +64,7 @@ export default function Button(props: Button) {
             style={props?.style}
             title={title}
             $type={type}
+            $align={align}
             $color={color}
             $scale={scale}
             $fit={fit}
@@ -69,8 +73,7 @@ export default function Button(props: Button) {
             onMouseDown={(e: any) => handleClickLonger(e)}
             onTouchStart={(e: any) => handleClickLonger(e)}
             onBlur={(e: any) => handleBlur(e)}
-            $disabled={disabled}
-        >
+            $disabled={disabled}>
             <div>
                 {props?.icon && typeof props?.children === "undefined" ? (
                     Icons(props?.icon)

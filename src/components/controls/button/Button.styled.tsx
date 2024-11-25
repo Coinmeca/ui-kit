@@ -7,6 +7,7 @@ import * as Box from "components/layouts/box/Box.styled";
 
 const Style = styled.button<{
     $type?: "glass" | "line" | "solid";
+    $align?: "left" | "center" | "right";
     $color: string;
     $scale: number;
     $fit?: boolean;
@@ -15,7 +16,13 @@ const Style = styled.button<{
 }>`
     ${({ $color }) => {
         return css`
-            --theme: ${$color === "white" ? "var(--black)" : $color === "black" ? "var(--white)" : $color === Root.Color($color) ? $color : Root.Color($color)};
+            --theme: ${$color === "white"
+                ? "var(--black)"
+                : $color === "black"
+                ? "var(--white)"
+                : $color === Root.Color($color)
+                ? $color
+                : Root.Color($color)};
         `;
     }};
 
@@ -38,7 +45,7 @@ const Style = styled.button<{
     & > * {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: ${({ $align }) => ($align === "left" ? "flex-start" : $align === "right" ? "flex-end" : "center")};
         width: 100%;
         min-width: 2em;
         min-height: 3em;
