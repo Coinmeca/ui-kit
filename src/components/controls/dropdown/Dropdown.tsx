@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
 import { usePortal, useWindowSize } from "hooks";
@@ -98,7 +98,7 @@ export default function Dropdown(props: Dropdown) {
         if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
 
-    const position = (e?: any) => {
+    const position = useCallback((e:any) => {
         if (dropdown?.current && dropbox?.current) {
             const size = dropdown?.current?.getBoundingClientRect();
             const position = dropbox?.current?.getBoundingClientRect();
@@ -109,12 +109,12 @@ export default function Dropdown(props: Dropdown) {
                 left: horizon ? size?.right - position?.width : size?.x,
             };
         }
-    };
+    }, [windowSize, dropbox])
 
     const Select = (visible: Visible, e?: any) => (
         <Options
             $chevron={chevron}
-            ref={dropbox}
+            ref={visible === "hidden" ? dropbox : null}
             onBlur={() => visible !== "hidden" && closeSelect()}
             style={{
                 ...(visible === "popup"
@@ -141,6 +141,7 @@ export default function Dropdown(props: Dropdown) {
                           visibility: "hidden",
                           pointerEvents: "none",
                           width: "100%",
+                          minWidth: 'min-content',
                           height: 0,
                           opacity: 0,
                       }
