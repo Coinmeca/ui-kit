@@ -116,8 +116,8 @@ export default function Input(props: Input) {
         }
     };
 
-    const handleClickOutside = (event: any) => {
-        if (fold && wrapper.current && !wrapper.current.contains(event.target)) setExpand(false);
+    const handleClickOutside = (e: any) => {
+        if (fold && wrapper.current && !wrapper.current.contains(e.target)) setExpand(false);
     };
 
     const handleChange = (e: any) => {
@@ -215,11 +215,13 @@ export default function Input(props: Input) {
     }, [fold, expand]);
 
     useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
+        if (fold) document.addEventListener("mousedown", handleClickOutside);
+        else setExpand(true);
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            if (fold) document.removeEventListener("mousedown", handleClickOutside);
+            else setExpand(true)
         };
-    }, []);
+    }, [fold]);
 
     const Input = (
         <Style

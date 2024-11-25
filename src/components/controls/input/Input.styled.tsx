@@ -95,7 +95,7 @@ export const Wrapper = styled.div<{
     & > * {
         position: absolute;
         max-width: ${({ $expand }) => ($expand ? "100%" : "0")};
-        min-width: max-content;
+        min-width: min-content;
         width: 100%;
         transition: 0.3s ease;
 
@@ -143,7 +143,7 @@ const Style = styled.div<{
     transition: 0.3s ease;
 
     ${({ $fold, $expand, $lock }) => $fold && !$expand && !$lock && "cursor:pointer;"}
-    backdrop-filter: blur(${({ $fold, $expand, $lock }) => ($fold && $expand ? "4em" : "0")});
+    backdrop-filter: blur(${({ $fold, $expand }) => ($fold && $expand ? "4em" : "0")});
 
     & > * {
         transition: 0.3s ease;

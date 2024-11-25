@@ -3,7 +3,7 @@ import { Layouts } from "components";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSwipe } from "hooks";
 import { Swipe } from "hooks/useSwipe";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Style, { SwipeArea } from "./BottomSheet.styled";
 
 export interface BottomSheet {
@@ -19,6 +19,8 @@ export interface BottomSheet {
 }
 
 export default function BottomSheet(props: BottomSheet) {
+    const bottomsheet:any = useRef();
+
     const [active, setActive] = useState<boolean>(props?.active || true);
     const scale = props?.scale || 1;
     const swipe = useSwipe(
@@ -34,21 +36,25 @@ export default function BottomSheet(props: BottomSheet) {
         }
     );
 
-    useEffect(() => {
-        // setActive(true);
-        return () => {
-            handleClose();
-            setActive(false);
-        };
-    }, []);
-
     const handleClose = (e?: any) => {
         if (typeof props?.onClose === "function") props?.onClose();
     };
 
-    const handleBlur = (e?: any) => {
-        if (typeof props?.onBlur === "function") props?.onBlur(e);
+    const handleBlur = (e: any) => {
+        if (bottomsheet.current && !bottomsheet.current.contains(e.target)) {
+            if (typeof props?.onBlur === "function") props?.onBlur(e);
+        }
     };
+
+    useEffect(() => {
+        // setActive(true);
+        document.addEventListener("mousedown", handleBlur);
+        return () => {
+            document.removeEventListener("mousedown", handleBlur);
+            handleClose();
+            setActive(false);
+        };
+    }, []);
 
     return (
         <Layouts.Panel active={active} style={{ zIndex: props?.zIndex || 200, pointerEvents: "none" }} onClick={(e: any) => handleBlur(e)} fix>
@@ -57,6 +63,7 @@ export default function BottomSheet(props: BottomSheet) {
                     <Style
                         {...(swipe && !props?.swipe?.area ? swipe : {})}
                         key={"bottomsheet"}
+                        ref={bottomsheet}
                         tabIndex={100}
                         $scale={scale}
                         $active={active}
