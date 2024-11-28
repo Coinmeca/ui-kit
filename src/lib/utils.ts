@@ -17,6 +17,18 @@ export type ItemType = {
     [key: string]: any;
 };
 
+export function throttle(callback: (...args: any[]) => void, limit: number) {
+    let lastCall = 0;
+
+    return (...args: any[]) => {
+        const now = Date.now();
+        if (now - lastCall >= limit) {
+            lastCall = now;
+            callback(...args);
+        }
+    };
+}
+
 const f = <T extends ItemType>(array: T[], filter: Filter | undefined, findOne: boolean): T[] | T | undefined => {
     if (!array.length) return findOne ? undefined : [];
     if (!filter) return findOne ? undefined : array || [];
@@ -203,8 +215,8 @@ export function format(
         typeof option === "object" && typeof option?.limit === "number"
             ? option?.limit
             : typeof option === "number"
-            ? option
-            : undefined;
+                ? option
+                : undefined;
     let unit =
         typeof option === "object" &&
         (typeof option?.unit === "boolean" ? option?.unit : typeof option?.unit === "number" ? true : false);
@@ -359,10 +371,10 @@ export function format(
                             l > precision
                                 ? l
                                 : copy[0].length > 1 || copy[0] !== "0"
-                                ? l
-                                : copy[1]?.length > 18
-                                ? 18
-                                : precision;
+                                    ? l
+                                    : copy[1]?.length > 18
+                                        ? 18
+                                        : precision;
                         if (l > 0) copy[1] = copy[1]?.substring(0, l);
                     }
 

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
-import { usePortal, useWindowSize } from "hooks";
+import { usePortal, usePositionTracker, useWindowSize } from "hooks";
 import Style, { Item, Option, Options } from "./Dropdown.styled";
 
 export interface DropdownOption {
@@ -75,6 +75,8 @@ export default function Dropdown(props: Dropdown) {
     const width = dropdown?.current?.offsetWidth;
     // const width = dropdown?.current?.offsetWidth > dropbox?.current?.offsetWidth ? dropdown?.current?.offsetWidth : dropbox?.current?.offsetWidth;
 
+    const position = usePositionTracker(dropbox);
+
     const handleSelect = (e: React.FormEvent, v: any, k: string | number) => {
         if (disabled) return;
         setOpen(false);
@@ -98,18 +100,18 @@ export default function Dropdown(props: Dropdown) {
         if (typeof props?.onClick === "function") props?.onClick(e, option);
     };
 
-    const position = useCallback((e:any) => {
-        if (dropdown?.current && dropbox?.current) {
+    const calculatedPosition = useCallback(
+        (e?: any) => {
             const size = dropdown?.current?.getBoundingClientRect();
-            const position = dropbox?.current?.getBoundingClientRect();
-            const horizon = windowSize.width < size?.width + position?.right;
+            const horizon = windowSize.width < size?.left + position?.width;
             const vertical = windowSize.height < size?.bottom + position?.height;
             return {
-                ...(vertical ? { bottom: windowSize.height - size?.top } : { top: size?.bottom }),
-                left: horizon ? size?.right - position?.width : size?.x,
+                ...(vertical ? { bottom: windowSize?.height - size?.top } : { top: size?.bottom }),
+                ...(horizon ? { right: windowSize?.width - size?.right } : { left: size?.left }),
             };
-        }
-    }, [windowSize, dropbox])
+        },
+        [windowSize, dropbox, position],
+    );
 
     const Select = (visible: Visible, e?: any) => (
         <Options
@@ -129,9 +131,8 @@ export default function Dropdown(props: Dropdown) {
                           color: `rgb(var(--white))`,
                           width: type !== "more" && width && `${width / (8 * scale)}em`,
                           backdropFilter: "blur(4em)",
-                          transition: "max-height .3s ease",
                           zIndex: 200,
-                          ...position(e),
+                          ...calculatedPosition(),
                           ...(open ? { maxHeight: "100em", overflowY: "hidden" } : { maxHeight: 0, overflowY: "scroll" }),
                           ...(props?.style as any)?.options,
                       }
@@ -141,13 +142,17 @@ export default function Dropdown(props: Dropdown) {
                           visibility: "hidden",
                           pointerEvents: "none",
                           width: "100%",
-                          minWidth: 'min-content',
+                          minWidth: "min-content",
                           height: 0,
                           opacity: 0,
                       }
                     : {
                           fontSize: `${scale}em`,
                       }),
+                transition: "max-height .3s ease",
+                // transitionProperty: "top, max-height",
+                // transitionDuration: ".3s",
+                // transitionTimingFunction: "ease-out",
             }}>
             {/* <div> */}
             {options &&

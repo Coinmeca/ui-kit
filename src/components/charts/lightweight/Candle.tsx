@@ -3,7 +3,7 @@ import { useTheme } from "hooks";
 import { sort } from "lib/utils";
 import type { CandlestickData, HistogramData } from "lightweight-charts";
 import { createChart } from "lightweight-charts";
-import { Suspense, memo, useEffect, useRef, useState } from "react";
+import { Suspense, memo, useEffect, useMemo, useRef, useState } from "react";
 import Style from "./Chart.styled";
 
 export interface Candle {
@@ -82,42 +82,35 @@ export const Candle = (props: Candle) => {
         return () => chartRef?.current?.removeEventListener("resize", handleResize);
     }, []);
 
-    useEffect(() => {
-        if (props?.price && props?.price?.length > 0) {
-            setPrice(
-                sort(
-                    props?.price?.map((v: Price) => {
-                        return {
-                            ...v,
-                        };
-                    }),
-                    key.time,
-                    typeof props?.price[0]?.time === "number" ? "number" : "string",
-                    true,
-                ),
-            );
-        }
+    const memoizedPrice = useMemo(() => {
+        return sort(
+            props?.price?.map((v: Price) => ({ ...v })),
+            key.time,
+            typeof props?.price?.[0]?.time === "number" ? "number" : "string",
+            true,
+        );
     }, [props?.price]);
 
+    const memoizedVolume = useMemo(() => {
+        return sort(
+            props?.volume?.map((v: any) => ({
+                time: v[key.time],
+                value: parseFloat(v[key.value].toString()),
+                color: v?.type === up ? `rgba(${color.up}, 0.3)` : `rgba(${color.down}, 0.3)`,
+            })),
+            key.time,
+            typeof props?.volume?.[0]?.time === "number" ? "number" : "string",
+            true,
+        );
+    }, [props?.volume]);
+
     useEffect(() => {
-        if (props?.volume && props?.volume?.length > 0) {
-            setVolume(
-                sort(
-                    props?.volume?.map((v: any) => {
-                        return {
-                            time: v[key.time],
-                            value: parseFloat(v[key.value].toString()),
-                            color: v?.type === up ? `rgba(${color.up}, 0.3)` : `rgba(${color.down}, 0.3)`,
-                            // color: v.type === up ? `rgb(${Root.Color(color.up)})` : `rgb(${Root.Color(color.down)})`,
-                        } as Volume;
-                    }),
-                    key.time,
-                    typeof props?.volume[0]?.time === "number" ? "number" : "string",
-                    true,
-                ),
-            );
-        }
-    }, [props?.volume, up, down, color]);
+        setPrice(memoizedPrice);
+    }, [memoizedPrice]);
+
+    useEffect(() => {
+        setVolume(memoizedVolume);
+    }, [memoizedVolume]);
 
     useEffect(() => {
         // const chart = createChart(document.getElementById('container'), );
