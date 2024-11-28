@@ -20,7 +20,7 @@ function getScrollableParents(element: HTMLElement | null | undefined): HTMLElem
 }
 
 
-export default function usePositionTracker(ref: RefObject<HTMLElement>, throttleTime = 1): DOMRect {
+export default function usePositionTracker(ref: RefObject<HTMLElement>, throttleTime = 0.1): DOMRect {
     const [position, setPosition] = useState<DOMRect>(ref?.current?.getBoundingClientRect() || {
         top: 0,
         bottom: 0,
