@@ -14,7 +14,6 @@ export interface OrderPad extends CurrencyPad, Sheet {
     unit?: string;
     padding?: number;
     onChange?: Function;
-    max?: string | number;
 }
 
 export default function OrderPad(props: OrderPad) {
@@ -24,8 +23,9 @@ export default function OrderPad(props: OrderPad) {
         max: (typeof props?.height === "object" ? props?.height?.min : props?.height) || "60vh",
     };
     const padding = props?.padding || 2;
-    const [value, setValue] = useState(props?.value || "");
     const max = parseNumber(props?.max);
+
+    const [value, setValue] = useState(props?.value || "");
 
     const handleChange = (e: any, v: string) => {
         let value = parseNumber(v);
@@ -47,14 +47,18 @@ export default function OrderPad(props: OrderPad) {
                         alignItems: "center",
                         padding: `${padding / 2}em ${padding / 1.5}em`,
                         maxWidth: `${width}`,
-                    }}
-                >
+                    }}>
                     {props?.sub && (
                         <>
                             <Elements.Text type={"p"} color={props?.sub?.color} weight={"bold"} align={"right"}>
                                 {props?.sub?.value}
                             </Elements.Text>
-                            <Elements.Text type={"p"} color={props?.sub?.color} weight={"bold"} opacity={0.6} style={{ maxWidth: "4em" }}>
+                            <Elements.Text
+                                type={"p"}
+                                color={props?.sub?.color}
+                                weight={"bold"}
+                                opacity={0.6}
+                                style={{ maxWidth: "4em" }}>
                                 {props?.sub?.unit}
                             </Elements.Text>
                         </>
