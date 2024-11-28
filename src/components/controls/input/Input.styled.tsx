@@ -2,7 +2,7 @@ import { css, styled } from "styled-components";
 import * as Dropdown from "components/controls/dropdown/Dropdown.styled";
 import * as Box from "components/layouts/box/Box.styled";
 
-export const Side = styled.div<{ $width?: number }>`
+export const Side = styled.div<{ $gap: number; $width?: number }>`
     display: flex;
     // min-width: max-content;
     min-width: ${({ $width }) => ($width ? `calc(var(--unit) * ${$width})` : "max-content")};
@@ -11,11 +11,11 @@ export const Side = styled.div<{ $width?: number }>`
     &:not(:has(> :is(h1, h2, h3, h4, h5, h6, strong, b, p, i))) {
         /* &:has(> :is(div, span)) { */
         &:first-child {
-            margin-left: -1em;
+            margin-left: -${({ $gap }) => $gap}em;
         }
 
         &:last-child {
-            margin-right: -1em;
+            margin-right: -${({ $gap }) => $gap}em;
         }
     }
 
@@ -47,11 +47,11 @@ export const Side = styled.div<{ $width?: number }>`
     }
 `;
 
-export const Inner = styled.div<{ $expand: boolean }>`
+export const Inner = styled.div<{ $gap: number; $expand: boolean }>`
     transition: 0.3s ease;
     overflow: hidden;
 
-    ${({ $expand }) =>
+    ${({ $gap, $expand }) =>
         $expand
             ? css`
                   opacity: 1;
@@ -59,29 +59,29 @@ export const Inner = styled.div<{ $expand: boolean }>`
               `
             : css`
                   &:last-child {
-                      margin-left: -1em;
+                      margin-left: -${$gap}em;
                   }
                   &:first-child {
-                      margin-right: -1em;
+                      margin-right: -${$gap}em;
                   }
                   &:not(:first-child):not(:last-child) {
-                      margin-left: -1em;
-                      margin-right: -1em;
+                      margin-left: -${$gap}em;
+                      margin-right: -${$gap}em;
                   }
                   opacity: 0;
                   max-width: 0;
                   pointer-events: none;
+
+                  & > button {
+                      &:first-child {
+                          margin-left: -${$gap}em;
+                      }
+
+                      &:last-child {
+                          margin-right: -${$gap}em;
+                      }
+                  }
               `}
-
-    & > button {
-        &:first-child {
-            margin-left: -1em;
-        }
-
-        &:last-child {
-            margin-right: -1em;
-        }
-    }
 `;
 
 export const Wrapper = styled.div<{
@@ -124,6 +124,7 @@ const Style = styled.div<{
     $clearable?: boolean;
     $scale: number;
     $type: string;
+    $gap: number;
     $fold: boolean;
     $expand: boolean;
     $focus: boolean;
@@ -168,7 +169,7 @@ const Style = styled.div<{
                 justify-content: center;
                 width: -webkit-fill-available;
                 height: auto;
-                gap: 1em;
+                gap: ${({ $gap }) => $gap}em;
 
                 & > ${Side} {
                     & > i > svg {

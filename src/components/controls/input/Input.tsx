@@ -15,6 +15,7 @@ export interface Input {
     value?: number | string;
     align?: "left" | "center" | "right";
     scale?: number;
+    gap?: number;
 
     placeholder?: number | string;
 
@@ -79,6 +80,7 @@ export default function Input(props: Input) {
     const scale = props?.scale || 1;
     const min = props?.min || 0;
     const align = props?.align || "left";
+    const gap = props?.gap || 1;
 
     const clearPosition = props?.clearPosition || "right";
 
@@ -219,7 +221,7 @@ export default function Input(props: Input) {
         else setExpand(true);
         return () => {
             if (fold) document.removeEventListener("mousedown", handleClickOutside);
-            else setExpand(true)
+            else setExpand(true);
         };
     }, [fold]);
 
@@ -230,6 +232,7 @@ export default function Input(props: Input) {
             style={props?.style?.wrapper}
             $clearable={props?.clearable}
             $scale={scale}
+            $gap={gap}
             $type={type}
             $fold={fold}
             $expand={expand}
@@ -246,11 +249,11 @@ export default function Input(props: Input) {
             <div>
                 <div style={props?.style?.input || props?.style}>
                     {props?.left && (
-                        <Side $width={props?.left?.width} style={props?.left?.style}>
+                        <Side $width={props?.left?.width} $gap={gap} style={props?.left?.style}>
                             {props?.left?.children}
                         </Side>
                     )}
-                    <Inner $expand={expand}>
+                    <Inner $gap={gap} $expand={expand}>
                         {props?.clearable && clearPosition === "left" && (
                             <Controls.Button
                                 icon={"x"}
@@ -299,7 +302,7 @@ export default function Input(props: Input) {
                         )}
                     </Inner>
                     {(props?.unit || props?.right) && (
-                        <Side $width={props?.right?.width} style={props?.right?.style}>
+                        <Side $width={props?.right?.width} $gap={gap} style={props?.right?.style}>
                             {props?.right?.children}
                             {props?.unit && <span>{props?.unit}</span>}
                         </Side>
