@@ -5,6 +5,7 @@ interface Passcode {
     index: number;
     length: number;
     scale?: number;
+    width?: number | string;
     size?: number;
     color?: string;
     error?: boolean;
@@ -27,7 +28,14 @@ export default function Passcode(props: Passcode) {
     const effect = props?.effect || false;
 
     return (
-        <Style $scale={scale} $gap={gap} $padding={padding} $color={color} $error={props?.error} style={props?.style}>
+        <Style
+            $width={props?.width}
+            $scale={scale}
+            $gap={gap}
+            $padding={padding}
+            $color={color}
+            $error={props?.error}
+            style={props?.style}>
             {length &&
                 [...Array(length)].map((_, i: number) => (
                     <Dot key={i} $active={index > i} $size={size} $stroke={stroke} $effect={effect}>

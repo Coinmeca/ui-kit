@@ -106,7 +106,14 @@ export const Dot = styled.div<{ $active?: boolean; $size: number; $stroke: numbe
     }
 `;
 
-const Style = styled.div<{ $scale: number; $gap: number | string; $padding: number; $color: string; $error?: boolean }>`
+const Style = styled.div<{
+    $width?: number | string;
+    $scale: number;
+    $gap: number | string;
+    $padding: number;
+    $color: string;
+    $error?: boolean;
+}>`
     ${({ $color, $error }) => {
         return css`
             --theme: ${$error
@@ -134,6 +141,8 @@ const Style = styled.div<{ $scale: number; $gap: number | string; $padding: numb
     gap: ${({ $gap }) => (typeof $gap === "number" ? `${$gap || 2}em` : $gap)};
     padding: ${({ $padding }) => `${$padding}em`};
     transition: 0.3s ease;
+
+    ${({ $width }) => $width && `max-width: ${typeof $width === "number" ? `${$width}em` : $width};`}
 
     @keyframes shake-horizon {
         0% {
