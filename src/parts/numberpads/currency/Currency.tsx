@@ -36,7 +36,7 @@ export default function Currency(props: CurrencyPad) {
         }
 
         v = parseNumber(v);
-        if (!isNaN(max) && max > 0 && !isNaN(v) && v > 0 && v > max) input = max;
+        if (!isNaN(max) && max > 0 && !isNaN(v) && v > 0 && v >= max) input = max;
         if (typeof props?.onChange === "function") props?.onChange(e, input);
     };
 
