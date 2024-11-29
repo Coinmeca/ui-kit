@@ -19,7 +19,7 @@ export interface BottomSheet {
 }
 
 export default function BottomSheet(props: BottomSheet) {
-    const bottomsheet:any = useRef();
+    const bottomsheet: any = useRef();
 
     const [active, setActive] = useState<boolean>(props?.active || true);
     const scale = props?.scale || 1;
@@ -33,7 +33,7 @@ export default function BottomSheet(props: BottomSheet) {
                 y: direction > 0 ? 0 : `100%`,
             }),
             onSwipe: (e: any, move: number) => move === -1 && handleClose(e),
-        }
+        },
     );
 
     const handleClose = (e?: any) => {
@@ -57,8 +57,12 @@ export default function BottomSheet(props: BottomSheet) {
     }, []);
 
     return (
-        <Layouts.Panel active={active} style={{ zIndex: props?.zIndex || 200, pointerEvents: "none" }} onClick={(e: any) => handleBlur(e)} fix>
-            <AnimatePresence>
+        <Layouts.Panel
+            active={active}
+            style={{ zIndex: props?.zIndex || 200, pointerEvents: "none" }}
+            onClick={(e: any) => handleBlur(e)}
+            fix>
+            <AnimatePresence mode="wait">
                 {active && (
                     <Style
                         {...(swipe && !props?.swipe?.area ? swipe : {})}
@@ -76,9 +80,14 @@ export default function BottomSheet(props: BottomSheet) {
                         transition={{ ease: "easeInOut", duration: 0.15 }}
                         variants={undefined}
                         style={props?.style}
-                    >
+                        layout>
                         {props?.swipe?.area && (
-                            <SwipeArea {...swipe} as={motion.div} $area={(typeof props?.swipe === "object" && props?.swipe?.area) || 2} variants={undefined} />
+                            <SwipeArea
+                                {...swipe}
+                                as={motion.div}
+                                $area={(typeof props?.swipe === "object" && props?.swipe?.area) || 2}
+                                variants={undefined}
+                            />
                         )}
                         {props?.children}
                     </Style>

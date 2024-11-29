@@ -8,6 +8,7 @@ import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
 import { Logo, Menu, MenuButton, Nav, Side, Style } from "./Header.styled";
 import Image from "next/image";
+import { CSSProperties } from "styled-components";
 
 export interface Header {
     logo?: Logo | boolean;
@@ -26,7 +27,7 @@ export interface Header {
     scale?: number;
     height?: number;
     color?: string;
-    style?: object;
+    style?: CSSProperties & { children: CSSProperties & { children: CSSProperties & { children: CSSProperties } } };
 }
 
 export interface Logo {
@@ -130,9 +131,9 @@ export default function Header(props: Header) {
 
     return (
         <Style $scale={scale} $color={color} $height={height} $side={side} style={props?.style}>
-            <Layouts.Row gap={0}>
-                <Layouts.Row>
-                    <Layouts.Row>
+            <Layouts.Row gap={0} style={props?.style?.children}>
+                <Layouts.Row style={props?.style?.children?.children}>
+                    <Layouts.Row style={props?.style?.children?.children?.children}>
                         <MenuButton
                             $active={mobileMenu}
                             onClick={(e: any) => {
@@ -146,7 +147,9 @@ export default function Header(props: Header) {
                             </div>
                         </MenuButton>
                         {props?.logo && (
-                            <Logo href={typeof props?.logo === "object" ? props?.logo?.href : "/"}>
+                            <Logo
+                                href={typeof props?.logo === "object" ? props?.logo?.href : "/"}
+                                style={typeof props?.logo === "object" ? props?.logo?.style : {}}>
                                 <LogoImage />
                             </Logo>
                         )}

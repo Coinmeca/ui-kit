@@ -46,7 +46,7 @@ export default function Modal(props: Modal) {
                 props?.outsideClose && handleClose(e);
             }}
             fix>
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                 {active && (
                     <Style
                         key={"modal"}
@@ -56,7 +56,8 @@ export default function Modal(props: Modal) {
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: active ? 1 : 0.9, opacity: active ? 1 : 0 }}
                         exit={{ scale: 0.9, opacity: 0 }}
-                        transition={{ ease: "easeInOut", duration: 0.15 }}>
+                        transition={{ ease: "easeInOut", duration: 0.15 }}
+                        layout>
                         <div>
                             {props?.title && (
                                 <Elements.Text size={2} align={"center"}>
@@ -77,11 +78,12 @@ export default function Modal(props: Modal) {
                                     {props?.children}
                                 </Layouts.Contents.InnerContent>
                             )}
-                            {props?.buttonArea && (typeof props?.buttonArea?.active === "boolean" ? props?.buttonArea?.active : true) && (
-                                <ButtonArea $gap={props?.buttonArea?.gap} style={props?.buttonArea?.style}>
-                                    {props?.buttonArea?.children || props?.buttonArea}
-                                </ButtonArea>
-                            )}
+                            {props?.buttonArea &&
+                                (typeof props?.buttonArea?.active === "boolean" ? props?.buttonArea?.active : true) && (
+                                    <ButtonArea $gap={props?.buttonArea?.gap} style={props?.buttonArea?.style}>
+                                        {props?.buttonArea?.children || props?.buttonArea}
+                                    </ButtonArea>
+                                )}
                             {props?.close && (
                                 <Close>
                                     <Controls.Button icon={"x"} onClick={(e: any) => handleClose(e)} />

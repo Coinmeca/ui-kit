@@ -8,6 +8,7 @@ import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
 import { Logo, Menu, MenuButton, Nav, Side, Style } from "./Header.styled";
 import Image from "next/image";
+import { CSSProperties } from "styled-components";
 
 export interface Header {
     logo?: Logo | boolean;
@@ -26,7 +27,7 @@ export interface Header {
     scale?: number;
     height?: number;
     color?: string;
-    style?: object;
+    style?: CSSProperties & { children: CSSProperties & { children: CSSProperties & { children: CSSProperties } } };
 }
 
 export interface Logo {
@@ -63,44 +64,54 @@ export default function Header(props: Header) {
     const side = props?.side?.width || 60;
 
     const LogoImage = useCallback(() => {
-        const _props = typeof props?.logo === 'object' ? {
-            width: typeof props?.logo?.width === 'number' ? props?.logo?.width : 0,
-            height: typeof props?.logo?.height === 'number' ? props?.logo?.height : 0,
-            style: {
-                ...(typeof props?.logo?.width === 'string' && { width: `${props?.logo?.width}` }),
-                ...(typeof props?.logo?.height === 'string' && { height: `${props?.logo?.height}` }),
-                ...props?.logo?.style,
-            },
-            title: props?.logo?.title,
-            alt: props?.logo?.alt || "",
-        } : undefined;
-        return props?.logo &&
-            (typeof props?.logo ==='boolean' || !props?.logo?.src ?
-            <Coinmeca
-                height={'5em'}
-                style={props?.style}
-                title={typeof props?.logo === 'object' ? props?.logo?.title : undefined}
-                alt={typeof props?.logo === 'object' ? props?.logo?.alt : ""}
-            />
-        : typeof props?.logo?.src === 'string' ? (
-            <Image src={props?.logo?.src} {..._props!} />
-        ) : isValidElement(props?.logo?.src) ? (
-                cloneElement(props?.logo?.src, ..._props as any)
-            ) : typeof props?.logo?.src === 'function' ? (
+        const _props =
+            typeof props?.logo === "object"
+                ? {
+                      width: typeof props?.logo?.width === "number" ? props?.logo?.width : 0,
+                      height: typeof props?.logo?.height === "number" ? props?.logo?.height : 0,
+                      style: {
+                          ...(typeof props?.logo?.width === "string" && { width: `${props?.logo?.width}` }),
+                          ...(typeof props?.logo?.height === "string" && { height: `${props?.logo?.height}` }),
+                          ...props?.logo?.style,
+                      },
+                      title: props?.logo?.title,
+                      alt: props?.logo?.alt || "",
+                  }
+                : undefined;
+        return (
+            props?.logo &&
+            (typeof props?.logo === "boolean" || !props?.logo?.src ? (
+                <Coinmeca
+                    height={"5em"}
+                    style={props?.style}
+                    title={typeof props?.logo === "object" ? props?.logo?.title : undefined}
+                    alt={typeof props?.logo === "object" ? props?.logo?.alt : ""}
+                />
+            ) : typeof props?.logo?.src === "string" ? (
+                <Image src={props?.logo?.src} {..._props!} />
+            ) : isValidElement(props?.logo?.src) ? (
+                cloneElement(props?.logo?.src, ...(_props as any))
+            ) : typeof props?.logo?.src === "function" ? (
                 props?.logo?.src(_props)
-                ) : props?.logo?.src
-            )
+            ) : (
+                props?.logo?.src
+            ))
+        );
     }, [props?.logo]);
 
     const [mobileMenu, setMobileMenu] = useState(false);
 
     useEffect(() => {
         if (windowSize.width <= Root.Device.Tablet) {
-            animate("nav", mobileMenu ? { opacity: 1, transform: "translateY(0)" } : { opacity: 0, transform: "translateY(-15%)" }, {
-                ease: "easeInOut",
-                duration: 0.3,
-                delay: mobileMenu ? stagger(0.05) : 0,
-            });
+            animate(
+                "nav",
+                mobileMenu ? { opacity: 1, transform: "translateY(0)" } : { opacity: 0, transform: "translateY(-15%)" },
+                {
+                    ease: "easeInOut",
+                    duration: 0.3,
+                    delay: mobileMenu ? stagger(0.05) : 0,
+                },
+            );
         } else {
             animate(
                 "nav",
@@ -120,9 +131,9 @@ export default function Header(props: Header) {
 
     return (
         <Style $scale={scale} $color={color} $height={height} $side={side} style={props?.style}>
-            <Layouts.Row gap={0}>
-                <Layouts.Row>
-                    <Layouts.Row>
+            <Layouts.Row gap={0} style={props?.style?.children}>
+                <Layouts.Row style={props?.style?.children?.children}>
+                    <Layouts.Row style={props?.style?.children?.children?.children}>
                         <MenuButton
                             $active={mobileMenu}
                             onClick={(e: any) => {
@@ -136,7 +147,9 @@ export default function Header(props: Header) {
                             </div>
                         </MenuButton>
                         {props?.logo && (
-                            <Logo href={typeof props?.logo === 'object' ? props?.logo?.href : "/"}>
+                            <Logo
+                                href={typeof props?.logo === "object" ? props?.logo?.href : "/"}
+                                style={typeof props?.logo === "object" ? props?.logo?.style : {}}>
                                 <LogoImage />
                             </Logo>
                         )}
