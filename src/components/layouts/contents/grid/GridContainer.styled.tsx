@@ -122,7 +122,7 @@ export const Grid = styled.div<{
     }}
 `;
 
-const Style = styled.div<{ $fullsize: boolean }>`
+const Style = styled.div<{ $scroll: boolean; $fullsize: boolean }>`
     ${({ $fullsize }) =>
         $fullsize &&
         `
@@ -134,7 +134,13 @@ const Style = styled.div<{ $fullsize: boolean }>`
             height: 100%;
         }
     `}
-    overflow: auto;
+
+    ${({ $scroll }) =>
+        $scroll &&
+        css`
+            overflow: auto;
+        `};
+
     scroll-snap-type: y mandatory;
     -webkit-overflow-scrolling: touch;
 `;

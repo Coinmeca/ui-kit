@@ -2,6 +2,7 @@
 
 import { SwipeProps } from "hooks/useSwipe";
 import Style from "./Row.styled";
+import { motion } from "framer-motion";
 
 export interface Row {
     children?: any;
@@ -18,6 +19,7 @@ export interface Row {
     fit?: boolean;
     fix?: boolean;
     swipe?: SwipeProps;
+    layout?: boolean | "position" | "size" | "preserve-aspect";
 }
 
 export default function Row(props: Row) {
@@ -30,6 +32,7 @@ export default function Row(props: Row) {
     return (
         <Style
             {...props?.swipe}
+            as={props?.layout ? motion.div : props?.swipe?.as}
             title={props?.title}
             style={props?.style}
             $gap={gap}

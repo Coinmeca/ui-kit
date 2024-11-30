@@ -24,11 +24,13 @@ export interface GridContainer {
         height?: number | string | { min?: number | string; max?: number | string };
     }[];
     style?: object;
+    scroll?: boolean;
     fullsize?: boolean;
 }
 
 export default function GridContainer(props: GridContainer) {
     const gap = props?.gap || 0;
+    const scroll = typeof props?.scroll === "boolean" ? props?.scroll : true;
     const [grid, setGrid] = useState<string | undefined>();
 
     useEffect(() => {
@@ -36,7 +38,7 @@ export default function GridContainer(props: GridContainer) {
     }, []);
 
     return (
-        <Style $fullsize={props?.fullsize || false}>
+        <Style $fullsize={props?.fullsize || false} $scroll={scroll}>
             {grid && (
                 <Grid
                     data-area={grid}
