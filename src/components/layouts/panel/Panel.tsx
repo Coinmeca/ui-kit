@@ -36,7 +36,7 @@ export default function Panel(props: Panel) {
     }, [props?.active]);
 
     return (
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
             {active && (
                 <Style
                     key={"panel"}

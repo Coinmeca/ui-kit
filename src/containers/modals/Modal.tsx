@@ -46,7 +46,7 @@ export default function Modal(props: Modal) {
                 props?.outsideClose && handleClose(e);
             }}
             fix>
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
                 {active && (
                     <Style
                         key={"modal"}
