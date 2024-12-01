@@ -36,7 +36,7 @@ export default function Panel(props: Panel) {
     }, [props?.active]);
 
     return (
-        <AnimatePresence>
+        <AnimatePresence mode="popLayout">
             {active && (
                 <Style
                     key={"panel"}
@@ -50,8 +50,7 @@ export default function Panel(props: Panel) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 1 }}
-                    transition={{ ease: "easeInOut", duration: 0 }}
-                    layout>
+                    transition={{ ease: "easeInOut", duration: 0 }}>
                     {props?.children}
                 </Style>
             )}

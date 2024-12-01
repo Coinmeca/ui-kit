@@ -46,7 +46,7 @@ export default function Modal(props: Modal) {
                 props?.outsideClose && handleClose(e);
             }}
             fix>
-            <AnimatePresence>
+            <AnimatePresence mode="popLayout">
                 {active && (
                     <Style
                         key={"modal"}
@@ -56,8 +56,7 @@ export default function Modal(props: Modal) {
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: active ? 1 : 0.9, opacity: active ? 1 : 0 }}
                         exit={{ scale: 0.9, opacity: 0 }}
-                        transition={{ ease: "easeInOut", duration: 0.15 }}
-                        layout>
+                        transition={{ ease: "easeInOut", duration: 0.15 }}>
                         <div>
                             {props?.title && (
                                 <Elements.Text size={2} align={"center"}>

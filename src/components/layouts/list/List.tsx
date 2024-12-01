@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { Elements } from "components";
 import Style, { NoData } from "./List.styled";
-import ListItem from "./ListItem";
+import ListItem, { ListItem as ListItemType } from "./ListItem";
 
 export interface List {
     list?: any;
@@ -22,21 +22,18 @@ export default function List(props: List) {
         <>
             {props?.list && typeof props?.list !== "string" && props?.list?.length > 0 ? (
                 <Style $fill={fill} style={props?.style}>
-                    <AnimatePresence>
+                    <AnimatePresence mode="popLayout">
                         <>
-                            {list?.map((data: any, i: number) => (
+                            {list?.map((data: ListItemType, i: number) => (
                                 <ListItem
                                     key={data?.index || i}
                                     {...(data?.children && data)}
-                                    as={motion.div}
-                                    initial={{ scale: 0.9, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    exit={{ scale: 0.9, opacity: 0 }}
-                                    transition={{
-                                        ease: "easeInOut",
-                                        duration: 0.3,
-                                    }}
-                                    layout>
+                                    motion={
+                                        data?.motion && {
+                                            ...(typeof data?.motion === "object" && data?.motion),
+                                            layoutId: `${i}`,
+                                        }
+                                    }>
                                     {data?.children ? data?.children : data}
                                 </ListItem>
                             ))}

@@ -97,7 +97,10 @@ export default function Text(props: Text) {
             );
         case "desc":
             return (
-                <Texts.Desc {...textProps} $weight={props?.weight || "normal"}>
+                <Texts.Desc
+                    {...textProps}
+                    $weight={props?.weight || "normal"}
+                    $opacity={(typeof props?.opacity === "number" && props?.opacity > 1 ? 1 : props?.opacity) || undefined}>
                     {props?.children}
                 </Texts.Desc>
             );
@@ -105,10 +108,10 @@ export default function Text(props: Text) {
             return (
                 <Texts.Link
                     {...textProps}
-                    $size={size}
                     href={props?.href}
                     target={!props?.target && !props?.target?.startsWith("/") ? "_blank" : props?.target}
                     onClick={(e: any) => typeof props?.onClick === "function" && props?.onClick(e)}
+                    $size={size}
                     $responsive={props?.responsive}>
                     {props?.children}
                 </Texts.Link>
