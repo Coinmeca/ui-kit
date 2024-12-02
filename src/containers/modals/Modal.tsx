@@ -30,7 +30,10 @@ export default function Modal(props: Modal) {
     const scroll = typeof props?.scroll === "boolean" ? props?.scroll : true;
 
     const handleClose = (e: any) => {
-        if (typeof props?.onClose === "function") props?.onClose(e);
+        setActive(false);
+        setTimeout(() => {
+            if (typeof props?.onClose === "function") props?.onClose(e);
+        }, 300);
     };
     useEffect(() => {
         // setActive(true);
@@ -46,7 +49,7 @@ export default function Modal(props: Modal) {
                 props?.outsideClose && handleClose(e);
             }}
             fix>
-            <AnimatePresence mode="popLayout">
+            <AnimatePresence>
                 {active && (
                     <Style
                         key={"modal"}
