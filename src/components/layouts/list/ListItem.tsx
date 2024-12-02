@@ -87,7 +87,7 @@ export default function ListItem(props: ListItem) {
         <Style
             {...m}
             as={m ? motion.div : undefined}
-            layoutId={`${m?.layoutId || crypto.randomUUID()}`}
+            layoutId={m && `${m?.layoutId || crypto.randomUUID()}`}
             initial={m?.initial || (m && { scale: 0.9, opacity: 0 })}
             animate={m?.animate || (m && { scale: 1, opacity: 1 })}
             exit={m?.exit || (m && { scale: 0.9, opacity: 0 })}

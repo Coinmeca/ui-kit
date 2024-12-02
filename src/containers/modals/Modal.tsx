@@ -55,11 +55,11 @@ export default function Modal(props: Modal) {
                 {active && (
                     <Style
                         key={"modal"}
-                        layoutId={id}
                         $active={active}
                         $width={width}
                         $fullsize={props?.fullsize}
                         as={motion.div}
+                        layoutId={id}
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{
                             scale: active ? 1 : 0.9,
