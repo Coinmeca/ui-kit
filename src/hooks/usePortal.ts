@@ -27,8 +27,8 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
             setRoot(undefined);
 
             setTimeout(() => {
-                if (r) r.unmount();
                 if (p.parentNode) p.parentNode.removeChild(p);
+                if (r) r.unmount();
             }, 0);
         };
     }, []);

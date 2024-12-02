@@ -37,12 +37,18 @@ export default function BottomSheet(props: BottomSheet) {
     );
 
     const handleClose = (e?: any) => {
-        if (typeof props?.onClose === "function") props?.onClose();
+        setActive(false);
+        setTimeout(() => {
+            if (typeof props?.onClose === "function") props?.onClose();
+        }, 300);
     };
 
     const handleBlur = (e: any) => {
         if (bottomsheet.current && !bottomsheet.current.contains(e.target)) {
-            if (typeof props?.onBlur === "function") props?.onBlur(e);
+            setActive(false);
+            setTimeout(() => {
+                if (typeof props?.onBlur === "function") props?.onBlur(e);
+            }, 300);
         }
     };
 

@@ -1,5 +1,5 @@
 "use client";
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import * as Button from "components/controls/button/Button.styled";
 import * as InnerContent from "components/layouts/contents/inner/InnerContent.styled";
 import * as Box from "components/layouts/box/Box.styled";
@@ -32,7 +32,7 @@ export const Close = styled.div`
     }
 `;
 
-const Style = styled.div<{ $width: { min: number; max: number }; $active: boolean }>`
+const Style = styled.div<{ $width: { min: number; max: number }; $active: boolean; $fullsize?: boolean }>`
     font-size: var(--unit);
     position: ${({ $active }) => ($active ? "relative" : "absolute")};
     display: flex;
@@ -40,12 +40,19 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
     min-width: ${({ $width }) => $width?.min}em;
     max-width: ${({ $width }) => $width?.max}em;
     max-height: -webkit-fill-available;
-    margin: 4em;
+    margin: ${({ $fullsize }) => ($fullsize ? 0 : 4)}em;
     transform: ${({ $active }) => ($active ? "scale(1,1)" : "scale(0.9, 0.9)")};
     opacity: ${({ $active }) => ($active ? "1" : "0")};
     pointer-events: ${({ $active }) => ($active ? "inherit" : "none")};
     overflow: hidden;
     transition: 0.3s ease;
+
+    ${({ $fullsize }) =>
+        $fullsize &&
+        css`
+            min-width: -webkit-fill-available;
+            min-height: -webkit-fill-available;
+        `}
 
     & > * {
         display: flex;

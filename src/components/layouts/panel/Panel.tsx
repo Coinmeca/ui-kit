@@ -15,6 +15,7 @@ export interface Panel {
 }
 
 export default function Panel(props: Panel) {
+    const id = `${new Date().getTime()}`;
     const [active, setActive] = useState(true);
 
     const handleClick = (e: any) => {
@@ -40,19 +41,19 @@ export default function Panel(props: Panel) {
             {active && (
                 <Style
                     key={"panel"}
-                    layoutId={"panel"}
-                    id={props?.id}
+                    id={props?.id || id}
                     $active={active}
                     $color={props?.color}
                     $fix={props?.fix}
                     style={props?.style}
                     onClick={(e: any) => handleClick(e)}
                     as={motion.div}
+                    layoutId={props?.id || id}
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 1 }}
-                    transition={{ ease: "easeInOut", duration: 0 }}
-                    layout="size">
+                    animate={{ opacity: 1, transition: { ease: "easeOut", duration: 0.3, staggerChildren: 0.1 } }}
+                    exit={{ opacity: 0, transition: { staggerChildren: 0.1 } }}
+                    transition={{ ease: "easeInOut", duration: 0.15 }}
+                    layout="position">
                     {props?.children}
                 </Style>
             )}
