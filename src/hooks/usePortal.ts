@@ -1,7 +1,7 @@
-'use client';
-import { ReactNode, useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { Root, createRoot } from 'react-dom/client';
+"use client";
+import { ReactNode, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { Root, createRoot } from "react-dom/client";
 
 type Child = Function | ReactNode | null;
 type Args = [Child] | [object] | [Child, object] | undefined[];
@@ -16,7 +16,7 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
     });
 
     useEffect(() => {
-        const p = document.createElement('section');
+        const p = document.createElement("section");
         const r = createRoot(p);
         document.body.appendChild(p);
         setRoot(r);
@@ -36,14 +36,7 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
     useEffect(() => {
         const element = children || initial;
         if (root) {
-            if (active) {
-                root.render(createPortal(
-                    typeof element === 'function' ? element(props) : element,
-                    document.body
-                ));
-            } else {
-                root.render(null);
-            }
+            root.render(active ? createPortal(typeof element === "function" ? element(props) : element, document.body) : null);
         }
     }, [active, initial, children, props, root]);
 
@@ -51,23 +44,23 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
         (...args) => {
             if (args) {
                 const props =
-                    args?.length === 2 && typeof args[1] === 'object' && !(args[1] as any)?.$$typeof
+                    args?.length === 2 && typeof args[1] === "object" && !(args[1] as any)?.$$typeof
                         ? args[1]
-                        : args?.length === 1 && typeof args[0] === 'object' && !(args[0] as any)?.$$typeof
-                            ? args[0]
-                            : undefined;
+                        : args?.length === 1 && typeof args[0] === "object" && !(args[0] as any)?.$$typeof
+                        ? args[0]
+                        : undefined;
                 props &&
                     setProps((state: any) => {
                         return { ...state, ...props, active: true };
                     });
 
                 const children =
-                    (args?.length === 2 && typeof args[1] === 'function') ||
-                    (typeof args[1] === 'object' && (args[1] as any)?.$$typeof
+                    (args?.length === 2 && typeof args[1] === "function") ||
+                    (typeof args[1] === "object" && (args[1] as any)?.$$typeof
                         ? args[1]
-                        : typeof args[0] === 'function' || (typeof args[0] === 'object' && (args[0] as any)?.$$typeof)
-                            ? args[0]
-                            : undefined);
+                        : typeof args[0] === "function" || (typeof args[0] === "object" && (args[0] as any)?.$$typeof)
+                        ? args[0]
+                        : undefined);
                 children && setChildren(children);
 
                 setActive(true);
@@ -81,6 +74,6 @@ export default function usePortal(initial?: any, initialProps?: any): Portal {
         },
         () => {
             setProps(({ active }: { active: boolean }) => ({ active }));
-        }
+        },
     ];
 }

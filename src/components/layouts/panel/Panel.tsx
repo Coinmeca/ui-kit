@@ -40,6 +40,7 @@ export default function Panel(props: Panel) {
             {active && (
                 <Style
                     key={"panel"}
+                    layoutId={"panel"}
                     id={props?.id}
                     $active={active}
                     $color={props?.color}
@@ -50,7 +51,8 @@ export default function Panel(props: Panel) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 1 }}
-                    transition={{ ease: "easeInOut", duration: 0 }}>
+                    transition={{ ease: "easeInOut", duration: 0 }}
+                    layout>
                     {props?.children}
                 </Style>
             )}
