@@ -1,7 +1,7 @@
 "use client";
 import { Controls, Layouts } from "components";
 import Style, { Pad } from "./Numberpad.styled";
-import { useMemo } from "react";
+import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from "react";
 
 export interface Numberpad {
     value?: number | string;
@@ -16,6 +16,7 @@ export interface Numberpad {
     onReset?: Function;
     style?: object;
     shuffle?: boolean;
+    input?: boolean | MutableRefObject<any>;
 }
 
 interface Option {
@@ -43,23 +44,28 @@ export default function Numberpad(props: Numberpad) {
     const type = props?.type || "number";
     const scale = props?.scale || 1.5;
     const padding = typeof props?.padding === "number" ? props?.padding : 2;
+    const ref = useRef(props?.value?.toString() || "");
 
-    const handleChange = (e: any, v: string) => {
-        const value = props?.value?.toString() || "";
-        let input: string = "";
-        if (v === "sub") input = value?.length - 1 > 0 ? value?.substring(0, value?.length - 1) : type === "code" ? "" : "0";
-        else if (v === "reset") {
-            input = type === "code" ? "" : "0";
-            props?.onReset?.();
-        } else
-            input =
-                type === "currency" && value === "0" && v === "0"
-                    ? "0"
-                    : type === "currency" && value === "0" && v !== "0"
-                    ? v
-                    : value + v;
-        props?.onChange?.(e, input);
-    };
+    const handleChange = useCallback(
+        (e: any, v: string) => {
+            const value = ref.current;
+            let input: string = "";
+            if (v === "sub")
+                input = value?.length - 1 > 0 ? value?.substring(0, value?.length - 1) : type === "code" ? "" : "0";
+            else if (v === "reset") {
+                input = type === "code" ? "" : "0";
+                props?.onReset?.();
+            } else
+                input =
+                    type === "currency" && value === "0" && v === "0"
+                        ? "0"
+                        : type === "currency" && value === "0" && v !== "0"
+                        ? v
+                        : value + v;
+            props?.onChange?.(e, input);
+        },
+        [ref],
+    );
 
     const numbers = [
         { value: "1", label: "1" },
@@ -77,6 +83,22 @@ export default function Numberpad(props: Numberpad) {
     const buttons = useMemo(() => {
         return chunk(props?.shuffle ? shuffle(numbers) : numbers, 3);
     }, [props?.shuffle]);
+
+    useEffect(() => {
+        ref.current = props?.value?.toString() || "";
+    }, [props?.value]);
+
+    useEffect(() => {
+        if (props?.input) {
+            const ref = props?.input === true ? window : props?.input?.current;
+            const input = (e: any) => {
+                if ((e.key >= "0" && e.key <= "9") || e.key === "Backspace" || e.key === "Delete")
+                    handleChange(e, e.key === "Backspace" ? "sub" : e.key === "Delete" ? "reset" : e.key);
+            };
+            ref.addEventListener("keydown", input);
+            return () => ref.removeEventListener("keydown", input);
+        }
+    }, [props?.input]);
 
     return (
         <Style $scale={scale} $width={props?.width} $padding={padding} $reverse={props?.reverse} style={props?.style}>
