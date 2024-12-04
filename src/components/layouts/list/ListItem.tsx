@@ -95,7 +95,7 @@ export default function ListItem(props: ListItem) {
                 m?.transition ||
                 (!!motion && {
                     ease: "easeInOut",
-                    duration: 0.3,
+                    duration: 0.15,
                 })
             }
             layout={m?.layout || (m && "position")}
