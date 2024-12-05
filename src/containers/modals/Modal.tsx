@@ -12,6 +12,7 @@ export interface Modal {
     content?: any;
     buttonArea?: any;
     width?: number | { min?: number; max?: number };
+    style?: object;
     close?: boolean;
     onClose: Function;
     outsideClose?: boolean;
@@ -58,6 +59,7 @@ export default function Modal(props: Modal) {
                         $active={active}
                         $width={width}
                         $fullsize={props?.fullsize}
+                        style={props?.style}
                         as={motion.div}
                         layoutId={id}
                         initial={{ scale: 0.9, opacity: 0 }}
