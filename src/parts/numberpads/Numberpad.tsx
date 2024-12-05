@@ -46,26 +46,22 @@ export default function Numberpad(props: Numberpad) {
     const padding = typeof props?.padding === "number" ? props?.padding : 2;
     const ref = useRef(props?.value?.toString() || "");
 
-    const handleChange = useCallback(
-        (e: any, v: string) => {
-            const value = ref.current;
-            let input: string = "";
-            if (v === "sub")
-                input = value?.length - 1 > 0 ? value?.substring(0, value?.length - 1) : type === "code" ? "" : "0";
-            else if (v === "reset") {
-                input = type === "code" ? "" : "0";
-                props?.onReset?.();
-            } else
-                input =
-                    type === "currency" && value === "0" && v === "0"
-                        ? "0"
-                        : type === "currency" && value === "0" && v !== "0"
-                        ? v
-                        : value + v;
-            props?.onChange?.(e, input);
-        },
-        [ref],
-    );
+    const handleChange = (e: any, v: string) => {
+        const value = ref.current;
+        let input: string = "";
+        if (v === "sub") input = value?.length - 1 > 0 ? value?.substring(0, value?.length - 1) : type === "code" ? "" : "0";
+        else if (v === "reset") {
+            input = type === "code" ? "" : "0";
+            props?.onReset?.();
+        } else
+            input =
+                type === "currency" && value === "0" && v === "0"
+                    ? "0"
+                    : type === "currency" && value === "0" && v !== "0"
+                    ? v
+                    : value + v;
+        props?.onChange?.(e, input);
+    };
 
     const numbers = [
         { value: "1", label: "1" },

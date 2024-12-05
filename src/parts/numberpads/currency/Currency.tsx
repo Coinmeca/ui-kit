@@ -24,28 +24,25 @@ export default function Currency(props: CurrencyPad) {
         [ref],
     );
 
-    const handleChange = useCallback(
-        (e: any, v: string | number) => {
-            const value = ref.current;
-            let input: number | string = "";
-            if (v === "+") {
-                const number: number = value === "" ? 0 : parseFloat(format(value, "number").toString());
-                input = number + step;
-            } else if (v === "-") {
-                const number: number = value === "" ? 0 : parseFloat(format(value, "number").toString());
-                input = number - step;
-                if (input <= 0) input = "0";
-            } else input = v;
-            if (v === ".") {
-                input = value === "" ? "0." : value + ".";
-            }
+    const handleChange = (e: any, v: string | number) => {
+        const value = ref.current;
+        let input: number | string = "";
+        if (v === "+") {
+            const number: number = value === "" ? 0 : parseFloat(format(value, "number").toString());
+            input = number + step;
+        } else if (v === "-") {
+            const number: number = value === "" ? 0 : parseFloat(format(value, "number").toString());
+            input = number - step;
+            if (input <= 0) input = "0";
+        } else input = v;
+        if (v === ".") {
+            input = value === "" ? "0." : value + ".";
+        }
 
-            v = parseNumber(v);
-            if (!isNaN(max) && max > 0 && !isNaN(v) && v > 0 && v >= max) input = max;
-            if (typeof props?.onChange === "function") props?.onChange(e, input);
-        },
-        [ref],
-    );
+        v = parseNumber(v);
+        if (!isNaN(max) && max > 0 && !isNaN(v) && v > 0 && v >= max) input = max;
+        if (typeof props?.onChange === "function") props?.onChange(e, input);
+    };
 
     useEffect(() => {
         ref.current = props?.value?.toString() || "";
@@ -56,8 +53,8 @@ export default function Currency(props: CurrencyPad) {
         if (props?.input) {
             const ref = props?.input === true ? window : props?.input?.current;
             const input = (e: any) => {
-                if (e.key === "." || e.key === "+" || e.key === "-" || e.key === "NumpadAdd" || e.key === "NumpadSubtract")
-                    handleChange(e, e.key === "NumpadAdd" ? "+" : e.key === "NumpadSubtract" ? "-" : e.key);
+                if (e.key === "." || e.key === "+" || e.key === "-" || e.code === "NumpadAdd" || e.code === "NumpadSubtract")
+                    handleChange(e, e.code === "NumpadAdd" ? "+" : e.code === "NumpadSubtract" ? "-" : e.key);
             };
             ref.addEventListener("keydown", input);
             return () => ref.removeEventListener("keydown", input);
