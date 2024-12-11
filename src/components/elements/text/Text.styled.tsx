@@ -758,7 +758,7 @@ export const Link = styled.a<{
                 : "rgba(var(--white),0.15)"};
     }
 
-    :is(${H1}, ${H2}, ${H3}, ${H4}, ${H5}, ${H6}, ${Strong}, ${P}, ${Desc}, ${Text}) > & {
+    :is(${H1}, ${H2}, ${H3}, ${H4}, ${H5}, ${H6}, ${Strong}, ${P}, ${Desc}, ${Text}, &) > & {
         display: inline;
         font-size: inherit;
         font-weight: inherit;
@@ -849,7 +849,7 @@ export const Button = styled.a<{
                 : "rgba(var(--white),0.15)"};
     }
 
-    :is(${H1}, ${H2}, ${H3}, ${H4}, ${H5}, ${H6}, ${Strong}, ${P}, ${Desc}, ${Text}) > & {
+    :is(${H1}, ${H2}, ${H3}, ${H4}, ${H5}, ${H6}, ${Strong}, ${P}, ${Desc}, ${Text}, ${Link}, &) > & {
         display: inline;
         font-size: inherit;
         font-weight: inherit;
