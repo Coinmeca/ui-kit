@@ -89,7 +89,6 @@ export default function Dropdown(props: Dropdown) {
     };
 
     const handleOpen = (e?: any) => {
-        console.log("open");
         if (disabled) return;
         setOpen(!open);
         openSelect(e);
