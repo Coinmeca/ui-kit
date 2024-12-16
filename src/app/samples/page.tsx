@@ -128,7 +128,12 @@ export default function Main() {
         <Layouts.Page>
             <Style>
                 <Layouts.Cover style={{ scrollSnapAlign: "start" }} fullsize>
-                    <Controls.Slide timer={5000} align={{ vertical: "center", horizon: "center" }} nav={"bottom"} slides={slides} />
+                    <Controls.Slide
+                        timer={5000}
+                        align={{ vertical: "center", horizon: "center" }}
+                        nav={"bottom"}
+                        slides={slides}
+                    />
                 </Layouts.Cover>
                 <NoScrollSnap />
                 <Layouts.Page scroll={false}>
@@ -170,18 +175,27 @@ export default function Main() {
                                     reverse={windowSize.width > Root.Device.Mobile ? false : true}>
                                     <div className="content">
                                         <div>
-                                            <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
+                                            <Layouts.Col
+                                                gap={4}
+                                                align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
                                                 <Layouts.Col gap={2}>
                                                     <Elements.Text type={"h5"} style={{ wordBreak: "break-word" }}>
                                                         Automated Liquidity Distributor
                                                     </Elements.Text>
-                                                    <Elements.Text type={"p"} opacity={0.6} align={"left"} style={{ wordBreak: "break-word" }}>
+                                                    <Elements.Text
+                                                        type={"p"}
+                                                        opacity={0.6}
+                                                        align={"left"}
+                                                        style={{ wordBreak: "break-word" }}>
                                                         {
                                                             "The ALD algorithm is designed to automatically distribute liquidity across the order book. The order book provides a visual representation of the liquidity distribution. Users can make liquidity even more abundant by stacking amounts through orders on top of this base liquidity, giving them the possibility to try different trading strategies while further minimizing slippage."
                                                         }
                                                     </Elements.Text>
                                                 </Layouts.Col>
-                                                <Controls.Button type={"solid"} color={"black"} fit={windowSize.width > Root.Device.Mobile ? true : false}>
+                                                <Controls.Button
+                                                    type={"solid"}
+                                                    color={"black"}
+                                                    fit={windowSize.width > Root.Device.Mobile ? true : false}>
                                                     VIEW MORE
                                                 </Controls.Button>
                                             </Layouts.Col>
@@ -195,21 +209,34 @@ export default function Main() {
                                 </Layouts.Row>
                             </section>
                             <section className="section s3">
-                                <Layouts.Row gap={windowSize.width > Root.Device.Mobile ? 8 : 4} align={"center"} responsive={"mobile"} reverse>
+                                <Layouts.Row
+                                    gap={windowSize.width > Root.Device.Mobile ? 8 : 4}
+                                    align={"center"}
+                                    responsive={"mobile"}
+                                    reverse>
                                     <div className="content">
                                         <div>
-                                            <Layouts.Col gap={4} align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
+                                            <Layouts.Col
+                                                gap={4}
+                                                align={windowSize.width > Root.Device.Mobile ? "left" : "center"}>
                                                 <Layouts.Col gap={2}>
                                                     <Elements.Text type={"h5"} style={{ wordBreak: "break-word" }}>
                                                         Order NFT
                                                     </Elements.Text>
-                                                    <Elements.Text type={"p"} opacity={0.6} align={"left"} style={{ wordBreak: "break-word" }}>
+                                                    <Elements.Text
+                                                        type={"p"}
+                                                        opacity={0.6}
+                                                        align={"left"}
+                                                        style={{ wordBreak: "break-word" }}>
                                                         {
                                                             "The limit order is transformed into a tokenized form. Tokenized orders can be transferred to others, and can take advantage of good positions based on predictions through an order book that processes orders in the order they are executed. This type of trading is not just limited to spot trading but also enables options trading. Also, if your orders have been filled and can be billed, they could be used as collateral."
                                                         }
                                                     </Elements.Text>
                                                 </Layouts.Col>
-                                                <Controls.Button type={"solid"} color={"black"} fit={windowSize.width > Root.Device.Mobile ? true : false}>
+                                                <Controls.Button
+                                                    type={"solid"}
+                                                    color={"black"}
+                                                    fit={windowSize.width > Root.Device.Mobile ? true : false}>
                                                     VIEW MORE
                                                 </Controls.Button>
                                             </Layouts.Col>
@@ -251,16 +278,28 @@ export default function Main() {
                                         Faster and Easier
                                     </Elements.Text>
                                     <Elements.Text type={"p"} style={{ wordBreak: "break-word" }}>
-                                        {"Optimizaed experience for you. Get more information or connect with people by joining the community."}
+                                        {
+                                            "Optimizaed experience for you. Get more information or connect with people by joining the community."
+                                        }
                                     </Elements.Text>
                                 </Layouts.Col>
                                 <Layouts.Col
                                     gap={4}
                                     align={"center"}
-                                    style={{ width: windowSize.width > Root.Device.Tablet ? "80%" : "100%", transition: ".3s ease" }}>
+                                    style={{
+                                        width: windowSize.width > Root.Device.Tablet ? "80%" : "100%",
+                                        transition: ".3s ease",
+                                    }}>
                                     <Layouts.Row gap={2} responsive={"mobile"}>
-                                        <a style={{ background: `url(${Btn1?.src}) 0% 0% / cover` }} href={"https://docs.coinmeca.net"} target={"_blank"}>
-                                            <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
+                                        <a
+                                            style={{ background: `url(${Btn1?.src}) 0% 0% / cover` }}
+                                            href={"https://docs.coinmeca.net"}
+                                            target={"_blank"}>
+                                            <Layouts.Col
+                                                gap={2}
+                                                align={"right"}
+                                                style={{ justifyContent: "space-between!important" }}
+                                                fill>
                                                 <Elements.Text size={2} weight={"bold"}>
                                                     Cryptocurrency
                                                     <br />
@@ -271,8 +310,15 @@ export default function Main() {
                                                 </Layouts.Row>
                                             </Layouts.Col>
                                         </a>
-                                        <a style={{ background: `url(${Btn2?.src}) 0% 0% / cover` }} href={"https://docs.coinmeca.net"} target={"_blank"}>
-                                            <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
+                                        <a
+                                            style={{ background: `url(${Btn2?.src}) 0% 0% / cover` }}
+                                            href={"https://docs.coinmeca.net"}
+                                            target={"_blank"}>
+                                            <Layouts.Col
+                                                gap={2}
+                                                align={"right"}
+                                                style={{ justifyContent: "space-between!important" }}
+                                                fill>
                                                 <Elements.Text size={2} weight={"bold"}>
                                                     Cryptocurrency
                                                     <br />
@@ -287,8 +333,15 @@ export default function Main() {
                                         </a>
                                     </Layouts.Row>
                                     <Layouts.Row gap={2} responsive={"mobile"}>
-                                        <a style={{ background: `url(${Btn3?.src}) 0% 0% / cover` }} href={"https://twitter.com/coinmeca"} target={"_blank"}>
-                                            <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
+                                        <a
+                                            style={{ background: `url(${Btn3?.src}) 0% 0% / cover` }}
+                                            href={"https://twitter.com/coinmeca"}
+                                            target={"_blank"}>
+                                            <Layouts.Col
+                                                gap={2}
+                                                align={"right"}
+                                                style={{ justifyContent: "space-between!important" }}
+                                                fill>
                                                 <Elements.Text size={2} weight={"bold"}>
                                                     Check Recent
                                                     <br />
@@ -299,8 +352,15 @@ export default function Main() {
                                                 </Layouts.Row>
                                             </Layouts.Col>
                                         </a>
-                                        <a style={{ background: `url(${Btn4?.src}) 0% 0% / cover` }} href={"https://discord.gg/m5Duwc9J"} target={"_blank"}>
-                                            <Layouts.Col gap={2} align={"right"} style={{ justifyContent: "space-between!important" }} fill>
+                                        <a
+                                            style={{ background: `url(${Btn4?.src}) 0% 0% / cover` }}
+                                            href={"https://discord.gg/m5Duwc9J"}
+                                            target={"_blank"}>
+                                            <Layouts.Col
+                                                gap={2}
+                                                align={"right"}
+                                                style={{ justifyContent: "space-between!important" }}
+                                                fill>
                                                 <Elements.Text size={2} weight={"bold"}>
                                                     Join
                                                     <br />
@@ -329,8 +389,9 @@ export default function Main() {
                                             Anytime, Anywhere
                                         </Elements.Text>
                                         <Elements.Text type={"p"} style={{ wordBreak: "break-word" }}>
-                                            You can access it anywhere and whenever you want. Coinmeca will unfold out an amazing decentralized trading system
-                                            out to your hand, also an optimized user interface for the user with responsive design.
+                                            You can access it anywhere and whenever you want. Coinmeca will unfold out an
+                                            amazing decentralized trading system out to your hand, also an optimized user
+                                            interface for the user with responsive design.
                                         </Elements.Text>
                                     </Layouts.Col>
                                     <Layouts.Row align={"left"}>

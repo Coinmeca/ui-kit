@@ -1,16 +1,17 @@
 "use client";
-import { AnimatePresence, motion } from "framer-motion";
-import type { ReactNode } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import type { JSX, ReactNode } from "react";
 import { Elements } from "components";
 import Style, { NoData } from "./List.styled";
 import ListItem, { ListItem as ListItemType } from "./ListItem";
+import { CSSProperties } from "styled-components";
 
 export interface List {
     list?: any;
     formatter?: Function;
     fallback?: string | ReactNode | JSX.Element;
     fill?: boolean;
-    style?: object;
+    style?: CSSProperties;
 }
 
 export default function List(props: List) {

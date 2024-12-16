@@ -3,6 +3,7 @@
 import { memo } from "react";
 import Style from "./SlideContent.styled";
 import { SwipeProps } from "hooks/useSwipe";
+import { CSSProperties } from "styled-components";
 
 export interface SlideContent {
     name?: string;
@@ -11,7 +12,7 @@ export interface SlideContent {
     vertical?: boolean;
     offset?: number;
     unit?: "%" | "vw" | "vh" | "em" | "rem";
-    style?: object;
+    style?: CSSProperties;
     swipe?: SwipeProps;
 }
 

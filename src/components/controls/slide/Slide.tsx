@@ -1,10 +1,11 @@
 "use client";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { memo, useEffect, useState } from "react";
 import BG, { type BG as Background } from "components/layouts/bg/BG";
 import { useSwipe } from "hooks";
 import { Swipe } from "hooks/useSwipe";
 import { Style } from "./Slide.styled";
+import { CSSProperties } from "styled-components";
 
 export interface PositionEvent {
     x?: number;
@@ -15,7 +16,7 @@ export interface PositionEvent {
 export interface SlideContent {
     active?: boolean;
     children?: any;
-    style?: object;
+    style?: CSSProperties;
     onClick?: Function;
     background?: Background;
 }
@@ -31,7 +32,7 @@ export interface Slide {
     padding?: number;
     timer?: number;
     scale?: number;
-    style?: object;
+    style?: CSSProperties;
     event?: Function;
     swipe?: Swipe;
 }
@@ -44,7 +45,7 @@ const Slide = (props: Slide) => {
             index: slideNo,
             length: props?.slides?.length,
             onSwipe: (e: any, i: number) => setSlideNo(i),
-        }
+        },
     );
 
     const timer = typeof props?.timer !== "number" ? 0 : props?.timer;
@@ -79,16 +80,22 @@ const Slide = (props: Slide) => {
             $nav={props?.nav}
             $vertical={vertical}
             $horizon={horizon}
-            data-align={props?.align?.horizon}
-        >
+            data-align={props?.align?.horizon}>
             <AnimatePresence initial={false} custom={swipe?.direction}>
                 {props?.slides && props?.slides?.length > 0 && (
                     <>
                         <div>
                             {props?.slides?.map((slide: any, i: number) => (
-                                <div key={i} data-active={slide?.active || slideNo === i} onClick={(e: any) => slide?.onClick && slide?.onClick(e)}>
+                                <div
+                                    key={i}
+                                    data-active={slide?.active || slideNo === i}
+                                    onClick={(e: any) => slide?.onClick && slide?.onClick(e)}>
                                     {slide?.background && <BG {...slide?.background} />}
-                                    <motion.div {...swipe} data-row={props?.align?.horizon} style={slide?.style} variants={undefined}>
+                                    <motion.div
+                                        {...swipe}
+                                        data-row={props?.align?.horizon}
+                                        style={slide?.style}
+                                        variants={undefined}>
                                         {/* <motion.div {...swipe} data-row={props?.align?.horizon} style={slide?.style} variants={undefined}> */}
                                         {slide.children}
                                     </motion.div>

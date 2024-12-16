@@ -1,6 +1,6 @@
 "use client";
 import { Contents, Controls, Layouts } from "components";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 import { Treasury } from "prefabs";
 import type { Farm, Token, Vault } from "types";
 

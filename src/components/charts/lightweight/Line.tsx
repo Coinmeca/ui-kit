@@ -76,7 +76,7 @@ export const Line = (props: Line) => {
 
     const [data, setData] = useState<any>([]);
     const [volume, setVolume] = useState<Volume[]>([]);
-    const chartRef: any = useRef();
+    const chartRef: any = useRef(null);
 
     useEffect(() => {
         const handleResize = () => {

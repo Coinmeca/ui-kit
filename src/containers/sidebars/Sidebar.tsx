@@ -2,6 +2,7 @@
 import { useMobile, useSwipe } from "hooks";
 import { SwipeConfig } from "hooks/useSwipe";
 import Style, { Lower, SwipeArea, Upper } from "./Sidebar.styled";
+import { CSSProperties } from "styled-components";
 
 export interface PositionEvent {
     x?: number;
@@ -18,7 +19,7 @@ export interface Sidebars {
         active?: boolean;
         children?: Sidebar[];
         onBlur?: Function;
-        swipe?: (SwipeConfig & { area?: number; onActive?: Function; style?: object }) | boolean;
+        swipe?: (SwipeConfig & { area?: number; onActive?: Function; style?: CSSProperties }) | boolean;
     };
     onBlur?: Function;
 }
@@ -49,7 +50,7 @@ export default function Sidebar(props: Sidebars) {
                     if (swiping && typeof swiping?.onActive === "function") swiping?.onActive(e, move > 0 ? false : true);
                 }
             },
-        }
+        },
     );
 
     const handleBlur = (e: any) => {
@@ -70,7 +71,13 @@ export default function Sidebar(props: Sidebars) {
         <Style tabIndex={10} $scale={scale} $active={active} $width={width} $align={align} onBlur={handleBlur}>
             {props?.lower?.children && props?.lower?.children?.length > 0 && (
                 <Lower $align={align} data-active={props?.lower?.active} onBlur={handleLowerBlur}>
-                    {props?.lower?.swipe && <SwipeArea {...swipe} $area={area} style={typeof props?.lower?.swipe === "object" && props?.lower?.swipe?.style} />}
+                    {props?.lower?.swipe && (
+                        <SwipeArea
+                            {...swipe}
+                            $area={area}
+                            style={typeof props?.lower?.swipe === "object" && props?.lower?.swipe?.style}
+                        />
+                    )}
                     {props?.lower?.children?.map((v: any, k: number) => (
                         <section key={k} data-active={v?.active}>
                             {v.children}

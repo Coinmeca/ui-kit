@@ -1,9 +1,10 @@
 "use client";
 
+import { CSSProperties } from "styled-components";
 import Style from "./Box.styled";
 
 export interface Box {
-    style?: object;
+    style?: CSSProperties;
     children?: any;
     padding?: number | any[];
     change?: string | false;

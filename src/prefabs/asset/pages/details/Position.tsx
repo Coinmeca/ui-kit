@@ -1,6 +1,6 @@
 "use client";
 import { Contents, Controls, Elements, Layouts } from "components";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
 import { format } from "lib/utils";
@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Asset } from "prefabs";
 import { useState } from "react";
 import { History } from "types/history";
-import type { Detail } from './Default';
+import type { Detail } from "./Default";
 
 export interface Position extends Detail {
     positions?: any[];
@@ -32,10 +32,17 @@ export default function Position(props: Position) {
                     <Layouts.Contents.InnerContent>
                         <Layouts.Row fix style={{ alignItems: "center" }}>
                             <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
-                                <Controls.Button scale={0.875} icon={"chevron-left"} style={{ padding: "1em" }} onClick={handleBack} />
+                                <Controls.Button
+                                    scale={0.875}
+                                    icon={"chevron-left"}
+                                    style={{ padding: "1em" }}
+                                    onClick={handleBack}
+                                />
                                 <Elements.Avatar
                                     size={4}
-                                    img={require(`../../../../assets/coins/${props?.asset?.symbol?.toLocaleLowerCase() || "btc"}.png`)}
+                                    img={require(`../../../../assets/coins/${
+                                        props?.asset?.symbol?.toLocaleLowerCase() || "btc"
+                                    }.png`)}
                                     style={{ marginLeft: "-1em" }}
                                 />
                                 <Layouts.Row responsive={"mobile"} gap={1} fit>
@@ -47,8 +54,7 @@ export default function Position(props: Position) {
                                         responsive={{
                                             device: "mobile",
                                             size: 1.5,
-                                        }}
-                                    >
+                                        }}>
                                         {props?.asset?.symbol}
                                     </Elements.Text>
                                     <Elements.Text
@@ -58,8 +64,7 @@ export default function Position(props: Position) {
                                         responsive={{
                                             device: "mobile",
                                             size: 1.5,
-                                        }}
-                                    >
+                                        }}>
                                         {props?.asset?.name}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -73,8 +78,7 @@ export default function Position(props: Position) {
                                             device: "mobile",
                                             size: 2,
                                         }}
-                                        change
-                                    >
+                                        change>
                                         $ {format("1,567,851,378.516", "currency", { unit: 9, limit: 12, fix: 3 })}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -159,7 +163,8 @@ export default function Position(props: Position) {
                                 {
                                     area: "position",
                                     children: (
-                                        <Layouts.Contents.SlideContent active={props?.responsive ? mobile === "position" : true}>
+                                        <Layouts.Contents.SlideContent
+                                            active={props?.responsive ? mobile === "position" : true}>
                                             <Layouts.Contents.InnerContent>
                                                 <Layouts.Menu
                                                     hide="mobile"
@@ -171,14 +176,16 @@ export default function Position(props: Position) {
                                                         ],
                                                     ]}
                                                 />
-                                                <Layouts.Contents.GridContainer direction={props?.responsive ? "col" : "row"} width={{ min: 24 }} fullsize>
+                                                <Layouts.Contents.GridContainer
+                                                    direction={props?.responsive ? "col" : "row"}
+                                                    width={{ min: 24 }}
+                                                    fullsize>
                                                     {props?.positions?.map((position: any, i: number) => (
                                                         <Controls.Card
                                                             key={i}
                                                             onClick={() => {
                                                                 console.log(i);
-                                                            }}
-                                                        >
+                                                            }}>
                                                             <div>
                                                                 <Image
                                                                     width={0}

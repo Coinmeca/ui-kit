@@ -1,12 +1,12 @@
 "use client";
-import { type CSSProperties } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "motion/react";
 import Style from "./InnerContent.styled";
+import { CSSProperties } from "styled-components";
 
 export interface InnerContent {
     children?: any;
     padding?: number | any[];
-    style?: object;
+    style?: CSSProperties;
     scroll?: boolean;
 }
 
@@ -54,7 +54,6 @@ export default function InnerContent(props: InnerContent) {
             $scroll={props?.scroll}
             $padding={padding}
             style={props?.style}
-            key="content"
             as={motion.div}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

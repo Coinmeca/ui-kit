@@ -1,15 +1,16 @@
 "use client";
 import { Elements } from "components";
-import { AnimatePresence, motion } from "framer-motion";
-import { ReactNode } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { JSX, ReactNode } from "react";
 import Style, { NoData } from "./Table.styled";
 import TableItem from "./TableItem";
+import { CSSProperties } from "styled-components";
 
 export interface Table {
     list?: any;
     formatter?: Function;
     fallback?: string | ReactNode | JSX.Element;
-    style?: object;
+    style?: CSSProperties;
     fix?: boolean;
 }
 

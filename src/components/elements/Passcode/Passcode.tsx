@@ -1,4 +1,5 @@
 ﻿"use client";
+import { CSSProperties } from "styled-components";
 import Style, { Dot } from "./Passcode.styled";
 
 interface Passcode {
@@ -13,7 +14,7 @@ interface Passcode {
     stroke?: number | string;
     padding?: number;
     effect?: boolean;
-    style?: object;
+    style?: CSSProperties;
 }
 
 export default function Passcode(props: Passcode) {

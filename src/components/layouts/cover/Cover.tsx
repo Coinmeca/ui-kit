@@ -3,11 +3,12 @@
 import { BG } from "components/layouts";
 import { type BG as Background } from "components/layouts/bg/BG";
 import Style from "./Cover.styled";
+import { CSSProperties } from "styled-components";
 
 export interface Cover {
     children?: any;
     height?: number;
-    style?: object;
+    style?: CSSProperties;
     fullsize?: boolean;
     background?: Background;
     reference?: any;

@@ -1,6 +1,6 @@
 "use client";
 import Coinmeca from "assets/coinmeca.svg";
-import { animate, stagger } from "framer-motion";
+import { animate, stagger } from "motion/react";
 import Link from "next/link";
 import { cloneElement, isValidElement, useCallback, useEffect, useMemo, useState } from "react";
 import { Layouts } from "components";
@@ -14,13 +14,13 @@ export interface Header {
     logo?: Logo | boolean;
     menu?: {
         active?: boolean;
-        style?: object;
+        style?: CSSProperties;
         children?: Menu[];
         onClick?: Function;
     };
     option?: {
         active?: boolean;
-        style?: object;
+        style?: CSSProperties;
         children?: any;
     };
     side?: Side;
@@ -38,7 +38,7 @@ export interface Logo {
     title?: string;
     alt?: string;
     href?: string;
-    style?: object;
+    style?: CSSProperties;
 }
 
 export interface Menu {
@@ -51,7 +51,7 @@ export interface Menu {
 export interface Side {
     width?: number;
     active?: boolean;
-    style?: object;
+    style?: CSSProperties;
     children?: any;
 }
 

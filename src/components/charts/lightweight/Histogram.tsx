@@ -37,7 +37,7 @@ export interface Data {
 }
 
 export const Histogram = (props: Histogram) => {
-    const chartRef: any = useRef();
+    const chartRef: any = useRef(null);
     const up = props?.up || "up";
     const down = props?.down || "down";
     const { theme: detectedTheme } = useTheme();

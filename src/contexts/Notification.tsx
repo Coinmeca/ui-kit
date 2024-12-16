@@ -1,6 +1,7 @@
 "use client";
 import { Swipe } from "hooks/useSwipe";
-import { createContext, useState, type Dispatch, type SetStateAction } from "react";
+import { createContext, JSX, ReactNode, useState, type Dispatch, type SetStateAction } from "react";
+import { CSSProperties } from "styled-components";
 
 export interface Notify {
     type?: "toast" | "notify";
@@ -8,8 +9,8 @@ export interface Notify {
     title?: string;
     date?: number | string | Date;
     img?: string;
-    style?: object;
-    message?: any | JSX.Element;
+    style?: CSSProperties;
+    message?: any | ReactNode | JSX.Element;
     timer?: number;
     importance?: boolean;
     remain?: boolean;
@@ -132,8 +133,7 @@ export default function Notification({ children }: { children?: any }) {
                 setRead,
                 saveNotis,
                 loadNotis,
-            }}
-        >
+            }}>
             {children}
         </NotificationContext.Provider>
     );

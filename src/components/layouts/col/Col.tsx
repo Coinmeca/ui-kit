@@ -1,5 +1,6 @@
 "use client";
 
+import { CSSProperties } from "styled-components";
 import Style from "./Col.styled";
 
 export interface Col {
@@ -7,7 +8,7 @@ export interface Col {
     title?: string;
     gap?: number | false;
     align?: "left" | "center" | "right" | "stretch";
-    style?: object;
+    style?: CSSProperties;
     fit?: boolean;
     fill?: boolean;
     show?: "desktop" | "laptop" | "tablet" | "mobile";

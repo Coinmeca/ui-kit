@@ -7,7 +7,7 @@ export interface PartContainer {
     content?: any;
     left?: { children?: any; onClick?: Function };
     right?: { children?: any; onClick?: Function };
-    style?: object;
+    style?: CSSProperties;
     onBack?: Function;
 }
 
@@ -42,10 +42,13 @@ export default function PartContainer(props: PartContainer) {
         <Style $state={state} style={props?.style}>
             <div
                 style={{
-                    transform: `translateX(${typeof state === "undefined" || state === null ? "-33.333%" : state ? "-66.666%" : "0"}`,
-                }}
-            >
-                <Part $state={state === false} style={{}}>{props?.left?.children}</Part>
+                    transform: `translateX(${
+                        typeof state === "undefined" || state === null ? "-33.333%" : state ? "-66.666%" : "0"
+                    }`,
+                }}>
+                <Part $state={state === false} style={{}}>
+                    {props?.left?.children}
+                </Part>
                 <Part $state={state === null}>{props?.content}</Part>
                 <Part $state={state === true}>{props?.right?.children}</Part>
             </div>

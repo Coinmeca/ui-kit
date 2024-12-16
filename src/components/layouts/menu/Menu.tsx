@@ -3,10 +3,11 @@
 import { Layouts } from "components";
 import { Fragment } from "react";
 import Style, { Row } from "./Menu.styled";
+import { CSSProperties } from "styled-components";
 
 export interface Menu {
     menu?: any;
-    style?: object;
+    style?: CSSProperties;
     scale?: number;
     show?: "desktop" | "laptop" | "tablet" | "mobile";
     hide?: "desktop" | "laptop" | "tablet" | "mobile";
@@ -28,7 +29,9 @@ export default function Menu(props: Menu) {
             <Row $scale={scale} style={menu?.style} $fix={menu?.fix} data-show={menu?.show} data-hide={menu?.hide}>
                 {menu?.children &&
                     (Array.isArray(menu?.children)
-                        ? menu?.children?.map((v: any, k: number) => <Fragment key={k}>{Items(v?.children || (!v?.style && v))}</Fragment>)
+                        ? menu?.children?.map((v: any, k: number) => (
+                              <Fragment key={k}>{Items(v?.children || (!v?.style && v))}</Fragment>
+                          ))
                         : Items(menu?.children))}
             </Row>
         ) : Array.isArray(menu) && menu?.length > 0 ? (

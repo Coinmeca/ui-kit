@@ -1,6 +1,6 @@
 "use client";
 import { Contents, Controls, Elements, Layouts } from "components";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 import { format } from "lib/utils";
 import { Asset } from "prefabs";
 import { useState } from "react";
@@ -30,10 +30,17 @@ export default function Default(props: Detail) {
                     <Layouts.Contents.InnerContent>
                         <Layouts.Row fix style={{ alignItems: "center" }}>
                             <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
-                                <Controls.Button scale={0.875} icon={"chevron-left"} style={{ padding: "1em" }} onClick={handleBack} />
+                                <Controls.Button
+                                    scale={0.875}
+                                    icon={"chevron-left"}
+                                    style={{ padding: "1em" }}
+                                    onClick={handleBack}
+                                />
                                 <Elements.Avatar
                                     size={4}
-                                    img={require(`../../../../assets/coins/${props?.asset?.symbol?.toLocaleLowerCase() || "btc"}.png`)}
+                                    img={require(`../../../../assets/coins/${
+                                        props?.asset?.symbol?.toLocaleLowerCase() || "btc"
+                                    }.png`)}
                                     style={{ marginLeft: "-1em" }}
                                 />
                                 <Layouts.Row responsive={"mobile"} gap={1} fit>
@@ -45,8 +52,7 @@ export default function Default(props: Detail) {
                                         responsive={{
                                             device: "mobile",
                                             size: 1.5,
-                                        }}
-                                    >
+                                        }}>
                                         {props?.asset?.symbol}
                                     </Elements.Text>
                                     <Elements.Text
@@ -56,8 +62,7 @@ export default function Default(props: Detail) {
                                         responsive={{
                                             device: "mobile",
                                             size: 1.5,
-                                        }}
-                                    >
+                                        }}>
                                         {props?.asset?.name}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -71,8 +76,7 @@ export default function Default(props: Detail) {
                                             device: "mobile",
                                             size: 2,
                                         }}
-                                        change
-                                    >
+                                        change>
                                         $ {format("1,567,851,378.516", "currency", true)}
                                     </Elements.Text>
                                 </Layouts.Row>

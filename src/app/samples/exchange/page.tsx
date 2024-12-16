@@ -1,6 +1,6 @@
 "use client";
 import { Charts, Controls, Elements, Layouts } from "components";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 import { useWindowSize } from "hooks";
 import { Root } from "lib/style";
 import { capitalize, format } from "lib/utils";
@@ -36,8 +36,10 @@ export default function Page() {
 
     return (
         <Layouts.Page>
-            <Layouts.Box fit change={parseFloat(props?.market?.change) > 0 ? "green" : parseFloat(props?.market?.change) < 0 && "red"}>
-                <AnimatePresence mode="wait">
+            <Layouts.Box
+                fit
+                change={parseFloat(props?.market?.change) > 0 ? "green" : parseFloat(props?.market?.change) < 0 && "red"}>
+                <AnimatePresence>
                     <Layouts.Contents.InnerContent>
                         <Layouts.Row fix style={{ alignItems: "center" }}>
                             <Layouts.Row fix style={{ alignItems: "center" }} gap={2} fit>
@@ -50,8 +52,7 @@ export default function Page() {
                                         responsive={{
                                             device: "mobile",
                                             size: 1.5,
-                                        }}
-                                    >
+                                        }}>
                                         {props?.market?.base?.symbol}
                                     </Elements.Text>
                                     <Elements.Text
@@ -60,8 +61,7 @@ export default function Page() {
                                         responsive={{
                                             device: "mobile",
                                             size: 1.5,
-                                        }}
-                                    >
+                                        }}>
                                         {capitalize(props?.market?.base?.name || "")}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -76,8 +76,7 @@ export default function Page() {
                                             device: "mobile",
                                             size: 1.75,
                                         }}
-                                        change
-                                    >
+                                        change>
                                         $ {format(props?.market?.price, "currency", { unit: 9, limit: 12, fix: 3 })}
                                     </Elements.Text>
                                 </Layouts.Row>
@@ -94,8 +93,7 @@ export default function Page() {
                                     onClick={() => {
                                         setMobile("orderbook");
                                         setMarketTab("orderbook");
-                                    }}
-                                >
+                                    }}>
                                     Orderbook
                                 </Controls.Tab>
                                 <Controls.Tab
@@ -103,8 +101,7 @@ export default function Page() {
                                     onClick={() => {
                                         setMobile("history");
                                         setMarketTab("history");
-                                    }}
-                                >
+                                    }}>
                                     Recent trades
                                 </Controls.Tab>
                                 <Controls.Tab active={mobile === "chart"} onClick={() => setMobile("chart")}>
@@ -132,7 +129,8 @@ export default function Page() {
                                 {
                                     area: "info",
                                     children: (
-                                        <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "info"}>
+                                        <Layouts.Contents.SlideContent
+                                            active={windowSize.width > Root.Device.Mobile ? true : mobile === "info"}>
                                             <Exchange.Containers.Info
                                                 base={props?.market?.base}
                                                 quote={props?.market?.quote}
@@ -152,8 +150,11 @@ export default function Page() {
                                     area: "book",
                                     children: (
                                         <Layouts.Contents.SlideContent
-                                            active={windowSize.width > Root.Device.Mobile ? true : mobile === "orderbook" || mobile === "history"}
-                                        >
+                                            active={
+                                                windowSize.width > Root.Device.Mobile
+                                                    ? true
+                                                    : mobile === "orderbook" || mobile === "history"
+                                            }>
                                             <Layouts.Contents.InnerContent>
                                                 <Layouts.Menu
                                                     menu={{
@@ -168,8 +169,7 @@ export default function Page() {
                                                                         onClick={() => {
                                                                             setMarketTab("orderbook");
                                                                             setMobile("orderbook");
-                                                                        }}
-                                                                    >
+                                                                        }}>
                                                                         Orderbook
                                                                     </Controls.Tab>
                                                                 </>,
@@ -179,8 +179,7 @@ export default function Page() {
                                                                         onClick={() => {
                                                                             setMarketTab("history");
                                                                             setMobile("history");
-                                                                        }}
-                                                                    >
+                                                                        }}>
                                                                         Recent trades
                                                                     </Controls.Tab>
                                                                 </>,
@@ -222,7 +221,12 @@ export default function Page() {
                                                         },
                                                         {
                                                             active: marketTab === "history",
-                                                            children: <Exchange.Containers.History data={props?.trades as any} view={view} />,
+                                                            children: (
+                                                                <Exchange.Containers.History
+                                                                    data={props?.trades as any}
+                                                                    view={view}
+                                                                />
+                                                            ),
                                                         },
                                                     ]}
                                                 />
@@ -239,7 +243,8 @@ export default function Page() {
                                 {
                                     area: "chart",
                                     children: (
-                                        <Layouts.Contents.SlideContent active={windowSize.width > Root.Device.Mobile ? true : mobile === "chart"}>
+                                        <Layouts.Contents.SlideContent
+                                            active={windowSize.width > Root.Device.Mobile ? true : mobile === "chart"}>
                                             <Layouts.Contents.InnerContent>
                                                 <Layouts.Menu
                                                     hide="mobile"
@@ -285,8 +290,7 @@ export default function Page() {
                                                                         onClick={() => {
                                                                             setTab("market");
                                                                             setOption("market");
-                                                                        }}
-                                                                    >
+                                                                        }}>
                                                                         Market
                                                                     </Controls.Tab>
                                                                 </>,
@@ -296,8 +300,7 @@ export default function Page() {
                                                                         onClick={() => {
                                                                             setTab("limit");
                                                                             setOption("limit");
-                                                                        }}
-                                                                    >
+                                                                        }}>
                                                                         Limit
                                                                     </Controls.Tab>
                                                                 </>,
@@ -308,8 +311,7 @@ export default function Page() {
                                                                         active={tab === "history"}
                                                                         onClick={() => {
                                                                             setTab("history");
-                                                                        }}
-                                                                    >
+                                                                        }}>
                                                                         History
                                                                     </Controls.Tab>
                                                                 </>,
@@ -330,7 +332,8 @@ export default function Page() {
                                                                     fee={0.1}
                                                                     option={option}
                                                                     responsive={
-                                                                        (windowSize.width <= Root.Device.Tablet && windowSize.width > Root.Device.Mobile) ||
+                                                                        (windowSize.width <= Root.Device.Tablet &&
+                                                                            windowSize.width > Root.Device.Mobile) ||
                                                                         windowSize.width <= Root.Device.Middle ||
                                                                         windowSize.width <= 560
                                                                     }

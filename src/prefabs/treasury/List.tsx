@@ -120,7 +120,7 @@ export default function List(props: List) {
                         />
                         <Layouts.Menu
                             style={{
-                                maxWidth: !props?.responsive || "max-content",
+                                maxWidth: !props?.responsive ? "max-content" : undefined,
                             }}
                             menu={[
                                 {

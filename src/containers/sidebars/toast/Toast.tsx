@@ -4,13 +4,14 @@ import { type Notify as Content } from "contexts/Notification";
 import { Swipe } from "hooks/useSwipe";
 import Notify from "../notification/Notify";
 import Style from "./Toast.styled";
+import { CSSProperties } from "styled-components";
 
 export interface Toast {
     list?: Content[];
     active?: boolean;
     width?: number;
     align?: "left" | "right";
-    style?: object;
+    style?: CSSProperties;
     swipe?: Swipe;
 }
 

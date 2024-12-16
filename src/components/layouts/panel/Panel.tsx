@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useId, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import Style from "./Panel.styled";
+import { CSSProperties } from "styled-components";
 
 export interface Panel {
     id?: string;
@@ -9,13 +10,13 @@ export interface Panel {
     children?: any;
     onClick?: Function;
     onBlur?: Function;
-    style?: object;
+    style?: CSSProperties;
     color?: string;
     fix?: boolean;
 }
 
 export default function Panel(props: Panel) {
-    const id = `${new Date().getTime()}`;
+    const id = useId();
     const [active, setActive] = useState(true);
 
     const handleClick = (e: any) => {
@@ -27,12 +28,13 @@ export default function Panel(props: Panel) {
     };
 
     useEffect(() => {
-        if (props?.active) setActive(true);
-        else {
-            setActive(false);
-            return () => {
-                handleBlur();
-            };
+        if (typeof props?.active === "boolean") {
+            setActive(props?.active);
+            if (!props?.active) {
+                return () => {
+                    handleBlur();
+                };
+            }
         }
     }, [props?.active]);
 

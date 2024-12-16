@@ -1,11 +1,11 @@
 "use client";
-import { type CSSProperties } from "react";
+import { type CSSProperties } from "styled-components";
 import { Elements } from "components";
 import type { Icon } from "components/elements/icon/Icon";
 import Style from "./Tab.styled";
 
 export interface Tab {
-    style?: object;
+    style?: CSSProperties;
     title?: string;
 
     active?: boolean;
@@ -63,8 +63,7 @@ export default function Tab(props: Tab) {
             $fit={fit}
             $disabled={props?.disabled}
             data-show={props?.show}
-            data-hide={props?.hide}
-        >
+            data-hide={props?.hide}>
             <div>
                 {props?.iconLeft && (
                     <>
@@ -72,7 +71,9 @@ export default function Tab(props: Tab) {
                         {props?.children && <span>{props?.children}</span>}
                     </>
                 )}
-                {(!props?.iconLeft || props?.iconLeft === "") && (!props?.iconRight || props?.iconRight === "") && <span>{props?.children}</span>}
+                {(!props?.iconLeft || props?.iconLeft === "") && (!props?.iconRight || props?.iconRight === "") && (
+                    <span>{props?.children}</span>
+                )}
                 {props?.iconRight && (
                     <>
                         {props?.children && <span>{props?.children}</span>}

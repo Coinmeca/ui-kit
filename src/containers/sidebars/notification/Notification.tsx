@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Layouts } from "components";
 import Notify from "./Notify";
 import Style from "./Notification.styled";
@@ -44,7 +44,7 @@ export default function Notification(props: { list?: Content[]; count?: number; 
                                 layout
                                 {...{ ...v, type: "notify" }}
                             />
-                        )
+                        ),
                     )}
                 {/* </AnimatePresence> */}
             </Layouts.Contents.InnerContent>

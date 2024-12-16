@@ -26,6 +26,8 @@ export default function Page() {
         },
     };
 
+    console.log({ props });
+
     return (
         <Layouts.Page style={{ background: "rgb(var(--dim))" }}>
             <Layouts.Contents.SlideContainer

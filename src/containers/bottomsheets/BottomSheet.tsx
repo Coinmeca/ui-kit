@@ -1,10 +1,11 @@
 "use client";
 import { Layouts } from "components";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { useSwipe } from "hooks";
 import { Swipe } from "hooks/useSwipe";
 import { useEffect, useRef, useState } from "react";
 import Style, { SwipeArea } from "./BottomSheet.styled";
+import { CSSProperties } from "styled-components";
 
 export interface BottomSheet {
     children?: any;
@@ -13,13 +14,13 @@ export interface BottomSheet {
     height?: number | string | { min?: number | string; max?: number | string };
     onBlur?: Function;
     onClose?: Function;
-    style?: object;
+    style?: CSSProperties;
     zIndex?: number;
     swipe?: Swipe & { area?: number };
 }
 
 export default function BottomSheet(props: BottomSheet) {
-    const bottomsheet: any = useRef();
+    const bottomsheet: any = useRef(null);
 
     const [active, setActive] = useState<boolean>(props?.active || true);
     const scale = props?.scale || 1;

@@ -2,6 +2,7 @@
 import { Controls, Layouts } from "components";
 import Style, { Pad } from "./Numberpad.styled";
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from "react";
+import { CSSProperties } from "styled-components";
 
 export interface Numberpad {
     value?: number | string;
@@ -14,7 +15,7 @@ export interface Numberpad {
     width?: number;
     onChange?: Function;
     onReset?: Function;
-    style?: object;
+    style?: CSSProperties;
     shuffle?: boolean;
     input?: boolean | MutableRefObject<any>;
 }

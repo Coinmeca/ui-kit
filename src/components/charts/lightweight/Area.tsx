@@ -75,7 +75,7 @@ export const Area = (props: Area) => {
 
     const [data, setData] = useState<AreaData[]>([]);
     const [volume, setVolume] = useState<Volume[]>([]);
-    const chartRef: any = useRef();
+    const chartRef: any = useRef(null);
 
     useEffect(() => {
         const handleResize = () => {

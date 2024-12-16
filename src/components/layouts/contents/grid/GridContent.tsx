@@ -1,10 +1,11 @@
 "use client";
 import { Fragment, memo } from "react";
+import { CSSProperties } from "styled-components";
 
 export interface GridContent {
     format?: any;
     area: string;
-    style?: object;
+    style?: CSSProperties;
     children?: any;
     props?: any;
     responsive?: {
@@ -15,7 +16,9 @@ export interface GridContent {
 
 const GridContent = (props: GridContent) => {
     const Child =
-        (props?.children?.children?.type !== Fragment && props.children?.children?.$$typeof && props?.children?.children?.type) ||
+        (props?.children?.children?.type !== Fragment &&
+            props.children?.children?.$$typeof &&
+            props?.children?.children?.type) ||
         (props?.children?.type !== Fragment && props?.children?.$$typeof && props?.children?.type);
     const Content = Child ? (
         <Child

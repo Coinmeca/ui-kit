@@ -1,7 +1,8 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import * as Texts from "./Text.styled";
 import { TextMotion } from "./TextMotion";
+import { CSSProperties } from "styled-components";
 
 export type TextType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "strong" | "p" | "desc" | "link" | "button";
 export type TextAlign = "left" | "center" | "right";
@@ -10,7 +11,7 @@ export type TextCase = "upper" | "lower" | "capital";
 export interface Text {
     children?: any;
     title?: string;
-    style?: object;
+    style?: CSSProperties;
     type?: TextType;
     align?: TextAlign;
     case?: TextCase;
@@ -30,7 +31,7 @@ export interface Text {
 }
 
 export interface Responsive {
-    style?: object;
+    style?: CSSProperties;
     size?: number;
     color?: string | false;
     change?: boolean;

@@ -69,7 +69,7 @@ export const Candle = (props: Candle) => {
 
     const [price, setPrice] = useState<Price[]>([]);
     const [volume, setVolume] = useState<Volume[]>([]);
-    const chartRef: any = useRef();
+    const chartRef: any = useRef(null);
 
     useEffect(() => {
         const handleResize = () => {

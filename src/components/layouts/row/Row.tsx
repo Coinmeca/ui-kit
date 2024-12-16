@@ -2,12 +2,13 @@
 
 import { SwipeProps } from "hooks/useSwipe";
 import Style from "./Row.styled";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
+import { CSSProperties } from "styled-components";
 
 export interface Row {
     children?: any;
     title?: string;
-    style?: object;
+    style?: CSSProperties;
     gap?: number;
     change?: string | false;
     align?: "left" | "center" | "middle" | "right" | "stretch";

@@ -1,6 +1,6 @@
 "use client";
 import { Fragment, useEffect, useState } from "react";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, CSSProperties } from "styled-components";
 import Style, { Grid } from "./GridContainer.styled";
 import type { GridContent as Content } from "./GridContent";
 import GridContent from "./GridContent";
@@ -23,7 +23,7 @@ export interface GridContainer {
         width?: number | string | { min?: number | string; max?: number | string };
         height?: number | string | { min?: number | string; max?: number | string };
     }[];
-    style?: object;
+    style?: CSSProperties;
     scroll?: boolean;
     fullsize?: boolean;
 }

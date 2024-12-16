@@ -3,6 +3,7 @@ import { Controls, Elements } from "components";
 import { format } from "lib/utils";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Style, { Dot, Inner, Side, Wrapper } from "./Input.styled";
+import { CSSProperties } from "styled-components";
 
 export interface Input {
     style?: any;
@@ -29,12 +30,12 @@ export interface Input {
     length?: number;
 
     left?: {
-        style?: object;
+        style?: CSSProperties;
         width?: number;
         children?: any;
     };
     right?: {
-        style?: object;
+        style?: CSSProperties;
         width?: number;
         children?: any;
     };
@@ -70,8 +71,8 @@ interface format {
 }
 
 export default function Input(props: Input) {
-    const wrapper: any = useRef();
-    const input: any = useRef();
+    const wrapper: any = useRef(null);
+    const input: any = useRef(null);
 
     const placeholder = props?.placeholder?.toString() || "";
     const type = props?.type === "password" ? "password" : props?.type || "text";

@@ -2,10 +2,11 @@
 import { Layouts } from "components";
 import { MutableRefObject } from "react";
 import Style from "./Page.styled";
+import { CSSProperties } from "styled-components";
 
 export interface Content {
     children?: any;
-    style?: object;
+    style?: CSSProperties;
     scroll?: boolean;
     snap?: boolean;
     active?: boolean;

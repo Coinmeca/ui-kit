@@ -27,7 +27,7 @@ export interface Data {
 }
 
 export default function ChartJS(props: ChartJS) {
-    const chartRef: any = useRef();
+    const chartRef: any = useRef(null);
     const [data, setData] = useState<any>();
 
     const key = {

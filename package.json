@@ -1,6 +1,6 @@
 {
     "name": "@coinmeca/ui",
-    "version": "0.1.64",
+    "version": "0.1.65",
     "keywords": [
         "coinmeca",
         "interface",
@@ -52,33 +52,33 @@
         "prebuild": "yarn clean"
     },
     "dependencies": {
-        "chart.js": "^4.4.4",
-        "framer-motion": "^11.11.11",
+        "chart.js": "^4.4.7",
         "immer": "^10.1.1",
-        "lightweight-charts": "^4.2.0",
+        "lightweight-charts": "^4.2.2",
         "module": "^1.2.5",
-        "next": "14.2.16",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "sass": "1.80.5",
+        "motion": "^11.14.4",
+        "next": "14.2.20",
+        "react": "18.3.1",
+        "react-dom": "18.3.1",
+        "sass": "1.83.0",
         "sharp": "^0.33.5",
-        "styled-components": "^6.1.12",
-        "zustand": "5.0.1"
+        "styled-components": "^6.1.13",
+        "zustand": "5.0.2"
     },
     "devDependencies": {
         "@svgr/webpack": "^8.1.0",
-        "@types/node": "^22.5.0",
-        "@types/react": "^18.3.4",
-        "@types/react-dom": "^18.3.0",
+        "@types/node": "^22.10.2",
+        "@types/react": "18.3.16",
+        "@types/react-dom": "18.3.5",
         "cross-env": "^7.0.3",
-        "eslint": "9.13.0",
-        "eslint-config-next": "14.2.16",
+        "eslint": "9.17.0",
+        "eslint-config-next": "14.2.20",
         "path-browserify": "^1.0.1",
         "tsc-alias": "^1.8.10",
-        "tsup": "^8.2.4",
-        "typescript": "^5.5.4",
+        "tsup": "^8.3.5",
+        "typescript": "^5.7.2",
         "typescript-cp": "^0.1.9",
-        "vercel": "^37.1.1"
+        "vercel": "39.2.2"
     },
     "packageManager": "yarn@4.5.1"
 }

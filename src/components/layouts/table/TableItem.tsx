@@ -1,10 +1,10 @@
 "use client";
-import { type CSSProperties } from "react";
+import { type CSSProperties } from "styled-components";
 import Style, { Row, Cell } from "./TableItem.styled";
 
 export interface ListItem {
     children?: any;
-    style?: object;
+    style?: CSSProperties;
     align?: "left" | "center" | "right";
     change?: string;
     active?: boolean;
@@ -60,8 +60,7 @@ export default function TableItem(props: ListItem) {
             $event={typeof props?.onClick === "function" ? true : false}
             onClick={(e: any) => handleClick(e)}
             style={props?.style}
-            data-active={props?.active}
-        >
+            data-active={props?.active}>
             {TableCell(props?.children)}
         </Style>
     );

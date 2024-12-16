@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Layouts } from "components";
 import Style from "./Tooltip.styled";
 
@@ -14,13 +14,13 @@ export interface Tooltip {
     width?: number;
     padding?: number;
     margin?: number | [number, number];
-    style?: object;
+    style?: CSSProperties;
     fill?: boolean;
     fit?: boolean;
 }
 
 export default function Tooltip(props: Tooltip) {
-    const ref: any = useRef();
+    const ref: any = useRef(null);
     props?.e?.stopPropagation();
     const event = props?.e?.nativeEvent?.relatedTarget?.offsetParent?.getBoundingClientRect();
 
@@ -87,16 +87,19 @@ export default function Tooltip(props: Tooltip) {
                         style={{
                             top: vertical(),
                             left: horizon(),
-                            minWidth: props?.width || (props?.fill && event?.width ? `calc(${event?.width}px - ${padding * 2}em)` : undefined),
-                            maxWidth: props?.width || (props?.fit && event?.width ? `calc(${event?.width}px - ${padding * 2}em)` : undefined),
+                            minWidth:
+                                props?.width ||
+                                (props?.fill && event?.width ? `calc(${event?.width}px - ${padding * 2}em)` : undefined),
+                            maxWidth:
+                                props?.width ||
+                                (props?.fit && event?.width ? `calc(${event?.width}px - ${padding * 2}em)` : undefined),
                             ...props?.style,
                         }}
                         as={motion.div}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ ease: "easeInOut", duration: 0.3 }}
-                    >
+                        transition={{ ease: "easeInOut", duration: 0.3 }}>
                         {props?.children}
                     </Style>
                 )}

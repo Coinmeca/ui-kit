@@ -1,5 +1,5 @@
 ﻿"use client";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect } from "react";
 import { Elements, Layouts } from "components";
 import { usePortal, useWindowSize } from "hooks";
@@ -39,8 +39,10 @@ export default function Ordrebook(props: Orderbook) {
     const asks = props?.asks ? sort(props?.asks, "price", "number", true) : [];
     const bids = props?.bids ? sort(props?.bids, "price", "number", false) : [];
 
-    const ask_max: number = (asks && asks?.length > 0 && Math.max(...asks?.map((o: Tick) => parseFloat(format(o?.balance, "number"))))) || 0;
-    const bid_max: number = (bids && bids?.length > 0 && Math.max(...bids?.map((o: Tick) => parseFloat(format(o?.balance, "number"))))) || 0;
+    const ask_max: number =
+        (asks && asks?.length > 0 && Math.max(...asks?.map((o: Tick) => parseFloat(format(o?.balance, "number"))))) || 0;
+    const bid_max: number =
+        (bids && bids?.length > 0 && Math.max(...bids?.map((o: Tick) => parseFloat(format(o?.balance, "number"))))) || 0;
 
     const view = props?.view || 0;
     const guidance = props?.guidance || false;
@@ -64,10 +66,14 @@ export default function Ordrebook(props: Orderbook) {
         const k = [...asks]
             .splice(0, i + 1)
             .reduce(
-                (a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.price || 0).toString()) * parseFloat((b?.balance || 0).toString()),
-                0
+                (a: Tick, b: Tick) =>
+                    parseFloat((a || 0).toString()) +
+                    parseFloat((b?.price || 0).toString()) * parseFloat((b?.balance || 0).toString()),
+                0,
             );
-        const sum = [...asks].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
+        const sum = [...asks]
+            .splice(0, i + 1)
+            .reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
         handleTooltip(null, {
             vertical: "top",
             color: "red",
@@ -86,10 +92,14 @@ export default function Ordrebook(props: Orderbook) {
         const k = [...bids]
             .splice(0, i + 1)
             .reduce(
-                (a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.price || 0).toString()) * parseFloat((b?.balance || 0).toString()),
-                0
+                (a: Tick, b: Tick) =>
+                    parseFloat((a || 0).toString()) +
+                    parseFloat((b?.price || 0).toString()) * parseFloat((b?.balance || 0).toString()),
+                0,
             );
-        const sum = [...bids].splice(0, i + 1).reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
+        const sum = [...bids]
+            .splice(0, i + 1)
+            .reduce((a: Tick, b: Tick) => parseFloat((a || 0).toString()) + parseFloat((b?.balance || 0).toString()), 0);
         handleTooltip(null, {
             vertical: windowSize.width > Root.Device.Mobile ? "bottom" : "top",
             color: "green",
@@ -118,8 +128,7 @@ export default function Ordrebook(props: Orderbook) {
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.9, opacity: 0 }}
                                 transition={{ duration: 0.3 }}
-                                layout
-                            >
+                                layout>
                                 <div>
                                     <div>
                                         <div>
@@ -134,8 +143,7 @@ export default function Ordrebook(props: Orderbook) {
                                                         ? "0"
                                                         : (parseFloat(ask?.balance.toString()) / ask_max) * 100
                                                 }% 100%`,
-                                            }}
-                                        >
+                                            }}>
                                             <span>{format(ask?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
                                         </div>
                                     </div>
@@ -153,8 +161,7 @@ export default function Ordrebook(props: Orderbook) {
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.9, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                >
+                    transition={{ duration: 0.3 }}>
                     <Elements.Text type={"desc"} opacity={0.6}>
                         There is no asks.
                     </Elements.Text>
@@ -162,7 +169,10 @@ export default function Ordrebook(props: Orderbook) {
             )}
             <Layouts.Divider responsive={props?.responsive?.device} style={{ ...(view !== 0 && { display: "none" }) }} />
             {bids && bids?.length > 0 ? (
-                <Bids $show={view === 0 || view === 2} onMouseEnter={(e) => e?.stopPropagation()} onMouseLeave={() => closeTooltip()}>
+                <Bids
+                    $show={view === 0 || view === 2}
+                    onMouseEnter={(e) => e?.stopPropagation()}
+                    onMouseLeave={() => closeTooltip()}>
                     <AnimatePresence mode="popLayout">
                         {bids?.map((bid: Tick, k: number) => (
                             <Ticks
@@ -174,8 +184,7 @@ export default function Ordrebook(props: Orderbook) {
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.9, opacity: 0 }}
                                 transition={{ duration: 0.3 }}
-                                layout
-                            >
+                                layout>
                                 <div onMouseEnter={(e) => e?.stopPropagation()}>
                                     <div>
                                         <div>
@@ -190,8 +199,7 @@ export default function Ordrebook(props: Orderbook) {
                                                         ? "0"
                                                         : (parseFloat(format(bid?.balance, "number")) / bid_max) * 100
                                                 }% 100%`,
-                                            }}
-                                        >
+                                            }}>
                                             <span>{format(bid?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
                                         </div>
                                     </div>
@@ -209,8 +217,7 @@ export default function Ordrebook(props: Orderbook) {
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.9, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                >
+                    transition={{ duration: 0.3 }}>
                     <Elements.Text type={"desc"} opacity={0.6}>
                         There is no bids.
                     </Elements.Text>

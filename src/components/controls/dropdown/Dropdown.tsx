@@ -5,6 +5,7 @@ import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
 import { usePortal, usePositionTracker, useWindowSize } from "hooks";
 import Style, { Item, Option, Options } from "./Dropdown.styled";
+import { CSSProperties } from "styled-components";
 
 export interface DropdownOption {
     title?: string;
@@ -17,7 +18,7 @@ export interface DropdownOption {
 
 export interface Dropdown {
     theme?: "light" | "dark";
-    style?: object;
+    style?: CSSProperties;
 
     type?: string;
     title?: string;
@@ -50,8 +51,8 @@ type Visible = "popup" | "sheet" | "hidden";
 
 export default function Dropdown(props: Dropdown) {
     const { windowSize } = useWindowSize();
-    const dropdown: any = useRef();
-    const dropbox: any = useRef();
+    const dropdown: any = useRef(null);
+    const dropbox: any = useRef(null);
 
     const theme = props?.theme === "light" || props?.theme === "dark" ? props?.theme : "light";
     const type = props?.type;
@@ -88,6 +89,7 @@ export default function Dropdown(props: Dropdown) {
     };
 
     const handleOpen = (e?: any) => {
+        console.log("open");
         if (disabled) return;
         setOpen(!open);
         openSelect(e);
@@ -138,7 +140,6 @@ export default function Dropdown(props: Dropdown) {
                       }
                     : visible === "hidden"
                     ? {
-                          position: "absolute",
                           visibility: "hidden",
                           pointerEvents: "none",
                           width: "100%",

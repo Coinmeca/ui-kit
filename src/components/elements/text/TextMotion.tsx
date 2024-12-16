@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { AnimatePresence, AnimationProps, Transition } from "framer-motion";
+import { AnimatePresence, AnimationProps, Transition } from "motion/react";
 import Text, { type Text as Props } from "./Text";
 import { Row } from "../../layouts";
 
