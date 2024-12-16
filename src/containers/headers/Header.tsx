@@ -27,7 +27,7 @@ export interface Header {
     scale?: number;
     height?: number;
     color?: string;
-    style?: CSSProperties & { children: CSSProperties & { children: CSSProperties & { children: CSSProperties } } };
+    style?: CSSProperties & { children?: CSSProperties & { children?: CSSProperties & { children?: CSSProperties } } };
 }
 
 export interface Logo {

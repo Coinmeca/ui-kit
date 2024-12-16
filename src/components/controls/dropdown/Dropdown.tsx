@@ -18,7 +18,7 @@ export interface DropdownOption {
 
 export interface Dropdown {
     theme?: "light" | "dark";
-    style?: CSSProperties;
+    style?: CSSProperties & { options?: CSSProperties };
 
     type?: string;
     title?: string;
