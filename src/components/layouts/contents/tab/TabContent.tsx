@@ -1,13 +1,13 @@
 "use client";
 
-import { memo, type CSSProperties } from "react";
+import { memo } from "react";
 import Style from "./TabContent.styled";
 
 export interface TabContent {
     name?: string;
     active?: boolean;
     children?: any;
-    style?: CSSProperties;
+    style?: object;
     fix?: boolean;
 }
 

@@ -1,13 +1,12 @@
 "use client";
 
-import { type CSSProperties } from "styled-components";
 import TabContent from "./TabContent";
 import { type TabContent as Content } from "./TabContent";
 import Style from "./TabContainer.styled";
 
 export interface TabContainer {
     contents?: Content[];
-    style?: CSSProperties;
+    style?: object;
     scroll?: boolean;
 }
 

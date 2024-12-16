@@ -1,11 +1,10 @@
 "use client";
 import { Fragment, memo } from "react";
-import { CSSProperties } from "styled-components";
 
 export interface GridContent {
     format?: any;
     area: string;
-    style?: CSSProperties;
+    style?: object;
     children?: any;
     props?: any;
     responsive?: {

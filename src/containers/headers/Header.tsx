@@ -14,20 +14,20 @@ export interface Header {
     logo?: Logo | boolean;
     menu?: {
         active?: boolean;
-        style?: CSSProperties;
+        style?: object;
         children?: Menu[];
         onClick?: Function;
     };
     option?: {
         active?: boolean;
-        style?: CSSProperties;
+        style?: object;
         children?: any;
     };
     side?: Side;
     scale?: number;
     height?: number;
     color?: string;
-    style?: CSSProperties & { children?: CSSProperties & { children?: CSSProperties & { children?: CSSProperties } } };
+    style?: object & { children?: object & { children?: object & { children?: object } } };
 }
 
 export interface Logo {
@@ -38,7 +38,7 @@ export interface Logo {
     title?: string;
     alt?: string;
     href?: string;
-    style?: CSSProperties;
+    style?: object;
 }
 
 export interface Menu {
@@ -51,7 +51,7 @@ export interface Menu {
 export interface Side {
     width?: number;
     active?: boolean;
-    style?: CSSProperties;
+    style?: object;
     children?: any;
 }
 
@@ -130,7 +130,7 @@ export default function Header(props: Header) {
     }, [props?.menu?.active]);
 
     return (
-        <Style $scale={scale} $color={color} $height={height} $side={side} style={props?.style}>
+        <Style $scale={scale} $color={color} $height={height} $side={side} style={props?.style as CSSProperties}>
             <Layouts.Row gap={0} style={props?.style?.children}>
                 <Layouts.Row style={props?.style?.children?.children}>
                     <Layouts.Row style={props?.style?.children?.children?.children}>

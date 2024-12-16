@@ -3,13 +3,12 @@
 import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
 import Style, { Count } from "./Icon.styled";
-import { CSSProperties } from "styled-components";
 
 export interface Icon {
     icon: string;
     color?: string | false;
     change?: boolean;
-    style?: CSSProperties;
+    style?: object;
     scale?: number;
     count?: number;
     title?: string;

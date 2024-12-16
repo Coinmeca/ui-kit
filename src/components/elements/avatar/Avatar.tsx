@@ -2,7 +2,6 @@
 import { useMemo } from "react";
 import Image from "next/image";
 import Style from "./Avatar.styled";
-import { CSSProperties } from "styled-components";
 
 export interface Avatar {
     scale?: number;
@@ -17,7 +16,7 @@ export interface Avatar {
     stroke?: number;
     align?: "left" | "right";
     fill?: string | boolean;
-    style?: CSSProperties;
+    style?: object;
     ellipsis?: string;
 }
 

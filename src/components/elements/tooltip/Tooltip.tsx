@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Layouts } from "components";
 import Style from "./Tooltip.styled";
@@ -14,7 +14,7 @@ export interface Tooltip {
     width?: number;
     padding?: number;
     margin?: number | [number, number];
-    style?: CSSProperties;
+    style?: object;
     fill?: boolean;
     fit?: boolean;
 }

@@ -1,11 +1,11 @@
 "use client";
 import { Elements } from "components";
 import { type Icon } from "components/elements/icon/Icon";
-import { type CSSProperties } from "styled-components";
+
 import Style from "./Button.styled";
 
 export interface Button {
-    style?: CSSProperties;
+    style?: object;
     title?: string;
     type?: "glass" | "line" | "solid";
     color?: string;

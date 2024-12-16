@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { Swipe } from './useSwipe';
 import { produce } from 'immer';
 import { JSX, ReactNode } from 'react';
-import { CSSProperties } from 'styled-components';
+
 
 export interface Notify {
     type?: "toast" | "notify";
@@ -11,7 +11,7 @@ export interface Notify {
     title?: string;
     date?: number | string | Date;
     img?: string;
-    style?: CSSProperties;
+    style?: object;
     message?: any | ReactNode | JSX.Element;
     timer?: number;
     importance?: boolean;

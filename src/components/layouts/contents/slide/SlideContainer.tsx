@@ -4,14 +4,13 @@ import { useSwipe } from "hooks";
 import { Swipe } from "hooks/useSwipe";
 import Style from "./SlideContainer.styled";
 import SlideContent, { type SlideContent as Content } from "./SlideContent";
-import { CSSProperties } from "styled-components";
 
 export interface SlideContainer {
     contents?: Content[];
     vertical?: boolean;
     offset?: number;
     unit?: "%" | "vw" | "vh" | "em" | "rem";
-    style?: CSSProperties;
+    style?: object;
     swipe?: Swipe;
 }
 

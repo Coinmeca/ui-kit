@@ -5,7 +5,6 @@ import { Controls, Elements, Layouts } from "components";
 import { BottomSheet } from "containers";
 import { usePortal, usePositionTracker, useWindowSize } from "hooks";
 import Style, { Item, Option, Options } from "./Dropdown.styled";
-import { CSSProperties } from "styled-components";
 
 export interface DropdownOption {
     title?: string;
@@ -18,7 +17,7 @@ export interface DropdownOption {
 
 export interface Dropdown {
     theme?: "light" | "dark";
-    style?: CSSProperties & { options?: CSSProperties };
+    style?: object;
 
     type?: string;
     title?: string;

@@ -2,13 +2,12 @@
 import { AnimationProps, motion, Transition } from "motion/react";
 import Style, { Col, Row } from "./ListItem.styled";
 import { useMemo } from "react";
-import { CSSProperties } from "styled-components";
 
 export interface ListItem {
     index?: number | string;
     children?: any;
     gap?: number;
-    style?: CSSProperties;
+    style?: object;
     align?: "left" | "center" | "right";
     change?: string;
     onClick?: Function;

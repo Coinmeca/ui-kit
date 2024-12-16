@@ -2,7 +2,6 @@
 import Image from "next/image";
 import Style, { Filter } from "./BG.styled";
 import type { DetailedHTMLProps, VideoHTMLAttributes, MutableRefObject } from "react";
-import { CSSProperties } from "styled-components";
 
 export interface BG {
     background?: string;
@@ -15,10 +14,10 @@ export interface BG {
     fix?: boolean;
     img?: {
         src: number | string;
-        style?: CSSProperties;
+        style?: object;
     };
     video?: DetailedHTMLProps<VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>;
-    style?: CSSProperties;
+    style?: object;
     children?: any;
     reference?: MutableRefObject<any>;
 }

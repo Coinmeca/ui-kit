@@ -5,7 +5,6 @@ import BG, { type BG as Background } from "components/layouts/bg/BG";
 import { useSwipe } from "hooks";
 import { Swipe } from "hooks/useSwipe";
 import { Style } from "./Slide.styled";
-import { CSSProperties } from "styled-components";
 
 export interface PositionEvent {
     x?: number;
@@ -16,7 +15,7 @@ export interface PositionEvent {
 export interface SlideContent {
     active?: boolean;
     children?: any;
-    style?: CSSProperties;
+    style?: object;
     onClick?: Function;
     background?: Background;
 }
@@ -32,7 +31,7 @@ export interface Slide {
     padding?: number;
     timer?: number;
     scale?: number;
-    style?: CSSProperties;
+    style?: object;
     event?: Function;
     swipe?: Swipe;
 }

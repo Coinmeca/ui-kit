@@ -5,7 +5,6 @@ import { useSwipe } from "hooks";
 import { Swipe } from "hooks/useSwipe";
 import { useEffect, useRef, useState } from "react";
 import Style, { SwipeArea } from "./BottomSheet.styled";
-import { CSSProperties } from "styled-components";
 
 export interface BottomSheet {
     children?: any;
@@ -14,7 +13,7 @@ export interface BottomSheet {
     height?: number | string | { min?: number | string; max?: number | string };
     onBlur?: Function;
     onClose?: Function;
-    style?: CSSProperties;
+    style?: object;
     zIndex?: number;
     swipe?: Swipe & { area?: number };
 }

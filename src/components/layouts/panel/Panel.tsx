@@ -2,7 +2,6 @@
 import { useEffect, useId, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import Style from "./Panel.styled";
-import { CSSProperties } from "styled-components";
 
 export interface Panel {
     id?: string;
@@ -10,7 +9,7 @@ export interface Panel {
     children?: any;
     onClick?: Function;
     onBlur?: Function;
-    style?: CSSProperties;
+    style?: object;
     color?: string;
     fix?: boolean;
 }

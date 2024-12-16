@@ -3,11 +3,10 @@
 import { Layouts } from "components";
 import { Fragment } from "react";
 import Style, { Row } from "./Menu.styled";
-import { CSSProperties } from "styled-components";
 
 export interface Menu {
     menu?: any;
-    style?: CSSProperties;
+    style?: object;
     scale?: number;
     show?: "desktop" | "laptop" | "tablet" | "mobile";
     hide?: "desktop" | "laptop" | "tablet" | "mobile";

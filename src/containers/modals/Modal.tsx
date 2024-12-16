@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import Style, { ButtonArea, Close } from "./Modal.styled";
-import { CSSProperties } from "styled-components";
 
 export interface Modal {
     active?: boolean;
@@ -13,7 +12,7 @@ export interface Modal {
     content?: any;
     buttonArea?: any;
     width?: number | { min?: number; max?: number };
-    style?: CSSProperties;
+    style?: object;
     close?: boolean;
     onClose: Function;
     outsideClose?: boolean;

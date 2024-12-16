@@ -4,13 +4,12 @@ import { AnimatePresence, motion } from "motion/react";
 import { JSX, ReactNode } from "react";
 import Style, { NoData } from "./Table.styled";
 import TableItem from "./TableItem";
-import { CSSProperties } from "styled-components";
 
 export interface Table {
     list?: any;
     formatter?: Function;
     fallback?: string | ReactNode | JSX.Element;
-    style?: CSSProperties;
+    style?: object;
     fix?: boolean;
 }
 

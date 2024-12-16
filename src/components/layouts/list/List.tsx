@@ -4,14 +4,13 @@ import type { JSX, ReactNode } from "react";
 import { Elements } from "components";
 import Style, { NoData } from "./List.styled";
 import ListItem, { ListItem as ListItemType } from "./ListItem";
-import { CSSProperties } from "styled-components";
 
 export interface List {
     list?: any;
     formatter?: Function;
     fallback?: string | ReactNode | JSX.Element;
     fill?: boolean;
-    style?: CSSProperties;
+    style?: object;
 }
 
 export default function List(props: List) {

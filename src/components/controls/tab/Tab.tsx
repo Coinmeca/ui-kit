@@ -1,11 +1,11 @@
 "use client";
-import { type CSSProperties } from "styled-components";
+
 import { Elements } from "components";
 import type { Icon } from "components/elements/icon/Icon";
 import Style from "./Tab.styled";
 
 export interface Tab {
-    style?: CSSProperties;
+    style?: object;
     title?: string;
 
     active?: boolean;

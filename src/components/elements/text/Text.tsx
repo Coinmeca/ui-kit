@@ -2,7 +2,6 @@
 import { motion } from "motion/react";
 import * as Texts from "./Text.styled";
 import { TextMotion } from "./TextMotion";
-import { CSSProperties } from "styled-components";
 
 export type TextType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "strong" | "p" | "desc" | "link" | "button";
 export type TextAlign = "left" | "center" | "right";
@@ -11,7 +10,7 @@ export type TextCase = "upper" | "lower" | "capital";
 export interface Text {
     children?: any;
     title?: string;
-    style?: CSSProperties;
+    style?: object;
     type?: TextType;
     align?: TextAlign;
     case?: TextCase;
@@ -31,7 +30,7 @@ export interface Text {
 }
 
 export interface Responsive {
-    style?: CSSProperties;
+    style?: object;
     size?: number;
     color?: string | false;
     change?: boolean;

@@ -1,7 +1,6 @@
 "use client";
 import { Contents, Layouts } from "components";
 import { type State } from "components/contents/states/State";
-import { CSSProperties } from "styled-components";
 
 export interface Process {
     process: boolean | null;
@@ -9,7 +8,7 @@ export interface Process {
     failure?: State;
     success?: State;
     loading?: State & { active?: boolean };
-    style?: CSSProperties;
+    style?: object;
 }
 
 export default function Process(props: Process) {

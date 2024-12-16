@@ -2,7 +2,6 @@
 import { useMobile, useSwipe } from "hooks";
 import { SwipeConfig } from "hooks/useSwipe";
 import Style, { Lower, SwipeArea, Upper } from "./Sidebar.styled";
-import { CSSProperties } from "styled-components";
 
 export interface PositionEvent {
     x?: number;
@@ -19,7 +18,7 @@ export interface Sidebars {
         active?: boolean;
         children?: Sidebar[];
         onBlur?: Function;
-        swipe?: (SwipeConfig & { area?: number; onActive?: Function; style?: CSSProperties }) | boolean;
+        swipe?: (SwipeConfig & { area?: number; onActive?: Function; style?: object }) | boolean;
     };
     onBlur?: Function;
 }
