@@ -28,7 +28,7 @@ export default function Modal(props: Modal) {
     const max = 64;
     const width = {
         min: (typeof props?.width === "object" ? props?.width?.min : props?.width) || min,
-        max: (typeof props?.width === "object" ? props?.width?.min : props?.width) || max,
+        max: (typeof props?.width === "object" ? props?.width?.max : props?.width) || max,
     };
     const scroll = typeof props?.scroll === "boolean" ? props?.scroll : true;
 

@@ -104,9 +104,13 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
     }
 
     @media all and (max-width: 640px) {
-        min-width: calc(100% - 4em);
-        max-width: calc(100% - 4em);
-        margin: 2em;
+        ${({ $fullsize }) =>
+            !$fullsize &&
+            css`
+                min-width: calc(100% - 4em);
+                max-width: calc(100% - 4em);
+                margin: 2em;
+            `}
 
         & > * {
             padding: 3em;
