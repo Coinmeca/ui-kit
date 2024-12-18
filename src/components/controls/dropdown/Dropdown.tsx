@@ -144,6 +144,7 @@ export default function Dropdown(props: Dropdown) {
                           minWidth: "min-content",
                           height: 0,
                           opacity: 0,
+                          ...(type === "more" && { position: "absolute" }),
                       }
                     : {
                           fontSize: `${scale}em`,
