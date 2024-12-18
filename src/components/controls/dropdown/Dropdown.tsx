@@ -125,7 +125,7 @@ export default function Dropdown(props: Dropdown) {
                               "--white": theme === "light" ? "255,255,255" : "0,0,0",
                               "--black": theme === "light" ? "0,0,0" : "255,255,255",
                           }),
-                          position: "absolute",
+                          position: "fixed",
                           fontSize: `${scale}em`,
                           background: `rgba(var(--white), var(--o0075))`,
                           color: `rgb(var(--white))`,
@@ -138,6 +138,7 @@ export default function Dropdown(props: Dropdown) {
                       }
                     : visible === "hidden"
                     ? {
+                          position: "absolute",
                           visibility: "hidden",
                           pointerEvents: "none",
                           width: "100%",
