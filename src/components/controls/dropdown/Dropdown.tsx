@@ -138,7 +138,6 @@ export default function Dropdown(props: Dropdown) {
                       }
                     : visible === "hidden"
                     ? {
-                          position: "absolute",
                           visibility: "hidden",
                           pointerEvents: "none",
                           width: "100%",
