@@ -1,6 +1,6 @@
 "use client";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Controls, Elements, Layouts } from "components";
 import Style, { ButtonArea, Close } from "./Modal.styled";
 
@@ -23,6 +23,8 @@ export interface Modal {
 export default function Modal(props: Modal) {
     const id = `${new Date().getTime()}`;
     const [active, setActive] = useState<boolean>(props?.active || true);
+    const [contentHeight, setContentHeight] = useState(0);
+    const ref: any = useRef(null);
 
     const min = 56;
     const max = 64;
@@ -43,6 +45,16 @@ export default function Modal(props: Modal) {
         return () => setActive(false);
     }, []);
 
+    useLayoutEffect(() => {
+        if (ref.current) {
+            const resizeObserver = new ResizeObserver(() => ref.current && setContentHeight(ref.current?.clientHeight));
+            resizeObserver.observe(ref.current);
+            return () => {
+                resizeObserver.disconnect();
+            };
+        }
+    }, [ref.current]);
+
     return (
         <Layouts.Panel
             active={active}
@@ -61,7 +73,7 @@ export default function Modal(props: Modal) {
                         $fullsize={props?.fullsize}
                         style={props?.style}
                         as={motion.div}
-                        layoutId={id}
+                        // layoutId={id}
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{
                             scale: active ? 1 : 0.9,
@@ -70,38 +82,41 @@ export default function Modal(props: Modal) {
                         }}
                         exit={{ scale: 0.9, opacity: 0 }}
                         transition={{ transition: { ease: "easeInOut", duration: 0.15 } }}
-                        layout>
-                        <div>
-                            {props?.title && (
-                                <Elements.Text size={2} align={"center"}>
-                                    {props?.title}
-                                </Elements.Text>
-                            )}
-                            {(props?.message || props?.content || props?.children) && (
-                                <Layouts.Contents.InnerContent scroll={scroll}>
-                                    {props?.message &&
-                                        (typeof props?.message === "string" ? (
-                                            <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
-                                                {props?.message}
-                                            </Elements.Text>
-                                        ) : (
-                                            props?.message
-                                        ))}
-                                    {props?.content}
-                                    {props?.children}
-                                </Layouts.Contents.InnerContent>
-                            )}
-                            {props?.buttonArea &&
-                                (typeof props?.buttonArea?.active === "boolean" ? props?.buttonArea?.active : true) && (
-                                    <ButtonArea $gap={props?.buttonArea?.gap} style={props?.buttonArea?.style}>
-                                        {props?.buttonArea?.children || props?.buttonArea}
-                                    </ButtonArea>
+                        // layout
+                    >
+                        <div style={{ height: contentHeight }}>
+                            <div ref={ref}>
+                                {props?.title && (
+                                    <Elements.Text size={2} align={"center"}>
+                                        {props?.title}
+                                    </Elements.Text>
                                 )}
-                            {props?.close && (
-                                <Close>
-                                    <Controls.Button icon={"x"} onClick={(e: any) => handleClose(e)} />
-                                </Close>
-                            )}
+                                {(props?.message || props?.content || props?.children) && (
+                                    <Layouts.Contents.InnerContent scroll={scroll}>
+                                        {props?.message &&
+                                            (typeof props?.message === "string" ? (
+                                                <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
+                                                    {props?.message}
+                                                </Elements.Text>
+                                            ) : (
+                                                props?.message
+                                            ))}
+                                        {props?.content}
+                                        {props?.children}
+                                    </Layouts.Contents.InnerContent>
+                                )}
+                                {props?.buttonArea &&
+                                    (typeof props?.buttonArea?.active === "boolean" ? props?.buttonArea?.active : true) && (
+                                        <ButtonArea $gap={props?.buttonArea?.gap} style={props?.buttonArea?.style}>
+                                            {props?.buttonArea?.children || props?.buttonArea}
+                                        </ButtonArea>
+                                    )}
+                                {props?.close && (
+                                    <Close>
+                                        <Controls.Button icon={"x"} onClick={(e: any) => handleClose(e)} />
+                                    </Close>
+                                )}
+                            </div>
                         </div>
                     </Style>
                 )}

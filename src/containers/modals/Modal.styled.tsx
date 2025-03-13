@@ -55,6 +55,12 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
         `}
 
     & > * {
+        width: -webkit-fill-available;
+        max-height: -webkit-fill-available;
+        transition: 0.3s cubic-bezier(0.33, 0, 0, 1);
+    }
+
+    & > * > * {
         display: flex;
         flex-direction: column;
         width: -webkit-fill-available;
@@ -67,7 +73,7 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
         background: rgba(var(--white), var(--o0045));
     }
 
-    & > * > ${InnerContent.default} {
+    & > * > * > ${InnerContent.default} {
         /* margin-top: 2em; */
         // font-size: 1.5em;
         align-items: center;
@@ -112,11 +118,11 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
                 margin: 2em;
             `}
 
-        & > * {
+        & > * > * {
             padding: 3em;
         }
 
-        & > ${ButtonArea} {
+        & > * > ${ButtonArea} {
             padding: 2em;
         }
 
