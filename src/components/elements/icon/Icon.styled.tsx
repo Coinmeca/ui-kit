@@ -1,6 +1,7 @@
 "use client";
 import { Root } from "lib/style";
 import { styled } from "styled-components";
+import { Button, Desc, H1, H2, H3, H4, H5, H6, Link, P, Strong, Text } from "components/elements/text/Text.styled";
 
 export const Count = styled.span<{ $color: string }>`
     background: rgb(${({ $color }) => Root.Color($color)});
@@ -31,8 +32,31 @@ const Style = styled.i<{ $color?: string; $change?: boolean; $scale?: number }>`
         width: 100%;
         height: 100%;
         fill: ${({ $color, $change }) =>
-            $change ? "rgb(var(--change))" : $color ? ($color === Root.Color($color) ? `${$color}` : `rgb(${Root.Color($color)})`) : "inherit"};
+            $change
+                ? "rgb(var(--change))"
+                : $color
+                ? $color === Root.Color($color)
+                    ? `${$color}`
+                    : `rgb(${Root.Color($color)})`
+                : "inherit"};
         transition: 0.3s ease;
+    }
+
+    ${H1} > &,
+    ${H2} > &,
+    ${H3} > &,
+    ${H4} > &,
+    ${H5} > &,
+    ${H6} > &,
+    ${P} > &,
+    ${Strong} > &,
+    ${Desc} > &,
+    ${Text} > &,
+    ${Link} > &,
+    ${Button} > & {
+        display: inline-block;
+        font-size: 1.5em;
+        margin-left: 0.125em;
     }
 `;
 
