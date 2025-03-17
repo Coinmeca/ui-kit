@@ -1,5 +1,6 @@
 "use client";
-import Style from "./Card.styled";
+import React from "react";
+import Style, { AddOn } from "./Card.styled";
 
 export interface Card {
     children?: any;
@@ -7,6 +8,22 @@ export interface Card {
     gap?: number;
     padding?: number;
     style?: any;
+    addOn?:
+        | React.ReactNode
+        | {
+              children: React.ReactNode;
+              position?:
+                  | number
+                  | string
+                  | {
+                        top?: number | string;
+                        left?: number | string;
+                        right?: number | string;
+                        bottom?: number | string;
+                    };
+              style?: any;
+              fix?: boolean;
+          };
     onHover?: Function;
     onClick?: Function;
 }
@@ -15,6 +32,7 @@ export default function Card(props: Card) {
     const scale = props?.scale || 1;
     const padding = props?.padding || 2;
     const gap = props?.gap || 1;
+    const position = props?.addOn && (props?.addOn as any)?.position;
 
     const handleMouseOver = (e?: any) => {
         if (typeof props?.onHover === "function") props?.onHover(e);
@@ -23,6 +41,8 @@ export default function Card(props: Card) {
     const handleClick = (e?: any) => {
         if (typeof props?.onClick === "function") props?.onClick(e);
     };
+
+    const handleChildHover = (e: React.MouseEvent) => e.stopPropagation();
 
     return (
         <Style
@@ -34,6 +54,18 @@ export default function Card(props: Card) {
             style={props?.style}
             onMouseOver={handleMouseOver}
             onClick={handleClick}>
+            {props?.addOn && (
+                <AddOn
+                    $top={position?.top || position?.bottom ? undefined : 1}
+                    $left={position?.left}
+                    $right={position?.right || position?.left ? undefined : 1}
+                    $bottom={position?.bottom}
+                    $fix={(props?.addOn as any)?.fix || false}
+                    style={(props?.addOn as any)?.style}
+                    onMouseOver={handleChildHover}>
+                    {(props?.addOn as any)?.children || props?.addOn}
+                </AddOn>
+            )}
             <div>{props?.children}</div>
         </Style>
     );
