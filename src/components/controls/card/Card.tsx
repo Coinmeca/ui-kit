@@ -51,9 +51,7 @@ export default function Card(props: Card) {
             $gap={gap}
             $hover={typeof props?.onHover === "function" ? true : false}
             $event={typeof props?.onClick === "function" ? true : false}
-            style={props?.style}
-            onMouseOver={handleMouseOver}
-            onClick={handleClick}>
+            style={props?.style}>
             {props?.addOn && (
                 <AddOn
                     $top={position?.top || position?.bottom ? undefined : 1}
@@ -66,7 +64,9 @@ export default function Card(props: Card) {
                     {(props?.addOn as any)?.children || props?.addOn}
                 </AddOn>
             )}
-            <div>{props?.children}</div>
+            <div onMouseOver={handleMouseOver} onClick={handleClick}>
+                {props?.children}
+            </div>
         </Style>
     );
 }

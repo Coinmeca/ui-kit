@@ -45,32 +45,31 @@ const Style = styled.button<{
     & > div {
         display: flex;
         flex-direction: column;
-        background: transparent;
         transition: 0.3s ease;
         padding: ${({ $padding }) => $padding}em;
 
         ${({ $gap }) => $gap && `gap: ${$gap}em;`}
 
         ${({ $event }) => $event && `cursor: pointer`};
-
-        ${({ $hover, $event }) =>
-            ($hover || $event) &&
-            css`
-                &:hover {
-                    background: rgba(var(--white), var(--o0075)) !important;
-                }
-            `}
-
-        ${({ $event }) =>
-            $event &&
-            css`
-                &:active {
-                    background: rgba(var(--white), var(--o015)) !important;
-                    transform: scale(0.96, 0.96);
-                    transition: 0.15s ease;
-                }
-            `}
     }
+
+    ${({ $hover, $event }) =>
+        ($hover || $event) &&
+        css`
+            &:hover > div {
+                background: rgba(var(--white), var(--o0075)) !important;
+            }
+        `}
+
+    ${({ $event }) =>
+        $event &&
+        css`
+            & > div:active {
+                background: rgba(var(--white), var(--o015)) !important;
+                transform: scale(0.96, 0.96);
+                transition: 0.15s ease;
+            }
+        `}
 `;
 
 export default Style;
