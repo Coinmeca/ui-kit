@@ -16,6 +16,7 @@ export interface Avatar {
     stroke?: number;
     align?: "left" | "right";
     fill?: string | boolean;
+    fit?: boolean;
     style?: object;
     ellipsis?: string;
 }
@@ -59,7 +60,14 @@ export default function Avatar(props: Avatar) {
     return (
         <>
             {((props?.img && props?.img !== "") || (props?.name && props?.name !== "")) && (
-                <Style $color={color} $scale={scale} $size={size} $fill={fill} $stroke={props?.stroke} style={props?.style}>
+                <Style
+                    $color={color}
+                    $scale={scale}
+                    $size={size}
+                    $fill={fill}
+                    $stroke={props?.stroke}
+                    $fit={props?.fit || false}
+                    style={props?.style}>
                     {align === "left" && avatar()}
                     {!hideName && name && name !== "" && (
                         <span>

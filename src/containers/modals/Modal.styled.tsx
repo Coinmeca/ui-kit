@@ -55,6 +55,7 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
         `}
 
     & > * {
+        display: flex;
         width: -webkit-fill-available;
         max-height: -webkit-fill-available;
         transition: 0.3s cubic-bezier(0.33, 0, 0, 1);
@@ -63,7 +64,6 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
             display: flex;
             flex-direction: column;
             width: -webkit-fill-available;
-            /* height: -webkit-fill-available; */
             gap: 4em;
             padding: 4em;
             transition: 0.3s ease;

@@ -181,7 +181,7 @@ export default function Connect(props: Connect) {
                         {
                             active: props?.chains && chain ? true : false,
                             children: (
-                                <Layouts.Col gap={2} fill>
+                                <Layouts.Col gap={2} style={{ height: "100%" }} fill>
                                     <Elements.Text type={"strong"} height={2} opacity={0.6} align={"center"}>
                                         {texts.wallet.description}
                                     </Elements.Text>

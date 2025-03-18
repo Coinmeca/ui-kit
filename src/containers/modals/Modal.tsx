@@ -23,7 +23,7 @@ export interface Modal {
 export default function Modal(props: Modal) {
     const id = `${new Date().getTime()}`;
     const [active, setActive] = useState<boolean>(props?.active || true);
-    const [contentHeight, setContentHeight] = useState(0);
+    const [height, setHeight] = useState();
     const ref: any = useRef(null);
 
     const min = 56;
@@ -34,7 +34,7 @@ export default function Modal(props: Modal) {
     };
     const scroll = typeof props?.scroll === "boolean" ? props?.scroll : true;
 
-    const handleClose = (e: any) => {
+    const handleClose = (e?: any) => {
         setActive(false);
         setTimeout(() => {
             if (typeof props?.onClose === "function") props?.onClose(e);
@@ -45,24 +45,24 @@ export default function Modal(props: Modal) {
         return () => setActive(false);
     }, []);
 
-    useLayoutEffect(() => {
-        if (ref.current) {
-            const resizeObserver = new ResizeObserver(() => ref.current && setContentHeight(ref.current?.clientHeight));
-            resizeObserver.observe(ref.current);
-            return () => {
-                resizeObserver.disconnect();
-            };
-        }
-    }, [ref.current]);
+    // useLayoutEffect(() => {
+    //     if (ref.current) {
+    //         const resizeObserver = new ResizeObserver(() => ref.current && setHeight(ref.current?.clientHeight));
+    //         resizeObserver.observe(ref.current);
+    //         return () => {
+    //             resizeObserver.disconnect();
+    //         };
+    //     }
+    // }, [ref.current]);
 
     return (
         <Layouts.Panel
             active={active}
             color={"black"}
             style={{ zIndex: 200 }}
-            onClick={(e: any) => {
-                props?.outsideClose && handleClose(e);
-            }}
+            onClick={(e: any) =>
+                active && ref.current && !ref.current.contains(e?.target) && props?.outsideClose && handleClose(e)
+            }
             fix>
             <AnimatePresence>
                 {active && (
@@ -84,7 +84,7 @@ export default function Modal(props: Modal) {
                         transition={{ transition: { ease: "easeInOut", duration: 0.15 } }}
                         // layout
                     >
-                        <div style={{ height: contentHeight }}>
+                        <div style={{ height }}>
                             <div ref={ref}>
                                 {props?.title && (
                                     <Elements.Text size={2} align={"center"}>

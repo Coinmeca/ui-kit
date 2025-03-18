@@ -29,7 +29,7 @@ export const AddOn = styled.span<{
     }
 `;
 
-const Style = styled.button<{
+const Style = styled.div<{
     $scale: number;
     $padding: number;
     $gap: number;
