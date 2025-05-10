@@ -98,7 +98,9 @@ export const H1 = styled.h1<{
     }
 
     & > ${Icon.default} {
+        display: inline-block;
         font-size: 1.5em;
+        margin-left: 0.125em;
     }
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
@@ -162,7 +164,9 @@ export const H2 = styled.h2<{
     }
 
     & > ${Icon.default} {
+        display: inline-block;
         font-size: 1.5em;
+        margin-left: 0.125em;
     }
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
@@ -226,7 +230,9 @@ export const H3 = styled.h3<{
     }
 
     & > ${Icon.default} {
+        display: inline-block;
         font-size: 1.5em;
+        margin-left: 0.125em;
     }
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
@@ -290,7 +296,9 @@ export const H4 = styled.h4<{
     }
 
     & > ${Icon.default} {
+        display: inline-block;
         font-size: 1.5em;
+        margin-left: 0.125em;
     }
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
@@ -354,7 +362,9 @@ export const H5 = styled.h5<{
     }
 
     & > ${Icon.default} {
+        display: inline-block;
         font-size: 1.5em;
+        margin-left: 0.125em;
     }
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
@@ -418,7 +428,9 @@ export const H6 = styled.h6<{
     }
 
     & > ${Icon.default} {
+        display: inline-block;
         font-size: 1.5em;
+        margin-left: 0.125em;
     }
 
     @media all and (max-width: ${Root.Device.Mobile}px) {
@@ -482,7 +494,9 @@ export const Strong = styled.strong<{
     }
 
     & > ${Icon.default} {
+        display: inline-block;
         font-size: 1.5em;
+        margin-left: 0.125em;
     }
 `;
 
@@ -542,7 +556,9 @@ export const P = styled.p<{
     }
 
     & > ${Icon.default} {
+        display: inline-block;
         font-size: 1.5em;
+        margin-left: 0.125em;
     }
 `;
 
@@ -602,7 +618,9 @@ export const Desc = styled.p<{
     }
 
     & > ${Icon.default} {
+        display: inline-block;
         font-size: 1.5em;
+        margin-left: 0.125em;
     }
 `;
 
@@ -663,7 +681,9 @@ export const Text = styled.span<{
     }
 
     & > ${Icon.default} {
+        display: inline-block;
         font-size: 1.5em;
+        margin-left: 0.125em;
     }
 
     :is(${H1}, ${H2}, ${H3}, ${H4}, ${H5}, ${H6}, ${Strong}, ${P}, ${Desc}, &) > & {
@@ -740,7 +760,9 @@ export const Link = styled.a<{
     }
 
     & > ${Icon.default} {
+        display: inline-block;
         font-size: 1.5em;
+        margin-left: 0.125em;
     }
 
     &:hover {
@@ -831,7 +853,9 @@ export const Button = styled.a<{
     }
 
     & > ${Icon.default} {
+        display: inline-block;
         font-size: 1.5em;
+        margin-left: 0.125em;
     }
 
     &:hover {

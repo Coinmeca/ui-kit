@@ -41,23 +41,6 @@ const Style = styled.i<{ $color?: string; $change?: boolean; $scale?: number }>`
                 : "inherit"};
         transition: 0.3s ease;
     }
-
-    ${H1} > &,
-    ${H2} > &,
-    ${H3} > &,
-    ${H4} > &,
-    ${H5} > &,
-    ${H6} > &,
-    ${P} > &,
-    ${Strong} > &,
-    ${Desc} > &,
-    ${Text} > &,
-    ${Link} > &,
-    ${Button} > & {
-        display: inline-block;
-        font-size: 1.5em;
-        margin-left: 0.125em;
-    }
 `;
 
 export default Style;

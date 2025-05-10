@@ -43,9 +43,11 @@ const Style = styled.div<{
     font-size: ${({ $scale }) => $scale}em;
 
     & > div {
+        flex: 1;
         display: flex;
         flex-direction: column;
         transition: 0.3s ease;
+        height: -webkit-fill-available;
         padding: ${({ $padding }) => $padding}em;
 
         ${({ $gap }) => $gap && `gap: ${$gap}em;`}
