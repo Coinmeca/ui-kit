@@ -225,6 +225,10 @@ export default function Input(props: Input) {
         };
     }, [fold]);
 
+    useEffect(() => {
+        if ((fold && expand) || focus || props?.autoFocus) input?.current?.focus();
+    }, [fold, expand, focus, props?.autoFocus]);
+
     const Input = (
         <Style
             tabIndex={5}
