@@ -156,7 +156,7 @@ export const Tick = styled.div`
         & > * {
             display: flex;
             padding: 0.5em;
-            // transition: 0.3s ease;
+            transition: 0.3s ease;
 
             & > * {
                 display: table-cell;

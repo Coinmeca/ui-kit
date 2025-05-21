@@ -1,10 +1,11 @@
-﻿'use client';
-import { useEffect, useState } from 'react';
-import Style from './Range.styled';
+﻿"use client";
+import { useEffect, useState } from "react";
+import Style from "./Range.styled";
 
 export interface Slider {
     color?: string;
     value?: number;
+    values?: number[] | string[];
     unit?: string;
     onChange?: Function;
     step?: number;
@@ -12,8 +13,8 @@ export interface Slider {
     zero?: boolean;
     min?: number;
     max?: number;
-    show?: 'desktop' | 'laptop' | 'tablet' | 'mobile';
-    hide?: 'desktop' | 'laptop' | 'tablet' | 'mobile';
+    show?: "desktop" | "laptop" | "tablet" | "mobile";
+    hide?: "desktop" | "laptop" | "tablet" | "mobile";
     disabled?: boolean;
 }
 
@@ -21,16 +22,19 @@ export default function Range(props: Slider) {
     const [value, setValue] = useState<number>(props?.value || 0);
     const [percent, setPercent] = useState<number>(0);
 
-    const color = props?.color || 'white';
-    const step = (props?.step && (props?.step > 2 ? props?.step : 2)) || 2;
+    const color = props?.color || "white";
+    const step =
+        (props?.values?.length && props?.values?.length + 1) || (props?.step && (props?.step > 2 ? props?.step : 2)) || 2;
     const snap = props?.snap || false;
     const zero = props?.zero || false;
     const min = props?.min || 0;
-    const max = props?.max || min + 100;
+    const max = props?.values?.length || props?.max || min + 100;
     const disabled = props?.disabled || false;
 
     useEffect(() => {
-        typeof props?.value === 'number' && !isNaN(props?.value) ? setValue(props?.value < min ? min : props?.value > max ? max : props?.value) : 0;
+        typeof props?.value === "number" && !isNaN(props?.value)
+            ? setValue(props?.value < min ? min : props?.value > max ? max : props?.value)
+            : 0;
     }, [props?.value, min, max]);
 
     useEffect(() => {
@@ -40,7 +44,8 @@ export default function Range(props: Slider) {
     const handleChange = (e: any) => {
         e?.stopPropagation();
         const range = max - min;
-        let value = parseFloat(e.target.value) >= max ? max : parseFloat(e.target.value) <= min ? min : parseFloat(e.target.value);
+        let value =
+            parseFloat(e.target.value) >= max ? max : parseFloat(e.target.value) <= min ? min : parseFloat(e.target.value);
 
         if (snap) {
             const tick = range / (step - 1);
@@ -54,7 +59,7 @@ export default function Range(props: Slider) {
         const percent = ((value - min) * 100) / range || 0;
         setPercent(percent);
         setValue(parseFloat(value.toFixed()));
-        props?.onChange && props?.onChange(value, percent);
+        props?.onChange?.(e, props?.values?.[Math.round(percent / (100 / (props.values.length - 1)))] || value, percent);
     };
 
     return (
@@ -74,21 +79,24 @@ export default function Range(props: Slider) {
                         <div style={{ backgroundSize: `${percent}% 100%` }}>
                             {zero && max % ((max - min) / (step - 1)) !== 0 && (
                                 <div
-                                    className={`zero${value >= 0 ? ' on' : ''}`}
+                                    className={`zero${value >= 0 ? " on" : ""}`}
                                     style={{
                                         left: `${(Math.abs(min) / (max - min)) * 100}%`,
                                     }}
                                 />
                             )}
                             {[...Array(step)].map((_, i) => (
-                                <div key={i} className={percent >= ((((max - min) / (step - 1)) * i) / (max - min)) * 100 ? 'on' : ''} />
+                                <div
+                                    key={i}
+                                    className={percent >= ((((max - min) / (step - 1)) * i) / (max - min)) * 100 ? "on" : ""}
+                                />
                             ))}
                         </div>
                     </div>
                     <div>
                         <span draggable={false} style={{ left: `${percent}%` }}>
                             <span>
-                                {value.toFixed(0)}
+                                {props?.values?.[Math.round(percent / (100 / (props.values.length - 1)))] || value.toFixed(0)}
                                 {props?.unit && ` ${props?.unit}`}
                             </span>
                         </span>

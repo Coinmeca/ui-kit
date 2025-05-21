@@ -27,7 +27,7 @@ const Thumb = (color: string, width: string) => css`
 const Style = styled.div<{ $color: string; $value: number }>`
     ${({ $color, $value }) => {
         const color: string = Root.Color($color);
-        const width: string = `${$value}ch + 2em`;
+        const width: string = `${$value < 3 ? 3 : $value}ch + 2em`;
         return css`
             font-size: 1em;
             position: relative;
