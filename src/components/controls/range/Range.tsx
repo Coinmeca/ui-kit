@@ -1,6 +1,7 @@
 ﻿"use client";
 import { useEffect, useState } from "react";
 import Style from "./Range.styled";
+import { isNumber, parseNumber } from "lib/utils";
 
 export interface Slider {
     color?: string;
@@ -23,16 +24,15 @@ export default function Range(props: Slider) {
     const [percent, setPercent] = useState<number>(0);
 
     const color = props?.color || "white";
-    const step =
-        (props?.values?.length && props?.values?.length + 1) || (props?.step && (props?.step > 2 ? props?.step : 2)) || 2;
+    const step = props?.values?.length || (props?.step ? (props?.step > 2 ? props?.step : 2) : 2);
     const snap = props?.snap || false;
     const zero = props?.zero || false;
     const min = props?.min || 0;
-    const max = props?.values?.length || props?.max || min + 100;
+    const max = props?.values?.length ? props?.values?.length - 1 : props?.max || min + 100;
     const disabled = props?.disabled || false;
 
     useEffect(() => {
-        typeof props?.value === "number" && !isNaN(props?.value)
+        typeof props?.value === "number" && isNumber(props?.value)
             ? setValue(props?.value < min ? min : props?.value > max ? max : props?.value)
             : 0;
     }, [props?.value, min, max]);
@@ -58,8 +58,8 @@ export default function Range(props: Slider) {
 
         const percent = ((value - min) * 100) / range || 0;
         setPercent(percent);
-        setValue(parseFloat(value.toFixed()));
-        props?.onChange?.(e, props?.values?.[Math.round(percent / (100 / (props.values.length - 1)))] || value, percent);
+        setValue(parseNumber(value));
+        props?.onChange?.(e, value, percent);
     };
 
     return (
