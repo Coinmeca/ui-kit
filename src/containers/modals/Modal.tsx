@@ -45,15 +45,15 @@ export default function Modal(props: Modal) {
         return () => setActive(false);
     }, []);
 
-    // useLayoutEffect(() => {
-    //     if (ref.current) {
-    //         const resizeObserver = new ResizeObserver(() => ref.current && setHeight(ref.current?.clientHeight));
-    //         resizeObserver.observe(ref.current);
-    //         return () => {
-    //             resizeObserver.disconnect();
-    //         };
-    //     }
-    // }, [ref.current]);
+    useLayoutEffect(() => {
+        if (ref.current) {
+            const resizeObserver = new ResizeObserver(() => ref.current && setHeight(ref.current?.scrollHeight));
+            resizeObserver.observe(ref.current);
+            return () => {
+                resizeObserver.disconnect();
+            };
+        }
+    }, [ref.current]);
 
     return (
         <Layouts.Panel
@@ -85,7 +85,7 @@ export default function Modal(props: Modal) {
                         // layout
                     >
                         <div style={{ height }}>
-                            <div ref={ref}>
+                            <div ref={ref} style={{ position: "absolute" }}>
                                 {props?.title && (
                                     <Elements.Text size={2} align={"center"}>
                                         {props?.title}
