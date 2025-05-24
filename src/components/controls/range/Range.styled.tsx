@@ -16,7 +16,7 @@ const Thumb = (color: string, width: string) => css`
     &:hover {
         background: rgba(${color}, var(--o06));
         transform: scale(1.15);
-        cursor: pointer;
+        cursor: grab;
     }
 
     &:active {
@@ -37,16 +37,17 @@ const Style = styled.div<{ $color: string; $value: number }>`
 
             & input[type="range"] {
                 appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                -ms-appearance: none;
+                -webkit-tap-highlight-color: transparent;
                 position: relative;
                 font-size: 1em;
                 width: 100%;
                 height: 4em;
                 background: none;
+                cursor: inherit;
                 z-index: 1;
-
-                &:hover {
-                    cursor: e-resize;
-                }
 
                 &:active {
                     cursor: grabbing;

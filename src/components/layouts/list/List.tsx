@@ -27,6 +27,7 @@ export default function List(props: List) {
                             {list?.map((data: ListItemType, i: number) => (
                                 <ListItem
                                     key={data?.index || i}
+                                    as={data?.motion && motion.div}
                                     {...(data?.children && data)}
                                     motion={
                                         data?.motion && {

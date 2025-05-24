@@ -21,11 +21,10 @@ export interface Modal {
 }
 
 export default function Modal(props: Modal) {
-    const id = `${new Date().getTime()}`;
     const [active, setActive] = useState<boolean>(props?.active || true);
-    const [height, setHeight] = useState();
-    const ref: any = useRef(null);
 
+    const id = `${new Date().getTime()}`;
+    const ref: any = useRef(null);
     const min = 56;
     const max = 64;
     const width = {
@@ -46,14 +45,16 @@ export default function Modal(props: Modal) {
     }, []);
 
     useLayoutEffect(() => {
-        if (ref.current) {
-            const resizeObserver = new ResizeObserver(() => ref.current && setHeight(ref.current?.scrollHeight));
+        if (ref?.current) {
+            const resizeObserver = new ResizeObserver(
+                () => (ref.current.parentElement.style.height = (ref.current?.offsetHeight || 0) + "px"),
+            );
             resizeObserver.observe(ref.current);
             return () => {
                 resizeObserver.disconnect();
             };
         }
-    }, [ref.current]);
+    }, [ref?.current]);
 
     return (
         <Layouts.Panel
@@ -84,8 +85,8 @@ export default function Modal(props: Modal) {
                         transition={{ transition: { ease: "easeInOut", duration: 0.15 } }}
                         // layout
                     >
-                        <div style={{ height }}>
-                            <div ref={ref} style={{ position: "absolute" }}>
+                        <div>
+                            <div ref={ref} style={{ position: "absolute", boxSizing: "border-box" }}>
                                 {props?.title && (
                                     <Elements.Text size={2} align={"center"}>
                                         {props?.title}

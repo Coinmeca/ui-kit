@@ -1,5 +1,5 @@
 ﻿"use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Style from "./Range.styled";
 import { isNumber, parseNumber } from "lib/utils";
 
@@ -20,6 +20,9 @@ export interface Slider {
 }
 
 export default function Range(props: Slider) {
+    const trackRef = useRef<HTMLDivElement>(null);
+    const thumbRef = useRef<HTMLDivElement>(null);
+
     const [value, setValue] = useState<number>(props?.value || 0);
     const [percent, setPercent] = useState<number>(0);
 
@@ -62,9 +65,21 @@ export default function Range(props: Slider) {
         props?.onChange?.(e, value, percent);
     };
 
+    const handleMouseMove = (e: any) => {
+        if (disabled) return;
+        if (!trackRef?.current || !thumbRef?.current) return;
+
+        const mouse = e.clientX;
+        const rect = thumbRef.current.getBoundingClientRect();
+        const thumb = rect.left + rect.width / 2;
+
+        trackRef.current.style.cursor = mouse < thumb ? "w-resize" : "e-resize";
+    };
+
     return (
         <>
             <Style
+                ref={trackRef}
                 draggable={false}
                 $color={color}
                 $value={
@@ -72,7 +87,8 @@ export default function Range(props: Slider) {
                     (props?.unit ? props?.unit.toString().length + 1 : 0)
                 }
                 data-show={props?.show}
-                data-hide={props?.hide}>
+                data-hide={props?.hide}
+                onMouseMove={handleMouseMove}>
                 <input type="range" min={min} max={max} value={value} onChange={(e) => handleChange(e)} />
                 <div>
                     <div>
@@ -94,7 +110,7 @@ export default function Range(props: Slider) {
                         </div>
                     </div>
                     <div>
-                        <span draggable={false} style={{ left: `${percent}%` }}>
+                        <span ref={thumbRef} draggable={false} style={{ left: `${percent}%` }}>
                             <span>
                                 {props?.values?.[Math.round(percent / (100 / (props.values.length - 1)))] || value.toFixed(0)}
                                 {props?.unit && ` ${props?.unit}`}

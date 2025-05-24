@@ -64,7 +64,7 @@ const Style = styled.div<{ $width: { min: number; max: number }; $active: boolea
             display: flex;
             flex-direction: column;
             width: -webkit-fill-available;
-            height: -webkit-fill-available;
+            /* height: -webkit-fill-available; */
             gap: 4em;
             padding: 4em;
             transition: 0.3s ease;
