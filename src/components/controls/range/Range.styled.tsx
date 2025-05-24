@@ -17,6 +17,9 @@ const Thumb = (color: string, width: string) => css`
         background: rgba(${color}, var(--o06));
         transform: scale(1.15);
         cursor: grab;
+        *:active > & {
+            cursor: grabbing;
+        }
     }
 
     &:active {
@@ -34,6 +37,14 @@ const Style = styled.div<{ $color: string; $value: number }>`
             display: flex;
             align-items: center;
             justify-content: center;
+
+            &:hover > div:last-child > div:first-child > div > div {
+                cursor: pointer;
+            }
+
+            &:active {
+                cursor: grabbing;
+            }
 
             & input[type="range"] {
                 appearance: none;

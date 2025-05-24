@@ -73,7 +73,7 @@ export default function Range(props: Slider) {
         const rect = thumbRef.current.getBoundingClientRect();
         const thumb = rect.left + rect.width / 2;
 
-        trackRef.current.style.cursor = mouse < thumb ? "w-resize" : "e-resize";
+        trackRef.current.style.cursor = e.buttons ? "grabbing" : mouse < thumb ? "w-resize" : "e-resize";
     };
 
     return (
