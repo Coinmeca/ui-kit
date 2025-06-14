@@ -1,6 +1,11 @@
 ﻿"use client";
 import { Root } from "lib/style";
-import { css, styled } from "styled-components";
+import { css, keyframes, styled } from "styled-components";
+
+const blink = (color: string) => keyframes`
+  0% { background-color: rgba(${Root.Color(color)}, 0.5); }
+  100% { background-color: transparent; }
+`;
 
 const Bar = (color: string) => css`
     &:nth-child(1) > * > * > *:nth-child(2) {
@@ -236,11 +241,19 @@ export const Ticks = (color: string, show: boolean) => css`
 export const Asks = styled.div<{ $show: boolean }>`
     flex-direction: column-reverse;
     ${({ $show }) => Ticks("red", $show)}
+
+    &[data-update="true"] {
+        animation: ${blink("red")} 0.5s ease-in-out infinite alternate;
+    }
 `;
 
 export const Bids = styled.div<{ $show: boolean }>`
     flex-direction: column;
     ${({ $show }) => Ticks("green", $show)}
+
+    &[data-update="true"] {
+        animation: ${blink("green")} 0.5s ease-in-out infinite alternate;
+    }
 `;
 
 export const NoData = styled.div`

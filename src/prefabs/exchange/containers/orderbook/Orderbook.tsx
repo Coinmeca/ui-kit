@@ -5,7 +5,8 @@ import { Elements, Layouts } from "components";
 import { usePortal, useWindowSize } from "hooks";
 import { Root } from "lib/style";
 import { format, sort } from "lib/utils";
-import Style, { Asks, Bids, NoData, Tick as Ticks } from "./Orderbook.styled";
+import { Tick } from "./Tick";
+import Style, { Asks, Bids, NoData } from "./Orderbook.styled";
 import Tooltip from "./Tooltip";
 
 export interface Orderbook {
@@ -22,11 +23,6 @@ export interface Orderbook {
         vertical?: boolean;
     };
     guidance?: boolean;
-}
-
-export interface Tick {
-    price: number | string;
-    balance: number | string;
 }
 
 export default function Ordrebook(props: Orderbook) {
@@ -119,39 +115,13 @@ export default function Ordrebook(props: Orderbook) {
                 <Asks $show={view === 0 || view === 1} onMouseLeave={() => closeTooltip()}>
                     <AnimatePresence mode="popLayout" presenceAffectsLayout>
                         {asks?.map((ask: Tick, k: number) => (
-                            <Ticks
-                                key={ask?.price || k}
-                                onClick={(e: any) => handleAsk(ask, k, e)}
-                                onMouseEnter={(e: any) => handleAskHover(ask, k, e)}
-                                as={motion.div}
-                                initial={{ scale: 0.9, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                exit={{ scale: 0.9, opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                                layout>
-                                <div>
-                                    <div>
-                                        <div>
-                                            <span>{format(ask?.balance, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
-                                        </div>
-                                        <div
-                                            style={{
-                                                backgroundSize: `${
-                                                    (parseFloat(ask?.balance.toString()) / ask_max) * 100 > 100
-                                                        ? "100"
-                                                        : (parseFloat(ask?.balance.toString()) / ask_max) * 100 < 0
-                                                        ? "0"
-                                                        : (parseFloat(ask?.balance.toString()) / ask_max) * 100
-                                                }% 100%`,
-                                            }}>
-                                            <span>{format(ask?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* <div>
-                                    <Controls.Button>Order</Controls.Button>
-                                </div> */}
-                            </Ticks>
+                            <Tick
+                                price={ask?.price}
+                                balance={ask?.balance}
+                                max={ask_max}
+                                onClick={(e) => handleAsk(ask, e)}
+                                onMouseEnter={(e) => handleAskHover(ask, k, e)}
+                            />
                         ))}
                     </AnimatePresence>
                 </Asks>
@@ -175,39 +145,13 @@ export default function Ordrebook(props: Orderbook) {
                     onMouseLeave={() => closeTooltip()}>
                     <AnimatePresence mode="popLayout">
                         {bids?.map((bid: Tick, k: number) => (
-                            <Ticks
-                                key={bid?.price || k}
-                                onClick={(e: any) => handleBid(bid, e)}
-                                onMouseEnter={(e: any) => handleBidHover(bid, k, e)}
-                                as={motion.div}
-                                initial={{ scale: 0.9, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                exit={{ scale: 0.9, opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                                layout>
-                                <div onMouseEnter={(e) => e?.stopPropagation()}>
-                                    <div>
-                                        <div>
-                                            <span>{format(bid?.balance, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
-                                        </div>
-                                        <div
-                                            style={{
-                                                backgroundSize: `${
-                                                    (parseFloat(format(bid?.balance, "number")) / bid_max) * 100 > 100
-                                                        ? "100"
-                                                        : (parseFloat(format(bid?.balance, "number")) / bid_max) * 100 < 0
-                                                        ? "0"
-                                                        : (parseFloat(format(bid?.balance, "number")) / bid_max) * 100
-                                                }% 100%`,
-                                            }}>
-                                            <span>{format(bid?.price, "currency", { unit: 9, limit: 12, fix: 3 })}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* <div>
-                                    <Controls.Button>Order</Controls.Button>
-                                </div> */}
-                            </Ticks>
+                            <Tick
+                                price={bid?.price}
+                                balance={bid?.balance}
+                                max={bid_max}
+                                onClick={(e) => handleBid(bid, e)}
+                                onMouseEnter={(e) => handleBidHover(bid, k, e)}
+                            />
                         ))}
                     </AnimatePresence>
                 </Bids>
