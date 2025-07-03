@@ -1,4 +1,6 @@
-﻿import { motion } from "motion/react";
+﻿"use client";
+
+import { motion } from "motion/react";
 import { format } from "lib/utils";
 import { Tick as Style } from "./Orderbook.styled";
 
