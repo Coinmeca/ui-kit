@@ -245,7 +245,7 @@ export default function Input(props: Input) {
             $error={error}
             $lock={props?.lock}
             $disabled={props?.disabled}
-            onClick={() => !(props?.lock || props?.disabled) && setFocus(true)}
+            // onClick={() => !(props?.lock || props?.disabled) && setFocus(true)}
             onBlur={() => !fold && handleBlur()}
             data-active={focus}
             data-show={props?.show}
